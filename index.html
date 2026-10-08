@@ -543,7 +543,7 @@ function parseBackup(text) {
 function backupCard() {
   var n = Object.keys(NOTES).length;
   var h = '<div class="card pad"><div class="nh"><h2>我的筆記備份</h2></div><div class="small muted">目前有 ' + n + ' 張表有修改。換手機或資料被清掉前，先匯出存到 LINE 記事本或 Keep；之後用匯入還原。</div>' +
-    '<div class="ebar" style="border-top:0"><button type="button" class="ebtn" data-bk="export"' + (n ? '' : ' disabled') + '>匯出</button><button type="button" class="ebtn" data-bk="import">匯入</button></div>';
+    '<div class="ebar" style="border-top:0"><button type="button" class="ebtn" data-bk="export"' + (n ? '' : ' disabled') + '>匯出</button><button type="button" class="ebtn" data-bk="import">匯入</button><button type="button" class="ebtn warn" data-bk="resetall"' + (n ? '' : ' disabled') + '>全部恢復原版</button></div>';
   if (bkMode === 'export') h += '<textarea id="bkt" class="bkt" readonly rows="8">' + esc(exportText()) + '</textarea><div class="ebar" style="border-top:0"><button type="button" class="ebtn" data-bk="copy">複製</button><button type="button" class="ebtn" data-bk="dl">下載 .txt 檔</button><span id="bkmsg" class="small muted" style="align-self:center"></span></div>';
   if (bkMode === 'import') h += '<textarea id="bkt" class="bkt" rows="6" placeholder="把之前匯出的整段文字貼在這裡"></textarea><div class="ebar" style="border-top:0"><button type="button" class="ebtn" data-bk="restore">還原筆記</button><span id="bkmsg" class="small muted" style="align-self:center"></span></div>';
   return h + '</div>';
@@ -567,6 +567,12 @@ function bindBackup() {
           document.body.appendChild(link); link.click(); link.remove(); setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
           msg('如果沒有下載，請改用「複製」');
         } catch (e) { msg('這個瀏覽器不能下載，請改用「複製」'); }
+        return;
+      }
+      if (a === 'resetall') {
+        if (!confirm('確定要全部恢復原版嗎？所有表（含名詞對照）的修改與新增都會刪除，無法復原。\n\n建議先按「匯出」留一份備份。')) return;
+        NOTES = {}; saveNotes(); editing = null; bkMode = ''; nuShow(); window.scrollTo(0, 0);
+        alert('已全部恢復原版。');
         return;
       }
       if (a === 'restore') {

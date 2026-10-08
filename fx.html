@@ -11,17 +11,18 @@
     --brand: #2f6b4f; --brand-soft: #e3efe8; --on-brand: #ffffff; --ok: #2e7d4f; --ok-soft: #e1f2e7;
     --bad: #b3261e; --bad-soft: #fbe5e3; --warm: #fff3d6; --chip: #eef0eb; --shadow: 0 1px 2px rgba(0,0,0,.06), 0 2px 8px rgba(0,0,0,.04);
     --c1: #8b5a3c; --c2: #5c7a5a; --c3: #a0763a; --c4: #4f6a86; --c5: #9a5b6b; --c6: #6b6390;
+    --c1s: #f4e8e0; --c2s: #e3eee2; --c3s: #f6ecd9; --c4s: #e1e9f2; --c5s: #f4e3e8; --c6s: #e9e6f3;
   }
   @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) mark { background: #5a4a12; color: #fff3c4; } }
   :root[data-theme="dark"] mark { background: #5a4a12; color: #fff3c4; }
   @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
     --bg: #121614; --card: #1b201d; --ink: #e8ece9; --muted: #9aa49e; --line: #2c332f; --brand: #7cc4a0; --brand-soft: #1f3329; --on-brand: #10251a;
     --ok: #7cc4a0; --ok-soft: #1d3127; --bad: #ff8a80; --bad-soft: #3a1f1d; --warm: #3a3220; --chip: #252b27; --shadow: none; color-scheme: dark;
-    --c1: #d9a27f; --c2: #9fc39c; --c3: #e0b878; --c4: #9cb7d6; --c5: #e0a1b0; --c6: #b7aee0; } }
+    --c1: #d9a27f; --c2: #9fc39c; --c3: #e0b878; --c4: #9cb7d6; --c5: #e0a1b0; --c6: #b7aee0; --c1s: #3a2a21; --c2s: #223024; --c3s: #3a301f; --c4s: #212c39; --c5s: #3a242b; --c6s: #2a2739; } }
   :root[data-theme="dark"] {
     --bg: #121614; --card: #1b201d; --ink: #e8ece9; --muted: #9aa49e; --line: #2c332f; --brand: #7cc4a0; --brand-soft: #1f3329; --on-brand: #10251a;
     --ok: #7cc4a0; --ok-soft: #1d3127; --bad: #ff8a80; --bad-soft: #3a1f1d; --warm: #3a3220; --chip: #252b27; --shadow: none; color-scheme: dark;
-    --c1: #d9a27f; --c2: #9fc39c; --c3: #e0b878; --c4: #9cb7d6; --c5: #e0a1b0; --c6: #b7aee0; }
+    --c1: #d9a27f; --c2: #9fc39c; --c3: #e0b878; --c4: #9cb7d6; --c5: #e0a1b0; --c6: #b7aee0; --c1s: #3a2a21; --c2s: #223024; --c3s: #3a301f; --c4s: #212c39; --c5s: #3a242b; --c6s: #2a2739; }
   * { box-sizing: border-box; }
   [hidden] { display: none !important; }
   html, body { margin: 0; background: var(--bg); color: var(--ink);
@@ -127,6 +128,16 @@
   .sym { display: inline-block; font-size: 11px; font-weight: 700; padding: 0 5px; border-radius: 6px; background: var(--warm); color: var(--ink); }
   .sym.s2 { background: var(--bad-soft); color: var(--bad); }
   .fxl { display: flex; flex-wrap: wrap; gap: 6px 14px; padding: 8px 14px 12px; font-size: 12px; color: var(--muted); } .fxl .sym { margin-right: 4px; }
+  .fxc { border-top: 5px solid var(--cc); } .fxc .fxh { background: var(--cs); padding-bottom: 10px; } .fxc .fxh .cbar { display: none; }
+  .fxc .fxh b { color: var(--cc); }
+  table.fxt tr:first-child th { background: var(--cs); color: var(--ink); } table.fxt tr:first-child th.st { background: var(--cs); }
+  table.fxt tr.sg th { background: var(--cs); border-left: 4px solid var(--cc); }
+  table.fxt tr.fxr td.st { border-left: 4px solid var(--cc); }
+  table.fxt tr.fxr:hover td, table.fxt tr.fxr.on td { background: var(--cs); }
+  .chips .cchip { display: inline-flex; align-items: center; gap: 6px; border-color: var(--cc); }
+  .chips .cchip .cdot { width: 9px; height: 9px; border-radius: 50%; background: var(--cc); display: inline-block; }
+  .chips .cchip.on { background: var(--cc); border-color: var(--cc); color: #fff; } .chips .cchip.on .cdot { background: #fff; }
+  .cdot2 { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--cc); margin-right: 6px; }
   .sw { display: inline-block; width: 10px; height: 18px; border-radius: 3px; margin-right: 8px; vertical-align: -3px; }
   .fx { padding: 11px 14px; border-top: 1px solid var(--line); cursor: pointer; }
   .fx:first-child { border-top: 0; }
@@ -634,11 +645,12 @@ function kcalCalc() {
    ===================================================================== */
 var CATS = ['乳品類', '蔬菜類', '水果類', '全榖雜糧類', '豆魚蛋肉類', '油脂與堅果種子類'];
 var CATCOL = { '乳品類': '--c4', '蔬菜類': '--c2', '水果類': '--c5', '全榖雜糧類': '--c3', '豆魚蛋肉類': '--c1', '油脂與堅果種子類': '--c6' };
+function catVars(c) { return '--cc:var(' + CATCOL[c] + ');--cs:var(' + CATCOL[c] + 's)'; }
 var fxState = { q: '', cat: '', show: 40, open: -1 };
 function fxNut(r) { var lvl = (r[0] === '乳品類' || r[0] === '豆魚蛋肉類') ? r[1].split('｜')[0] : ''; return FX.nut[r[0] + '|' + lvl]; }
 function viewFx() {
   $('tools').innerHTML = '<input class="search" id="fq" type="search" placeholder="搜尋食物，例如：豆腐、吐司、芭樂、低脂" value="' + esc(fxState.q) + '">' +
-    '<div class="chips" id="fc">' + [''].concat(CATS).map(function (c) { return '<button type="button" data-c="' + c + '" class="' + (c === fxState.cat ? 'on' : '') + '">' + (c || '全部') + '</button>'; }).join('') + '</div>';
+    '<div class="chips" id="fc">' + [''].concat(CATS).map(function (c) { return '<button type="button" data-c="' + c + '" class="' + (c === fxState.cat ? 'on' : '') + (c ? ' cchip' : '') + '"' + (c ? ' style="' + catVars(c) + '"' : '') + '>' + (c ? '<i class="cdot"></i>' : '') + (c || '全部') + '</button>'; }).join('') + '</div>';
   $('fq').oninput = function () { fxState.q = this.value.trim(); fxState.show = 40; fxState.open = -1; fxList(); };
   $('fc').querySelectorAll('button').forEach(function (b) { b.onclick = function () { fxState.cat = b.getAttribute('data-c'); fxState.show = 40; fxState.open = -1; $('fc').querySelectorAll('button').forEach(function (x) { x.classList.toggle('on', x === b); }); fxList(); }; });
   fxList();
@@ -663,7 +675,7 @@ function fxList() {
     var idx = rows.filter(function (i) { return FX.rows[i][0] === cat; });
     if (!idx.length) return;
     var single = cat !== '乳品類' && cat !== '豆魚蛋肉類';
-    var t = '<div class="card fxc"><div class="fxh"><span class="cbar" style="background:var(' + CATCOL[cat] + ')"></span><b>' + cat + '</b>' +
+    var t = '<div class="card fxc" style="' + catVars(cat) + '"><div class="fxh"><span class="cbar" style="background:var(' + CATCOL[cat] + ')"></span><b>' + cat + '</b>' +
       (single ? '<span class="fxn">' + fxNutTxt(FX.nut[cat + '|']) + '</span>' : '') + '</div>' +
       '<div class="scroll"><table class="fxt"><tr><th class="st">食物名稱</th><th>每份可食重量</th><th>份量</th><th>熟重</th><th>購買量</th><th>附註</th></tr>';
     var last = null;
@@ -708,7 +720,7 @@ function fxConv() {
 }
 function fxSummary() {
   return '<div class="card"><details class="acc"><summary><div class="tx"><b>各類食物每份營養素</b><span class="d">考試必背的那張表</span></div>' + CHEV + '</summary><div class="body"><div class="scroll"><table><tr><th>品名</th><th>蛋白質</th><th>脂肪</th><th>醣類</th><th>熱量</th></tr>' +
-    FX.summary.map(function (s) { return '<tr><td>' + esc(s[0]) + '</td><td>' + s[1] + '</td><td>' + s[2] + '</td><td>' + s[3] + '</td><td>' + s[4] + '</td></tr>'; }).join('') + '</table></div>' +
+    FX.summary.map(function (s) { var cc = CATS.filter(function (c) { return s[0].replace(/[、（）]/g, '').indexOf(c.replace(/類|與/g, '').slice(0, 2)) === 0; })[0]; return '<tr' + (cc ? ' style="' + catVars(cc) + ';background:var(--cs)"' : '') + '><td>' + (cc ? '<i class="cdot2"></i>' : '') + esc(s[0]) + '</td><td>' + s[1] + '</td><td>' + s[2] + '</td><td>' + s[3] + '</td><td>' + s[4] + '</td></tr>'; }).join('') + '</table></div>' +
     '<div class="small muted" style="margin-top:6px">' + FX.notes.map(esc).join('<br>') + '</div></div></details>' +
     '<details class="acc"><summary><div class="tx"><b>稱量換算</b><span class="d">杯、湯匙、茶匙、台斤</span></div>' + CHEV + '</summary><div class="body">' + FX.measure.map(function (m) { return '<span class="tag">' + esc(m) + '</span>'; }).join('') + '</div></details>' +
     '<details class="acc"><summary><div class="tx"><b>符號說明</b><span class="d">＊ ◎ △ ＃ 是什麼意思</span></div>' + CHEV + '</summary><div class="body"><ul class="dots">' +

@@ -252,8 +252,6 @@ function nuShow() {
         .map(function (r) { return '<tr><th><a href="#" data-k="' + { '醣類': 'carb', '脂質': 'fat', '蛋白質': 'pro', '維生素': 'vit', '礦物質': 'min', '水': 'water' }[r[0]] + '">' + r[0] + '</a></th><td class="c">' + r[1] + '</td><td>' + r[2] + '</td><td>' + r[3] + '</td></tr>'; }).join('') +
       '</table></div><div class="small muted" style="margin-top:6px">熱量單位：大卡／公克。酒精 7 大卡／公克，但不是營養素。點營養素名稱看重點表。</div></div>';
     h += '<div class="card pad"><h2>分類速記</h2>' + kvTable([['巨量營養素', '醣類、脂質、蛋白質（需要量以公克計，產生熱量）＋水'], ['微量營養素', '維生素、礦物質（需要量以毫克、微克計，不產生熱量）'], ['有機', '醣類、脂質、蛋白質、維生素'], ['無機', '礦物質、水']]) + '</div>';
-    h += '<div class="card pad"><h2>熱量試算</h2><div class="grid3" style="margin-top:6px"><label class="f">蛋白質（g）<input id="kp" type="number" inputmode="decimal" value="60"></label>' +
-      '<label class="f">脂質（g）<input id="kf" type="number" inputmode="decimal" value="55"></label><label class="f">醣類（g）<input id="kc" type="number" inputmode="decimal" value="250"></label></div><div id="kout" style="margin-top:12px"></div></div>';
   } else if (NU_MACRO[nuSel]) {
     var m = NU_MACRO[nuSel];
     h += '<div class="card pad"><h2><span class="sw" style="background:var(' + m.c + ')"></span>' + m.n + '</h2>' + kvTable(m.rows) + '</div>';
@@ -542,8 +540,7 @@ function wCalc() {
 buildNav();
 var q0 = (location.search.match(/[?&]app=([a-z]+)/) || [])[1];
 var s0 = /^[a-z]+$/.test(START) ? START : (q0 || 'nutrition');
-/* 從圖文選單開啟（網址有 app=）時只顯示該單元，不顯示其他單元的連結 */
-if (/^[a-z]+$/.test(START) || q0) document.body.classList.add('solo');
+document.body.classList.add('solo');   // 一律只顯示單一單元；沒帶 app= 時預設營養學
 go(TABS.some(function (t) { return t[0] === s0; }) ? s0 : 'nutrition');
 </script>
 </body>

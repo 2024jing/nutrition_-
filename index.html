@@ -12,6 +12,8 @@
     --bad: #b3261e; --bad-soft: #fbe5e3; --warm: #fff3d6; --chip: #eef0eb; --shadow: 0 1px 2px rgba(0,0,0,.06), 0 2px 8px rgba(0,0,0,.04);
     --c1: #8b5a3c; --c2: #5c7a5a; --c3: #a0763a; --c4: #4f6a86; --c5: #9a5b6b; --c6: #6b6390;
   }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) mark { background: #5a4a12; color: #fff3c4; } }
+  :root[data-theme="dark"] mark { background: #5a4a12; color: #fff3c4; }
   @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
     --bg: #121614; --card: #1b201d; --ink: #e8ece9; --muted: #9aa49e; --line: #2c332f; --brand: #7cc4a0; --brand-soft: #1f3329; --on-brand: #10251a;
     --ok: #7cc4a0; --ok-soft: #1d3127; --bad: #ff8a80; --bad-soft: #3a1f1d; --warm: #3a3220; --chip: #252b27; --shadow: none; color-scheme: dark;
@@ -83,8 +85,9 @@
   .kvt.wide th { width: auto; white-space: nowrap; } .kvt.wide tr:first-child th { color: var(--muted); font-size: 12px; font-weight: 600; }
   .kvt.wide td { padding-right: 8px; } .kvt td.c { text-align: center; font-weight: 700; }
   .kvt a { text-decoration: none; }
-  #nm { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; overflow: visible; }
-  #nm button { padding: 6px 0; font-size: 13px; }
+  #nm { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 4px; overflow: visible; }
+  #nm button { padding: 6px 0; font-size: 13px; letter-spacing: -.02em; }
+  table.glo td { text-align: left; padding: 7px 0; } table.glo td.zh { width: 42%; font-weight: 600; padding-right: 10px; } table.glo td.en { color: var(--muted); }
   body.solo nav.tabbar, body.solo [data-go] { display: none !important; }
   body.solo main { padding-bottom: 32px; }
   .nh { display: flex; align-items: flex-start; gap: 8px; } .nh h2 { flex: 1; min-width: 0; }
@@ -98,6 +101,16 @@
   .kvt tr.mine th, .kvt tr.mine td { background: var(--warm); } .kvt tr.mine th { padding-left: 6px; border-radius: 6px 0 0 6px; }
   .bkt { width: 100%; margin-top: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 10px; padding: 8px 10px; font-size: 14px; font-family: inherit; line-height: 1.5; }
   .ebtn[disabled] { opacity: .4; cursor: default; }
+  mark { background: #ffe9a8; color: #3b2f00; border-radius: 3px; padding: 0 2px; }
+  em.warn { font-style: normal; color: var(--bad); font-weight: 700; }
+  b.num { color: var(--brand); font-weight: 700; white-space: nowrap; }
+  .lgd { display: flex; gap: 12px; font-size: 12px; margin: 10px 2px 0; color: var(--muted); align-items: center; }
+  .lgd > * { font-size: 12px; }
+  details.deep { margin-top: 10px; border-top: 1px dashed var(--line); }
+  details.deep > summary { cursor: pointer; padding: 10px 0 4px; color: var(--brand); font-weight: 700; font-size: 14px; list-style: none; }
+  details.deep > summary::-webkit-details-marker { display: none; }
+  details.deep > summary::before { content: '＋ '; } details.deep[open] > summary::before { content: '－ '; }
+  .dp { font-size: 14px; line-height: 1.65; padding: 4px 0; }
   .sw { display: inline-block; width: 10px; height: 18px; border-radius: 3px; margin-right: 8px; vertical-align: -3px; }
   .fx { padding: 11px 14px; border-top: 1px solid var(--line); cursor: pointer; }
   .fx:first-child { border-top: 0; }
@@ -168,82 +181,226 @@ function buildNav() {
    ===================================================================== */
 /* 六大營養素重點表：依《透視營養學》（Wardlaw's Perspectives in Nutrition 12/e）章節架構整理。
    需求量為本書採用的美國 DRIs（成人，男／女）。 */
-var NU_MENU = [['all', '總覽'], ['carb', '醣類'], ['fat', '脂質'], ['pro', '蛋白質'], ['vit', '維生素'], ['min', '礦物質'], ['water', '水']];
+var NU_MENU = [['all', '總覽'], ['carb', '醣類'], ['fat', '脂質'], ['pro', '蛋白質'], ['vit', '維生素'], ['min', '礦物質'], ['water', '水'], ['glo', '名詞']];
 var NU_MACRO = {
   carb: { n: '醣類', c: '--c3', rows: [
-    ['分類', '單醣：葡萄糖、果糖、半乳糖\n雙醣：蔗糖、乳糖、麥芽糖\n寡醣：棉子糖、水蘇糖（豆類，易脹氣）\n多醣：澱粉（直鏈、支鏈）、肝醣、膳食纖維'],
-    ['膳食纖維', '水溶性：果膠、樹膠、β-聚葡萄醣 → 降膽固醇、穩血糖\n非水溶性：纖維素、半纖維素、木質素 → 增加糞便量、預防便秘'],
-    ['功能', '供能 4 大卡／g・節省蛋白質・防止酮症・纖維維持腸道健康'],
+    ['分類', '單醣：[[葡萄糖]]、果糖、半乳糖\n雙醣：[[蔗糖]]（葡＋果）、[[乳糖]]（葡＋半乳）、[[麥芽糖]]（葡＋葡）\n寡醣：棉子糖、水蘇糖（豆類，易脹氣）\n多醣：[[澱粉]]（直鏈、支鏈）、[[肝醣]]、膳食纖維'],
+    ['膳食纖維', '[[水溶性]]：果膠、樹膠、β-聚葡萄醣 → 降膽固醇、穩血糖\n[[非水溶性]]：纖維素、半纖維素、木質素 → 增加糞便量、預防便秘'],
+    ['功能', '供能 4 大卡／g・[[節省蛋白質]]・[[防止酮症]]・纖維維持腸道健康'],
     ['消化吸收', '口腔唾液澱粉酶 → 小腸胰澱粉酶 → 刷狀緣雙醣酶 → 單醣吸收 → 門靜脈到肝臟'],
     ['食物來源', '全榖雜糧、水果、乳品（乳糖）、豆類、蔬菜'],
-    ['需求', 'RDA 130 g（供應大腦）・AMDR 45–65% 熱量\n纖維約每 1000 大卡 14 g・添加糖 < 10% 熱量'],
-    ['相關問題', '乳糖不耐症・糖尿病・齲齒・升糖指數（GI）與升糖負荷（GL）']] },
+    ['需求', 'RDA 130 g（供應大腦）・AMDR 45–65%\n纖維約每 1000 大卡 14 g・添加糖 < 10% 熱量'],
+    ['相關問題', '[[乳糖不耐症]]・[[糖尿病]]・齲齒・升糖指數（GI）與升糖負荷（GL）']],
+    deep: [
+      ['血糖調節', '[[胰島素]]（胰臟 β 細胞）：餐後血糖升高時分泌 → 細胞吸收葡萄糖、合成肝醣\n[[升糖素]]（α 細胞）：血糖下降時分泌 → 肝醣分解、醣質新生'],
+      ['能量代謝', '葡萄糖 → 糖解作用 → 丙酮酸 → 乙醯輔酶 A → 檸檬酸循環 → 電子傳遞鏈 → ATP\n缺氧時丙酮酸 → 乳酸'],
+      ['醣質新生', '飢餓時肝臟用胺基酸、乳酸、甘油合成葡萄糖；脂肪酸不能轉成葡萄糖'],
+      ['GI 與 GL', 'GI：吃下含 50 g 醣的食物後的血糖反應（以葡萄糖為 100）\nGL ＝ GI × 一份食物的醣量 ÷ 100，更貼近實際份量'],
+      ['甜味劑', '營養性：糖醇（山梨醇、木糖醇）熱量較低，過量會腹瀉\n非營養性：阿斯巴甜、蔗糖素、甜菊等；!!苯酮尿症患者不可用阿斯巴甜!!'],
+      ['乳糖不耐', '乳糖酶不足，乳糖到大腸發酵 → 脹氣、腹瀉\n對策：少量多次、隨餐喝、改吃優格或起司']] },
   fat: { n: '脂質', c: '--c1', rows: [
-    ['分類', '三酸甘油酯（甘油＋3 脂肪酸）・磷脂質（卵磷脂）・固醇（膽固醇）'],
-    ['脂肪酸', '飽和：動物油、椰子油\n單元不飽和：橄欖油、芥花油、苦茶油\n多元不飽和：ω-6（大豆油）、ω-3（魚油 EPA／DHA、亞麻仁）\n反式脂肪：部分氫化油 → 升 LDL、降 HDL'],
-    ['必需脂肪酸', '亞麻油酸（ω-6）・α-次亞麻油酸（ω-3）'],
-    ['功能', '供能 9 大卡／g・儲存能量・構成細胞膜・合成荷爾蒙・幫助脂溶性維生素吸收・保溫護臟'],
-    ['消化吸收', '膽汁乳化 → 胰脂解酶分解 → 微膠粒吸收 → 組成乳糜微粒 → 淋巴系統'],
-    ['脂蛋白', '乳糜微粒：運送食物脂肪\nVLDL → LDL：運膽固醇到組織（「壞」）\nHDL：運膽固醇回肝臟（「好」）'],
+    ['分類', '[[三酸甘油酯]]（甘油＋3 脂肪酸）・[[磷脂質]]（卵磷脂）・[[固醇]]（膽固醇）'],
+    ['脂肪酸', '飽和：動物油、椰子油\n單元不飽和：橄欖油、芥花油、苦茶油\n多元不飽和：ω-6（大豆油）、[[ω-3]]（魚油 EPA／DHA、亞麻仁）\n!!反式脂肪!!：部分氫化油 → 升 LDL、降 HDL'],
+    ['必需脂肪酸', '[[亞麻油酸]]（ω-6）・[[α-次亞麻油酸]]（ω-3）'],
+    ['功能', '供能 9 大卡／g・儲存能量・構成細胞膜・合成荷爾蒙・幫助[[脂溶性維生素]]吸收・保溫護臟'],
+    ['消化吸收', '[[膽汁乳化]] → 胰脂解酶分解 → 微膠粒吸收 → 組成[[乳糜微粒]] → 淋巴系統'],
+    ['脂蛋白', '乳糜微粒：運送食物脂肪\nVLDL → [[LDL]]：運膽固醇到組織（「壞」）\n[[HDL]]：運膽固醇回肝臟（「好」）'],
     ['食物來源', '油脂與堅果種子、肉類、全脂乳品、蛋黃（膽固醇）'],
-    ['需求', 'AMDR 20–35% 熱量・飽和 < 10%・反式越少越好\n亞麻油酸 17／12 g・α-次亞麻油酸 1.6／1.1 g'],
-    ['相關問題', '心血管疾病・肥胖・必需脂肪酸缺乏（皮膚炎）']] },
+    ['需求', 'AMDR 20–35%・飽和 < 10%・反式越少越好\n亞麻油酸 17／12 g・α-次亞麻油酸 1.6／1.1 g'],
+    ['相關問題', '[[心血管疾病]]・肥胖・必需脂肪酸缺乏（皮膚炎）']],
+    deep: [
+      ['碳鏈長度', '短鏈、中鏈（[[MCT]]）可直接經門靜脈吸收，不需乳糜微粒 → 用於脂肪吸收不良者\n長鏈需形成乳糜微粒走淋巴'],
+      ['類花生酸', '由 20 碳脂肪酸合成的荷爾蒙樣物質\nω-6（花生四烯酸）來源：偏促發炎、凝血\nω-3（EPA）來源：偏抗發炎、抗凝血'],
+      ['脂肪代謝', '脂肪酸 → [[β-氧化]] → 乙醯輔酶 A → 檸檬酸循環\n醣類不足時乙醯輔酶 A 堆積 → 生成[[酮體]]'],
+      ['膽固醇', '肝臟會自行合成，膳食膽固醇對血膽固醇的影響因人而異\n飽和脂肪與反式脂肪對 LDL 的影響更大'],
+      ['油脂變質', '[[酸敗]]：不飽和脂肪酸被氧化 → 油耗味；抗氧化劑（維生素 E）可延緩\n[[氫化]]：液態油加氫變固態，部分氫化會產生反式脂肪'],
+      ['飲食型態', '地中海飲食：橄欖油、魚、堅果、蔬果、全穀 → 心血管保護']] },
   pro: { n: '蛋白質', c: '--c5', rows: [
-    ['組成', '胺基酸約 20 種，含氮\n必需胺基酸 9 種：組、異白、白、離、甲硫、苯丙、羥丁（蘇）、色、纈\n條件性必需：如酪胺酸（苯酮尿症時）'],
-    ['結構', '一級（胺基酸序列）→ 二、三、四級立體結構\n變性：受熱、酸、鹼破壞立體結構，失去功能'],
-    ['品質', '完全蛋白質：蛋、奶、肉、魚、黃豆\n互補作用：穀類缺離胺酸＋豆類缺甲硫胺酸\n評估：生物價（BV）、PDCAAS'],
+    ['組成', '胺基酸約 20 種，[[含氮]]\n[[必需胺基酸 9 種]]：組、異白、白、離、甲硫、苯丙、羥丁（蘇）、色、纈\n條件性必需：如酪胺酸（苯酮尿症時）'],
+    ['結構', '一級（胺基酸序列）→ 二、三、四級立體結構\n[[變性]]：受熱、酸、鹼破壞立體結構，失去功能'],
+    ['品質', '[[完全蛋白質]]：蛋、奶、肉、魚、黃豆\n[[互補作用]]：穀類缺離胺酸＋豆類缺甲硫胺酸\n評估：生物價（BV）、PDCAAS'],
     ['功能', '建造修補組織・酵素荷爾蒙・抗體・體液與酸鹼平衡・運輸（血紅素）・必要時供能 4 大卡／g'],
-    ['消化吸收', '胃：鹽酸使變性＋胃蛋白酶\n小腸：胰蛋白酶、胰凝乳蛋白酶 → 胺基酸、雙肽吸收'],
-    ['氮平衡', '正氮平衡：生長、懷孕、復原期\n負氮平衡：飢餓、疾病、燒燙傷'],
+    ['消化吸收', '胃：鹽酸使變性＋[[胃蛋白酶]]\n小腸：[[胰蛋白酶]]、胰凝乳蛋白酶 → 胺基酸、雙肽吸收'],
+    ['氮平衡', '[[正氮平衡]]：生長、懷孕、復原期\n[[負氮平衡]]：飢餓、疾病、燒燙傷'],
     ['食物來源', '豆魚蛋肉、乳品；全榖（每份約 2 g）、蔬菜（每份約 1 g）'],
-    ['需求', 'RDA 0.8 g／公斤體重・AMDR 10–35% 熱量'],
-    ['缺乏與過量', '蛋白質熱量營養不良（PEM）：紅孩兒症（瓜西奧科，水腫）、消瘦症\n過量：增加腎臟負擔、高脂肉類連帶飽和脂肪']] },
+    ['需求', 'RDA 0.8 g／公斤體重・AMDR 10–35%'],
+    ['缺乏與過量', '蛋白質熱量營養不良（PEM）：[[紅孩兒症]]（瓜西奧科，水腫）、[[消瘦症]]\n過量：!!增加腎臟負擔!!、高脂肉類連帶飽和脂肪']],
+    deep: [
+      ['胺基酸代謝', '[[脫胺作用]]：去掉胺基 → 氨 → 肝臟[[尿素循環]] → 尿素由腎臟排出\n[[轉胺作用]]：把胺基轉給其他碳骨架 → 合成非必需胺基酸'],
+      ['蛋白質周轉', '體內蛋白質不斷分解與合成，釋出的胺基酸進入[[胺基酸池]]再利用'],
+      ['品質指標', 'PDCAAS：依必需胺基酸組成並校正消化率，最高 1.0（蛋、牛奶、黃豆分離蛋白）\nDIAAS：較新的評估方法'],
+      ['食物過敏', '多由食物蛋白質引起：牛奶、蛋、花生、堅果、魚、甲殼類、黃豆、小麥'],
+      ['特殊需求', '耐力與肌力運動員常見建議 1.2–2.0 g／公斤\n老人為預防[[肌少症]]，需求較高']] },
   water: { n: '水', c: '--c6', rows: [
-    ['體內分布', '成人約占體重 50–70%\n細胞內液約 2/3・細胞外液（血漿、組織間液）約 1/3'],
-    ['功能', '溶劑與運輸・調節體溫（流汗）・潤滑關節・參與化學反應・排除廢物'],
-    ['攝取與排出', '來源：飲料、食物水分、代謝水\n排出：尿液、皮膚、呼吸、糞便'],
-    ['調節', '口渴機制・抗利尿激素（ADH）・腎臟濃縮尿液'],
+    ['體內分布', '成人約占體重 50–70%\n[[細胞內液]]約 2/3・[[細胞外液]]（血漿、組織間液）約 1/3'],
+    ['功能', '溶劑與運輸・[[調節體溫]]（流汗）・潤滑關節・參與化學反應・排除廢物'],
+    ['攝取與排出', '來源：飲料、食物水分、[[代謝水]]\n排出：尿液、皮膚、呼吸、糞便'],
+    ['調節', '口渴機制・[[抗利尿激素（ADH）]]・腎臟濃縮尿液'],
     ['需求', 'AI 總水量（含食物）：男 3.7 L、女 2.7 L\n飲料約占 80%'],
-    ['缺乏與過量', '脫水：失水 1–2% 體重即口渴、表現下降；老人與嬰幼兒高風險\n水中毒：短時間大量喝水 → 低血鈉']] }
+    ['缺乏與過量', '[[脫水]]：失水 1–2% 體重即口渴、表現下降；老人與嬰幼兒高風險\n!!水中毒!!：短時間大量喝水 → 低血鈉']],
+    deep: [
+      ['電解質', '鈉、鉀、氯在細胞內外的濃度差，靠[[鈉鉀幫浦]]維持，水跟著電解質移動（滲透作用）'],
+      ['運動補水', '運動前後量體重，每減少 1 公斤約補 1.25–1.5 L\n長時間大量流汗時，飲料可含鈉與醣'],
+      ['判斷水分', '尿液淡黃色表示水分足夠；深黃、量少表示需要補水'],
+      ['利尿物質', '酒精會抑制抗利尿激素 → 尿量增加；適量咖啡因的利尿作用不大']] }
 };
 var NU_MICRO = {
   vit: { n: '維生素', c: '--c2', groups: [
-    { g: '脂溶性', d: '溶於脂肪、可儲存於肝臟與脂肪組織，過量較易中毒', items: [
-      ['維生素 A', '視網醇・β-胡蘿蔔素', '視覺（視紫質）・上皮細胞分化・免疫・生長', '肝臟、蛋黃、乳品；深綠與橘黃色蔬果（β-胡蘿蔔素）', '夜盲症・乾眼症・角膜軟化・毛囊角化', '致畸胎・肝損・骨質流失；β-胡蘿蔔素過多只會皮膚變黃', '900／700 μg RAE'],
-      ['維生素 D', '鈣化醇', '促進鈣磷吸收・骨骼健康・調節細胞生長', '皮膚照日光合成；魚油、鮭魚、強化乳品、蛋黃', '兒童佝僂症・成人骨質軟化症', '高血鈣・軟組織鈣化', '15 μg（600 IU）；70 歲以上 20 μg'],
-      ['維生素 E', '生育醇', '抗氧化，保護細胞膜不飽和脂肪酸', '植物油、堅果種子、小麥胚芽', '溶血性貧血（早產兒）・神經病變', '干擾凝血，服抗凝血劑者注意', '15 mg'],
-      ['維生素 K', '葉綠醌・甲萘醌', '凝血因子合成・骨骼蛋白', '深綠色蔬菜；腸道細菌合成', '凝血不良、出血（新生兒出生時常規補充）', '無已知上限，但會影響抗凝血劑（warfarin）', '120／90 μg（AI）']] },
-    { g: '水溶性', d: '溶於水、多餘隨尿排出，需經常攝取；B 群多為輔酶，參與能量代謝', items: [
-      ['維生素 B1', '硫胺', '醣類代謝輔酶（TPP）・神經功能', '豬肉、全穀、豆類、強化穀類', '腳氣病・魏尼凱-高沙可夫症候群（酗酒）', '無已知毒性', '1.2／1.1 mg'],
-      ['維生素 B2', '核黃素', '能量代謝輔酶（FAD、FMN）', '乳品、肉類、強化穀類；怕光', '口角炎・舌炎・脂漏性皮膚炎', '無已知毒性', '1.3／1.1 mg'],
-      ['菸鹼素', '維生素 B3', '能量代謝輔酶（NAD、NADP）；可由色胺酸合成', '肉類、魚、家禽、花生、強化穀類', '癩皮病（4D：皮膚炎、腹瀉、失智、死亡）', '大劑量：皮膚潮紅、肝損傷', '16／14 mg NE'],
-      ['泛酸', '維生素 B5', '構成輔酶 A，參與能量與脂肪代謝', '分布廣：肉、蛋、全穀、豆類、菇類', '罕見（腳燒灼感）', '無已知毒性', '5 mg（AI）'],
-      ['生物素', '維生素 B7', '羧化酶輔酶，參與醣質新生、脂肪酸合成', '蛋黃、肝臟、花生；腸道細菌合成', '罕見；長期吃生蛋白（抗生物素蛋白）可能缺乏', '無已知毒性', '30 μg（AI）'],
-      ['維生素 B6', '吡哆醇', '胺基酸代謝輔酶（PLP）・神經傳導物質・血紅素合成', '肉、魚、家禽、馬鈴薯、香蕉', '小球性貧血・皮膚炎・抽搐', '補充劑過量：神經病變', '1.3 mg'],
-      ['葉酸', '維生素 B9', 'DNA 合成・細胞分裂・紅血球生成', '深綠色蔬菜、豆類、柳橙、強化穀類', '巨球性貧血・胎兒神經管缺陷', '大量會掩蓋 B12 缺乏', '400 μg DFE'],
-      ['維生素 B12', '鈷胺素', '紅血球生成・神經髓鞘・與葉酸代謝合作；吸收需胃內在因子', '只存在動物性食物：肉、魚、蛋、乳品', '惡性貧血（巨球性貧血＋神經損傷）；全素者、老人、胃切除者注意', '無已知毒性', '2.4 μg'],
-      ['維生素 C', '抗壞血酸', '膠原蛋白合成・抗氧化・促進非血基質鐵吸收・免疫', '柑橘、芭樂、奇異果、甜椒、深綠色蔬菜；怕熱', '壞血病（牙齦出血、傷口難癒合）', '腹瀉・腎結石風險', '90／75 mg；吸菸者 +35 mg'],
-      ['膽素', '類維生素', '構成卵磷脂・神經傳導物質乙醯膽鹼', '蛋黃、肝臟、肉類、黃豆', '脂肪肝・肌肉損傷', '魚腥體臭・低血壓', '550／425 mg（AI）']] }] },
+    { g: '脂溶性', d: '溶於脂肪、可儲存於肝臟與脂肪組織，!!過量較易中毒!!', items: [
+      ['維生素 A', '視網醇・β-胡蘿蔔素', '[[視覺]]（視紫質）・上皮細胞分化・免疫・生長', '肝臟、蛋黃、乳品；深綠與橘黃色蔬果（β-胡蘿蔔素）', '[[夜盲症]]・[[乾眼症]]・角膜軟化・毛囊角化', '!!致畸胎!!・肝損・骨質流失；β-胡蘿蔔素過多只會皮膚變黃', '900／700 μg RAE',
+        '儲存：約 90% 在[[肝臟]]\n轉換：β-胡蘿蔔素在小腸轉成維生素 A，所以 12 μg β-胡蘿蔔素才等於 1 μg RAE\n!!孕婦不可大量補充!!（A 酸類藥物也會致畸胎）'],
+      ['維生素 D', '鈣化醇', '促進[[鈣磷吸收]]・骨骼健康・調節細胞生長', '皮膚照日光合成；魚油、鮭魚、強化乳品、蛋黃', '兒童[[佝僂症]]・成人[[骨質軟化症]]', '!!高血鈣!!・軟組織鈣化', '15 μg（600 IU）；70 歲以上 20 μg',
+        '活化路徑：皮膚 7-脫氫膽固醇 → D3 → [[肝臟]] 25(OH)D → [[腎臟]] 1,25(OH)₂D（活化型）\n血液狀態指標：25(OH)D\n高風險：少曬太陽、深膚色、老人、腎臟病'],
+      ['維生素 E', '生育醇', '[[抗氧化]]，保護細胞膜不飽和脂肪酸', '植物油、堅果種子、小麥胚芽', '溶血性貧血（早產兒）・神經病變', '!!干擾凝血!!，服抗凝血劑者注意', '15 mg',
+        'α-生育醇活性最高\n與[[維生素 C]]、[[硒]]合作：E 被氧化後可由 C 還原'],
+      ['維生素 K', '葉綠醌・甲萘醌', '[[凝血因子]]合成・骨骼蛋白', '深綠色蔬菜；腸道細菌合成', '凝血不良、出血（[[新生兒]]出生時常規補充）', '無已知上限，但!!會影響抗凝血劑（warfarin）!!', '120／90 μg（AI）',
+        'K1：植物（葉綠醌）・K2：腸道細菌、發酵食品（納豆）\n新生兒腸道無菌、母乳含量低 → 出生時注射\n長期使用抗生素可能減少腸道合成']] },
+    { g: '水溶性', d: '溶於水、多餘隨尿排出，需經常攝取；B 群多為[[輔酶]]，參與能量代謝', items: [
+      ['維生素 B1', '硫胺', '醣類代謝輔酶（TPP）・神經功能', '[[豬肉]]、全穀、豆類、強化穀類', '[[腳氣病]]・[[魏尼凱-高沙可夫症候群]]（酗酒）', '無已知毒性', '1.2／1.1 mg',
+        '酒精會降低吸收、增加流失 → 酗酒者高風險\n生魚、蕨類含硫胺酶會破壞 B1；精白米為主食易缺乏'],
+      ['維生素 B2', '核黃素', '能量代謝輔酶（FAD、FMN）', '[[乳品]]、肉類、強化穀類；!!怕光!!', '[[口角炎]]・舌炎・脂漏性皮膚炎', '無已知毒性', '1.3／1.1 mg',
+        '怕光 → 牛奶用不透光容器\n補充後尿液呈亮黃色'],
+      ['菸鹼素', '維生素 B3', '能量代謝輔酶（NAD、NADP）；可由[[色胺酸]]合成', '肉類、魚、家禽、花生、強化穀類', '[[癩皮病]]（4D：皮膚炎、腹瀉、失智、死亡）', '大劑量：!!皮膚潮紅、肝損傷!!', '16／14 mg NE',
+        '60 mg 色胺酸 ≈ 1 mg 菸鹼素（NE 菸鹼素當量）\n以玉米為主食的地區易缺乏（結合型菸鹼素不易吸收）'],
+      ['泛酸', '維生素 B5', '構成[[輔酶 A]]，參與能量與脂肪代謝', '分布廣：肉、蛋、全穀、豆類、菇類', '罕見（腳燒灼感）', '無已知毒性', '5 mg（AI）',
+        '名稱源自希臘文「到處都有」，所以很少缺乏'],
+      ['生物素', '維生素 B7', '羧化酶輔酶，參與醣質新生、脂肪酸合成', '蛋黃、肝臟、花生；腸道細菌合成', '罕見；長期吃[[生蛋白]]可能缺乏', '無已知毒性', '30 μg（AI）',
+        '生蛋白的抗生物素蛋白（avidin）會結合生物素；加熱後就不會'],
+      ['維生素 B6', '吡哆醇', '[[胺基酸代謝]]輔酶（PLP）・神經傳導物質・血紅素合成', '肉、魚、家禽、馬鈴薯、香蕉', '小球性貧血・皮膚炎・抽搐', '補充劑過量：!!神經病變!!', '1.3 mg',
+        '儲存在肌肉；蛋白質吃越多，需求越高\n部分藥物（如抗結核藥 isoniazid）會干擾 B6'],
+      ['葉酸', '維生素 B9', '[[DNA 合成]]・細胞分裂・紅血球生成', '深綠色蔬菜、豆類、柳橙、強化穀類', '[[巨球性貧血]]・胎兒[[神經管缺陷]]', '!!大量會掩蓋 B12 缺乏!!', '400 μg DFE',
+        'DFE：合成葉酸吸收率較高，1 μg 合成葉酸 ≈ 1.7 μg DFE\n準備懷孕的女性：孕前就要補足（神經管在懷孕初期形成）\n怕熱，烹調流失多'],
+      ['維生素 B12', '鈷胺素', '紅血球生成・[[神經髓鞘]]・與葉酸代謝合作；吸收需[[胃內在因子]]', '!!只存在動物性食物!!：肉、魚、蛋、乳品', '[[惡性貧血]]（巨球性貧血＋神經損傷）；全素者、老人、胃切除者注意', '無已知毒性', '2.4 μg',
+        '吸收：胃酸釋放 B12 → 與內在因子結合 → [[迴腸]]吸收\n肝臟可儲存數年，缺乏症狀出現較慢\n老人萎縮性胃炎、胃切除者需注射或高劑量補充'],
+      ['維生素 C', '抗壞血酸', '[[膠原蛋白]]合成・抗氧化・促進[[非血基質鐵]]吸收・免疫', '柑橘、芭樂、奇異果、甜椒、深綠色蔬菜；!!怕熱!!', '[[壞血病]]（牙齦出血、傷口難癒合）', '腹瀉・!!腎結石風險!!', '90／75 mg；吸菸者 +35 mg',
+        '人類無法自行合成，必須從食物取得\n可把被氧化的維生素 E 還原\n吸菸、壓力、受傷時需求增加'],
+      ['膽素', '類維生素', '構成卵磷脂・神經傳導物質[[乙醯膽鹼]]', '蛋黃、肝臟、肉類、黃豆', '脂肪肝・肌肉損傷', '魚腥體臭・低血壓', '550／425 mg（AI）',
+        '人體可自行合成一部分，但不足以滿足需求']] }] },
   min: { n: '礦物質', c: '--c4', groups: [
     { g: '巨量', d: '每日需要量 100 mg 以上', items: [
-      ['鈉', 'Na', '細胞外液主要陽離子・水分平衡・神經傳導', '食鹽、醬料、加工食品', '罕見（大量流汗、嘔吐腹瀉）→ 低血鈉', '高血壓（鹽敏感者）', 'AI 1500 mg；建議 < 2300 mg'],
-      ['鉀', 'K', '細胞內液主要陽離子・神經肌肉・心跳', '蔬菜、水果、豆類、乳品、馬鈴薯', '低血鉀 → 心律不整（利尿劑、嘔吐）', '高血鉀（腎臟病）→ 心臟停止', '3400／2600 mg（AI）'],
-      ['氯', 'Cl', '細胞外液陰離子・胃酸成分', '食鹽', '罕見', '高血壓（隨鈉）', '2300 mg（AI）'],
-      ['鈣', 'Ca', '骨骼牙齒・肌肉收縮・凝血・神經傳導', '乳品、小魚乾、板豆腐、深綠色蔬菜', '骨質疏鬆・兒童生長受影響', '便秘・腎結石・干擾鐵鋅吸收', '1000 mg'],
-      ['磷', 'P', '骨骼牙齒・ATP・DNA・磷脂質・酸鹼緩衝', '乳品、肉類、加工食品（磷酸鹽添加物）、可樂', '罕見', '腎臟病時高血磷 → 骨病變', '700 mg'],
-      ['鎂', 'Mg', '300 多種酵素輔因子・骨骼・神經肌肉', '全穀、堅果、豆類、深綠色蔬菜', '肌肉痙攣・心律不整', '補充劑過量 → 腹瀉', '400–420／310–320 mg'],
-      ['硫', 'S', '含硫胺基酸（甲硫、半胱）的成分・蛋白質結構', '蛋白質食物', '蛋白質足夠就不會缺乏', '—', '無 DRI']] },
+      ['鈉', 'Na', '[[細胞外液]]主要陽離子・水分平衡・神經傳導', '食鹽、醬料、[[加工食品]]', '罕見（大量流汗、嘔吐腹瀉）→ 低血鈉', '!!高血壓!!（鹽敏感者）', 'AI 1500 mg；建議 < 2300 mg',
+        '1 g 鹽約含 400 mg 鈉（鈉 × 2.5 ＝ 鹽）\n飲食中的鈉大多來自加工食品與外食，不是自己加的鹽'],
+      ['鉀', 'K', '[[細胞內液]]主要陽離子・神經肌肉・心跳', '蔬菜、水果、豆類、乳品、馬鈴薯', '低血鉀 → 心律不整（利尿劑、嘔吐）', '!!高血鉀（腎臟病）→ 心臟停止!!', '3400／2600 mg（AI）',
+        '高鉀低鈉的飲食有助降血壓（得舒飲食）\n腎功能不佳者要限鉀'],
+      ['氯', 'Cl', '細胞外液陰離子・[[胃酸]]成分', '食鹽', '罕見', '高血壓（隨鈉）', '2300 mg（AI）',
+        '大量嘔吐流失胃酸 → 氯不足'],
+      ['鈣', 'Ca', '[[骨骼牙齒]]・肌肉收縮・凝血・神經傳導', '乳品、小魚乾、板豆腐、深綠色蔬菜', '[[骨質疏鬆]]・兒童生長受影響', '便秘・腎結石・!!干擾鐵鋅吸收!!', '1000 mg',
+        '體內約 99% 在骨骼\n血鈣調節：[[副甲狀腺素]]、[[降鈣素]]、活化型維生素 D\n促進吸收：維生素 D；抑制：草酸（菠菜）、植酸\n骨質量約在 30 歲前後達到高峰'],
+      ['磷', 'P', '骨骼牙齒・[[ATP]]・DNA・磷脂質・酸鹼緩衝', '乳品、肉類、加工食品（磷酸鹽添加物）、可樂', '罕見', '!!腎臟病時高血磷 → 骨病變!!', '700 mg',
+        '分布很廣，一般飲食不易缺乏；加工食品的磷吸收率高'],
+      ['鎂', 'Mg', '300 多種酵素輔因子・骨骼・神經肌肉', '全穀、堅果、豆類、[[深綠色蔬菜]]', '肌肉痙攣・心律不整', '補充劑過量 → 腹瀉', '400–420／310–320 mg',
+        '鎂位於葉綠素的中心，所以綠色蔬菜含量多\n利尿劑、酗酒會增加流失'],
+      ['硫', 'S', '含硫胺基酸（甲硫、半胱）的成分・蛋白質結構', '蛋白質食物', '蛋白質足夠就不會缺乏', '—', '無 DRI',
+        '也存在於維生素 B1、生物素與穀胱甘肽']] },
     { g: '微量', d: '每日需要量 100 mg 以下', items: [
-      ['鐵', 'Fe', '血紅素、肌紅素運氧・能量代謝酵素', '血基質鐵：紅肉、肝（吸收好）\n非血基質鐵：深綠色蔬菜、豆類（搭配維生素 C）', '缺鐵性貧血（最常見的營養缺乏）', '血鐵沉積症・兒童誤食補充劑中毒', '8／18 mg（女 19–50 歲）'],
-      ['鋅', 'Zn', '酵素輔因子・生長・免疫・傷口癒合・味覺', '牡蠣、紅肉、海鮮、全穀', '生長遲緩・味覺下降・傷口癒合慢・皮膚炎', '抑制銅吸收', '11／8 mg'],
-      ['銅', 'Cu', '鐵代謝・膠原蛋白・抗氧化酵素', '內臟、海鮮、堅果、全穀', '貧血・白血球減少', '肝損傷（威爾森氏症為遺傳性銅堆積）', '900 μg'],
-      ['碘', 'I', '甲狀腺素合成，調節代謝', '碘鹽、海帶、紫菜、海鮮', '甲狀腺腫・孕期缺乏 → 呆小症（克汀症）', '甲狀腺功能異常', '150 μg'],
-      ['硒', 'Se', '抗氧化酵素（穀胱甘肽過氧化酶）・甲狀腺代謝', '海鮮、肉類、全穀（依土壤含量）', '克山病（心肌病變）', '硒中毒：掉髮、指甲變脆', '55 μg'],
-      ['氟', 'F', '強化牙齒琺瑯質、預防齲齒', '含氟水、茶、海鮮、含氟牙膏', '齲齒', '氟斑牙・骨骼氟中毒', '4／3 mg（AI）'],
-      ['鉻', 'Cr', '加強胰島素作用', '全穀、肉類、蛋黃、啤酒酵母', '葡萄糖耐受不良', '無已知毒性', '35／25 μg（AI）'],
-      ['錳', 'Mn', '酵素輔因子・骨骼形成', '全穀、堅果、茶、豆類', '罕見', '神經症狀（多為職業暴露）', '2.3／1.8 mg（AI）'],
-      ['鉬', 'Mo', '含硫胺基酸代謝酵素輔因子', '豆類、全穀、堅果', '罕見', '罕見', '45 μg']] }] }
+      ['鐵', 'Fe', '[[血紅素]]、肌紅素運氧・能量代謝酵素', '[[血基質鐵]]：紅肉、肝（吸收好）\n[[非血基質鐵]]：深綠色蔬菜、豆類（搭配維生素 C）', '[[缺鐵性貧血]]（最常見的營養缺乏）', '血鐵沉積症・!!兒童誤食補充劑中毒!!', '8／18 mg（女 19–50 歲）',
+        '促進吸收：維生素 C、肉類；抑制：植酸、草酸、茶與咖啡的多酚、鈣\n儲存：[[儲鐵蛋白]]（ferritin，評估鐵儲存）；運送：運鐵蛋白\n缺鐵三階段：儲存減少 → 運送減少 → 貧血'],
+      ['鋅', 'Zn', '酵素輔因子・生長・[[免疫]]・傷口癒合・[[味覺]]', '[[牡蠣]]、紅肉、海鮮、全穀', '生長遲緩・味覺下降・傷口癒合慢・皮膚炎', '!!抑制銅吸收!!', '11／8 mg',
+        '植酸會抑制吸收 → 以穀類為主、少吃肉者較易缺乏'],
+      ['銅', 'Cu', '鐵代謝・膠原蛋白・抗氧化酵素', '內臟、海鮮、堅果、全穀', '貧血・白血球減少', '肝損傷（[[威爾森氏症]]為遺傳性銅堆積）', '900 μg',
+        '銅藍蛋白協助鐵的運送，所以缺銅也會貧血'],
+      ['碘', 'I', '[[甲狀腺素]]合成，調節代謝', '[[碘鹽]]、海帶、紫菜、海鮮', '[[甲狀腺腫]]・孕期缺乏 → [[呆小症]]（克汀症）', '甲狀腺功能異常', '150 μg',
+        '台灣食鹽加碘；少吃海產又不用碘鹽者需注意'],
+      ['硒', 'Se', '抗氧化酵素（穀胱甘肽過氧化酶）・甲狀腺代謝', '海鮮、肉類、全穀（依土壤含量）', '[[克山病]]（心肌病變）', '!!硒中毒!!：掉髮、指甲變脆', '55 μg',
+        '與維生素 E 合作抗氧化'],
+      ['氟', 'F', '強化牙齒琺瑯質、預防[[齲齒]]', '含氟水、茶、海鮮、含氟牙膏', '齲齒', '!!氟斑牙!!・骨骼氟中毒', '4／3 mg（AI）',
+        '兒童使用含氟牙膏的量要控制，避免吞下過多'],
+      ['鉻', 'Cr', '加強[[胰島素]]作用', '全穀、肉類、蛋黃、啤酒酵母', '葡萄糖耐受不良', '無已知毒性', '35／25 μg（AI）',
+        '精製食品含量低'],
+      ['錳', 'Mn', '酵素輔因子・骨骼形成', '全穀、堅果、茶、豆類', '罕見', '神經症狀（多為職業暴露）', '2.3／1.8 mg（AI）', ''],
+      ['鉬', 'Mo', '含硫胺基酸代謝酵素輔因子', '豆類、全穀、堅果', '罕見', '罕見', '45 μg', '']] }] }
 };
+var GLO_CATS = ['基礎', '消化吸收', '醣類', '脂質', '蛋白質', '能量代謝', '維生素', '礦物質', '水分'];
+var GLO = [
+  ['基礎', '營養素', 'nutrient'], ['基礎', '必需營養素', 'essential nutrient'], ['基礎', '巨量營養素', 'macronutrient'], ['基礎', '微量營養素', 'micronutrient'],
+  ['基礎', '熱量；能量', 'energy; calorie'], ['基礎', '大卡', 'kilocalorie (kcal)'], ['基礎', '膳食營養素參考攝取量', 'Dietary Reference Intakes (DRIs)'],
+  ['基礎', '平均需要量', 'Estimated Average Requirement (EAR)'], ['基礎', '建議攝取量', 'Recommended Dietary Allowance (RDA)'], ['基礎', '足夠攝取量', 'Adequate Intake (AI)'],
+  ['基礎', '上限攝取量', 'Tolerable Upper Intake Level (UL)'], ['基礎', '巨量營養素可接受範圍', 'Acceptable Macronutrient Distribution Range (AMDR)'],
+  ['基礎', '估計能量需要量', 'Estimated Energy Requirement (EER)'], ['基礎', '營養素密度', 'nutrient density'], ['基礎', '能量密度', 'energy density'],
+  ['基礎', '植化素', 'phytochemical'], ['基礎', '機能性食品', 'functional food'], ['基礎', '營養不良', 'malnutrition'], ['基礎', '營養不足', 'undernutrition'], ['基礎', '營養過剩', 'overnutrition'],
+  ['消化吸收', '消化', 'digestion'], ['消化吸收', '吸收', 'absorption'], ['消化吸收', '酵素', 'enzyme'], ['消化吸收', '唾液澱粉酶', 'salivary amylase'],
+  ['消化吸收', '胃蛋白酶', 'pepsin'], ['消化吸收', '胰澱粉酶', 'pancreatic amylase'], ['消化吸收', '胰脂解酶', 'pancreatic lipase'], ['消化吸收', '胰蛋白酶', 'trypsin'],
+  ['消化吸收', '胰凝乳蛋白酶', 'chymotrypsin'], ['消化吸收', '膽汁', 'bile'], ['消化吸收', '乳化作用', 'emulsification'], ['消化吸收', '微膠粒', 'micelle'],
+  ['消化吸收', '刷狀緣', 'brush border'], ['消化吸收', '絨毛', 'villi'], ['消化吸收', '門靜脈', 'portal vein'], ['消化吸收', '淋巴系統', 'lymphatic system'],
+  ['消化吸收', '迴腸', 'ileum'], ['消化吸收', '益生菌', 'probiotics'], ['消化吸收', '益生質', 'prebiotics'],
+  ['醣類', '醣類；碳水化合物', 'carbohydrate'], ['醣類', '單醣', 'monosaccharide'], ['醣類', '雙醣', 'disaccharide'], ['醣類', '寡醣', 'oligosaccharide'], ['醣類', '多醣', 'polysaccharide'],
+  ['醣類', '葡萄糖', 'glucose'], ['醣類', '果糖', 'fructose'], ['醣類', '半乳糖', 'galactose'], ['醣類', '蔗糖', 'sucrose'], ['醣類', '乳糖', 'lactose'], ['醣類', '麥芽糖', 'maltose'],
+  ['醣類', '棉子糖', 'raffinose'], ['醣類', '水蘇糖', 'stachyose'], ['醣類', '澱粉', 'starch'], ['醣類', '直鏈澱粉', 'amylose'], ['醣類', '支鏈澱粉', 'amylopectin'], ['醣類', '肝醣', 'glycogen'],
+  ['醣類', '膳食纖維', 'dietary fiber'], ['醣類', '水溶性纖維', 'soluble fiber'], ['醣類', '非水溶性纖維', 'insoluble fiber'], ['醣類', '纖維素', 'cellulose'],
+  ['醣類', '半纖維素', 'hemicellulose'], ['醣類', '木質素', 'lignin'], ['醣類', '果膠', 'pectin'], ['醣類', '樹膠', 'gum'], ['醣類', 'β-聚葡萄醣', 'beta-glucan'],
+  ['醣類', '乳糖酶', 'lactase'], ['醣類', '乳糖不耐症', 'lactose intolerance'], ['醣類', '升糖指數', 'glycemic index (GI)'], ['醣類', '升糖負荷', 'glycemic load (GL)'],
+  ['醣類', '胰島素', 'insulin'], ['醣類', '升糖素', 'glucagon'], ['醣類', '醣質新生', 'gluconeogenesis'], ['醣類', '酮體', 'ketone bodies'], ['醣類', '酮症', 'ketosis'],
+  ['醣類', '糖醇', 'sugar alcohol'], ['醣類', '非營養性甜味劑', 'nonnutritive sweetener'], ['醣類', '阿斯巴甜', 'aspartame'], ['醣類', '添加糖', 'added sugar'],
+  ['醣類', '糖尿病', 'diabetes mellitus'], ['醣類', '齲齒', 'dental caries'],
+  ['脂質', '脂質', 'lipid'], ['脂質', '三酸甘油酯', 'triglyceride'], ['脂質', '磷脂質', 'phospholipid'], ['脂質', '卵磷脂', 'lecithin'], ['脂質', '固醇', 'sterol'], ['脂質', '膽固醇', 'cholesterol'],
+  ['脂質', '脂肪酸', 'fatty acid'], ['脂質', '飽和脂肪酸', 'saturated fatty acid'], ['脂質', '單元不飽和脂肪酸', 'monounsaturated fatty acid (MUFA)'],
+  ['脂質', '多元不飽和脂肪酸', 'polyunsaturated fatty acid (PUFA)'], ['脂質', '反式脂肪酸', 'trans fatty acid'], ['脂質', '必需脂肪酸', 'essential fatty acid'],
+  ['脂質', '亞麻油酸', 'linoleic acid'], ['脂質', 'α-次亞麻油酸', 'alpha-linolenic acid'], ['脂質', '二十碳五烯酸', 'eicosapentaenoic acid (EPA)'],
+  ['脂質', '二十二碳六烯酸', 'docosahexaenoic acid (DHA)'], ['脂質', '花生四烯酸', 'arachidonic acid'], ['脂質', '類花生酸', 'eicosanoids'],
+  ['脂質', '中鏈三酸甘油酯', 'medium-chain triglyceride (MCT)'], ['脂質', '脂蛋白', 'lipoprotein'], ['脂質', '乳糜微粒', 'chylomicron'],
+  ['脂質', '極低密度脂蛋白', 'very-low-density lipoprotein (VLDL)'], ['脂質', '低密度脂蛋白', 'low-density lipoprotein (LDL)'], ['脂質', '高密度脂蛋白', 'high-density lipoprotein (HDL)'],
+  ['脂質', '氫化', 'hydrogenation'], ['脂質', '酸敗', 'rancidity'], ['脂質', '動脈粥狀硬化', 'atherosclerosis'], ['脂質', '心血管疾病', 'cardiovascular disease (CVD)'],
+  ['脂質', '地中海飲食', 'Mediterranean diet'],
+  ['蛋白質', '蛋白質', 'protein'], ['蛋白質', '胺基酸', 'amino acid'], ['蛋白質', '必需胺基酸', 'essential (indispensable) amino acid'], ['蛋白質', '非必需胺基酸', 'nonessential (dispensable) amino acid'],
+  ['蛋白質', '條件性必需胺基酸', 'conditionally essential amino acid'], ['蛋白質', '胜肽鍵', 'peptide bond'], ['蛋白質', '變性', 'denaturation'],
+  ['蛋白質', '完全蛋白質', 'complete protein'], ['蛋白質', '不完全蛋白質', 'incomplete protein'], ['蛋白質', '互補蛋白質', 'complementary proteins'], ['蛋白質', '限制胺基酸', 'limiting amino acid'],
+  ['蛋白質', '生物價', 'biological value (BV)'], ['蛋白質', '蛋白質消化率校正胺基酸分數', 'protein digestibility corrected amino acid score (PDCAAS)'],
+  ['蛋白質', '氮平衡', 'nitrogen balance'], ['蛋白質', '脫胺作用', 'deamination'], ['蛋白質', '轉胺作用', 'transamination'], ['蛋白質', '尿素', 'urea'], ['蛋白質', '尿素循環', 'urea cycle'],
+  ['蛋白質', '胺基酸池', 'amino acid pool'], ['蛋白質', '蛋白質周轉', 'protein turnover'], ['蛋白質', '蛋白質熱量營養不良', 'protein-energy malnutrition (PEM)'],
+  ['蛋白質', '紅孩兒症（瓜西奧科）', 'kwashiorkor'], ['蛋白質', '消瘦症', 'marasmus'], ['蛋白質', '肌少症', 'sarcopenia'], ['蛋白質', '苯酮尿症', 'phenylketonuria (PKU)'], ['蛋白質', '食物過敏', 'food allergy'],
+  ['蛋白質', '組胺酸', 'histidine'], ['蛋白質', '異白胺酸', 'isoleucine'], ['蛋白質', '白胺酸', 'leucine'], ['蛋白質', '離胺酸', 'lysine'], ['蛋白質', '甲硫胺酸', 'methionine'],
+  ['蛋白質', '苯丙胺酸', 'phenylalanine'], ['蛋白質', '羥丁胺酸（蘇胺酸）', 'threonine'], ['蛋白質', '色胺酸', 'tryptophan'], ['蛋白質', '纈胺酸', 'valine'], ['蛋白質', '酪胺酸', 'tyrosine'],
+  ['能量代謝', '代謝', 'metabolism'], ['能量代謝', '三磷酸腺苷', 'adenosine triphosphate (ATP)'], ['能量代謝', '糖解作用', 'glycolysis'], ['能量代謝', '丙酮酸', 'pyruvate'],
+  ['能量代謝', '乳酸', 'lactate'], ['能量代謝', '乙醯輔酶 A', 'acetyl-CoA'], ['能量代謝', '檸檬酸循環', 'citric acid cycle (TCA cycle)'], ['能量代謝', '電子傳遞鏈', 'electron transport chain'],
+  ['能量代謝', 'β-氧化', 'beta-oxidation'], ['能量代謝', '基礎代謝率', 'basal metabolic rate (BMR)'],
+  ['維生素', '維生素', 'vitamin'], ['維生素', '脂溶性維生素', 'fat-soluble vitamin'], ['維生素', '水溶性維生素', 'water-soluble vitamin'], ['維生素', '輔酶', 'coenzyme'],
+  ['維生素', '抗氧化劑', 'antioxidant'], ['維生素', '自由基', 'free radical'], ['維生素', '維生素前驅物', 'provitamin'], ['維生素', '視網醇', 'retinol'],
+  ['維生素', 'β-胡蘿蔔素', 'beta-carotene'], ['維生素', '類胡蘿蔔素', 'carotenoids'], ['維生素', '視網醇活性當量', 'retinol activity equivalent (RAE)'], ['維生素', '視紫質', 'rhodopsin'],
+  ['維生素', '夜盲症', 'night blindness'], ['維生素', '乾眼症', 'xerophthalmia'], ['維生素', '鈣化醇', 'calciferol'], ['維生素', '膽鈣化醇（D3）', 'cholecalciferol'],
+  ['維生素', '佝僂症', 'rickets'], ['維生素', '骨質軟化症', 'osteomalacia'], ['維生素', '生育醇', 'tocopherol'], ['維生素', '溶血性貧血', 'hemolytic anemia'],
+  ['維生素', '葉綠醌（K1）', 'phylloquinone'], ['維生素', '甲萘醌（K2）', 'menaquinone'], ['維生素', '凝血', 'blood clotting (coagulation)'],
+  ['維生素', '硫胺（B1）', 'thiamin'], ['維生素', '腳氣病', 'beriberi'], ['維生素', '魏尼凱-高沙可夫症候群', 'Wernicke-Korsakoff syndrome'], ['維生素', '核黃素（B2）', 'riboflavin'],
+  ['維生素', '菸鹼素', 'niacin'], ['維生素', '菸鹼素當量', 'niacin equivalent (NE)'], ['維生素', '癩皮病', 'pellagra'], ['維生素', '泛酸', 'pantothenic acid'],
+  ['維生素', '生物素', 'biotin'], ['維生素', '抗生物素蛋白', 'avidin'], ['維生素', '吡哆醇（B6）', 'pyridoxine'], ['維生素', '葉酸', 'folate; folic acid'],
+  ['維生素', '膳食葉酸當量', 'dietary folate equivalent (DFE)'], ['維生素', '巨球性貧血', 'megaloblastic (macrocytic) anemia'], ['維生素', '神經管缺陷', 'neural tube defect'],
+  ['維生素', '鈷胺素（B12）', 'cobalamin'], ['維生素', '內在因子', 'intrinsic factor'], ['維生素', '惡性貧血', 'pernicious anemia'], ['維生素', '萎縮性胃炎', 'atrophic gastritis'],
+  ['維生素', '抗壞血酸（C）', 'ascorbic acid'], ['維生素', '壞血病', 'scurvy'], ['維生素', '膠原蛋白', 'collagen'], ['維生素', '膽素', 'choline'], ['維生素', '乙醯膽鹼', 'acetylcholine'],
+  ['礦物質', '礦物質', 'mineral'], ['礦物質', '巨量礦物質', 'major mineral'], ['礦物質', '微量礦物質', 'trace mineral'], ['礦物質', '生物利用率', 'bioavailability'],
+  ['礦物質', '植酸', 'phytic acid (phytate)'], ['礦物質', '草酸', 'oxalic acid (oxalate)'], ['礦物質', '鈉', 'sodium'], ['礦物質', '鉀', 'potassium'], ['礦物質', '氯', 'chloride'],
+  ['礦物質', '鈣', 'calcium'], ['礦物質', '磷', 'phosphorus'], ['礦物質', '鎂', 'magnesium'], ['礦物質', '硫', 'sulfur'], ['礦物質', '鐵', 'iron'], ['礦物質', '鋅', 'zinc'],
+  ['礦物質', '銅', 'copper'], ['礦物質', '碘', 'iodine'], ['礦物質', '硒', 'selenium'], ['礦物質', '氟', 'fluoride'], ['礦物質', '鉻', 'chromium'], ['礦物質', '錳', 'manganese'], ['礦物質', '鉬', 'molybdenum'],
+  ['礦物質', '骨質疏鬆症', 'osteoporosis'], ['礦物質', '骨質密度', 'bone mineral density'], ['礦物質', '副甲狀腺素', 'parathyroid hormone (PTH)'], ['礦物質', '降鈣素', 'calcitonin'],
+  ['礦物質', '高血壓', 'hypertension'], ['礦物質', '得舒飲食', 'DASH diet'], ['礦物質', '血紅素', 'hemoglobin'], ['礦物質', '肌紅素', 'myoglobin'],
+  ['礦物質', '血基質鐵', 'heme iron'], ['礦物質', '非血基質鐵', 'nonheme iron'], ['礦物質', '儲鐵蛋白', 'ferritin'], ['礦物質', '運鐵蛋白', 'transferrin'],
+  ['礦物質', '缺鐵性貧血', 'iron-deficiency anemia'], ['礦物質', '血鐵沉積症', 'hemochromatosis'], ['礦物質', '甲狀腺素', 'thyroxine'], ['礦物質', '甲狀腺腫', 'goiter'],
+  ['礦物質', '呆小症（克汀症）', 'cretinism'], ['礦物質', '克山病', 'Keshan disease'], ['礦物質', '穀胱甘肽過氧化酶', 'glutathione peroxidase'], ['礦物質', '銅藍蛋白', 'ceruloplasmin'],
+  ['礦物質', '威爾森氏症', "Wilson's disease"], ['礦物質', '氟斑牙', 'dental fluorosis'],
+  ['水分', '水', 'water'], ['水分', '細胞內液', 'intracellular fluid'], ['水分', '細胞外液', 'extracellular fluid'], ['水分', '電解質', 'electrolyte'],
+  ['水分', '滲透作用', 'osmosis'], ['水分', '鈉鉀幫浦', 'sodium-potassium pump'], ['水分', '抗利尿激素', 'antidiuretic hormone (ADH)'], ['水分', '代謝水', 'metabolic water'],
+  ['水分', '脫水', 'dehydration'], ['水分', '水中毒', 'water intoxication'], ['水分', '低血鈉', 'hyponatremia'], ['水分', '利尿劑', 'diuretic']
+];
+var gloState = { q: '', cat: '' };
+function gloView() {
+  var h = '<input class="search" id="gq" type="search" placeholder="搜尋中文或英文，例如：肝醣、glycogen" value="' + esc(gloState.q) + '">' +
+    '<div class="chips" id="gc">' + [''].concat(GLO_CATS).map(function (c) { return '<button type="button" data-c="' + c + '" class="' + (c === gloState.cat ? 'on' : '') + '">' + (c || '全部') + '</button>'; }).join('') + '</div>' +
+    '<div id="gl"></div>';
+  return h;
+}
+function gloList() {
+  var q = gloState.q.toLowerCase(), list = GLO.filter(function (g) { return (!gloState.cat || g[0] === gloState.cat) && (!q || (g[1] + ' ' + g[2]).toLowerCase().indexOf(q) >= 0); });
+  var h = '<div class="small muted" style="margin:10px 2px 0">' + list.length + ' 個名詞</div>';
+  if (!list.length) { $('gl').innerHTML = h + '<div class="card"><div class="empty">找不到「' + esc(gloState.q) + '」</div></div>'; return; }
+  var cats = GLO_CATS.filter(function (c) { return list.some(function (g) { return g[0] === c; }); });
+  h += cats.map(function (c) {
+    return '<div class="card pad"><h2>' + c + '</h2><table class="glo">' + list.filter(function (g) { return g[0] === c; }).map(function (g) { return '<tr><td class="zh">' + esc(g[1]) + '</td><td class="en" lang="en">' + esc(g[2]) + '</td></tr>'; }).join('') + '</table></div>';
+  }).join('');
+  $('gl').innerHTML = h;
+}
+function gloBind() {
+  $('gq').oninput = function () { gloState.q = this.value.trim(); gloList(); };
+  $('gc').querySelectorAll('button').forEach(function (b) { b.onclick = function () { gloState.cat = b.getAttribute('data-c'); $('gc').querySelectorAll('button').forEach(function (x) { x.classList.toggle('on', x === b); }); gloList(); }; });
+  gloList();
+}
 var MICRO_KEYS = ['功能', '食物來源', '缺乏', '毒性', '成人需求'];
 var nuSel = 'all', nuGroup = { vit: 0, min: 0 };
 
@@ -252,8 +409,14 @@ function nuMenu() {
   $('nm').querySelectorAll('button').forEach(function (b) { b.onclick = function () { nuSel = b.getAttribute('data-k'); nuMenu(); nuShow(); window.scrollTo(0, 0); }; });
 }
 function viewNutrition() { nuMenu(); nuShow(); }
-function br(s) { return esc(s).replace(/\n/g, '<br>'); }
-function kvTable(rows) { return '<table class="kvt">' + rows.map(function (r) { return '<tr><th>' + esc(r[0]) + '</th><td>' + br(r[1]) + '</td></tr>'; }).join('') + '</table>'; }
+var NUM_RE = /(^|[^A-Za-z0-9.ωα-])(\d+(?:\.\d+)?(?:\s*[–～\/／-]\s*\d+(?:\.\d+)?)*\s*(?:大卡|kcal|mg|μg|g|%|L|IU|公克|毫克|毫升|公斤|歲|種)(?:\s*(?:RAE|DFE|NE))?)/g;
+function mk(s) {
+  return esc(s).replace(/\[\[(.+?)\]\]/g, '<mark>$1</mark>').replace(/!!(.+?)!!/g, '<em class="warn">$1</em>').replace(NUM_RE, '$1<b class="num">$2</b>');
+}
+function plain(s) { return String(s).replace(/\[\[(.+?)\]\]/g, '$1').replace(/!!(.+?)!!/g, '$1'); }
+function br(s) { return mk(s).replace(/\n/g, '<br>'); }
+var LEGEND = '<div class="lgd"><mark>必背</mark><b class="num">數值</b><em class="warn">注意</em></div>';
+function kvTable(rows) { return '<table class="kvt">' + rows.map(function (r) { return '<tr><th>' + mk(r[0]) + '</th><td>' + br(r[1]) + '</td></tr>'; }).join('') + '</table>'; }
 function nuShow() {
   var h = '';
   if (nuSel === 'all') {
@@ -262,51 +425,62 @@ function nuShow() {
         ['維生素', '0', '輔酶、調節代謝', '蔬菜、水果、全穀、肉類'], ['礦物質', '0', '骨骼、體液平衡、神經肌肉', '乳品、肉類、蔬果'], ['水', '0', '溶劑、運輸、調節體溫', '飲水、湯、蔬果']]
         .map(function (r) { return '<tr><th><a href="#" data-k="' + { '醣類': 'carb', '脂質': 'fat', '蛋白質': 'pro', '維生素': 'vit', '礦物質': 'min', '水': 'water' }[r[0]] + '">' + r[0] + '</a></th><td class="c">' + r[1] + '</td><td>' + r[2] + '</td><td>' + r[3] + '</td></tr>'; }).join('') +
       '</table></div><div class="small muted" style="margin-top:6px">熱量單位：大卡／公克。酒精 7 大卡／公克，但不是營養素。點營養素名稱看重點表。</div></div>';
+    h += '<div class="card pad"><h2>顏色標記</h2>' + kvTable([['[[螢光底]]', '必背名詞：缺乏症名稱、關鍵分類、重要器官'], ['數值', '需求量、熱量等數字，例如 4 大卡、130 g（自動標示）'], ['!!紅字!!', '要特別注意：毒性、禁忌、高風險族群']]) +
+      '<div class="small muted" style="margin-top:6px">每張表底下的「深入補充」收著進階內容，需要時再點開。</div></div>';
     h += '<div class="card pad"><h2>分類速記</h2>' + kvTable([['巨量營養素', '醣類、脂質、蛋白質（需要量以公克計，產生熱量）＋水'], ['微量營養素', '維生素、礦物質（需要量以毫克、微克計，不產生熱量）'], ['有機', '醣類、脂質、蛋白質、維生素'], ['無機', '礦物質、水']]) + '</div>';
+  } else if (nuSel === 'glo') {
+    h += gloView();
   } else if (NU_MACRO[nuSel]) {
     var m = NU_MACRO[nuSel];
-    h += noteCard(nuSel, '<span class="sw" style="background:var(' + m.c + ')"></span>' + m.n, m.rows);
+    h += LEGEND + noteCard(nuSel, '<span class="sw" style="background:var(' + m.c + ')"></span>' + m.n, m.rows, null, m.deep);
   } else {
     var x = NU_MICRO[nuSel], gi = nuGroup[nuSel], grp = x.groups[gi];
     h += '<div class="seg" id="ng" style="margin-top:12px">' + x.groups.map(function (g, i) { return '<button type="button" class="' + (i === gi ? 'on' : '') + '" data-i="' + i + '">' + g.g + (x === NU_MICRO.vit ? '維生素' : '礦物質') + '</button>'; }).join('') + '</div>';
-    h += '<div class="small muted" style="margin:8px 2px 0">' + esc(grp.d) + '</div>';
+    h += '<div class="small muted" style="margin:8px 2px 0">' + br(grp.d) + '</div>' + LEGEND;
     h += '<div class="card pad"><h2>速記表</h2><div class="scroll"><table class="kvt wide"><tr><th>名稱</th><th>缺乏</th><th>毒性</th></tr>' +
       grp.items.map(function (it, i) { return '<tr><th><a href="#mi' + i + '" data-j="' + i + '">' + esc(it[0]) + '</a></th><td>' + br(it[4]) + '</td><td>' + br(it[5]) + '</td></tr>'; }).join('') + '</table></div></div>';
     h += grp.items.map(function (it, i) {
       return noteCard(nuSel + ':' + gi + ':' + i, '<span class="sw" style="background:var(' + x.c + ')"></span>' + esc(it[0]) + ' <span class="small muted" style="font-weight:400">' + esc(it[1]) + '</span>',
-        MICRO_KEYS.map(function (k, j) { return [k, it[2 + j]]; }), 'mi' + i);
+        MICRO_KEYS.map(function (k, j) { return [k, it[2 + j]]; }), 'mi' + i, it[7]);
     }).join('');
   }
-  if (NOTE_OK) h += backupCard();
-  if (nuSel !== 'all') h += '<p class="note">' + (NOTE_OK ? '點各表右上角「編輯」可以修改內容、新增項目，例如在「相關問題」加上自己的筆記。修改只存在這支手機的瀏覽器，換手機或清除瀏覽器資料會消失；隨時可按「恢復原本內容」。' : '這個瀏覽器無法儲存資料，修改內容的功能無法使用；請改用手機的 Chrome 或 Safari 開啟。') + '</p>';
+  if (NOTE_OK && nuSel !== 'glo') h += backupCard();
+  if (nuSel === 'glo') h += '<p class="note">名詞譯法採常見的營養學教科書用語，與《透視營養學》譯本可能略有不同，以課本為準。</p>';
+  if (nuSel !== 'all' && nuSel !== 'glo') h += '<p class="note">' + (NOTE_OK ? '點各表右上角「編輯」可以修改內容、新增項目，例如在「相關問題」加上自己的筆記。修改只存在這支手機的瀏覽器，換手機或清除瀏覽器資料會消失；隨時可按「恢復原本內容」。' : '這個瀏覽器無法儲存資料，修改內容的功能無法使用；請改用手機的 Chrome 或 Safari 開啟。') + '</p>';
   h += '<p class="note">依《透視營養學》（Wardlaw\'s Perspectives in Nutrition 12/e，蕭寧馨編譯）的章節架構整理成重點表。需求量為本書採用的美國 DRIs（成人，男／女）；國人 DRIs 請查衛生福利部國民健康署。</p>';
   $('main').innerHTML = h;
   document.querySelectorAll('[data-k]').forEach(function (a) { if (a.tagName === 'A') a.onclick = function (e) { e.preventDefault(); nuSel = a.getAttribute('data-k'); nuMenu(); nuShow(); window.scrollTo(0, 0); }; });
   document.querySelectorAll('a[data-j]').forEach(function (a) { a.onclick = function (e) { e.preventDefault(); var t = $('mi' + a.getAttribute('data-j')); if (t) window.scrollTo(0, t.getBoundingClientRect().top + window.pageYOffset - $('tools').parentNode.offsetHeight - 8); }; });
   if ($('ng')) $('ng').querySelectorAll('button').forEach(function (b) { b.onclick = function () { nuGroup[nuSel] = +b.getAttribute('data-i'); nuShow(); }; });
   if ($('kp')) { ['kp', 'kf', 'kc'].forEach(function (id) { $(id).oninput = kcalCalc; }); kcalCalc(); }
-  bindNotes(); bindBackup();
+  bindNotes(); bindBackup(); if (nuSel === 'glo') gloBind();
 }
 
 /* ---------- 個人筆記：每張表可修改、新增、刪除，存在這支手機的瀏覽器 ---------- */
-var NOTE_KEY = 'nutri-notes-v1', NOTE_OK = true, NOTES = {}, editing = null;
+var deepOpen = {}, NOTE_KEY = 'nutri-notes-v1', NOTE_OK = true, NOTES = {}, editing = null;
 try { NOTES = JSON.parse(localStorage.getItem(NOTE_KEY) || '{}') || {}; localStorage.setItem(NOTE_KEY + '-t', '1'); } catch (e) { NOTE_OK = false; NOTES = {}; }
 function saveNotes() { try { localStorage.setItem(NOTE_KEY, JSON.stringify(NOTES)); } catch (e) { NOTE_OK = false; } }
-function noteCard(key, title, def, id) {
+function noteCard(key, title, def, id, deep) {
   var rows = NOTES[key] || def, ed = editing === key, changed = !!NOTES[key];
   var h = '<div class="card pad" data-card="' + esc(key) + '"' + (id ? ' id="' + id + '"' : '') + '><div class="nh"><h2>' + title + (changed ? ' <span class="tag k">已修改</span>' : '') + '</h2>' +
     (NOTE_OK ? '<button type="button" class="ebtn" data-act="' + (ed ? 'done' : 'edit') + '">' + (ed ? '完成' : '編輯') + '</button>' : '') + '</div>';
   if (!ed) {
     h += '<table class="kvt">' + rows.map(function (r, i) {
       var d = def[i], mine = !d || d[0] !== r[0] || d[1] !== r[1];
-      return '<tr' + (changed && mine ? ' class="mine"' : '') + '><th>' + esc(r[0]) + '</th><td>' + br(r[1]) + '</td></tr>';
+      return '<tr' + (changed && mine ? ' class="mine"' : '') + '><th>' + mk(r[0]) + '</th><td>' + br(r[1]) + '</td></tr>';
     }).join('') + '</table>';
   } else {
     h += rows.map(function (r, i) {
       return '<div class="er" data-i="' + i + '"><div class="erh"><input class="el" value="' + esc(r[0]) + '" placeholder="項目名稱" aria-label="項目名稱">' +
         '<button type="button" class="ebtn del" data-act="del" data-i="' + i + '">刪除</button></div><textarea class="et" rows="3" placeholder="內容（可換行）" aria-label="內容">' + esc(r[1]) + '</textarea></div>';
     }).join('') +
+      '<div class="small muted" style="padding-top:8px">標記方式：<b>[[文字]]</b> 變螢光底、<b>!!文字!!</b> 變紅字；數值會自動變綠色。</div>' +
       '<div class="ebar"><button type="button" class="ebtn" data-act="add">＋ 新增項目</button>' + (changed ? '<button type="button" class="ebtn warn" data-act="reset">恢復原本內容</button>' : '') + '</div>';
+  }
+  if (deep && deep.length) {
+    var open = deepOpen[key] ? ' open' : '';
+    h += '<details class="deep" data-deep="' + esc(key) + '"' + open + '><summary>深入補充</summary>' +
+      (typeof deep === 'string' ? '<div class="dp">' + br(deep) + '</div>' : '<table class="kvt">' + deep.map(function (r) { return '<tr><th>' + mk(r[0]) + '</th><td>' + br(r[1]) + '</td></tr>'; }).join('') + '</table>') + '</details>';
   }
   return h + '</div>';
 }
@@ -337,7 +511,7 @@ function exportText() {
   var t = '【保健營養菜單研究室・營養學筆記備份】\n' + new Date().toLocaleString('zh-TW') + '\n\n';
   keys.forEach(function (k) {
     var def = defRows(k), mine = NOTES[k].filter(function (r, i) { return !def[i] || def[i][0] !== r[0] || def[i][1] !== r[1]; });
-    t += '■ ' + noteTitle(k) + '\n' + (mine.length ? mine.map(function (r) { return '・' + r[0] + '：' + String(r[1]).replace(/\n/g, '／'); }).join('\n') : '（刪除了部分項目）') + '\n\n';
+    t += '■ ' + noteTitle(k) + '\n' + (mine.length ? mine.map(function (r) { return '・' + r[0] + '：' + plain(r[1]).replace(/\n/g, '／'); }).join('\n') : '（刪除了部分項目）') + '\n\n';
   });
   var code = btoa(unescape(encodeURIComponent(JSON.stringify({ v: 1, notes: NOTES }))));
   return t + '----- 以下是備份碼，匯入時整段貼上即可 -----\n備份碼：' + code + '\n';
@@ -394,6 +568,7 @@ function bindBackup() {
 }
 function grow(t) { t.style.height = 'auto'; t.style.height = (t.scrollHeight + 2) + 'px'; }
 function bindNotes() {
+  document.querySelectorAll('details.deep').forEach(function (d) { d.ontoggle = function () { deepOpen[d.getAttribute('data-deep')] = d.open; }; });
   document.querySelectorAll('[data-card]').forEach(function (card) {
     var key = card.getAttribute('data-card');
     card.querySelectorAll('.el, .et').forEach(function (inp) { inp.oninput = function () { if (inp.tagName === 'TEXTAREA') grow(inp); storeCard(card); }; if (inp.tagName === 'TEXTAREA') grow(inp); });

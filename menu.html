@@ -140,6 +140,31 @@
   .nin { display: inline-flex; align-items: center; gap: 6px; } .nin input { width: 92px; border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 10px; padding: 7px 8px; font: inherit; font-size: 16px; text-align: right; }
   .nin span { font-size: 13px; color: var(--muted); }
   .pad2 { padding: 0 14px 12px; } .ebar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; padding-top: 10px; }
+  .wt-wrap { overflow-x: auto; margin: 12px -16px 0; padding: 0 16px; -webkit-overflow-scrolling: touch; }
+  table.wt { border-collapse: separate; border-spacing: 0; min-width: 760px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; font-size: 13px; }
+  .wt th, .wt td { border-bottom: 1px solid var(--line); border-left: 1px solid var(--line); padding: 6px 6px; vertical-align: top; text-align: left; }
+  .wt tr > :first-child { border-left: 0; }
+  .wt .stk { position: sticky; left: 0; z-index: 2; background: var(--card); min-width: 76px; max-width: 76px; font-size: 12px; color: var(--ink); font-weight: 700; box-shadow: 1px 0 0 var(--line); }
+  .wt th:not(.stk) { min-width: 132px; background: var(--brand-soft); }
+  .wt .dh { display: grid; gap: 2px; } .wt .dh span { color: var(--muted); font-weight: 400; font-size: 11px; } .wt .dh .badge { justify-self: start; }
+  .wt select { width: 100%; border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 8px; padding: 5px 4px; font: inherit; font-size: 14px; }
+  .wt .exl { margin-top: 5px; } .wt .stp button { width: 30px; height: 28px; font-size: 17px; } .wt .stp b { min-width: 34px; font-size: 13px; }
+  .wt .sv { font-size: 11px; color: var(--muted); margin-top: 3px; } .wt .sg { display: block; font-size: 11px; color: var(--brand); }
+  .wt td.edc { background: var(--warm); }
+  .wt td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .wt td.badc { background: var(--bad-soft); color: var(--bad); font-weight: 700; } .wt .jt { display: block; font-size: 11px; }
+  .wt .u { display: block; font-weight: 400; color: var(--muted); font-size: 11px; }
+  .wt tr.sec th, .wt tr.sec td { background: var(--chip); font-size: 12px; color: var(--muted); padding: 4px 6px; }
+  .wt tr:last-child > * { border-bottom: 0; }
+  .ebtn.sm { padding: 3px 8px; font-size: 12px; margin-top: 0; }
+  table.rt { min-width: 600px; } table.rt td { vertical-align: middle; } table.rt td.nm2 { font-weight: 600; white-space: nowrap; } table.rt td.ctl { white-space: nowrap; }
+  table.rt .stp button { width: 30px; height: 28px; font-size: 17px; } table.rt .stp b { min-width: 34px; font-size: 13px; }
+  table.rt tr.tot td { font-weight: 700; border-top: 2px solid var(--line); }
+  .editbox .scroll { margin: 0 -4px; }
+  .detail .editbox { margin: 0 -6px 12px; padding: 8px; }
+  main.wide { max-width: 1240px; }
+  @media (max-height: 520px) { header { position: static; } }
+  table.rt td.nm2 { position: sticky; left: 0; background: var(--chip); z-index: 1; }
   .bkt { width: 100%; margin-top: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 10px; padding: 8px 10px; font: inherit; font-size: 13px; }
 </style>
 </head>
@@ -348,7 +373,8 @@ function save() { try { localStorage.setItem(OV_KEY, JSON.stringify(OV)); } catc
 var RES = null;
 function recalc() { RES = ENGINE.build(MODEL, OV); }
 
-var S = { view: 'menu', week: 0, day: 0, buyTab: 'buy', cat: '主食', q: '', mq: '', mcat: '全部', open: {}, edit: {}, bk: '' };
+var S = { layout: 'table', view: 'menu', week: 0, day: 0, buyTab: 'buy', cat: '主食', q: '', mq: '', mcat: '全部', open: {}, edit: {}, bk: '' };
+try { var _l = localStorage.getItem('tuanshan-layout'); if (_l === 'card' || _l === 'table') S.layout = _l; } catch (e) {}
 (function () {
   var m = location.search.match(/[?&]page=([a-z]+)/), p = m ? m[1] : '';
   if (p === 'label') { S.view = 'buy'; S.buyTab = 'label'; }
@@ -389,6 +415,7 @@ function render() {
   Array.prototype.forEach.call(document.querySelectorAll('#tabbar button'), function (b) { b.className = (b.dataset.v === S.view || (sub && b.dataset.v === 'more')) ? 'on' : ''; });
   var h = '';
   if (S.view === 'menu' || S.view === 'summary' || S.view === 'settings') h = WEEKCHIPS();
+  if (S.view === 'menu') h += '<div class="seg"><button class="' + (S.layout === 'table' ? 'on' : '') + '" data-lay="table">週表格（可直接修改）</button><button class="' + (S.layout === 'card' ? 'on' : '') + '" data-lay="card">逐日卡片</button></div>';
   if (S.view === 'buy') h = WEEKCHIPS() + chips([[0, '週一'], [1, '週二'], [2, '週三'], [3, '週四'], [4, '週五']], S.day, 'd') +
     '<div class="seg"><button class="' + (S.buyTab === 'buy' ? 'on' : '') + '" data-bt="buy">採購單</button><button class="' + (S.buyTab === 'label' ? 'on' : '') + '" data-bt="label">營養標示</button></div>';
   if (S.view === 'recipes') h = chips(TABS.map(function (t) { return [t, t]; }), S.cat, 'cat') + '<input class="search" id="q" type="search" placeholder="搜尋菜名或材料" value="' + esc(S.q) + '">';
@@ -401,7 +428,7 @@ function render() {
 }
 function renderMain() {
   var v = S.view, h = '';
-  if (v === 'menu') h = renderWeek();
+  if (v === 'menu') h = S.layout === 'table' ? renderWeekTable() : renderWeek();
   else if (v === 'check') h = renderCheck();
   else if (v === 'buy') h = S.buyTab === 'buy' ? renderBuy() : renderLabel();
   else if (v === 'recipes') h = renderRecipes();
@@ -415,6 +442,7 @@ function renderMain() {
   else if (v === 'mine') h = renderMine();
   if (!CAN_SAVE) h = '<div class="warnbox">這個瀏覽器無法儲存資料，修改在關閉頁面後會消失。請改用手機的 Chrome 或 Safari 開啟。</div>' + h;
   $('main').innerHTML = h;
+  $('main').className = (v === 'menu' && S.layout === 'table') ? 'wide' : '';
 }
 
 /* ---------- 週菜單（含編輯） ---------- */
@@ -466,6 +494,43 @@ function renderWeek() {
       '<div class="dishes">' + dishes + '</div>' + flags + '<div class="stats">' + stats + '</div><div class="six">' + six + '</div>' +
       '<div class="btn2"><button class="more" data-open="' + key + '">' + (open ? '收起明細' : '看食材與克數') + '</button><button class="more" data-edit="' + key + '">' + (ed ? '完成' : '調整這天') + '</button></div>' + detail + '</section>';
   }).join('') + '<p class="note">份數「-」表示 0 或調味料。每人克數為可食生重。按「調整這天」可以換菜、改設計EX，修改只存在這支手機。</p>';
+}
+
+/* ---------- 週表格：5 天並排，直接修改 ---------- */
+function renderWeekTable() {
+  var ds = RES.days.slice(S.week * 5, S.week * 5 + 5), wd = ['週一', '週二', '週三', '週四', '週五'];
+  var head = '<tr><th class="stk">項目</th>' + ds.map(function (d, j) {
+    return '<th><div class="dh"><b>' + wd[j] + '</b><span>第 ' + d.cycleDay + ' 天' + (d.veggieDay ? '・蔬食' : '') + '</span>' + badge(d.verdict) + '</div></th>'; }).join('') + '</tr>';
+  var slotRows = ENGINE.SLOTS.map(function (lab, k) {
+    return '<tr class="sl"><th class="stk">' + lab + '</th>' + ds.map(function (d) {
+      var s = d.slots[k], sug = isNum(s.suggestEx) ? '<span class="sg">建議 ' + f1(s.suggestEx) + '</span>' : '';
+      return '<td class="' + (s.edited ? 'edc' : '') + '"><select data-dish="' + d.i + '-' + k + '" aria-label="第' + d.cycleDay + '天' + lab + '">' + dishOptions(k, s.dish) + '</select>' +
+        '<div class="exl">' + stepper('m' + d.i + '-' + k, s.designEx, 0.5, s.dish ? '' : ' disabled') + '</div>' +
+        '<div class="sv">供應 ' + exs(s.serveEx) + ' EX' + (k === 4 && s.type ? '・' + esc(s.type) : '') + '</div>' + sug + (s.over ? '<div class="bad-t small">材料超過列數</div>' : '') + '</td>';
+    }).join('') + '</tr>';
+  }).join('');
+  var M = function (lab, f, jf, unit) {
+    return '<tr><th class="stk">' + lab + (unit ? '<span class="u">' + unit + '</span>' : '') + '</th>' + ds.map(function (d) {
+      var j = jf ? jf(d) : ''; return '<td class="num' + (j && j !== '符合' ? ' badc' : '') + '">' + f(d) + (j && j !== '符合' ? '<span class="jt">' + esc(j) + '</span>' : '') + '</td>'; }).join('') + '</tr>';
+  };
+  var sec = function (t) { return '<tr class="sec"><th class="stk">' + t + '</th><td colspan="5"></td></tr>'; };
+  var rows = sec('營養素') +
+    M('熱量', function (d) { return f1(d.kcal); }, function (d) { return d.judge.kcal; }, '大卡') +
+    M('蛋白質 P', function (d) { return f1(d.p); }, null, 'g') + M('脂肪 F', function (d) { return f1(d.f); }, null, 'g') + M('醣類 C', function (d) { return f1(d.c); }, null, 'g') +
+    M('P%', function (d) { return pc(d.pPct); }) + M('F%', function (d) { return pc(d.fPct); }, function (d) { return d.judge.fat; }) + M('C%', function (d) { return pc(d.cPct); }) +
+    sec('六大類份數') +
+    M('全榖', function (d) { return f1(d.six.全榖); }, function (d) { return d.judge.grain; }, 'EX') + M('豆魚蛋肉', function (d) { return f1(d.six.豆魚蛋肉); }, function (d) { return d.judge.pm; }, 'EX') +
+    M('乳品', function (d) { return f1(d.six.乳品); }, null, 'EX') + M('蔬菜', function (d) { return f1(d.six.蔬菜); }, function (d) { return d.judge.veg; }, 'EX') +
+    M('水果', function (d) { return f1(d.six.水果); }, null, 'EX') + M('油脂堅果', function (d) { return f1(d.six.油脂堅果); }, function (d) { return d.judge.oil; }, 'EX') +
+    sec('檢核指標') +
+    M('未精製占比', function (d) { return pc(d.unref); }, function (d) { return d.judge.unref; }) + M('深色蔬菜', function (d) { return f1(d.idx.深色); }, function (d) { return d.judge.dark; }, 'EX') +
+    M('豆製品', function (d) { return f1(d.idx.豆); }, null, 'EX') + M('魚海鮮', function (d) { return f1(d.idx.魚); }, null, 'EX') + M('油炸', function (d) { return d.fried ? '有' : '無'; }) +
+    M('湯固形物', function (d) { return d.soup === null ? '—' : f1(d.soup) + ' g<br>' + pc(d.soupPct); }, function (d) { return d.soupJudge === '偏多' ? '偏多' : ''; }) +
+    M('成本', function (d) { return f1(d.cost); }, function (d) { return d.judge.cost; }, '元') + M('素別', function (d) { return esc(d.veg); }) +
+    '<tr><th class="stk">整日判定</th>' + ds.map(function (d) { return '<td class="num">' + badge(d.verdict) + '</td>'; }).join('') + '</tr>' +
+    '<tr><th class="stk">恢復原版</th>' + ds.map(function (d) { return '<td class="num">' + (d.slots.some(function (s) { return s.edited; }) ? '<button class="ebtn warn sm" data-resetday="' + d.i + '">恢復</button>' : '<span class="muted small">原版</span>') + '</td>'; }).join('') + '</tr>';
+  return '<div class="wt-wrap"><table class="wt">' + head + slotRows + rows + '</table></div>' +
+    '<p class="note">表格可左右滑動，第一欄固定。每格可直接換菜、用 ＋／− 調設計EX（0.5 級距），下方數值即時重算；紅底為不符合。' + LOCK + ' 供應EX、數值與判定自動計算，不能直接改。想看每道菜的材料克數，切換到「逐日卡片」。</p>';
 }
 
 /* ---------- 規範檢核 ---------- */
@@ -568,12 +633,13 @@ function renderRecipes() {
       '<div><span>菜單使用次數 ' + LOCK + '</span><b>' + d.used + ' 次</b></div>' + groups + '</div>';
     if (!chk) body += '<div class="warnbox">基準類別的份數合計應為 1.0，目前是 ' + f1(d.check) + '；請調整主材料的份數。</div>';
     if (ed) {
-      body += '<div class="editbox">' + d.rows.map(function (r, i) {
+      body += '<div class="editbox"><div class="scroll"><table class="rt"><tr><th>材料</th><th>份數／克</th><th>每EX g</th><th>P</th><th>F</th><th>C</th><th>熱量</th><th>類別</th><th></th></tr>' + d.rows.map(function (r, i) {
         var m = RES.M[r.name], sea = !m || m.cat === '調味';
-        var ctl = sea ? stepper('g' + i, r.g, 0.1, ' data-rec="' + esc(d.name) + '"') + '<span class="small">g</span>'
-          : stepper('x' + i, r.ex, ENGINE.stepOf(r.name, origEx(d.name, r.name), m.cat), ' data-rec="' + esc(d.name) + '"') + '<span class="small">份＝' + f1(r.g) + ' g</span>';
-        return '<div class="erow2"><span class="enm">' + esc(r.name) + ' <span class="small">' + esc(r.cat) + '</span></span>' + ctl + '<button type="button" class="ebtn del" data-delrow="' + i + '" data-rec="' + esc(d.name) + '">刪除</button></div>';
-      }).join('') +
+        var ctl = sea ? stepper('g' + i, r.g, 0.1, ' data-rec="' + esc(d.name) + '"') + '<span class="small"> g</span>'
+          : stepper('x' + i, r.ex, ENGINE.stepOf(r.name, origEx(d.name, r.name), m.cat), ' data-rec="' + esc(d.name) + '"') + '<span class="small"> 份</span>';
+        return '<tr><td class="nm2">' + esc(r.name) + '</td><td class="ctl">' + ctl + '</td><td>' + f1(r.g) + '</td><td>' + exs(r.p) + '</td><td>' + exs(r.f) + '</td><td>' + exs(r.c) + '</td><td>' + exs(r.k) + '</td><td>' + esc(r.cat) + '</td>' +
+          '<td><button type="button" class="ebtn del sm" data-delrow="' + i + '" data-rec="' + esc(d.name) + '" aria-label="刪除' + esc(r.name) + '">刪除</button></td></tr>';
+      }).join('') + '<tr class="tot"><td>合計（每EX）</td><td></td><td></td><td>' + f1(d.p) + '</td><td>' + f1(d.f) + '</td><td>' + f1(d.c) + '</td><td>' + f1(d.kcal) + '</td><td></td><td></td></tr></table></div>' +
         '<div class="addrow"><input list="mlist" id="add-' + esc(d.name) + '" placeholder="新增材料：輸入食材名稱" aria-label="新增材料"><button type="button" class="ebtn" data-addrow="' + esc(d.name) + '">＋ 新增</button></div>' +
         '<div class="small muted" style="margin-top:6px">' + LOCK + ' 份數以 0.5 為級距（調味料、香油、辛香料等少量材料 0.1）；克數＝份數 × 食材主檔每份克數，營養素依食物代換表自動計算。菜名、基準類別、使用次數不能改。' +
         (d.count > 10 || (d.tab === '主食' && d.count > 7) || (['湯品', '甜湯', '附餐', '水果', '乳品'].indexOf(d.tab) >= 0 && d.count > 6) ? '<br><b class="bad-t">材料數超過菜單可列的項數，多的不會列入菜單計算。</b>' : '') + '</div>' +
@@ -715,6 +781,7 @@ document.addEventListener('click', function (e) {
   if (ds.w !== undefined) { S.week = +ds.w; render(); return window.scrollTo(0, 0); }
   if (ds.d !== undefined) { S.day = +ds.d; return render(); }
   if (ds.bt) { S.buyTab = ds.bt; return render(); }
+  if (ds.lay) { S.layout = ds.lay; try { localStorage.setItem('tuanshan-layout', ds.lay); } catch (x) {} return render(); }
   if (ds.cat) { S.cat = ds.cat; S.q = ''; render(); return window.scrollTo(0, 0); }
   if (ds.mc) { S.mcat = ds.mc; return render(); }
   if (ds.open) { S.open[ds.open] = !S.open[ds.open]; return keepScroll(function () {}); }

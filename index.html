@@ -78,6 +78,16 @@
   .seg button.on { background: var(--card); color: var(--ink); box-shadow: var(--shadow); }
   .badge { font-size: 12px; font-weight: 700; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
   .ok { background: var(--ok-soft); color: var(--ok); } .bad { background: var(--bad-soft); color: var(--bad); }
+  .kvt th { text-align: left; color: var(--brand); font-size: 13px; font-weight: 700; width: 5.6em; padding: 8px 8px 8px 0; white-space: normal; }
+  .kvt td { text-align: left; font-size: 14px; line-height: 1.6; padding: 8px 0; }
+  .kvt.wide th { width: auto; white-space: nowrap; } .kvt.wide tr:first-child th { color: var(--muted); font-size: 12px; font-weight: 600; }
+  .kvt.wide td { padding-right: 8px; } .kvt td.c { text-align: center; font-weight: 700; }
+  .kvt a { text-decoration: none; }
+  #nm { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; overflow: visible; }
+  #nm button { padding: 6px 0; font-size: 13px; }
+  body.solo nav.tabbar, body.solo [data-go] { display: none !important; }
+  body.solo main { padding-bottom: 32px; }
+  .sw { display: inline-block; width: 10px; height: 18px; border-radius: 3px; margin-right: 8px; vertical-align: -3px; }
   .fx { padding: 11px 14px; border-top: 1px solid var(--line); cursor: pointer; }
   .fx:first-child { border-top: 0; }
   .fx .r1 { display: flex; gap: 8px; align-items: baseline; }
@@ -125,7 +135,7 @@ var ICON = {
   weight: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><path d="M8 11a4 4 0 0 1 8 0M12 11l2-2.5"/></svg>',
   menu: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="5" width="18" height="15" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>'
 };
-var TABS = [['nutrition', '營養學', '六大營養素'], ['fx', '食物代換', '查每一份是多少'], ['therapy', '膳食療養', '疾病飲食設計原則'], ['weight', '體重管理', '熱量與六大類份數']];
+var TABS = [['nutrition', '營養學', '六大營養素重點表'], ['fx', '食物代換', '查每一份是多少'], ['therapy', '膳食療養', '疾病飲食設計原則'], ['weight', '體重管理', '熱量與六大類份數']];
 var cur = '';
 
 function go(app) {
@@ -145,67 +155,127 @@ function buildNav() {
 /* =====================================================================
    一、營養學：六大營養素
    ===================================================================== */
-var NUTRIENTS = [
-  { k: '醣', n: '醣類', c: '--c3', kcal: '4 大卡／公克', one: '身體最主要、最快速的能量來源，也是大腦與紅血球的主要燃料。',
-    fn: ['提供熱量（每公克 4 大卡）', '節省蛋白質：醣類足夠，蛋白質才不會被拿去當能量', '避免脂肪不完全代謝產生酮體', '膳食纖維幫助腸道蠕動、增加飽足感、延緩血糖上升'],
-    kind: ['單醣：葡萄糖、果糖、半乳糖', '雙醣：蔗糖（葡萄糖＋果糖）、乳糖（葡萄糖＋半乳糖）、麥芽糖（葡萄糖＋葡萄糖）', '多醣：澱粉、肝醣（動物儲存形式）、膳食纖維', '膳食纖維：水溶性（燕麥、豆類、水果果膠）與非水溶性（全穀外皮、蔬菜粗纖維）'],
-    src: ['全榖雜糧類（主要）', '水果類', '乳品類（乳糖）', '蔬菜類（少量，多為纖維）'],
-    lack: ['缺乏：能量不足、體重下降、酮酸中毒、蛋白質被分解', '過多：精製糖過量易造成肥胖、齲齒、血糖與三酸甘油酯升高'],
-    tip: '菜單設計：全榖雜糧至少 1/3 選未精製；含糖飲料與甜點是「添加糖」的主要來源。' },
-  { k: '脂', n: '脂質', c: '--c1', kcal: '9 大卡／公克', one: '熱量密度最高的營養素，也負責運送脂溶性維生素。',
-    fn: ['提供熱量與儲存能量（每公克 9 大卡）', '幫助吸收脂溶性維生素 A、D、E、K', '構成細胞膜、合成荷爾蒙', '保護內臟、維持體溫', '提供必需脂肪酸、增加食物風味與飽足感'],
-    kind: ['飽和脂肪酸：動物油、椰子油、棕櫚油，室溫多為固態', '單元不飽和脂肪酸：橄欖油、苦茶油、芥花油、酪梨', '多元不飽和脂肪酸：大豆油、葵花油（ω-6）；深海魚、亞麻仁（ω-3，EPA、DHA）', '必需脂肪酸：亞麻油酸（ω-6）、次亞麻油酸（ω-3），人體無法自行合成', '反式脂肪：部分氫化油，會升高 LDL、降低 HDL，應盡量避免', '膽固醇：只存在動物性食物（蛋黃、內臟、海鮮）'],
-    src: ['油脂與堅果種子類（主要）', '豆魚蛋肉類（肉類的油脂）', '乳品類（全脂）'],
-    lack: ['缺乏：必需脂肪酸缺乏（皮膚炎）、脂溶性維生素吸收不良', '過多：肥胖、高血脂、心血管疾病風險增加'],
-    tip: '菜單設計：烹調用油屬油脂類；炸物、酥皮、肥肉的「隱形油」也要算進去。' },
-  { k: '蛋', n: '蛋白質', c: '--c5', kcal: '4 大卡／公克', one: '建造與修補身體組織的原料，由胺基酸組成。',
-    fn: ['建造與修補組織（肌肉、皮膚、器官）', '合成酵素、荷爾蒙、抗體', '維持體液平衡（血漿白蛋白）與酸鹼平衡', '運送物質（血紅素運送氧氣）', '熱量不足時提供能量（每公克 4 大卡）'],
-    kind: ['胺基酸約 20 種；成人必需胺基酸 9 種：組胺酸、異白胺酸、白胺酸、離胺酸、甲硫胺酸、苯丙胺酸、羥丁胺酸（蘇胺酸）、色胺酸、纈胺酸', '完全蛋白質：含全部必需胺基酸且比例適當，如蛋、奶、肉、魚、黃豆', '互補作用：穀類缺離胺酸、豆類缺甲硫胺酸，兩者一起吃可以互補（如紅豆飯、豆漿配饅頭）', '生理價值（BV）：雞蛋為常用參考標準'],
-    src: ['豆魚蛋肉類（主要）', '乳品類', '全榖雜糧類（含少量，每份約 2 公克）', '蔬菜類（每份約 1 公克）'],
-    lack: ['缺乏：生長遲緩、免疫力下降、水腫；嚴重時為瓜西奧科兒症（蛋白質缺乏）或消瘦症（熱量蛋白質都不足）', '過多：增加肝腎負擔，腎臟病人需依醫囑限制'],
-    tip: '菜單設計：素食者以黃豆製品為主要蛋白質，搭配全榖互補。' },
-  { k: '維', n: '維生素', c: '--c2', kcal: '不產生熱量', one: '需要量很少，但參與幾乎所有代謝反應的調節因子。',
-    fn: ['作為輔酶，協助醣類、脂質、蛋白質代謝', '抗氧化（維生素 C、E）', '維持視力、骨骼、凝血、造血等功能'],
-    kind: ['脂溶性 A：維持視覺與上皮組織；缺乏→夜盲症、乾眼症', '脂溶性 D：幫助鈣磷吸收；缺乏→兒童佝僂症、成人軟骨症', '脂溶性 E：抗氧化；缺乏→溶血性貧血（早產兒）', '脂溶性 K：凝血；缺乏→凝血不良（新生兒出生後常規補充）', '水溶性 B1：醣類代謝；缺乏→腳氣病', '水溶性 B2：能量代謝；缺乏→口角炎、舌炎', '水溶性 菸鹼素：缺乏→癩皮病（皮膚炎、腹瀉、失智）', '水溶性 B6：胺基酸代謝', '水溶性 葉酸：造血、細胞分裂；缺乏→巨球性貧血，孕期缺乏增加胎兒神經管缺陷', '水溶性 B12：造血、神經；缺乏→惡性貧血，全素者需注意', '水溶性 C：膠原蛋白合成、幫助鐵吸收；缺乏→壞血病'],
-    src: ['蔬菜類、水果類（C、葉酸、β-胡蘿蔔素）', '全榖雜糧類（B 群，未精製較多）', '豆魚蛋肉類、乳品類（B2、B12、A、D）', '油脂與堅果種子類（E）'],
-    lack: ['脂溶性維生素會儲存在體內，補充劑過量可能中毒', '水溶性維生素多餘會排出，需每天攝取；怕熱、易溶於水，烹調方式會影響保留量'],
-    tip: '記憶法：脂溶性「ADEK」，其餘 B 群與 C 是水溶性。' },
-  { k: '礦', n: '礦物質', c: '--c4', kcal: '不產生熱量', one: '構成骨骼牙齒、調節體液與神經肌肉的無機元素。',
-    fn: ['構成骨骼、牙齒（鈣、磷、鎂）', '調節體液與酸鹼平衡（鈉、鉀、氯）', '維持神經傳導與肌肉收縮', '構成血紅素、酵素、荷爾蒙（鐵、鋅、碘）'],
-    kind: ['巨量礦物質（每日需要 100 毫克以上）：鈣、磷、鎂、鈉、鉀、氯、硫', '微量礦物質：鐵、鋅、碘、硒、銅、氟、錳、鉻、鉬', '鈣：缺乏→骨質疏鬆；乳品、小魚乾、板豆腐、深綠色蔬菜', '鐵：缺乏→缺鐵性貧血；紅肉、肝臟、深綠色蔬菜（搭配維生素 C 幫助吸收）', '碘：缺乏→甲狀腺腫大；碘鹽、海帶、紫菜', '鋅：缺乏→生長遲緩、味覺異常、傷口癒合慢', '氟：適量可預防齲齒', '鈉：攝取過多與高血壓相關；鉀：腎臟病人需注意血鉀'],
-    src: ['乳品類（鈣、磷）', '豆魚蛋肉類（鐵、鋅）', '蔬菜類、水果類（鉀、鎂）', '加工食品與調味料（鈉）'],
-    lack: ['同一種礦物質「不足」與「過量」都有問題，如鈉過多、鈣不足是國人常見情形'],
-    tip: '菜單設計：食物代換表的蔬菜依含鉀量排列，水果標 ＊、＊＊ 的是含鉀較高的種類。' },
-  { k: '水', n: '水', c: '--c6', kcal: '不產生熱量', one: '體內含量最多的成分，成人約占體重的一半以上。',
-    fn: ['身體組成與細胞內外液的主要成分', '運送營養素與代謝廢物', '調節體溫（流汗）', '潤滑關節、保護器官', '參與消化與化學反應'],
-    kind: ['來源：飲水、食物中的水分（蔬果、湯）、營養素代謝產生的代謝水', '流失：尿液、汗水、呼吸、糞便', '一般成人常以每公斤體重約 30–35 毫升估算，實際依活動量、氣溫與疾病調整'],
-    src: ['白開水（最主要）', '湯品', '蔬菜類、水果類（食物中的水分）'],
-    lack: ['缺乏：脫水、便秘、頭暈、尿量減少；老人與幼兒較容易脫水', '心臟衰竭、腎臟病透析者需依醫囑限制水分'],
-    tip: '團膳湯品與水果也是水分來源；含糖飲料不能取代白開水。' }
-];
+/* 六大營養素重點表：依《透視營養學》（Wardlaw's Perspectives in Nutrition 12/e）章節架構整理。
+   需求量為本書採用的美國 DRIs（成人，男／女）。 */
+var NU_MENU = [['all', '總覽'], ['carb', '醣類'], ['fat', '脂質'], ['pro', '蛋白質'], ['vit', '維生素'], ['min', '礦物質'], ['water', '水']];
+var NU_MACRO = {
+  carb: { n: '醣類', c: '--c3', rows: [
+    ['分類', '單醣：葡萄糖、果糖、半乳糖\n雙醣：蔗糖、乳糖、麥芽糖\n寡醣：棉子糖、水蘇糖（豆類，易脹氣）\n多醣：澱粉（直鏈、支鏈）、肝醣、膳食纖維'],
+    ['膳食纖維', '水溶性：果膠、樹膠、β-聚葡萄醣 → 降膽固醇、穩血糖\n非水溶性：纖維素、半纖維素、木質素 → 增加糞便量、預防便秘'],
+    ['功能', '供能 4 大卡／g・節省蛋白質・防止酮症・纖維維持腸道健康'],
+    ['消化吸收', '口腔唾液澱粉酶 → 小腸胰澱粉酶 → 刷狀緣雙醣酶 → 單醣吸收 → 門靜脈到肝臟'],
+    ['食物來源', '全榖雜糧、水果、乳品（乳糖）、豆類、蔬菜'],
+    ['需求', 'RDA 130 g（供應大腦）・AMDR 45–65% 熱量\n纖維約每 1000 大卡 14 g・添加糖 < 10% 熱量'],
+    ['相關問題', '乳糖不耐症・糖尿病・齲齒・升糖指數（GI）與升糖負荷（GL）']] },
+  fat: { n: '脂質', c: '--c1', rows: [
+    ['分類', '三酸甘油酯（甘油＋3 脂肪酸）・磷脂質（卵磷脂）・固醇（膽固醇）'],
+    ['脂肪酸', '飽和：動物油、椰子油\n單元不飽和：橄欖油、芥花油、苦茶油\n多元不飽和：ω-6（大豆油）、ω-3（魚油 EPA／DHA、亞麻仁）\n反式脂肪：部分氫化油 → 升 LDL、降 HDL'],
+    ['必需脂肪酸', '亞麻油酸（ω-6）・α-次亞麻油酸（ω-3）'],
+    ['功能', '供能 9 大卡／g・儲存能量・構成細胞膜・合成荷爾蒙・幫助脂溶性維生素吸收・保溫護臟'],
+    ['消化吸收', '膽汁乳化 → 胰脂解酶分解 → 微膠粒吸收 → 組成乳糜微粒 → 淋巴系統'],
+    ['脂蛋白', '乳糜微粒：運送食物脂肪\nVLDL → LDL：運膽固醇到組織（「壞」）\nHDL：運膽固醇回肝臟（「好」）'],
+    ['食物來源', '油脂與堅果種子、肉類、全脂乳品、蛋黃（膽固醇）'],
+    ['需求', 'AMDR 20–35% 熱量・飽和 < 10%・反式越少越好\n亞麻油酸 17／12 g・α-次亞麻油酸 1.6／1.1 g'],
+    ['相關問題', '心血管疾病・肥胖・必需脂肪酸缺乏（皮膚炎）']] },
+  pro: { n: '蛋白質', c: '--c5', rows: [
+    ['組成', '胺基酸約 20 種，含氮\n必需胺基酸 9 種：組、異白、白、離、甲硫、苯丙、羥丁（蘇）、色、纈\n條件性必需：如酪胺酸（苯酮尿症時）'],
+    ['結構', '一級（胺基酸序列）→ 二、三、四級立體結構\n變性：受熱、酸、鹼破壞立體結構，失去功能'],
+    ['品質', '完全蛋白質：蛋、奶、肉、魚、黃豆\n互補作用：穀類缺離胺酸＋豆類缺甲硫胺酸\n評估：生物價（BV）、PDCAAS'],
+    ['功能', '建造修補組織・酵素荷爾蒙・抗體・體液與酸鹼平衡・運輸（血紅素）・必要時供能 4 大卡／g'],
+    ['消化吸收', '胃：鹽酸使變性＋胃蛋白酶\n小腸：胰蛋白酶、胰凝乳蛋白酶 → 胺基酸、雙肽吸收'],
+    ['氮平衡', '正氮平衡：生長、懷孕、復原期\n負氮平衡：飢餓、疾病、燒燙傷'],
+    ['食物來源', '豆魚蛋肉、乳品；全榖（每份約 2 g）、蔬菜（每份約 1 g）'],
+    ['需求', 'RDA 0.8 g／公斤體重・AMDR 10–35% 熱量'],
+    ['缺乏與過量', '蛋白質熱量營養不良（PEM）：紅孩兒症（瓜西奧科，水腫）、消瘦症\n過量：增加腎臟負擔、高脂肉類連帶飽和脂肪']] },
+  water: { n: '水', c: '--c6', rows: [
+    ['體內分布', '成人約占體重 50–70%\n細胞內液約 2/3・細胞外液（血漿、組織間液）約 1/3'],
+    ['功能', '溶劑與運輸・調節體溫（流汗）・潤滑關節・參與化學反應・排除廢物'],
+    ['攝取與排出', '來源：飲料、食物水分、代謝水\n排出：尿液、皮膚、呼吸、糞便'],
+    ['調節', '口渴機制・抗利尿激素（ADH）・腎臟濃縮尿液'],
+    ['需求', 'AI 總水量（含食物）：男 3.7 L、女 2.7 L\n飲料約占 80%'],
+    ['缺乏與過量', '脫水：失水 1–2% 體重即口渴、表現下降；老人與嬰幼兒高風險\n水中毒：短時間大量喝水 → 低血鈉']] }
+};
+var NU_MICRO = {
+  vit: { n: '維生素', c: '--c2', groups: [
+    { g: '脂溶性', d: '溶於脂肪、可儲存於肝臟與脂肪組織，過量較易中毒', items: [
+      ['維生素 A', '視網醇・β-胡蘿蔔素', '視覺（視紫質）・上皮細胞分化・免疫・生長', '肝臟、蛋黃、乳品；深綠與橘黃色蔬果（β-胡蘿蔔素）', '夜盲症・乾眼症・角膜軟化・毛囊角化', '致畸胎・肝損・骨質流失；β-胡蘿蔔素過多只會皮膚變黃', '900／700 μg RAE'],
+      ['維生素 D', '鈣化醇', '促進鈣磷吸收・骨骼健康・調節細胞生長', '皮膚照日光合成；魚油、鮭魚、強化乳品、蛋黃', '兒童佝僂症・成人骨質軟化症', '高血鈣・軟組織鈣化', '15 μg（600 IU）；70 歲以上 20 μg'],
+      ['維生素 E', '生育醇', '抗氧化，保護細胞膜不飽和脂肪酸', '植物油、堅果種子、小麥胚芽', '溶血性貧血（早產兒）・神經病變', '干擾凝血，服抗凝血劑者注意', '15 mg'],
+      ['維生素 K', '葉綠醌・甲萘醌', '凝血因子合成・骨骼蛋白', '深綠色蔬菜；腸道細菌合成', '凝血不良、出血（新生兒出生時常規補充）', '無已知上限，但會影響抗凝血劑（warfarin）', '120／90 μg（AI）']] },
+    { g: '水溶性', d: '溶於水、多餘隨尿排出，需經常攝取；B 群多為輔酶，參與能量代謝', items: [
+      ['維生素 B1', '硫胺', '醣類代謝輔酶（TPP）・神經功能', '豬肉、全穀、豆類、強化穀類', '腳氣病・魏尼凱-高沙可夫症候群（酗酒）', '無已知毒性', '1.2／1.1 mg'],
+      ['維生素 B2', '核黃素', '能量代謝輔酶（FAD、FMN）', '乳品、肉類、強化穀類；怕光', '口角炎・舌炎・脂漏性皮膚炎', '無已知毒性', '1.3／1.1 mg'],
+      ['菸鹼素', '維生素 B3', '能量代謝輔酶（NAD、NADP）；可由色胺酸合成', '肉類、魚、家禽、花生、強化穀類', '癩皮病（4D：皮膚炎、腹瀉、失智、死亡）', '大劑量：皮膚潮紅、肝損傷', '16／14 mg NE'],
+      ['泛酸', '維生素 B5', '構成輔酶 A，參與能量與脂肪代謝', '分布廣：肉、蛋、全穀、豆類、菇類', '罕見（腳燒灼感）', '無已知毒性', '5 mg（AI）'],
+      ['生物素', '維生素 B7', '羧化酶輔酶，參與醣質新生、脂肪酸合成', '蛋黃、肝臟、花生；腸道細菌合成', '罕見；長期吃生蛋白（抗生物素蛋白）可能缺乏', '無已知毒性', '30 μg（AI）'],
+      ['維生素 B6', '吡哆醇', '胺基酸代謝輔酶（PLP）・神經傳導物質・血紅素合成', '肉、魚、家禽、馬鈴薯、香蕉', '小球性貧血・皮膚炎・抽搐', '補充劑過量：神經病變', '1.3 mg'],
+      ['葉酸', '維生素 B9', 'DNA 合成・細胞分裂・紅血球生成', '深綠色蔬菜、豆類、柳橙、強化穀類', '巨球性貧血・胎兒神經管缺陷', '大量會掩蓋 B12 缺乏', '400 μg DFE'],
+      ['維生素 B12', '鈷胺素', '紅血球生成・神經髓鞘・與葉酸代謝合作；吸收需胃內在因子', '只存在動物性食物：肉、魚、蛋、乳品', '惡性貧血（巨球性貧血＋神經損傷）；全素者、老人、胃切除者注意', '無已知毒性', '2.4 μg'],
+      ['維生素 C', '抗壞血酸', '膠原蛋白合成・抗氧化・促進非血基質鐵吸收・免疫', '柑橘、芭樂、奇異果、甜椒、深綠色蔬菜；怕熱', '壞血病（牙齦出血、傷口難癒合）', '腹瀉・腎結石風險', '90／75 mg；吸菸者 +35 mg'],
+      ['膽素', '類維生素', '構成卵磷脂・神經傳導物質乙醯膽鹼', '蛋黃、肝臟、肉類、黃豆', '脂肪肝・肌肉損傷', '魚腥體臭・低血壓', '550／425 mg（AI）']] }] },
+  min: { n: '礦物質', c: '--c4', groups: [
+    { g: '巨量', d: '每日需要量 100 mg 以上', items: [
+      ['鈉', 'Na', '細胞外液主要陽離子・水分平衡・神經傳導', '食鹽、醬料、加工食品', '罕見（大量流汗、嘔吐腹瀉）→ 低血鈉', '高血壓（鹽敏感者）', 'AI 1500 mg；建議 < 2300 mg'],
+      ['鉀', 'K', '細胞內液主要陽離子・神經肌肉・心跳', '蔬菜、水果、豆類、乳品、馬鈴薯', '低血鉀 → 心律不整（利尿劑、嘔吐）', '高血鉀（腎臟病）→ 心臟停止', '3400／2600 mg（AI）'],
+      ['氯', 'Cl', '細胞外液陰離子・胃酸成分', '食鹽', '罕見', '高血壓（隨鈉）', '2300 mg（AI）'],
+      ['鈣', 'Ca', '骨骼牙齒・肌肉收縮・凝血・神經傳導', '乳品、小魚乾、板豆腐、深綠色蔬菜', '骨質疏鬆・兒童生長受影響', '便秘・腎結石・干擾鐵鋅吸收', '1000 mg'],
+      ['磷', 'P', '骨骼牙齒・ATP・DNA・磷脂質・酸鹼緩衝', '乳品、肉類、加工食品（磷酸鹽添加物）、可樂', '罕見', '腎臟病時高血磷 → 骨病變', '700 mg'],
+      ['鎂', 'Mg', '300 多種酵素輔因子・骨骼・神經肌肉', '全穀、堅果、豆類、深綠色蔬菜', '肌肉痙攣・心律不整', '補充劑過量 → 腹瀉', '400–420／310–320 mg'],
+      ['硫', 'S', '含硫胺基酸（甲硫、半胱）的成分・蛋白質結構', '蛋白質食物', '蛋白質足夠就不會缺乏', '—', '無 DRI']] },
+    { g: '微量', d: '每日需要量 100 mg 以下', items: [
+      ['鐵', 'Fe', '血紅素、肌紅素運氧・能量代謝酵素', '血基質鐵：紅肉、肝（吸收好）\n非血基質鐵：深綠色蔬菜、豆類（搭配維生素 C）', '缺鐵性貧血（最常見的營養缺乏）', '血鐵沉積症・兒童誤食補充劑中毒', '8／18 mg（女 19–50 歲）'],
+      ['鋅', 'Zn', '酵素輔因子・生長・免疫・傷口癒合・味覺', '牡蠣、紅肉、海鮮、全穀', '生長遲緩・味覺下降・傷口癒合慢・皮膚炎', '抑制銅吸收', '11／8 mg'],
+      ['銅', 'Cu', '鐵代謝・膠原蛋白・抗氧化酵素', '內臟、海鮮、堅果、全穀', '貧血・白血球減少', '肝損傷（威爾森氏症為遺傳性銅堆積）', '900 μg'],
+      ['碘', 'I', '甲狀腺素合成，調節代謝', '碘鹽、海帶、紫菜、海鮮', '甲狀腺腫・孕期缺乏 → 呆小症（克汀症）', '甲狀腺功能異常', '150 μg'],
+      ['硒', 'Se', '抗氧化酵素（穀胱甘肽過氧化酶）・甲狀腺代謝', '海鮮、肉類、全穀（依土壤含量）', '克山病（心肌病變）', '硒中毒：掉髮、指甲變脆', '55 μg'],
+      ['氟', 'F', '強化牙齒琺瑯質、預防齲齒', '含氟水、茶、海鮮、含氟牙膏', '齲齒', '氟斑牙・骨骼氟中毒', '4／3 mg（AI）'],
+      ['鉻', 'Cr', '加強胰島素作用', '全穀、肉類、蛋黃、啤酒酵母', '葡萄糖耐受不良', '無已知毒性', '35／25 μg（AI）'],
+      ['錳', 'Mn', '酵素輔因子・骨骼形成', '全穀、堅果、茶、豆類', '罕見', '神經症狀（多為職業暴露）', '2.3／1.8 mg（AI）'],
+      ['鉬', 'Mo', '含硫胺基酸代謝酵素輔因子', '豆類、全穀、堅果', '罕見', '罕見', '45 μg']] }] }
+};
+var MICRO_KEYS = ['功能', '食物來源', '缺乏', '毒性', '成人需求'];
+var nuSel = 'all', nuGroup = { vit: 0, min: 0 };
 
-function viewNutrition() {
-  var h = '<div class="card pad"><h2>六大營養素 ≠ 六大類食物</h2>' +
-    '<div class="small muted">營養素是食物裡的「成分」；六大類食物是把食物依營養素組成分成的「類別」。</div>' +
-    '<div class="scroll"><table style="margin-top:8px"><tr><th>六大營養素</th><th style="text-align:left">主要來自哪些食物類別</th></tr>' +
-    NUTRIENTS.map(function (x) { return '<tr><td><b>' + x.n + '</b></td><td style="text-align:left">' + x.src.map(function (s) { return s.replace(/（.*?）/g, ''); }).join('、') + '</td></tr>'; }).join('') +
-    '</table></div><div class="tip">產生熱量的只有三種：<b>醣類 4</b>、<b>蛋白質 4</b>、<b>脂質 9</b> 大卡／公克（酒精 7 大卡，但不是營養素）。</div></div>';
-  h += '<div class="card">' + NUTRIENTS.map(function (x) {
-    return '<details class="acc"><summary><div class="dot" style="background:var(' + x.c + ')">' + x.k + '</div><div class="tx"><b>' + x.n + '</b><span class="d">' + x.kcal + '・' + x.one + '</span></div>' + CHEV + '</summary><div class="body">' +
-      '<h3>生理功能</h3><ul class="dots">' + x.fn.map(li).join('') + '</ul>' +
-      '<h3>分類與重點</h3><ul class="dots">' + x.kind.map(li).join('') + '</ul>' +
-      '<h3>食物來源</h3><div>' + x.src.map(function (s) { return '<span class="tag k">' + esc(s) + '</span>'; }).join('') + '</div>' +
-      '<h3>缺乏與過量</h3><ul class="dots">' + x.lack.map(li).join('') + '</ul>' +
-      '<div class="tip">' + esc(x.tip) + '</div></div></details>';
-  }).join('') + '</div>';
-  h += '<div class="card pad"><h2>熱量試算</h2><div class="small muted">輸入三大營養素的公克數，算出熱量與占比。</div>' +
-    '<div class="grid3" style="margin-top:10px"><label class="f">蛋白質（g）<input id="kp" type="number" inputmode="decimal" value="60"></label>' +
-    '<label class="f">脂質（g）<input id="kf" type="number" inputmode="decimal" value="55"></label><label class="f">醣類（g）<input id="kc" type="number" inputmode="decimal" value="250"></label></div>' +
-    '<div id="kout" style="margin-top:12px"></div></div>';
-  h += '<p class="note">內容為營養學課程重點整理，詳細定義與數值以授課教材與衛生福利部最新公告為準。</p>';
-  $('main').innerHTML = h;
-  ['kp', 'kf', 'kc'].forEach(function (id) { $(id).oninput = kcalCalc; }); kcalCalc();
+function nuMenu() {
+  $('tools').innerHTML = '<div class="chips" id="nm">' + NU_MENU.map(function (m) { return '<button type="button" data-k="' + m[0] + '" class="' + (m[0] === nuSel ? 'on' : '') + '">' + m[1] + '</button>'; }).join('') + '</div>';
+  $('nm').querySelectorAll('button').forEach(function (b) { b.onclick = function () { nuSel = b.getAttribute('data-k'); nuMenu(); nuShow(); window.scrollTo(0, 0); }; });
 }
+function viewNutrition() { nuMenu(); nuShow(); }
+function br(s) { return esc(s).replace(/\n/g, '<br>'); }
+function kvTable(rows) { return '<table class="kvt">' + rows.map(function (r) { return '<tr><th>' + esc(r[0]) + '</th><td>' + br(r[1]) + '</td></tr>'; }).join('') + '</table>'; }
+function nuShow() {
+  var h = '';
+  if (nuSel === 'all') {
+    h += '<div class="card pad"><h2>六大營養素總覽</h2><div class="scroll"><table class="kvt wide" style="margin-top:6px"><tr><th>營養素</th><th>熱量</th><th>主要功能</th><th>主要來源（六大類）</th></tr>' +
+      [['醣類', '4', '主要能量來源', '全榖雜糧、水果、乳品'], ['脂質', '9', '儲能、細胞膜、脂溶性維生素吸收', '油脂與堅果種子、肉類'], ['蛋白質', '4', '建造修補組織、酵素抗體', '豆魚蛋肉、乳品'],
+        ['維生素', '0', '輔酶、調節代謝', '蔬菜、水果、全穀、肉類'], ['礦物質', '0', '骨骼、體液平衡、神經肌肉', '乳品、肉類、蔬果'], ['水', '0', '溶劑、運輸、調節體溫', '飲水、湯、蔬果']]
+        .map(function (r) { return '<tr><th><a href="#" data-k="' + { '醣類': 'carb', '脂質': 'fat', '蛋白質': 'pro', '維生素': 'vit', '礦物質': 'min', '水': 'water' }[r[0]] + '">' + r[0] + '</a></th><td class="c">' + r[1] + '</td><td>' + r[2] + '</td><td>' + r[3] + '</td></tr>'; }).join('') +
+      '</table></div><div class="small muted" style="margin-top:6px">熱量單位：大卡／公克。酒精 7 大卡／公克，但不是營養素。點營養素名稱看重點表。</div></div>';
+    h += '<div class="card pad"><h2>分類速記</h2>' + kvTable([['巨量營養素', '醣類、脂質、蛋白質（需要量以公克計，產生熱量）＋水'], ['微量營養素', '維生素、礦物質（需要量以毫克、微克計，不產生熱量）'], ['有機', '醣類、脂質、蛋白質、維生素'], ['無機', '礦物質、水']]) + '</div>';
+    h += '<div class="card pad"><h2>熱量試算</h2><div class="grid3" style="margin-top:6px"><label class="f">蛋白質（g）<input id="kp" type="number" inputmode="decimal" value="60"></label>' +
+      '<label class="f">脂質（g）<input id="kf" type="number" inputmode="decimal" value="55"></label><label class="f">醣類（g）<input id="kc" type="number" inputmode="decimal" value="250"></label></div><div id="kout" style="margin-top:12px"></div></div>';
+  } else if (NU_MACRO[nuSel]) {
+    var m = NU_MACRO[nuSel];
+    h += '<div class="card pad"><h2><span class="sw" style="background:var(' + m.c + ')"></span>' + m.n + '</h2>' + kvTable(m.rows) + '</div>';
+  } else {
+    var x = NU_MICRO[nuSel], gi = nuGroup[nuSel], grp = x.groups[gi];
+    h += '<div class="seg" id="ng" style="margin-top:12px">' + x.groups.map(function (g, i) { return '<button type="button" class="' + (i === gi ? 'on' : '') + '" data-i="' + i + '">' + g.g + (x === NU_MICRO.vit ? '維生素' : '礦物質') + '</button>'; }).join('') + '</div>';
+    h += '<div class="small muted" style="margin:8px 2px 0">' + esc(grp.d) + '</div>';
+    h += '<div class="card pad"><h2>速記表</h2><div class="scroll"><table class="kvt wide"><tr><th>名稱</th><th>缺乏</th><th>毒性</th></tr>' +
+      grp.items.map(function (it, i) { return '<tr><th><a href="#mi' + i + '" data-j="' + i + '">' + esc(it[0]) + '</a></th><td>' + br(it[4]) + '</td><td>' + br(it[5]) + '</td></tr>'; }).join('') + '</table></div></div>';
+    h += grp.items.map(function (it, i) {
+      return '<div class="card pad" id="mi' + i + '"><h2><span class="sw" style="background:var(' + x.c + ')"></span>' + esc(it[0]) + ' <span class="small muted" style="font-weight:400">' + esc(it[1]) + '</span></h2>' +
+        kvTable(MICRO_KEYS.map(function (k, j) { return [k, it[2 + j]]; })) + '</div>';
+    }).join('');
+  }
+  h += '<p class="note">依《透視營養學》（Wardlaw\'s Perspectives in Nutrition 12/e，蕭寧馨編譯）的章節架構整理成重點表。需求量為本書採用的美國 DRIs（成人，男／女）；國人 DRIs 請查衛生福利部國民健康署。</p>';
+  $('main').innerHTML = h;
+  document.querySelectorAll('[data-k]').forEach(function (a) { if (a.tagName === 'A') a.onclick = function (e) { e.preventDefault(); nuSel = a.getAttribute('data-k'); nuMenu(); nuShow(); window.scrollTo(0, 0); }; });
+  document.querySelectorAll('a[data-j]').forEach(function (a) { a.onclick = function (e) { e.preventDefault(); var t = $('mi' + a.getAttribute('data-j')); if (t) window.scrollTo(0, t.getBoundingClientRect().top + window.pageYOffset - $('tools').parentNode.offsetHeight - 8); }; });
+  if ($('ng')) $('ng').querySelectorAll('button').forEach(function (b) { b.onclick = function () { nuGroup[nuSel] = +b.getAttribute('data-i'); nuShow(); }; });
+  if ($('kp')) { ['kp', 'kf', 'kc'].forEach(function (id) { $(id).oninput = kcalCalc; }); kcalCalc(); }
+}
+
 function li(s) { return '<li>' + esc(s) + '</li>'; }
 function kcalCalc() {
   var p = +$('kp').value || 0, f = +$('kf').value || 0, c = +$('kc').value || 0, kp = p * 4, kf = f * 9, kc = c * 4, t = kp + kf + kc;
@@ -213,7 +283,7 @@ function kcalCalc() {
   $('kout').innerHTML = '<div class="grid2"><div class="stat hl"><span>總熱量</span><b>' + fmt(t) + '</b> 大卡</div><div class="stat"><span>計算式</span><b style="font-size:13px">' + p + '×4＋' + f + '×9＋' + c + '×4</b></div></div>' +
     '<div class="bar"><i style="width:' + pc(kp) + '%;background:var(--c5)"></i><i style="width:' + pc(kf) + '%;background:var(--c1)"></i><i style="width:' + pc(kc) + '%;background:var(--c3)"></i></div>' +
     '<div class="legend"><span><i style="background:var(--c5)"></i>蛋白質 ' + pc(kp) + '%</span><span><i style="background:var(--c1)"></i>脂質 ' + pc(kf) + '%</span><span><i style="background:var(--c3)"></i>醣類 ' + pc(kc) + '%</span></div>' +
-    '<div class="small muted" style="margin-top:6px">成人建議範圍（DRIs 第八版）：蛋白質 10–20%、脂質 20–30%、醣類 50–60%</div>';
+    '<div class="small muted" style="margin-top:6px">美國 AMDR（本書）：醣類 45–65%、脂質 20–35%、蛋白質 10–35%<br>國人 DRIs 第八版：醣類 50–60%、脂質 20–30%、蛋白質 10–20%</div>';
 }
 
 /* =====================================================================
@@ -472,6 +542,8 @@ function wCalc() {
 buildNav();
 var q0 = (location.search.match(/[?&]app=([a-z]+)/) || [])[1];
 var s0 = /^[a-z]+$/.test(START) ? START : (q0 || 'nutrition');
+/* 從圖文選單開啟（網址有 app=）時只顯示該單元，不顯示其他單元的連結 */
+if (/^[a-z]+$/.test(START) || q0) document.body.classList.add('solo');
 go(TABS.some(function (t) { return t[0] === s0; }) ? s0 : 'nutrition');
 </script>
 </body>

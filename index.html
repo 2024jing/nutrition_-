@@ -87,6 +87,17 @@
   #nm button { padding: 6px 0; font-size: 13px; }
   body.solo nav.tabbar, body.solo [data-go] { display: none !important; }
   body.solo main { padding-bottom: 32px; }
+  .nh { display: flex; align-items: flex-start; gap: 8px; } .nh h2 { flex: 1; min-width: 0; }
+  .ebtn { border: 1px solid var(--line); background: var(--card); color: var(--brand); border-radius: 9px; padding: 5px 12px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+  .ebtn.del { color: var(--bad); } .ebtn.warn { color: var(--bad); border-color: var(--bad-soft); }
+  .er { border-top: 1px solid var(--line); padding: 10px 0; }
+  .erh { display: flex; gap: 8px; margin-bottom: 6px; }
+  .er input, .er textarea { width: 100%; border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 9px; padding: 8px 10px; font-size: 16px; font-family: inherit; }
+  .er input { font-weight: 700; color: var(--brand); } .er textarea { resize: vertical; line-height: 1.55; overflow: hidden; }
+  .ebar { display: flex; gap: 8px; flex-wrap: wrap; padding-top: 10px; border-top: 1px solid var(--line); }
+  .kvt tr.mine th, .kvt tr.mine td { background: var(--warm); } .kvt tr.mine th { padding-left: 6px; border-radius: 6px 0 0 6px; }
+  .bkt { width: 100%; margin-top: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 10px; padding: 8px 10px; font-size: 14px; font-family: inherit; line-height: 1.5; }
+  .ebtn[disabled] { opacity: .4; cursor: default; }
   .sw { display: inline-block; width: 10px; height: 18px; border-radius: 3px; margin-right: 8px; vertical-align: -3px; }
   .fx { padding: 11px 14px; border-top: 1px solid var(--line); cursor: pointer; }
   .fx:first-child { border-top: 0; }
@@ -254,7 +265,7 @@ function nuShow() {
     h += '<div class="card pad"><h2>分類速記</h2>' + kvTable([['巨量營養素', '醣類、脂質、蛋白質（需要量以公克計，產生熱量）＋水'], ['微量營養素', '維生素、礦物質（需要量以毫克、微克計，不產生熱量）'], ['有機', '醣類、脂質、蛋白質、維生素'], ['無機', '礦物質、水']]) + '</div>';
   } else if (NU_MACRO[nuSel]) {
     var m = NU_MACRO[nuSel];
-    h += '<div class="card pad"><h2><span class="sw" style="background:var(' + m.c + ')"></span>' + m.n + '</h2>' + kvTable(m.rows) + '</div>';
+    h += noteCard(nuSel, '<span class="sw" style="background:var(' + m.c + ')"></span>' + m.n, m.rows);
   } else {
     var x = NU_MICRO[nuSel], gi = nuGroup[nuSel], grp = x.groups[gi];
     h += '<div class="seg" id="ng" style="margin-top:12px">' + x.groups.map(function (g, i) { return '<button type="button" class="' + (i === gi ? 'on' : '') + '" data-i="' + i + '">' + g.g + (x === NU_MICRO.vit ? '維生素' : '礦物質') + '</button>'; }).join('') + '</div>';
@@ -262,16 +273,141 @@ function nuShow() {
     h += '<div class="card pad"><h2>速記表</h2><div class="scroll"><table class="kvt wide"><tr><th>名稱</th><th>缺乏</th><th>毒性</th></tr>' +
       grp.items.map(function (it, i) { return '<tr><th><a href="#mi' + i + '" data-j="' + i + '">' + esc(it[0]) + '</a></th><td>' + br(it[4]) + '</td><td>' + br(it[5]) + '</td></tr>'; }).join('') + '</table></div></div>';
     h += grp.items.map(function (it, i) {
-      return '<div class="card pad" id="mi' + i + '"><h2><span class="sw" style="background:var(' + x.c + ')"></span>' + esc(it[0]) + ' <span class="small muted" style="font-weight:400">' + esc(it[1]) + '</span></h2>' +
-        kvTable(MICRO_KEYS.map(function (k, j) { return [k, it[2 + j]]; })) + '</div>';
+      return noteCard(nuSel + ':' + gi + ':' + i, '<span class="sw" style="background:var(' + x.c + ')"></span>' + esc(it[0]) + ' <span class="small muted" style="font-weight:400">' + esc(it[1]) + '</span>',
+        MICRO_KEYS.map(function (k, j) { return [k, it[2 + j]]; }), 'mi' + i);
     }).join('');
   }
+  if (NOTE_OK) h += backupCard();
+  if (nuSel !== 'all') h += '<p class="note">' + (NOTE_OK ? '點各表右上角「編輯」可以修改內容、新增項目，例如在「相關問題」加上自己的筆記。修改只存在這支手機的瀏覽器，換手機或清除瀏覽器資料會消失；隨時可按「恢復原本內容」。' : '這個瀏覽器無法儲存資料，修改內容的功能無法使用；請改用手機的 Chrome 或 Safari 開啟。') + '</p>';
   h += '<p class="note">依《透視營養學》（Wardlaw\'s Perspectives in Nutrition 12/e，蕭寧馨編譯）的章節架構整理成重點表。需求量為本書採用的美國 DRIs（成人，男／女）；國人 DRIs 請查衛生福利部國民健康署。</p>';
   $('main').innerHTML = h;
   document.querySelectorAll('[data-k]').forEach(function (a) { if (a.tagName === 'A') a.onclick = function (e) { e.preventDefault(); nuSel = a.getAttribute('data-k'); nuMenu(); nuShow(); window.scrollTo(0, 0); }; });
   document.querySelectorAll('a[data-j]').forEach(function (a) { a.onclick = function (e) { e.preventDefault(); var t = $('mi' + a.getAttribute('data-j')); if (t) window.scrollTo(0, t.getBoundingClientRect().top + window.pageYOffset - $('tools').parentNode.offsetHeight - 8); }; });
   if ($('ng')) $('ng').querySelectorAll('button').forEach(function (b) { b.onclick = function () { nuGroup[nuSel] = +b.getAttribute('data-i'); nuShow(); }; });
   if ($('kp')) { ['kp', 'kf', 'kc'].forEach(function (id) { $(id).oninput = kcalCalc; }); kcalCalc(); }
+  bindNotes(); bindBackup();
+}
+
+/* ---------- 個人筆記：每張表可修改、新增、刪除，存在這支手機的瀏覽器 ---------- */
+var NOTE_KEY = 'nutri-notes-v1', NOTE_OK = true, NOTES = {}, editing = null;
+try { NOTES = JSON.parse(localStorage.getItem(NOTE_KEY) || '{}') || {}; localStorage.setItem(NOTE_KEY + '-t', '1'); } catch (e) { NOTE_OK = false; NOTES = {}; }
+function saveNotes() { try { localStorage.setItem(NOTE_KEY, JSON.stringify(NOTES)); } catch (e) { NOTE_OK = false; } }
+function noteCard(key, title, def, id) {
+  var rows = NOTES[key] || def, ed = editing === key, changed = !!NOTES[key];
+  var h = '<div class="card pad" data-card="' + esc(key) + '"' + (id ? ' id="' + id + '"' : '') + '><div class="nh"><h2>' + title + (changed ? ' <span class="tag k">已修改</span>' : '') + '</h2>' +
+    (NOTE_OK ? '<button type="button" class="ebtn" data-act="' + (ed ? 'done' : 'edit') + '">' + (ed ? '完成' : '編輯') + '</button>' : '') + '</div>';
+  if (!ed) {
+    h += '<table class="kvt">' + rows.map(function (r, i) {
+      var d = def[i], mine = !d || d[0] !== r[0] || d[1] !== r[1];
+      return '<tr' + (changed && mine ? ' class="mine"' : '') + '><th>' + esc(r[0]) + '</th><td>' + br(r[1]) + '</td></tr>';
+    }).join('') + '</table>';
+  } else {
+    h += rows.map(function (r, i) {
+      return '<div class="er" data-i="' + i + '"><div class="erh"><input class="el" value="' + esc(r[0]) + '" placeholder="項目名稱" aria-label="項目名稱">' +
+        '<button type="button" class="ebtn del" data-act="del" data-i="' + i + '">刪除</button></div><textarea class="et" rows="3" placeholder="內容（可換行）" aria-label="內容">' + esc(r[1]) + '</textarea></div>';
+    }).join('') +
+      '<div class="ebar"><button type="button" class="ebtn" data-act="add">＋ 新增項目</button>' + (changed ? '<button type="button" class="ebtn warn" data-act="reset">恢復原本內容</button>' : '') + '</div>';
+  }
+  return h + '</div>';
+}
+function cardRows(card) { return Array.prototype.map.call(card.querySelectorAll('.er'), function (er) { return [er.querySelector('.el').value, er.querySelector('.et').value]; }); }
+function defRows(key) {
+  if (NU_MACRO[key]) return NU_MACRO[key].rows;
+  var p = key.split(':'), it = NU_MICRO[p[0]].groups[+p[1]].items[+p[2]];
+  return MICRO_KEYS.map(function (k, j) { return [k, it[2 + j]]; });
+}
+function storeCard(card) {
+  var key = card.getAttribute('data-card'), rows = cardRows(card), def = defRows(key);
+  var same = rows.length === def.length && rows.every(function (r, i) { return r[0] === def[i][0] && r[1] === def[i][1]; });
+  if (same) delete NOTES[key]; else NOTES[key] = rows;
+  saveNotes();
+}
+function rerender(key) {
+  var y = window.pageYOffset; nuShow(); window.scrollTo(0, y);
+  var c = document.querySelector('[data-card="' + key + '"]'); return c;
+}
+/* ---------- 匯出／匯入：一段文字（看得懂的筆記＋備份碼） ---------- */
+var bkMode = '';
+function noteTitle(key) {
+  if (NU_MACRO[key]) return NU_MACRO[key].n;
+  var p = key.split(':'); try { return NU_MICRO[p[0]].groups[+p[1]].items[+p[2]][0]; } catch (e) { return key; }
+}
+function exportText() {
+  var keys = Object.keys(NOTES);
+  var t = '【保健營養菜單研究室・營養學筆記備份】\n' + new Date().toLocaleString('zh-TW') + '\n\n';
+  keys.forEach(function (k) {
+    var def = defRows(k), mine = NOTES[k].filter(function (r, i) { return !def[i] || def[i][0] !== r[0] || def[i][1] !== r[1]; });
+    t += '■ ' + noteTitle(k) + '\n' + (mine.length ? mine.map(function (r) { return '・' + r[0] + '：' + String(r[1]).replace(/\n/g, '／'); }).join('\n') : '（刪除了部分項目）') + '\n\n';
+  });
+  var code = btoa(unescape(encodeURIComponent(JSON.stringify({ v: 1, notes: NOTES }))));
+  return t + '----- 以下是備份碼，匯入時整段貼上即可 -----\n備份碼：' + code + '\n';
+}
+function parseBackup(text) {
+  var m = String(text).match(/備份碼：\s*([A-Za-z0-9+\/=\s]+)/), raw = m ? m[1].replace(/\s+/g, '') : String(text).trim();
+  var obj; try { obj = JSON.parse(decodeURIComponent(escape(atob(raw)))); } catch (e) { return null; }
+  if (!obj || typeof obj.notes !== 'object') return null;
+  var out = {};
+  Object.keys(obj.notes).forEach(function (k) {
+    var rows = obj.notes[k]; try { defRows(k); } catch (e) { return; }
+    if (Array.isArray(rows) && rows.every(function (r) { return Array.isArray(r) && r.length === 2; })) out[k] = rows.map(function (r) { return [String(r[0]), String(r[1])]; });
+  });
+  return out;
+}
+function backupCard() {
+  var n = Object.keys(NOTES).length;
+  var h = '<div class="card pad"><div class="nh"><h2>我的筆記備份</h2></div><div class="small muted">目前有 ' + n + ' 張表有修改。換手機或資料被清掉前，先匯出存到 LINE 記事本或 Keep；之後用匯入還原。</div>' +
+    '<div class="ebar" style="border-top:0"><button type="button" class="ebtn" data-bk="export"' + (n ? '' : ' disabled') + '>匯出</button><button type="button" class="ebtn" data-bk="import">匯入</button></div>';
+  if (bkMode === 'export') h += '<textarea id="bkt" class="bkt" readonly rows="8">' + esc(exportText()) + '</textarea><div class="ebar" style="border-top:0"><button type="button" class="ebtn" data-bk="copy">複製</button><button type="button" class="ebtn" data-bk="dl">下載 .txt 檔</button><span id="bkmsg" class="small muted" style="align-self:center"></span></div>';
+  if (bkMode === 'import') h += '<textarea id="bkt" class="bkt" rows="6" placeholder="把之前匯出的整段文字貼在這裡"></textarea><div class="ebar" style="border-top:0"><button type="button" class="ebtn" data-bk="restore">還原筆記</button><span id="bkmsg" class="small muted" style="align-self:center"></span></div>';
+  return h + '</div>';
+}
+function bindBackup() {
+  document.querySelectorAll('[data-bk]').forEach(function (b) {
+    b.onclick = function () {
+      var a = b.getAttribute('data-bk'), y = window.pageYOffset, msg = function (t) { if ($('bkmsg')) $('bkmsg').textContent = t; };
+      if (a === 'export' || a === 'import') { bkMode = bkMode === a ? '' : a; nuShow(); window.scrollTo(0, y); if (a === 'import' && $('bkt')) $('bkt').focus(); return; }
+      if (a === 'copy') {
+        var t = $('bkt'); t.select(); t.setSelectionRange(0, t.value.length);
+        var ok = function () { msg('已複製，請貼到 LINE 記事本或 Keep'); };
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t.value).then(ok, function () { try { document.execCommand('copy'); ok(); } catch (e) { msg('請長按文字框，全選後複製'); } });
+        else { try { document.execCommand('copy'); ok(); } catch (e) { msg('請長按文字框，全選後複製'); } }
+        return;
+      }
+      if (a === 'dl') {
+        try {
+          var url = URL.createObjectURL(new Blob([$('bkt').value], { type: 'text/plain;charset=utf-8' })), d = new Date();
+          var link = document.createElement('a'); link.href = url; link.download = '營養學筆記備份_' + d.getFullYear() + (d.getMonth() + 1) + d.getDate() + '.txt';
+          document.body.appendChild(link); link.click(); link.remove(); setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
+          msg('如果沒有下載，請改用「複製」');
+        } catch (e) { msg('這個瀏覽器不能下載，請改用「複製」'); }
+        return;
+      }
+      if (a === 'restore') {
+        var data = parseBackup($('bkt').value), k = data ? Object.keys(data) : [];
+        if (!data || !k.length) { msg('看不懂這段文字，請確認有貼到「備份碼：」那一行'); return; }
+        if (!confirm('要還原 ' + k.length + ' 張表的筆記嗎？同一張表目前的修改會被備份內容取代。')) return;
+        k.forEach(function (key) { NOTES[key] = data[key]; }); saveNotes(); bkMode = ''; nuShow(); window.scrollTo(0, y);
+        alert('已還原 ' + k.length + ' 張表的筆記。');
+      }
+    };
+  });
+}
+function grow(t) { t.style.height = 'auto'; t.style.height = (t.scrollHeight + 2) + 'px'; }
+function bindNotes() {
+  document.querySelectorAll('[data-card]').forEach(function (card) {
+    var key = card.getAttribute('data-card');
+    card.querySelectorAll('.el, .et').forEach(function (inp) { inp.oninput = function () { if (inp.tagName === 'TEXTAREA') grow(inp); storeCard(card); }; if (inp.tagName === 'TEXTAREA') grow(inp); });
+    card.querySelectorAll('[data-act]').forEach(function (b) {
+      b.onclick = function () {
+        var act = b.getAttribute('data-act');
+        if (act === 'edit') { editing = key; rerender(key); return; }
+        if (act === 'done') { storeCard(card); editing = null; rerender(key); return; }
+        if (act === 'add') { var rows = cardRows(card); rows.push(['', '']); NOTES[key] = rows; saveNotes(); var c = rerender(key); var ls = c.querySelectorAll('.el'); if (ls.length) ls[ls.length - 1].focus(); return; }
+        if (act === 'del') { var r2 = cardRows(card); r2.splice(+b.getAttribute('data-i'), 1); NOTES[key] = r2; saveNotes(); storeCard(rerender(key)); rerender(key); return; }
+        if (act === 'reset') { if (confirm('確定要恢復原本內容？你在這張表的修改會全部刪除。')) { delete NOTES[key]; saveNotes(); editing = null; rerender(key); } }
+      };
+    });
+  });
 }
 
 function li(s) { return '<li>' + esc(s) + '</li>'; }

@@ -87,6 +87,7 @@
   .kvt a { text-decoration: none; }
   #nm { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 4px; overflow: visible; }
   #nm button { padding: 6px 0; font-size: 13px; letter-spacing: -.02em; }
+    .kvt.glo2 th { color: var(--ink); width: 42%; font-weight: 600; } .kvt.glo2 td { color: var(--muted); }
   table.glo td { text-align: left; padding: 7px 0; } table.glo td.zh { width: 42%; font-weight: 600; padding-right: 10px; } table.glo td.en { color: var(--muted); }
   body.solo nav.tabbar, body.solo [data-go] { display: none !important; }
   body.solo main { padding-bottom: 32px; }
@@ -386,15 +387,25 @@ function gloView() {
     '<div id="gl"></div>';
   return h;
 }
+function gloRows(c) { return NOTES['glo:' + c] || GLO.filter(function (g) { return g[0] === c; }).map(function (g) { return [g[1], g[2]]; }); }
 function gloList() {
-  var q = gloState.q.toLowerCase(), list = GLO.filter(function (g) { return (!gloState.cat || g[0] === gloState.cat) && (!q || (g[1] + ' ' + g[2]).toLowerCase().indexOf(q) >= 0); });
-  var h = '<div class="small muted" style="margin:10px 2px 0">' + list.length + ' 個名詞</div>';
-  if (!list.length) { $('gl').innerHTML = h + '<div class="card"><div class="empty">找不到「' + esc(gloState.q) + '」</div></div>'; return; }
-  var cats = GLO_CATS.filter(function (c) { return list.some(function (g) { return g[0] === c; }); });
-  h += cats.map(function (c) {
-    return '<div class="card pad"><h2>' + c + '</h2><table class="glo">' + list.filter(function (g) { return g[0] === c; }).map(function (g) { return '<tr><td class="zh">' + esc(g[1]) + '</td><td class="en" lang="en">' + esc(g[2]) + '</td></tr>'; }).join('') + '</table></div>';
-  }).join('');
-  $('gl').innerHTML = h;
+  var q = gloState.q.toLowerCase(), total = 0, h = '';
+  GLO_CATS.forEach(function (c) {
+    if (gloState.cat && c !== gloState.cat) return;
+    var rows = gloRows(c);
+    if (q) {
+      rows = rows.filter(function (r) { return (plain(r[0]) + ' ' + plain(r[1])).toLowerCase().indexOf(q) >= 0; });
+      if (!rows.length) return;
+      total += rows.length;
+      h += '<div class="card pad"><h2>' + c + '</h2><table class="kvt glo2">' + rows.map(function (r) { return '<tr><th>' + mk(r[0]) + '</th><td lang="en">' + br(r[1]) + '</td></tr>'; }).join('') + '</table></div>';
+    } else {
+      total += rows.length;
+      h += noteCard('glo:' + c, c, defRows('glo:' + c), null, null, 'glo2');
+    }
+  });
+  var head = '<div class="small muted" style="margin:10px 2px 0">' + total + ' 個名詞' + (q ? '・清除搜尋後可以編輯' : '・點各類右上角「編輯」可修改譯名或新增名詞') + '</div>';
+  $('gl').innerHTML = head + (total ? h : '<div class="card"><div class="empty">找不到「' + esc(gloState.q) + '」</div></div>');
+  bindNotes();
 }
 function gloBind() {
   $('gq').oninput = function () { gloState.q = this.value.trim(); gloList(); };
@@ -444,7 +455,7 @@ function nuShow() {
         MICRO_KEYS.map(function (k, j) { return [k, it[2 + j]]; }), 'mi' + i, it[7]);
     }).join('');
   }
-  if (NOTE_OK && nuSel !== 'glo') h += backupCard();
+  if (NOTE_OK) h += backupCard();
   if (nuSel === 'glo') h += '<p class="note">名詞譯法採常見的營養學教科書用語，與《透視營養學》譯本可能略有不同，以課本為準。</p>';
   if (nuSel !== 'all' && nuSel !== 'glo') h += '<p class="note">' + (NOTE_OK ? '點各表右上角「編輯」可以修改內容、新增項目，例如在「相關問題」加上自己的筆記。修改只存在這支手機的瀏覽器，換手機或清除瀏覽器資料會消失；隨時可按「恢復原本內容」。' : '這個瀏覽器無法儲存資料，修改內容的功能無法使用；請改用手機的 Chrome 或 Safari 開啟。') + '</p>';
   h += '<p class="note">依《透視營養學》（Wardlaw\'s Perspectives in Nutrition 12/e，蕭寧馨編譯）的章節架構整理成重點表。需求量為本書採用的美國 DRIs（成人，男／女）；國人 DRIs 請查衛生福利部國民健康署。</p>';
@@ -460,12 +471,12 @@ function nuShow() {
 var deepOpen = {}, NOTE_KEY = 'nutri-notes-v1', NOTE_OK = true, NOTES = {}, editing = null;
 try { NOTES = JSON.parse(localStorage.getItem(NOTE_KEY) || '{}') || {}; localStorage.setItem(NOTE_KEY + '-t', '1'); } catch (e) { NOTE_OK = false; NOTES = {}; }
 function saveNotes() { try { localStorage.setItem(NOTE_KEY, JSON.stringify(NOTES)); } catch (e) { NOTE_OK = false; } }
-function noteCard(key, title, def, id, deep) {
+function noteCard(key, title, def, id, deep, cls) {
   var rows = NOTES[key] || def, ed = editing === key, changed = !!NOTES[key];
   var h = '<div class="card pad" data-card="' + esc(key) + '"' + (id ? ' id="' + id + '"' : '') + '><div class="nh"><h2>' + title + (changed ? ' <span class="tag k">已修改</span>' : '') + '</h2>' +
     (NOTE_OK ? '<button type="button" class="ebtn" data-act="' + (ed ? 'done' : 'edit') + '">' + (ed ? '完成' : '編輯') + '</button>' : '') + '</div>';
   if (!ed) {
-    h += '<table class="kvt">' + rows.map(function (r, i) {
+    h += '<table class="kvt' + (cls ? ' ' + cls : '') + '">' + rows.map(function (r, i) {
       var d = def[i], mine = !d || d[0] !== r[0] || d[1] !== r[1];
       return '<tr' + (changed && mine ? ' class="mine"' : '') + '><th>' + mk(r[0]) + '</th><td>' + br(r[1]) + '</td></tr>';
     }).join('') + '</table>';
@@ -487,6 +498,7 @@ function noteCard(key, title, def, id, deep) {
 function cardRows(card) { return Array.prototype.map.call(card.querySelectorAll('.er'), function (er) { return [er.querySelector('.el').value, er.querySelector('.et').value]; }); }
 function defRows(key) {
   if (NU_MACRO[key]) return NU_MACRO[key].rows;
+  if (key.indexOf('glo:') === 0) { var gc = key.slice(4); if (GLO_CATS.indexOf(gc) < 0) throw new Error('bad'); return GLO.filter(function (g) { return g[0] === gc; }).map(function (g) { return [g[1], g[2]]; }); }
   var p = key.split(':'), it = NU_MICRO[p[0]].groups[+p[1]].items[+p[2]];
   return MICRO_KEYS.map(function (k, j) { return [k, it[2 + j]]; });
 }
@@ -504,6 +516,7 @@ function rerender(key) {
 var bkMode = '';
 function noteTitle(key) {
   if (NU_MACRO[key]) return NU_MACRO[key].n;
+  if (key.indexOf('glo:') === 0) return '名詞對照・' + key.slice(4);
   var p = key.split(':'); try { return NU_MICRO[p[0]].groups[+p[1]].items[+p[2]][0]; } catch (e) { return key; }
 }
 function exportText() {

@@ -9,16 +9,19 @@
     --bg: #f4f5f2; --card: #ffffff; --ink: #1f2a24; --muted: #5f6a63; --line: #e2e5df; --rail: #c9d2cb;
     --brand: #2f6b4f; --brand-soft: #e3efe8; --on-brand: #ffffff; --ok: #2e7d4f; --ok-soft: #e1f2e7;
     --bad: #b3261e; --bad-soft: #fbe5e3; --warm: #fff3d6; --chip: #eef0eb; --shadow: 0 1px 2px rgba(0,0,0,.06), 0 2px 8px rgba(0,0,0,.04);
-    --c6: #a0763a; --c5: #4f6a86; --c4: #5c7a5a; --c3: #9a5b6b; --p1: #a0763a; --p2: #4f6a86;
+    --k6: #fbe9c6; --k6s: #b8791c; --k5: #dce9f7; --k5s: #3f73a8; --k4: #d4eeee; --k4s: #2c8088; --k3: #f9e0e6; --k3s: #b8506c; --k2: #e9e2f6; --k2s: #6f57ab;
+    --e-atp: #c96f14; --e-nadh: #4558b8; --e-fad: #7a4fb0; --e-co2: #77817a; --on-tag: #ffffff; --hl: #fff1a8; --w-k: #a8560a; --w-d: #3c4fb0;
   }
   @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
     --bg: #121614; --card: #1b201d; --ink: #e8ece9; --muted: #9aa49e; --line: #2c332f; --rail: #3a443e; --brand: #7cc4a0; --brand-soft: #1f3329; --on-brand: #10251a;
     --ok: #7cc4a0; --ok-soft: #1d3127; --bad: #ff8a80; --bad-soft: #3a1f1d; --warm: #3a3220; --chip: #252b27; --shadow: none; color-scheme: dark;
-    --c6: #e0b878; --c5: #9cb7d6; --c4: #9fc39c; --c3: #e0a1b0; --p1: #e0b878; --p2: #9cb7d6; } }
+    --k6: #3b2e12; --k6s: #e0b878; --k5: #1b2b3c; --k5s: #9cb7d6; --k4: #16302f; --k4s: #7fc4c4; --k3: #3a1e27; --k3s: #e0a1b0; --k2: #2a2340; --k2s: #b9a8e6;
+    --e-atp: #f0a44c; --e-nadh: #9aa8f0; --e-fad: #c3a2ee; --e-co2: #9aa49e; --on-tag: #14181a; --hl: #5a4d12; --w-k: #f0a44c; --w-d: #9aa8f0; } }
   :root[data-theme="dark"] {
     --bg: #121614; --card: #1b201d; --ink: #e8ece9; --muted: #9aa49e; --line: #2c332f; --rail: #3a443e; --brand: #7cc4a0; --brand-soft: #1f3329; --on-brand: #10251a;
     --ok: #7cc4a0; --ok-soft: #1d3127; --bad: #ff8a80; --bad-soft: #3a1f1d; --warm: #3a3220; --chip: #252b27; --shadow: none; color-scheme: dark;
-    --c6: #e0b878; --c5: #9cb7d6; --c4: #9fc39c; --c3: #e0a1b0; --p1: #e0b878; --p2: #9cb7d6; }
+    --k6: #3b2e12; --k6s: #e0b878; --k5: #1b2b3c; --k5s: #9cb7d6; --k4: #16302f; --k4s: #7fc4c4; --k3: #3a1e27; --k3s: #e0a1b0; --k2: #2a2340; --k2s: #b9a8e6;
+    --e-atp: #f0a44c; --e-nadh: #9aa8f0; --e-fad: #c3a2ee; --e-co2: #9aa49e; --on-tag: #14181a; --hl: #5a4d12; --w-k: #f0a44c; --w-d: #9aa8f0; }
   * { box-sizing: border-box; }
   [hidden] { display: none !important; }
   html, body { margin: 0; background: var(--bg); color: var(--ink);
@@ -74,7 +77,6 @@
   .face b { font-weight: 600; font-size: 15px; overflow-wrap: anywhere; } .face small { font-size: 12px; color: var(--muted); overflow-wrap: anywhere; }
   .pick.has .face { border-style: solid; background: var(--brand-soft); }
   .pick.ok .face { border: 2px solid var(--ok); background: var(--ok-soft); }
-  .pick.no .face { border: 2px solid var(--bad); background: var(--bad-soft); }
   .pick:focus-within .face { outline: 2px solid var(--brand); outline-offset: 2px; }
   .bk .pick { display: flex; width: 100%; height: 100%; }
   .bk .face { width: 100%; height: 100%; min-height: 0; padding: 0 6px; border-radius: 999px; align-items: center; text-align: center; white-space: nowrap; overflow: hidden; line-height: 1.2; }
@@ -99,6 +101,29 @@
   .tip { background: var(--warm); border-radius: 12px; padding: 10px 12px; font-size: 13px; margin-top: 10px; }
   .note { color: var(--muted); font-size: 12px; margin: 16px 2px; }
   .foot { position: sticky; bottom: 0; background: var(--bg); padding: 10px 0 calc(10px + env(safe-area-inset-bottom, 0px)); margin-top: 4px; }
+  /* 顏色的意思：名稱框的底色＝碳數；小標籤＝這一步花掉或產生什麼；實心編號＝不可逆步驟 */
+  .dia rect.k6 { fill: var(--k6); stroke: var(--k6s); } .dia rect.k5 { fill: var(--k5); stroke: var(--k5s); } .dia rect.k4 { fill: var(--k4); stroke: var(--k4s); }
+  .dia rect.k3 { fill: var(--k3); stroke: var(--k3s); } .dia rect.k2 { fill: var(--k2); stroke: var(--k2s); }
+  .dia .num.irr circle { fill: var(--brand); } .dia .num.irr text { fill: var(--on-brand); }
+  .dia .tag rect { stroke-width: 1.2; } .dia .tag text { fill: var(--on-tag); font-weight: 700; }
+  .dia .tag.atp rect { fill: var(--e-atp); stroke: var(--e-atp); } .dia .tag.nadh rect { fill: var(--e-nadh); stroke: var(--e-nadh); } .dia .tag.fad rect { fill: var(--e-fad); stroke: var(--e-fad); }
+  .dia .tag.co2 rect { fill: var(--e-co2); stroke: var(--e-co2); } .dia .tag.sp rect { fill: var(--card); stroke: var(--e-atp); } .dia .tag.sp text { fill: var(--w-k); }
+  .pick .face.k6 { background: var(--k6); } .pick .face.k5 { background: var(--k5); } .pick .face.k4 { background: var(--k4); } .pick .face.k3 { background: var(--k3); } .pick .face.k2 { background: var(--k2); }
+  .pick:not(.ok):not(.no) .face.k6 { border-color: var(--k6s); } .pick:not(.ok):not(.no) .face.k5 { border-color: var(--k5s); } .pick:not(.ok):not(.no) .face.k4 { border-color: var(--k4s); }
+  .pick:not(.ok):not(.no) .face.k3 { border-color: var(--k3s); } .pick:not(.ok):not(.no) .face.k2 { border-color: var(--k2s); }
+  .pick.no .face { border: 2px solid var(--bad); background: var(--bad-soft); }
+  .face.tk { box-shadow: inset 6px 0 0 var(--e-atp); padding-left: 16px; } .face.td { box-shadow: inset 6px 0 0 var(--e-nadh); padding-left: 16px; } .face.tf { box-shadow: inset 6px 0 0 var(--e-fad); padding-left: 16px; }
+  .lgd { display: flex; flex-wrap: wrap; gap: 4px 12px; justify-content: center; margin-top: 8px; font-size: 12px; color: var(--muted); }
+  .lgd span { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+  .lgd i { display: inline-grid; place-items: center; width: 14px; height: 14px; border-radius: 4px; border: 1.5px solid; font-style: normal; font-size: 9px; font-weight: 700; }
+  .lgd i.k6 { background: var(--k6); border-color: var(--k6s); } .lgd i.k5 { background: var(--k5); border-color: var(--k5s); } .lgd i.k4 { background: var(--k4); border-color: var(--k4s); }
+  .lgd i.k3 { background: var(--k3); border-color: var(--k3s); } .lgd i.k2 { background: var(--k2); border-color: var(--k2s); }
+  .lgd i.irr { border-radius: 50%; background: var(--brand); border-color: var(--brand); color: var(--on-brand); }
+  .lgd i.tk { background: var(--e-atp); border-color: var(--e-atp); } .lgd i.td { background: var(--e-nadh); border-color: var(--e-nadh); } .lgd i.tf { background: var(--e-fad); border-color: var(--e-fad); }
+  mark { background: var(--hl); color: inherit; padding: 0 2px; border-radius: 3px; }
+  .wk { color: var(--w-k); font-weight: 700; } .wd { color: var(--w-d); font-weight: 700; }
+  .glab.k6 { color: var(--k6s); } .glab.k5 { color: var(--k5s); } .glab.k4 { color: var(--k4s); } .glab.k3 { color: var(--k3s); } .glab.k2 { color: var(--k2s); }
+  .item.k6 { border-left: 5px solid var(--k6s); } .item.k5 { border-left: 5px solid var(--k5s); } .item.k4 { border-left: 5px solid var(--k4s); } .item.k3 { border-left: 5px solid var(--k3s); } .item.k2 { border-left: 5px solid var(--k2s); }
 </style>
 </head>
 <body>
@@ -147,7 +172,12 @@ function pill(x, y, w, o, cls) {
   return r + tx(x, y - 2, L[0], '', fit(L[0], w, 11.5)) + tx(x, y + 12, L[1], 'm', fit(L[1], w, 10));
 }
 function arrow(x1, y1, x2, y2, dash) { var a = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI; return '<line class="ln" x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '" stroke-width="3"' + (dash ? ' stroke-dasharray="3 3"' : '') + '/><polygon class="ar" points="-8,-6 5,0 -8,6" transform="translate(' + x2 + ',' + y2 + ') rotate(' + a + ')"/>'; }
-function badge(x, y, n) { return '<g class="num"><circle cx="' + x + '" cy="' + y + '" r="11" stroke-width="1.5"/><text x="' + x + '" y="' + (y + 4.5) + '" text-anchor="middle" font-size="12">' + n + '</text></g>'; }
+function badge(x, y, n, irr) { return '<g class="num' + (irr ? ' irr' : '') + '"><circle cx="' + x + '" cy="' + y + '" r="11" stroke-width="1.5"/><text x="' + x + '" y="' + (y + 4.5) + '" text-anchor="middle" font-size="12">' + n + '</text></g>'; }
+
+function tagW(t) { return Math.round(t.length * 5.7 + 12); }
+function tagC(x, y, t, k) { var w = tagW(t); return '<g class="tag ' + k + '"><rect x="' + (x - w / 2) + '" y="' + (y - 7.5) + '" width="' + w + '" height="15" rx="4"/><text x="' + x + '" y="' + (y + 3.5) + '" text-anchor="middle" font-size="9.5">' + esc(t) + '</text></g>'; }
+/* 說明文字裡的記號：[[必背]]、{k:激酶這一類}、{d:去氫酶這一類} */
+function fmt(s) { return s.replace(/\[\[(.+?)\]\]/g, '<mark>$1</mark>').replace(/\{k:(.+?)\}/g, '<span class="wk">$1</span>').replace(/\{d:(.+?)\}/g, '<span class="wd">$1</span>'); }
 
 /* ======================================================================
    單元零：開始之前（生化代謝在學什麼、怎麼記英文）
@@ -176,11 +206,11 @@ var PRE = { id: 'pre', zh: '開始之前', en: 'Before you start', alias: '整�
     thi: { zh: '硫胺（thiamin）', en: 'Thiamin', bi: '硫胺（thiamin，維生素 B1）' }, pan: { zh: '泛酸（pantothenic acid）', en: 'Pantothenic acid', bi: '泛酸（pantothenic acid）' }, bio: { zh: '生物素（biotin）', en: 'Biotin', bi: '生物素（biotin）' }
   },
   levels: [
-    { t: '整張地圖：生化從哪裡開始', kind: 'ov', h: 594,
+    { t: '整張地圖：生化從哪裡開始', kind: 'ov', h: 594, legend: [6, 3, 2],
       intro: ['食物吃進去後，先在消化道被拆成最小單位再吸收。這一段主要是營養學和生理學在教。',
         '生化接手的是「進了細胞之後」：這些小分子怎麼被燒掉產生能量、怎麼存起來、怎麼互相轉換。',
         '各條路徑不是各自獨立的，它們靠幾個共同的分子接在一起，就像捷運的轉乘站，不管從哪一條線來都在這裡換車。最重要的兩個轉乘站，就是圖中間的兩個空格。'],
-      tip: '生化不只有代謝。國考還會考分子本身的結構與性質（醣類、脂質、胺基酸、酵素），以及分子生物學（複製、轉錄、轉譯）。這一頁只練代謝路徑。',
+      tip: '[[生化不只有代謝。]]國考還會考分子本身的結構與性質（醣類、脂質、胺基酸、酵素），以及分子生物學（複製、轉錄、轉譯）。這一頁只練代謝路徑。',
       svg: function () { var h = PH() / 2;
         return '<rect x="6" y="160" width="348" height="424" rx="18" fill="none" stroke="var(--rail)" stroke-width="1.5" stroke-dasharray="5 4"/>' +
           pill(70, 30, 96, { zh: '醣類', en: 'Carbohydrates' }, 'src') + pill(180, 30, 96, { zh: '脂肪', en: 'Fats' }, 'src') + pill(290, 30, 96, { zh: '蛋白質', en: 'Proteins' }, 'src') +
@@ -189,18 +219,18 @@ var PRE = { id: 'pre', zh: '開始之前', en: 'Before you start', alias: '整�
           tx(125, 180, T('進入細胞後', 'Inside the cell'), 'b', 10.5) + tx(125, 194, T('是生化的範圍', '= biochemistry'), 'b', 10.5) +
           tx(62, 176, T('糖解', 'glycolysis'), 'm', 10, 'end') + tx(188, 236, T('β-氧化', 'β-oxidation'), 'm', 10, 'start') +
           arrow(180, 313 + h, 180, 364) + '<circle class="pill" cx="180" cy="400" r="36" stroke-width="1.5"/>' + tx(180, 398, T('檸檬酸循環', 'TCA cycle'), 'b', 12) + tx(180, 413, T('轉一圈', 'one turn'), 'm', 10) +
-          arrow(216, 400, 258, 400) + tx(284, 404, 'CO₂', '', 13) + arrow(180, 436, 180, 480 - h) + pill(180, 482, 124, 'NADH、FADH₂') + arrow(180, 483 + h, 180, 546 - h) +
+          arrow(216, 400, 258, 400) + tagC(282, 400, 'CO₂', 'co2') + arrow(180, 436, 180, 480 - h) + pill(180, 482, 124, 'NADH、FADH₂') + arrow(180, 483 + h, 180, 546 - h) +
           pill(180, 548, 190, { zh: '電子傳遞鏈 → 大量 ATP', en: 'Electron transport chain → ATP' }); },
-      blanks: [{ id: 'u1', x: 70, y: 118, w: 96, a: 'glc', o: ['glc', 'fa', 'aa', 'lac', 'ket'] }, { id: 'u2', x: 180, y: 118, w: 96, a: 'fa', o: ['glc', 'fa', 'aa', 'lac', 'ket'] }, { id: 'u3', x: 290, y: 118, w: 96, a: 'aa', o: ['glc', 'fa', 'aa', 'lac', 'ket'] },
-        { id: 'h1', x: 70, y: 224, w: 96, a: 'pyr', o: ['pyr', 'aco', 'cit', 'lac', 'g6p'] }, { id: 'h2', x: 180, y: 312, w: 116, a: 'aco', o: ['pyr', 'aco', 'cit', 'lac', 'g6p'] }],
-      done: ['三大營養素要產生能量，最後都會匯集到乙醯輔酶A（acetyl-CoA），再進檸檬酸循環。', '葡萄糖要先經過糖解作用變成丙酮酸（pyruvate），才會變成乙醯輔酶A。',
+      blanks: [{ id: 'u1', x: 70, y: 118, w: 96, c: 6, a: 'glc', o: ['glc', 'fa', 'aa', 'lac', 'ket'] }, { id: 'u2', x: 180, y: 118, w: 96, a: 'fa', o: ['glc', 'fa', 'aa', 'lac', 'ket'] }, { id: 'u3', x: 290, y: 118, w: 96, a: 'aa', o: ['glc', 'fa', 'aa', 'lac', 'ket'] },
+        { id: 'h1', x: 70, y: 224, w: 96, c: 3, a: 'pyr', o: ['pyr', 'aco', 'cit', 'lac', 'g6p'] }, { id: 'h2', x: 180, y: 312, w: 116, c: 2, a: 'aco', o: ['pyr', 'aco', 'cit', 'lac', 'g6p'] }],
+      done: ['三大營養素要產生能量，最後都會匯集到[[乙醯輔酶A（acetyl-CoA）]]，再進檸檬酸循環。', '葡萄糖要先經過糖解作用變成[[丙酮酸（pyruvate）]]，才會變成乙醯輔酶A。',
         '國考考過：三大營養素產能代謝的主要串聯分子，就是 pyruvate 和 acetyl-CoA。', '脂肪消化後除了脂肪酸還有甘油，甘油走的是另一條路，之後的單元會教。'] },
     { t: '每條路徑問三件事', kind: 'cloze',
       intro: ['每學一條路徑，問自己三件事就夠了：',
         '<b>一、從哪裡來、往哪裡去。</b>原料和產物是什麼，接到哪一個轉乘站。',
         '<b>二、在細胞的哪裡。</b>細胞質，還是粒線體。',
         '<b>三、什麼時候開、什麼時候關。</b>吃飽時胰島素打開哪些路徑，飢餓時升糖素打開哪些路徑。',
-        '第三件最容易被忽略，但國考很愛考。同一個細胞不會一邊合成、一邊又把它分解掉，所以方向相反的兩條路徑，一邊開另一邊就關。'],
+        '第三件最容易被忽略，但國考很愛考。同一個細胞不會一邊合成、一邊又把它分解掉，所以[[方向相反的兩條路徑，一邊開另一邊就關]]。'],
       cloze: [
         ['糖解作用在細胞質進行；檸檬酸循環和脂肪酸 β-氧化則在', { a: 'mito', o: ['mito', 'nuc', 'er', 'cyt'] }, '進行。'],
         ['吃飽後血糖上升，胰臟分泌的荷爾蒙是', { a: 'ins', o: ['ins', 'glu', 'epi', 'cor'] }, '。'],
@@ -213,10 +243,10 @@ var PRE = { id: 'pre', zh: '開始之前', en: 'Before you start', alias: '整�
         ['丙酮酸變成乙醯輔酶A 這一步不可逆，所以乙醯輔酶A', { a: 'cannot', o: ['can', 'cannot'] }, '變回葡萄糖，脂肪酸也就不能拿來做葡萄糖。']
       ] },
     { t: '看英文名字猜功能', kind: 'cloze',
-      intro: ['國考的酵素和中間產物常常只寫英文，不附中文。不過考的是選擇題，練到「看到認得」就夠了，不必會拼。',
+      intro: ['國考的酵素和中間產物常常只寫英文，不附中文。不過考的是選擇題，練到[[「看到認得」就夠了，不必會拼]]。',
         '酵素的英文名字通常是「受質＋它做的事＋ase」。把下面幾個字根記起來，大部分酵素看字面就能猜出它在做什麼。',
-        '例如 pyruvate kinase：pyruvate 是丙酮酸，kinase 是搬磷酸根，所以它是處理丙酮酸和磷酸根的酵素。'],
-      tip: '很多字根是成對的：kinase 接上磷酸根、phosphatase 拿掉；carboxylase 接上 CO₂、decarboxylase 拿掉；-genesis 是生成、-lysis 是分解。',
+        '例如 pyruvate {k:kinase}：pyruvate 是丙酮酸，{k:kinase} 是搬磷酸根，所以它是處理丙酮酸和磷酸根的酵素。'],
+      tip: '很多字根是成對的：{k:kinase} 接上磷酸根、phosphatase 拿掉；carboxylase 接上 CO₂、decarboxylase 拿掉；-genesis 是生成、-lysis 是分解。',
       cloze: [
         ['kinase（激酶）做的事是', { a: 'k', o: ['k', 'dh', 'iso', 'ptase'] }, '。'],
         ['dehydrogenase（去氫酶）做的事是', { a: 'dh', o: ['k', 'dh', 'carb', 'syn'] }, '。'],
@@ -257,23 +287,23 @@ var PRE = { id: 'pre', zh: '開始之前', en: 'Before you start', alias: '整�
    ====================================================================== */
 var GLY = { id: 'gly', zh: '糖解作用', en: 'Glycolysis', alias: 'Glycolysis・葡萄糖 → 丙酮酸', layout: 'chain',
   nodes: [
-    { k: 'glc', zh: '葡萄糖', en: 'Glucose' },
-    { k: 'g6p', zh: '葡萄糖-6-磷酸', en: 'Glucose 6-phosphate', ab: 'G6P' },
-    { k: 'f6p', zh: '果糖-6-磷酸', en: 'Fructose 6-phosphate', ab: 'F6P' },
-    { k: 'fbp', zh: '果糖-1,6-雙磷酸', en: 'Fructose 1,6-bisphosphate', ab: 'F1,6BP' },
-    { k: 'g3p', zh: '甘油醛-3-磷酸', en: 'Glyceraldehyde 3-phosphate', ab: 'G3P' },
-    { k: 'bpg', zh: '1,3-雙磷酸甘油酸', en: '1,3-Bisphosphoglycerate', ab: '1,3-BPG' },
-    { k: 'pg3', zh: '3-磷酸甘油酸', en: '3-Phosphoglycerate', ab: '3-PG' },
-    { k: 'pg2', zh: '2-磷酸甘油酸', en: '2-Phosphoglycerate', ab: '2-PG' },
-    { k: 'pep', zh: '磷酸烯醇丙酮酸', en: 'Phosphoenolpyruvate', ab: 'PEP' },
-    { k: 'pyr', zh: '丙酮酸', en: 'Pyruvate' },
-    { k: 'dha', zh: '二羥丙酮磷酸', en: 'Dihydroxyacetone phosphate', ab: 'DHAP', side: 'g3p' }
+    { k: 'glc', zh: '葡萄糖', en: 'Glucose', c: 6 },
+    { k: 'g6p', zh: '葡萄糖-6-磷酸', en: 'Glucose 6-phosphate', ab: 'G6P', c: 6 },
+    { k: 'f6p', zh: '果糖-6-磷酸', en: 'Fructose 6-phosphate', ab: 'F6P', c: 6 },
+    { k: 'fbp', zh: '果糖-1,6-雙磷酸', en: 'Fructose 1,6-bisphosphate', ab: 'F1,6BP', c: 6 },
+    { k: 'g3p', zh: '甘油醛-3-磷酸', en: 'Glyceraldehyde 3-phosphate', ab: 'G3P', c: 3 },
+    { k: 'bpg', zh: '1,3-雙磷酸甘油酸', en: '1,3-Bisphosphoglycerate', ab: '1,3-BPG', c: 3 },
+    { k: 'pg3', zh: '3-磷酸甘油酸', en: '3-Phosphoglycerate', ab: '3-PG', c: 3 },
+    { k: 'pg2', zh: '2-磷酸甘油酸', en: '2-Phosphoglycerate', ab: '2-PG', c: 3 },
+    { k: 'pep', zh: '磷酸烯醇丙酮酸', en: 'Phosphoenolpyruvate', ab: 'PEP', c: 3 },
+    { k: 'pyr', zh: '丙酮酸', en: 'Pyruvate', c: 3 },
+    { k: 'dha', zh: '二羥丙酮磷酸', en: 'Dihydroxyacetone phosphate', ab: 'DHAP', c: 3, side: 'g3p' }
   ],
-  phases: [{ a: 'glc', b: 'g3p', zh: '準備階段', en: 'Preparatory phase', c: '--p1' }, { a: 'bpg', b: 'pyr', zh: '收益階段（每個都是 2 份）', en: 'Payoff phase (×2)', c: '--p2' }],
+  phases: [{ a: 'glc', b: 'g3p', zh: '準備階段', en: 'Preparatory phase', c: '--k6s' }, { a: 'bpg', b: 'pyr', zh: '收益階段（每個都是 2 份）', en: 'Payoff phase (×2)', c: '--k3s' }],
   steps: [
-    { f: 'glc', t: 'g6p', e: 'hk', p: 'use' }, { f: 'g6p', t: 'f6p', e: 'pgi', p: 'none' }, { f: 'f6p', t: 'fbp', e: 'pfk', p: 'use' },
+    { f: 'glc', t: 'g6p', e: 'hk', p: 'use', irr: 1 }, { f: 'g6p', t: 'f6p', e: 'pgi', p: 'none' }, { f: 'f6p', t: 'fbp', e: 'pfk', p: 'use', irr: 1 },
     { f: 'fbp', t: 'g3p', also: 'dha', e: 'ald', p: 'none' }, { f: 'dha', t: 'g3p', e: 'tpi', p: 'none' }, { f: 'g3p', t: 'bpg', e: 'gap', p: 'nadh' },
-    { f: 'bpg', t: 'pg3', e: 'pgk', p: 'atp' }, { f: 'pg3', t: 'pg2', e: 'pgm', p: 'none' }, { f: 'pg2', t: 'pep', e: 'eno', p: 'none' }, { f: 'pep', t: 'pyr', e: 'pk', p: 'atp' }
+    { f: 'bpg', t: 'pg3', e: 'pgk', p: 'atp' }, { f: 'pg3', t: 'pg2', e: 'pgm', p: 'none' }, { f: 'pg2', t: 'pep', e: 'eno', p: 'none' }, { f: 'pep', t: 'pyr', e: 'pk', p: 'atp', irr: 1 }
   ],
   enz: {
     hk: { zh: '己糖激酶', en: 'Hexokinase' }, pgi: { zh: '磷酸己糖異構酶', en: 'Phosphohexose isomerase' }, pfk: { zh: '磷酸果糖激酶-1', en: 'Phosphofructokinase-1', ab: 'PFK-1' },
@@ -281,6 +311,7 @@ var GLY = { id: 'gly', zh: '糖解作用', en: 'Glycolysis', alias: 'Glycolysis�
     pgk: { zh: '磷酸甘油酸激酶', en: 'Phosphoglycerate kinase' }, pgm: { zh: '磷酸甘油酸變位酶', en: 'Phosphoglycerate mutase' }, eno: { zh: '烯醇酶', en: 'Enolase' }, pk: { zh: '丙酮酸激酶', en: 'Pyruvate kinase' },
     ldh: { zh: '乳酸去氫酶', en: 'Lactate dehydrogenase' }
   },
+  tags: { use: [['−1 ATP', 'sp']], atp: [['+2 ATP', 'atp']], nadh: [['+2 NADH', 'nadh']] },
   prod: { use: { zh: '消耗 1 個 ATP', en: 'Uses 1 ATP' }, atp: { zh: '產生 ATP', en: 'Makes ATP' }, nadh: { zh: '產生 NADH', en: 'Makes NADH' }, none: { zh: '都沒有', en: 'Neither' } },
   dict: {
     cyt: { zh: '細胞質', en: 'Cytosol' }, mat: { zh: '粒線體基質', en: 'Mitochondrial matrix' }, imm: { zh: '粒線體內膜', en: 'Inner mitochondrial membrane' }, nuc: { zh: '細胞核', en: 'Nucleus' },
@@ -296,38 +327,38 @@ var GLY = { id: 'gly', zh: '糖解作用', en: 'Glycolysis', alias: 'Glycolysis�
     dhap: { zh: '二羥丙酮磷酸', en: 'Dihydroxyacetone phosphate' }, cit: { zh: '檸檬酸', en: 'Citrate' }, acac: { zh: '乙醯乙酸', en: 'Acetoacetate' }, mal: { zh: '蘋果酸', en: 'Malate' }
   },
   levels: [
-    { t: '先看全貌', kind: 'ov', h: 404,
+    { t: '先看全貌', kind: 'ov', h: 404, legend: [6, 3, 2],
       intro: ['糖解作用是把一個 6 碳的葡萄糖，切成兩個 3 碳的丙酮酸。它不需要氧氣，所以每一種細胞都能做。',
         '過程中會先花掉一點 ATP，後面再賺回來，同時產生 NADH。',
         '丙酮酸接下來去哪裡，要看有沒有氧氣：有氧就進粒線體，無氧就留在原地換一條路。',
         '每條路徑先問三件事：原料和產物是什麼、在細胞的哪裡、什麼時候開什麼時候關。這一關的空格回答前兩件，第三件在後面「調節與國考重點」那一關。'],
       svg: function () { var h = PH() / 2;
-        return pill(180, 30, 120, { zh: '葡萄糖（6C）', en: 'Glucose (6C)' }, 'src') + arrow(180, 31 + h, 180, 198 - h) + tx(168, 104, T(GLY.zh, GLY.en), 'b', 14, 'end') + tx(168, 122, T('共 10 步', '10 steps'), 'm', 11, 'end') +
+        return pill(180, 30, 120, { zh: '葡萄糖（6C）', en: 'Glucose (6C)' }, 'src k6') + arrow(180, 31 + h, 180, 198 - h) + tx(168, 104, T(GLY.zh, GLY.en), 'b', 14, 'end') + tx(168, 122, T('共 10 步', '10 steps'), 'm', 11, 'end') +
           tx(260, 80, T('進行的位置', 'Where'), 'm', 11) + tx(106, 204, '2 ×', '', 14, 'end') + tx(236, 204, '（3C）', 'm', 11, 'start') +
           arrow(150, 201 + h, 100, 298 - h) + arrow(204, 201 + h, 268, 298 - h) + tx(112, 254, T('有氧', 'With O₂'), 'b', 12, 'end') + tx(252, 254, T('無氧', 'No O₂'), 'b', 12, 'start') +
           arrow(92, 301 + h, 92, 366 - h) + pill(92, 368, 112, { zh: '檸檬酸循環', en: 'TCA cycle' }) + tx(276, 318 + h, T('同時把 NADH', 'regenerates'), 'm', 10.5) + tx(276, 333 + h, T('變回 NAD⁺', 'NAD⁺'), 'm', 10.5); },
-      blanks: [{ id: 'loc', x: 260, y: 108, w: 108, a: 'cyt', o: ['cyt', 'mat', 'imm', 'nuc'] }, { id: 'pyr', x: 172, y: 200, w: 116, a: 'pyr', o: ['pyr', 'aco', 'lac', 'oaa', 'eth'] },
-        { id: 'aer', x: 92, y: 300, w: 112, a: 'aco', o: ['pyr', 'aco', 'lac', 'oaa', 'eth'] }, { id: 'ana', x: 276, y: 300, w: 96, a: 'lac', o: ['pyr', 'aco', 'lac', 'oaa', 'eth'] }],
+      blanks: [{ id: 'loc', x: 260, y: 108, w: 108, a: 'cyt', o: ['cyt', 'mat', 'imm', 'nuc'] }, { id: 'pyr', x: 172, y: 200, w: 116, c: 3, a: 'pyr', o: ['pyr', 'aco', 'lac', 'oaa', 'eth'] },
+        { id: 'aer', x: 92, y: 300, w: 112, c: 2, a: 'aco', o: ['pyr', 'aco', 'lac', 'oaa', 'eth'] }, { id: 'ana', x: 276, y: 300, w: 96, c: 3, a: 'lac', o: ['pyr', 'aco', 'lac', 'oaa', 'eth'] }],
       countsTitle: '一個葡萄糖走完糖解作用', counts: [['淨得幾個 ATP', '2', ['1', '2', '4', '6']], ['產生幾個 NADH', '2', ['1', '2', '3', '4']]],
-      done: ['原料與產物：1 個葡萄糖 → 2 個丙酮酸，淨得 2 ATP、2 NADH。', '位置：細胞質，每一種細胞都有。', '轉乘站：丙酮酸。有氧時再變成乙醯輔酶A，進檸檬酸循環。', '開關：吃飽時胰島素讓它加快；飢餓時升糖素讓它變慢，肝臟改走方向相反的糖質新生。'] },
+      done: ['原料與產物：1 個葡萄糖 → 2 個丙酮酸，[[淨得 2 ATP、2 NADH]]。', '位置：[[細胞質]]，每一種細胞都有。', '轉乘站：丙酮酸。有氧時再變成乙醯輔酶A，進檸檬酸循環。', '開關：吃飽時胰島素讓它加快；飢餓時升糖素讓它變慢，肝臟改走方向相反的糖質新生。'] },
     { t: '準備階段：步驟 1 到 5', kind: 'map', blanks: ['g6p', 'f6p', 'fbp', 'g3p'],
       intro: ['前五步是「準備階段」，先投資。葡萄糖被接上兩個磷酸根，變成兩頭都有磷酸的果糖，再從中間切成兩個 3 碳的分子。',
         '名字本身就在說發生了什麼事：多了「-6-磷酸」（6-phosphate）是接上一個磷酸根；「葡萄糖」變「果糖」（glucose → fructose）是換形狀；「1,6-雙磷酸」（1,6-bisphosphate）是又接上一個。'],
-      tip: '切開後得到甘油醛-3-磷酸（glyceraldehyde 3-phosphate，G3P）和二羥丙酮磷酸（dihydroxyacetone phosphate，DHAP）。DHAP 會再轉成 G3P，所以最後是 2 個 G3P 往下走。' },
+      tip: '切開後得到甘油醛-3-磷酸（glyceraldehyde 3-phosphate，G3P）和二羥丙酮磷酸（dihydroxyacetone phosphate，DHAP）。DHAP 會再轉成 G3P，所以最後是 [[2 個 G3P]] 往下走。' },
     { t: '收益階段：步驟 6 到 10', kind: 'map', blanks: ['bpg', 'pg3', 'pg2', 'pep', 'pyr'],
-      intro: ['後五步是「收益階段」，開始回收。從這裡起每個分子都是 2 份，所以產物都要乘以 2。',
+      intro: ['後五步是「收益階段」，開始回收。從這裡起[[每個分子都是 2 份]]，所以產物都要乘以 2。',
         'G3P 先被氧化、接上一個高能的磷酸根；接著兩次把磷酸根交給 ADP 做出 ATP，最後剩下丙酮酸。'],
       tip: '名字的規律：1,3-雙磷酸（1,3-bisphospho-）→ 交出一個，剩 3-磷酸（3-phospho-）→ 磷酸根搬到 2 號位置（2-phospho-）→ 脫水變成「磷酸烯醇」丙酮酸（phosphoenol-pyruvate）→ 再交出磷酸根，就是丙酮酸（pyruvate）。' },
     { t: '十步的中間產物（全部自己填）', kind: 'map', blanks: ['g6p', 'f6p', 'fbp', 'g3p', 'dha', 'bpg', 'pg3', 'pg2', 'pep', 'pyr'],
       intro: ['把準備階段和收益階段接起來，從葡萄糖一路填到丙酮酸。'] },
     { t: '十個酵素', kind: 'map', blanks: [], rows: 'enz', rowsTitle: '每一步的酵素',
       intro: ['酵素的名字一樣在說它做的事：',
-        '<b>激酶</b>（kinase）負責搬磷酸根，跟 ATP 有關的步驟都是它；<b>異構酶</b>（isomerase）只是換形狀；<b>去氫酶</b>（dehydrogenase）把氫拿走交給 NAD⁺；<b>變位酶</b>（mutase）把磷酸根搬到同一個分子的另一個位置。'],
+        '{k:激酶（kinase）}負責搬磷酸根，跟 ATP 有關的步驟都是它；<b>異構酶</b>（isomerase）只是換形狀；{d:去氫酶（dehydrogenase）}把氫拿走交給 NAD⁺；<b>變位酶</b>（mutase）把磷酸根搬到同一個分子的另一個位置。'],
       tip: '第 1 步的酵素在大部分組織是己糖激酶（hexokinase），在肝臟則是葡萄糖激酶（glucokinase）。' },
     { t: '算帳：ATP 與 NADH', kind: 'map', blanks: [], rows: 'prod', rowsTitle: '每一步花掉或產生什麼',
       intro: ['現在來算帳：哪幾步花 ATP？哪幾步賺 ATP？哪一步產生 NADH？',
-        '記法：名字有「激酶」（kinase）的四步都跟 ATP 有關，前兩個是花，後兩個是賺；唯一有「去氫酶」（dehydrogenase）的那一步產生 NADH。'],
-      tip: '收益階段每一步都是 2 份，所以賺到的 ATP 要乘以 2。',
+        '記法：名字有{k:「激酶」（kinase）}的四步都跟 ATP 有關，前兩個是花，後兩個是賺；唯一有{d:「去氫酶」（dehydrogenase）}的那一步產生 NADH。全對之後，圖上會出現每一步的標籤。'],
+      tip: '收益階段每一步都是 2 份，所以[[賺到的 ATP 要乘以 2]]。',
       countsTitle: '一個葡萄糖的總帳', counts: [['準備階段花掉的 ATP', '2', ['1', '2', '3', '4']], ['收益階段賺到的 ATP', '4', ['2', '4', '6', '8']], ['淨得的 ATP', '2', ['2', '4', '6', '8']], ['產生的 NADH', '2', ['1', '2', '3', '4']]] },
     { t: '調節與國考重點', kind: 'cloze',
       intro: ['把糖解作用接到國考常考的重點：不可逆步驟、關鍵酵素的調控（什麼時候開、什麼時候關）、無氧代謝。每一句選出正確的詞。',
@@ -351,7 +382,7 @@ var GLY = { id: 'gly', zh: '糖解作用', en: 'Glycolysis', alias: 'Glycolysis�
         ['進行受質層次磷酸化的兩個酵素，是 phosphoglycerate kinase 和', { a: 'pk', src: 'enz', lang: 'en', o: ['hk', 'pfk', 'eno', 'pk'] }, '。'],
         ['下列何者是糖解作用的中間產物？', { a: 'dhap', lang: 'en', o: ['dhap', 'cit', 'acac', 'mal'] }, '']
       ] },
-    { t: '總複習：全部空白（英文作答）', kind: 'map', force: 'en', blanks: ['g6p', 'f6p', 'fbp', 'g3p', 'dha', 'bpg', 'pg3', 'pg2', 'pep', 'pyr'], rows: 'enz', rowsTitle: '每一步的酵素',
+    { t: '總複習：全部空白（英文作答）', kind: 'map', force: 'en', plain: true, energy: true, blanks: ['g6p', 'f6p', 'fbp', 'g3p', 'dha', 'bpg', 'pg3', 'pg2', 'pep', 'pyr'], rows: 'enz', rowsTitle: '每一步的酵素',
       intro: ['圖上十個中間產物、圖下十個酵素，全部空白。全對，就代表糖解作用你已經能「看圖說故事」了。'],
       tip: '這一關固定用英文作答，因為國考的酵素和中間產物常常只寫英文。答對後，酵素下方會顯示中文。' }
   ] };
@@ -367,7 +398,7 @@ var TCA = { id: 'tca', zh: '檸檬酸循環', en: 'TCA cycle', alias: 'TCA cycle
   ],
   ang: { cit: 34, iso: 73, akg: 107, sco: 146, suc: 214, fum: 253, mal: 287, oaa: 326 },
   steps: [
-    { f: 'oaa', t: 'cit', e: 'cs', p: 'none' }, { f: 'cit', t: 'iso', e: 'aco', p: 'none' }, { f: 'iso', t: 'akg', e: 'idh', p: 'nc' }, { f: 'akg', t: 'sco', e: 'kgd', p: 'nc' },
+    { f: 'oaa', t: 'cit', e: 'cs', p: 'none', irr: 1 }, { f: 'cit', t: 'iso', e: 'aco', p: 'none' }, { f: 'iso', t: 'akg', e: 'idh', p: 'nc', irr: 1 }, { f: 'akg', t: 'sco', e: 'kgd', p: 'nc', irr: 1 },
     { f: 'sco', t: 'suc', e: 'scs', p: 'gtp' }, { f: 'suc', t: 'fum', e: 'sdh', p: 'fad' }, { f: 'fum', t: 'mal', e: 'fmr', p: 'none' }, { f: 'mal', t: 'oaa', e: 'mdh', p: 'n' }
   ],
   enz: {
@@ -375,6 +406,7 @@ var TCA = { id: 'tca', zh: '檸檬酸循環', en: 'TCA cycle', alias: 'TCA cycle
     kgd: { zh: 'α-酮戊二酸去氫酶複合體', en: 'α-Ketoglutarate dehydrogenase complex' }, scs: { zh: '琥珀醯輔酶A合成酶', en: 'Succinyl-CoA synthetase' },
     sdh: { zh: '琥珀酸去氫酶', en: 'Succinate dehydrogenase' }, fmr: { zh: '延胡索酸酶', en: 'Fumarase' }, mdh: { zh: '蘋果酸去氫酶', en: 'Malate dehydrogenase' }
   },
+  tags: { nc: [['NADH', 'nadh'], ['CO₂', 'co2']], n: [['NADH', 'nadh']], fad: [['FADH₂', 'fad']], gtp: [['GTP', 'atp']] },
   prod: { nc: { zh: 'NADH ＋ CO₂', en: 'NADH + CO₂' }, n: { zh: 'NADH', en: 'NADH' }, fad: { zh: 'FADH₂', en: 'FADH₂' }, gtp: { zh: 'GTP', en: 'GTP' }, none: { zh: '都沒有', en: 'None' } },
   dict: {
     pyr: { zh: '丙酮酸', en: 'Pyruvate' }, aco: { zh: '乙醯輔酶A', en: 'Acetyl-CoA' }, car: { zh: 'NADH、FADH₂', en: 'NADH、FADH₂' }, atp: { zh: 'ATP', en: 'ATP' }, lac: { zh: '乳酸', en: 'Lactate' }, co2: { zh: 'CO₂', en: 'CO₂' },
@@ -387,21 +419,21 @@ var TCA = { id: 'tca', zh: '檸檬酸循環', en: 'TCA cycle', alias: 'TCA cycle
     fum: { zh: '延胡索酸', en: 'Fumarate' }, iso: { zh: '異檸檬酸', en: 'Isocitrate' }, sco: { zh: '琥珀醯輔酶A', en: 'Succinyl-CoA' }, pep: { zh: '磷酸烯醇丙酮酸', en: 'Phosphoenolpyruvate' }
   },
   levels: [
-    { t: '先看全貌', kind: 'ov', h: 500,
+    { t: '先看全貌', kind: 'ov', h: 500, legend: [6, 3, 2],
       intro: ['吃進去的醣類、脂肪、蛋白質，最後都要先變成同一個分子，才能進到同一個循環裡燒掉。就像捷運的轉乘站，不管從哪一條線來，都在這裡換車。',
         '循環本身幾乎不直接做 ATP。它的工作是把碳變成 CO₂ 排掉，同時把能量裝進兩種「載電子的貨車」，再交給電子傳遞鏈去做 ATP。',
         '一樣先問三件事：原料和產物是什麼、在細胞的哪裡、什麼時候開什麼時候關。先把這張大地圖的四個空格填對，後面每一關都是把其中一段放大來看。'],
       tip: '胺基酸其實還能從循環的其他位置進來，之後的單元會教。',
       svg: function () { var h = PH() / 2;
         return arrow(70, 35 + h, 70, 126 - h) + arrow(70, 129 + h, 132, 210 - h) + arrow(180, 35 + h, 180, 210 - h) + arrow(290, 35 + h, 228, 210 - h) + arrow(180, 213 + h, 180, 260) + arrow(180, 338, 180, 390 - h) + arrow(180, 393 + h, 180, 460 - h) + arrow(234, 462, 252, 462) + arrow(226, 300, 276, 300) +
-          pill(70, 34, 100, { zh: '醣類（葡萄糖）', en: 'Glucose' }, 'src') + pill(180, 34, 88, { zh: '脂肪酸', en: 'Fatty acids' }, 'src') + pill(290, 34, 88, { zh: '胺基酸', en: 'Amino acids' }, 'src') +
-          '<circle class="pill" cx="180" cy="300" r="38" stroke-width="1.5"/>' + tx(180, 297, T(TCA.zh, TCA.en), 'b', 13) + tx(180, 313, T('轉一圈', 'one turn'), 'm', 10.5) + tx(306, 304, 'CO₂', '', 13) +
+          pill(70, 34, 100, { zh: '醣類（葡萄糖）', en: 'Glucose' }, 'src k6') + pill(180, 34, 88, { zh: '脂肪酸', en: 'Fatty acids' }, 'src') + pill(290, 34, 88, { zh: '胺基酸', en: 'Amino acids' }, 'src') +
+          '<circle class="pill" cx="180" cy="300" r="38" stroke-width="1.5"/>' + tx(180, 297, T(TCA.zh, TCA.en), 'b', 13) + tx(180, 313, T('轉一圈', 'one turn'), 'm', 10.5) + tagC(304, 300, 'CO₂', 'co2') +
           pill(180, 462, 104, { zh: '電子傳遞鏈', en: 'Electron transport chain', ab: 'ETC' }) + tx(70, 466, 'O₂ → H₂O', 'm', 11) + arrow(104, 462, 124, 462, true) + tx(80, 88, T('糖解', 'glycolysis'), 'm', 10.5, 'start'); },
-      blanks: [{ id: 'o1', x: 70, y: 128, w: 92, a: 'pyr', o: ['pyr', 'aco', 'car', 'atp', 'lac', 'co2'] }, { id: 'o2', x: 180, y: 212, w: 104, a: 'aco', o: ['pyr', 'aco', 'car', 'atp', 'lac', 'co2'] },
+      blanks: [{ id: 'o1', x: 70, y: 128, w: 92, c: 3, a: 'pyr', o: ['pyr', 'aco', 'car', 'atp', 'lac', 'co2'] }, { id: 'o2', x: 180, y: 212, w: 104, c: 2, a: 'aco', o: ['pyr', 'aco', 'car', 'atp', 'lac', 'co2'] },
         { id: 'o3', x: 180, y: 392, w: 116, a: 'car', o: ['pyr', 'aco', 'car', 'atp', 'lac', 'co2'] }, { id: 'o4', x: 294, y: 462, w: 76, a: 'atp', o: ['pyr', 'aco', 'car', 'atp', 'lac', 'co2'] }],
-      done: ['原料與產物：1 個乙醯輔酶A（2 碳）→ 2 個 CO₂，能量裝進 3 NADH、1 FADH₂、1 GTP。', '位置：粒線體基質。', '轉乘站：乙醯輔酶A。醣類、脂肪酸和多數胺基酸都從這裡進來。', '開關：細胞能量充足（ATP、NADH 多）就變慢；能量不足（ADP 多）就加快。'] },
+      done: ['原料與產物：1 個乙醯輔酶A（2 碳）→ 2 個 CO₂，能量裝進 [[3 NADH、1 FADH₂、1 GTP]]。', '位置：[[粒線體基質]]。', '轉乘站：乙醯輔酶A。醣類、脂肪酸和多數胺基酸都從這裡進來。', '開關：細胞能量充足（ATP、NADH 多）就變慢；能量不足（ADP 多）就加快。'] },
     { t: '八個中間產物（先填四個）', kind: 'map', blanks: ['cit', 'akg', 'suc', 'mal'], carbon: true,
-      intro: ['循環一圈有八個中間產物。先記碳數怎麼變，名字就不容易亂：',
+      intro: ['循環一圈有八個中間產物。先記碳數怎麼變，名字就不容易亂。圖上的底色就是碳數：',
         '2 碳的乙醯輔酶A 接上 4 碳的草醯乙酸，變成 6 碳的檸檬酸；接著掉兩次 CO₂，6 碳 → 5 碳 → 4 碳；最後整理回草醯乙酸，去接下一個乙醯輔酶A。',
         '這一關先填四個，另外四個先給你看。方向是順時針。'],
       tip: '同一個東西有好幾個名字：草醯乙酸（oxaloacetate，OAA）在簡報也寫成草醋酸；延胡索酸（fumarate）也叫富馬酸、反丁烯二酸。這裡用國考題目的寫法。' },
@@ -410,13 +442,13 @@ var TCA = { id: 'tca', zh: '檸檬酸循環', en: 'TCA cycle', alias: 'TCA cycle
       tip: '名字裡有「琥珀」（succin-）的有兩個：先是帶著輔酶A 的 succinyl-CoA，下一個才是沒有輔酶A 的 succinate。' },
     { t: '八個酵素', kind: 'map', blanks: [], rows: 'enz', rowsTitle: '每一步的酵素',
       intro: ['每一步都有一個酵素，圖上用 ①～⑧ 標出來。酵素的名字大多直接說出它在做什麼：',
-        '<b>去氫酶</b>（dehydrogenase）把氫（電子）拿走，交給 NAD⁺ 或 FAD；<b>合成酶</b>（synthase、synthetase）把兩個東西接起來；<b>複合體</b>（complex）是好幾個酵素組在一起，需要多種輔因子。',
+        '{d:去氫酶（dehydrogenase）}把氫（電子）拿走，交給 NAD⁺ 或 FAD；<b>合成酶</b>（synthase、synthetase）把兩個東西接起來；<b>複合體</b>（complex）是好幾個酵素組在一起，需要多種輔因子。',
         '所以看到「誰 → 誰」，先想這一步是在脫氫、接合，還是只是換個形狀。'],
       tip: '「去氫酶」和「脫氫酶」是同一個意思，國考題目多半寫去氫酶。' },
     { t: '哪一步產生什麼', kind: 'map', blanks: [], rows: 'prod', rowsTitle: '每一步產生什麼',
       intro: ['考試最常問的是：哪一步掉 CO₂？哪一步產生 NADH、FADH₂、GTP？',
-        '兩條規則就夠了：碳數變少的那一步才會掉 CO₂；酵素名字有「去氫酶」（dehydrogenase）的步驟才會產生 NADH 或 FADH₂。'],
-      tip: '換算 ATP 的規則：考試沒有特別說明時，NADH 算 2.5 個、FADH₂ 算 1.5 個、GTP 算 1 個。舊的算法是 NADH 3 個、FADH₂ 2 個，題目有指定才用。',
+        '兩條規則就夠了：[[碳數變少的那一步才會掉 CO₂]]；酵素名字有{d:「去氫酶」（dehydrogenase）}的步驟才會產生 NADH 或 FADH₂。全對之後，圖上會出現每一步的標籤。'],
+      tip: '換算 ATP 的規則：考試沒有特別說明時，[[NADH 算 2.5 個、FADH₂ 算 1.5 個]]、GTP 算 1 個。舊的算法是 NADH 3 個、FADH₂ 2 個，題目有指定才用。',
       countsTitle: '一分子乙醯輔酶A 走一圈，總共產生幾個？', counts: [['NADH', '3', ['0', '1', '2', '3', '4']], ['FADH₂', '1', ['0', '1', '2', '3', '4']], ['GTP', '1', ['0', '1', '2', '3', '4']], ['CO₂', '2', ['0', '1', '2', '3', '4']], ['全部換算成 ATP（NADH 2.5、FADH₂ 1.5）', '10', ['8', '10', '12', '15']]] },
     { t: '位置、調節、維生素與抑制劑', kind: 'cloze',
       intro: ['把循環接到國考常考的幾個重點。每一句選出正確的詞。', '最後四題的選項只有英文，仿照國考的出法，答對後會顯示中文。'],
@@ -434,7 +466,7 @@ var TCA = { id: 'tca', zh: '檸檬酸循環', en: 'TCA cycle', alias: 'TCA cycle
         ['三大營養素產能代謝的主要串聯分子，是 pyruvate 和', { a: 'aco', lang: 'en', o: ['aco', 'cit', 'mal', 'g6p'] }, '。'],
         ['下列何者不是檸檬酸循環的中間產物？', { a: 'pep', lang: 'en', o: ['fum', 'iso', 'sco', 'pep'] }, '']
       ] },
-    { t: '總複習：全部空白（英文作答）', kind: 'map', force: 'en', blanks: ['cit', 'iso', 'akg', 'sco', 'suc', 'fum', 'mal', 'oaa'], rows: 'enz', rowsTitle: '每一步的酵素',
+    { t: '總複習：全部空白（英文作答）', kind: 'map', force: 'en', plain: true, energy: true, blanks: ['cit', 'iso', 'akg', 'sco', 'suc', 'fum', 'mal', 'oaa'], rows: 'enz', rowsTitle: '每一步的酵素',
       intro: ['圖上八個中間產物、圖下八個酵素，全部空白。全對，就代表這個循環你已經畫得出來了。'],
       tip: '這一關固定用英文作答，因為國考的酵素和中間產物常常只寫英文。答對後，酵素下方會顯示中文。' }
   ] };
@@ -442,12 +474,12 @@ var TCA = { id: 'tca', zh: '檸檬酸循環', en: 'TCA cycle', alias: 'TCA cycle
 /* 目錄：照老師上課的順序。有 levels 的才是做好的單元 */
 var GROUPS = [
   { g: '先讀這裡', items: [PRE] },
-  { g: '生化 1・醣類代謝', items: [GLY, { zh: '糖質新生', en: 'Gluconeogenesis' }, { zh: '肝醣合成與分解', en: 'Glycogenesis & glycogenolysis' }, { zh: '五碳糖磷酸途徑', en: 'Pentose phosphate pathway' }] },
-  { g: '生化 1・能量代謝', items: [{ zh: '丙酮酸去氫酶複合體', en: 'PDH complex' }, TCA, { zh: '電子傳遞鏈與氧化磷酸化', en: 'ETC & oxidative phosphorylation' }] },
-  { g: '生化 1・脂質分解', items: [{ zh: '脂肪酸 β-氧化', en: 'β-Oxidation' }] },
-  { g: '生化 2・脂質合成', items: [{ zh: '脂肪酸合成', en: 'Fatty acid synthesis' }, { zh: '酮體生成', en: 'Ketogenesis' }, { zh: '膽固醇合成與脂蛋白', en: 'Cholesterol & lipoproteins' }] },
-  { g: '生化 2・蛋白質與胺基酸', items: [{ zh: '轉胺作用與尿素循環', en: 'Transamination & urea cycle' }, { zh: '胺基酸碳骨架與單碳代謝', en: 'Carbon skeletons & one-carbon metabolism' }] },
-  { g: '全部學完之後', items: [{ zh: '整合：吃飽與飢餓時，哪些路徑開、哪些關', en: 'Fed & fasting states' }] }
+  { g: '生化 1・醣類代謝', c: 6, items: [GLY, { zh: '糖質新生', en: 'Gluconeogenesis' }, { zh: '肝醣合成與分解', en: 'Glycogenesis & glycogenolysis' }, { zh: '五碳糖磷酸途徑', en: 'Pentose phosphate pathway' }] },
+  { g: '生化 1・能量代謝', c: 5, items: [{ zh: '丙酮酸去氫酶複合體', en: 'PDH complex' }, TCA, { zh: '電子傳遞鏈與氧化磷酸化', en: 'ETC & oxidative phosphorylation' }] },
+  { g: '生化 1・脂質分解', c: 2, items: [{ zh: '脂肪酸 β-氧化', en: 'β-Oxidation' }] },
+  { g: '生化 2・脂質合成', c: 2, items: [{ zh: '脂肪酸合成', en: 'Fatty acid synthesis' }, { zh: '酮體生成', en: 'Ketogenesis' }, { zh: '膽固醇合成與脂蛋白', en: 'Cholesterol & lipoproteins' }] },
+  { g: '生化 2・蛋白質與胺基酸', c: 3, items: [{ zh: '轉胺作用與尿素循環', en: 'Transamination & urea cycle' }, { zh: '胺基酸碳骨架與單碳代謝', en: 'Carbon skeletons & one-carbon metabolism' }] },
+  { g: '全部學完之後', c: 4, items: [{ zh: '整合：吃飽與飢餓時，哪些路徑開、哪些關', en: 'Fed & fasting states' }] }
 ];
 var UNITS = {}; GROUPS.forEach(function (g) { g.items.forEach(function (u) { if (u.levels) { UNITS[u.id] = u; u.map = {}; u.nodes.forEach(function (n) { u.map[n.k] = n; }); } }); });
 
@@ -472,13 +504,13 @@ function home() {
   $('back').hidden = true; $('lv').hidden = true; seg();
   var h = '<div class="card pad"><h2>怎麼用</h2><p>每個路徑分成幾關，從只看大方向開始，一次多記一點，最後整張圖自己填出來。</p>' +
     '<p>虛線框的空格是下拉選單，點一下選答案，填完按「對答案」。</p>' +
-    '<ul class="small muted"><li>右上角可以切換名稱：中文、中英對照、英文。預設是中英對照。</li><li>國考的酵素和中間產物常常只寫英文，所以每個單元最後的總複習固定用英文作答。考的是選擇題，練到看到認得就夠了，不必會拼。</li><li>第一次來，請先做最上面的「開始之前」。</li></ul></div>';
+    '<ul class="small muted"><li>右上角可以切換名稱：中文、中英對照、英文。預設是中英對照。</li><li>顏色都有意思：圖上名稱的底色是碳數（6 碳、3 碳…），小標籤是這一步花掉或產生什麼，<mark>黃底的字</mark>是必背。</li><li>國考的酵素和中間產物常常只寫英文，所以每個單元最後的總複習固定用英文作答。考的是選擇題，練到看到認得就夠了，不必會拼。</li><li>第一次來，請先做最上面的「開始之前」。</li></ul></div>';
   GROUPS.forEach(function (g) {
-    h += '<div class="glab">' + esc(g.g) + '</div>';
+    h += '<div class="glab' + (g.c ? ' k' + g.c : '') + '">' + esc(g.g) + '</div>';
     g.items.forEach(function (p) {
       if (p.levels) { var n = p.levels.length, d = p.levels.filter(function (_, i) { return isDone(p.id, i); }).length;
-        h += '<button type="button" class="item" data-p="' + p.id + '"><b>' + esc(p.zh) + '<span>' + esc(p.alias || p.en) + '</span></b><i>' + (d === n ? '已完成' : d + ' ／ ' + n + ' 關') + '</i></button>';
-      } else h += '<button type="button" class="item" disabled><b>' + esc(p.zh) + '<span>' + esc(p.en) + '</span></b><i>製作中</i></button>';
+        h += '<button type="button" class="item' + (g.c ? ' k' + g.c : '') + '" data-p="' + p.id + '"><b>' + esc(p.zh) + '<span>' + esc(p.alias || p.en) + '</span></b><i>' + (d === n ? '已完成' : d + ' ／ ' + n + ' 關') + '</i></button>';
+      } else h += '<button type="button" class="item' + (g.c ? ' k' + g.c : '') + '" disabled><b>' + esc(p.zh) + '<span>' + esc(p.en) + '</span></b><i>製作中</i></button>';
     });
   });
   h += OK ? '<p class="note">完成的關卡只記在這支手機的瀏覽器。清除瀏覽器資料、換手機，或 iPhone 超過一週沒打開，紀錄會消失；內容不受影響。</p>' : '<p class="note">這個瀏覽器無法儲存資料，完成紀錄不會保留。</p>';
@@ -503,17 +535,17 @@ function pos(U, k) {
 function mapH(U) { return U.layout === 'cycle' ? CY.h : CH.y0 * 2 + (mainNodes(U).length - 1) * CH.dy; }
 function stepNo(U, f, t) { for (var i = 0; i < U.steps.length; i++) if (U.steps[i].f === f && U.steps[i].t === t) return i; return -1; }
 
-function mapSvg(U, L) {
-  var s = '', h = PH() / 2, isBlank = function (k) { return L.blanks.indexOf(k) >= 0; };
+function mapSvg(U, L, E) {      // E：'all' 顯示能量標籤、'co2' 只顯示 CO₂、'' 不顯示
+  var s = '', tg = '', pick = function (st) { return (U.tags && U.tags[st.p] || []).filter(function (t) { return E === 'all' || (E === 'co2' && t[1] === 'co2'); }); }, h = PH() / 2, isBlank = function (k) { return L.blanks.indexOf(k) >= 0; };
   if (U.layout === 'cycle') {
     s += '<ellipse class="ln" cx="' + CY.cx + '" cy="' + CY.cy + '" rx="' + CY.rx + '" ry="' + CY.ry + '" fill="none" stroke-width="3"/>';
     U.steps.forEach(function (st, i) {
       var a = U.ang[st.f], b = U.ang[st.t]; if (b < a) b += 360; var m = ((a + b) / 2) % 360, p = cpt(m), r = m * Math.PI / 180, ang = Math.atan2(CY.ry * Math.sin(r), CY.rx * Math.cos(r)) * 180 / Math.PI;
-      s += L.rows ? badge(p.x, p.y, i + 1) : '<polygon class="ar" points="-7,-6 7,0 -7,6" transform="translate(' + p.x + ',' + p.y + ') rotate(' + ang + ')"/>';
-      if (L.carbon && st.p === 'nc') { var q = cpt(m, CY.rx + 26, CY.ry + 4); s += tx(q.x + 2, q.y + 4, 'CO₂', 'm', 11); }
+      s += L.rows ? badge(p.x, p.y, i + 1, st.irr) : '<polygon class="ar" points="-7,-6 7,0 -7,6" transform="translate(' + p.x + ',' + p.y + ') rotate(' + ang + ')"/>';
+      var tl = pick(st), ac = Math.abs(Math.cos(r)), q = cpt(m, CY.rx + 44 + 6 * ac, CY.ry + 14 + 12 * ac); tl.forEach(function (t, j) { tg += tagC(q.x, q.y + (j - (tl.length - 1) / 2) * 18, t[0], t[1]); });
     });
     s += '<line class="ln" x1="' + CY.cx + '" y1="' + (35 + h) + '" x2="' + CY.cx + '" y2="' + (CY.cy - CY.ry - 14) + '" stroke-width="3"/><polygon class="ar" points="-6,-7 6,-7 0,7" transform="translate(' + CY.cx + ',' + (CY.cy - CY.ry - 12) + ')"/>';
-    s += pill(CY.cx, 34, 128, { zh: U.dict.aco.zh + (L.carbon ? '（2C）' : ''), en: U.dict.aco.en + (L.carbon ? ' (2C)' : '') }, 'src');
+    s += pill(CY.cx, 34, 128, { zh: U.dict.aco.zh + (L.carbon ? '（2C）' : ''), en: U.dict.aco.en + (L.carbon ? ' (2C)' : '') }, 'src k2');
     if (M() === 'bi') s += tx(CY.cx, CY.cy - 10, U.zh, 'b', 15) + tx(CY.cx, CY.cy + 7, U.en, 'b', 11.5) + tx(CY.cx, CY.cy + 24, '順時針方向', 'm', 11);
     else s += tx(CY.cx, CY.cy - 4, T(U.zh, U.en), 'b', 15) + tx(CY.cx, CY.cy + 16, T('順時針方向', 'clockwise'), 'm', 11);
   } else {
@@ -523,29 +555,30 @@ function mapSvg(U, L) {
         '<text x="30" y="' + my + '" text-anchor="middle" font-size="11.5" font-weight="700" style="fill:var(' + ph.c + ')" transform="rotate(-90 30 ' + my + ')">' + esc(T(ph.zh, ph.en)) + '</text>'; });
     for (var i = 0; i < m.length - 1; i++) { var a = pos(U, m[i].k), b = pos(U, m[i + 1].k), n = stepNo(U, m[i].k, m[i + 1].k);
       s += '<line class="ln" x1="' + a.x + '" y1="' + (a.y + h) + '" x2="' + b.x + '" y2="' + (b.y - h) + '" stroke-width="3"/>';
-      s += L.rows ? badge(a.x, (a.y + b.y) / 2, n + 1) : '<polygon class="ar" points="-6,-6 6,-6 0,6" transform="translate(' + a.x + ',' + ((a.y + b.y) / 2 + 1) + ')"/>'; }
+      s += L.rows ? badge(a.x, (a.y + b.y) / 2, n + 1, U.steps[n].irr) : '<polygon class="ar" points="-6,-6 6,-6 0,6" transform="translate(' + a.x + ',' + ((a.y + b.y) / 2 + 1) + ')"/>';
+      var tx0 = a.x + 17; pick(U.steps[n]).forEach(function (t) { var w = tagW(t[0]); tg += tagC(tx0 + w / 2, (a.y + b.y) / 2, t[0], t[1]); tx0 += w + 4; }); }
     U.nodes.forEach(function (sd) { if (!sd.side) return;      // 旁支：例如 DHAP
       var p = pos(U, sd.k), q = pos(U, sd.side), n = stepNo(U, sd.k, sd.side), prev = null;
       for (var i = 0; i < m.length; i++) if (m[i].k === sd.side) prev = pos(U, m[i - 1].k);
       s += '<line class="ln" x1="' + (prev.x + 50) + '" y1="' + (prev.y + h) + '" x2="' + p.x + '" y2="' + (p.y - h - 1) + '" stroke-width="3"/>';
       var x1 = q.x + q.w / 2 + 1, x2 = p.x - p.w / 2 - 1; s += '<line class="ln" x1="' + x1 + '" y1="' + p.y + '" x2="' + x2 + '" y2="' + p.y + '" stroke-width="3"/>';
-      if (L.rows) s += badge((x1 + x2) / 2 + 4, p.y + h + 13, n + 1); else s += tx((x1 + x2) / 2 + 4, p.y + h + 14, '⇌', 'm', 14);
+      if (L.rows) s += badge((x1 + x2) / 2 + 4, p.y + h + 13, n + 1, U.steps[n].irr); else s += tx((x1 + x2) / 2 + 4, p.y + h + 14, '⇌', 'm', 14);
     });
   }
   U.nodes.forEach(function (n) { var p = pos(U, n.k);
-    if (!isBlank(n.k)) s += pill(p.x, p.y, p.w, n, U.layout === 'chain' && n === U.nodes[0] ? 'src' : 'pill');
-    if (L.carbon && n.c) s += '<text x="' + p.x + '" y="' + (p.y + h + 13) + '" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--c' + n.c + ')">' + n.c + 'C</text>';
+    if (!isBlank(n.k)) s += pill(p.x, p.y, p.w, n, (U.layout === 'chain' && n === U.nodes[0] ? 'src' : 'pill') + (n.c ? ' k' + n.c : ''));
+    if (L.carbon && n.c) s += '<text x="' + p.x + '" y="' + (p.y + h + 13) + '" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--k' + n.c + 's)">' + n.c + 'C</text>';
   });
-  return s;
+  return s + tg;
 }
 
 /* ---------- 一關的空格清單 ---------- */
 function buildBlanks(U, L) {
   var B = [];
-  if (L.kind === 'ov') L.blanks.forEach(function (b) { B.push({ id: b.id, where: 'node', ans: b.a, src: U.dict, opts: shuffle(b.o), x: b.x, y: b.y, w: b.w }); });
+  if (L.kind === 'ov') L.blanks.forEach(function (b) { B.push({ id: b.id, where: 'node', ans: b.a, src: U.dict, opts: shuffle(b.o), x: b.x, y: b.y, w: b.w, c: b.c }); });
   if (L.kind === 'map') {
     var keys = U.nodes.filter(function (n) { return n !== U.nodes[0] || U.layout === 'cycle'; }).map(function (n) { return n.k; });
-    L.blanks.forEach(function (k) { var p = pos(U, k); B.push({ id: 'n_' + k, where: 'node', ans: k, src: U.map, enFirst: true, opts: shuffle(keys), x: p.x, y: p.y, w: p.w }); });
+    L.blanks.forEach(function (k) { var p = pos(U, k); B.push({ id: 'n_' + k, where: 'node', ans: k, src: U.map, enFirst: true, opts: shuffle(keys), x: p.x, y: p.y, w: p.w, c: L.plain ? null : U.map[k].c }); });
     if (L.rows) U.steps.forEach(function (s, i) { var d = L.rows === 'enz' ? U.enz : U.prod, ks = Object.keys(d).filter(function (k) { return L.rows !== 'enz' || U.steps.some(function (t) { return t.e === k; }); });
       B.push({ id: 'r' + i, where: 'row', ans: L.rows === 'enz' ? s.e : s.p, src: d, enFirst: true, opts: shuffle(ks), step: i }); });
   }
@@ -563,9 +596,16 @@ function face(b) {
   if (b.where === 'row' || b.enFirst) { var R = two(b.src[v], b.lang); return '<b>' + esc(R[0]) + '</b>' + (R[1] ? '<small>' + esc(R[1]) + '</small>' : ''); }
   return '<b>' + esc(label(b, v)) + '</b>';
 }
+/* 空格的顏色：圖上的空格＝這個位置的碳數；圖下的空格＝選到的答案是哪一類（激酶與 ATP 橘色、去氫酶與 NADH 藍色、FADH₂ 紫色） */
+function faceCls(b) {
+  var v = ST.ans[b.id] || '', c = 'face';
+  if (b.where === 'node' && b.c) c += ' k' + b.c;
+  if (b.where === 'row' && v) { var e = b.src[v].en || ''; c += /kinase|ATP|GTP/.test(e) ? ' tk' : /dehydrogenase|NADH/.test(e) ? ' td' : /FADH/.test(e) ? ' tf' : ''; }
+  return c;
+}
 function sel(b) {
   var v = ST.ans[b.id] || '';
-  return '<span class="pick' + (v ? ' has' : '') + '"><span class="face">' + face(b) + '</span><select data-b="' + b.id + '" aria-label="空格"><option value="">' + (b.where === 'node' ? '？' : '請選擇') + '</option>' +
+  return '<span class="pick' + (v ? ' has' : '') + '"><span class="' + faceCls(b) + '">' + face(b) + '</span><select data-b="' + b.id + '" aria-label="空格"><option value="">' + (b.where === 'node' ? '？' : '請選擇') + '</option>' +
     b.opts.map(function (o) { return '<option value="' + esc(o) + '"' + (o === v ? ' selected' : '') + '>' + esc(label(b, o)) + '</option>'; }).join('') + '</select></span>';
 }
 
@@ -579,13 +619,18 @@ function level() {
   $('lv').querySelectorAll('button').forEach(function (b) { b.onclick = function () { open(U, +b.getAttribute('data-i')); }; });
   var on = $('lv').querySelector('.on'); if (on && on.scrollIntoView) on.scrollIntoView({ block: 'nearest', inline: 'center' });
 
-  var h = '<div class="card pad"><h2>' + esc(L.t) + '</h2>' + L.intro.map(function (p) { return '<p>' + p + '</p>'; }).join('') + (L.tip ? '<div class="tip">' + esc(L.tip) + '</div>' : '') + '</div>';
+  var h = '<div class="card pad"><h2>' + esc(L.t) + '</h2>' + L.intro.map(function (p) { return '<p>' + fmt(p) + '</p>'; }).join('') + (L.tip ? '<div class="tip">' + fmt(esc(L.tip)) + '</div>' : '') + '</div>';
   var by = function (w) { return ST.blanks.filter(function (b) { return b.where === w; }); }, nodes = by('node'), rows = by('row'), cnt = by('count');
+  var passed = ST.checked && !ST.shown && ST.blanks.every(function (b) { return ST.ans[b.id] === b.ans; });
+  var E = L.energy || (L.rows === 'prod' && (ST.shown || passed)) ? 'all' : L.carbon ? 'co2' : '';      // 算帳那一關：全對或看答案後，圖上才出現能量標籤
+  var lg = (L.legend || (L.kind === 'map' && !L.plain ? U.nodes.map(function (n) { return n.c; }).concat(U.layout === 'cycle' ? [2] : []).filter(function (c, i, a) { return c && a.indexOf(c) === i; }).sort(function (a, b) { return b - a; }) : []))
+    .map(function (c) { return '<span><i class="k' + c + '"></i>' + c + ' 碳</span>'; });
+  if (L.kind === 'map' && L.rows && U.steps.some(function (s) { return s.irr; })) lg.push('<span><i class="irr">1</i>實心編號＝不可逆步驟</span>');
   if (L.kind !== 'cloze') { var H = L.kind === 'ov' ? L.h : mapH(U), fh = Math.round(PH() / .75);
-    h += '<div class="card pad"><div class="dia" id="dia"><svg viewBox="0 0 360 ' + H + '" role="img" aria-label="' + esc(U.zh) + '路徑圖">' + (L.kind === 'ov' ? L.svg() : mapSvg(U, L)) + '</svg>' +
+    h += '<div class="card pad"><div class="dia" id="dia"><svg viewBox="0 0 360 ' + H + '" role="img" aria-label="' + esc(U.zh) + '路徑圖">' + (L.kind === 'ov' ? L.svg() : mapSvg(U, L, E)) + '</svg>' +
       nodes.map(function (b) { return '<span class="bk" data-k="' + b.id + '" style="left:' + (b.x / 360 * 100) + '%;top:' + (b.y / H * 100) + '%"><span style="display:block;width:' + Math.round(b.w / .75) + 'px;height:' + fh + 'px">' + sel(b) + '</span><i class="mk"></i></span>'; }).join('') + '</div>' +
-      (nodes.length ? '<div class="small muted" style="text-align:center;margin-top:6px">點虛線框選答案</div>' : '') + '</div>'; }
-  if (rows.length) h += '<div class="card pad"><h2>' + esc(L.rowsTitle || '') + '</h2>' + rows.map(function (b) { var s = U.steps[b.step];
+      (lg.length ? '<div class="lgd">' + (L.kind === 'ov' || !L.plain ? '<span>底色＝碳數</span>' : '') + lg.join('') + '</div>' : '') + (nodes.length ? '<div class="small muted" style="text-align:center;margin-top:6px">點虛線框選答案</div>' : '') + '</div>'; }
+  if (rows.length) h += '<div class="card pad"><h2>' + esc(L.rowsTitle || '') + '</h2><div class="lgd" style="justify-content:flex-start;margin:0 0 4px">' + (L.rows === 'enz' ? '<span><i class="tk"></i>激酶 kinase</span><span><i class="td"></i>去氫酶 dehydrogenase</span>' : '<span><i class="tk"></i>ATP、GTP</span><span><i class="td"></i>NADH</span>' + (U.prod.fad ? '<span><i class="tf"></i>FADH₂</span>' : '')) + '</div>' + rows.map(function (b) { var s = U.steps[b.step];
     return '<div class="st" data-k="' + b.id + '"><span class="n">' + (b.step + 1) + '</span><span class="d">' + esc(short(U.map[s.f])) + ' → ' + esc(short(U.map[s.t])) + (s.also ? ' ＋ ' + esc(short(U.map[s.also])) : '') + '</span><span class="w">' + sel(b) + '<div class="r"></div></span></div>'; }).join('') + '</div>';
   if (cnt.length) h += '<div class="card pad"><h2>' + esc(L.countsTitle || '') + '</h2>' + cnt.map(function (b) {
     return '<div class="st c" data-k="' + b.id + '"><span class="d">' + esc(b.label) + '</span><span class="w">' + sel(b) + '<div class="r"></div></span></div>'; }).join('') + '</div>';
@@ -595,7 +640,7 @@ function level() {
   $('main').innerHTML = h;
   document.querySelectorAll('.pick select').forEach(function (el) { el.onchange = function () {
     var id = el.getAttribute('data-b'), b = ST.blanks.filter(function (x) { return x.id === id; })[0];
-    ST.ans[id] = el.value; el.parentNode.classList.toggle('has', !!el.value); el.parentNode.querySelector('.face').innerHTML = face(b);
+    ST.ans[id] = el.value; el.parentNode.classList.toggle('has', !!el.value); var fe = el.parentNode.querySelector('.face'); fe.className = faceCls(b); fe.innerHTML = face(b);
     if (ST.checked) { ST.checked = false; clearMarks(); acts(); }
   }; });
   if (ST.shown) document.querySelectorAll('.pick select').forEach(function (el) { el.disabled = true; });
@@ -623,7 +668,7 @@ function mark() {
   if (all && !ST.shown) { if (!SAVE.done[CUR.id]) SAVE.done[CUR.id] = {}; SAVE.done[CUR.id][LV] = 1; save(); var c = $('lv').querySelectorAll('button')[LV]; c.classList.add('done'); if (c.textContent.indexOf('✓') < 0) c.textContent += ' ✓'; }
   $('res').innerHTML = '<div class="res ' + (all ? 'ok' : 'bad') + '"><b>' + (ST.shown ? '這是正確答案' : all ? '全對！' : '答對 ' + right + ' ／ ' + total) + '</b>　' +
     (ST.shown ? '看熟之後按「重來」，自己再填一次才算過關。' : all ? (last ? '這個單元完成了。' : '可以進下一關了。') : '紅色的空格再改一次，改完再按「對答案」。') + '</div>' +
-    (all && !ST.shown && L.done ? '<div class="card pad"><h2>記住這幾件事</h2><ul>' + L.done.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ul></div>' : '');
+    (all && !ST.shown && L.done ? '<div class="card pad"><h2>記住這幾件事</h2><ul>' + L.done.map(function (t) { return '<li>' + fmt(esc(t)) + '</li>'; }).join('') + '</ul></div>' : '');
   return all;
 }
 function acts() {
@@ -632,7 +677,7 @@ function acts() {
   else if (ST.checked) h = '<button type="button" class="btn plain" id="' + (ST.shown ? 'redo' : 'show') + '">' + (ST.shown ? '重來' : '看正確答案') + '</button><button type="button" class="btn" id="chk"' + (ST.shown ? ' disabled' : '') + '>對答案</button>';
   else h = '<button type="button" class="btn" id="chk">對答案</button>';
   $('acts').innerHTML = h;
-  if ($('chk')) $('chk').onclick = function () { ST.checked = true; mark(); acts(); var r = $('res'); if (r.scrollIntoView) r.scrollIntoView({ block: 'nearest' }); };
+  if ($('chk')) $('chk').onclick = function () { ST.checked = true; var L = CUR.levels[LV]; if (L.rows === 'prod' && ST.blanks.every(function (b) { return ST.ans[b.id] === b.ans; })) level(); else { mark(); acts(); } var r = $('res'); if (r.scrollIntoView) r.scrollIntoView({ block: 'nearest' }); };
   if ($('show')) $('show').onclick = function () { ST.shown = true; ST.blanks.forEach(function (b) { ST.ans[b.id] = b.ans; }); level(); };
   if ($('redo')) $('redo').onclick = function () { ST = null; level(); window.scrollTo(0, 0); };
   if ($('next')) $('next').onclick = function () { if (last) home(); else open(CUR, LV + 1); };

@@ -162,7 +162,7 @@ function head(title, sub, quiz) { $('title').textContent = title; $('subtitle').
 function home() {
   var G = groupOf(S.group);
   SES = null; head('歷屆考題', (G ? G.name + '・' : '') + '營養師國考選擇題練習', false);
-  var h = '<a class="jump" href="pathway.html"><b>圖解生化</b><span>代謝路徑看圖填空，一關一關把糖解作用、檸檬酸循環等路徑記起來</span><i>›</i></a>' +
+  var h = '<a class="jump" href="pathway.html"><b>圖解生理生化</b><span>看圖填空，一關一關把代謝路徑、DNA 複製、轉譯等過程記起來</span><i>›</i></a>' +
     '<div class="card pad"><div class="lab">出題範圍</div>' + seg('s_by', [['course', '依上課科目'], ['paper', '依國考試卷']], S.by);
   if (S.by === 'course') {
     var cnt = function (c) { return Q.filter(function (q) { return inCourse(q, c); }).length; };

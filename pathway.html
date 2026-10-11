@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>圖解生化</title>
+<title>圖解生理生化</title>
 <style>
   :root {
     --bg: #f4f5f2; --card: #ffffff; --ink: #1f2a24; --muted: #5f6a63; --line: #e2e5df; --rail: #c9d2cb;
@@ -127,12 +127,28 @@
   .wk { color: var(--w-k); font-weight: 700; } .wd { color: var(--w-d); font-weight: 700; }
   .glab.k6 { color: var(--k6s); } .glab.k5 { color: var(--k5s); } .glab.k4 { color: var(--k4s); } .glab.k3 { color: var(--k3s); } .glab.k2 { color: var(--k2s); }
   .item.k6 { border-left: 5px solid var(--k6s); } .item.k5 { border-left: 5px solid var(--k5s); } .item.k4 { border-left: 5px solid var(--k4s); } .item.k3 { border-left: 5px solid var(--k3s); } .item.k2 { border-left: 5px solid var(--k2s); }
+  /* 分生：底色與線的顏色＝分子種類（DNA 藍、新合成的 DNA 青、RNA 玫瑰、蛋白質琥珀） */
+  .dia rect.kD, .dia .kD { fill: var(--k5); stroke: var(--k5s); } .dia rect.kN, .dia .kN { fill: var(--k4); stroke: var(--k4s); } .dia rect.kR, .dia .kR { fill: var(--k3); stroke: var(--k3s); } .dia rect.kP, .dia .kP { fill: var(--k6); stroke: var(--k6s); }
+  .pick .face.kD { background: var(--k5); } .pick .face.kN { background: var(--k4); } .pick .face.kR { background: var(--k3); } .pick .face.kP { background: var(--k6); }
+  .pick:not(.ok):not(.no) .face.kD { border-color: var(--k5s); } .pick:not(.ok):not(.no) .face.kN { border-color: var(--k4s); } .pick:not(.ok):not(.no) .face.kR { border-color: var(--k3s); } .pick:not(.ok):not(.no) .face.kP { border-color: var(--k6s); }
+  .lgd i.kD { background: var(--k5); border-color: var(--k5s); } .lgd i.kN { background: var(--k4); border-color: var(--k4s); } .lgd i.kR { background: var(--k3); border-color: var(--k3s); } .lgd i.kP { background: var(--k6); border-color: var(--k6s); }
+  .lgd i.sD { background: var(--k5s); border-color: var(--k5s); } .lgd i.sN { background: var(--k4s); border-color: var(--k4s); } .lgd i.sR { background: var(--k3s); border-color: var(--k3s); } .lgd i.sP { background: var(--k6s); border-color: var(--k6s); }
+  .glab.kD { color: var(--k5s); } .glab.kR { color: var(--k3s); } .glab.kP { color: var(--k6s); } .glab.kN { color: var(--k4s); }
+  .item.kD { border-left: 5px solid var(--k5s); } .item.kR { border-left: 5px solid var(--k3s); } .item.kP { border-left: 5px solid var(--k6s); } .item.kN { border-left: 5px solid var(--k4s); }
+  .wD { color: var(--k5s); font-weight: 700; } .wN { color: var(--k4s); font-weight: 700; } .wR { color: var(--k3s); font-weight: 700; } .wP { color: var(--w-k); font-weight: 700; }
+  /* 首頁的分頁 */
+  .tabs { display: flex; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--card); margin: 4px 0 0; }
+  .tabs button { flex: 1; min-width: 0; border: 0; background: transparent; padding: 10px 4px; font-size: 15px; font-weight: 700; cursor: pointer; color: var(--muted); }
+  .tabs button.on { background: var(--brand); color: var(--on-brand); }
+  details.card > summary { cursor: pointer; font-weight: 700; font-size: 15px; list-style: none; display: flex; align-items: center; justify-content: space-between; }
+  details.card > summary::-webkit-details-marker { display: none; }
+  details.card > summary::after { content: "展開"; font-size: 12px; font-weight: 400; color: var(--muted); } details.card[open] > summary::after { content: "收起"; }
 </style>
 </head>
 <body>
 <header>
   <div class="hd">
-    <div class="tt"><h1 id="title">圖解生化</h1><div class="sub" id="subtitle"></div></div>
+    <div class="tt"><h1 id="title">圖解生理生化</h1><div class="sub" id="subtitle"></div></div>
     <div class="seg" id="lang" role="group" aria-label="名稱顯示的語言"><button type="button" data-l="zh">中</button><button type="button" data-l="bi">中英</button><button type="button" data-l="en">EN</button></div>
     <button type="button" class="xbtn" id="back" hidden>目錄</button>
   </div>
@@ -161,7 +177,7 @@ function two(o, m, w) {
   m = m || M(); var e = o.en || o.zh; if (m === 'zh' || e === o.zh) return [o.zh, ''];
   var ab = o.ab && w && fit(e, w, 12) < 8.5;
   if (m === 'en') return ab ? [o.ab, ''] : [e, o.ab || ''];
-  return ab ? [o.ab, o.zh] : [e, o.zh + (o.ab ? '・' + o.ab : '')];
+  return ab ? [o.ab, o.zh] : [e, (o.sub != null ? o.sub : o.zh) + (o.ab ? '・' + o.ab : '')];      // sub：中英對照時第二行的寫法（例：mRNA 下面寫「傳訊 RNA」）
 }
 function short(o) { return M() === 'zh' ? o.zh : (o.ab || o.en || o.zh); }
 
@@ -180,10 +196,21 @@ function badge(x, y, n, irr) { return '<g class="num' + (irr ? ' irr' : '') + '"
 function tagT(t) { return typeof t === 'string' ? t : (M() === 'zh' ? t.zh : t.en); }      // 標籤的字：可以是字串，或 { zh, en }
 function tagW(t) { t = tagT(t); var n = 0; for (var i = 0; i < t.length; i++) n += t.charCodeAt(i) > 255 && !/[₀-₉⁺⁻−→]/.test(t.charAt(i)) ? 1 : .6; return Math.round(n * 9.5 + 12); }
 function tagC(x, y, t, k) { var w = tagW(t); x = Math.max(3 + w / 2, Math.min(357 - w / 2, x)); return '<g class="tag ' + k + '"><rect x="' + (x - w / 2) + '" y="' + (y - 7.5) + '" width="' + w + '" height="15" rx="4"/><text x="' + x + '" y="' + (y + 3.5) + '" text-anchor="middle" font-size="9.5">' + esc(tagT(t)) + '</text></g>'; }
+/* 分生用的畫圖工具：有顏色的線、箭頭、蛋白質的橢圓、有顏色的字、「說明＋空格」的一列
+   顏色代號 D＝DNA（舊股）、N＝新合成的 DNA、R＝RNA、P＝蛋白質、M＝灰 */
+var KS = { D: '--k5s', N: '--k4s', R: '--k3s', P: '--k6s', M: '--muted' };
+function sl(pts, k, w, dash) { return '<polyline points="' + pts + '" fill="none" stroke="var(' + KS[k] + ')" stroke-width="' + (w || 4) + '" stroke-linecap="round" stroke-linejoin="round"' + (dash ? ' stroke-dasharray="' + dash + '"' : '') + '/>'; }
+function sp(d, k, w, dash) { return '<path d="' + d + '" fill="none" stroke="var(' + KS[k] + ')" stroke-width="' + (w || 4) + '" stroke-linecap="round" stroke-linejoin="round"' + (dash ? ' stroke-dasharray="' + dash + '"' : '') + '/>'; }
+function hd(x, y, a, k) { return '<polygon points="-10,-6.5 4,0 -10,6.5" fill="var(' + KS[k] + ')" transform="translate(' + x + ',' + y + ') rotate(' + a + ')"/>'; }
+function blob(cx, cy, rx, ry, k) { return '<ellipse class="k' + (k || 'P') + '" cx="' + cx + '" cy="' + cy + '" rx="' + rx + '" ry="' + ry + '" stroke-width="1.5"/>'; }
+function kt(x, y, t, k, size, anchor, bold) { return '<text x="' + x + '" y="' + y + '" text-anchor="' + (anchor || 'middle') + '" font-size="' + (size || 12) + '"' + (bold === false ? '' : ' font-weight="700"') + ' style="fill:var(' + KS[k] + ')">' + esc(t) + '</text>'; }
+function rungs(x1, y1, x2, y2, n, dx, dy) { var s = ''; for (var i = 0; i < n; i++) s += '<line x1="' + (x1 + dx * i) + '" y1="' + (y1 + dy * i) + '" x2="' + (x2 + dx * i) + '" y2="' + (y2 + dy * i) + '" stroke="var(--rail)" stroke-width="1.5"/>'; return s; }
+function cap(y, zh, en, w) { var t = T(zh, en); return tx(14, y + 4.5, t, '', fit(t, w || 168, 12), 'start'); }      // 圖上的一列：左邊說明，右邊放空格
+
 /* 全貌圖用：虛線框（例如細胞、粒線體）和框上的小字 */
 function zone(x, y, w, h, t) { return '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="16" fill="none" stroke="var(--rail)" stroke-width="1.5" stroke-dasharray="5 4"/>' + (t ? tx(x + 12, y + 16, t, 'm', 10.5, 'start') : ''); }
-/* 說明文字裡的記號：[[必背]]、{k:激酶這一類}、{d:去氫酶這一類} */
-function fmt(s) { return s.replace(/\[\[(.+?)\]\]/g, '<mark>$1</mark>').replace(/\{k:(.+?)\}/g, '<span class="wk">$1</span>').replace(/\{d:(.+?)\}/g, '<span class="wd">$1</span>'); }
+/* 說明文字裡的記號：[[必背]]、{k:激酶這一類}、{d:去氫酶這一類}；分生用 {D:DNA}、{N:新合成的 DNA}、{R:RNA}、{P:蛋白質} */
+function fmt(s) { return s.replace(/\[\[(.+?)\]\]/g, '<mark>$1</mark>').replace(/\{k:(.+?)\}/g, '<span class="wk">$1</span>').replace(/\{d:(.+?)\}/g, '<span class="wd">$1</span>').replace(/\{([DNRP]):(.+?)\}/g, '<span class="w$1">$2</span>'); }
 
 /* ======================================================================
    單元零：開始之前（生化代謝在學什麼、怎麼記英文）
@@ -1564,6 +1591,491 @@ var INT = { id: 'int', zh: '整合：吃飽與飢餓', en: 'Fed & fasting states
         ['Pentose phosphate pathway（五碳糖磷酸途徑）', { a: 'g6pd', src: 'enz', o: INT_E }], ['TCA cycle（檸檬酸循環）', { a: 'idh', src: 'enz', o: INT_E }], ['Fatty acid synthesis（脂肪酸合成）', { a: 'acc', src: 'enz', o: INT_E }], ['β-Oxidation（脂肪酸 β-氧化）', { a: 'cpt', src: 'enz', o: INT_E }],
         ['Ketogenesis（酮體生成）', { a: 'hmgs', src: 'enz', o: INT_E }], ['Cholesterol synthesis（膽固醇合成）', { a: 'hmgr', src: 'enz', o: INT_E }], ['Urea cycle（尿素循環）', { a: 'cps', src: 'enz', o: INT_E }]] }
   ] };
+
+/* ======================================================================
+   分子生物・導讀：中心法則（先知道在學什麼、每個過程問哪四件事、方向與配對、常見英文）
+   ====================================================================== */
+var CDG_P = ['rep', 'trc', 'trl', 'rt'];
+var CDG = { id: 'cdg', zh: '開始之前：中心法則', en: 'Central dogma', alias: '中心法則・每個過程問四件事・方向與配對・常見英文', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    rep: { zh: '複製', en: 'Replication' }, trc: { zh: '轉錄', en: 'Transcription' }, trl: { zh: '轉譯', en: 'Translation' }, rt: { zh: '反轉錄', en: 'Reverse transcription' },
+    /* 四件事 */
+    t_both: { zh: 'DNA 的兩股都當模板' }, t_one: { zh: 'DNA 的其中一股（模板股）' }, t_mrna: { zh: 'mRNA' }, t_pro: { zh: '蛋白質' },
+    dntp: { zh: 'dNTP（去氧核苷三磷酸）', en: 'dNTPs' }, ntp: { zh: 'NTP（核苷三磷酸）', en: 'NTPs' }, aa: { zh: '胺基酸', en: 'Amino acids' }, glc: { zh: '葡萄糖', en: 'Glucose' },
+    dnap: { zh: 'DNA 聚合酶', en: 'DNA polymerase' }, rnap: { zh: 'RNA 聚合酶', en: 'RNA polymerase' }, ribo: { zh: '核糖體', en: 'Ribosome' }, lig: { zh: 'DNA 連接酶', en: 'DNA ligase' },
+    d53: { zh: '5′ → 3′' }, d35: { zh: '3′ → 5′' }, nc: { zh: 'N 端 → C 端' }, cn: { zh: 'C 端 → N 端' },
+    /* 方向與配對 */
+    A: { zh: 'A' }, T: { zh: 'T' }, G: { zh: 'G' }, C: { zh: 'C' }, U: { zh: 'U' },
+    pho: { zh: '磷酸根', en: 'Phosphate' }, oh: { zh: '羥基（−OH）', en: 'Hydroxyl (−OH)' }, nh2: { zh: '胺基（−NH₂）', en: 'Amino (−NH₂)' }, cooh: { zh: '羧基（−COOH）', en: 'Carboxyl (−COOH)' },
+    anti: { zh: '反向平行', en: 'Antiparallel' }, para: { zh: '同向平行', en: 'Parallel' },
+    c2: { zh: '2′ 碳' }, c3: { zh: '3′ 碳' }, c5: { zh: '5′ 碳' }, hi: { zh: '越高' }, lo: { zh: '越低' },
+    ag: { zh: 'A 和 G' }, ct: { zh: 'C、T 和 U' }, at: { zh: 'A 和 T' }, gc: { zh: 'G 和 C' },
+    pde: { zh: '磷酸二酯鍵', en: 'Phosphodiester bond' }, pep: { zh: '肽鍵', en: 'Peptide bond' }, hb: { zh: '氫鍵', en: 'Hydrogen bond' }, gly: { zh: '醣苷鍵', en: 'Glycosidic bond' },
+    /* 英文 */
+    w_rep: { zh: '複製：DNA 抄成 DNA' }, w_trc: { zh: '轉錄：DNA 抄成 RNA' }, w_trl: { zh: '轉譯：照 RNA 做出蛋白質' },
+    w_tmp: { zh: '模板：被照著抄的那一股' }, w_pri: { zh: '引子：給聚合酶接下去的一小段起頭' }, w_str: { zh: '股：核酸的一條鏈' },
+    w_pol: { zh: '聚合酶：把核苷酸一個一個接成長鏈' }, w_hel: { zh: '解旋酶：把雙股拉開' }, w_lig: { zh: '連接酶：把兩段接起來' },
+    w_nuc: { zh: '核酸酶：把核酸切斷' }, w_exo: { zh: '從末端一個一個切' }, w_endo: { zh: '從鏈的中間切' },
+    w_cod: { zh: '密碼子：mRNA 上三個一組的鹼基' }, w_acd: { zh: '反密碼子：tRNA 上和密碼子配對的三個鹼基' }, w_pro: { zh: '啟動子：轉錄開始前，RNA 聚合酶停靠的位置' },
+    w_exn: { zh: '表現子：會留在成熟 mRNA 裡的片段' }, w_int: { zh: '插入子：會被剪掉的片段' }, w_gen: { zh: '基因體：一個生物全部的遺傳物質' }
+  },
+  levels: [
+    { t: '中心法則：遺傳訊息怎麼流動', kind: 'ov', h: 344, legend: [['kD', 'DNA'], ['kR', 'RNA'], ['kP', '蛋白質']], legendTitle: '底色＝分子種類',
+      intro: ['生化的代謝在講「能量和材料」怎麼流動；分子生物學在講「訊息」怎麼流動。',
+        '細胞的設計圖寫在 {D:DNA} 上。要用的時候，先把需要的那一段抄成 {R:RNA}，再照著 RNA 把胺基酸一個一個接起來，做成{P:蛋白質}。蛋白質才是真正在細胞裡做事的分子，前面學過的酵素幾乎都是蛋白質。',
+        '另外，細胞分裂前要把整套 DNA 再抄一份。這三個過程各有名字，合起來叫做中心法則（central dogma）。',
+        '之後整個分生都用同一套顏色：{D:藍色是 DNA}、{R:玫瑰色是 RNA}、{P:琥珀色是蛋白質}。'],
+      svg: function () { var h = PH() / 2;
+        return zone(12, 10, 336, 192, T('細胞核', 'Nucleus')) + zone(12, 212, 336, 96, T('細胞質', 'Cytoplasm')) +
+          pill(180, 70, 84, 'DNA', 'pill kD') + pill(180, 166, 84, 'RNA', 'pill kR') + pill(180, 272, 84, { zh: '蛋白質', en: 'Protein' }, 'pill kP') +
+          sp('M144,58 C112,36 112,104 140,84', 'M', 3) + '<polygon class="ar" points="-8,-6 5,0 -8,6" transform="translate(142,83) rotate(-28)"/>' +
+          arrow(196, 71 + h, 196, 164 - h) + arrow(164, 165 - h, 164, 74 + h, true) + arrow(180, 167 + h, 180, 270 - h) +
+          tx(180, 330, T('虛線是特殊情況：反轉錄病毒（如 HIV）、端粒酶', 'Dashed: special cases (retroviruses, telomerase)'), 'm', 10); },
+      blanks: [{ id: 'b1', x: 62, y: 70, w: 92, a: 'rep', o: CDG_P }, { id: 'b2', x: 272, y: 118, w: 118, a: 'trc', o: CDG_P }, { id: 'b3', x: 82, y: 118, w: 128, a: 'rt', o: CDG_P }, { id: 'b4', x: 280, y: 230, w: 118, a: 'trl', o: CDG_P }],
+      done: ['[[複製（replication）]]：DNA → DNA。[[轉錄（transcription）]]：DNA → RNA。[[轉譯（translation）]]：RNA → 蛋白質。',
+        '真核細胞的複製和轉錄在細胞核，轉譯在細胞質的核糖體。細菌沒有核膜，可以一邊轉錄一邊轉譯。',
+        '反轉錄（RNA → DNA）是例外的方向，由反轉錄酶（reverse transcriptase）負責。',
+        '訊息不會從蛋白質流回核酸。'] },
+    { t: '每個過程問四件事', kind: 'list',
+      intro: ['代謝路徑我們問三件事（從哪來往哪去、在哪裡、什麼時候開關）。分生的三個過程都是「照著一條模板，把小單位接成長鏈」，所以改問四件事：',
+        '<b>一、模板是誰。</b>照著誰抄。', '<b>二、原料是什麼。</b>接上去的小單位。', '<b>三、誰來做。</b>酵素或機器。', '<b>四、往哪個方向長。</b>',
+        '把這四件事分清楚，三個過程就不會混在一起。之後每個單元的第一關，都會先回答這四件事。'],
+      listTitle: '複製、轉錄、轉譯各是什麼',
+      list: [['複製的模板', { a: 't_both', o: ['t_both', 't_one', 't_mrna', 't_pro'] }], ['轉錄的模板', { a: 't_one', o: ['t_both', 't_one', 't_mrna', 't_pro'] }], ['轉譯的模板', { a: 't_mrna', o: ['t_both', 't_one', 't_mrna', 't_pro'] }],
+        ['複製的原料', { a: 'dntp', o: ['dntp', 'ntp', 'aa', 'glc'] }], ['轉錄的原料', { a: 'ntp', o: ['dntp', 'ntp', 'aa', 'glc'] }], ['轉譯的原料', { a: 'aa', o: ['dntp', 'ntp', 'aa', 'glc'] }],
+        ['複製的主要酵素', { a: 'dnap', o: ['dnap', 'rnap', 'ribo', 'lig'] }], ['轉錄的主要酵素', { a: 'rnap', o: ['dnap', 'rnap', 'ribo', 'lig'] }], ['轉譯的機器', { a: 'ribo', o: ['dnap', 'rnap', 'ribo', 'lig'] }],
+        ['DNA 和 RNA 新股合成的方向', { a: 'd53', o: ['d53', 'd35', 'nc', 'cn'] }], ['蛋白質合成的方向', { a: 'nc', o: ['d53', 'd35', 'nc', 'cn'] }],
+        ['一定要先有引子才能開始的酵素', { a: 'dnap', o: ['dnap', 'rnap'] }]],
+      done: ['[[核酸一律往 5′→3′ 的方向合成]]，不管是 DNA 還是 RNA。蛋白質則是 N 端 → C 端。', 'dNTP 的 d 是 deoxy（去氧）：DNA 用的糖比 RNA 用的糖少一個氧。',
+        'DNA 聚合酶不能從零開始，需要引子；RNA 聚合酶可以自己起頭。這是常考的差別。'] },
+    { t: '方向與配對：5′、3′ 是什麼', kind: 'ov', h: 372,
+      intro: ['核酸的每個單位（核苷酸）有三個零件：磷酸、五碳糖、鹼基。糖上面的碳有編號，為了和鹼基上的編號區分，糖的碳加一撇，唸作 prime。',
+        '核苷酸一個接一個時，是前一個糖的 3′ 碳，透過磷酸，接到下一個糖的 5′ 碳。所以一條鏈的兩端不一樣：一端露出 5′ 碳，一端露出 3′ 碳。',
+        '習慣上序列都從 5′ 寫到 3′。雙股 DNA 的兩股靠鹼基之間的氫鍵配對，而且方向相反：一股是 5′→3′，另一股就是 3′→5′。',
+        '看圖把空格填出來。虛線是氫鍵，數一數每一對有幾條。'],
+      svg: function () { var s = '', X = [72, 144, 216, 288], top = ['A', 'G', 'T', 'C'], bot = ['T', 'C', 'A', 'G'], n = [2, 3, 2, 3];
+        s += sl('34,40 326,40', 'D', 5) + sl('34,176 326,176', 'D', 5) + hd(330, 40, 0, 'D') + hd(30, 176, 180, 'D') +
+          kt(14, 44.5, '5′', 'D', 13) + kt(346, 44.5, '3′', 'D', 13) + kt(14, 180.5, '3′', 'D', 13) + kt(346, 180.5, '5′', 'D', 13);
+        X.forEach(function (x, i) {
+          s += '<rect class="kD" x="' + (x - 17) + '" y="42" width="34" height="46" rx="5" stroke-width="1.5"/>' + tx(x, 71, top[i], '', 15);
+          if (i > 1) s += '<rect class="kD" x="' + (x - 17) + '" y="128" width="34" height="46" rx="5" stroke-width="1.5"/>' + tx(x, 157, bot[i], '', 15);
+          else s += '<line x1="' + x + '" y1="174" x2="' + x + '" y2="166" stroke="var(--k5s)" stroke-width="5"/>';
+          for (var j = 0; j < n[i]; j++) { var xx = x + (j - (n[i] - 1) / 2) * 9; s += '<line x1="' + xx + '" y1="92" x2="' + xx + '" y2="' + (i > 1 ? 124 : 118) + '" stroke="var(--muted)" stroke-width="2" stroke-dasharray="3 3"/>'; } });
+        return s + cap(232, '5′ 端露出來的是', 'The 5′ end carries a') + cap(284, '3′ 端露出來的是', 'The 3′ end carries a') + cap(336, '兩股的方向關係', 'The two strands are'); },
+      blanks: [{ id: 'p1', x: 72, y: 142, w: 62, c: 'D', a: 'T', o: ['A', 'T', 'G', 'C', 'U'] }, { id: 'p2', x: 144, y: 142, w: 62, c: 'D', a: 'C', o: ['A', 'T', 'G', 'C', 'U'] },
+        { id: 'e5', x: 262, y: 232, w: 170, a: 'pho', o: ['pho', 'oh', 'nh2', 'cooh'] }, { id: 'e3', x: 262, y: 284, w: 170, a: 'oh', o: ['pho', 'oh', 'nh2', 'cooh'] }, { id: 'ap', x: 262, y: 336, w: 170, a: 'anti', o: ['anti', 'para'] }],
+      done: ['[[A 配 T（2 個氫鍵）、G 配 C（3 個氫鍵）。]]RNA 沒有 T，改用 U，所以 A 配 U。', '5′ 端是磷酸根，3′ 端是羥基（−OH）。聚合酶只會把新的核苷酸接在 [[3′ 端的 −OH]] 上，所以鏈只能往 5′→3′ 長。',
+        '兩股反向平行（antiparallel）。這件事是 DNA 複製時「兩條新股做法不同」的原因。'] },
+    { t: '配對規則的幾個推論', kind: 'list',
+      intro: ['知道 A 配 T、G 配 C 之後，可以直接推出幾件常考的事。',
+        '雙股 DNA 裡 A 的數量一定等於 T，G 一定等於 C，這叫 Chargaff 法則。所以只要知道其中一種鹼基的比例，另外三種都算得出來。',
+        '嘌呤（purine）是雙環的大鹼基，嘧啶（pyrimidine）是單環的小鹼基。配對永遠是一大配一小，所以雙螺旋的寬度才會固定。'],
+      countsTitle: '算算看', counts: [['A 和 T 之間有幾個氫鍵', '2', ['1', '2', '3']], ['G 和 C 之間有幾個氫鍵', '3', ['1', '2', '3']],
+        ['某段雙股 DNA 的 A 佔 20%，T 佔多少', '20%', ['20%', '30%', '60%', '80%']], ['同一段 DNA，G 佔多少', '30%', ['20%', '30%', '60%', '80%']]],
+      listTitle: '想想看',
+      list: [['RNA 用哪個鹼基取代 T', { a: 'U', o: ['A', 'G', 'C', 'U'] }], ['嘌呤（雙環）是哪幾個', { a: 'ag', o: ['ag', 'ct', 'at', 'gc'] }], ['嘧啶（單環）是哪幾個', { a: 'ct', o: ['ag', 'ct', 'at', 'gc'] }],
+        ['比較難拉開的是哪一種配對', { a: 'gc', o: ['at', 'gc'] }], ['G、C 的比例越高，把雙股加熱分開所需的溫度（Tm）', { a: 'hi', o: ['hi', 'lo'] }],
+        ['DNA 的去氧核糖，比 RNA 的核糖少了哪個碳上的氧', { a: 'c2', o: ['c2', 'c3', 'c5'] }], ['把核苷酸一個一個串成鏈的鍵結', { a: 'pde', o: ['pde', 'pep', 'hb', 'gly'] }],
+        ['把兩股維持在一起的鍵結', { a: 'hb', o: ['pde', 'pep', 'hb', 'gly'] }]],
+      done: ['Chargaff 法則：A＝T、G＝C，所以嘌呤的總量等於嘧啶的總量。只適用於雙股。', '記嘧啶：C、U、T（諧音 cut，被切過所以比較小、只有單環）。剩下的 A、G 就是嘌呤。',
+        '去氧核糖少的是 [[2′ 碳]]上的氧。RNA 多了這個 2′-OH，所以比 DNA 不穩定、容易被水解。', '串成鏈的是磷酸二酯鍵（共價鍵，很牢）；兩股之間的是氫鍵（比較弱，所以加熱就能拉開）。'] },
+    { t: '先認得這些英文', kind: 'list',
+      intro: ['分生的國考題，專有名詞幾乎都附英文，選項有時只寫英文。先把最常出現的認起來。',
+        '字根很有用：<b>-ase</b> 是酵素；<b>polymer-</b> 是聚合物；<b>helic-</b> 是螺旋；<b>lig-</b> 是綁；<b>nucle-</b> 是核酸；<b>exo-</b> 是外面、末端；<b>endo-</b> 是裡面；<b>anti-</b> 是相反。'],
+      listTitle: '這個字是什麼意思',
+      list: [['replication', { a: 'w_rep', o: ['w_rep', 'w_trc', 'w_trl'] }], ['transcription', { a: 'w_trc', o: ['w_rep', 'w_trc', 'w_trl'] }], ['translation', { a: 'w_trl', o: ['w_rep', 'w_trc', 'w_trl'] }],
+        ['template', { a: 'w_tmp', o: ['w_tmp', 'w_pri', 'w_str'] }], ['primer', { a: 'w_pri', o: ['w_tmp', 'w_pri', 'w_str'] }], ['strand', { a: 'w_str', o: ['w_tmp', 'w_pri', 'w_str'] }],
+        ['polymerase', { a: 'w_pol', o: ['w_pol', 'w_hel', 'w_lig', 'w_nuc'] }], ['helicase', { a: 'w_hel', o: ['w_pol', 'w_hel', 'w_lig', 'w_nuc'] }], ['ligase', { a: 'w_lig', o: ['w_pol', 'w_hel', 'w_lig', 'w_nuc'] }], ['nuclease', { a: 'w_nuc', o: ['w_pol', 'w_hel', 'w_lig', 'w_nuc'] }],
+        ['exonuclease 的 exo-', { a: 'w_exo', o: ['w_exo', 'w_endo'] }], ['endonuclease 的 endo-', { a: 'w_endo', o: ['w_exo', 'w_endo'] }],
+        ['codon', { a: 'w_cod', o: ['w_cod', 'w_acd', 'w_pro'] }], ['anticodon', { a: 'w_acd', o: ['w_cod', 'w_acd', 'w_pro'] }], ['promoter', { a: 'w_pro', o: ['w_cod', 'w_acd', 'w_pro'] }],
+        ['exon', { a: 'w_exn', o: ['w_exn', 'w_int', 'w_gen'] }], ['intron', { a: 'w_int', o: ['w_exn', 'w_int', 'w_gen'] }]],
+      done: ['三個過程的字首：re-plication（再做一份）、tran-scription（抄寫，還是核酸的語言）、trans-lation（翻譯，換成胺基酸的語言）。', 'exon 是 expressed（表現出來）的片段；intron 是 intervening（插在中間）的片段。',
+        '看到 -ase 就知道是酵素，再看前面的字根猜它的工作。'] }
+  ] };
+
+/* ======================================================================
+   分子生物・DNA 複製
+   ====================================================================== */
+function REP_DUP(x1, x2, y, k1, k2) { return rungs(x1 + 8, y, x1 + 8, y + 14, Math.floor((x2 - x1 - 8) / 12), 12, 0) + sl(x1 + ',' + y + ' ' + x2 + ',' + y, k1) + sl(x1 + ',' + (y + 14) + ' ' + x2 + ',' + (y + 14), k2); }
+/* 複製叉。o.enz：畫出蛋白質和編號（這時最下面那段岡崎片段的引子已經換成 DNA）；o.lab：在兩側標出領先股、遲緩股 */
+function REP_F(o) {
+  var s = '', frag = [[206, 258], [276, 328], [346, 414]], y, C = function (x, y) { return '<circle class="kP" cx="' + x + '" cy="' + y + '" r="7" stroke-width="1.5"/>'; };
+  if (o.enz) s += blob(180, 62, 27, 16) + blob(180, 122, 27, 17) + blob(120, 193, 20, 14) + blob(258, 213, 16, 11) + blob(258, 250, 16, 12) + blob(258, 283, 16, 11) + blob(258, 341, 14, 9);
+  s += rungs(170, 46, 190, 46, 6, 0, 12) + rungs(84, 222, 102, 222, 16, 0, 12);
+  for (y = 212; y < 416; y += 12) if (frag.some(function (f) { return y >= f[0] && y <= f[1]; })) s += rungs(258, y, 276, y, 1, 0, 0);
+  s += sl('170,34 170,118 84,196 84,420', 'D') + sl('190,34 190,118 276,196 276,420', 'D');                 // 兩條舊股
+  s += sl('102,400 102,214 137,173', 'N') + hd(140, 169.5, -49.5, 'N') + sl('102,416 102,404', 'R');         // 領先股：一路往複製叉的方向長
+  frag.forEach(function (f, i) { var noPrimer = o.enz && i === 2;                                        // 遲緩股：一小段一小段，背對複製叉的方向長
+    s += sl('258,' + (f[0] + (noPrimer ? 0 : 16)) + ' 258,' + f[1], 'N') + hd(258, f[1] + 5, 90, 'N') + (noPrimer ? '' : sl('258,' + f[0] + ' 258,' + (f[0] + 12), 'R')); });
+  s += kt(162, 30, '5′', 'D', 12, 'end') + kt(198, 30, '3′', 'D', 12, 'start') + kt(82, 438, '3′', 'D', 12) + kt(278, 438, '5′', 'D', 12) + kt(104, 438, '5′', 'N', 12) + kt(256, 438, '3′', 'N', 12) + kt(152, 166, '3′', 'N', 12, 'start');
+  s += arrow(40, 116, 40, 62) + tx(52, 84, T('複製叉', 'fork'), 'm', 10.5, 'start') + tx(52, 98, T('前進方向', 'moves up'), 'm', 10.5, 'start');
+  if (o.enz) { [[215.8, 141.4], [234.7, 158.6], [253.6, 175.7], [272.5, 192.8], [144.2, 141.4]].forEach(function (p) { s += C(p[0], p[1]); });
+    s += badge(226, 116, 1) + badge(270, 150, 2) + badge(226, 60, 3) + badge(230, 213, 4) + badge(152, 204, 5) + badge(230, 250, 5) + badge(230, 284, 6) + badge(230, 341, 7); }
+  if (o.lab) s += tx(74, 304, T('領先股', 'Leading'), 'm', 10.5, 'end') + tx(286, 304, T('遲緩股', 'Lagging'), 'm', 10.5, 'start');
+  return s;
+}
+var REP_L = [['sD', '舊股（模板）'], ['sN', '新合成的 DNA'], ['sR', 'RNA 引子']];
+var REP_ZO = ['hel', 'ssb', 'topo', 'pri', 'p3', 'p1', 'lig', 'rnap'], REP_SO = ['lead', 'lag', 'oka', 'primer', 'tmpl'], REP_PO = ['pola', 'polb', 'pold', 'pole', 'polg'], REP_FO = ['orc', 'mcm', 'rpa', 'pcna', 'rfc', 'fen'];
+var REP = { id: 'rep', zh: 'DNA 複製', en: 'DNA replication', alias: 'Replication・半保留複製・複製叉・端粒', layout: 'none', nodes: [], steps: [], prod: {},
+  enz: {
+    hel: { zh: '解旋酶', en: 'Helicase' }, ssb: { zh: '單股結合蛋白', en: 'Single-strand binding protein', ab: 'SSB' }, topo: { zh: '拓撲異構酶（DNA 旋轉酶）', en: 'Topoisomerase (DNA gyrase)' },
+    pri: { zh: '引子酶', en: 'Primase' }, p3: { zh: 'DNA 聚合酶 III', en: 'DNA polymerase III' }, p2: { zh: 'DNA 聚合酶 II', en: 'DNA polymerase II' }, p1: { zh: 'DNA 聚合酶 I', en: 'DNA polymerase I' }, lig: { zh: 'DNA 連接酶', en: 'DNA ligase' },
+    dnap: { zh: 'DNA 聚合酶', en: 'DNA polymerase' }, rnap: { zh: 'RNA 聚合酶', en: 'RNA polymerase' }, tel: { zh: '端粒酶', en: 'Telomerase' }, rt: { zh: '反轉錄酶', en: 'Reverse transcriptase' }
+  },
+  dict: {
+    semi: { zh: '半保留複製', en: 'Semiconservative' }, cons: { zh: '全保留複製', en: 'Conservative' }, disp: { zh: '分散式複製', en: 'Dispersive' },
+    d53: { zh: '5′ → 3′' }, d35: { zh: '3′ → 5′' }, dntp: { zh: 'dNTP（去氧核苷三磷酸）', en: 'dNTPs' }, ntp: { zh: 'NTP（核苷三磷酸）', en: 'NTPs' }, aa: { zh: '胺基酸', en: 'Amino acids' },
+    sph: { zh: 'S 期', en: 'S phase' }, g1: { zh: 'G1 期', en: 'G1 phase' }, g2: { zh: 'G2 期', en: 'G2 phase' }, mph: { zh: 'M 期', en: 'M phase' },
+    lead: { zh: '領先股', en: 'Leading strand' }, lag: { zh: '遲緩股', en: 'Lagging strand' }, oka: { zh: '岡崎片段', en: 'Okazaki fragment' }, primer: { zh: 'RNA 引子', en: 'RNA primer' }, tmpl: { zh: '模板股', en: 'Template strand' },
+    oh3: { zh: '3′-OH（羥基）', en: '3′-OH' }, p5: { zh: '5′-磷酸根', en: '5′-phosphate' }, oh2: { zh: '2′-OH', en: '2′-OH' }, nh2: { zh: '胺基', en: 'amino group' },
+    rna: { zh: 'RNA' }, dna: { zh: 'DNA' }, pro: { zh: '蛋白質', en: 'Protein' },
+    exo35: { zh: '3′→5′ 核酸外切酶', en: '3′→5′ exonuclease' }, exo53: { zh: '5′→3′ 核酸外切酶', en: '5′→3′ exonuclease' }, pol53: { zh: '5′→3′ 聚合酶', en: '5′→3′ polymerase' },
+    klenow: { zh: 'Klenow 片段', en: 'Klenow fragment' }, ori: { zh: '複製起點', en: 'Origin of replication' },
+    ppi: { zh: '焦磷酸（PPi）', en: 'Pyrophosphate (PPi)' }, pi: { zh: '無機磷酸（Pi）', en: 'Phosphate (Pi)' }, amp: { zh: 'AMP' }, co2: { zh: 'CO₂' },
+    pde: { zh: '磷酸二酯鍵', en: 'Phosphodiester bond' }, pep: { zh: '肽鍵', en: 'Peptide bond' }, gly: { zh: '醣苷鍵', en: 'Glycosidic bond' }, hb: { zh: '氫鍵', en: 'Hydrogen bond' },
+    orc: { zh: '起點辨識複合體', en: 'ORC' }, mcm: { zh: 'MCM 解旋酶', en: 'MCM helicase' }, rpa: { zh: '複製蛋白 A', en: 'RPA' }, pcna: { zh: '增殖細胞核抗原', en: 'PCNA' }, rfc: { zh: '複製因子 C', en: 'RFC' }, fen: { zh: 'RNase H ＋ FEN1' },
+    pola: { zh: 'DNA 聚合酶 α', en: 'DNA polymerase α' }, polb: { zh: 'DNA 聚合酶 β', en: 'DNA polymerase β' }, pold: { zh: 'DNA 聚合酶 δ', en: 'DNA polymerase δ' }, pole: { zh: 'DNA 聚合酶 ε', en: 'DNA polymerase ε' }, polg: { zh: 'DNA 聚合酶 γ', en: 'DNA polymerase γ' },
+    ttaggg: { zh: 'TTAGGG' }, s1: { zh: 'AATTCC' }, s2: { zh: 'TATAAT' }, s3: { zh: 'CCCGGG' },
+    c_germ: { zh: '生殖細胞、幹細胞、癌細胞' }, c_som: { zh: '大多數的體細胞' }, c_rbc: { zh: '成熟的紅血球' }, shorter: { zh: '變短' }, longer: { zh: '變長' }, same: { zh: '不變' },
+    tg: { zh: 'T 與 G' }, at: { zh: 'A 與 T' }, cg: { zh: 'C 與 G' }, au: { zh: 'A 與 U' },
+    one: { zh: '一個' }, many: { zh: '很多個' }, bidi: { zh: '兩個方向（雙向）', en: 'Both directions (bidirectional)' }, unidi: { zh: '一個方向（單向）', en: 'One direction (unidirectional)' },
+    mega: { zh: '巨球性貧血', en: 'Megaloblastic anemia' }, micro: { zh: '小球性貧血', en: 'Microcytic anemia' }, hemo: { zh: '溶血性貧血', en: 'Hemolytic anemia' }
+  },
+  levels: [
+    { t: '先看全貌：一份抄成兩份', kind: 'ov', h: 364, legend: [['sD', '舊股（模板）'], ['sN', '新合成的股']],
+      intro: ['細胞分裂之前，要先把整套 DNA 抄一份，兩個子細胞才能各拿到一套。這件事叫 DNA 複製（replication）。',
+        '做法是把雙股拉開，兩條{D:舊股}各自當模板，照著 A 配 T、G 配 C 的規則，各長出一條{N:新股}。',
+        '所以複製完的兩條 DNA，每一條都是「一股舊的、一股新的」，沒有哪一條是全新的。',
+        '先回答四件事：模板是 DNA 的兩股；原料、方向和時機，看圖填出來。'],
+      svg: function () { return tx(180, 24, T('原本的 DNA：兩股都是舊的', 'Parental DNA: both strands old'), 'm', 10.5) + REP_DUP(110, 250, 36, 'D', 'D') + arrow(180, 62, 180, 94) +
+        REP_DUP(28, 168, 108, 'D', 'N') + REP_DUP(192, 332, 108, 'N', 'D') + tx(98, 144, T('一舊一新', 'one old, one new'), 'm', 10.5) + tx(262, 144, T('一舊一新', 'one old, one new'), 'm', 10.5) +
+        cap(190, '這種複製方式叫做', 'This is called') + cap(238, '新股合成的方向', 'New strand grows') + cap(286, '接上去的原料', 'Building blocks') + cap(334, '真核細胞在細胞週期的', 'In eukaryotes, during'); },
+      blanks: [{ id: 'm', x: 262, y: 190, w: 170, a: 'semi', o: ['semi', 'cons', 'disp'] }, { id: 'd', x: 262, y: 238, w: 170, a: 'd53', o: ['d53', 'd35'] },
+        { id: 'r', x: 262, y: 286, w: 170, a: 'dntp', o: ['dntp', 'ntp', 'aa'] }, { id: 'c', x: 262, y: 334, w: 170, a: 'sph', o: ['g1', 'sph', 'g2', 'mph'] }],
+      done: ['[[半保留複製（semiconservative replication）]]：每條新的雙股 DNA 都保留一條舊股。Meselson 和 Stahl 用重氮（¹⁵N）標記大腸桿菌證明了這件事。',
+        '主要酵素是 DNA 聚合酶，只能往 [[5′→3′]] 的方向把核苷酸接上去。', '原料是四種 dNTP（dATP、dTTP、dGTP、dCTP）。每接上一個，放出一個焦磷酸（PPi）。', '真核細胞只在細胞週期的 [[S 期]]複製 DNA，而且每個週期只複製一次。'] },
+    { t: '複製叉：兩條新股的做法不一樣', kind: 'ov', h: 446, legend: REP_L, svg: function () { var s = REP_F({}), c = [['一路連續合成的新股', 'made continuously'], ['一段一段合成的新股', 'made in pieces'], ['上面的每一小段叫做', 'each piece is an'], ['每一段開頭的玫瑰色短線', 'the short red start']];
+        c.forEach(function (x, i) { var t = T(x[0], x[1]); s += tx(180, 220 + i * 56, t, 'm', fit(t, 138, 10)); }); return s; },
+      intro: ['雙股被拉開的地方呈 Y 字形，叫做複製叉（replication fork）。複製叉一邊拉開、一邊往前走。圖上是往上走。',
+        '麻煩來了：兩條舊股的方向相反，可是 DNA 聚合酶只會往 5′→3′ 一個方向接。',
+        '所以左邊那條新股，可以順著複製叉前進的方向一路接下去。右邊那條方向剛好相反，只能等前面拉開一段，背對著複製叉接一小段；再拉開一段，再接一小段。',
+        '還有一件事：DNA 聚合酶沒辦法從零開始，一定要先有一小段 {R:RNA} 起頭，它才接得下去。'],
+      blanks: [{ id: 's1', x: 180, y: 246, w: 124, a: 'lead', o: REP_SO }, { id: 's2', x: 180, y: 302, w: 124, a: 'lag', o: REP_SO }, { id: 's3', x: 180, y: 358, w: 124, a: 'oka', o: REP_SO }, { id: 's4', x: 180, y: 414, w: 124, a: 'primer', o: REP_SO }],
+      done: ['[[領先股（leading strand）]]：連續合成，方向和複製叉前進的方向相同，只需要一個引子。', '[[遲緩股（lagging strand）]]：不連續合成，每一小段叫[[岡崎片段（Okazaki fragment）]]，每一段都需要自己的引子。',
+        '一股連續、一股不連續，合起來叫半不連續複製（semidiscontinuous）。', '引子是 RNA，不是 DNA。之後要切掉，換成 DNA。'] },
+    { t: '複製叉上的七個幫手', kind: 'ov', h: 446, legend: REP_L.concat([['kP', '蛋白質']]), svg: function () { return REP_F({ enz: 1, lab: 1 }); }, blanks: [],
+      intro: ['複製不是一個酵素做得完的。這一關認識在複製叉上工作的蛋白質，圖上{P:琥珀色}的都是，編號照工作的順序。名字用的是大腸桿菌的版本，國考最常考這一套。',
+        '先看字根就能猜到工作：<b>helic-</b>ase 是處理螺旋的；<b>prim-</b>ase 是做起頭（primer）的；<b>polymer-</b>ase 是把小單位聚合成長鏈的；<b>lig-</b>ase 是綁起來的。',
+        '圖上最下面那段岡崎片段，引子已經被換成 DNA 了，只剩和上一段之間的一個小缺口。'],
+      listTitle: '圖上的編號是誰',
+      list: [['在複製叉的尖端，把兩股之間的氫鍵打斷、拉開（要用 ATP）', { a: 'hel', o: REP_ZO, src: 'enz' }], ['黏在剛拉開的單股上，不讓它們又配對回去', { a: 'ssb', o: REP_ZO, src: 'enz' }],
+        ['在複製叉前方，把越轉越緊的超螺旋鬆開', { a: 'topo', o: REP_ZO, src: 'enz' }], ['做出一小段 RNA 引子，給 DNA 聚合酶當起頭', { a: 'pri', o: REP_ZO, src: 'enz' }],
+        ['從引子的 3′ 端接下去，合成絕大部分的新股（主力）', { a: 'p3', o: REP_ZO, src: 'enz' }], ['把前面那段的 RNA 引子切掉，同時補上 DNA', { a: 'p1', o: REP_ZO, src: 'enz' }],
+        ['把相鄰兩段 DNA 之間最後的缺口接起來', { a: 'lig', o: REP_ZO, src: 'enz' }]],
+      done: ['順序：解旋酶拉開 → 單股結合蛋白（SSB）穩住 → 引子酶起頭 → [[DNA 聚合酶 III]] 合成 → [[DNA 聚合酶 I]] 換掉引子 → [[DNA 連接酶]]接合。拓撲異構酶在最前面鬆開超螺旋。',
+        '細菌的第二型拓撲異構酶又叫 DNA 旋轉酶（gyrase）。Quinolone 類抗生素（例如 ciprofloxacin）就是抑制它。',
+        'DNA 連接酶接起來的是磷酸二酯鍵，需要能量：大腸桿菌用 NAD⁺，真核細胞用 ATP。', '領先股也是由 DNA 聚合酶 III 合成的，只是它不必一直重新起頭。'] },
+    { t: 'DNA 聚合酶的三種本事', kind: 'cloze',
+      intro: ['大腸桿菌的 DNA 聚合酶除了會「接上去」，還會「切下來」。切的方向不同，用途完全不同：',
+        '<b>5′→3′ 聚合</b>：把新的核苷酸接在 3′ 端。所有 DNA 聚合酶都會。',
+        '<b>3′→5′ 外切</b>：倒退一步，把剛剛接錯的那一個切掉重接。這叫[[校對（proofreading）]]，是複製很少出錯的主要原因。',
+        '<b>5′→3′ 外切</b>：往前走的時候，把擋在前面的 RNA 引子一個一個切掉。只有 DNA 聚合酶 I 有這個本事。',
+        '外切酶（exonuclease）的意思是從鏈的末端一個一個切；從中間切的叫內切酶（endonuclease）。'],
+      cloze: [
+        ['DNA 聚合酶合成新股的方向是', { a: 'd53', o: ['d53', 'd35'] }, '。'],
+        ['所以它讀模板的方向是', { a: 'd35', o: ['d53', 'd35'] }, '。'],
+        ['DNA 聚合酶不能從零開始，需要引子提供一個游離的', { a: 'oh3', o: ['oh3', 'p5', 'oh2', 'nh2'] }, '。'],
+        ['複製時用的引子，成分是', { a: 'rna', o: ['rna', 'dna', 'pro'] }, '。'],
+        ['負責校對（proofreading）的是', { a: 'exo35', o: ['exo35', 'exo53', 'pol53'] }, '活性。'],
+        ['負責切掉 RNA 引子的，是 DNA 聚合酶 I 的', { a: 'exo53', o: ['exo35', 'exo53', 'pol53'] }, '活性。'],
+        ['大腸桿菌複製染色體時，合成大部分新股的主力是', { a: 'p3', o: ['p1', 'p2', 'p3'], src: 'enz' }, '。'],
+        ['三種活性都有的是', { a: 'p1', o: ['p1', 'p2', 'p3'], src: 'enz' }, '。'],
+        ['把 DNA 聚合酶 I 切開，留下沒有 5′→3′ 外切活性的大片段，叫做', { a: 'klenow', o: ['klenow', 'oka', 'ori'] }, '。'],
+        ['每接上一個核苷酸，會放出一個', { a: 'ppi', o: ['ppi', 'pi', 'amp', 'co2'] }, '。'],
+        ['核苷酸和核苷酸之間的鍵結是', { a: 'pde', o: ['pde', 'pep', 'gly', 'hb'] }, '。']
+      ],
+      done: ['DNA 聚合酶 I：聚合、3′→5′ 外切（校對）、5′→3′ 外切（去引子）三種都有。工作是換掉引子和修補。', 'DNA 聚合酶 III：聚合加校對，速度快，一次可以接很長，是複製的主力。DNA 聚合酶 II 主要參與修補。',
+        '光靠配對大約每十萬個會錯一個；加上校對，再加上複製後的錯誤配對修補，最後大約十億個才錯一個。'] },
+    { t: '真核細胞的版本', kind: 'list',
+      intro: ['真核細胞做的事情一樣，只是蛋白質換了名字。染色體又長又是線狀的，所以多了兩個特點：',
+        '<b>有很多個複製起點</b>同時開工。細菌的環狀染色體只有一個起點（大腸桿菌的叫 OriC），從起點往兩邊同時複製。',
+        '<b>染色體有末端</b>，會遇到下一關的「末端問題」。',
+        '下面用「它做什麼」來配對。真核的 DNA 聚合酶用希臘字母命名。'],
+      listTitle: '真核細胞裡，這件事由誰負責',
+      list: [['辨識複製起點（相當於細菌的 DnaA）', { a: 'orc', o: REP_FO }], ['把雙股拉開的解旋酶（相當於細菌的 DnaB）', { a: 'mcm', o: REP_FO }], ['黏在單股上保護它（相當於 SSB）', { a: 'rpa', o: REP_FO }],
+        ['像環一樣套住 DNA，讓聚合酶不會掉下來（滑動夾）', { a: 'pcna', o: REP_FO }], ['切除 RNA 引子', { a: 'fen', o: REP_FO }],
+        ['帶有引子酶，負責起頭', { a: 'pola', o: REP_PO }], ['合成領先股的主力', { a: 'pole', o: REP_PO }], ['合成遲緩股的主力', { a: 'pold', o: REP_PO }], ['複製粒線體的 DNA', { a: 'polg', o: REP_PO }], ['主要負責修補（鹼基切除修補）', { a: 'polb', o: REP_PO }]],
+      done: ['[[PCNA]]（proliferating cell nuclear antigen，增殖細胞核抗原）是真核的滑動夾，常被當作細胞正在增殖的指標。',
+        'DNA 聚合酶 α 自己帶著引子酶；δ 和 ε 是主力；[[γ 在粒線體]]；β 做修補。', '真核的岡崎片段比較短（約 100 到 200 個核苷酸），細菌的比較長（約 1000 到 2000 個）。'] },
+    { t: '末端問題與端粒', kind: 'ov', h: 256, legend: [['sD', '染色體末端的 DNA'], ['sN', '新接上去的 DNA'], ['sR', '酵素自己帶的模板'], ['kP', '蛋白質']],
+      intro: ['線狀染色體的最末端有個麻煩：遲緩股最後一個 RNA 引子被切掉之後，那個缺口前面沒有 3′-OH 可以接，補不起來。所以每複製一次，染色體就短一點。',
+        '細胞的對策，是在染色體兩端放一長串不帶基因的重複序列當緩衝，磨掉了也不要緊。這段叫做端粒（telomere）。人類的重複序列是 [[TTAGGG]]，一直重複上千次。',
+        '端粒磨短了，可以靠一個特別的酵素補回去。它特別的地方是自己帶著一小段模板，照著這段模板把染色體的 3′ 端接長。看圖上的顏色，想想這段模板是哪一種分子。'],
+      svg: function () { return blob(272, 82, 70, 38) + rungs(30, 60, 30, 78, 10, 12, 0) + rungs(214, 60, 214, 76, 8, 12, 0) + sl('22,60 236,60', 'D') + sl('22,78 150,78', 'D') + sl('206,76 306,76', 'R') +
+        sl('242,60 300,60', 'N', 4, '7 5') + hd(306, 60, 0, 'N') + kt(10, 64.5, '5′', 'D', 12) + kt(10, 82.5, '3′', 'D', 12) + kt(150, 96, '5′', 'D', 11) + kt(222, 50, '3′', 'D', 11, 'end') +
+        tx(272, 104, T('（蛋白質）', '(protein)'), 'm', 10) + tx(96, 34, T('染色體的末端', 'End of a chromosome'), 'm', 10.5) +
+        cap(170, '這個酵素叫做', 'This enzyme is') + cap(222, '它自己帶的模板是', 'Its built-in template is'); },
+      blanks: [{ id: 'e', x: 262, y: 170, w: 170, a: 'tel', o: ['tel', 'p1', 'lig', 'pri'] }, { id: 't', x: 262, y: 222, w: 170, a: 'rna', o: ['rna', 'dna', 'pro'] }],
+      listTitle: '端粒與端粒酶',
+      list: [['照著 RNA 模板做出 DNA，這種酵素活性叫做', { a: 'rt', o: ['rt', 'dnap', 'rnap', 'hel'], src: 'enz' }], ['人類端粒的重複序列', { a: 'ttaggg', o: ['ttaggg', 's1', 's2', 's3'] }],
+        ['端粒酶活性高的細胞', { a: 'c_germ', o: ['c_germ', 'c_som', 'c_rbc'] }], ['大多數體細胞的端粒酶活性很低，細胞分裂越多次，端粒會', { a: 'shorter', o: ['shorter', 'longer', 'same'] }]],
+      done: ['[[端粒酶（telomerase）具有反轉錄酶（reverse transcriptase）活性]]：用 RNA 當模板合成 DNA。國考考過。', '端粒酶是「蛋白質＋RNA」的複合體，RNA 那一段就是它自己帶的模板。',
+        '人類端粒是富含 T 與 G 的重複序列（TTAGGG）。國考考過。', '端粒越磨越短和細胞老化有關。癌細胞多半重新打開了端粒酶，所以能一直分裂下去。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把整個單元最常考的觀念再走一次。有幾題的選項只有英文，和考卷上一樣。',
+        '最後兩題把複製和營養接起來：DNA 複製需要 dNTP，而其中 dTMP 的合成要靠葉酸。分裂越快的細胞，越先受影響。'],
+      cloze: [
+        ['下列何者具有反轉錄酶（reverse transcriptase）活性？', { a: 'tel', o: ['dnap', 'rnap', 'hel', 'tel'], src: 'enz', lang: 'en' }, '。'],
+        ['人類的端粒（telomere）是富含哪兩種鹼基的重複序列？', { a: 'tg', o: ['tg', 'at', 'cg', 'au'] }, '。'],
+        ['Meselson 和 Stahl 的實驗證明 DNA 的複製方式是', { a: 'semi', o: ['semi', 'cons', 'disp'], lang: 'en' }, '。'],
+        ['複製時，以不連續方式合成的是', { a: 'lag', o: ['lead', 'lag', 'tmpl'], lang: 'en' }, '。'],
+        ['把岡崎片段接起來的酵素是', { a: 'lig', o: ['hel', 'pri', 'p3', 'lig'], src: 'enz', lang: 'en' }, '。'],
+        ['解開雙股 DNA、需要消耗 ATP 的是', { a: 'hel', o: ['hel', 'ssb', 'topo', 'lig'], src: 'enz', lang: 'en' }, '。'],
+        ['Quinolone 類抗生素（如 ciprofloxacin）抑制的是細菌的', { a: 'topo', o: ['hel', 'pri', 'topo', 'lig'], src: 'enz', lang: 'en' }, '。'],
+        ['複製的正確性，主要靠 DNA 聚合酶的哪一種活性？', { a: 'exo35', o: ['exo35', 'exo53', 'pol53'], lang: 'en' }, '。'],
+        ['真核細胞的滑動夾（sliding clamp）是', { a: 'pcna', o: ['pcna', 'rpa', 'mcm', 'orc'], lang: 'en' }, '。'],
+        ['複製粒線體 DNA 的酵素是', { a: 'polg', o: ['pola', 'pold', 'pole', 'polg'], lang: 'en' }, '。'],
+        ['細菌的環狀染色體有幾個複製起點？', { a: 'one', o: ['one', 'many'] }, '；人類的每條染色體則有很多個。'],
+        ['從一個複製起點開始，複製是往', { a: 'bidi', o: ['bidi', 'unidi'] }, '進行。'],
+        ['抗病毒藥 AZT 這類核苷類似物，接上去之後鏈就無法再延長，因為它缺少', { a: 'oh3', o: ['oh3', 'p5', 'oh2', 'nh2'] }, '。'],
+        ['葉酸不足時 dTMP 做不出來，受影響最直接的是細胞週期的', { a: 'sph', o: ['g1', 'sph', 'g2', 'mph'] }, '。'],
+        ['所以葉酸或維生素 B12 缺乏時，分裂很快的造血細胞先出問題，造成', { a: 'mega', o: ['mega', 'micro', 'hemo'] }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 446, force: 'en', legend: REP_L.concat([['kP', '蛋白質']]), svg: function () { return REP_F({ enz: 1 }); }, blanks: [],
+      intro: ['同一張複製叉，這次全部用英文作答。前七題對照圖上的編號。'], tip: '這一關固定用英文作答。',
+      listTitle: '圖上的編號，以及四個名詞',
+      list: [['在複製叉的尖端把雙股拉開', { a: 'hel', o: REP_ZO, src: 'enz' }], ['黏在單股上，不讓它們配對回去', { a: 'ssb', o: REP_ZO, src: 'enz' }], ['在複製叉前方鬆開超螺旋', { a: 'topo', o: REP_ZO, src: 'enz' }],
+        ['做出 RNA 引子', { a: 'pri', o: REP_ZO, src: 'enz' }], ['合成絕大部分的新股', { a: 'p3', o: REP_ZO, src: 'enz' }], ['切掉 RNA 引子，補上 DNA', { a: 'p1', o: REP_ZO, src: 'enz' }], ['把最後的缺口接起來', { a: 'lig', o: REP_ZO, src: 'enz' }],
+        ['連續合成的新股（圖的左邊）', { a: 'lead', o: REP_SO }], ['一段一段合成的新股（圖的右邊）', { a: 'lag', o: REP_SO }], ['右邊新股上的每一小段', { a: 'oka', o: REP_SO }], ['每一小段開頭的玫瑰色短線', { a: 'primer', o: REP_SO }],
+        ['用自己帶的 RNA 當模板，把染色體末端接長', { a: 'tel', o: ['tel', 'rt', 'p1', 'lig'], src: 'enz' }]] }
+  ] };
+(function () { for (var k in REP.enz) REP.dict[k] = REP.enz[k]; })();
+
+/* ======================================================================
+   分子生物・轉譯（蛋白質的合成）
+   ====================================================================== */
+function TRL_AA(x, y, r) { return '<circle class="kP" cx="' + x + '" cy="' + y + '" r="' + (r || 7) + '" stroke-width="1.5"/>'; }
+function TRL_T(x, y1, y2, dash) { return sl(x + ',' + y2 + ' ' + x + ',' + y1, 'R', 4, dash) + sl((x - 13) + ',' + y2 + ' ' + (x + 13) + ',' + y2, 'R', 4, dash); }      // 簡化的 tRNA：下面的橫槓是反密碼子，上面接胺基酸
+/* 全貌：mRNA、核糖體、tRNA、長出來的多肽鏈 */
+function TRL_OV() {
+  var s = blob(180, 150, 96, 58) + blob(180, 238, 82, 22) + sl('24,214 332,214', 'R', 5) + hd(338, 214, 0, 'R') + kt(11, 218.5, '5′', 'R', 12) + kt(351, 218.5, '3′', 'R', 12);
+  s += TRL_T(156, 162, 208) + TRL_T(204, 162, 208) + TRL_AA(204, 152);
+  [[156, 152], [144, 138], [130, 126], [116, 114], [102, 102], [88, 90], [74, 80], [60, 72], [46, 66]].forEach(function (p) { s += TRL_AA(p[0], p[1]); });
+  s += TRL_T(306, 122, 168) + TRL_AA(306, 112) + arrow(288, 150, 262, 164) + tx(306, 94, T('胺基酸', 'amino acid'), 'm', 10) + tx(180, 116, T('核糖體', 'Ribosome'), 'b', 12) + tx(60, 50, T('長出來的多肽鏈', 'growing polypeptide'), 'm', 10);
+  return s + cap(300, '帶著密碼子的設計圖', 'Carries the codons') + cap(348, '認密碼子、搬胺基酸', 'Brings the amino acids') + cap(396, '組成核糖體的主體', 'Main part of the ribosome') + cap(444, '設計圖被讀的方向', 'The message is read') + cap(492, '多肽鏈合成的方向', 'The chain grows');
+}
+/* tRNA 三葉草（照課本的畫法左右鏡射：3′ 端在左，這樣下面的 mRNA 才是 5′ 在左） */
+function TRL_CL() {
+  var s = '<rect x="185" y="325" width="15" height="42" rx="4" fill="var(--hl)"/>' + rungs(172, 70, 188, 70, 7, 0, 13) + rungs(214, 172, 214, 188, 4, 12, 0) + rungs(110, 172, 110, 188, 4, 12, 0) + rungs(172, 210, 188, 210, 6, 0, 12);
+  s += sp('M188,60 L188,160 L210,172 L257,172 A24,24 0 1 1 257,188 L210,188 L188,200 L188,276 A24,24 0 1 1 172,276 L172,200 L150,188 L103,188 A24,24 0 1 1 103,172 L150,172 L172,160 L172,30', 'R', 3.5);
+  s += TRL_AA(172, 18, 10) + kt(197, 62, '5′', 'R', 12, 'start') + tx(280, 184, T('D 環', 'D loop'), 'm', 9.5) + tx(80, 184, T('TψC 環', 'TψC loop'), 'm', 9);
+  ['U', 'A', 'C'].forEach(function (c, i) { var x = 168 + i * 12; s += kt(x, 337, c, 'R', 10.5) + '<line x1="' + x + '" y1="341" x2="' + x + '" y2="351" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="2 2"/>' + kt(x, 363, 'AUG'.charAt(i), 'R', 10.5); });
+  s += sl('60,373 296,373', 'R', 4) + hd(302, 373, 0, 'R') + kt(48, 377.5, '5′', 'R', 12) + kt(316, 377.5, '3′', 'R', 12) + tx(338, 377, 'mRNA', 'm', 10);
+  var c1 = T('胺基酸（圓圈）接在這一端', 'Amino acid attaches at the'), c2 = T('和密碼子配對的三個鹼基', '3 bases that pair with the codon');
+  return s + tx(82, 16, c1, 'm', fit(c1, 150, 10)) + tx(284, 272, c2, 'm', fit(c2, 142, 10));
+}
+/* 核糖體的 E、P、A 三個位置與延長的三個動作 */
+function TRL_APE() {
+  var s = '<rect class="kP" x="92" y="56" width="176" height="188" rx="44" stroke-width="1.5"/><rect class="kP" x="84" y="256" width="192" height="30" rx="15" stroke-width="1.5"/>';
+  s += '<line x1="152" y1="104" x2="152" y2="238" stroke="var(--k6s)" stroke-width="1.5" stroke-dasharray="4 4"/><line x1="208" y1="104" x2="208" y2="238" stroke="var(--k6s)" stroke-width="1.5" stroke-dasharray="4 4"/>';
+  s += sl('18,250 334,250', 'R', 5) + hd(340, 250, 0, 'R') + kt(8, 254.5, '5′', 'R', 12) + kt(352, 254.5, '3′', 'R', 12);
+  [40, 96, 152, 208, 264, 320].forEach(function (x) { s += '<line x1="' + x + '" y1="243" x2="' + x + '" y2="257" stroke="var(--card)" stroke-width="2.5"/>'; });
+  s += TRL_T(124, 166, 242, '5 4') + TRL_T(180, 166, 242) + TRL_T(236, 166, 242) + TRL_AA(236, 156);
+  [[180, 156], [188, 142], [180, 128], [172, 114]].forEach(function (p) { s += TRL_AA(p[0], p[1]); });
+  s += arrow(110, 160, 72, 128) + tx(88, 118, T('空的 tRNA 離開', 'empty tRNA leaves'), 'm', 9.5, 'end') + arrow(322, 156, 258, 156) + badge(300, 136, 1) + arrow(196, 140, 224, 150) + badge(212, 124, 2) + arrow(134, 310, 232, 310) + badge(116, 310, 3);
+  var t = T('核糖體往 3′ 端走一個密碼子', 'ribosome moves one codon toward 3′');
+  return s + tx(180, 330, t, 'm', 10);
+}
+var TRL_SO = ['sa', 'sp_', 'se'], TRL_RO = ['mrna', 'trna', 'rrna'], TRL_FO = ['eftu', 'efg', 'if2', 'rf1'], TRL_DO = ['tet', 'str', 'chl', 'ery', 'pur', 'chx', 'dip'], TRL_MO = ['m_a', 'm_pt', 'm_tl', 'm_pre'];
+var TRL = { id: 'trl', zh: '轉譯', en: 'Translation', alias: 'Translation・蛋白質的合成・密碼子・tRNA・核糖體', layout: 'none', nodes: [], steps: [], prod: {}, enz: {},
+  dict: {
+    mrna: { zh: 'mRNA（傳訊 RNA）', en: 'mRNA', bi: 'mRNA（傳訊 RNA）', sub: '傳訊 RNA' }, trna: { zh: 'tRNA（轉送 RNA）', en: 'tRNA', bi: 'tRNA（轉送 RNA）', sub: '轉送 RNA' }, rrna: { zh: 'rRNA（核糖體 RNA）', en: 'rRNA', bi: 'rRNA（核糖體 RNA）', sub: '核糖體 RNA' },
+    d53: { zh: '5′ → 3′' }, d35: { zh: '3′ → 5′' }, nc: { zh: 'N 端 → C 端', en: 'N-terminus → C-terminus' }, cn: { zh: 'C 端 → N 端', en: 'C-terminus → N-terminus' },
+    /* 遺傳密碼 */
+    degen: { zh: '簡併性', en: 'Degeneracy' }, univ: { zh: '通用性', en: 'Universality' }, nonov: { zh: '不重疊、無標點', en: 'Non-overlapping, commaless' },
+    b1: { zh: '第 1 個鹼基' }, b2: { zh: '第 2 個鹼基' }, b3: { zh: '第 3 個鹼基' },
+    AUG: { zh: 'AUG' }, UAA: { zh: 'UAA' }, UAG: { zh: 'UAG' }, UGA: { zh: 'UGA' }, UGG: { zh: 'UGG' }, UAC: { zh: 'UAC' }, GUA: { zh: 'GUA' },
+    met: { zh: '甲硫胺酸（Met）', en: 'Methionine (Met)' }, trp: { zh: '色胺酸（Trp）', en: 'Tryptophan (Trp)' }, leu: { zh: '白胺酸（Leu）', en: 'Leucine (Leu)' }, fmet: { zh: '甲醯甲硫胺酸（fMet）', en: 'N-formylmethionine (fMet)' },
+    mt: { zh: '甲硫胺酸和色胺酸', en: 'Met and Trp' }, ls: { zh: '白胺酸和絲胺酸', en: 'Leu and Ser' }, rg: { zh: '精胺酸和甘胺酸', en: 'Arg and Gly' },
+    fs: { zh: '框移突變', en: 'Frameshift mutation' }, ms: { zh: '誤義突變', en: 'Missense mutation' }, sm: { zh: '沉默突變', en: 'Silent mutation' },
+    /* tRNA */
+    e3: { zh: '3′ 端（序列是 CCA）', en: '3′ end (CCA)' }, e5: { zh: '5′ 端', en: '5′ end' }, dl: { zh: 'D 環', en: 'D loop' }, al: { zh: '反密碼子環', en: 'Anticodon loop' },
+    codon: { zh: '密碼子', en: 'Codon' }, acodon: { zh: '反密碼子', en: 'Anticodon' }, wob: { zh: '搖擺配對', en: 'Wobble pairing' }, wc: { zh: '華生-克立克配對', en: 'Watson-Crick pairing' },
+    i_uca: { zh: 'U、C、A 三種' }, i_c: { zh: '只有 C' }, i_ag: { zh: 'A、G 兩種' }, pol1: { zh: 'RNA 聚合酶 I', en: 'RNA polymerase I' }, pol2: { zh: 'RNA 聚合酶 II', en: 'RNA polymerase II' }, pol3: { zh: 'RNA 聚合酶 III', en: 'RNA polymerase III' },
+    psu: { zh: '偽尿苷（ψ）', en: 'Pseudouridine (ψ)' }, ino: { zh: '肌苷（I）', en: 'Inosine (I)' }, thy: { zh: '胸腺嘧啶', en: 'Thymine' },
+    /* 胺基酸活化 */
+    aamp: { zh: '胺醯-AMP', en: 'Aminoacyl-AMP' }, aadp: { zh: '胺醯-ADP', en: 'Aminoacyl-ADP' }, ptrna: { zh: '肽醯-tRNA', en: 'Peptidyl-tRNA' },
+    ppi: { zh: '焦磷酸（PPi）', en: 'Pyrophosphate (PPi)' }, pi: { zh: '無機磷酸（Pi）', en: 'Phosphate (Pi)' }, adp: { zh: 'ADP' },
+    est: { zh: '酯鍵', en: 'Ester bond' }, pep: { zh: '肽鍵', en: 'Peptide bond' }, pde: { zh: '磷酸二酯鍵', en: 'Phosphodiester bond' }, hb: { zh: '氫鍵', en: 'Hydrogen bond' },
+    aars: { zh: '胺醯-tRNA 合成酶', en: 'Aminoacyl-tRNA synthetase' }, ribo: { zh: '核糖體', en: 'Ribosome' }, pt: { zh: '肽基轉移酶', en: 'Peptidyl transferase' },
+    /* 核糖體 */
+    s30: { zh: '30S' }, s40: { zh: '40S' }, s50: { zh: '50S' }, s60: { zh: '60S' }, s70: { zh: '70S' }, s80: { zh: '80S' },
+    /* 起始 */
+    sd: { zh: 'Shine-Dalgarno 序列', en: 'Shine-Dalgarno sequence' }, kozak: { zh: 'Kozak 序列', en: 'Kozak sequence' }, tata: { zh: 'TATA 盒', en: 'TATA box' }, polya: { zh: 'poly(A) 尾巴', en: 'Poly(A) tail' }, cap5: { zh: '5′ 帽蓋', en: '5′ cap' },
+    r16: { zh: '16S rRNA 的 3′ 端', en: "3′ end of 16S rRNA" }, r23: { zh: '23S rRNA', en: '23S rRNA' }, r5: { zh: '5S rRNA', en: '5S rRNA' },
+    eif4e: { zh: 'eIF4E' }, eif2: { zh: 'eIF2' }, eef2: { zh: 'eEF2' }, if3: { zh: 'IF3' }, if2: { zh: 'IF2' },
+    sa: { zh: 'A 位', en: 'A site' }, sp_: { zh: 'P 位', en: 'P site' }, se: { zh: 'E 位', en: 'E site' },
+    gtp: { zh: 'GTP' }, atp: { zh: 'ATP' }, ctp: { zh: 'CTP' }, nenv: { zh: '核膜', en: 'Nuclear envelope' }, cw: { zh: '細胞壁', en: 'Cell wall' }, mito: { zh: '粒線體', en: 'Mitochondria' },
+    /* 延長與終止 */
+    eftu: { zh: 'EF-Tu' }, efg: { zh: 'EF-G' }, rf1: { zh: 'RF1' }, erf1: { zh: 'eRF1' }, eef1: { zh: 'eEF1A' },
+    rz: { zh: 'rRNA（是 RNA，不是蛋白質）', en: 'rRNA (RNA, not protein)' }, rprot: { zh: '核糖體的蛋白質', en: 'A ribosomal protein' },
+    rf: { zh: '釋放因子（蛋白質）', en: 'Release factor (a protein)' }, stRNA: { zh: '特殊的 tRNA', en: 'A special tRNA' }, poly: { zh: '聚核糖體', en: 'Polysome' }, nucs: { zh: '核小體', en: 'Nucleosome' }, splc: { zh: '剪接體', en: 'Spliceosome' },
+    /* 抗生素與毒素 */
+    tet: { zh: '四環黴素', en: 'Tetracycline' }, str: { zh: '鏈黴素', en: 'Streptomycin' }, chl: { zh: '氯黴素', en: 'Chloramphenicol' }, ery: { zh: '紅黴素', en: 'Erythromycin' },
+    pur: { zh: '嘌呤黴素', en: 'Puromycin' }, chx: { zh: '環己醯亞胺', en: 'Cycloheximide' }, dip: { zh: '白喉毒素', en: 'Diphtheria toxin' },
+    m_a: { zh: '擋住 A 位，胺醯-tRNA 進不來', en: 'Blocks aminoacyl-tRNA binding to the A site' }, m_pt: { zh: '抑制肽基轉移酶', en: 'Inhibits peptidyl transferase' },
+    m_tl: { zh: '抑制移位', en: 'Inhibits translocation' }, m_pre: { zh: '讓多肽鏈提早終止', en: 'Causes premature chain termination' },
+    /* 國考重點 */
+    self: { zh: '同一條單股 RNA 自己互補的區域形成的' }, two_: { zh: '一定要兩條不同的 RNA 才能形成的' }, lab: { zh: '只在實驗室才觀察得到的' },
+    cau: { zh: '5′-CAU-3′' }, uac: { zh: '5′-UAC-3′' }, aug: { zh: '5′-AUG-3′' }, tac: { zh: '5′-TAC-3′' },
+    n2: { zh: '2 個' }, n3: { zh: '3 個' }, n4: { zh: '4 個' }, up: { zh: '增加' }, down: { zh: '減少' },
+    ire: { zh: '鐵反應元件（IRE）', en: 'Iron-responsive element (IRE)' }
+  },
+  levels: [
+    { t: '先看全貌：照著 mRNA 接胺基酸', kind: 'ov', h: 520, legend: [['sR', 'RNA'], ['kP', '蛋白質、胺基酸']], svg: TRL_OV,
+      intro: ['轉譯（translation）是中心法則的最後一步：把 {R:mRNA} 上的核苷酸序列，「翻譯」成{P:蛋白質}的胺基酸序列。',
+        '為什麼叫翻譯？因為這是兩種不同的語言。核酸的字母是 A、U、G、C 四種鹼基，蛋白質的字母是 20 種胺基酸。',
+        '這件事需要三種 RNA 合作：一種是設計圖；一種是搬運工兼翻譯員，一頭認得設計圖、另一頭帶著胺基酸；還有一種是工廠的主體。',
+        '先回答四件事：模板、原料的搬運者、機器，還有方向。'],
+      blanks: [{ id: 'r1', x: 262, y: 300, w: 170, c: 'R', a: 'mrna', o: TRL_RO }, { id: 'r2', x: 262, y: 348, w: 170, c: 'R', a: 'trna', o: TRL_RO }, { id: 'r3', x: 262, y: 396, w: 170, c: 'R', a: 'rrna', o: TRL_RO },
+        { id: 'd1', x: 262, y: 444, w: 170, a: 'd53', o: ['d53', 'd35'] }, { id: 'd2', x: 262, y: 492, w: 170, c: 'P', a: 'nc', o: ['nc', 'cn'] }],
+      done: ['mRNA 是模板，tRNA 把胺基酸帶來，核糖體（rRNA 加上蛋白質）是機器。', '核糖體沿著 mRNA [[5′→3′]] 讀；多肽鏈從 [[N 端往 C 端]]長。先做出來的是 N 端。',
+        '位置：細胞質裡的核糖體，有些游離、有些附在粗糙內質網上。', '細胞裡的 RNA，數量最多的是 rRNA（大約八成），其次是 tRNA，mRNA 最少。'] },
+    { t: '遺傳密碼：三個鹼基一個字', kind: 'list',
+      intro: ['mRNA 上每三個鹼基是一個字，叫做密碼子（codon）。一個密碼子對應一個胺基酸。',
+        '四種鹼基、三個一組，一共有 4×4×4＝64 種組合。可是胺基酸只有 20 種，所以大部分的胺基酸都不只一個密碼子。',
+        '64 個裡面有 3 個不對應任何胺基酸，意思是「到這裡結束」；另外有一個身兼二職，既代表一種胺基酸，也是「從這裡開始」。',
+        '國考不會要你背整張密碼表，但[[起始密碼子和三個終止密碼子一定要背]]。'],
+      tip: '起始：AUG。終止：UAA、UAG、UGA（可以記成 U Are Away、U Are Gone、U Go Away）。',
+      listTitle: '密碼的性質',
+      list: [['下列哪一個是起始密碼子', { a: 'AUG', o: ['AUG', 'UAA', 'UGG', 'GUA'] }], ['起始密碼子對應的胺基酸', { a: 'met', o: ['met', 'trp', 'leu'] }], ['下列哪一個是終止密碼子', { a: 'UGA', o: ['AUG', 'UGA', 'UGG', 'UAC'] }],
+        ['一種胺基酸可以對應好幾個密碼子，這個性質叫', { a: 'degen', o: ['degen', 'univ', 'nonov'] }], ['從細菌到人類幾乎都用同一套密碼，這個性質叫', { a: 'univ', o: ['degen', 'univ', 'nonov'] }],
+        ['三個一組連著讀，中間沒有空格，同一個鹼基也不會用兩次', { a: 'nonov', o: ['degen', 'univ', 'nonov'] }], ['同一種胺基酸的幾個密碼子，通常只差在', { a: 'b3', o: ['b1', 'b2', 'b3'] }],
+        ['只有一個密碼子的胺基酸是哪兩種', { a: 'mt', o: ['mt', 'ls', 'rg'] }], ['三個一組的分法叫做讀框。多插入或少掉一個鹼基，後面的分法全部跑掉，叫做', { a: 'fs', o: ['fs', 'ms', 'sm'] }]],
+      countsTitle: '數字', counts: [['密碼子一共有幾種', '64', ['20', '61', '64']], ['對應胺基酸的密碼子有幾種', '61', ['20', '61', '64']], ['終止密碼子有幾種', '3', ['1', '3', '4']]],
+      done: ['[[AUG]] 是起始密碼子，同時也是甲硫胺酸（Met）的密碼子。', '[[UAA、UAG、UGA]] 是終止密碼子，不對應任何胺基酸，又叫無意義密碼子（nonsense codon）。',
+        '簡併性（degeneracy）：多個密碼子對應同一種胺基酸，多半只差第三個鹼基。所以第三個鹼基突變，胺基酸常常不變。', '只有甲硫胺酸（AUG）和色胺酸（UGG）各只有一個密碼子。'] },
+    { t: 'tRNA：一頭認密碼、一頭帶胺基酸', kind: 'ov', h: 392, legend: [['sR', 'RNA'], ['kP', '胺基酸']], svg: TRL_CL,
+      intro: ['tRNA 是一條只有 70 到 80 個核苷酸的小 RNA。同一條鏈上有幾段序列互補，自己和自己配對，折成像三葉草的形狀。',
+        '它有兩個工作的地方。一個是三個鹼基的[[反密碼子（anticodon）]]，和 mRNA 上的密碼子互補配對；另一個是胺基酸接上去的那一端。',
+        '所以 tRNA 才是真正的翻譯員：它同時認得核酸的語言和胺基酸的語言。',
+        '配對時兩條鏈方向相反。圖上黃底的那一對，配對規則比較寬鬆，下面的題目會問到。'],
+      blanks: [{ id: 'aa', x: 84, y: 44, w: 136, c: 'R', a: 'e3', o: ['e3', 'e5', 'dl', 'al'] }, { id: 'ac', x: 284, y: 298, w: 128, c: 'R', a: 'acodon', o: ['codon', 'acodon', 'dl', 'al'] }],
+      listTitle: '配對的規則',
+      list: [['黃底那一對比較寬鬆。它是密碼子的', { a: 'b3', o: ['b1', 'b2', 'b3'] }], ['這種比較寬鬆的配對叫做', { a: 'wob', o: ['wob', 'wc'] }],
+        ['反密碼子的第 1 個鹼基如果是肌苷（I，inosine），可以配密碼子的', { a: 'i_uca', o: ['i_uca', 'i_c', 'i_ag'] }],
+        ['tRNA 有很多修飾過的鹼基。TψC 環的 ψ 是', { a: 'psu', o: ['psu', 'ino', 'thy'] }], ['真核細胞的 tRNA 基因由誰轉錄', { a: 'pol3', o: ['pol1', 'pol2', 'pol3'] }]],
+      done: ['胺基酸接在 tRNA 的 [[3′ 端]]，那裡的序列固定是 CCA。', '[[搖擺配對（wobble）]]：密碼子的第 3 個鹼基，和反密碼子的第 1 個鹼基之間，配對規則比較寬鬆。所以一種 tRNA 可以認好幾個密碼子，細胞不需要準備 61 種 tRNA。',
+        'RNA 的雙股區域，是同一條單股 RNA 自己互補的地方折出來的。tRNA 的三葉草就是例子。國考考過。', '起始用的 tRNA 很特別：細菌帶的是甲醯甲硫胺酸（fMet），真核細胞帶的是一般的甲硫胺酸（Met）。'] },
+    { t: '胺基酸上車：胺醯-tRNA 合成酶', kind: 'ov', h: 244, legend: [['kP', '胺基酸']],
+      intro: ['胺基酸不會自己找到對的 tRNA，要靠酵素把它接上去。這個酵素叫[[胺醯-tRNA 合成酶（aminoacyl-tRNA synthetase）]]。',
+        '接好胺基酸的 tRNA 叫胺醯-tRNA（aminoacyl-tRNA），也有人說是「充電」過的 tRNA。簡報上寫的「胺基酸乙醯 tRNA」是同一個東西；國考和課本多半寫胺醯-tRNA。',
+        '反應分兩步，能量來自 ATP。注意這裡的 ATP 不是變成 ADP。'],
+      svg: function () { var h = PH() / 2; return pill(120, 34, 124, { zh: '胺基酸', en: 'Amino acid' }, 'pill kP') + arrow(120, 35 + h, 120, 118 - h) + arrow(120, 121 + h, 120, 204 - h) + pill(120, 206, 150, { zh: '胺醯-tRNA', en: 'Aminoacyl-tRNA' }, 'src') +
+        tagC(158, 76, { zh: '用掉 ATP', en: 'uses ATP' }, 'sp') + tx(214, 60, T('同時放出', 'releasing'), 'm', 10, 'start') + tagC(158, 163, { zh: '接上 tRNA', en: '+ tRNA' }, 'mol') + tagC(232, 163, { zh: '放出 AMP', en: 'AMP out' }, 'mol'); },
+      blanks: [{ id: 'mid', x: 120, y: 120, w: 150, c: 'P', a: 'aamp', o: ['aamp', 'aadp', 'ptrna'] }, { id: 'out', x: 284, y: 82, w: 132, a: 'ppi', o: ['ppi', 'pi', 'adp'] }],
+      listTitle: '這個酵素的重點',
+      list: [['胺基酸和 tRNA 之間的鍵結', { a: 'est', o: ['est', 'pep', 'pde', 'hb'] }], ['負責「對的胺基酸接到對的 tRNA」的是', { a: 'aars', o: ['aars', 'ribo', 'pt'] }]],
+      countsTitle: '數字', counts: [['這種酵素一共有幾種（每種胺基酸一種）', '20', ['1', '20', '61', '64']], ['活化一個胺基酸，用掉幾個高能磷酸鍵', '2', ['1', '2', '3', '4']]],
+      done: ['ATP → AMP ＋ PPi，一次斷掉兩個高能磷酸鍵，所以算[[用掉 2 個高能磷酸鍵]]。', '胺基酸以酯鍵接在 tRNA 的 3′ 端。這個鍵的能量，之後用來形成肽鍵。',
+        '轉譯要正確，有兩道關卡：這個酵素把對的胺基酸接到對的 tRNA 上；之後核糖體上密碼子和反密碼子要配對正確。核糖體只認反密碼子，不會檢查 tRNA 上載的是哪一種胺基酸。'] },
+    { t: '核糖體：大小兩個次單元', kind: 'ov', h: 196, legend: [['kP', '核糖體（rRNA 加蛋白質）']],
+      intro: ['核糖體是 rRNA 加上許多蛋白質組成的大型複合體，分成大、小兩個次單元。平常分開，要轉譯時才合起來。',
+        '分工：小次單元抓住 mRNA、負責對密碼；大次單元負責把胺基酸一個一個接起來。',
+        '大小用沉降係數 S 表示，數字越大、沉得越快。S 和形狀也有關係，所以[[不能直接相加]]。'],
+      svg: function () { return tx(95, 22, T('原核細胞（細菌）', 'Prokaryote (bacteria)'), 'b', 12) + tx(265, 22, T('真核細胞', 'Eukaryote'), 'b', 12) + blob(95, 84, 56, 40) + blob(95, 152, 48, 23) + blob(265, 84, 62, 44) + blob(265, 154, 54, 25) +
+        tx(180, 88, T('大次單元', 'large'), 'm', 10) + tx(180, 158, T('小次單元', 'small'), 'm', 10); },
+      blanks: [{ id: 'pl', x: 95, y: 84, w: 84, a: 's50', o: ['s30', 's40', 's50', 's60'] }, { id: 'ps', x: 95, y: 152, w: 84, a: 's30', o: ['s30', 's40', 's50', 's60'] },
+        { id: 'el', x: 265, y: 84, w: 84, a: 's60', o: ['s30', 's40', 's50', 's60'] }, { id: 'es', x: 265, y: 154, w: 84, a: 's40', o: ['s30', 's40', 's50', 's60'] }],
+      countsTitle: '合起來，以及裡面的 rRNA',
+      counts: [['原核細胞完整的核糖體', '70S', ['70S', '80S', '90S']], ['真核細胞質裡完整的核糖體', '80S', ['70S', '80S', '100S']],
+        ['原核小次單元裡的 rRNA', '16S', ['16S', '18S', '23S', '28S']], ['真核小次單元裡的 rRNA', '18S', ['16S', '18S', '23S', '28S']],
+        ['原核大次單元裡有 5S 和', '23S', ['16S', '18S', '23S', '28S']], ['真核大次單元裡有 5S、5.8S 和', '28S', ['16S', '18S', '23S', '28S']]],
+      done: ['細菌：[[30S ＋ 50S ＝ 70S]]。真核：[[40S ＋ 60S ＝ 80S]]。', '小次單元的 rRNA：細菌 16S、真核 18S。大次單元最大的那條：細菌 23S、真核 28S。',
+        '抗生素能殺細菌又不太傷人，就是因為細菌的核糖體和人的不一樣。', '粒線體有自己的核糖體，比較像細菌的。所以有些抗生素（例如氯黴素）會有副作用。'] },
+    { t: '起始：從哪裡開始讀', kind: 'list',
+      intro: ['核糖體要先找到正確的 AUG，才知道從哪裡開始、三個三個怎麼分組。',
+        '<b>細菌</b>：mRNA 的起始密碼子前面有一段 Shine-Dalgarno 序列，和小次單元裡 16S rRNA 的 3′ 端互補。一配對，AUG 就剛好對在正確的位置。',
+        '<b>真核細胞</b>：mRNA 的 5′ 端有帽蓋（cap）。小次單元先靠起始因子認出帽蓋，再沿著 mRNA 往 3′ 方向掃描，通常遇到的第一個 AUG 就是起點。',
+        '兩邊的共通點：小次單元先和 mRNA、起始 tRNA 組好，大次單元最後才蓋上來；起始 tRNA 直接進 P 位；過程要用 GTP。',
+        '幫忙的蛋白質叫起始因子（initiation factor），細菌的寫 IF，真核的前面多一個 e，寫 eIF。'],
+      listTitle: '細菌和真核細胞的起始',
+      list: [['細菌的第一個胺基酸', { a: 'fmet', o: ['fmet', 'met', 'trp'] }], ['真核細胞的第一個胺基酸', { a: 'met', o: ['fmet', 'met', 'trp'] }],
+        ['細菌 mRNA 上讓核糖體定位的序列', { a: 'sd', o: ['sd', 'kozak', 'tata', 'polya'] }], ['和這段序列配對的是', { a: 'r16', o: ['r16', 'r23', 'r5'] }],
+        ['真核細胞的小次單元，先認 mRNA 的', { a: 'cap5', o: ['cap5', 'polya', 'sd', 'tata'] }], ['認出帽蓋的真核起始因子', { a: 'eif4e', o: ['eif4e', 'eif2', 'eef2', 'if3'] }],
+        ['帶著 GTP、把起始 tRNA 送到小次單元的真核起始因子', { a: 'eif2', o: ['eif4e', 'eif2', 'eef2', 'if3'] }], ['起始 tRNA 進入核糖體的哪個位置', { a: 'sp_', o: TRL_SO }],
+        ['起始階段使用的能量', { a: 'gtp', o: ['atp', 'gtp', 'ctp'] }], ['細菌可以一邊轉錄、一邊轉譯；真核細胞不行，因為多了', { a: 'nenv', o: ['nenv', 'cw', 'mito'] }]],
+      done: ['細菌：Shine-Dalgarno 序列配 16S rRNA，第一個胺基酸是 fMet。', '真核：認 5′ 帽蓋、往下掃描到第一個 AUG（周圍的序列叫 Kozak 序列），第一個胺基酸是 Met。',
+        '起始 tRNA 是唯一直接進 [[P 位]]的 tRNA，之後的都從 A 位進來。', '和營養有關：胰島素和白胺酸（leucine）會活化 mTOR，讓 eIF4E 可以工作，轉譯的起始增加，蛋白質合成就上升。'] },
+    { t: '延長：A、P、E 三個位置', kind: 'ov', h: 340, legend: [['sR', 'RNA'], ['kP', '核糖體、胺基酸']], svg: TRL_APE,
+      intro: ['大小次單元合起來之後，中間有三個放 tRNA 的位置，順著 mRNA 的 5′→3′ 排成一列。名字取自英文的第一個字母：',
+        '<b>A 位</b>（aminoacyl）：新來的、帶著一個胺基酸的 tRNA 進來的地方。<b>P 位</b>（peptidyl）：拿著整條多肽鏈的 tRNA 待的地方。<b>E 位</b>（exit）：卸完貨的空 tRNA 離開前待的地方。',
+        '每多接一個胺基酸，就重複三個動作，圖上有編號：1 進位，新的胺醯-tRNA 進來；2 成肽，形成肽鍵；3 移位，核糖體往前走一個密碼子。',
+        '成肽的時候，是 P 位那整條多肽鏈被搬過去，接到新來的那個胺基酸上。移位之後，原本拿著鏈的 tRNA 變成空的，往出口移動。',
+        '看圖上三個位置的 tRNA 各拿著什麼，把三個位置的名字填出來。'],
+      blanks: [{ id: 'e', x: 124, y: 82, w: 52, a: 'se', o: TRL_SO }, { id: 'p', x: 180, y: 82, w: 52, a: 'sp_', o: TRL_SO }, { id: 'a', x: 236, y: 82, w: 52, a: 'sa', o: TRL_SO }],
+      listTitle: '三個動作各靠誰',
+      list: [['進位（圖上的 1）：細菌把胺醯-tRNA 送進來的延長因子', { a: 'eftu', o: TRL_FO }], ['成肽（圖上的 2）：催化肽鍵形成的酵素活性', { a: 'pt', o: ['pt', 'aars', 'ribo'] }],
+        ['這個酵素活性來自大次單元裡的', { a: 'rz', o: ['rz', 'rprot'] }], ['移位（圖上的 3）：細菌推動核糖體前進的延長因子', { a: 'efg', o: TRL_FO }],
+        ['真核細胞負責移位的因子', { a: 'eef2', o: ['eef2', 'eif2', 'eif4e', 'erf1'] }], ['進位和移位各用掉一個', { a: 'gtp', o: ['atp', 'gtp', 'ctp'] }]],
+      done: ['順序可以記成：A 進、P 接、E 出。', '[[肽基轉移酶（peptidyl transferase）是 rRNA]]，不是蛋白質。細菌是 23S rRNA，真核是 28S rRNA。會催化反應的 RNA 叫核糖酶（ribozyme）。',
+        '細菌的 EF-Tu 管進位、EF-G 管移位；真核細胞對應的是 eEF1A 和 eEF2。', '成肽這一步本身不另外用 ATP 或 GTP，能量來自胺基酸和 tRNA 之間的那個酯鍵。'] },
+    { t: '終止與能量總帳', kind: 'list',
+      intro: ['核糖體走到終止密碼子（UAA、UAG、UGA）時，沒有任何 tRNA 認得它。這時進到 A 位的是一種蛋白質，叫釋放因子（release factor）。',
+        '釋放因子讓 P 位上的多肽鏈被切下來。接著大小次單元分開、離開 mRNA，可以再拿去用。',
+        '一條 mRNA 上通常同時有好幾個核糖體排著隊在讀，同一份設計圖可以同時做出很多條蛋白質。',
+        '最後算能量。蛋白質合成是細胞裡最花能量的工作之一，每接一個胺基酸要付三筆。'],
+      listTitle: '終止',
+      list: [['認得終止密碼子的是', { a: 'rf', o: ['rf', 'stRNA', 'rprot'] }], ['細菌的 RF1 認 UAA 和', { a: 'UAG', o: ['UAG', 'UGA', 'AUG'] }], ['細菌的 RF2 認 UAA 和', { a: 'UGA', o: ['UAG', 'UGA', 'AUG'] }],
+        ['真核細胞只用一種釋放因子認全部三種終止密碼子，它是', { a: 'erf1', o: ['erf1', 'eef2', 'eif2'] }], ['一條 mRNA 上同時掛著許多核糖體，叫做', { a: 'poly', o: ['poly', 'nucs', 'splc'] }]],
+      countsTitle: '每形成一個肽鍵，用掉幾個高能磷酸鍵',
+      counts: [['胺基酸活化（ATP → AMP ＋ PPi）', '2', ['1', '2', '3']], ['進位（GTP）', '1', ['1', '2', '3']], ['移位（GTP）', '1', ['1', '2', '3']], ['合計', '4', ['2', '3', '4', '6']]],
+      done: ['[[每形成一個肽鍵，一共用掉 4 個高能磷酸鍵]]：活化 2 個，進位 1 個，移位 1 個。', '終止密碼子是由蛋白質（釋放因子）辨識的，不是 tRNA。',
+        '聚核糖體（polysome）：越靠近 mRNA 3′ 端的核糖體，身上的多肽鏈越長。'] },
+    { t: '抗生素與毒素：卡在哪一步', kind: 'list',
+      intro: ['很多抗生素專門卡住細菌的 70S 核糖體。記法是先分它黏在哪個次單元，再記卡住哪一個動作。',
+        '<b>黏在小次單元 30S</b>：鏈黴素這一類（胺基糖苷類）干擾起始、讓密碼被讀錯；四環黴素擋住 A 位。',
+        '<b>黏在大次單元 50S</b>：氯黴素卡成肽；紅黴素這一類（巨環類）卡移位。',
+        '另外有幾個作用在真核細胞，或是兩邊都有效的，國考也考過。'],
+      tip: '英文口訣：buy AT 30, CCEL at 50。Aminoglycosides（如 streptomycin）和 Tetracyclines 作用在 30S；Chloramphenicol、Clindamycin、Erythromycin、Linezolid 作用在 50S。',
+      listTitle: '是哪一個',
+      list: [['黏在 30S，擋住 A 位，胺醯-tRNA 進不來', { a: 'tet', o: TRL_DO }], ['黏在 30S，干擾起始，並且讓密碼子被讀錯', { a: 'str', o: TRL_DO }],
+        ['黏在 50S，抑制肽基轉移酶', { a: 'chl', o: TRL_DO }], ['黏在 50S，抑制移位，卡在延長（elongation）階段', { a: 'ery', o: TRL_DO }],
+        ['長得像胺醯-tRNA 的 3′ 端，進到 A 位接上多肽鏈後，鏈就提早掉下來。細菌和真核細胞都有效', { a: 'pur', o: TRL_DO }],
+        ['只作用在真核細胞的 60S 次單元，實驗室用來停掉真核細胞的蛋白質合成', { a: 'chx', o: TRL_DO }], ['把真核細胞的 eEF2 接上 ADP-核糖，讓移位停擺', { a: 'dip', o: TRL_DO }]],
+      done: ['國考考過的四個敘述，正確的是「紅黴素（erythromycin）抑制細菌的延伸過程（elongation）」。',
+        '另外三個是錯的：四環黴素黏的是 30S，不是 23S rRNA；鏈黴素不是肽基轉移酶的抑制物；嘌呤黴素不是擋住 tRNA 結合，而是冒充胺醯-tRNA。',
+        '白喉毒素做的修飾叫 ADP-核糖基化（ADP-ribosylation），對象是 eEF2。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把整個單元最常考的觀念再走一次。抗生素那幾題的選項只有英文，和考卷上一樣。',
+        '最後兩題是營養學會用到的：細胞可以不改變 mRNA 的量，只調整「轉譯得多還是少」。'],
+      cloze: [
+        ['RNA 的雙股區域是', { a: 'self', o: ['self', 'two_', 'lab'] }, '。'],
+        ['mRNA 上的密碼子是 5′-AUG-3′，和它配對的反密碼子是', { a: 'cau', o: ['cau', 'uac', 'aug', 'tac'] }, '。'],
+        ['細胞中含量最多的 RNA 是', { a: 'rrna', o: TRL_RO }, '。'],
+        ['同時帶有反密碼子和胺基酸結合位置的 RNA 是', { a: 'trna', o: TRL_RO }, '。'],
+        ['多肽鏈合成的方向是', { a: 'nc', o: ['nc', 'cn'] }, '。'],
+        ['肽基轉移酶（peptidyl transferase）的本質是', { a: 'rz', o: ['rz', 'rprot'] }, '。'],
+        ['細菌核糖體的小次單元是', { a: 's30', o: ['s30', 's40', 's50', 's60'] }, '。'],
+        ['每形成一個肽鍵，一共用掉幾個高能磷酸鍵？', { a: 'n4', o: ['n2', 'n3', 'n4'] }, '。'],
+        ['Tetracycline 抑制細菌蛋白質合成的方式是', { a: 'm_a', o: TRL_MO, lang: 'en' }, '。'],
+        ['Chloramphenicol 的作用方式是', { a: 'm_pt', o: TRL_MO, lang: 'en' }, '。'],
+        ['Erythromycin 的作用方式是', { a: 'm_tl', o: TRL_MO, lang: 'en' }, '。'],
+        ['Puromycin 的作用方式是', { a: 'm_pre', o: TRL_MO, lang: 'en' }, '。'],
+        ['白喉毒素（diphtheria toxin）修飾的對象是', { a: 'eef2', o: ['eef2', 'eif2', 'efg', 'rf1'] }, '。'],
+        ['白胺酸（leucine）和胰島素活化 mTOR 之後，轉譯的起始會', { a: 'up', o: ['up', 'down'] }, '，肌肉蛋白質的合成上升。'],
+        ['缺鐵時，鐵調節蛋白會黏在鐵蛋白（ferritin）mRNA 的', { a: 'ire', o: ['ire', 'sd', 'cap5', 'polya'] }, '上，擋住轉譯，鐵蛋白就做得比較少。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 340, force: 'en', legend: [['sR', 'RNA'], ['kP', '核糖體、胺基酸']], svg: TRL_APE,
+      intro: ['同一張核糖體的圖，三個位置自己填。下面的題目全部用英文作答。'], tip: '這一關固定用英文作答。',
+      blanks: [{ id: 'e', x: 124, y: 82, w: 52, a: 'se', o: TRL_SO }, { id: 'p', x: 180, y: 82, w: 52, a: 'sp_', o: TRL_SO }, { id: 'a', x: 236, y: 82, w: 52, a: 'sa', o: TRL_SO }],
+      listTitle: '誰負責、叫什麼',
+      list: [['把胺基酸接到正確的 tRNA 上', { a: 'aars', o: ['aars', 'pt', 'ribo'] }], ['進位（圖上的 1）：細菌把胺醯-tRNA 送進 A 位', { a: 'eftu', o: TRL_FO }], ['成肽（圖上的 2）：催化肽鍵形成的酵素活性', { a: 'pt', o: ['aars', 'pt', 'ribo'] }],
+        ['移位（圖上的 3）：細菌推動核糖體前進', { a: 'efg', o: TRL_FO }], ['認得終止密碼子的', { a: 'rf', o: ['rf', 'stRNA', 'rprot'] }],
+        ['mRNA 上三個一組的鹼基', { a: 'codon', o: ['codon', 'acodon', 'wob'] }], ['tRNA 上和它配對的三個鹼基', { a: 'acodon', o: ['codon', 'acodon', 'wob'] }], ['密碼子第 3 個鹼基那種比較寬鬆的配對', { a: 'wob', o: ['codon', 'acodon', 'wob'] }],
+        ['一條 mRNA 上同時掛著許多核糖體', { a: 'poly', o: ['poly', 'nucs', 'splc'] }], ['細菌 mRNA 上讓核糖體定位的序列', { a: 'sd', o: ['sd', 'kozak', 'tata'] }],
+        ['黏在 30S、擋住 A 位的抗生素', { a: 'tet', o: ['tet', 'str', 'chl', 'ery'] }], ['黏在 50S、抑制肽基轉移酶的抗生素', { a: 'chl', o: ['tet', 'str', 'chl', 'ery'] }], ['黏在 50S、抑制移位的抗生素', { a: 'ery', o: ['tet', 'str', 'chl', 'ery'] }]] }
+  ] };
 /* 目錄：照老師上課的順序。有 levels 的才是做好的單元 */
 var GROUPS = [
   { g: '先讀這裡', items: [PRE] },
@@ -1572,7 +2084,13 @@ var GROUPS = [
   { g: '生化 1・脂質分解', c: 2, items: [BOX] },
   { g: '生化 2・脂質合成', c: 2, items: [FAS, KET, CHO] },
   { g: '生化 2・蛋白質與胺基酸', c: 3, items: [UREA, AAC] },
-  { g: '全部學完之後', c: 4, items: [INT] }
+  { g: '全部學完之後', c: 4, items: [INT] },
+  /* 分子生物（tab: 'mb'）：照老師簡報的順序。沒有 levels 的會顯示「製作中」 */
+  { tab: 'mb', g: '先讀這裡', items: [CDG] },
+  { tab: 'mb', g: '分生 1・DNA', c: 'D', items: [{ zh: '核酸與染色體的結構', en: 'Nucleic acids & chromatin' }, REP, { zh: 'DNA 的突變與修補', en: 'Mutation & DNA repair' }, { zh: 'DNA 的重組與轉位', en: 'Recombination & transposition' }] },
+  { tab: 'mb', g: '分生 2・RNA', c: 'R', items: [{ zh: '轉錄', en: 'Transcription' }, { zh: 'RNA 的轉錄後修飾', en: 'RNA processing' }, { zh: '基因表現的調控', en: 'Regulation of gene expression' }] },
+  { tab: 'mb', g: '分生 3・蛋白質', c: 'P', items: [TRL, { zh: '轉譯後修飾與蛋白質的運送', en: 'Post-translational modification & targeting' }] },
+  { tab: 'mb', g: '分生 4・技術', c: 4, items: [{ zh: '分子生物學的技術', en: 'PCR・電泳・定序・重組 DNA' }] }
 ];
 function prep(u, par) {
   if (par) ['dict', 'enz', 'prod', 'tags', 'zh', 'en'].forEach(function (k) { if (u[k] == null) u[k] = par[k]; });      // 子路徑沒寫的就沿用單元的
@@ -1580,7 +2098,7 @@ function prep(u, par) {
   u.steps = u.steps || []; u.enz = u.enz || {}; u.prod = u.prod || {};
   for (var k in (u.subs || {})) prep(u.subs[k], u);
 }
-var UNITS = {}; GROUPS.forEach(function (g) { g.items.forEach(function (u) { if (u.levels) { UNITS[u.id] = u; prep(u); } }); });
+var UNITS = {}; GROUPS.forEach(function (g) { g.items.forEach(function (u) { if (u.levels) { UNITS[u.id] = u; u.tab = g.tab || 'met'; prep(u); } }); });
 
 /* ======================================================================
    程式
@@ -1598,13 +2116,19 @@ var CUR = null, LV = 0, ST = null;   // 目前單元、關卡、作答狀態
 function seg() { var s = $('lang'); s.hidden = !!FORCE; s.querySelectorAll('button').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-l') === LANG); b.setAttribute('aria-pressed', b.getAttribute('data-l') === LANG ? 'true' : 'false'); }); }
 
 /* ---------- 目錄 ---------- */
+var TABS = [['met', '生化代謝'], ['mb', '分子生物'], ['phy', '人體生理']];
+var HINT = { met: '圖上名稱的底色是碳數（6 碳、3 碳…），小標籤是這一步花掉或產生什麼，', mb: '藍色是 DNA、青色是新合成的 DNA、玫瑰色是 RNA、琥珀色是蛋白質（酵素、因子、核糖體），', phy: '' };
 function home() {
-  CUR = null; FORCE = null; $('title').textContent = '圖解生化'; $('subtitle').textContent = '代謝路徑：看圖、填空，一關一關記起來';
+  CUR = null; FORCE = null; $('title').textContent = '圖解生理生化'; $('subtitle').textContent = '看圖、填空，一關一關記起來';
   $('back').hidden = true; $('lv').hidden = true; seg();
-  var h = '<div class="card pad"><h2>怎麼用</h2><p>每個路徑分成幾關，從只看大方向開始，一次多記一點，最後整張圖自己填出來。</p>' +
+  var tab = TABS.some(function (x) { return x[0] === SAVE.tab; }) ? SAVE.tab : 'met', fresh = !Object.keys(SAVE.done).length;
+  var h = '<div class="tabs" role="tablist">' + TABS.map(function (x) { return '<button type="button" role="tab" data-t="' + x[0] + '" class="' + (x[0] === tab ? 'on' : '') + '" aria-selected="' + (x[0] === tab) + '">' + x[1] + '</button>'; }).join('') + '</div>';
+  h += '<details class="card pad"' + (fresh ? ' open' : '') + '><summary>怎麼用</summary><p>每個單元分成幾關，從只看大方向開始，一次多記一點，最後整張圖自己填出來。</p>' +
     '<p>虛線框的空格是下拉選單，點一下選答案，填完按「對答案」。</p>' +
-    '<ul class="small muted"><li>右上角可以切換名稱：中文、中英對照、英文。預設是中英對照。</li><li>顏色都有意思：圖上名稱的底色是碳數（6 碳、3 碳…），小標籤是這一步花掉或產生什麼，<mark>黃底的字</mark>是必背。</li><li>國考的酵素和中間產物常常只寫英文，所以每個單元最後的總複習固定用英文作答。考的是選擇題，練到看到認得就夠了，不必會拼。</li><li>第一次來，請先做最上面的「開始之前」。</li></ul></div>';
+    '<ul class="small muted"><li>右上角可以切換名稱：中文、中英對照、英文。預設是中英對照。</li><li>顏色都有意思：' + HINT[tab] + '<mark>黃底的字</mark>是必背。</li><li>國考的專有名詞常常只寫英文，所以每個單元最後的總複習固定用英文作答。考的是選擇題，練到看到認得就夠了，不必會拼。</li><li>第一次來，請先做最上面「先讀這裡」的單元。</li></ul></details>';
+  if (tab === 'phy') h += '<div class="card pad"><h2>人體生理：製作中</h2><p>會比照生化代謝的做法，一個系統一個單元，從全貌到細節一關一關填。</p><p class="muted small">做好之後會直接出現在這一頁，不需要換網址。</p></div>';
   GROUPS.forEach(function (g) {
+    if ((g.tab || 'met') !== tab) return;
     h += '<div class="glab' + (g.c ? ' k' + g.c : '') + '">' + esc(g.g) + '</div>';
     g.items.forEach(function (p) {
       if (p.levels) { var n = p.levels.length, d = p.levels.filter(function (_, i) { return isDone(p.id, i); }).length;
@@ -1613,13 +2137,14 @@ function home() {
     });
   });
   h += OK ? '<p class="note">完成的關卡只記在這支手機的瀏覽器。清除瀏覽器資料、換手機，或 iPhone 超過一週沒打開，紀錄會消失；內容不受影響。</p>' : '<p class="note">這個瀏覽器無法儲存資料，完成紀錄不會保留。</p>';
-  h += '<p class="note">名詞以營養師國考題目的寫法為主。換算 ATP 時，沒有特別說明就用 NADH 2.5、FADH₂ 1.5。內容是教學用的重點整理，細節以課本與老師上課為準。</p>';
+  h += '<p class="note">名詞以營養師國考題目的寫法為主。' + (tab === 'met' ? '換算 ATP 時，沒有特別說明就用 NADH 2.5、FADH₂ 1.5。' : '') + '內容是教學用的重點整理，細節以課本與老師上課為準。</p>';
   $('main').innerHTML = h;
+  document.querySelectorAll('.tabs button').forEach(function (b) { b.onclick = function () { SAVE.tab = b.getAttribute('data-t'); save(); home(); }; });
   document.querySelectorAll('.item[data-p]').forEach(function (b) { b.onclick = function () { var u = UNITS[b.getAttribute('data-p')]; open(u, firstTodo(u)); }; });
   window.scrollTo(0, 0);
 }
 function firstTodo(p) { for (var i = 0; i < p.levels.length; i++) if (!isDone(p.id, i)) return i; return 0; }
-function open(p, i) { CUR = p; LV = i; ST = null; level(); window.scrollTo(0, 0); }
+function open(p, i) { CUR = p; LV = i; ST = null; if (p.tab && SAVE.tab !== p.tab) { SAVE.tab = p.tab; save(); } level(); window.scrollTo(0, 0); }
 
 /* ---------- 版面：每個節點在圖上的位置 ----------
    鏈狀（chain）：主幹由上往下；旁支 side 接在某個主幹節點的同一列，link 決定線怎麼畫：
@@ -1752,9 +2277,9 @@ function level() {
   var by = function (w) { return ST.blanks.filter(function (b) { return b.where === w; }); }, nodes = by('node'), rows = by('row').filter(function (b) { return b.li == null; }), lst = by('row').filter(function (b) { return b.li != null; }), cnt = by('count');
   var passed = ST.checked && !ST.shown && ST.blanks.every(function (b) { return ST.ans[b.id] === b.ans; });
   var E = L.energy || (L.rows === 'prod' && (ST.shown || passed)) ? 'all' : L.carbon ? 'co2' : '';      // 算帳那一關：全對或看答案後，圖上才出現能量標籤
-  var lg = (L.legend || (L.kind === 'map' && !L.plain ? U.nodes.map(function (n) { return n.c; }).concat(U.top ? [U.top.c] : []).filter(function (c, i, a) { return c && a.indexOf(c) === i; }).sort(function (a, b) { return b - a; }) : []))
-    .map(function (c) { return '<span><i class="k' + c + '"></i>' + c + ' 碳</span>'; });
-  if (lg.length) lg.unshift('<span>底色＝碳數</span>');
+  var lgS = L.legend || (L.kind === 'map' && !L.plain ? U.nodes.map(function (n) { return n.c; }).concat(U.top ? [U.top.c] : []).filter(function (c, i, a) { return c && a.indexOf(c) === i; }).sort(function (a, b) { return b - a; }) : []);
+  var lg = lgS.map(function (c) { return typeof c === 'object' ? '<span><i class="' + c[0] + '"></i>' + esc(c[1]) + '</span>' : '<span><i class="k' + c + '"></i>' + c + ' 碳</span>'; });      // 圖例：數字＝碳數；[樣式, 文字]＝自訂
+  if (lg.length && (L.legendTitle || typeof lgS[0] !== 'object')) lg.unshift('<span>' + esc(L.legendTitle || '底色＝碳數') + '</span>');
   if (L.kind === 'map' && L.rows && allSteps(U).some(function (s) { return s.irr && asked(L, s); })) lg.push('<span><i class="irr">1</i>實心編號＝不可逆步驟</span>');
   if (L.kind === 'ov' || L.kind === 'map') { var H = L.kind === 'ov' ? L.h : mapH(U), fh = Math.round(PH() / .75);
     h += '<div class="card pad"><div class="dia" id="dia"><svg viewBox="0 0 360 ' + H + '" role="img" aria-label="' + esc(P.zh) + '路徑圖">' + (L.kind === 'ov' ? L.svg() : mapSvg(U, L, E)) + '</svg>' +

@@ -136,6 +136,12 @@
   .glab.kD { color: var(--k5s); } .glab.kR { color: var(--k3s); } .glab.kP { color: var(--k6s); } .glab.kN { color: var(--k4s); }
   .item.kD { border-left: 5px solid var(--k5s); } .item.kR { border-left: 5px solid var(--k3s); } .item.kP { border-left: 5px solid var(--k6s); } .item.kN { border-left: 5px solid var(--k4s); }
   .wD { color: var(--k5s); font-weight: 700; } .wN { color: var(--k4s); font-weight: 700; } .wR { color: var(--k3s); font-weight: 700; } .wP { color: var(--w-k); font-weight: 700; }
+  /* 生理：E＝興奮、交感、去極化（玫瑰）；I＝抑制、副交感、再極化（藍）；H＝激素、耗能（琥珀）；C＝鈣與第二傳訊者（紫）；T＝被動、水（青） */
+  .dia rect.kE, .dia .kE { fill: var(--k3); stroke: var(--k3s); } .pick .face.kE { background: var(--k3); } .pick:not(.ok):not(.no) .face.kE { border-color: var(--k3s); } .lgd i.kE { background: var(--k3); border-color: var(--k3s); } .lgd i.sE { background: var(--k3s); border-color: var(--k3s); } .glab.kE { color: var(--k3s); } .item.kE { border-left: 5px solid var(--k3s); } .wE { color: var(--k3s); font-weight: 700; }
+  .dia rect.kI, .dia .kI { fill: var(--k5); stroke: var(--k5s); } .pick .face.kI { background: var(--k5); } .pick:not(.ok):not(.no) .face.kI { border-color: var(--k5s); } .lgd i.kI { background: var(--k5); border-color: var(--k5s); } .lgd i.sI { background: var(--k5s); border-color: var(--k5s); } .glab.kI { color: var(--k5s); } .item.kI { border-left: 5px solid var(--k5s); } .wI { color: var(--k5s); font-weight: 700; }
+  .dia rect.kH, .dia .kH { fill: var(--k6); stroke: var(--k6s); } .pick .face.kH { background: var(--k6); } .pick:not(.ok):not(.no) .face.kH { border-color: var(--k6s); } .lgd i.kH { background: var(--k6); border-color: var(--k6s); } .lgd i.sH { background: var(--k6s); border-color: var(--k6s); } .glab.kH { color: var(--k6s); } .item.kH { border-left: 5px solid var(--k6s); } .wH { color: var(--w-k); font-weight: 700; }
+  .dia rect.kC, .dia .kC { fill: var(--k2); stroke: var(--k2s); } .pick .face.kC { background: var(--k2); } .pick:not(.ok):not(.no) .face.kC { border-color: var(--k2s); } .lgd i.kC { background: var(--k2); border-color: var(--k2s); } .lgd i.sC { background: var(--k2s); border-color: var(--k2s); } .glab.kC { color: var(--k2s); } .item.kC { border-left: 5px solid var(--k2s); } .wC { color: var(--k2s); font-weight: 700; }
+  .dia rect.kT, .dia .kT { fill: var(--k4); stroke: var(--k4s); } .pick .face.kT { background: var(--k4); } .pick:not(.ok):not(.no) .face.kT { border-color: var(--k4s); } .lgd i.kT { background: var(--k4); border-color: var(--k4s); } .lgd i.sT { background: var(--k4s); border-color: var(--k4s); } .glab.kT { color: var(--k4s); } .item.kT { border-left: 5px solid var(--k4s); } .wT { color: var(--k4s); font-weight: 700; }
   /* 首頁的分頁 */
   .tabs { display: flex; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--card); margin: 4px 0 0; }
   .tabs button { flex: 1; min-width: 0; border: 0; background: transparent; padding: 10px 4px; font-size: 15px; font-weight: 700; cursor: pointer; color: var(--muted); }
@@ -198,19 +204,21 @@ function tagW(t) { t = tagT(t); var n = 0; for (var i = 0; i < t.length; i++) n 
 function tagC(x, y, t, k) { var w = tagW(t); x = Math.max(3 + w / 2, Math.min(357 - w / 2, x)); return '<g class="tag ' + k + '"><rect x="' + (x - w / 2) + '" y="' + (y - 7.5) + '" width="' + w + '" height="15" rx="4"/><text x="' + x + '" y="' + (y + 3.5) + '" text-anchor="middle" font-size="9.5">' + esc(tagT(t)) + '</text></g>'; }
 /* 分生用的畫圖工具：有顏色的線、箭頭、蛋白質的橢圓、有顏色的字、「說明＋空格」的一列
    顏色代號 D＝DNA（舊股）、N＝新合成的 DNA、R＝RNA、P＝蛋白質、M＝灰 */
-var KS = { D: '--k5s', N: '--k4s', R: '--k3s', P: '--k6s', M: '--muted' };
+var KS = { D: '--k5s', N: '--k4s', R: '--k3s', P: '--k6s', M: '--muted', E: '--k3s', I: '--k5s', H: '--k6s', C: '--k2s', T: '--k4s', K: '--ink' };
 function sl(pts, k, w, dash) { return '<polyline points="' + pts + '" fill="none" stroke="var(' + KS[k] + ')" stroke-width="' + (w || 4) + '" stroke-linecap="round" stroke-linejoin="round"' + (dash ? ' stroke-dasharray="' + dash + '"' : '') + '/>'; }
 function sp(d, k, w, dash) { return '<path d="' + d + '" fill="none" stroke="var(' + KS[k] + ')" stroke-width="' + (w || 4) + '" stroke-linecap="round" stroke-linejoin="round"' + (dash ? ' stroke-dasharray="' + dash + '"' : '') + '/>'; }
 function hd(x, y, a, k) { return '<polygon points="-10,-6.5 4,0 -10,6.5" fill="var(' + KS[k] + ')" transform="translate(' + x + ',' + y + ') rotate(' + a + ')"/>'; }
 function blob(cx, cy, rx, ry, k) { return '<ellipse class="k' + (k || 'P') + '" cx="' + cx + '" cy="' + cy + '" rx="' + rx + '" ry="' + ry + '" stroke-width="1.5"/>'; }
 function kt(x, y, t, k, size, anchor, bold) { return '<text x="' + x + '" y="' + y + '" text-anchor="' + (anchor || 'middle') + '" font-size="' + (size || 12) + '"' + (bold === false ? '' : ' font-weight="700"') + ' style="fill:var(' + KS[k] + ')">' + esc(t) + '</text>'; }
 function rungs(x1, y1, x2, y2, n, dx, dy) { var s = ''; for (var i = 0; i < n; i++) s += '<line x1="' + (x1 + dx * i) + '" y1="' + (y1 + dy * i) + '" x2="' + (x2 + dx * i) + '" y2="' + (y2 + dy * i) + '" stroke="var(--rail)" stroke-width="1.5"/>'; return s; }
+function box(x, y, w, h, k, r) { return '<rect class="' + (k ? 'k' + k : 'pill') + '" x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="' + (r == null ? 10 : r) + '" stroke-width="1.5"/>'; }
+function dot(x, y, r, k) { return '<circle class="k' + k + '" cx="' + x + '" cy="' + y + '" r="' + r + '" stroke-width="1.5"/>'; }
 function cap(y, zh, en, w) { var t = T(zh, en); return tx(14, y + 4.5, t, '', fit(t, w || 168, 12), 'start'); }      // 圖上的一列：左邊說明，右邊放空格
 
 /* 全貌圖用：虛線框（例如細胞、粒線體）和框上的小字 */
 function zone(x, y, w, h, t) { return '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="16" fill="none" stroke="var(--rail)" stroke-width="1.5" stroke-dasharray="5 4"/>' + (t ? tx(x + 12, y + 16, t, 'm', 10.5, 'start') : ''); }
 /* 說明文字裡的記號：[[必背]]、{k:激酶這一類}、{d:去氫酶這一類}；分生用 {D:DNA}、{N:新合成的 DNA}、{R:RNA}、{P:蛋白質} */
-function fmt(s) { return s.replace(/\[\[(.+?)\]\]/g, '<mark>$1</mark>').replace(/\{k:(.+?)\}/g, '<span class="wk">$1</span>').replace(/\{d:(.+?)\}/g, '<span class="wd">$1</span>').replace(/\{([DNRP]):(.+?)\}/g, '<span class="w$1">$2</span>'); }
+function fmt(s) { return s.replace(/\[\[(.+?)\]\]/g, '<mark>$1</mark>').replace(/\{k:(.+?)\}/g, '<span class="wk">$1</span>').replace(/\{d:(.+?)\}/g, '<span class="wd">$1</span>').replace(/\{([DNRPEIHCT]):(.+?)\}/g, '<span class="w$1">$2</span>'); }
 
 /* ======================================================================
    單元零：開始之前（生化代謝在學什麼、怎麼記英文）
@@ -2076,6 +2084,819 @@ var TRL = { id: 'trl', zh: '轉譯', en: 'Translation', alias: 'Translation・�
         ['一條 mRNA 上同時掛著許多核糖體', { a: 'poly', o: ['poly', 'nucs', 'splc'] }], ['細菌 mRNA 上讓核糖體定位的序列', { a: 'sd', o: ['sd', 'kozak', 'tata'] }],
         ['黏在 30S、擋住 A 位的抗生素', { a: 'tet', o: ['tet', 'str', 'chl', 'ery'] }], ['黏在 50S、抑制肽基轉移酶的抗生素', { a: 'chl', o: ['tet', 'str', 'chl', 'ery'] }], ['黏在 50S、抑制移位的抗生素', { a: 'ery', o: ['tet', 'str', 'chl', 'ery'] }]] }
   ] };
+
+/* ======================================================================
+   人體生理・導讀：恆定與回饋（生理在學什麼、每個調節問哪三件事、體液區域）
+   ====================================================================== */
+var HOM_O = ['sen', 'ic', 'eff'], HOM_F = ['neg', 'pos'], HOM_N = ['f23', 'f13', 'f80', 'f20'];
+var HOM = { id: 'hom', zh: '開始之前：恆定與回饋', en: 'Homeostasis and feedback', alias: '恆定・負回饋與正回饋・神經與內分泌・體液區域', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    sen: { zh: '感應器', en: 'Sensor' }, ic: { zh: '整合中樞', en: 'Integrating center' }, eff: { zh: '動器', en: 'Effector' },
+    neg: { zh: '負回饋', en: 'Negative feedback' }, pos: { zh: '正回饋', en: 'Positive feedback' }, ant: { zh: '拮抗性動器', en: 'Antagonistic effectors' }, setp: { zh: '設定點', en: 'Set point' },
+    thermo: { zh: '皮膚和腦裡的溫度受器' }, hypo: { zh: '下視丘', en: 'Hypothalamus' }, sweat: { zh: '汗腺和皮膚的血管' }, liver: { zh: '肝臟', en: 'Liver' }, kidney: { zh: '腎臟', en: 'Kidneys' }, lung: { zh: '肺臟', en: 'Lungs' },
+    beta: { zh: 'β 細胞', en: 'β cells' }, alpha: { zh: 'α 細胞', en: 'α cells' }, delta: { zh: 'δ 細胞', en: 'δ cells' },
+    ins: { zh: '胰島素', en: 'Insulin' }, glu: { zh: '升糖素', en: 'Glucagon' }, epi: { zh: '腎上腺素', en: 'Epinephrine' }, thy: { zh: '甲狀腺素', en: 'Thyroxine' },
+    islet: { zh: '胰臟的胰島', en: 'Pancreatic islets' }, adr: { zh: '腎上腺', en: 'Adrenal gland' }, pit: { zh: '腦垂腺', en: 'Pituitary' },
+    nerve: { zh: '神經系統', en: 'Nervous system' }, endo: { zh: '內分泌系統', en: 'Endocrine system' },
+    intr: { zh: '內在調節', en: 'Intrinsic regulation' }, extr: { zh: '外在調節', en: 'Extrinsic regulation' },
+    f23: { zh: '2/3' }, f13: { zh: '1/3' }, f80: { zh: '80%' }, f20: { zh: '20%' },
+    K: { zh: 'K⁺（鉀離子）', en: 'K⁺' }, Na: { zh: 'Na⁺（鈉離子）', en: 'Na⁺' }, Ca: { zh: 'Ca²⁺（鈣離子）', en: 'Ca²⁺' }, Cl: { zh: 'Cl⁻（氯離子）', en: 'Cl⁻' },
+    cm: { zh: '細胞膜', en: 'Plasma membrane' }, cap: { zh: '微血管的管壁', en: 'Capillary wall' }, icf: { zh: '細胞內液', en: 'Intracellular fluid' }, ecf: { zh: '細胞外液', en: 'Extracellular fluid' },
+    isf: { zh: '組織液', en: 'Interstitial fluid' }, pla: { zh: '血漿', en: 'Plasma' },
+    w_home: { zh: '恆定：把體內環境維持在穩定範圍' }, w_neg: { zh: '負回饋：反應會抵銷原本的變化' }, w_pos: { zh: '正回饋：反應會加強原本的變化' },
+    w_sen: { zh: '感應器：偵測變化' }, w_ic: { zh: '整合中樞：比較設定點、下指令' }, w_eff: { zh: '動器：執行反應的肌肉或腺體' },
+    w_icf: { zh: '細胞內液' }, w_ecf: { zh: '細胞外液' }, w_isf: { zh: '組織液：細胞和細胞之間的液體' }, w_pla: { zh: '血漿：血液的液體部分' },
+    w_aff: { zh: '傳入：把訊息送進中樞' }, w_efr: { zh: '傳出：把指令從中樞送出去' }, w_intr: { zh: '內在的：器官自己調節' }, w_extr: { zh: '外在的：由神經或激素調節' }
+  },
+  levels: [
+    { t: '恆定：身體怎麼把數值拉回來', kind: 'ov', h: 330,
+      intro: ['生化在講分子怎麼變，生理在講[[整個身體怎麼把內部環境維持穩定]]。體溫、血糖、血壓、血液的酸鹼值，都被控制在一個很窄的範圍裡。這件事叫做恆定（homeostasis）。',
+        '恆定不是固定不動，而是一偏離就被拉回來。拉回來靠的是一個迴路，裡面有三個角色，圖上從上到下依序是：',
+        '<b>誰偵測</b>到數值變了；<b>誰決定</b>要不要反應（拿來和設定點比較）；<b>誰執行</b>（一定是肌肉或腺體）。',
+        '之後學每一個調節，都先問這三件事。'],
+      svg: function () { var h = PH() / 2, s = '';
+        s += pill(180, 34, 214, { zh: '變化：體溫上升', en: 'Change: body temperature rises' }, 'src') + arrow(180, 35 + h, 180, 98 - h) + arrow(180, 101 + h, 180, 164 - h) + arrow(180, 167 + h, 180, 230 - h) + arrow(180, 233 + h, 180, 296 - h) +
+          pill(180, 298, 214, { zh: '反應：流汗、皮膚血管擴張', en: 'Response: sweating, vasodilation' }) +
+          sl('288,298 328,298 328,34', 'I', 3, '6 5') + sl('328,34 298,34', 'I', 3, '6 5') + hd(294, 34, 180, 'I') +
+          '<text x="350" y="166" text-anchor="middle" font-size="10.5" font-weight="700" style="fill:var(--k5s)" transform="rotate(90 350 166)">' + esc(T('反應抵銷了原本的變化', 'the response opposes the change')) + '</text>';
+        [[100, '誰偵測', 'detects'], [166, '誰決定', 'decides'], [232, '誰執行', 'acts']].forEach(function (x) { s += tx(86, x[0] + 4, T(x[1], x[2]), 'm', 11, 'end'); });
+        return s; },
+      blanks: [{ id: 'a', x: 180, y: 100, w: 156, a: 'sen', o: HOM_O }, { id: 'b', x: 180, y: 166, w: 156, a: 'ic', o: HOM_O }, { id: 'c', x: 180, y: 232, w: 156, a: 'eff', o: HOM_O }],
+      listTitle: '以體溫上升為例',
+      list: [['這個例子的感應器', { a: 'thermo', o: ['thermo', 'hypo', 'sweat'] }], ['這個例子的整合中樞', { a: 'hypo', o: ['thermo', 'hypo', 'sweat'] }], ['這個例子的動器', { a: 'sweat', o: ['thermo', 'hypo', 'sweat'] }],
+        ['反應的結果會抵銷原本的變化，這種迴路叫做', { a: 'neg', o: HOM_F }]],
+      done: ['[[負回饋（negative feedback）]]：反應的方向和原本的變化相反，把數值拉回設定點。身體絕大多數的調節都是負回饋。', '三個角色：感應器（sensor）、整合中樞（integrating center）、動器（effector）。整合中樞多半在腦或脊髓，也可以是內分泌腺。',
+        '動器只有兩種：肌肉和腺體。', '恆定是動態的：數值會在設定點上下小幅擺動，不是一條直線。'] },
+    { t: '血糖：兩個方向各有一個動器', kind: 'ov', h: 270,
+      intro: ['只有一個動器，就像只有暖氣沒有冷氣的房間，太熱時只能把暖氣關掉等它自己涼。',
+        '身體比較講究：同一個數值，通常由[[作用相反的兩組動器]]一起管，一個負責往上拉，一個負責往下壓，控制起來才又快又準。',
+        '血糖是最好的例子，也是營養最常用到的一個。吃飽和飢餓時，胰臟裡不同的細胞分泌不同的激素。'],
+      svg: function () { var h = PH() / 2, s = ''; [95, 265].forEach(function (x, i) {
+          s += pill(x, 34, 150, i ? { zh: '飢餓：血糖下降', en: 'Fasting: glucose falls' } : { zh: '吃飽：血糖上升', en: 'Fed: glucose rises' }, 'src') + arrow(x, 35 + h, x, 98 - h) + arrow(x, 101 + h, x, 164 - h) + arrow(x, 167 + h, x, 230 - h) +
+            pill(x, 232, 150, i ? { zh: '血糖回升', en: 'Glucose goes back up' } : { zh: '血糖回降', en: 'Glucose comes back down' }); });
+        return s + tx(180, 104, T('胰臟的', 'pancreatic'), 'm', 10) + tx(180, 170, T('分泌', 'secrete'), 'm', 10); },
+      blanks: [{ id: 'c1', x: 95, y: 100, w: 130, a: 'beta', o: ['alpha', 'beta', 'delta'] }, { id: 'h1', x: 95, y: 166, w: 130, c: 'H', a: 'ins', o: ['ins', 'glu', 'epi', 'thy'] },
+        { id: 'c2', x: 265, y: 100, w: 130, a: 'alpha', o: ['alpha', 'beta', 'delta'] }, { id: 'h2', x: 265, y: 166, w: 130, c: 'H', a: 'glu', o: ['ins', 'glu', 'epi', 'thy'] }],
+      listTitle: '想想看',
+      list: [['作用相反的兩組動器一起調控同一個數值，這樣的動器叫做', { a: 'ant', o: ['ant', 'setp', 'pos'] }], ['這兩種細胞都位在', { a: 'islet', o: ['islet', 'adr', 'pit'] }],
+        ['人體唯一能降低血糖的激素', { a: 'ins', o: ['ins', 'glu', 'epi', 'thy'] }], ['胰島素分泌後血糖下降，胰島素的分泌也跟著減少。這是', { a: 'neg', o: HOM_F }]],
+      done: ['[[拮抗性動器（antagonistic effectors）]]：胰島素降血糖、升糖素升血糖。其他例子：流汗降溫和顫抖升溫；交感神經讓心跳變快、副交感神經讓心跳變慢。',
+        '這裡的感應器和整合中樞都是胰島細胞自己：β 細胞自己偵測血糖、自己分泌胰島素。', '升血糖的激素不只一種（升糖素、腎上腺素、皮質醇、生長激素），降血糖的只有胰島素。'] },
+    { t: '負回饋還是正回饋', kind: 'list',
+      intro: ['負回饋是「踩煞車」：反應把變化抵銷掉。',
+        '正回饋（positive feedback）是「踩油門」：反應讓原本的變化更強，一路衝到某件事完成才停。',
+        '正回饋很少，而且都是需要[[一鼓作氣完成]]的事。分辨的方法：看反應出現之後，原本的刺激是變弱還是變強。'],
+      listTitle: '這是哪一種回饋',
+      list: [['體溫下降時發抖，體溫回升後停止', { a: 'neg', o: HOM_F }], ['血液開始凝固後，活化的凝血因子再去活化更多凝血因子', { a: 'pos', o: HOM_F }],
+        ['甲狀腺素太多時，抑制腦垂腺分泌促甲狀腺素', { a: 'neg', o: HOM_F }], ['分娩時子宮收縮刺激催產素分泌，催產素又讓子宮收縮更強', { a: 'pos', o: HOM_F }],
+        ['從躺著突然站起來，血壓下降，心跳馬上加快把血壓拉回來', { a: 'neg', o: HOM_F }], ['排卵前雌激素升高，引發黃體成長激素（LH）大量分泌', { a: 'pos', o: HOM_F }],
+        ['嬰兒吸吮乳頭刺激催產素分泌，乳汁射出，嬰兒繼續吸吮', { a: 'pos', o: HOM_F }], ['血糖上升時胰島素增加，血糖下降後胰島素減少', { a: 'neg', o: HOM_F }]],
+      done: ['常考的正回饋例子：[[凝血、分娩（催產素）、排卵前的 LH 高峰]]，還有哺乳時的射乳，以及之後會學到的動作電位上升期。', '正回饋一定有終點：血塊形成、胎兒娩出、排卵。事情完成，刺激消失，迴路就停了。'] },
+    { t: '兩套傳訊系統：神經與內分泌', kind: 'list',
+      intro: ['整合中樞要把指令送到動器，有兩套系統可以用。',
+        '<b>神經系統</b>像打電話：訊號沿著神經纖維直接送到指定的對象，很快，但作用時間短。',
+        '<b>內分泌系統</b>像廣播：把激素放進血液流遍全身，比較慢，但作用比較久。聽得到廣播的，只有帶著對應受器的細胞，這些細胞叫標的細胞。',
+        '另外，有些器官不靠外來的指令也能自己調整，例如血管的平滑肌被撐大時會自己收縮。'],
+      listTitle: '是哪一個',
+      list: [['用神經衝動和神經傳遞物質傳訊', { a: 'nerve', o: ['nerve', 'endo'] }], ['用血液中的激素傳訊', { a: 'endo', o: ['nerve', 'endo'] }], ['反應比較快，作用時間短', { a: 'nerve', o: ['nerve', 'endo'] }],
+        ['反應比較慢，作用時間長', { a: 'endo', o: ['nerve', 'endo'] }], ['站起來的瞬間調整心跳和血壓', { a: 'nerve', o: ['nerve', 'endo'] }], ['飯後幾十分鐘內調整血糖', { a: 'endo', o: ['nerve', 'endo'] }],
+        ['器官靠自己細胞內建的機制調整', { a: 'intr', o: ['intr', 'extr'] }], ['由神經系統或內分泌系統來調整', { a: 'extr', o: ['intr', 'extr'] }],
+        ['同時屬於神經系統和內分泌系統，連接兩者的構造', { a: 'hypo', o: ['hypo', 'liver', 'kidney'] }]],
+      done: ['激素只對有受器的標的細胞起作用。', '下視丘（hypothalamus）是神經和內分泌的交會點：它是腦的一部分，又控制腦垂腺。很多整合中樞就在這裡。', '外在調節（extrinsic）靠神經或激素；內在調節（intrinsic）是器官自己的反應。'] },
+    { t: '體液區域：身體的水在哪裡', kind: 'ov', h: 236, legend: [['kT', '細胞內液'], ['kI', '細胞外液']],
+      intro: ['所謂「內部環境」，指的其實是細胞外面的那些液體。細胞泡在裡面，從那裡拿養分、把廢物丟進去。',
+        '身體的水分成兩大區。細胞裡面的叫細胞內液；細胞外面的叫細胞外液。細胞外液又分成兩部分：血管裡的血漿，和細胞之間的組織液。',
+        '養分和氧氣走的路是：血漿 → 組織液 → 細胞。廢物反過來走。',
+        '把比例填出來。'],
+      svg: function () { return tx(180, 20, T('全身的水（約占體重 60%）', 'Total body water (about 60% of body weight)'), 'b', 12) + box(14, 30, 212, 62, 'T') + box(230, 30, 116, 62, 'I') +
+        tx(120, 50, T('細胞內液', 'Intracellular fluid'), '', 12) + tx(288, 50, T('細胞外液', 'Extracellular fluid'), '', fit(T('細胞外液', 'Extracellular fluid'), 112, 12)) +
+        sl('232,94 96,138', 'M', 1.5, '4 4') + sl('344,94 346,138', 'M', 1.5, '4 4') + box(96, 140, 164, 66, 'I') + box(264, 140, 82, 66, 'I') +
+        tx(178, 160, T('組織液', 'Interstitial fluid'), '', 12) + tx(305, 160, T('血漿', 'Plasma'), '', 12) + tx(46, 176, T('細胞外液', 'ECF is'), 'm', 10.5) + tx(46, 190, T('再分成', 'split into'), 'm', 10.5) + tx(220, 226, T('兩者之間隔著微血管的管壁', 'separated by the capillary wall'), 'm', 10); },
+      blanks: [{ id: 'i', x: 120, y: 72, w: 84, a: 'f23', o: HOM_N }, { id: 'e', x: 288, y: 72, w: 84, a: 'f13', o: HOM_N }, { id: 's', x: 178, y: 184, w: 84, a: 'f80', o: HOM_N }, { id: 'p', x: 305, y: 184, w: 66, a: 'f20', o: HOM_N }],
+      listTitle: '兩區的差別',
+      list: [['細胞內液裡最多的陽離子', { a: 'K', o: ['K', 'Na', 'Ca', 'Cl'] }], ['細胞外液裡最多的陽離子', { a: 'Na', o: ['K', 'Na', 'Ca', 'Cl'] }], ['隔開細胞內液和細胞外液的是', { a: 'cm', o: ['cm', 'cap'] }],
+        ['隔開血漿和組織液的是', { a: 'cap', o: ['cm', 'cap'] }], ['直接調控血漿的體積和成分，間接影響所有細胞外液的器官', { a: 'kidney', o: ['kidney', 'liver', 'lung'] }]],
+      done: ['[[細胞內液約占 2/3，細胞外液約占 1/3]]；細胞外液裡，組織液約 80%、血漿約 20%。', '[[細胞內 K⁺ 多、細胞外 Na⁺ 多]]。這個差別是之後膜電位、神經衝動、腎臟再吸收的基礎。',
+        '血漿和組織液的成分很像，最大的差別是血漿多了蛋白質（蛋白質過不了微血管壁）。這和水腫有關。'] },
+    { t: '先認得這些英文', kind: 'list',
+      intro: ['生理的國考題，名詞後面常常附英文。先把貫穿整門課的幾個字認起來。',
+        '字根：<b>homeo-</b> 是相同、<b>-stasis</b> 是停住，合起來是維持不變；<b>intra-</b> 是裡面、<b>extra-</b> 是外面、<b>inter-</b> 是之間；<b>af-</b>ferent 是送進來、<b>ef-</b>ferent 是送出去。'],
+      listTitle: '這個字是什麼意思',
+      list: [['homeostasis', { a: 'w_home', o: ['w_home', 'w_neg', 'w_pos'] }], ['negative feedback', { a: 'w_neg', o: ['w_home', 'w_neg', 'w_pos'] }], ['positive feedback', { a: 'w_pos', o: ['w_home', 'w_neg', 'w_pos'] }],
+        ['sensor', { a: 'w_sen', o: ['w_sen', 'w_ic', 'w_eff'] }], ['integrating center', { a: 'w_ic', o: ['w_sen', 'w_ic', 'w_eff'] }], ['effector', { a: 'w_eff', o: ['w_sen', 'w_ic', 'w_eff'] }],
+        ['intracellular fluid', { a: 'w_icf', o: ['w_icf', 'w_ecf', 'w_isf', 'w_pla'] }], ['extracellular fluid', { a: 'w_ecf', o: ['w_icf', 'w_ecf', 'w_isf', 'w_pla'] }],
+        ['interstitial fluid', { a: 'w_isf', o: ['w_icf', 'w_ecf', 'w_isf', 'w_pla'] }], ['plasma', { a: 'w_pla', o: ['w_icf', 'w_ecf', 'w_isf', 'w_pla'] }],
+        ['afferent', { a: 'w_aff', o: ['w_aff', 'w_efr'] }], ['efferent', { a: 'w_efr', o: ['w_aff', 'w_efr'] }], ['intrinsic', { a: 'w_intr', o: ['w_intr', 'w_extr'] }], ['extrinsic', { a: 'w_extr', o: ['w_intr', 'w_extr'] }]],
+      done: ['afferent 和 efferent 很容易混。記法：Afferent 的 A 是 Arrive（到達中樞），Efferent 的 E 是 Exit（離開中樞）。', 'interstitial 的 inter- 是「之間」，所以是細胞和細胞之間的液體。'] }
+  ] };
+
+/* ======================================================================
+   人體生理・細胞膜運輸
+   ====================================================================== */
+function MEM_BAND(y, h) { return '<rect x="6" y="' + y + '" width="348" height="' + h + '" rx="6" fill="var(--chip)" stroke="var(--rail)" stroke-width="1.5"/>'; }
+/* 四條過膜的路：1 直接穿過脂雙層、2 通道、3 載體、4 幫浦（要 ATP，逆著濃度差） */
+function MEM_OV(lab) {
+  var V = function (y, zh, en) { return '<text x="12" y="' + y + '" text-anchor="middle" font-size="10.5" class="m" transform="rotate(-90 12 ' + y + ')">' + esc(T(zh, en)) + '</text>'; };
+  var s = V(60, '細胞外', 'outside') + V(200, '細胞內', 'inside') + MEM_BAND(104, 56), X = [52, 136, 220, 304];
+  s += '<rect class="kT" x="120" y="100" width="12" height="64" rx="4" stroke-width="1.5"/><rect class="kT" x="140" y="100" width="12" height="64" rx="4" stroke-width="1.5"/>' + blob(220, 132, 22, 36, 'T') + blob(304, 132, 24, 36, 'H');
+  [0, 1, 2].forEach(function (i) { s += sl(X[i] + ',58 ' + X[i] + ',196', 'T', 3.5) + hd(X[i], 202, 90, 'T') + tx(X[i], 48, T('多', 'high'), 'm', 10) + tx(X[i], 222, T('少', 'low'), 'm', 10); });
+  s += sl('304,206 304,66', 'H', 3.5) + hd(304, 60, -90, 'H') + tx(304, 48, T('多', 'high'), 'm', 10) + tx(304, 222, T('少', 'low'), 'm', 10) + tagC(332, 186, 'ATP', 'sp');
+  s += tx(52, 34, T('O₂、CO₂', 'O₂, CO₂'), '', 10.5) + tx(136, 34, T('離子', 'ions'), '', 10.5) + tx(220, 34, T('葡萄糖', 'glucose'), '', 10.5) + tx(304, 34, 'Na⁺', '', 10.5);
+  X.forEach(function (x, i) { s += badge(x - 22, 84, i + 1); });
+  if (lab) s += sl('20,252 252,252', 'T', 2.5) + sl('272,252 338,252', 'H', 2.5) + cap(276, '順著濃度差、不花能量：', 'Down the gradient, no energy:', 172) + cap(322, '逆著濃度差、要花能量：', 'Against the gradient, needs energy:', 172);
+  return s;
+}
+function MEM_RBC(x, y, kind) {      // 紅血球：0 正常、1 脹大、2 皺縮
+  if (kind === 2) { var p = '', i; for (i = 0; i < 16; i++) { var a = i * Math.PI / 8, r = i % 2 ? 9 : 17; p += (x + r * Math.cos(a)).toFixed(1) + ',' + (y + r * Math.sin(a)).toFixed(1) + ' '; } return '<polygon class="kE" points="' + p + '" stroke-width="1.5"/>'; }
+  return '<circle class="kE" cx="' + x + '" cy="' + y + '" r="' + (kind ? 27 : 17) + '" stroke-width="1.5"' + (kind ? ' stroke-dasharray="5 4"' : '') + '/>';
+}
+/* 小腸上皮細胞吸收葡萄糖：上面是腸腔，下面是血液 */
+function MEM_EPI() {
+  var s = tx(180, 20, T('小腸的管腔', 'Intestinal lumen'), 'm', 11) + tx(180, 296, T('組織液 → 微血管', 'Interstitial fluid → capillary'), 'm', 11) + box(60, 70, 240, 170, '', 14);
+  s += '<rect x="48" y="62" width="24" height="16" rx="4" fill="var(--muted)"/><rect x="288" y="62" width="24" height="16" rx="4" fill="var(--muted)"/>' + tx(180, 160, T('小腸上皮細胞', 'Intestinal epithelial cell'), 'm', 11) +
+    tx(46, 100, T('緊密', 'tight'), 'm', 9.5, 'end') + tx(46, 112, T('接合', 'junction'), 'm', 9.5, 'end');
+  s += blob(130, 70, 26, 15, 'H') + sl('122,34 122,112', 'H', 3) + hd(122, 118, 90, 'H') + sl('140,34 140,112', 'T', 3) + hd(140, 118, 90, 'T') + tx(114, 44, 'Na⁺', '', 10, 'end') + tx(148, 44, T('葡萄糖', 'glucose'), '', 10, 'start') + badge(170, 92, 1);
+  s += blob(120, 240, 24, 15, 'T') + sl('120,200 120,272', 'T', 3) + hd(120, 278, 90, 'T') + tx(128, 270, T('葡萄糖', 'glucose'), '', 10, 'start') + badge(92, 216, 2);
+  s += blob(240, 240, 26, 15, 'H') + sl('230,204 230,272', 'H', 3) + hd(230, 278, 90, 'H') + sl('250,276 250,208', 'C', 3) + hd(250, 202, -90, 'C') + tx(222, 272, 'Na⁺', '', 10, 'end') + tx(258, 272, 'K⁺', '', 10, 'start') + tagC(282, 216, 'ATP', 'sp') + badge(204, 216, 3);
+  return s;
+}
+var MEM_R = ['sd', 'ch', 'fd', 'pat', 'sat', 'osm', 'bulk'], MEM_TO = ['iso', 'hypo', 'hyper'], MEM_G = ['g1', 'g2', 'g4', 'sglt'], MEM_J = ['tj', 'des', 'gj'];
+var MEM = { id: 'mem', zh: '細胞膜運輸', en: 'Membrane transport', alias: '擴散・滲透與張力・載體・主動運輸・GLUT', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    sd: { zh: '簡單擴散', en: 'Simple diffusion' }, ch: { zh: '經由通道的擴散', en: 'Diffusion through channels' }, fd: { zh: '促進性擴散', en: 'Facilitated diffusion' },
+    pat: { zh: '初級主動運輸', en: 'Primary active transport' }, sat: { zh: '次級主動運輸', en: 'Secondary active transport' }, osm: { zh: '滲透', en: 'Osmosis' }, bulk: { zh: '大量運輸（胞吞、胞吐）', en: 'Bulk transport' },
+    pas: { zh: '被動運輸', en: 'Passive transport' }, act: { zh: '主動運輸', en: 'Active transport' },
+    lip: { zh: '直接穿過磷脂雙層' }, chn: { zh: '走離子通道' }, aqp: { zh: '走水孔蛋白（aquaporin）' }, car: { zh: '靠載體蛋白' },
+    up: { zh: '變快' }, down: { zh: '變慢' }, iso: { zh: '等張', en: 'Isotonic' }, hypo: { zh: '低張', en: 'Hypotonic' }, hyper: { zh: '高張', en: 'Hypertonic' },
+    hemo: { zh: '脹破（溶血）', en: 'Bursts (hemolysis)' }, cren: { zh: '皺縮', en: 'Shrinks (crenation)' }, same: { zh: '大小不變', en: 'Unchanged' },
+    alb: { zh: '白蛋白', en: 'Albumin' }, glob: { zh: '球蛋白', en: 'Globulins' }, fib: { zh: '血纖維蛋白原', en: 'Fibrinogen' }, hb: { zh: '血紅素', en: 'Hemoglobin' },
+    spec: { zh: '專一性', en: 'Specificity' }, comp: { zh: '競爭性', en: 'Competition' }, satu: { zh: '飽和性', en: 'Saturation' },
+    g1: { zh: 'GLUT1、GLUT3', en: 'GLUT1 / GLUT3' }, g2: { zh: 'GLUT2', en: 'GLUT2' }, g4: { zh: 'GLUT4', en: 'GLUT4' }, sglt: { zh: 'SGLT（鈉-葡萄糖共同運輸蛋白）', en: 'SGLT' },
+    brain: { zh: '腦', en: 'Brain' }, musc: { zh: '骨骼肌', en: 'Skeletal muscle' }, fat: { zh: '脂肪組織', en: 'Adipose tissue' }, livr: { zh: '肝臟', en: 'Liver' },
+    na3: { zh: '3 個 Na⁺', en: '3 Na⁺' }, na2: { zh: '2 個 Na⁺', en: '2 Na⁺' }, k3: { zh: '3 個 K⁺', en: '3 K⁺' }, k2: { zh: '2 個 K⁺', en: '2 K⁺' }, atp: { zh: 'ATP' }, grad: { zh: 'Na⁺ 的濃度梯度', en: 'The Na⁺ gradient' }, gtp: { zh: 'GTP' },
+    sym: { zh: '次級主動運輸（同向運輸）', en: 'Secondary active transport (symport)' }, anti: { zh: '次級主動運輸（反向運輸）', en: 'Secondary active transport (antiport)' }, nak: { zh: '初級主動運輸（鈉鉀幫浦）', en: 'Primary active transport (Na⁺/K⁺ pump)' },
+    fd2: { zh: '促進性擴散（GLUT）', en: 'Facilitated diffusion (GLUT)' }, trans: { zh: '跨細胞運輸', en: 'Transcellular transport' }, para: { zh: '細胞旁運輸', en: 'Paracellular transport' },
+    tj: { zh: '緊密接合', en: 'Tight junction' }, des: { zh: '橋粒（胞橋小體）', en: 'Desmosome' }, gj: { zh: '間隙接合', en: 'Gap junction' },
+    cftr: { zh: '氯離子通道（CFTR）', en: 'Chloride channel (CFTR)' }, nach: { zh: '鈉離子通道', en: 'Sodium channel' }, pump: { zh: '鈉鉀幫浦', en: 'Na⁺/K⁺ pump' },
+    glyc: { zh: '尿糖', en: 'Glycosuria' }, ket: { zh: '酮尿', en: 'Ketonuria' }, prot: { zh: '蛋白尿', en: 'Proteinuria' },
+    endo: { zh: '受器媒介式胞吞', en: 'Receptor-mediated endocytosis' }, exo: { zh: '胞吐作用', en: 'Exocytosis' }, phag: { zh: '吞噬作用', en: 'Phagocytosis' },
+    o2: { zh: '氧氣' }, ster: { zh: '類固醇激素' }, gluc: { zh: '葡萄糖' }, co2: { zh: '二氧化碳' }, more: { zh: '增加' }, less: { zh: '減少' }
+  },
+  levels: [
+    { t: '先看全貌：四條過膜的路', kind: 'ov', h: 344, legend: [['sT', '順著濃度差（不花能量）'], ['sH', '逆著濃度差（花能量）']], svg: function () { return MEM_OV(1); },
+      intro: ['細胞膜的主體是磷脂雙層，中間那一層是油性的。所以它只讓一部分分子自由通過，叫做選擇性通透。',
+        '一個分子過不過得去，看兩件事：它溶不溶於油（脂溶性的、不帶電的小分子可以直接穿過去），以及膜上有沒有專門給它走的蛋白質。',
+        '圖上畫了四條路，由左到右：直接穿過磷脂雙層；走通道（像一條隧道）；靠載體蛋白（像旋轉門，一次載一個）；靠幫浦。',
+        '前三條都是從多的地方往少的地方走，不花能量。第四條是硬把分子從少的地方搬到多的地方，要用 ATP。先把這兩大類的名字填出來。'],
+      blanks: [{ id: 'p', x: 252, y: 276, w: 150, c: 'T', a: 'pas', o: ['pas', 'act'] }, { id: 'a', x: 252, y: 322, w: 150, c: 'H', a: 'act', o: ['pas', 'act'] }],
+      listTitle: '圖上的編號，還有另外三種',
+      list: [['編號 1：脂溶性的小分子直接穿過磷脂雙層', { a: 'sd', o: MEM_R }], ['編號 2：離子順著濃度差穿過通道蛋白', { a: 'ch', o: MEM_R }], ['編號 3：靠載體蛋白順著濃度差進出，不花能量', { a: 'fd', o: MEM_R }],
+        ['編號 4：幫浦直接分解 ATP，逆著濃度差搬運', { a: 'pat', o: MEM_R }], ['不直接用 ATP，而是借用 Na⁺ 往細胞內衝的力量，順便帶別的分子', { a: 'sat', o: MEM_R }],
+        ['水順著自己的濃度差通過膜', { a: 'osm', o: MEM_R }], ['用膜做成的囊泡一次搬很多、很大的分子', { a: 'bulk', o: MEM_R }]],
+      done: ['[[被動運輸不花能量、順著濃度差]]：簡單擴散、經由通道的擴散、促進性擴散、滲透。', '[[主動運輸要花能量、逆著濃度差]]：初級（直接用 ATP）和次級（借用 Na⁺ 梯度）。',
+        '另一種分法是看需不需要載體蛋白：促進性擴散和主動運輸都需要載體，所以都有專一性、會飽和。', '「促進性擴散」名字裡有擴散，所以是被動的，不要和主動運輸弄混。'] },
+    { t: '擴散：誰可以直接過，誰要走門', kind: 'list',
+      intro: ['擴散（diffusion）是分子因為自己的熱運動，從濃度高的地方往濃度低的地方淨移動。不需要細胞出力。',
+        '國考常問「下列何者不是以擴散方式通過細胞膜」。判斷的方法就是看這個分子的性質：',
+        '<b>不帶電、脂溶性</b>的（O₂、CO₂、類固醇激素、酒精）直接穿過磷脂雙層。<b>帶電的離子</b>一定要走通道。<b>水</b>主要走水孔蛋白。<b>葡萄糖、胺基酸</b>又大又極性，要靠載體。',
+        '擴散只適合很短的距離。距離變兩倍，時間要四倍。所以身體長距離的運送要靠血液循環。'],
+      listTitle: '它怎麼過細胞膜',
+      list: [['氧氣和二氧化碳', { a: 'lip', o: ['lip', 'chn', 'aqp', 'car'] }], ['類固醇激素', { a: 'lip', o: ['lip', 'chn', 'aqp', 'car'] }], ['Na⁺、K⁺、Ca²⁺、Cl⁻', { a: 'chn', o: ['lip', 'chn', 'aqp', 'car'] }],
+        ['水（大部分）', { a: 'aqp', o: ['lip', 'chn', 'aqp', 'car'] }], ['葡萄糖', { a: 'car', o: ['lip', 'chn', 'aqp', 'car'] }], ['胺基酸', { a: 'car', o: ['lip', 'chn', 'aqp', 'car'] }]],
+      countsTitle: '擴散的速度', counts: [['膜兩邊的濃度差越大，擴散', '變快', ['變快', '變慢']], ['膜的表面積越大（例如小腸的微絨毛），擴散', '變快', ['變快', '變慢']],
+        ['溫度越高，擴散', '變快', ['變快', '變慢']], ['要走的距離越長，擴散', '變慢', ['變快', '變慢']]],
+      done: ['擴散速率和濃度差、膜的通透性、表面積、溫度成正比；和距離成反比。', '肺泡壁很薄、小腸有微絨毛，都是為了讓擴散更快：一個縮短距離，一個增加面積。', '離子通道很多是有閘門的（gated），平常關著，受到刺激才開。神經和肌肉的訊號就靠這個。'] },
+    { t: '滲透與張力：紅血球泡在不同的水裡', kind: 'ov', h: 268, legend: [['kE', '紅血球'], ['sT', '水移動的方向']],
+      intro: ['滲透（osmosis）就是水的擴散。水也是從「水多」的地方往「水少」的地方跑；溶質越濃的地方，水就越少。所以[[水會往溶質濃的那一邊跑]]。',
+        '條件是膜讓水過、卻不讓溶質過。如果溶質自己也過得去，兩邊很快就一樣濃，水就不必搬家了。',
+        '血漿的濃度大約是 300 mOsm。把紅血球泡進溶液裡，比較溶液和細胞內哪一邊濃，就知道水往哪邊跑、細胞會怎麼變。這種比較叫做張力（tonicity）。',
+        '0.9% 的食鹽水和 5% 的葡萄糖水，濃度都和血漿一樣，所以是點滴最常用的溶液。'],
+      svg: function () { var s = '', X = [62, 180, 298], lab = [['0.9% 食鹽水', '0.9% NaCl'], ['純水', 'Pure water'], ['濃鹽水', 'Strong saline']];
+        X.forEach(function (x, i) { s += '<path d="M' + (x - 44) + ',40 L' + (x - 44) + ',136 Q' + (x - 44) + ',148 ' + (x - 32) + ',148 L' + (x + 32) + ',148 Q' + (x + 44) + ',148 ' + (x + 44) + ',136 L' + (x + 44) + ',40" fill="var(--k4)" stroke="var(--k4s)" stroke-width="1.5"/>' + MEM_RBC(x, 96, i) + tx(x, 28, T(lab[i][0], lab[i][1]), '', 11) + tx(x, 222, T('這種溶液是', 'this solution is'), 'm', 9.5); });
+        s += sl('134,96 150,96', 'T', 3) + hd(155, 96, 0, 'T') + sl('226,96 210,96', 'T', 3) + hd(205, 96, 180, 'T') + sl('280,96 262,96', 'T', 3) + hd(257, 96, 180, 'T') + sl('316,96 334,96', 'T', 3) + hd(339, 96, 0, 'T');
+        return s + tx(62, 166, T('水進出一樣多', 'no net water movement'), 'm', 9.5) + tx(180, 166, T('水進入細胞', 'water enters the cell'), 'm', 9.5) + tx(298, 166, T('水離開細胞', 'water leaves the cell'), 'm', 9.5); },
+      blanks: [{ id: 't1', x: 62, y: 244, w: 104, a: 'iso', o: MEM_TO }, { id: 't2', x: 180, y: 244, w: 104, a: 'hypo', o: MEM_TO }, { id: 't3', x: 298, y: 244, w: 104, a: 'hyper', o: MEM_TO }],
+      listTitle: '結果會怎樣',
+      list: [['紅血球泡在低張溶液裡', { a: 'hemo', o: ['hemo', 'cren', 'same'] }], ['紅血球泡在高張溶液裡', { a: 'cren', o: ['hemo', 'cren', 'same'] }],
+        ['把水留在血管裡、撐住血漿滲透壓的主要蛋白質', { a: 'alb', o: ['alb', 'glob', 'fib', 'hb'] }]],
+      countsTitle: '數字', counts: [['血漿的滲透濃度大約是（mOsm）', '300', ['150', '300', '600']], ['和血漿等張的食鹽水濃度', '0.9%', ['0.45%', '0.9%', '5%']],
+        ['和血漿等張的葡萄糖水濃度', '5%', ['0.9%', '5%', '10%']], ['1 莫耳的 NaCl 溶在水裡，算幾個滲透莫耳', '2', ['1', '2', '3']]],
+      done: ['[[低張：水進細胞，脹破（溶血）。高張：水出細胞，皺縮。等張：不變。]]', '算滲透濃度時數的是顆粒數。NaCl 會解離成 Na⁺ 和 Cl⁻ 兩顆，葡萄糖不解離，只算一顆。',
+        '白蛋白過不了微血管壁，所以能把水拉在血管裡。肝硬化或營養不良時白蛋白太少，水留在組織，就是水腫。', '等滲透不一定等張：尿素溶液的濃度即使和血漿一樣，因為尿素自己會進到細胞裡，水跟著進去，紅血球還是會脹破。'] },
+    { t: '載體蛋白：三個特性與 GLUT 家族', kind: 'list',
+      intro: ['葡萄糖太大又太極性，穿不過磷脂雙層，要靠膜上的載體蛋白。載體像酵素一樣要先和分子結合，所以有三個和酵素很像的特性：',
+        '<b>專一性</b>：一種載體只載特定的分子。<b>競爭性</b>：長得像的分子會搶同一個載體。<b>飽和性</b>：載體的數量有限，全部載滿之後，再多的分子也不會變快。這個上限叫最大運輸量（Tm）。',
+        '可以想成公車：每班的座位數固定，等車的人再多，一小時能載走的人數也有上限。',
+        '載葡萄糖的促進性擴散載體叫 GLUT，有好幾型，分布在不同的組織。其中一型平常收在細胞裡面，要有訊號才會搬到細胞膜上。'],
+      listTitle: '載體的特性',
+      list: [['葡萄糖的載體不會去載果糖', { a: 'spec', o: ['spec', 'comp', 'satu'] }], ['兩種構造相似的糖同時存在時，各自的運輸都變慢', { a: 'comp', o: ['spec', 'comp', 'satu'] }],
+        ['濃度一直提高，運輸速率卻停在一個上限', { a: 'satu', o: ['spec', 'comp', 'satu'] }], ['血糖太高，腎小管的載體來不及把葡萄糖全部收回，結果是', { a: 'glyc', o: ['glyc', 'ket', 'prot'] }],
+        ['神經系統主要的葡萄糖載體，不需要胰島素', { a: 'g1', o: MEM_G }], ['肝臟和胰島 β 細胞的載體，雙向、容量大', { a: 'g2', o: MEM_G }], ['骨骼肌和脂肪組織的載體，受胰島素調控', { a: 'g4', o: MEM_G }],
+        ['除了胰島素，還有什麼能讓 GLUT4 移到細胞膜上', { a: 'exer', o: ['exer', 'fast', 'slp'] }], ['血糖只有 60 mg/dL 時，仍然能從血液拿到大量葡萄糖的組織', { a: 'brain', o: ['brain', 'musc', 'fat'] }]],
+      done: ['載體三特性：專一性、競爭性、飽和性。通道沒有飽和的問題，載體才有。', '[[GLUT4 在骨骼肌和脂肪組織，受胰島素和運動調控]]。胰島素阻抗就是 GLUT4 上不了細胞膜，葡萄糖進不去，血糖居高不下。',
+        '腦用的 GLUT1、GLUT3 不靠胰島素，而且對葡萄糖的親和力高，所以血糖偏低時腦仍然優先拿得到。國考考過。', '糖尿病的尿糖，原因是腎小管的葡萄糖載體飽和了。'] },
+    { t: '主動運輸：鈉鉀幫浦', kind: 'ov', h: 330, legend: [['kH', 'Na⁺'], ['kC', 'K⁺']],
+      intro: ['細胞內 K⁺ 多、細胞外 Na⁺ 多。可是這兩種離子一直順著濃度差慢慢漏，為什麼不會漏到兩邊一樣？',
+        '因為膜上有鈉鉀幫浦（Na⁺/K⁺ pump）不停地把它們搬回去。這是逆著濃度差搬，每搬一次要分解一個 ATP。直接用 ATP 的叫[[初級主動運輸]]。',
+        '這個幫浦很花能量：一個細胞休息時的 ATP，大約有三分之一用在它身上。',
+        '看圖數一數：每一次往外送幾個、往內送幾個。'],
+      svg: function () { var s = tx(14, 22, T('細胞外（Na⁺ 多）', 'Outside (high Na⁺)'), 'm', 11, 'start') + tx(14, 196, T('細胞內（K⁺ 多）', 'Inside (high K⁺)'), 'm', 11, 'start') + MEM_BAND(80, 56) + '<ellipse class="pill" cx="180" cy="108" rx="60" ry="44" stroke-width="1.5"/>';
+        [146, 166, 186].forEach(function (x) { s += dot(x, 46, 9, 'H'); }); [204, 224].forEach(function (x) { s += dot(x, 170, 9, 'C'); });
+        s += sl('156,150 156,70', 'H', 3.5) + hd(156, 64, -90, 'H') + sl('214,66 214,146', 'C', 3.5) + hd(214, 152, 90, 'C') + tagC(96, 150, 'ATP → ADP + Pi', 'sp') + tx(180, 112, T('幫浦', 'pump'), 'm', 10);
+        return s + cap(226, '每次往細胞外送出', 'Pumped out each cycle') + cap(266, '每次往細胞內送入', 'Pumped in each cycle') + cap(306, '能量來源', 'Energy source'); },
+      blanks: [{ id: 'o', x: 262, y: 226, w: 170, c: 'H', a: 'na3', o: ['na3', 'na2', 'k3', 'k2'] }, { id: 'i', x: 262, y: 266, w: 170, c: 'C', a: 'k2', o: ['na3', 'na2', 'k3', 'k2'] }, { id: 'e', x: 262, y: 306, w: 170, a: 'atp', o: ['atp', 'gtp', 'grad'] }],
+      listTitle: '幫浦的用途',
+      list: [['不直接用 ATP，而是利用鈉鉀幫浦造出來的 Na⁺ 梯度', { a: 'sat', o: ['pat', 'sat', 'fd'] }], ['把 Ca²⁺ 打出細胞或打回內質網的鈣幫浦，屬於', { a: 'pat', o: ['pat', 'sat', 'fd'] }],
+        ['幫浦停擺時，Na⁺ 留在細胞內，水跟著進來，細胞的體積會', { a: 'more', o: ['more', 'less'] }]],
+      done: ['[[鈉鉀幫浦：3 個 Na⁺ 出、2 個 K⁺ 入、用 1 個 ATP。]]', '三個功能：維持 Na⁺ 和 K⁺ 的濃度梯度（給次級主動運輸和神經衝動用）；讓細胞內稍微偏負；避免細胞吸水脹大。',
+        '每次送出去的正電荷比送進來的多一個，所以它本身也讓細胞內變得更負一點。', '鈣幫浦把細胞質的 Ca²⁺ 壓得非常低，Ca²⁺ 一放進來就是訊號。肌肉收縮和神經傳遞物質的釋放都靠這個。'] },
+    { t: '次級主動運輸：小腸怎麼吸收葡萄糖', kind: 'ov', h: 306, legend: [['sH', 'Na⁺'], ['sT', '葡萄糖'], ['sC', 'K⁺']], svg: MEM_EPI, blanks: [],
+      intro: ['小腸要把腸腔裡的葡萄糖全部吸乾淨，連濃度比細胞裡還低的時候也要吸。這是逆著濃度差，光靠擴散辦不到。',
+        '做法是搭便車。細胞外的 Na⁺ 很想衝進細胞，膜上有一種載體規定：Na⁺ 要進來，必須順便帶一個葡萄糖。Na⁺ 往下衝的力量，就把葡萄糖一起拖進來。',
+        '這不直接用 ATP，但 Na⁺ 的梯度是鈉鉀幫浦花 ATP 造出來的，所以叫次級主動運輸。兩個分子同方向的叫同向運輸，反方向的叫反向運輸。',
+        '葡萄糖進了細胞之後，還要從另一側出去才到得了血液。看圖上三個編號，各是哪一種運輸。'],
+      listTitle: '圖上的三個編號',
+      list: [['編號 1：面向腸腔那一側，Na⁺ 和葡萄糖一起進細胞', { a: 'sym', o: ['sym', 'anti', 'nak', 'fd2'] }], ['編號 2：面向血液那一側，葡萄糖順著濃度差離開細胞', { a: 'fd2', o: ['sym', 'anti', 'nak', 'fd2'] }],
+        ['編號 3：把進來的 Na⁺ 再打出去，維持梯度', { a: 'nak', o: ['sym', 'anti', 'nak', 'fd2'] }], ['編號 1 的載體叫做', { a: 'sglt', o: MEM_G }],
+        ['物質穿過上皮細胞本身，從一側進、另一側出', { a: 'trans', o: ['trans', 'para'] }], ['物質從兩個細胞之間的縫隙通過', { a: 'para', o: ['trans', 'para'] }],
+        ['把相鄰上皮細胞的頂端封住、管制細胞旁運輸的構造', { a: 'tj', o: MEM_J }]],
+      done: ['葡萄糖吸收兩步走：[[腸腔側用 SGLT（和 Na⁺ 同向運輸，次級主動運輸），血液側用 GLUT2（促進性擴散）]]。腎小管再吸收葡萄糖也是同一套。',
+        '口服補水液（ORS）裡同時有鹽和葡萄糖，就是利用這個載體：Na⁺ 和葡萄糖一起被吸收，水跟著進來。腹瀉脫水時很有效。', '胺基酸的吸收也是和 Na⁺ 同向運輸。', '反向運輸的例子：Na⁺ 進細胞、Ca²⁺ 出細胞。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。前兩題是國考考過的問法。', '細胞之間的連結有三種，功能不同，常被放在一起考：緊密接合負責封住，橋粒負責拉住，間隙接合負責相通。'],
+      cloze: [
+        ['下列何者不是以擴散方式由細胞外通過細胞膜進入細胞？', { a: 'gluc', o: ['o2', 'co2', 'ster', 'gluc'] }, '（它要靠載體蛋白）。'],
+        ['封住相鄰上皮細胞之間的縫隙，不讓物質從細胞旁滲過去的是', { a: 'tj', o: MEM_J }, '。'],
+        ['提供機械強度，把細胞牢牢扣在一起（皮膚、心肌很多）的是', { a: 'des', o: MEM_J }, '。'],
+        ['讓離子和小分子在相鄰細胞之間直接流通（心肌靠它同步收縮）的是', { a: 'gj', o: MEM_J }, '。'],
+        ['促進性擴散和主動運輸的共同點是都需要', { a: 'car', o: ['car', 'chn', 'aqp'] }, '。'],
+        ['紅血球放進 0.45% 的食鹽水，會', { a: 'hemo', o: ['hemo', 'cren', 'same'] }, '。'],
+        ['肝硬化的病人血漿中哪一種蛋白質不足，造成水腫？', { a: 'alb', o: ['alb', 'glob', 'fib', 'hb'] }, '。'],
+        ['胰島素讓骨骼肌多攝取葡萄糖，靠的是把哪一種載體移到細胞膜上？', { a: 'g4', o: MEM_G, lang: 'en' }, '。'],
+        ['小腸上皮細胞面向腸腔那一側吸收葡萄糖，用的是', { a: 'sat', o: ['sd', 'fd', 'pat', 'sat'], lang: 'en' }, '。'],
+        ['鈉鉀幫浦屬於', { a: 'pat', o: ['sd', 'fd', 'pat', 'sat'], lang: 'en' }, '。'],
+        ['囊腫纖維化（cystic fibrosis）是哪一種膜蛋白有缺陷？', { a: 'cftr', o: ['cftr', 'nach', 'pump'] }, '。'],
+        ['低密度脂蛋白（LDL）進入細胞，靠的是', { a: 'endo', o: ['endo', 'exo', 'phag'] }, '。'],
+        ['神經末梢把神經傳遞物質釋放出去，靠的是', { a: 'exo', o: ['endo', 'exo', 'phag'] }, '。'],
+        ['糖尿病控制不良時尿裡有葡萄糖，把水一起帶走，所以尿量會', { a: 'more', o: ['more', 'less'] }, '（滲透性利尿）。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 244, force: 'en', legend: [['sT', '順著濃度差'], ['sH', '逆著濃度差']], svg: function () { return MEM_OV(0); }, blanks: [],
+      intro: ['同一張膜的圖，這次全部用英文作答。'], tip: '這一關固定用英文作答。',
+      listTitle: '圖上的編號與其他名詞',
+      list: [['編號 1：脂溶性小分子直接穿過磷脂雙層', { a: 'sd', o: MEM_R }], ['編號 2：離子穿過通道蛋白', { a: 'ch', o: MEM_R }], ['編號 3：靠載體、順著濃度差', { a: 'fd', o: MEM_R }], ['編號 4：幫浦直接用 ATP', { a: 'pat', o: MEM_R }],
+        ['借用 Na⁺ 梯度，順便帶別的分子', { a: 'sat', o: MEM_R }], ['水順著濃度差通過膜', { a: 'osm', o: MEM_R }], ['不花能量、順著濃度差的運輸，總稱', { a: 'pas', o: ['pas', 'act'] }],
+        ['溶液濃度和細胞內一樣，細胞大小不變', { a: 'iso', o: MEM_TO }], ['溶液比細胞內稀，細胞脹大', { a: 'hypo', o: MEM_TO }], ['溶液比細胞內濃，細胞皺縮', { a: 'hyper', o: MEM_TO }],
+        ['載體全部載滿，速率到了上限', { a: 'satu', o: ['spec', 'comp', 'satu'] }], ['封住上皮細胞之間縫隙的構造', { a: 'tj', o: MEM_J }], ['讓相鄰細胞的細胞質相通的構造', { a: 'gj', o: MEM_J }]] }
+  ] };
+MEM.dict.exer = { zh: '運動（肌肉收縮）', en: 'Exercise' }; MEM.dict.fast = { zh: '飢餓', en: 'Fasting' }; MEM.dict.slp = { zh: '睡眠', en: 'Sleep' };
+
+/* ======================================================================
+   人體生理・膜電位與細胞傳訊
+   ====================================================================== */
+var POT_I = ['K', 'Na'], POT_E = ['ek', 'ena', 'rmp'], POT_S = ['para', 'syn', 'endo', 'auto'], POT_L = ['inside', 'onmem'];
+var POT = { id: 'pot', zh: '膜電位與細胞傳訊', en: 'Membrane potential and cell signaling', alias: '靜止膜電位・平衡電位・受器・第二傳訊者', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    K: { zh: 'K⁺' }, Na: { zh: 'Na⁺' }, Cl: { zh: 'Cl⁻' }, Ca: { zh: 'Ca²⁺' }, neg: { zh: '負', en: 'Negative' }, posi: { zh: '正', en: 'Positive' },
+    ek: { zh: 'K⁺ 的平衡電位', en: 'K⁺ equilibrium potential' }, ena: { zh: 'Na⁺ 的平衡電位', en: 'Na⁺ equilibrium potential' }, rmp: { zh: '靜止膜電位', en: 'Resting membrane potential' },
+    kout: { zh: 'K⁺ 往外流' }, kin: { zh: 'K⁺ 往內流' }, nain: { zh: 'Na⁺ 往內流' }, naout: { zh: 'Na⁺ 往外流' },
+    leak: { zh: 'K⁺ 滲漏通道', en: 'K⁺ leak channels' }, vg: { zh: '電位閘控 Na⁺ 通道', en: 'Voltage-gated Na⁺ channels' }, pump: { zh: '鈉鉀幫浦', en: 'Na⁺/K⁺ pump' },
+    prot: { zh: '蛋白質和磷酸根等帶負電的大分子' }, lessneg: { zh: '變得比較不負（往 0 靠近）' }, moreneg: { zh: '變得更負' }, nochg: { zh: '不變' },
+    nernst: { zh: 'Nernst 方程式', en: 'Nernst equation' }, hh: { zh: 'Henderson-Hasselbalch 方程式', en: 'Henderson-Hasselbalch equation' }, mm: { zh: 'Michaelis-Menten 方程式', en: 'Michaelis-Menten equation' },
+    para: { zh: '旁泌', en: 'Paracrine' }, syn: { zh: '突觸', en: 'Synaptic' }, endo: { zh: '內分泌', en: 'Endocrine' }, auto: { zh: '自泌', en: 'Autocrine' },
+    inside: { zh: '細胞裡面（細胞質或細胞核）', en: 'Inside the cell (cytoplasm or nucleus)' }, onmem: { zh: '細胞膜的表面', en: 'On the plasma membrane' },
+    atp: { zh: 'ATP' }, gtp: { zh: 'GTP' }, gdp: { zh: 'GDP' }, amp: { zh: 'AMP' }, pde: { zh: '磷酸二酯酶', en: 'Phosphodiesterase', ab: 'PDE' }, ac: { zh: '腺苷酸環化酶', en: 'Adenylate cyclase' }, pka: { zh: '蛋白質激酶 A', en: 'Protein kinase A', ab: 'PKA' },
+    more: { zh: '增加' }, less: { zh: '減少' }, slow: { zh: '比較慢，但效果可以放大' }, fast: { zh: '比較快' },
+    first: { zh: '第一傳訊者', en: 'First messenger' }, second: { zh: '第二傳訊者', en: 'Second messenger' }, gp: { zh: 'G 蛋白', en: 'G protein' }, camp: { zh: 'cAMP' }, cgmp: { zh: 'cGMP' },
+    ster: { zh: '類固醇激素', en: 'Steroid hormones' }, ins: { zh: '胰島素', en: 'Insulin' }, epi: { zh: '腎上腺素', en: 'Epinephrine' }, ach: { zh: '乙醯膽鹼', en: 'Acetylcholine' }, th: { zh: '甲狀腺素', en: 'Thyroid hormone' },
+    hyperk: { zh: '高血鉀', en: 'Hyperkalemia' }, hypok: { zh: '低血鉀', en: 'Hypokalemia' }, hyperna: { zh: '高血鈉', en: 'Hypernatremia' }
+  },
+  subs: { camp: { layout: 'chain', geo: { x: 180, w: 236, sx: 320 },
+    nodes: [{ k: 'horm', zh: '激素（第一傳訊者）', en: 'Hormone (first messenger)' }, { k: 'rec', zh: '細胞膜上的受器', en: 'Membrane receptor' }, { k: 'gp', zh: 'G 蛋白', en: 'G protein' },
+      { k: 'ac', zh: '腺苷酸環化酶', en: 'Adenylate cyclase' }, { k: 'camp', zh: 'cAMP（第二傳訊者）', en: 'cAMP (second messenger)' }, { k: 'pka', zh: '蛋白質激酶 A', en: 'Protein kinase A', ab: 'PKA' },
+      { k: 'resp', zh: '蛋白質被磷酸化，細胞活動改變', en: 'Proteins phosphorylated; cell responds', fixed: 1 }],
+    extra: [{ k: 'pde', zh: '磷酸二酯酶', en: 'Phosphodiesterase', ab: 'PDE' }, { k: 'plc', zh: '磷脂酶 C', en: 'Phospholipase C' }] } },
+  levels: [
+    { t: '先看全貌：細胞內外的離子不一樣多', kind: 'ov', h: 318, legend: [['kC', 'K⁺'], ['kH', 'Na⁺']],
+      intro: ['上一個單元說過：鈉鉀幫浦讓細胞內外的離子分布不一樣。這一個單元看這件事的後果：[[細胞膜的兩側有電位差]]，裡面比外面負。',
+        '這個電位差叫膜電位（membrane potential）。每個細胞都有，但神經和肌肉細胞會利用它的變化來傳遞訊號。',
+        '細胞裡還有很多出不去的大分子（蛋白質、磷酸根），它們帶負電，圖上寫作 A⁻。',
+        '先把兩邊各是哪一種離子比較多填出來。提示：鈉鉀幫浦把誰往外送、把誰往內送。'],
+      svg: function () { var s = tx(60, 18, T('細胞外', 'Outside the cell'), 'b', 12) + box(40, 110, 280, 150, '', 26) + tx(76, 132, T('細胞內', 'Inside the cell'), 'b', 12);
+        s += tx(232, 48.5, '145 mM', '', 12, 'start') + tx(232, 88.5, '5 mM', '', 12, 'start') + tx(232, 164.5, '150 mM', '', 12, 'start') + tx(232, 204.5, '12 mM', '', 12, 'start') + tx(180, 246, T('A⁻：出不去的帶負電大分子', 'A⁻: trapped negatively charged molecules'), 'm', 10);
+        return s + cap(294, '所以細胞內側的電位是', 'So the inside of the cell is'); },
+      blanks: [{ id: 'o1', x: 180, y: 44, w: 84, c: 'H', a: 'Na', o: POT_I }, { id: 'o2', x: 180, y: 84, w: 84, c: 'C', a: 'K', o: POT_I }, { id: 'i1', x: 180, y: 160, w: 84, c: 'C', a: 'K', o: POT_I }, { id: 'i2', x: 180, y: 200, w: 84, c: 'H', a: 'Na', o: POT_I },
+        { id: 'v', x: 262, y: 294, w: 170, a: 'neg', o: ['neg', 'posi'] }],
+      done: ['[[細胞內 K⁺ 多（約 150 mM）、細胞外 Na⁺ 多（約 145 mM）]]。', '膜電位都是以「細胞內相對於細胞外」來表示，所以靜止時是負值。', '造成內負外正的三個原因：細胞內有出不去的帶負電大分子、膜對各種離子的通透性不同、鈉鉀幫浦。下一關一個一個看。'] },
+    { t: '平衡電位：一種離子自己的拔河', kind: 'ov', h: 344,
+      intro: ['先假設膜上只有 K⁺ 通道。細胞內 K⁺ 多，所以 K⁺ 順著濃度差往外流。',
+        '可是 K⁺ 帶正電，它一出去，細胞內就少了正電、變得更負。裡面越負，就越把帶正電的 K⁺ 吸住不讓它走。',
+        '一邊是濃度差把 K⁺ 往外推，一邊是電的力量把 K⁺ 往內拉。兩邊剛好打平時的膜電位，叫做這種離子的[[平衡電位]]。',
+        'Na⁺ 的情況相反：外面多，想往裡衝；要讓它停下來，細胞內必須是正的。',
+        '真正的細胞兩種通道都有，但靜止時 K⁺ 通道開得多、Na⁺ 通道幾乎都關著。所以實際的膜電位很靠近其中一個。把三個名字放到刻度上。'],
+      tip: '記法：誰的通道開得多，膜電位就往誰的平衡電位靠過去。',
+      svg: function () { var s = sl('180,24 180,330', 'K', 2), Y = { '+66': 36, '0': 150, '−70': 271, '−90': 306 }, k;
+        for (k in Y) s += '<line x1="172" y1="' + Y[k] + '" x2="188" y2="' + Y[k] + '" stroke="var(--ink)" stroke-width="2"/>';
+        s += tx(166, 40.5, '+66 mV', '', 12, 'end') + tx(166, 154.5, '0 mV', 'm', 12, 'end') + tx(194, 275.5, '−70 mV', '', 12, 'start') + tx(166, 310.5, '−90 mV', '', 12, 'end');
+        return s + tx(40, 180, T('細胞內比較正 ↑', 'inside more positive ↑'), 'm', 10, 'start') + tx(40, 196, T('細胞內比較負 ↓', 'inside more negative ↓'), 'm', 10, 'start'); },
+      blanks: [{ id: 'a', x: 272, y: 36, w: 156, c: 'H', a: 'ena', o: POT_E }, { id: 'b', x: 84, y: 271, w: 156, a: 'rmp', o: POT_E }, { id: 'c', x: 272, y: 306, w: 156, c: 'C', a: 'ek', o: POT_E }],
+      listTitle: '離子會往哪裡走',
+      list: [['膜電位是 −70 mV 時（比 −90 還正一點），K⁺ 的淨移動方向', { a: 'kout', o: ['kout', 'kin'] }], ['膜電位是 −70 mV 時，Na⁺ 通道如果打開，Na⁺ 會', { a: 'nain', o: ['nain', 'naout'] }],
+        ['Na⁺ 通道突然大量打開，膜電位會往哪一個數值靠近', { a: 'ena', o: POT_E }], ['用離子內外的濃度算出平衡電位的公式', { a: 'nernst', o: ['nernst', 'hh', 'mm'] }]],
+      done: ['[[K⁺ 的平衡電位約 −90 mV，Na⁺ 約 +66 mV，靜止膜電位約 −70 mV]]。', '靜止膜電位靠近 K⁺ 的平衡電位，因為靜止時膜對 K⁺ 的通透性最大；它沒有到 −90，是因為還有一點點 Na⁺ 漏進來。',
+        '神經衝動發生時，Na⁺ 通道大開，膜電位一下子衝向 +66 的方向。下一個單元會看到。'] },
+    { t: '靜止膜電位：是誰在維持', kind: 'cloze',
+      intro: ['靜止膜電位（resting membrane potential）是細胞沒有受到刺激時的膜電位，神經細胞大約是 −70 mV。',
+        '它的大小主要由 K⁺ 決定，所以[[血液裡 K⁺ 的濃度一變，全身神經和肌肉的膜電位都會跟著變]]。這是血鉀異常會影響心臟的原因，臨床上很重要。',
+        '鈉鉀幫浦在這裡有兩個角色：長期來說，它維持 Na⁺ 和 K⁺ 的濃度差；另外因為它每次送 3 個正電荷出去、只收 2 個進來，本身也讓細胞內再負一點點。'],
+      cloze: [
+        ['靜止時一直開著、讓 K⁺ 慢慢往外漏的是', { a: 'leak', o: ['leak', 'vg', 'pump'] }, '。'],
+        ['靜止時膜對哪一種離子的通透性最大？', { a: 'K', o: ['K', 'Na', 'Cl', 'Ca'] }, '。'],
+        ['所以靜止膜電位比較靠近', { a: 'ek', o: POT_E }, '。'],
+        ['細胞內帶負電、又出不去的主要是', { a: 'prot', o: ['prot', 'Cl', 'K'] }, '。'],
+        ['把漏進來的 Na⁺ 打出去、把漏出去的 K⁺ 打回來的是', { a: 'pump', o: ['leak', 'vg', 'pump'] }, '。'],
+        ['血漿的 K⁺ 濃度升高（高血鉀）時，K⁺ 往外流的力量變小，靜止膜電位會', { a: 'lessneg', o: ['lessneg', 'moreneg', 'nochg'] }, '。'],
+        ['利尿劑讓 K⁺ 從尿液流失太多，可能造成', { a: 'hypok', o: ['hyperk', 'hypok', 'hyperna'] }, '，心電圖會出現異常。']
+      ],
+      done: ['靜止膜電位三個來源：K⁺ 滲漏通道（最主要）、細胞內出不去的負電分子、鈉鉀幫浦。', '高血鉀和低血鉀都會改變心肌的膜電位，嚴重時造成心律不整。所以腎臟病、用利尿劑的人要注意鉀的攝取。'] },
+    { t: '細胞怎麼互相傳訊', kind: 'list',
+      intro: ['細胞之間靠化學分子溝通。依照訊號走多遠、怎麼走，分成幾種。',
+        '<b>內分泌</b>：激素進到血液，流到遠處。<b>旁泌</b>：只影響附近的細胞。<b>突觸</b>：神經末梢把神經傳遞物質放到窄窄的突觸間隙。<b>自泌</b>：細胞放出來的分子作用回自己身上。',
+        '不管哪一種，訊號分子都要先和[[受器（receptor）]]結合才有作用。受器在哪裡，要看訊號分子進不進得了細胞：',
+        '脂溶性的訊號分子可以穿過細胞膜，受器就在細胞裡面。水溶性的進不去，受器只能放在細胞膜的表面。'],
+      listTitle: '是哪一種傳訊，受器在哪裡',
+      list: [['胰島素經由血液作用在全身的肌肉和脂肪細胞', { a: 'endo', o: POT_S }], ['血管內皮放出一氧化氮，讓旁邊的平滑肌放鬆', { a: 'para', o: POT_S }], ['運動神經末梢放出乙醯膽鹼，作用在肌肉細胞', { a: 'syn', o: POT_S }],
+        ['T 淋巴球分泌的細胞介素刺激自己增生', { a: 'auto', o: POT_S }], ['類固醇激素（皮質醇、性激素）的受器', { a: 'inside', o: POT_L }], ['甲狀腺素的受器', { a: 'inside', o: POT_L }],
+        ['胰島素、升糖素這類多肽激素的受器', { a: 'onmem', o: POT_L }], ['腎上腺素、乙醯膽鹼的受器', { a: 'onmem', o: POT_L }]],
+      done: ['[[脂溶性的訊號分子（類固醇激素、甲狀腺素、一氧化氮）受器在細胞內；水溶性的（多肽激素、兒茶酚胺、乙醯膽鹼）受器在細胞膜上。]]', '細胞內的受器多半直接調控基因的轉錄，所以作用慢但持久。',
+        '水溶性的訊號分子進不了細胞，要靠下一關的「第二傳訊者」把訊息帶進去。'] },
+    { t: '第二傳訊者：cAMP 這條路', kind: 'map', sub: 'camp', plain: 1, blanks: ['gp', 'ac', 'camp', 'pka'],
+      intro: ['水溶性的激素停在細胞膜外面，訊息要怎麼進到細胞裡？靠接力。',
+        '激素是第一棒（第一傳訊者）。它和受器結合後，受器把膜內側的 [[G 蛋白]]叫醒；G 蛋白再去打開膜上的一個酵素；這個酵素把 ATP 做成一種小分子，在細胞質裡到處跑，這就是[[第二傳訊者]]。',
+        '最常見的第二傳訊者是 cAMP（環腺苷單磷酸）。它去活化一種激酶，激酶再把磷酸根接到別的蛋白質上，改變它們的活性。',
+        '這種接力的好處是放大：一個激素分子可以做出很多 cAMP，每個又活化很多酵素。生化的肝醣分解，就是腎上腺素和升糖素走這條路打開的。'],
+      listTitle: '這條路的細節',
+      list: [['cAMP 是用什麼做的', { a: 'atp', o: ['atp', 'gtp', 'amp'] }], ['G 蛋白被活化時，它的 α 次單元結合的是', { a: 'gtp', o: ['atp', 'gtp', 'gdp'] }], ['把 cAMP 分解掉、讓訊號結束的酵素', { a: 'pde', o: ['pde', 'ac', 'pka'] }],
+        ['咖啡因和茶鹼抑制上一題的酵素，細胞內的 cAMP 會', { a: 'more', o: ['more', 'less'] }]],
+      done: ['順序：激素 → 受器 → G 蛋白 → 腺苷酸環化酶（adenylate cyclase）→ cAMP → 蛋白質激酶 A（PKA）→ 蛋白質磷酸化。', 'G 蛋白有 α、β、γ 三個次單元。活化時 α 把 GDP 換成 GTP 並離開去作用；之後 GTP 被水解成 GDP，三個次單元再合起來，訊號就關掉。',
+        '[[磷酸二酯酶（PDE）分解 cAMP]]。咖啡因、茶鹼抑制 PDE，所以 cAMP 留得比較久。', '其他的第二傳訊者：Ca²⁺、cGMP、IP₃ 和 DAG。內分泌的單元會再遇到。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。有幾題的選項只有英文。'],
+      cloze: [
+        ['靜止膜電位最接近哪一種離子的平衡電位？', { a: 'K', o: ['K', 'Na', 'Cl', 'Ca'] }, '。'],
+        ['神經細胞的靜止膜電位大約是 −70 mV，意思是細胞內側相對於外側是', { a: 'neg', o: ['neg', 'posi'] }, '的。'],
+        ['細胞外液中濃度最高的陽離子是', { a: 'Na', o: ['K', 'Na', 'Ca'] }, '。'],
+        ['鈉鉀幫浦每分解一個 ATP，淨送出細胞的正電荷是幾個？', { a: 'one', o: ['zero', 'one', 'two'] }, '。'],
+        ['血鉀過高時，心肌細胞的靜止膜電位會', { a: 'lessneg', o: ['lessneg', 'moreneg', 'nochg'] }, '。'],
+        ['受器位在細胞內的訊號分子是', { a: 'ster', o: ['ster', 'ins', 'epi', 'ach'], lang: 'en' }, '。'],
+        ['以 cAMP 當第二傳訊者時，直接製造 cAMP 的酵素是', { a: 'ac', o: ['ac', 'pde', 'pka'], lang: 'en' }, '。'],
+        ['cAMP 直接活化的是', { a: 'pka', o: ['ac', 'pde', 'pka'], lang: 'en' }, '。'],
+        ['只作用在鄰近細胞的調節方式叫做', { a: 'para', o: POT_S, lang: 'en' }, '。'],
+        ['威而鋼（sildenafil）抑制磷酸二酯酶，使平滑肌細胞內哪一種第二傳訊者增加？', { a: 'cgmp', o: ['camp', 'cgmp', 'Ca'] }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'map', sub: 'camp', plain: 1, force: 'en', blanks: ['rec', 'gp', 'ac', 'camp', 'pka'],
+      intro: ['cAMP 這條路全部自己填，下面的題目也用英文作答。'], tip: '這一關固定用英文作答。',
+      listTitle: '名詞',
+      list: [['細胞沒有受刺激時的膜電位', { a: 'rmp', o: POT_E }], ['只讓 K⁺ 通過時，濃度差和電的力量打平的膜電位', { a: 'ek', o: POT_E }], ['靜止時讓 K⁺ 慢慢往外漏的通道', { a: 'leak', o: ['leak', 'vg', 'pump'] }],
+        ['維持 Na⁺ 和 K⁺ 濃度差的膜蛋白', { a: 'pump', o: ['leak', 'vg', 'pump'] }], ['激素經由血液作用在遠處的細胞', { a: 'endo', o: POT_S }], ['只影響鄰近的細胞', { a: 'para', o: POT_S }],
+        ['把 cAMP 分解掉的酵素', { a: 'pde', o: ['pde', 'ac', 'pka'] }], ['血液中 K⁺ 過高', { a: 'hyperk', o: ['hyperk', 'hypok', 'hyperna'] }]] }
+  ] };
+POT.dict.zero = { zh: '0 個' }; POT.dict.one = { zh: '1 個' }; POT.dict.two = { zh: '2 個' };
+
+/* ======================================================================
+   人體生理・神經元與動作電位
+   ====================================================================== */
+/* 神經系統的分工（縮排的樹狀圖） */
+function NAP_TREE() {
+  var s = '', R = [[0, '神經系統', 'Nervous system', '', ''], [1, '', '', '腦、脊髓', 'brain, spinal cord'], [1, '', '', '腦神經、脊神經', 'cranial and spinal nerves'], [2, '感覺神經（傳入）', 'Sensory (afferent)', '把訊息送進中樞', 'to the CNS'],
+    [2, '運動神經（傳出）', 'Motor (efferent)', '把指令送出去', 'from the CNS'], [3, '', '', '骨骼肌（隨意）', 'skeletal muscle'], [3, '', '', '心肌、平滑肌、腺體', 'heart, smooth muscle, glands'], [4, '', '', '戰或逃', 'fight or flight'], [4, '', '', '休息與消化', 'rest and digest']];
+  var par = [null, 0, 0, 2, 2, 4, 4, 6, 6];
+  R.forEach(function (r, i) { var y = 30 + i * 44, x = 12 + r[0] * 22;
+    if (par[i] != null) { var px = 12 + R[par[i]][0] * 22 + 10, py = 30 + par[i] * 44 + 19; s += sl(px + ',' + py + ' ' + px + ',' + y + ' ' + (x - 2) + ',' + y, 'M', 1.5); }
+    if (r[1]) s += pill(x + 62, y, 124, { zh: r[1], en: r[2] }, i ? 'pill' : 'src');
+    if (r[3]) { var t = T(r[3], r[4]); s += tx(x + 134, y + 4, t, 'm', fit(t, 358 - x - 134 + 12, 10.5), 'start'); } });
+  return s;
+}
+/* 神經元的構造 */
+function NAP_N() {
+  var s = '';
+  ['48,112 28,84 12,80', '28,84 30,60', '50,138 26,162 10,160', '26,162 28,186', '62,102 60,72 44,54', '66,149 62,186', '60,72 74,50'].forEach(function (p) { s += sl(p, 'K', 3); });
+  s += sl('94,125 300,125', 'K', 3.5) + '<polygon points="90,112 90,138 112,125" fill="var(--ink)"/>' + '<circle class="pill" cx="70" cy="125" r="24" stroke-width="2" style="stroke:var(--ink)"/><circle cx="70" cy="125" r="8" fill="var(--muted)"/>';
+  [118, 166, 214].forEach(function (x) { s += '<rect class="kT" x="' + x + '" y="116" width="40" height="18" rx="9" stroke-width="1.5"/>'; });
+  ['300,125 330,98', '300,125 336,125', '300,125 330,152'].forEach(function (p) { s += sl(p, 'K', 3); }); [[333, 95], [340, 125], [333, 155]].forEach(function (p) { s += '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="5.5" fill="var(--ink)"/>'; });
+  s += arrow(120, 204, 262, 204) + tx(190, 224, T('訊號前進的方向', 'direction of the signal'), 'm', 10.5);
+  return s + badge(22, 38, 1) + badge(96, 92, 2) + badge(102, 154, 3) + badge(138, 100, 4) + badge(162, 150, 5) + badge(340, 68, 6);
+}
+/* 動作電位的曲線。ref：畫出兩段不反應期 */
+function NAP_AP(ref) {
+  var Y = function (mv) { return 124 - mv * 1.8; }, s = '';
+  s += sl('66,24 66,292', 'K', 1.5) + sl('66,292 346,292', 'K', 1.5) + tx(206, 312, T('時間（整個過程大約 3 毫秒）', 'time (the whole event takes about 3 ms)'), 'm', 10) +
+    '<text x="14" y="160" text-anchor="middle" font-size="10" class="m" transform="rotate(-90 14 160)">' + esc(T('膜電位（mV）', 'membrane potential (mV)')) + '</text>';
+  [[30, '+30'], [0, '0'], [-55, '−55'], [-70, '−70']].forEach(function (a) { s += '<line x1="60" y1="' + Y(a[0]) + '" x2="66" y2="' + Y(a[0]) + '" stroke="var(--ink)" stroke-width="1.5"/>' + tx(56, Y(a[0]) + 4, a[1], '', 11, 'end'); });
+  s += sl('66,' + Y(-55) + ' 346,' + Y(-55), 'M', 1.2, '5 4') + sl('66,' + Y(-70) + ' 346,' + Y(-70), 'M', 1, '2 4') + tx(344, Y(-55) - 5, T('閾值', 'threshold'), 'm', 10, 'end');
+  s += sp('M66,250 L124,250', 'K', 3.5) + sp('M124,250 C132,250 138,240 144,223 C150,190 154,90 164,70', 'E', 4) + sp('M164,70 C174,60 180,200 200,250 C208,268 218,270 226,268', 'I', 4) + sp('M226,268 C244,262 258,250 274,250 L346,250', 'K', 3.5);
+  s += badge(94, 234, 1) + badge(136, 150, 2) + badge(204, 150, 3) + badge(232, 284, 4);
+  if (ref) s += '<rect class="kE" x="144" y="36" width="56" height="12" rx="4" stroke-width="1.5"/><rect class="kI" x="200" y="36" width="72" height="12" rx="4" stroke-width="1.5"/>' + tx(172, 30, 'A', 'b', 11) + tx(236, 30, 'B', 'b', 11);
+  return s;
+}
+var NAP_T = ['cns', 'pns', 'som', 'aut', 'symp', 'psym'], NAP_P = ['den', 'soma', 'hil', 'axon', 'mye', 'node', 'term'], NAP_G = ['sch', 'sat', 'oli', 'mic', 'ast', 'epe'], NAP_PH = ['rest', 'dep', 'rep', 'hyp'], NAP_C = ['vna', 'vk', 'leak', 'pump'];
+var NAP = { id: 'nap', zh: '神經元與動作電位', en: 'Neurons and action potentials', alias: '神經系統的分工・神經膠細胞・動作電位・跳躍傳導', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    cns: { zh: '中樞神經系統', en: 'Central nervous system', ab: 'CNS' }, pns: { zh: '周邊神經系統', en: 'Peripheral nervous system', ab: 'PNS' }, som: { zh: '體運動神經', en: 'Somatic motor' }, aut: { zh: '自主神經', en: 'Autonomic' },
+    symp: { zh: '交感神經', en: 'Sympathetic' }, psym: { zh: '副交感神經', en: 'Parasympathetic' },
+    den: { zh: '樹突', en: 'Dendrites' }, soma: { zh: '細胞本體', en: 'Cell body (soma)' }, hil: { zh: '軸丘', en: 'Axon hillock' }, axon: { zh: '軸突', en: 'Axon' }, mye: { zh: '髓鞘', en: 'Myelin sheath' }, node: { zh: '郎氏結', en: 'Node of Ranvier' }, term: { zh: '軸突末梢', en: 'Axon terminal' },
+    sen: { zh: '感覺神經元', en: 'Sensory neuron' }, mot: { zh: '運動神經元', en: 'Motor neuron' }, intn: { zh: '聯絡神經元', en: 'Interneuron' },
+    sch: { zh: '許旺細胞', en: 'Schwann cell' }, sat: { zh: '衛星細胞', en: 'Satellite cell' }, oli: { zh: '寡樹突細胞', en: 'Oligodendrocyte' }, mic: { zh: '微膠細胞', en: 'Microglia' }, ast: { zh: '星狀細胞', en: 'Astrocyte' }, epe: { zh: '室管膜細胞', en: 'Ependymal cell' },
+    rest: { zh: '靜止', en: 'Resting' }, dep: { zh: '去極化', en: 'Depolarization' }, rep: { zh: '再極化', en: 'Repolarization' }, hyp: { zh: '過極化', en: 'Hyperpolarization' },
+    nain: { zh: 'Na⁺ 往細胞內流', en: 'Na⁺ flows in' }, kout: { zh: 'K⁺ 往細胞外流', en: 'K⁺ flows out' }, cain: { zh: 'Ca²⁺ 往細胞內流', en: 'Ca²⁺ flows in' }, clin: { zh: 'Cl⁻ 往細胞內流', en: 'Cl⁻ flows in' },
+    vna: { zh: '電位閘控 Na⁺ 通道', en: 'Voltage-gated Na⁺ channel' }, vk: { zh: '電位閘控 K⁺ 通道', en: 'Voltage-gated K⁺ channel' }, leak: { zh: 'K⁺ 滲漏通道', en: 'K⁺ leak channel' }, pump: { zh: '鈉鉀幫浦', en: 'Na⁺/K⁺ pump' },
+    posf: { zh: '正回饋', en: 'Positive feedback' }, negf: { zh: '負回饋', en: 'Negative feedback' }, aon: { zh: '全有全無律', en: 'All-or-none law' }, freq: { zh: '頻率', en: 'frequency' }, ampl: { zh: '振幅（大小）', en: 'amplitude' },
+    abs: { zh: '絕對不反應期', en: 'Absolute refractory period' }, rel: { zh: '相對不反應期', en: 'Relative refractory period' }, inact: { zh: 'Na⁺ 通道處於不活化狀態', en: 'Na⁺ channels are inactivated' },
+    noap: { zh: '動作電位無法產生' }, bigger: { zh: '動作電位變得更大' }, rmp0: { zh: '靜止膜電位變成 0' },
+    salt: { zh: '跳躍傳導', en: 'Saltatory conduction' }, cont: { zh: '連續傳導', en: 'Continuous conduction' }, fast: { zh: '比較快' }, slow: { zh: '比較慢' }, one: { zh: '一段' }, many: { zh: '很多段' },
+    ms: { zh: '多發性硬化症', en: 'Multiple sclerosis' }, gbs: { zh: 'Guillain-Barré 症候群', en: 'Guillain-Barré syndrome' }, park: { zh: '帕金森氏症', en: "Parkinson's disease" }, pnsr: { zh: '周邊神經', en: 'Peripheral nerves' }, cnsr: { zh: '中樞神經', en: 'Central nervous system' },
+    white: { zh: '白質', en: 'White matter' }, gray: { zh: '灰質', en: 'Gray matter' }, g1: { zh: 'GLUT1（不需要胰島素）', en: 'GLUT1 (insulin-independent)' }, g4: { zh: 'GLUT4（需要胰島素）', en: 'GLUT4 (insulin-dependent)' },
+    ldopa: { zh: 'L-dopa（左旋多巴）', en: 'L-dopa' }, dopa: { zh: '多巴胺', en: 'Dopamine' }, tj: { zh: '緊密接合', en: 'Tight junctions' }, gj: { zh: '間隙接合', en: 'Gap junctions' }
+  },
+  levels: [
+    { t: '先看全貌：神經系統怎麼分工', kind: 'ov', h: 410, svg: NAP_TREE,
+      intro: ['神經系統是身體的快速通訊網。它的工作可以寫成一句話：把感覺訊息送進來，整合之後，把指令送出去。',
+        '先照「位置」分：腦和脊髓是中樞，負責整合；其他伸到全身各處的神經都算周邊。',
+        '周邊神經再照「方向」分成送進來的和送出去的。送出去的再照「管誰」分：管骨骼肌、可以用意志控制的；以及管內臟、不受意志控制的。',
+        '最後，管內臟的那一套又有作用相反的兩組，是上一個單元說的拮抗性動器。',
+        '把樹狀圖上六個名稱填出來。'],
+      blanks: [{ id: 'a', x: 96, y: 74, w: 124, a: 'cns', o: NAP_T }, { id: 'b', x: 96, y: 118, w: 124, a: 'pns', o: NAP_T }, { id: 'c', x: 140, y: 250, w: 124, a: 'som', o: NAP_T }, { id: 'd', x: 140, y: 294, w: 124, a: 'aut', o: NAP_T },
+        { id: 'e', x: 162, y: 338, w: 124, c: 'E', a: 'symp', o: NAP_T }, { id: 'f', x: 162, y: 382, w: 124, c: 'I', a: 'psym', o: NAP_T }],
+      done: ['中樞神經系統（CNS）＝腦＋脊髓；周邊神經系統（PNS）＝腦神經 12 對＋脊神經 31 對。', '傳入（afferent）是感覺，傳出（efferent）是運動。', '運動分兩種：體運動神經管骨骼肌；[[自主神經管心肌、平滑肌和腺體]]。',
+        '自主神經分交感（戰或逃）和副交感（休息與消化）。整個生理都會用同一組顏色：{E:玫瑰色是交感}、{I:藍色是副交感}。'] },
+    { t: '神經元的構造', kind: 'ov', h: 236, legend: [['kT', '包在軸突外面的絕緣層']], svg: NAP_N, blanks: [],
+      intro: ['神經系統有兩類細胞。神經元（neuron）負責產生和傳遞訊號；神經膠細胞負責支持和照顧神經元，下一關再看。',
+        '一個神經元有三個部分。短而多分支的突起負責接收訊號；中間膨大的部分有細胞核，是代謝中心；一條很長的突起負責把訊號送出去，最長可以到一公尺。',
+        '訊號的方向是固定的：從接收的那一端，經過中間，往長突起的末端走。',
+        '長突起從細胞本體伸出來的地方像一個小山丘，動作電位就是從那裡開始產生的。'],
+      listTitle: '圖上的編號是什麼',
+      list: [['編號 1：短而多分支，負責接收訊號', { a: 'den', o: NAP_P }], ['編號 2：有細胞核，是代謝中心', { a: 'soma', o: NAP_P }], ['編號 3：長突起的起點，動作電位在這附近開始', { a: 'hil', o: NAP_P }],
+        ['編號 4：包在外面的絕緣層', { a: 'mye', o: NAP_P }], ['編號 5：兩段絕緣層之間露出來的縫隙', { a: 'node', o: NAP_P }], ['編號 6：末端，在這裡把訊號交給下一個細胞', { a: 'term', o: NAP_P }],
+        ['從細胞本體伸出、把訊號送出去的那條長突起', { a: 'axon', o: NAP_P }], ['只存在於中樞、夾在感覺和運動之間負責整合的神經元', { a: 'intn', o: ['sen', 'mot', 'intn'] }]],
+      done: ['樹突（dendrite）接收、細胞本體（cell body）整合、軸突（axon）送出。', '成熟的神經元幾乎不再分裂，受損很難補回來。', '神經元依功能分三種：感覺神經元（傳入）、運動神經元（傳出）、聯絡神經元（只在中樞）。'] },
+    { t: '神經膠細胞：六種幫手', kind: 'list',
+      intro: ['神經膠細胞（glial cells）的數量比神經元還多，而且能分裂。它們不傳遞神經衝動，但少了它們神經元活不下去。',
+        '[[先分清楚在中樞還是在周邊]]，這是國考最常問的。周邊只有兩種，其餘四種都在中樞。',
+        '其中有兩種的工作一樣，都是把自己的細胞膜一圈一圈捲在軸突外面，做成絕緣層（髓鞘）。一種在周邊、一種在中樞。'],
+      listTitle: '是哪一種細胞',
+      list: [['在周邊神經形成髓鞘', { a: 'sch', o: NAP_G }], ['在中樞神經形成髓鞘', { a: 'oli', o: NAP_G }], ['在周邊的神經節裡，包圍並支持神經元的細胞本體', { a: 'sat', o: NAP_G }],
+        ['中樞的免疫細胞，會吞噬外來物和壞死的碎片', { a: 'mic', o: NAP_G }], ['中樞數量最多；回收 K⁺ 和神經傳遞物質、供應養分、參與血腦障壁', { a: 'ast', o: NAP_G }],
+        ['襯在腦室和脊髓中央管的內面，和腦脊髓液的產生有關', { a: 'epe', o: NAP_G }], ['下列哪一種主要位於周邊神經系統', { a: 'sch', o: ['sch', 'oli', 'ast', 'mic'] }]],
+      done: ['[[周邊：許旺細胞（Schwann cell）、衛星細胞。中樞：寡樹突細胞、微膠細胞、星狀細胞、室管膜細胞。]]', '許旺細胞一個只包一段軸突；寡樹突細胞一個可以伸出很多隻手，同時包好幾條軸突。',
+        '星狀細胞（astrocyte）的腳包著腦的微血管，促使內皮細胞之間形成緊密接合，這就是血腦障壁。', '成人的腦瘤大多來自神經膠細胞，因為它們還會分裂。'] },
+    { t: '動作電位：一次神經衝動的四個階段', kind: 'ov', h: 320, legend: [['sE', '上升'], ['sI', '下降']], svg: function () { return NAP_AP(0); }, blanks: [],
+      intro: ['上一個單元說，靜止時膜電位大約 −70 mV，靠近 K⁺ 的平衡電位（−90）；Na⁺ 的平衡電位是 +66。',
+        '神經元的軸突膜上有兩種平常關著、[[膜電位一變就會打開]]的通道，叫電位閘控通道。一種給 Na⁺ 走，一種給 K⁺ 走。',
+        '受到刺激時，如果膜電位升到一個門檻（閾值），第一種通道會突然大開。回想「誰的通道開，膜電位就往誰的平衡電位靠」，就能推出曲線為什麼往上衝。',
+        '大約一毫秒後這種通道自己關上，換第二種通道打開，曲線就掉回來。因為第二種通道關得慢，還會掉得比原來更低一點。',
+        '這整個快速的上下變化，叫做動作電位（action potential）。看著圖回答。'],
+      listTitle: '圖上的四個階段',
+      list: [['編號 1：還沒受到刺激', { a: 'rest', o: NAP_PH }], ['編號 2：膜電位快速往正的方向衝', { a: 'dep', o: NAP_PH }], ['編號 3：膜電位掉回負的', { a: 'rep', o: NAP_PH }], ['編號 4：比靜止時還要負', { a: 'hyp', o: NAP_PH }],
+        ['編號 2 是因為哪一種離子流動', { a: 'nain', o: ['nain', 'kout', 'cain', 'clin'] }], ['編號 3 是因為哪一種離子流動', { a: 'kout', o: ['nain', 'kout', 'cain', 'clin'] }],
+        ['編號 2 的時候，Na⁺ 進來使膜更去極化，又讓更多 Na⁺ 通道打開。這是', { a: 'posf', o: ['posf', 'negf'] }]],
+      countsTitle: '從圖上讀數字（mV）', counts: [['靜止膜電位', '−70', ['−90', '−70', '−55', '+30']], ['要達到才會引發動作電位的閾值', '−55', ['−90', '−70', '−55', '+30']], ['動作電位的最高點大約', '+30', ['−55', '0', '+30', '+66']]],
+      done: ['[[去極化＝Na⁺ 內流；再極化＝K⁺ 外流。]]兩者都是順著濃度差的擴散，不直接用 ATP。', '閾值大約 −55 mV。上升期是正回饋：越去極化，Na⁺ 通道開越多。',
+        '最高點到不了 +66，是因為 Na⁺ 通道很快就自己關上（不活化），同時 K⁺ 通道開始打開。', '鈉鉀幫浦不參與動作電位本身。它的工作是事後慢慢把離子搬回去，長期維持濃度差。'] },
+    { t: '全有全無與不反應期', kind: 'ov', h: 320, legend: [['kE', 'A'], ['kI', 'B']], svg: function () { return NAP_AP(1); }, blanks: [],
+      intro: ['動作電位有幾個和一般電訊號不一樣的特性。',
+        '<b>全有全無</b>：刺激沒到閾值，什麼都不會發生；一到閾值，就產生一個完整的動作電位，而且每一個都一樣大。像扣扳機，扣得再用力，子彈也不會飛得更快。',
+        '那刺激的強弱要怎麼表示？答案是靠[[頻率]]：刺激越強，單位時間內發出的動作電位越多。',
+        '<b>不反應期</b>：一個動作電位發生後，要隔一小段時間才能產生下一個。圖上方的 A、B 兩段就是。這讓動作電位只會往前傳，不會掉頭；也限制了頻率的上限。'],
+      listTitle: '特性與不反應期',
+      list: [['動作電位要嘛不發生，一發生就是固定的大小，這叫做', { a: 'aon', o: ['aon', 'posf', 'salt'] }], ['神經用什麼來表示刺激的強弱', { a: 'freq', o: ['freq', 'ampl'] }],
+        ['A 段：不管刺激多強，都不能再引發動作電位', { a: 'abs', o: ['abs', 'rel'] }], ['B 段：要比平常更強的刺激才能引發', { a: 'rel', o: ['abs', 'rel'] }],
+        ['A 段不能再興奮的原因', { a: 'inact', o: ['inact', 'kout', 'pump'] }], ['B 段比較難興奮，是因為還有哪一種離子在流動', { a: 'kout', o: ['nain', 'kout', 'cain'] }],
+        ['局部麻醉藥 procaine、河魨毒素、麻痺性貝毒都會阻斷電位閘控 Na⁺ 通道，結果是', { a: 'noap', o: ['noap', 'bigger', 'rmp0'] }]],
+      done: ['[[全有全無律（all-or-none）]]：動作電位的大小固定，強度用頻率編碼。', '絕對不反應期：Na⁺ 通道不活化，完全不能再興奮。相對不反應期：K⁺ 還在外流，需要更強的刺激。',
+        '阻斷電位閘控 Na⁺ 通道，動作電位就無法產生，但靜止膜電位幾乎不受影響（靜止膜電位靠的是 K⁺ 滲漏通道）。國考考過 procaine。', '吃到被麻痺性貝毒（saxitoxin）污染的貝類會麻痺，機制也是這個。'] },
+    { t: '傳導：有沒有髓鞘差很多', kind: 'list',
+      intro: ['動作電位不是像電流那樣「流過去」，而是一段引發下一段，像骨牌或一排火柴依序點燃。每到一處都重新產生一次，所以傳得再遠也不會變小。',
+        '沒有髓鞘的軸突，膜上每一小段都要輪流產生動作電位，一步一步走，很慢。',
+        '有髓鞘的軸突，被髓鞘包住的地方離子進出不了，只有兩段髓鞘之間露出來的郎氏結（Na⁺ 通道特別密）能產生動作電位。動作電位就從一個結「跳」到下一個結，快非常多。',
+        '另外，軸突越粗，內部的阻力越小，也傳得越快。'],
+      listTitle: '傳導的比較',
+      list: [['動作電位從一個郎氏結跳到下一個，這叫做', { a: 'salt', o: ['salt', 'cont'] }], ['有髓鞘的軸突，傳導速度', { a: 'fast', o: ['fast', 'slow'] }], ['軸突的直徑越大，傳導速度', { a: 'fast', o: ['fast', 'slow'] }],
+        ['一個許旺細胞可以包幾段軸突', { a: 'one', o: ['one', 'many'] }], ['一個寡樹突細胞可以包幾段軸突', { a: 'many', o: ['one', 'many'] }],
+        ['免疫系統攻擊中樞的髓鞘（寡樹突細胞）', { a: 'ms', o: ['ms', 'gbs', 'park'] }], ['免疫系統攻擊周邊的髓鞘（許旺細胞）', { a: 'gbs', o: ['ms', 'gbs', 'park'] }],
+        ['軸突被切斷後，哪裡的比較有機會再生', { a: 'pnsr', o: ['pnsr', 'cnsr'] }], ['腦和脊髓裡，有髓鞘的軸突聚集的地方看起來是', { a: 'white', o: ['white', 'gray'] }]],
+      done: ['[[跳躍傳導（saltatory conduction）]]：有髓鞘才有。又快又省能量，因為只有郎氏結需要搬離子。', '速度由兩件事決定：有沒有髓鞘、軸突粗不粗。細而無髓鞘的約每秒 1 公尺，粗而有髓鞘的可達每秒 100 公尺。',
+        '多發性硬化症在中樞、Guillain-Barré 症候群在周邊，兩者都是髓鞘被自己的免疫系統破壞。', '白質＝有髓鞘的軸突；灰質＝細胞本體和樹突。髓鞘是脂質，所以看起來白白的。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。', '最後三題是血腦障壁（blood-brain barrier）：腦的微血管內皮細胞之間封得很緊，物質不能隨便從血液進到腦裡。這和腦的營養供應、用藥都有關。'],
+      cloze: [
+        ['下列哪一種支持細胞主要位於周邊神經系統？', { a: 'sch', o: ['sch', 'oli', 'ast', 'mic'], lang: 'en' }, '。'],
+        ['在中樞神經系統形成髓鞘的是', { a: 'oli', o: ['sch', 'oli', 'ast', 'mic'], lang: 'en' }, '。'],
+        ['動作電位的上升期（去極化）是因為', { a: 'nain', o: ['nain', 'kout', 'cain', 'clin'] }, '。'],
+        ['動作電位的下降期（再極化）是因為', { a: 'kout', o: ['nain', 'kout', 'cain', 'clin'] }, '。'],
+        ['投與阻斷電位閘控 Na⁺ 通道的藥物（如 procaine）之後，神經細胞', { a: 'noap', o: ['noap', 'bigger', 'rmp0'] }, '。'],
+        ['同一條軸突上，較強的刺激會讓動作電位的什麼增加？', { a: 'freq', o: ['freq', 'ampl'] }, '。'],
+        ['完全無法再引發動作電位的時期叫做', { a: 'abs', o: ['abs', 'rel'], lang: 'en' }, '。'],
+        ['有髓鞘軸突的傳導方式叫做', { a: 'salt', o: ['salt', 'cont'], lang: 'en' }, '。'],
+        ['直接負責產生動作電位上升期的膜蛋白是', { a: 'vna', o: NAP_C }, '。'],
+        ['動作電位結束後，把 Na⁺ 和 K⁺ 慢慢搬回原位的是', { a: 'pump', o: NAP_C }, '。'],
+        ['血腦障壁的構造基礎，是腦微血管內皮細胞之間的', { a: 'tj', o: ['tj', 'gj'] }, '。'],
+        ['葡萄糖通過血腦障壁進入腦，靠的是', { a: 'g1', o: ['g1', 'g4'] }, '。'],
+        ['帕金森氏症缺的是多巴胺，但多巴胺過不了血腦障壁，所以給病人吃的是它的前驅物', { a: 'ldopa', o: ['ldopa', 'dopa'] }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 320, force: 'en', legend: [['sE', '上升'], ['sI', '下降']], svg: function () { return NAP_AP(0); }, blanks: [],
+      intro: ['同一張動作電位的圖，這次全部用英文作答。'], tip: '這一關固定用英文作答。',
+      listTitle: '圖上的階段與其他名詞',
+      list: [['編號 2 的階段', { a: 'dep', o: NAP_PH }], ['編號 3 的階段', { a: 'rep', o: NAP_PH }], ['編號 4 的階段', { a: 'hyp', o: NAP_PH }], ['編號 2 打開的通道', { a: 'vna', o: NAP_C }], ['編號 3 打開的通道', { a: 'vk', o: NAP_C }],
+        ['接收訊號的短突起', { a: 'den', o: NAP_P }], ['把訊號送出去的長突起', { a: 'axon', o: NAP_P }], ['軸突外面的絕緣層', { a: 'mye', o: NAP_P }], ['兩段絕緣層之間的縫隙', { a: 'node', o: NAP_P }],
+        ['在周邊形成髓鞘的細胞', { a: 'sch', o: NAP_G }], ['在中樞形成髓鞘的細胞', { a: 'oli', o: NAP_G }], ['中樞數量最多、參與血腦障壁的細胞', { a: 'ast', o: NAP_G }],
+        ['動作電位在郎氏結之間跳著傳', { a: 'salt', o: ['salt', 'cont'] }], ['動作電位的大小固定，不隨刺激強度改變', { a: 'aon', o: ['aon', 'posf'] }]] }
+  ] };
+
+/* ======================================================================
+   人體生理・突觸與神經傳遞物質
+   ====================================================================== */
+/* 化學突觸：上面是突觸前的軸突末梢，下面是突觸後的細胞 */
+function SYN_S() {
+  var s = '<path class="pill" d="M158,8 L158,58 C118,68 90,98 90,128 C90,160 110,172 180,172 C250,172 270,160 270,128 C270,98 242,68 202,58 L202,8" stroke-width="1.5"/>';
+  s += sl('180,14 180,48', 'E', 4) + hd(180, 54, 90, 'E');
+  [[138, 112], [182, 98], [224, 116]].forEach(function (p) { s += '<circle class="kT" cx="' + p[0] + '" cy="' + p[1] + '" r="13" stroke-width="1.5"/>'; [[-4, -3], [4, -2], [0, 5]].forEach(function (d) { s += '<circle cx="' + (p[0] + d[0]) + '" cy="' + (p[1] + d[1]) + '" r="2.2" fill="var(--k4s)"/>'; }); });
+  s += '<path d="M166,172 A14,14 0 0 1 194,172" fill="var(--k4)" stroke="var(--k4s)" stroke-width="1.5"/>'; [[170, 184], [180, 190], [190, 184], [176, 198], [186, 200], [160, 194], [200, 194]].forEach(function (p) { s += '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="2.4" fill="var(--k4s)"/>'; });
+  s += '<rect class="kC" x="264" y="116" width="12" height="9" rx="2" stroke-width="1.5"/><rect class="kC" x="264" y="131" width="12" height="9" rx="2" stroke-width="1.5"/>' + sl('318,128 284,128', 'C', 3.5) + hd(278, 128, 180, 'C');
+  s += box(64, 218, 232, 22, '', 6); [140, 180, 220].forEach(function (x) { s += '<path d="M' + (x - 9) + ',218 L' + (x - 9) + ',208 L' + (x - 4) + ',208 L' + (x - 4) + ',214 L' + (x + 4) + ',214 L' + (x + 4) + ',208 L' + (x + 9) + ',208 L' + (x + 9) + ',218 Z" fill="var(--k6)" stroke="var(--k6s)" stroke-width="1.5"/>'; });
+  s += sl('180,244 180,272', 'K', 3) + hd(180, 278, 90, 'K') + tx(60, 100, T('突觸前', 'presynaptic'), 'm', 10.5) + tx(60, 114, T('（軸突末梢）', '(axon terminal)'), 'm', 9.5) + tx(34, 196, T('突觸間隙', 'synaptic cleft'), 'm', 10, 'start') + tx(34, 262, T('突觸後的細胞', 'postsynaptic cell'), 'm', 10.5, 'start');
+  return s + badge(214, 30, 1) + badge(330, 108, 2) + badge(140, 160, 3) + badge(250, 198, 4) + badge(206, 262, 5);
+}
+var SYN_ST = ['s_ca', 's_exo', 's_rec', 's_lig', 's_ap'], SYN_PP = ['epsp', 'ipsp'], SYN_R = ['nic', 'mus'], SYN_NT = ['ach', 'da', 'ne', 'ser', 'his', 'glu', 'gaba', 'gly', 'no'], SYN_AA = ['tyr', 'trp', 'hisd', 'glut', 'arg', 'chol'];
+var SYN = { id: 'syn', zh: '突觸與神經傳遞物質', en: 'Synapses and neurotransmitters', alias: '化學突觸・EPSP 與 IPSP・乙醯膽鹼・單胺・GABA', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    s_ap: { zh: '動作電位到達軸突末梢', en: 'The action potential arrives' }, s_ca: { zh: '電位閘控 Ca²⁺ 通道打開，Ca²⁺ 進入', en: 'Voltage-gated Ca²⁺ channels open; Ca²⁺ enters' },
+    s_exo: { zh: '突觸囊泡以胞吐作用釋放神經傳遞物質', en: 'Vesicles release neurotransmitter by exocytosis' }, s_rec: { zh: '神經傳遞物質和突觸後膜的受器結合', en: 'Neurotransmitter binds postsynaptic receptors' },
+    s_lig: { zh: '離子通道打開，突觸後膜電位改變', en: 'Ion channels open; postsynaptic potential changes' },
+    ca: { zh: 'Ca²⁺' }, na: { zh: 'Na⁺' }, k: { zh: 'K⁺' }, cl: { zh: 'Cl⁻' }, exo: { zh: '胞吐作用', en: 'Exocytosis' }, endoc: { zh: '胞吞作用', en: 'Endocytosis' }, diff: { zh: '擴散', en: 'Diffusion' },
+    chem: { zh: '化學突觸', en: 'Chemical synapse' }, elec: { zh: '電性突觸（間隙接合）', en: 'Electrical synapse (gap junctions)' }, oneway: { zh: '單方向' }, twoway: { zh: '雙方向' },
+    flac: { zh: '肌肉無法收縮（鬆弛性麻痺）' }, spas: { zh: '肌肉持續收縮' }, epsp: { zh: '興奮性突觸後電位', en: 'EPSP' }, ipsp: { zh: '抑制性突觸後電位', en: 'IPSP' },
+    spat: { zh: '空間加成', en: 'Spatial summation' }, temp: { zh: '時間加成', en: 'Temporal summation' }, hil: { zh: '軸丘（軸突起始段）', en: 'Axon hillock (initial segment)' }, dend: { zh: '樹突的末端', en: 'Tips of the dendrites' }, graded: { zh: '可以有大有小、可以相加', en: 'Graded; can summate' }, allnone: { zh: '大小固定、全有全無', en: 'All-or-none' },
+    nic: { zh: '菸鹼型受器', en: 'Nicotinic receptor' }, mus: { zh: '蕈毒鹼型受器', en: 'Muscarinic receptor' }, ache: { zh: '乙醯膽鹼酯酶', en: 'Acetylcholinesterase', ab: 'AChE' }, mao: { zh: '單胺氧化酶', en: 'Monoamine oxidase', ab: 'MAO' },
+    cur: { zh: '箭毒（curare）', en: 'Curare' }, atr: { zh: '阿托品（atropine）', en: 'Atropine' }, neo: { zh: '新斯狄明（neostigmine）', en: 'Neostigmine' }, opp: { zh: '有機磷殺蟲劑', en: 'Organophosphates' }, btx: { zh: '肉毒桿菌毒素', en: 'Botulinum toxin' },
+    mg: { zh: '重症肌無力', en: 'Myasthenia gravis' }, park: { zh: '帕金森氏症', en: "Parkinson's disease" }, hunt: { zh: '杭丁頓氏舞蹈症', en: "Huntington's disease" }, dep: { zh: '憂鬱症', en: 'Depression' }, schi: { zh: '思覺失調症', en: 'Schizophrenia' },
+    ach: { zh: '乙醯膽鹼', en: 'Acetylcholine', ab: 'ACh' }, da: { zh: '多巴胺', en: 'Dopamine' }, ne: { zh: '去甲基腎上腺素', en: 'Norepinephrine' }, epi: { zh: '腎上腺素', en: 'Epinephrine' }, ser: { zh: '血清素', en: 'Serotonin', ab: '5-HT' },
+    his: { zh: '組織胺', en: 'Histamine' }, glu: { zh: '麩胺酸', en: 'Glutamate' }, gaba: { zh: 'GABA（γ-胺基丁酸）', en: 'GABA' }, gly: { zh: '甘胺酸', en: 'Glycine' }, no: { zh: '一氧化氮', en: 'Nitric oxide', ab: 'NO' },
+    endor: { zh: '腦內啡等內生性類鴉片', en: 'Endorphins (endogenous opioids)' }, subp: { zh: 'P 物質', en: 'Substance P' }, npy: { zh: '神經肽 Y', en: 'Neuropeptide Y' }, cck: { zh: '膽囊收縮素', en: 'Cholecystokinin', ab: 'CCK' }, ecb: { zh: '內生性大麻素', en: 'Endocannabinoids' },
+    tyr: { zh: '酪胺酸', en: 'Tyrosine' }, trp: { zh: '色胺酸', en: 'Tryptophan' }, hisd: { zh: '組胺酸', en: 'Histidine' }, glut: { zh: '麩胺酸', en: 'Glutamate' }, arg: { zh: '精胺酸', en: 'Arginine' }, chol: { zh: '膽鹼', en: 'Choline' },
+    b6: { zh: '維生素 B6', en: 'Vitamin B6' }, vc: { zh: '維生素 C', en: 'Vitamin C' }, b1: { zh: '維生素 B1', en: 'Vitamin B1' }, b12: { zh: '維生素 B12', en: 'Vitamin B12' },
+    reup: { zh: '回收到突觸前神經元（再吸收）', en: 'Reuptake into the presynaptic neuron' }, enzd: { zh: '在突觸間隙被酵素分解', en: 'Enzymatic breakdown in the cleft' },
+    ssri: { zh: '選擇性血清素再吸收抑制劑', en: 'Selective serotonin reuptake inhibitors', ab: 'SSRI' }, maoi: { zh: '單胺氧化酶抑制劑', en: 'MAO inhibitors', ab: 'MAOI' }, bzd: { zh: '苯二氮平類鎮靜劑', en: 'Benzodiazepines' }, coc: { zh: '古柯鹼', en: 'Cocaine' },
+    tyra: { zh: '酪胺（tyramine）', en: 'Tyramine' }, caf: { zh: '咖啡因', en: 'Caffeine' }, lac: { zh: '乳糖', en: 'Lactose' }, bp: { zh: '血壓急遽升高' }, sugar: { zh: '血糖急遽下降' },
+    nmda: { zh: 'NMDA 受器', en: 'NMDA receptor' }, gabar: { zh: 'GABA 受器', en: 'GABA receptor' }, ltp: { zh: '長期增益', en: 'Long-term potentiation', ab: 'LTP' }, ltd: { zh: '長期抑制', en: 'Long-term depression', ab: 'LTD' },
+    more: { zh: '增加' }, less: { zh: '減少' }, exc: { zh: '興奮', en: 'Excitatory' }, inh: { zh: '抑制', en: 'Inhibitory' }
+  },
+  subs: {
+    cat: { layout: 'chain', geo: { x: 180, w: 220 }, nodes: [{ k: 'tyr', zh: '酪胺酸', en: 'Tyrosine' }, { k: 'ldopa', zh: '左旋多巴', en: 'L-dopa' }, { k: 'da', zh: '多巴胺', en: 'Dopamine' }, { k: 'ne', zh: '去甲基腎上腺素', en: 'Norepinephrine' }, { k: 'epi', zh: '腎上腺素', en: 'Epinephrine' }],
+      extra: [{ k: 'ser', zh: '血清素', en: 'Serotonin' }, { k: 'his', zh: '組織胺', en: 'Histamine' }] },
+    ind: { layout: 'chain', geo: { x: 180, w: 220 }, nodes: [{ k: 'trp', zh: '色胺酸', en: 'Tryptophan' }, { k: 'htp', zh: '5-羥色胺酸', en: '5-Hydroxytryptophan', ab: '5-HTP' }, { k: 'ser', zh: '血清素', en: 'Serotonin' }, { k: 'mel', zh: '褪黑激素', en: 'Melatonin' }],
+      extra: [{ k: 'da', zh: '多巴胺', en: 'Dopamine' }, { k: 'nia', zh: '菸鹼酸', en: 'Niacin' }] }
+  },
+  levels: [
+    { t: '先看全貌：訊號怎麼跨過細胞之間的縫', kind: 'ov', h: 290, legend: [['kT', '突觸囊泡與神經傳遞物質'], ['kC', 'Ca²⁺'], ['kH', '受器']], svg: SYN_S, blanks: [],
+      intro: ['動作電位傳到軸突的末端就到底了。神經元和下一個細胞之間隔著一條很窄的縫，電傳不過去。兩個細胞交接的地方叫做突觸（synapse）。',
+        '辦法是換一種訊號：把電訊號換成化學分子，讓它漂過這條縫。這種分子叫[[神經傳遞物質（neurotransmitter）]]，平常裝在軸突末梢的小囊泡裡。',
+        '到了對面，神經傳遞物質和受器結合，打開離子通道，又變回電訊號。所以整個過程是：電 → 化學 → 電。',
+        '圖上五個編號是依序發生的五件事。關鍵是第二步：是哪一種離子進來，才觸發囊泡把東西放出去。'],
+      listTitle: '五個步驟',
+      list: [['編號 1', { a: 's_ap', o: SYN_ST }], ['編號 2', { a: 's_ca', o: SYN_ST }], ['編號 3', { a: 's_exo', o: SYN_ST }], ['編號 4', { a: 's_rec', o: SYN_ST }], ['編號 5', { a: 's_lig', o: SYN_ST }],
+        ['觸發囊泡釋放的離子', { a: 'ca', o: ['ca', 'na', 'k', 'cl'] }], ['突觸的訊號傳遞方向', { a: 'oneway', o: ['oneway', 'twoway'] }],
+        ['肉毒桿菌毒素會破壞囊泡和細胞膜融合所需的蛋白質，乙醯膽鹼放不出來，結果是', { a: 'flac', o: ['flac', 'spas'] }]],
+      done: ['順序：動作電位到達 → [[Ca²⁺ 進入]] → 囊泡胞吐 → 和受器結合 → 突觸後的離子通道打開。', '化學突觸是單方向的，而且有大約 0.5 毫秒的延遲。',
+        '另一種是電性突觸：兩個細胞用間隙接合直接相通，離子可以直接流過去，沒有延遲。心肌和許多平滑肌靠它同步收縮。', '神經和骨骼肌之間的突觸叫神經肌肉接合，用的神經傳遞物質是乙醯膽鹼。'] },
+    { t: '興奮還是抑制：EPSP 與 IPSP', kind: 'list',
+      intro: ['神經傳遞物質打開突觸後膜的離子通道，造成的膜電位變化有兩種方向。',
+        '如果讓細胞[[往閾值靠近]]（去極化），下一個神經元比較容易發出動作電位，這叫興奮性突觸後電位（EPSP）。如果讓細胞[[離閾值更遠]]（過極化），就叫抑制性突觸後電位（IPSP）。',
+        '想一想哪種離子進來或出去會造成哪一種：正電荷進來會去極化；負電荷進來或正電荷出去，會更負。',
+        '一個神經元身上有幾千個突觸，同時收到很多 EPSP 和 IPSP。這些小電位和動作電位不同，可以有大有小、可以相加。加起來的結果在軸丘決定：到了閾值就發出動作電位，沒到就沒有。'],
+      listTitle: '是哪一種',
+      list: [['通道打開，Na⁺ 流進細胞', { a: 'epsp', o: SYN_PP }], ['通道打開，Cl⁻ 流進細胞', { a: 'ipsp', o: SYN_PP }], ['通道打開，K⁺ 流出細胞', { a: 'ipsp', o: SYN_PP }],
+        ['很多個突觸同時傳來訊號，一起加起來', { a: 'spat', o: ['spat', 'temp'] }], ['同一個突觸很快地連續傳來訊號，前後加起來', { a: 'temp', o: ['spat', 'temp'] }],
+        ['EPSP 和 IPSP 的性質', { a: 'graded', o: ['graded', 'allnone'] }], ['動作電位的性質', { a: 'allnone', o: ['graded', 'allnone'] }], ['加總之後，決定要不要發出動作電位的位置', { a: 'hil', o: ['hil', 'dend'] }]],
+      done: ['[[EPSP：Na⁺ 進入，去極化。IPSP：Cl⁻ 進入或 K⁺ 流出，過極化。]]', 'EPSP 和 IPSP 是分級電位：沒有閾值、沒有不反應期、可以加成。動作電位則是全有全無。',
+        '加成有兩種：空間加成（不同位置的突觸）、時間加成（同一個突觸連續來）。', '同一種神經傳遞物質是興奮還是抑制，不是看它自己，而是看對面的受器是哪一種。下一關的乙醯膽鹼就是例子。'] },
+    { t: '乙醯膽鹼：兩種受器', kind: 'list',
+      intro: ['乙醯膽鹼（acetylcholine，ACh）是最早被發現的神經傳遞物質。運動神經叫骨骼肌收縮、副交感神經叫心跳變慢，用的都是它。',
+        '同一個分子，為什麼一個興奮、一個抑制？因為受器不同。受器用能刺激它的植物毒素來命名：',
+        '<b>菸鹼型（nicotinic）</b>：受器本身就是離子通道，ACh 一接上就打開，Na⁺ 進來，又快又直接，一定是興奮。在骨骼肌和自主神經節。',
+        '<b>蕈毒鹼型（muscarinic）</b>：受器透過 G 蛋白去影響別的通道，比較慢，可以興奮也可以抑制。在心臟、平滑肌和腺體。',
+        'ACh 放出來之後不能一直留著，否則肌肉會一直收縮。突觸間隙裡有酵素很快把它分解掉。'],
+      listTitle: '是哪一種受器，或哪一個藥',
+      list: [['骨骼肌的運動終板上的受器', { a: 'nic', o: SYN_R }], ['心臟上、讓心跳變慢的受器', { a: 'mus', o: SYN_R }], ['受器本身就是離子通道，作用最快', { a: 'nic', o: SYN_R }], ['透過 G 蛋白作用', { a: 'mus', o: SYN_R }],
+        ['在突觸間隙把 ACh 分解成醋酸和膽鹼的酵素', { a: 'ache', o: ['ache', 'mao'] }], ['阻斷菸鹼型受器，讓骨骼肌麻痺', { a: 'cur', o: ['cur', 'atr', 'neo', 'opp'] }],
+        ['阻斷蕈毒鹼型受器，用來散瞳、減少分泌、治療心跳過慢', { a: 'atr', o: ['cur', 'atr', 'neo', 'opp'] }], ['抑制乙醯膽鹼酯酶，造成 ACh 堆積、過度刺激而中毒', { a: 'opp', o: ['cur', 'atr', 'neo', 'opp'] }],
+        ['同樣抑制乙醯膽鹼酯酶，但用來治療重症肌無力', { a: 'neo', o: ['cur', 'atr', 'neo', 'opp'] }], ['自體抗體攻擊骨骼肌上的菸鹼型受器，肌肉容易無力', { a: 'mg', o: ['mg', 'park', 'hunt'] }]],
+      done: ['[[菸鹼型受器：離子通道，骨骼肌和自主神經節，興奮。蕈毒鹼型受器：G 蛋白，心臟、平滑肌、腺體。]]', '乙醯膽鹼酯酶（AChE）讓訊號結束。抑制它，ACh 就變多、作用變久。',
+        '有機磷農藥中毒是 ACh 太多，解毒用阿托品（擋住蕈毒鹼型受器）。這在食品安全會遇到。', '阿茲海默症病人腦內的 ACh 減少，治療藥物之一也是乙醯膽鹼酯酶抑制劑。'] },
+    { t: '兒茶酚胺：從酪胺酸一路做下來', kind: 'map', sub: 'cat', plain: 1, blanks: ['ldopa', 'da', 'ne', 'epi'],
+      intro: ['有一大類神經傳遞物質叫單胺（monoamine），都是把一個胺基酸稍微加工做成的。所以飲食裡的胺基酸，和腦裡的神經傳遞物質有直接的關係。',
+        '其中三個是一條生產線上的前後產品，合稱兒茶酚胺（catecholamine），原料是酪胺酸。每多走一步就多一個產品。',
+        '順序可以這樣記：先做出來的那一個管動作和酬賞；再加工一步，變成交感神經用的；最後一步在腎上腺髓質完成，當作激素放進血液。'],
+      listTitle: '這條生產線需要的營養素',
+      list: [['左旋多巴脫掉羧基變成多巴胺，酵素的輔酶來自', { a: 'b6', o: ['b6', 'vc', 'b1', 'b12'] }], ['多巴胺變成去甲基腎上腺素，這個酵素需要銅和', { a: 'vc', o: ['b6', 'vc', 'b1', 'b12'] }],
+        ['酪胺酸本身，可以由哪一個必需胺基酸做出來', { a: 'phe', o: ['phe', 'trp', 'hisd'] }]],
+      done: ['[[酪胺酸 → 左旋多巴（L-dopa）→ 多巴胺 → 去甲基腎上腺素 → 腎上腺素。]]', '多巴胺：黑質到紋狀體的路徑管動作，退化就是帕金森氏症；中腦到邊緣系統的路徑管酬賞，和成癮有關。',
+        '去甲基腎上腺素是交感神經節後纖維的神經傳遞物質；腎上腺素主要由腎上腺髓質分泌，是激素。', '脫羧酶需要維生素 B6（PLP）；多巴胺 β-羥化酶需要維生素 C 和銅。'] },
+    { t: '血清素與其他：各從哪個胺基酸來', kind: 'map', sub: 'ind', plain: 1, blanks: ['htp', 'ser', 'mel'],
+      intro: ['另一條生產線從色胺酸開始，做出血清素（serotonin，又寫作 5-HT）。血清素和情緒、食慾、睡眠有關。',
+        '血清素在松果腺還可以再加工，變成調節日夜節律的激素。',
+        '其他幾個常考的神經傳遞物質，原料也都是胺基酸或營養素，下面一起配對。'],
+      listTitle: '它的原料是什麼',
+      list: [['組織胺', { a: 'hisd', o: SYN_AA }], ['GABA（γ-胺基丁酸）', { a: 'glut', o: SYN_AA }], ['一氧化氮（NO）', { a: 'arg', o: SYN_AA }], ['乙醯膽鹼（另一半是乙醯輔酶A）', { a: 'chol', o: SYN_AA }],
+        ['血清素', { a: 'trp', o: SYN_AA }], ['多巴胺', { a: 'tyr', o: SYN_AA }], ['麩胺酸變成 GABA 是脫羧反應，需要的維生素是', { a: 'b6', o: ['b6', 'vc', 'b1', 'b12'] }]],
+      done: ['[[色胺酸 → 5-羥色胺酸 → 血清素 → 褪黑激素。]]', '配對：酪胺酸做兒茶酚胺；色胺酸做血清素；組胺酸做組織胺；麩胺酸做 GABA；精胺酸做一氧化氮；膽鹼做乙醯膽鹼。',
+        '這些「胺基酸 → 胺」的反應都是脫羧，都需要維生素 B6。B6 嚴重缺乏時 GABA 不足，會抽搐。', '色胺酸還有另一個去路是做成菸鹼酸，這在營養學會學到。'] },
+    { t: '訊號怎麼結束，藥物怎麼插手', kind: 'cloze',
+      intro: ['神經傳遞物質放出來之後一定要被清掉，突觸才能準備接下一個訊號。清掉的方法主要有兩種：',
+        '<b>被酵素分解</b>：乙醯膽鹼就是這樣。<b>被回收</b>：單胺類大多被突觸前神經元吸回去（再吸收），吸回去之後再由細胞裡的單胺氧化酶（MAO）分解。',
+        '很多藥物和毒品就是在這兩個地方動手腳。擋住回收或分解，神經傳遞物質就留得久、作用變強。',
+        '有一個和飲食直接相關的：起司、醃漬和發酵食品裡有酪胺，平常會被腸道和肝臟的 MAO 分解掉。'],
+      cloze: [
+        ['乙醯膽鹼的作用主要靠什麼方式結束？', { a: 'enzd', o: ['enzd', 'reup'] }, '。'],
+        ['血清素、多巴胺、去甲基腎上腺素的作用主要靠什麼方式結束？', { a: 'reup', o: ['enzd', 'reup'] }, '。'],
+        ['在神經元裡分解單胺的酵素是', { a: 'mao', o: ['mao', 'ache'] }, '。'],
+        ['抗憂鬱藥 Prozac（百憂解）屬於', { a: 'ssri', o: ['ssri', 'maoi', 'bzd'] }, '，讓血清素在突觸間隙留得更久。'],
+        ['同時擋住多巴胺、去甲基腎上腺素、血清素三者再吸收的毒品是', { a: 'coc', o: ['coc', 'btx', 'cur'] }, '。'],
+        ['服用單胺氧化酶抑制劑的人，要避免吃含有什麼成分的食物（起司、發酵食品）？', { a: 'tyra', o: ['tyra', 'caf', 'lac'] }, '。'],
+        ['因為這個成分分解不掉，會促使去甲基腎上腺素大量釋放，造成', { a: 'bp', o: ['bp', 'sugar'] }, '。'],
+        ['黑質的多巴胺神經元退化，造成動作僵硬、顫抖，這是', { a: 'park', o: ['park', 'hunt', 'mg', 'schi'] }, '。'],
+        ['中腦到邊緣系統的多巴胺活性過高，和哪一種疾病有關？', { a: 'schi', o: ['park', 'dep', 'schi'] }, '。'],
+        ['增強 GABA 的抑制作用，用來治療焦慮和失眠的是', { a: 'bzd', o: ['ssri', 'maoi', 'bzd'] }, '。']
+      ],
+      done: ['兩種結束方式：酵素分解（ACh）、再吸收（單胺類）。', '[[單胺氧化酶抑制劑加上高酪胺食物，會引起高血壓危象。]]這是藥物和食物交互作用的經典例子。',
+        '多巴胺太少是帕金森氏症，太多和思覺失調症有關。'] },
+    { t: '麩胺酸、GABA 與其他神經傳遞物質', kind: 'list',
+      intro: ['腦裡最主要的興奮性神經傳遞物質是一種胺基酸，最主要的抑制性神經傳遞物質是由它做出來的另一個分子。腦的活動就是這兩股力量的平衡。',
+        '另外還有幾類：<b>多肽</b>（例如和疼痛、飽足感有關的）；<b>氣體</b>（一氧化氮，不裝在囊泡裡，做出來直接擴散出去）；<b>脂質</b>（內生性大麻素，方向和別人相反，由突觸後的細胞放出來，回頭作用在突觸前）。',
+        '其中幾個和進食的調節有關，營養學會再遇到。'],
+      listTitle: '是哪一個',
+      list: [['腦內最主要的興奮性神經傳遞物質，和學習、記憶有關', { a: 'glu', o: SYN_NT }], ['腦內最主要的抑制性神經傳遞物質，打開 Cl⁻ 通道', { a: 'gaba', o: SYN_NT }],
+        ['脊髓和腦幹主要的抑制性神經傳遞物質；受器被番木鱉鹼擋住會全身痙攣', { a: 'gly', o: SYN_NT }], ['氣體，由精胺酸製造，讓血管平滑肌放鬆', { a: 'no', o: SYN_NT }],
+        ['身體自己做的止痛分子，運動後的愉悅感也和它有關', { a: 'endor', o: ['endor', 'subp', 'npy', 'cck'] }], ['傳遞疼痛訊號的多肽', { a: 'subp', o: ['endor', 'subp', 'npy', 'cck'] }],
+        ['下視丘裡強力促進進食的多肽', { a: 'npy', o: ['endor', 'subp', 'npy', 'cck'] }], ['帶來飽足感的多肽，也是小腸分泌的激素', { a: 'cck', o: ['endor', 'subp', 'npy', 'cck'] }],
+        ['突觸反覆被使用之後，傳遞效率長期變強，是記憶的基礎', { a: 'ltp', o: ['ltp', 'ltd'] }], ['大腦缺少 GABA 神經元，出現不自主的舞蹈樣動作', { a: 'hunt', o: ['park', 'hunt', 'mg'] }]],
+      done: ['[[麩胺酸（glutamate）是主要的興奮性神經傳遞物質；GABA 是主要的抑制性神經傳遞物質。]]甘胺酸在脊髓負責抑制。', '長期增益（LTP）發生在海馬回，需要麩胺酸的 NMDA 受器和 Ca²⁺ 進入，是學習和記憶的細胞機制。',
+        '促進進食的有神經肽 Y；帶來飽足感的有膽囊收縮素（CCK）。', '一氧化氮透過 cGMP 讓平滑肌放鬆，所以能擴張血管。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。有幾題的選項只有英文。'],
+      cloze: [
+        ['動作電位到達軸突末梢後，哪一種離子進入才會引發神經傳遞物質的釋放？', { a: 'ca', o: ['ca', 'na', 'k', 'cl'] }, '。'],
+        ['神經肌肉接合的神經傳遞物質是', { a: 'ach', o: ['ach', 'ne', 'da', 'gaba'], lang: 'en' }, '。'],
+        ['骨骼肌細胞膜上的乙醯膽鹼受器是', { a: 'nic', o: SYN_R, lang: 'en' }, '。'],
+        ['腦內主要的抑制性神經傳遞物質是', { a: 'gaba', o: ['glu', 'gaba', 'ach', 'da'], lang: 'en' }, '。'],
+        ['腦內主要的興奮性神經傳遞物質是', { a: 'glu', o: ['glu', 'gaba', 'gly', 'ser'], lang: 'en' }, '。'],
+        ['血清素（serotonin）的前驅胺基酸是', { a: 'trp', o: ['tyr', 'trp', 'hisd', 'arg'], lang: 'en' }, '。'],
+        ['多巴胺、去甲基腎上腺素、腎上腺素共同的前驅胺基酸是', { a: 'tyr', o: ['tyr', 'trp', 'hisd', 'arg'], lang: 'en' }, '。'],
+        ['一氧化氮（NO）的前驅胺基酸是', { a: 'arg', o: ['tyr', 'trp', 'hisd', 'arg'], lang: 'en' }, '。'],
+        ['Cl⁻ 通道打開、Cl⁻ 流入突觸後神經元，產生的是', { a: 'ipsp', o: SYN_PP }, '。'],
+        ['有機磷中毒時，突觸間隙的乙醯膽鹼會', { a: 'more', o: ['more', 'less'] }, '。'],
+        ['重症肌無力病人的自體抗體，攻擊的是骨骼肌的', { a: 'nic', o: SYN_R }, '。'],
+        ['心肌細胞之間靠哪一種突觸讓收縮同步？', { a: 'elec', o: ['chem', 'elec'] }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 290, force: 'en', legend: [['kT', '突觸囊泡與神經傳遞物質'], ['kC', 'Ca²⁺'], ['kH', '受器']], svg: SYN_S, blanks: [],
+      intro: ['同一張突觸的圖，這次全部用英文作答。'], tip: '這一關固定用英文作答。',
+      listTitle: '步驟與名詞',
+      list: [['編號 2', { a: 's_ca', o: SYN_ST }], ['編號 3', { a: 's_exo', o: SYN_ST }], ['編號 4', { a: 's_rec', o: SYN_ST }], ['編號 5', { a: 's_lig', o: SYN_ST }],
+        ['讓突觸後細胞往閾值靠近的電位', { a: 'epsp', o: SYN_PP }], ['讓突觸後細胞離閾值更遠的電位', { a: 'ipsp', o: SYN_PP }], ['不同位置的突觸同時傳來，加在一起', { a: 'spat', o: ['spat', 'temp'] }],
+        ['本身是離子通道的乙醯膽鹼受器', { a: 'nic', o: SYN_R }], ['透過 G 蛋白作用的乙醯膽鹼受器', { a: 'mus', o: SYN_R }], ['分解乙醯膽鹼的酵素', { a: 'ache', o: ['ache', 'mao'] }],
+        ['由酪胺酸做成、和動作與酬賞有關', { a: 'da', o: SYN_NT }], ['由色胺酸做成、和情緒與食慾有關', { a: 'ser', o: SYN_NT }], ['腦內主要的抑制性神經傳遞物質', { a: 'gaba', o: SYN_NT }], ['腦內主要的興奮性神經傳遞物質', { a: 'glu', o: SYN_NT }]] }
+  ] };
+SYN.dict.phe = { zh: '苯丙胺酸', en: 'Phenylalanine' };
+
+/* ======================================================================
+   人體生理・自主神經系統
+   ====================================================================== */
+/* 一列神經路徑：中樞在左，動器在右。g＝神經節的 x（0 表示只有一個神經元），k＝顏色，tgt＝右邊的名稱 */
+function ANS_ROW(y, g, k, tgt, title) {
+  var s = '<circle cx="34" cy="' + y + '" r="7" fill="var(' + KS[k] + ')"/>';
+  if (!g) s += sl('41,' + y + ' 276,' + y, k, 3.5) + hd(282, y, 0, k);
+  else s += sl('41,' + y + ' ' + (g - 12) + ',' + y, k, 3.5) + hd(g - 7, y, 0, k) + '<circle cx="' + (g + 8) + '" cy="' + y + '" r="7" fill="var(' + KS[k] + ')"/>' + sl((g + 15) + ',' + y + ' 276,' + y, k, 3.5, '7 4') + hd(282, y, 0, k);
+  s += pill(322, y, 68, tgt, 'pill');
+  if (title) s += tx(64, y + 18, T(title[0], title[1]), 'm', 10, 'start');
+  return s;
+}
+function ANS_CNS(h) { return box(6, 18, 44, h - 30, '', 12) + '<text x="18" y="' + (h / 2) + '" text-anchor="middle" font-size="10.5" class="m" transform="rotate(-90 18 ' + (h / 2) + ')">' + esc(T('中樞（腦、脊髓）', 'CNS (brain, spinal cord)')) + '</text>'; }
+var ANS_TG = { sk: { zh: '骨骼肌', en: 'Skeletal m.' }, vis: { zh: '內臟', en: 'Viscera' }, sw: { zh: '汗腺', en: 'Sweat gl.' } };
+function ANS_A() { return ANS_CNS(232) + ANS_ROW(66, 0, 'K', ANS_TG.sk, ['體運動神經', 'Somatic motor']) + ANS_ROW(164, 150, 'C', ANS_TG.vis, ['自主神經', 'Autonomic']); }      // 全貌：一個神經元與兩個神經元
+function ANS_B() { return ANS_CNS(214) + ANS_ROW(66, 92, 'K', ANS_TG.vis) + ANS_ROW(164, 222, 'K', ANS_TG.vis) + tx(64, 84, T('神經節靠近脊髓', 'ganglion near the spinal cord'), 'm', 10, 'start') + tx(64, 182, T('神經節在器官旁邊或裡面', 'ganglion in or near the organ'), 'm', 10, 'start'); }
+function ANS_C() {      // 五條路徑上各放出什麼
+  var s = ANS_CNS(380) + ANS_ROW(56, 0, 'K', ANS_TG.sk, ['體運動神經', 'Somatic motor']) + ANS_ROW(128, 222, 'I', ANS_TG.vis, ['副交感神經', 'Parasympathetic']) + ANS_ROW(200, 92, 'E', ANS_TG.vis, ['交感神經', 'Sympathetic']) + ANS_ROW(272, 92, 'E', ANS_TG.sw, ['交感神經（到汗腺）', 'Sympathetic (to sweat glands)']);
+  s += '<circle cx="34" cy="344" r="7" fill="var(--k3s)"/>' + sl('41,344 196,344', 'E', 3.5) + hd(202, 344, 0, 'E') + blob(238, 344, 30, 20, 'P') + tx(238, 348, T('髓質', 'medulla'), '', 10) + arrow(270, 344, 300, 344) + tx(326, 340, T('進入', 'into the'), 'm', 10) + tx(326, 353, T('血液', 'blood'), 'm', 10) + tx(64, 362, T('交感神經（到腎上腺髓質）', 'Sympathetic (to the adrenal medulla)'), 'm', 10, 'start');
+  return s;
+}
+var ANS_N = ['ACh', 'NE', 'Epi', 'DA'], ANS_D = ['sy', 'pa'], ANS_RC = ['a1', 'a2', 'b1', 'b2', 'b3', 'm', 'n'], ANS_UP = ['up', 'down'], ANS_DR = ['prop', 'aten', 'salb', 'phen', 'clon', 'atro'];
+var ANS = { id: 'ans', zh: '自主神經系統', en: 'Autonomic nervous system', alias: '交感與副交感・神經傳遞物質・α、β、M 受器', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    ACh: { zh: 'ACh' }, NE: { zh: 'NE' }, Epi: { zh: 'Epi' }, DA: { zh: 'DA' }, pre: { zh: '節前神經元', en: 'Preganglionic neuron' }, post: { zh: '節後神經元', en: 'Postganglionic neuron' }, gang: { zh: '自主神經節', en: 'Autonomic ganglion' },
+    sy: { zh: '交感神經', en: 'Sympathetic' }, pa: { zh: '副交感神經', en: 'Parasympathetic' }, n1: { zh: '1 個' }, n2: { zh: '2 個' },
+    skm: { zh: '骨骼肌', en: 'Skeletal muscle' }, vism: { zh: '心肌、平滑肌、腺體', en: 'Cardiac muscle, smooth muscle, glands' }, alw: { zh: '一定是興奮' }, both: { zh: '可以興奮，也可以抑制' },
+    cn3: { zh: '動眼神經（III）', en: 'Oculomotor (III)' }, cn7: { zh: '顏面神經（VII）', en: 'Facial (VII)' }, cn9: { zh: '舌咽神經（IX）', en: 'Glossopharyngeal (IX)' }, cn10: { zh: '迷走神經（X）', en: 'Vagus (X)' },
+    a1: { zh: 'α1 受器', en: 'α1 receptor' }, a2: { zh: 'α2 受器', en: 'α2 receptor' }, b1: { zh: 'β1 受器', en: 'β1 receptor' }, b2: { zh: 'β2 受器', en: 'β2 receptor' }, b3: { zh: 'β3 受器', en: 'β3 receptor' },
+    m: { zh: '蕈毒鹼型（M）受器', en: 'Muscarinic (M) receptor' }, n: { zh: '菸鹼型（N）受器', en: 'Nicotinic (N) receptor' },
+    up: { zh: '交感神經', en: 'Sympathetic' }, down: { zh: '副交感神經', en: 'Parasympathetic' },
+    prop: { zh: 'Propranolol（β 阻斷劑，β1、β2 都擋）', en: 'Propranolol' }, aten: { zh: 'Atenolol（選擇性 β1 阻斷劑）', en: 'Atenolol' }, salb: { zh: 'Salbutamol（β2 促效劑）', en: 'Salbutamol (albuterol)' },
+    phen: { zh: 'Phenylephrine（α1 促效劑）', en: 'Phenylephrine' }, clon: { zh: 'Clonidine（α2 促效劑）', en: 'Clonidine' }, atro: { zh: 'Atropine（阿托品，M 受器阻斷劑）', en: 'Atropine' },
+    med: { zh: '延髓', en: 'Medulla oblongata' }, hyp: { zh: '下視丘', en: 'Hypothalamus' }, cer: { zh: '小腦', en: 'Cerebellum' }, tho: { zh: '脊髓的胸腰段', en: 'Thoracolumbar spinal cord' }, cra: { zh: '腦幹和脊髓的薦段', en: 'Brainstem and sacral spinal cord' },
+    admed: { zh: '腎上腺髓質', en: 'Adrenal medulla' }, adcor: { zh: '腎上腺皮質', en: 'Adrenal cortex' }, epi: { zh: '腎上腺素', en: 'Epinephrine' }, ne: { zh: '去甲基腎上腺素', en: 'Norepinephrine' }, ach: { zh: '乙醯膽鹼', en: 'Acetylcholine' },
+    anta: { zh: '拮抗', en: 'Antagonistic' }, comp: { zh: '互補', en: 'Complementary' }, coop: { zh: '協同', en: 'Cooperative' }, fast: { zh: '變快' }, slow: { zh: '變慢' }, strong: { zh: '增強' }, nochg: { zh: '沒有直接的影響' },
+    sa: { zh: '竇房結', en: 'SA node' }, vent: { zh: '心室肌', en: 'Ventricular muscle' }, chol: { zh: '膽鹼性', en: 'Cholinergic' }, adre: { zh: '腎上腺素性', en: 'Adrenergic' }
+  },
+  levels: [
+    { t: '先看全貌：一個神經元與兩個神經元', kind: 'ov', h: 232, svg: ANS_A,
+      intro: ['運動神經把中樞的指令送到動器。前面說過它分兩套：管骨骼肌的體運動神經，和管內臟的自主神經（autonomic nervous system）。',
+        '兩套在構造上有一個明顯的差別。體運動神經從脊髓出來，[[一個神經元]]直達骨骼肌。',
+        '自主神經要[[接力一次]]：第一個神經元從中樞出來，在半路的神經節交棒給第二個神經元，第二個才到動器。圖上實線是第一個，虛線是第二個。',
+        '把圖上三個空格填出來，再回答下面的比較。'],
+      blanks: [{ id: 'p', x: 96, y: 138, w: 106, a: 'pre', o: ['pre', 'post', 'gang'] }, { id: 'g', x: 170, y: 204, w: 106, a: 'gang', o: ['pre', 'post', 'gang'] }, { id: 'q', x: 222, y: 138, w: 106, a: 'post', o: ['pre', 'post', 'gang'] }],
+      listTitle: '兩套運動神經的比較',
+      list: [['體運動神經：從中樞到動器有幾個神經元', { a: 'n1', o: ['n1', 'n2'] }], ['自主神經：從中樞到動器有幾個神經元', { a: 'n2', o: ['n1', 'n2'] }], ['體運動神經的動器', { a: 'skm', o: ['skm', 'vism'] }],
+        ['自主神經的動器', { a: 'vism', o: ['skm', 'vism'] }], ['體運動神經對動器的作用', { a: 'alw', o: ['alw', 'both'] }], ['自主神經對動器的作用', { a: 'both', o: ['alw', 'both'] }]],
+      done: ['自主神經：節前神經元（細胞本體在中樞）→ 自主神經節 → 節後神經元 → 動器。', '動器是[[心肌、平滑肌、腺體]]，不受意志控制。', '骨骼肌的神經切斷後會癱軟、萎縮；心肌和平滑肌本來就會自己動，自主神經只是把它調快或調慢。'] },
+    { t: '交感與副交感：構造上哪裡不同', kind: 'ov', h: 214, svg: ANS_B,
+      intro: ['自主神經有兩個分系，大部分內臟兩邊都有神經支配，作用通常相反。',
+        '<b>交感神經</b>處理緊急狀況，口訣是「戰或逃」。它從脊髓的胸段和腰段出來，神經節排在脊椎兩旁連成一串，離脊髓很近。而且一條節前纖維會接到很多節後神經元，所以一發動就是全身一起反應。',
+        '<b>副交感神經</b>管平時的保養，口訣是「休息與消化」。它從腦幹和脊髓的薦段出來，神經節在器官旁邊甚至器官裡面，作用比較局部。',
+        '圖上兩條路徑，神經節的位置不同，所以實線（節前）和虛線（節後）的長短也不同。看圖判斷哪一條是哪一個分系。'],
+      blanks: [{ id: 'a', x: 190, y: 40, w: 130, c: 'E', a: 'sy', o: ANS_D }, { id: 'b', x: 130, y: 138, w: 130, c: 'I', a: 'pa', o: ANS_D }],
+      listTitle: '是交感還是副交感',
+      list: [['節前纖維短、節後纖維長', { a: 'sy', o: ANS_D }], ['節前纖維長、節後纖維短', { a: 'pa', o: ANS_D }], ['從脊髓的胸段和腰段發出（胸腰分系）', { a: 'sy', o: ANS_D }], ['從腦幹和脊髓的薦段發出（頭薦分系）', { a: 'pa', o: ANS_D }],
+        ['一發動，全身一起反應', { a: 'sy', o: ANS_D }], ['迷走神經屬於', { a: 'pa', o: ANS_D }], ['腎上腺髓質受誰支配', { a: 'sy', o: ANS_D }],
+        ['支配胸腔和腹腔大部分內臟的副交感神經是', { a: 'cn10', o: ['cn3', 'cn7', 'cn9', 'cn10'] }]],
+      done: ['[[交感：胸腰段發出，神經節靠近脊髓，節前短、節後長。副交感：腦幹和薦段發出，神經節靠近器官，節前長、節後短。]]', '帶有副交感纖維的腦神經有四對：第 III、VII、IX、X 對。其中迷走神經（X）最重要，管到心、肺、胃、肝、胰、小腸和大腸的前半段。',
+        '大腸後半段、直腸、膀胱和生殖器官的副交感神經來自薦段。', '血管、汗腺和豎毛肌幾乎只有交感神經支配。'] },
+    { t: '每一站放出什麼神經傳遞物質', kind: 'ov', h: 380, legend: [['sE', '交感'], ['sI', '副交感']], svg: ANS_C,
+      intro: ['自主神經的路上有兩個交棒的地方：神經節裡（節前交給節後），以及動器上（節後交給動器）。每一站放出什麼神經傳遞物質，是這個單元最核心的考點。',
+        '只有兩種要記：乙醯膽鹼（ACh）和去甲基腎上腺素（NE）。規則很簡單：',
+        '<b>所有從中樞出來的第一個神經元，放的都一樣。</b>體運動神經、兩種節前神經元都算。',
+        '<b>節後神經元才有分別</b>：副交感放一種，交感放另一種。',
+        '有兩個例外放在圖的最下面。交感神經到汗腺的節後纖維，放的和其他交感節後纖維不一樣。腎上腺髓質本身就像一個變形的交感神經節，它不放到突觸，而是把產物放進血液。',
+        '空格放在神經末端的上方。圖例：ACh＝乙醯膽鹼，NE＝去甲基腎上腺素，Epi＝腎上腺素，DA＝多巴胺。'],
+      blanks: [{ id: 'r1', x: 254, y: 32, w: 54, a: 'ACh', o: ANS_N }, { id: 'r2a', x: 200, y: 104, w: 54, a: 'ACh', o: ANS_N }, { id: 'r2b', x: 258, y: 104, w: 54, a: 'ACh', o: ANS_N },
+        { id: 'r3a', x: 72, y: 176, w: 54, a: 'ACh', o: ANS_N }, { id: 'r3b', x: 254, y: 176, w: 54, a: 'NE', o: ANS_N }, { id: 'r4a', x: 72, y: 248, w: 54, a: 'ACh', o: ANS_N }, { id: 'r4b', x: 254, y: 248, w: 54, a: 'ACh', o: ANS_N },
+        { id: 'r5a', x: 176, y: 320, w: 54, a: 'ACh', o: ANS_N }, { id: 'r5b', x: 300, y: 314, w: 54, c: 'H', a: 'Epi', o: ANS_N }],
+      done: ['[[所有節前神經元都放乙醯膽鹼。副交感的節後放乙醯膽鹼；交感的節後放去甲基腎上腺素。]]', '放乙醯膽鹼的纖維叫膽鹼性（cholinergic），放去甲基腎上腺素的叫腎上腺素性（adrenergic）。',
+        '例外：交感神經到汗腺的節後纖維放乙醯膽鹼。', '腎上腺髓質受交感節前纖維直接支配，分泌腎上腺素（為主）和去甲基腎上腺素到血液，讓戰或逃的反應更強、更久。'] },
+    { t: '受器：同一個分子，不同的效果', kind: 'list',
+      intro: ['神經傳遞物質的效果，要看動器上是哪一種受器。這和藥物直接相關，所以常考。',
+        '<b>接乙醯膽鹼的</b>有兩種：菸鹼型（N）在所有自主神經節和骨骼肌，一定是興奮；蕈毒鹼型（M）在副交感神經支配的器官上。',
+        '<b>接去甲基腎上腺素和腎上腺素的</b>叫腎上腺素性受器，分 α 和 β 兩大類，再各分幾型。',
+        '記最重要的四個就夠用：α1 讓血管收縮；β1 在心臟；β2 讓支氣管放鬆；M 在心臟讓心跳變慢。'],
+      listTitle: '是哪一種受器',
+      list: [['讓血管的平滑肌收縮，血壓上升', { a: 'a1', o: ANS_RC }], ['在心臟：心跳變快、收縮變強', { a: 'b1', o: ANS_RC }], ['讓支氣管的平滑肌放鬆（支氣管擴張）', { a: 'b2', o: ANS_RC }],
+        ['在脂肪組織：促進脂肪分解與產熱', { a: 'b3', o: ANS_RC }], ['在神經末梢上，抑制去甲基腎上腺素繼續釋放（負回饋）', { a: 'a2', o: ANS_RC }],
+        ['在心臟：接上乙醯膽鹼後心跳變慢', { a: 'm', o: ANS_RC }], ['在所有自主神經節的節後神經元上', { a: 'n', o: ANS_RC }], ['在骨骼肌的運動終板上', { a: 'n', o: ANS_RC }]],
+      done: ['[[α1 血管收縮；β1 心臟；β2 支氣管擴張；β3 脂肪分解；M（M2）心跳變慢。]]', '記法：人有 1 顆心臟、2 個肺，所以 β1 在心、β2 在肺。',
+        'α2 是煞車：去甲基腎上腺素放太多時，回頭接上神經末梢的 α2，叫它少放一點。', 'β 受器走 cAMP 這條第二傳訊者的路；α1 走 Ca²⁺。'] },
+    { t: '各器官的反應：誰讓它這樣', kind: 'list',
+      intro: ['把交感想成「現在要打架或逃命」，副交感想成「吃飽了在休息」，大部分的反應都推得出來。',
+        '戰或逃時：要看得清楚、吸得到氣、血要打得快、燃料要放到血裡，消化和排泄先擱著。',
+        '休息時：心跳慢下來，消化道開始蠕動、分泌，膀胱排空。',
+        '下面每一個反應，是哪一個分系造成的？'],
+      listTitle: '這是誰的作用',
+      list: [['瞳孔放大', { a: 'sy', o: ANS_D }], ['瞳孔縮小', { a: 'pa', o: ANS_D }], ['心跳加快、收縮變強', { a: 'sy', o: ANS_D }], ['心跳變慢', { a: 'pa', o: ANS_D }], ['支氣管擴張', { a: 'sy', o: ANS_D }],
+        ['胃腸蠕動和消化液分泌增加', { a: 'pa', o: ANS_D }], ['胃腸蠕動減慢、括約肌收縮', { a: 'sy', o: ANS_D }], ['分泌大量水樣的唾液', { a: 'pa', o: ANS_D }], ['肝醣分解、脂肪分解，血糖上升', { a: 'sy', o: ANS_D }],
+        ['皮膚和內臟的血管收縮', { a: 'sy', o: ANS_D }], ['流汗、豎毛', { a: 'sy', o: ANS_D }], ['膀胱壁收縮（排尿）', { a: 'pa', o: ANS_D }], ['陰莖勃起', { a: 'pa', o: ANS_D }], ['射精', { a: 'sy', o: ANS_D }]],
+      done: ['大部分器官是雙重支配，兩邊作用相反（拮抗）：心跳、瞳孔、消化道。', '有些是互補：兩邊都讓唾液分泌，副交感的多而稀、交感的少而黏。有些是協同：勃起靠副交感、射精靠交感，兩者合起來完成一件事。',
+        '只有交感支配的：腎上腺髓質、汗腺、豎毛肌、大部分血管。所以血壓主要靠交感神經調整強弱。', '副交感對消化的作用很大：迷走神經興奮，胃酸、胰液分泌和腸蠕動都增加。'] },
+    { t: '藥物：促效劑與阻斷劑', kind: 'list',
+      intro: ['知道受器之後，藥物就很好懂。<b>促效劑（agonist）</b>是假裝成神經傳遞物質去刺激受器；<b>阻斷劑（拮抗劑，antagonist）</b>是佔住受器不讓神經傳遞物質接上去。',
+        '先想清楚這個受器平常做什麼，刺激它或擋住它的結果就出來了。'],
+      listTitle: '是哪一個藥',
+      list: [['擋住心臟的 β1，心跳變慢、血壓下降，用來治療高血壓；但也會擋 β2，氣喘病人不適合', { a: 'prop', o: ANS_DR }], ['只擋 β1，對支氣管影響小', { a: 'aten', o: ANS_DR }],
+        ['刺激 β2，讓支氣管擴張，氣喘發作時吸入', { a: 'salb', o: ANS_DR }], ['刺激 α1，讓鼻黏膜的血管收縮，緩解鼻塞', { a: 'phen', o: ANS_DR }],
+        ['刺激 α2，減少去甲基腎上腺素釋放，降低血壓', { a: 'clon', o: ANS_DR }], ['擋住 M 受器：瞳孔放大、心跳加快、唾液和胃酸分泌減少', { a: 'atro', o: ANS_DR }]],
+      done: ['β 阻斷劑降低心跳和心輸出量，是常用的降血壓藥。', '阿托品（atropine）擋住副交感的作用，所以效果看起來像交感興奮。有機磷中毒時用它解毒。', '自主神經除了這兩種神經傳遞物質，也會放一氧化氮（NO）。副交感神經讓陰莖血管擴張，靠的就是 NO。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。', '前三題是「自主神經對心臟的作用」，國考考過。重點：交感神經同時管心跳的速度和心室收縮的力量；副交感（迷走神經）主要只管速度。',
+        '最後兩題是誰在指揮自主神經：延髓有心臟、血管、呼吸等反射中樞；再上一層由下視丘統整。'],
+      cloze: [
+        ['交感神經興奮時，竇房結放電的速度', { a: 'fast', o: ['fast', 'slow'] }, '。'],
+        ['交感神經興奮時，心室肌的收縮力', { a: 'strong', o: ['strong', 'nochg'] }, '。'],
+        ['迷走神經興奮時，對心室肌的收縮力', { a: 'nochg', o: ['strong', 'nochg'] }, '，主要是讓心跳變慢。'],
+        ['迷走神經末梢在心臟釋放的神經傳遞物質是', { a: 'ach', o: ['ach', 'ne', 'epi'], lang: 'en' }, '。'],
+        ['所有自主神經的節前纖維都屬於', { a: 'chol', o: ['chol', 'adre'], lang: 'en' }, '纖維。'],
+        ['大部分交感神經節後纖維釋放的是', { a: 'ne', o: ['ach', 'ne', 'epi'], lang: 'en' }, '。'],
+        ['支配汗腺的交感神經節後纖維釋放的是', { a: 'ach', o: ['ach', 'ne', 'epi'], lang: 'en' }, '。'],
+        ['接受交感節前纖維直接支配、把激素分泌到血液的是', { a: 'admed', o: ['admed', 'adcor'] }, '。'],
+        ['交感神經的節前神經元，細胞本體在', { a: 'tho', o: ['tho', 'cra'] }, '。'],
+        ['氣喘病人應避免使用非選擇性 β 阻斷劑，因為會擋住支氣管的', { a: 'b2', o: ['a1', 'b1', 'b2', 'm'] }, '。'],
+        ['心跳、瞳孔受兩個分系相反方向的調控，這種雙重支配的關係是', { a: 'anta', o: ['anta', 'comp', 'coop'] }, '。'],
+        ['最主要的自主神經反射中樞（心跳、血壓、呼吸）在', { a: 'med', o: ['med', 'hyp', 'cer'] }, '。'],
+        ['統整體溫、飢餓、口渴，被稱為自主神經最高調節中樞的是', { a: 'hyp', o: ['med', 'hyp', 'cer'] }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 380, force: 'en', legend: [['sE', '交感'], ['sI', '副交感']], svg: ANS_C,
+      intro: ['同一張圖，九個空格自己填。下面的題目用英文作答。'], tip: '這一關固定用英文作答。圖上 ACh＝acetylcholine，NE＝norepinephrine，Epi＝epinephrine。',
+      blanks: [{ id: 'r1', x: 254, y: 32, w: 54, a: 'ACh', o: ANS_N }, { id: 'r2a', x: 200, y: 104, w: 54, a: 'ACh', o: ANS_N }, { id: 'r2b', x: 258, y: 104, w: 54, a: 'ACh', o: ANS_N },
+        { id: 'r3a', x: 72, y: 176, w: 54, a: 'ACh', o: ANS_N }, { id: 'r3b', x: 254, y: 176, w: 54, a: 'NE', o: ANS_N }, { id: 'r4a', x: 72, y: 248, w: 54, a: 'ACh', o: ANS_N }, { id: 'r4b', x: 254, y: 248, w: 54, a: 'ACh', o: ANS_N },
+        { id: 'r5a', x: 176, y: 320, w: 54, a: 'ACh', o: ANS_N }, { id: 'r5b', x: 300, y: 314, w: 54, c: 'H', a: 'Epi', o: ANS_N }],
+      listTitle: '名詞與受器',
+      list: [['細胞本體在中樞的第一個神經元', { a: 'pre', o: ['pre', 'post', 'gang'] }], ['細胞本體在神經節的第二個神經元', { a: 'post', o: ['pre', 'post', 'gang'] }], ['戰或逃', { a: 'sy', o: ANS_D }], ['休息與消化', { a: 'pa', o: ANS_D }],
+        ['血管收縮', { a: 'a1', o: ANS_RC }], ['心跳加快、收縮變強', { a: 'b1', o: ANS_RC }], ['支氣管擴張', { a: 'b2', o: ANS_RC }], ['心跳變慢', { a: 'm', o: ANS_RC }], ['在自主神經節和骨骼肌上', { a: 'n', o: ANS_RC }],
+        ['支配胸腹腔內臟最主要的副交感神經', { a: 'cn10', o: ['cn3', 'cn7', 'cn9', 'cn10'] }]] }
+  ] };
 /* 目錄：照老師上課的順序。有 levels 的才是做好的單元 */
 var GROUPS = [
   { g: '先讀這裡', items: [PRE] },
@@ -2090,7 +2911,17 @@ var GROUPS = [
   { tab: 'mb', g: '分生 1・DNA', c: 'D', items: [{ zh: '核酸與染色體的結構', en: 'Nucleic acids & chromatin' }, REP, { zh: 'DNA 的突變與修補', en: 'Mutation & DNA repair' }, { zh: 'DNA 的重組與轉位', en: 'Recombination & transposition' }] },
   { tab: 'mb', g: '分生 2・RNA', c: 'R', items: [{ zh: '轉錄', en: 'Transcription' }, { zh: 'RNA 的轉錄後修飾', en: 'RNA processing' }, { zh: '基因表現的調控', en: 'Regulation of gene expression' }] },
   { tab: 'mb', g: '分生 3・蛋白質', c: 'P', items: [TRL, { zh: '轉譯後修飾與蛋白質的運送', en: 'Post-translational modification & targeting' }] },
-  { tab: 'mb', g: '分生 4・技術', c: 4, items: [{ zh: '分子生物學的技術', en: 'PCR・電泳・定序・重組 DNA' }] }
+  { tab: 'mb', g: '分生 4・技術', c: 4, items: [{ zh: '分子生物學的技術', en: 'PCR・電泳・定序・重組 DNA' }] },
+  /* 人體生理（tab: 'phy'）：照課本章節的順序。沒有 levels 的會顯示「製作中」 */
+  { tab: 'phy', g: '先讀這裡', items: [HOM] },
+  { tab: 'phy', g: '生理 1・細胞', c: 4, items: [MEM, POT, { zh: '基本組織與細胞', en: 'Tissues and cells' }] },
+  { tab: 'phy', g: '生理 2・神經', c: 2, items: [NAP, SYN, ANS, { zh: '中樞神經系統', en: 'Central nervous system' }] },
+  { tab: 'phy', g: '生理 3・感覺與肌肉', c: 5, items: [{ zh: '感覺一：皮膚感覺、味覺與嗅覺', en: 'Somatic senses, taste and smell' }, { zh: '感覺二：視覺、聽覺與平衡', en: 'Vision, hearing and equilibrium' }, { zh: '肌肉', en: 'Muscle' }] },
+  { tab: 'phy', g: '生理 4・內分泌', c: 6, items: [{ zh: '激素總論與作用機制', en: 'Hormones and their mechanisms' }, { zh: '下視丘與腦垂腺', en: 'Hypothalamus and pituitary' }, { zh: '腎上腺、甲狀腺、鈣的調節與胰島', en: 'Adrenal, thyroid, calcium, islets' }] },
+  { tab: 'phy', g: '生理 5・血液與循環', c: 3, items: [{ zh: '血液', en: 'Blood' }, { zh: '心臟', en: 'The heart' }, { zh: '心輸出量與血容積', en: 'Cardiac output and blood volume' }, { zh: '血流、血壓與調節', en: 'Blood flow and blood pressure' }] },
+  { tab: 'phy', g: '生理 6・免疫與呼吸', c: 4, items: [{ zh: '免疫系統', en: 'The immune system' }, { zh: '呼吸一：換氣', en: 'Ventilation' }, { zh: '呼吸二：氣體運輸與酸鹼平衡', en: 'Gas transport and acid-base balance' }] },
+  { tab: 'phy', g: '生理 7・消化', c: 6, items: [{ zh: '消化道與胃', en: 'GI tract and stomach' }, { zh: '肝、膽、胰與消化的調控', en: 'Liver, gallbladder, pancreas; regulation' }, { zh: '消化與吸收', en: 'Digestion and absorption' }] },
+  { tab: 'phy', g: '生理 8・腎臟、代謝與生殖', c: 2, items: [{ zh: '腎臟與體液', en: 'Kidneys and body fluids' }, { zh: '代謝的調節', en: 'Regulation of metabolism' }, { zh: '生殖', en: 'Reproduction' }] }
 ];
 function prep(u, par) {
   if (par) ['dict', 'enz', 'prod', 'tags', 'zh', 'en'].forEach(function (k) { if (u[k] == null) u[k] = par[k]; });      // 子路徑沒寫的就沿用單元的
@@ -2117,7 +2948,7 @@ function seg() { var s = $('lang'); s.hidden = !!FORCE; s.querySelectorAll('butt
 
 /* ---------- 目錄 ---------- */
 var TABS = [['met', '生化代謝'], ['mb', '分子生物'], ['phy', '人體生理']];
-var HINT = { met: '圖上名稱的底色是碳數（6 碳、3 碳…），小標籤是這一步花掉或產生什麼，', mb: '藍色是 DNA、青色是新合成的 DNA、玫瑰色是 RNA、琥珀色是蛋白質（酵素、因子、核糖體），', phy: '' };
+var HINT = { met: '圖上名稱的底色是碳數（6 碳、3 碳…），小標籤是這一步花掉或產生什麼，', mb: '藍色是 DNA、青色是新合成的 DNA、玫瑰色是 RNA、琥珀色是蛋白質（酵素、因子、核糖體），', phy: '玫瑰色是興奮、交感、去極化；藍色是抑制、副交感、再極化；琥珀色是激素或要花能量的步驟；每張圖下面都有圖例，' };
 function home() {
   CUR = null; FORCE = null; $('title').textContent = '圖解生理生化'; $('subtitle').textContent = '看圖、填空，一關一關記起來';
   $('back').hidden = true; $('lv').hidden = true; seg();
@@ -2126,7 +2957,6 @@ function home() {
   h += '<details class="card pad"' + (fresh ? ' open' : '') + '><summary>怎麼用</summary><p>每個單元分成幾關，從只看大方向開始，一次多記一點，最後整張圖自己填出來。</p>' +
     '<p>虛線框的空格是下拉選單，點一下選答案，填完按「對答案」。</p>' +
     '<ul class="small muted"><li>右上角可以切換名稱：中文、中英對照、英文。預設是中英對照。</li><li>顏色都有意思：' + HINT[tab] + '<mark>黃底的字</mark>是必背。</li><li>國考的專有名詞常常只寫英文，所以每個單元最後的總複習固定用英文作答。考的是選擇題，練到看到認得就夠了，不必會拼。</li><li>第一次來，請先做最上面「先讀這裡」的單元。</li></ul></details>';
-  if (tab === 'phy') h += '<div class="card pad"><h2>人體生理：製作中</h2><p>會比照生化代謝的做法，一個系統一個單元，從全貌到細節一關一關填。</p><p class="muted small">做好之後會直接出現在這一頁，不需要換網址。</p></div>';
   GROUPS.forEach(function (g) {
     if ((g.tab || 'met') !== tab) return;
     h += '<div class="glab' + (g.c ? ' k' + g.c : '') + '">' + esc(g.g) + '</div>';

@@ -108,18 +108,21 @@
   .dia .tag rect { stroke-width: 1.2; } .dia .tag text { fill: var(--on-tag); font-weight: 700; }
   .dia .tag.atp rect { fill: var(--e-atp); stroke: var(--e-atp); } .dia .tag.nadh rect { fill: var(--e-nadh); stroke: var(--e-nadh); } .dia .tag.fad rect { fill: var(--e-fad); stroke: var(--e-fad); }
   .dia .tag.co2 rect { fill: var(--e-co2); stroke: var(--e-co2); } .dia .tag.sp rect { fill: var(--card); stroke: var(--e-atp); } .dia .tag.sp text { fill: var(--w-k); }
+  .dia .tag.spn rect { fill: var(--card); stroke: var(--e-nadh); } .dia .tag.spn text { fill: var(--w-d); }
+  .dia .tag.nadph rect { fill: var(--k4s); stroke: var(--k4s); } .dia .tag.spp rect { fill: var(--card); stroke: var(--k4s); } .dia .tag.spp text { fill: var(--k4s); } .dia .tag.mol rect, .dia .tag.out rect { fill: var(--card); stroke: var(--muted); } .dia .tag.mol text, .dia .tag.out text { fill: var(--ink); }
+  .dia text.nt { fill: var(--muted); }
   .pick .face.k6 { background: var(--k6); } .pick .face.k5 { background: var(--k5); } .pick .face.k4 { background: var(--k4); } .pick .face.k3 { background: var(--k3); } .pick .face.k2 { background: var(--k2); }
   .pick:not(.ok):not(.no) .face.k6 { border-color: var(--k6s); } .pick:not(.ok):not(.no) .face.k5 { border-color: var(--k5s); } .pick:not(.ok):not(.no) .face.k4 { border-color: var(--k4s); }
   .pick:not(.ok):not(.no) .face.k3 { border-color: var(--k3s); } .pick:not(.ok):not(.no) .face.k2 { border-color: var(--k2s); }
   .pick.no .face { border: 2px solid var(--bad); background: var(--bad-soft); }
-  .face.tk { box-shadow: inset 6px 0 0 var(--e-atp); padding-left: 16px; } .face.td { box-shadow: inset 6px 0 0 var(--e-nadh); padding-left: 16px; } .face.tf { box-shadow: inset 6px 0 0 var(--e-fad); padding-left: 16px; }
+  .face.tk { box-shadow: inset 6px 0 0 var(--e-atp); padding-left: 16px; } .face.td { box-shadow: inset 6px 0 0 var(--e-nadh); padding-left: 16px; } .face.tf { box-shadow: inset 6px 0 0 var(--e-fad); padding-left: 16px; } .face.tp { box-shadow: inset 6px 0 0 var(--k4s); padding-left: 16px; }
   .lgd { display: flex; flex-wrap: wrap; gap: 4px 12px; justify-content: center; margin-top: 8px; font-size: 12px; color: var(--muted); }
   .lgd span { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
   .lgd i { display: inline-grid; place-items: center; width: 14px; height: 14px; border-radius: 4px; border: 1.5px solid; font-style: normal; font-size: 9px; font-weight: 700; }
   .lgd i.k6 { background: var(--k6); border-color: var(--k6s); } .lgd i.k5 { background: var(--k5); border-color: var(--k5s); } .lgd i.k4 { background: var(--k4); border-color: var(--k4s); }
   .lgd i.k3 { background: var(--k3); border-color: var(--k3s); } .lgd i.k2 { background: var(--k2); border-color: var(--k2s); }
   .lgd i.irr { border-radius: 50%; background: var(--brand); border-color: var(--brand); color: var(--on-brand); }
-  .lgd i.tk { background: var(--e-atp); border-color: var(--e-atp); } .lgd i.td { background: var(--e-nadh); border-color: var(--e-nadh); } .lgd i.tf { background: var(--e-fad); border-color: var(--e-fad); }
+  .lgd i.tk { background: var(--e-atp); border-color: var(--e-atp); } .lgd i.td { background: var(--e-nadh); border-color: var(--e-nadh); } .lgd i.tf { background: var(--e-fad); border-color: var(--e-fad); } .lgd i.tp { background: var(--k4s); border-color: var(--k4s); }
   mark { background: var(--hl); color: inherit; padding: 0 2px; border-radius: 3px; }
   .wk { color: var(--w-k); font-weight: 700; } .wd { color: var(--w-d); font-weight: 700; }
   .glab.k6 { color: var(--k6s); } .glab.k5 { color: var(--k5s); } .glab.k4 { color: var(--k4s); } .glab.k3 { color: var(--k3s); } .glab.k2 { color: var(--k2s); }
@@ -174,8 +177,11 @@ function pill(x, y, w, o, cls) {
 function arrow(x1, y1, x2, y2, dash) { var a = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI; return '<line class="ln" x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '" stroke-width="3"' + (dash ? ' stroke-dasharray="3 3"' : '') + '/><polygon class="ar" points="-8,-6 5,0 -8,6" transform="translate(' + x2 + ',' + y2 + ') rotate(' + a + ')"/>'; }
 function badge(x, y, n, irr) { return '<g class="num' + (irr ? ' irr' : '') + '"><circle cx="' + x + '" cy="' + y + '" r="11" stroke-width="1.5"/><text x="' + x + '" y="' + (y + 4.5) + '" text-anchor="middle" font-size="12">' + n + '</text></g>'; }
 
-function tagW(t) { return Math.round(t.length * 5.7 + 12); }
-function tagC(x, y, t, k) { var w = tagW(t); return '<g class="tag ' + k + '"><rect x="' + (x - w / 2) + '" y="' + (y - 7.5) + '" width="' + w + '" height="15" rx="4"/><text x="' + x + '" y="' + (y + 3.5) + '" text-anchor="middle" font-size="9.5">' + esc(t) + '</text></g>'; }
+function tagT(t) { return typeof t === 'string' ? t : (M() === 'zh' ? t.zh : t.en); }      // 標籤的字：可以是字串，或 { zh, en }
+function tagW(t) { t = tagT(t); var n = 0; for (var i = 0; i < t.length; i++) n += t.charCodeAt(i) > 255 && !/[₀-₉⁺⁻−→]/.test(t.charAt(i)) ? 1 : .6; return Math.round(n * 9.5 + 12); }
+function tagC(x, y, t, k) { var w = tagW(t); x = Math.max(3 + w / 2, Math.min(357 - w / 2, x)); return '<g class="tag ' + k + '"><rect x="' + (x - w / 2) + '" y="' + (y - 7.5) + '" width="' + w + '" height="15" rx="4"/><text x="' + x + '" y="' + (y + 3.5) + '" text-anchor="middle" font-size="9.5">' + esc(tagT(t)) + '</text></g>'; }
+/* 全貌圖用：虛線框（例如細胞、粒線體）和框上的小字 */
+function zone(x, y, w, h, t) { return '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="16" fill="none" stroke="var(--rail)" stroke-width="1.5" stroke-dasharray="5 4"/>' + (t ? tx(x + 12, y + 16, t, 'm', 10.5, 'start') : ''); }
 /* 說明文字裡的記號：[[必背]]、{k:激酶這一類}、{d:去氫酶這一類} */
 function fmt(s) { return s.replace(/\[\[(.+?)\]\]/g, '<mark>$1</mark>').replace(/\{k:(.+?)\}/g, '<span class="wk">$1</span>').replace(/\{d:(.+?)\}/g, '<span class="wd">$1</span>'); }
 
@@ -388,6 +394,365 @@ var GLY = { id: 'gly', zh: '糖解作用', en: 'Glycolysis', alias: 'Glycolysis�
   ] };
 
 /* ======================================================================
+   糖質新生
+   ====================================================================== */
+var GNG = { id: 'gng', zh: '糖質新生', en: 'Gluconeogenesis', alias: 'Gluconeogenesis・丙酮酸 → 葡萄糖', layout: 'chain',
+  geo: { x: 132, w: 150, sx: 298, sw: 112 },
+  nodes: [
+    { k: 'pyr', zh: '丙酮酸', en: 'Pyruvate', c: 3 },
+    { k: 'oaa', zh: '草醯乙酸', en: 'Oxaloacetate', ab: 'OAA', c: 4 },
+    { k: 'pep', zh: '磷酸烯醇丙酮酸', en: 'Phosphoenolpyruvate', ab: 'PEP', c: 3 },
+    { k: 'fbp', zh: '果糖-1,6-雙磷酸', en: 'Fructose 1,6-bisphosphate', ab: 'F1,6BP', c: 6 },
+    { k: 'f6p', zh: '果糖-6-磷酸', en: 'Fructose 6-phosphate', ab: 'F6P', c: 6 },
+    { k: 'g6p', zh: '葡萄糖-6-磷酸', en: 'Glucose 6-phosphate', ab: 'G6P', c: 6 },
+    { k: 'glc', zh: '葡萄糖', en: 'Glucose', c: 6 },
+    { k: 'lac', zh: '乳酸、丙胺酸', en: 'Lactate, alanine', c: 3, side: 'pyr', link: 'feed', fixed: 1 },
+    { k: 'aa', zh: '生糖胺基酸', en: 'Glucogenic a.a.', side: 'oaa', link: 'feed', fixed: 1 },
+    { k: 'gol', zh: '甘油（經 DHAP）', en: 'Glycerol (via DHAP)', c: 3, side: 'fbp', link: 'feed', fixed: 1 }
+  ],
+  steps: [
+    { f: 'pyr', t: 'oaa', e: 'pc', p: 'atp', irr: 1 }, { f: 'oaa', t: 'pep', e: 'pepck', p: 'gtp', irr: 1 },
+    { f: 'pep', t: 'fbp', p: 'both', dots: { zh: '和糖解共用的 7 步（可逆，方向相反）', en: '7 reversible steps shared with glycolysis' },
+      desc: { zh: 'PEP → F1,6BP（和糖解共用的 7 步）', en: 'PEP → F1,6BP (7 shared steps)' } },
+    { f: 'fbp', t: 'f6p', e: 'fbpase', p: 'pi', irr: 1 }, { f: 'f6p', t: 'g6p', e: 'pgi', p: 'none' }, { f: 'g6p', t: 'glc', e: 'g6pase', p: 'pi', irr: 1 }
+  ],
+  enz: {
+    pc: { zh: '丙酮酸羧化酶', en: 'Pyruvate carboxylase' }, pepck: { zh: 'PEP 羧激酶', en: 'PEP carboxykinase', ab: 'PEPCK' },
+    fbpase: { zh: '果糖-1,6-雙磷酸酶', en: 'Fructose-1,6-bisphosphatase' }, pgi: { zh: '磷酸己糖異構酶', en: 'Phosphohexose isomerase' }, g6pase: { zh: '葡萄糖-6-磷酸酶', en: 'Glucose-6-phosphatase' },
+    pk: { zh: '丙酮酸激酶', en: 'Pyruvate kinase' }, pfk: { zh: '磷酸果糖激酶-1', en: 'Phosphofructokinase-1' }, hk: { zh: '己糖激酶', en: 'Hexokinase' },
+    fum: { zh: '延胡索酸酶', en: 'Fumarase' }, pdh: { zh: '丙酮酸去氫酶', en: 'Pyruvate dehydrogenase' }
+  },
+  prod: { atp: { zh: '消耗 ATP', en: 'Uses ATP' }, gtp: { zh: '消耗 GTP', en: 'Uses GTP' }, both: { zh: '消耗 ATP 和 NADH', en: 'Uses ATP and NADH' },
+    pi: { zh: '只切下磷酸根', en: 'Releases phosphate only' }, none: { zh: '都沒有', en: 'Neither' } },
+  tags: { atp: [['−2 ATP', 'sp']], gtp: [['−2 GTP', 'sp']], both: [['−2 ATP', 'sp'], ['−2 NADH', 'spn']] },
+  dict: {
+    liv: { zh: '肝臟', en: 'Liver' }, mus: { zh: '肌肉', en: 'Muscle' }, brn: { zh: '腦', en: 'Brain' }, adi: { zh: '脂肪組織', en: 'Adipose tissue' },
+    glu: { zh: '升糖素', en: 'Glucagon' }, ins: { zh: '胰島素', en: 'Insulin' }, lep: { zh: '瘦體素', en: 'Leptin' },
+    fa: { zh: '脂肪酸', en: 'Fatty acids' }, lac: { zh: '乳酸', en: 'Lactate' }, gol: { zh: '甘油', en: 'Glycerol' }, ala: { zh: '丙胺酸', en: 'Alanine' },
+    mito: { zh: '粒線體', en: 'mitochondria' }, cyt: { zh: '細胞質', en: 'cytosol' }, er: { zh: '內質網', en: 'endoplasmic reticulum' }, nuc: { zh: '細胞核', en: 'nucleus' },
+    bio: { zh: '生物素', en: 'biotin' }, b1: { zh: '維生素 B1', en: 'thiamin', bi: '維生素 B1（thiamin）' }, b6: { zh: '維生素 B6', en: 'vitamin B6', bi: '維生素 B6' }, b12: { zh: '維生素 B12', en: 'vitamin B12', bi: '維生素 B12' },
+    aco: { zh: '乙醯輔酶A', en: 'acetyl-CoA' }, cit: { zh: '檸檬酸', en: 'citrate' }, amp: { zh: 'AMP', en: 'AMP' }, g6: { zh: '葡萄糖', en: 'glucose' },
+    up: { zh: '促進', en: 'stimulates' }, down: { zh: '抑制', en: 'inhibits' },
+    cori: { zh: '柯氏循環（Cori cycle）', en: 'Cori cycle', bi: '柯氏循環（Cori cycle）' }, gac: { zh: '葡萄糖-丙胺酸循環', en: 'Glucose-alanine cycle' }, urea: { zh: '尿素循環', en: 'Urea cycle' }, tca: { zh: '檸檬酸循環', en: 'TCA cycle' },
+    ket: { zh: '酮體', en: 'ketone bodies' }, lys: { zh: '離胺酸', en: 'lysine' }, glut: { zh: '麩胺酸', en: 'glutamate' }, asp: { zh: '天門冬胺酸', en: 'aspartate' },
+    n2: { zh: '2', en: '2' }, n3: { zh: '3', en: '3' }, n4: { zh: '4', en: '4' }, n10: { zh: '10', en: '10' }
+  },
+  levels: [
+    { t: '先看全貌', kind: 'ov', h: 392, legend: [6, 3],
+      intro: ['血糖不夠、肝醣也快用完的時候，身體要自己做葡萄糖，這就是糖質新生：用「不是醣」的原料合成葡萄糖。',
+        '最需要它的是腦和紅血球，因為它們平常幾乎只用葡萄糖。',
+        '先問三件事：原料是什麼、在哪裡做、什麼時候開。圖上三個空格就是答案。'],
+      svg: function () { var h = PH() / 2;
+        return pill(64, 30, 96, { zh: '乳酸', en: 'Lactate' }, 'src k3') + pill(180, 30, 96, { zh: '甘油', en: 'Glycerol' }, 'src k3') + pill(296, 30, 108, { zh: '生糖胺基酸', en: 'Glucogenic a.a.' }, 'src') +
+          arrow(64, 31 + h, 104, 96) + arrow(180, 31 + h, 180, 96) + arrow(296, 31 + h, 256, 96) + zone(40, 100, 280, 88) + tx(180, 124, T(GNG.zh, GNG.en), 'b', 14) +
+          tx(122, 162, T('主要在', 'mainly in'), 'm', 11, 'end') + tx(258, 162, T('進行', ''), 'm', 11, 'start') +
+          arrow(180, 190, 180, 236 - h) + pill(180, 238, 124, { zh: '葡萄糖', en: 'Glucose' }, 'pill k6') + arrow(180, 239 + h, 180, 290 - h) +
+          pill(180, 292, 196, { zh: '送進血液，給腦和紅血球用', en: 'to blood → brain, red blood cells' }) +
+          tx(92, 338, T('啟動它的激素', 'Hormone that turns it on'), 'm', 10.5) + tx(268, 338, T('不能當原料的是', 'Cannot be a precursor'), 'm', 10.5); },
+      blanks: [{ id: 'org', x: 190, y: 158, w: 112, a: 'liv', o: ['liv', 'mus', 'brn', 'adi'] }, { id: 'hor', x: 92, y: 364, w: 124, a: 'glu', o: ['glu', 'ins', 'lep'] },
+        { id: 'no', x: 268, y: 364, w: 124, a: 'fa', o: ['fa', 'lac', 'gol', 'ala'] }],
+      done: ['原料：[[乳酸、甘油、生糖胺基酸]]（例如丙胺酸）。國考申論考過「四個最重要的先驅質」，就是乳酸、甘油、丙酮酸、生糖胺基酸。',
+        '位置：主要在[[肝臟]]，長期飢餓或酸中毒時腎臟也會做。', '開關：飢餓時[[升糖素]]打開它，吃飽後胰島素關掉它。',
+        '脂肪酸分解出來的乙醯輔酶A 不能變回丙酮酸，所以[[脂肪酸不能用來做葡萄糖]]；脂肪裡只有甘油可以。'] },
+    { t: '路線：繞過三個不可逆步驟', kind: 'map', blanks: ['oaa', 'pep', 'fbp', 'f6p', 'g6p'],
+      intro: ['糖質新生大致是把糖解作用倒著走。糖解十步裡有 7 步可逆，可以直接倒著用；但[[第 1、3、10 步不可逆]]，必須換別的酵素繞過去。',
+        '最麻煩的是倒著走第 10 步：丙酮酸沒辦法直接變回 PEP，要先進粒線體變成草醯乙酸，再變成 PEP，等於繞兩步。',
+        '這張圖把共用的 7 步收成一段虛線，只留下要繞路的地方。從上面的丙酮酸填到下面的葡萄糖。'],
+      tip: '右邊是三種原料進來的位置：乳酸和丙胺酸先變成丙酮酸；其他生糖胺基酸多半先變成草醯乙酸；甘油經過二羥丙酮磷酸（DHAP）進來。' },
+    { t: '繞路的酵素', kind: 'map', blanks: [], rows: 'enz', rowsTitle: '每一步的酵素',
+      intro: ['繞過糖解三個不可逆步驟，一共用到四個糖質新生專屬的酵素，這四個是國考最常問的。',
+        '名字的規律：糖解用{k:激酶（kinase）}把磷酸根接上去，糖質新生就用<b>磷酸酶</b>（phosphatase）把磷酸根拿掉；第 10 步則改用<b>羧化酶</b>（carboxylase）加上 CO₂，再用<b>羧激酶</b>（carboxykinase）拿掉 CO₂、換上磷酸根。'],
+      tip: '對照著記：丙酮酸激酶 ↔ 丙酮酸羧化酶＋PEP 羧激酶；磷酸果糖激酶-1 ↔ 果糖-1,6-雙磷酸酶；己糖激酶（葡萄糖激酶）↔ 葡萄糖-6-磷酸酶。' },
+    { t: '算帳：做一個葡萄糖要花多少', kind: 'map', blanks: [], rows: 'prod', rowsTitle: '每一段花掉什麼',
+      intro: ['糖解作用是賺 ATP，糖質新生就是花 ATP。做 1 個葡萄糖需要 2 個丙酮酸，所以每一步都要算 2 份。',
+        '記法：兩個繞路步驟各花一種（一個花 ATP、一個花 GTP）；共用的那一段裡，原本賺 ATP 和 NADH 的兩步倒著走，就變成花 ATP 和 NADH。全對之後，圖上會出現每一段的標籤。'],
+      tip: '下面兩個磷酸酶的步驟只是把磷酸根切掉，不會把 ATP 賺回來。所以糖質新生花的（6 個）比糖解賺的（2 個）多。',
+      countsTitle: '合成 1 個葡萄糖', counts: [['需要幾個丙酮酸', '2', ['1', '2', '3', '4']], ['消耗的 ATP', '4', ['2', '4', '6', '8']], ['消耗的 GTP', '2', ['1', '2', '3', '4']], ['消耗的 NADH', '2', ['1', '2', '3', '4']], ['ATP 加 GTP 一共幾個', '6', ['4', '6', '8', '12']]] },
+    { t: '調節與國考重點', kind: 'cloze',
+      intro: ['位置、輔酶、開關，以及乳酸和丙胺酸怎麼送回肝臟。每一句選出正確的詞。', '最後三題的選項只有英文，仿照國考的出法，答對後會顯示中文。'],
+      cloze: [
+        ['糖質新生主要在', { a: 'liv', o: ['liv', 'mus', 'brn', 'adi'] }, '進行，長期飢餓時腎臟也會。'],
+        ['丙酮酸羧化酶位在', { a: 'mito', o: ['mito', 'cyt', 'er', 'nuc'] }, '，所以丙酮酸要先進去變成草醯乙酸。'],
+        ['丙酮酸羧化酶需要的維生素是', { a: 'bio', o: ['bio', 'b1', 'b6', 'b12'] }, '。'],
+        ['脂肪酸大量氧化時，哪一個分子變多，會活化丙酮酸羧化酶？', { a: 'aco', o: ['aco', 'cit', 'amp', 'g6'] }, ''],
+        ['葡萄糖-6-磷酸酶位在', { a: 'er', o: ['mito', 'cyt', 'er', 'nuc'] }, '的膜上，只有肝臟和腎臟有。'],
+        ['果糖-2,6-雙磷酸（F2,6BP）會活化 PFK-1，同時', { a: 'down', o: ['up', 'down'] }, '果糖-1,6-雙磷酸酶，所以糖解和糖質新生不會同時全速進行。'],
+        ['飢餓時分泌的升糖素會', { a: 'up', o: ['up', 'down'] }, '糖質新生，例如增加 PEP 羧激酶的基因轉錄。'],
+        ['肌肉和紅血球產生的乳酸送到肝臟做成葡萄糖，再送回去使用，這個循環叫做', { a: 'cori', o: ['cori', 'gac', 'urea', 'tca'] }, '。'],
+        ['肌肉把丙酮酸轉胺成丙胺酸，送到肝臟再變回丙酮酸做成葡萄糖，叫做', { a: 'gac', o: ['cori', 'gac', 'urea', 'tca'] }, '。'],
+        ['脂肪分解後，可以拿來做葡萄糖的是', { a: 'gol', o: ['gol', 'fa', 'aco', 'ket'] }, '。'],
+        ['純生酮、完全不能用來做葡萄糖的胺基酸，是白胺酸和', { a: 'lys', o: ['lys', 'ala', 'glut', 'asp'] }, '。'],
+        ['空腹大量喝酒時，酒精代謝讓 NADH 變多，丙酮酸被拉去變成乳酸，糖質新生被', { a: 'down', o: ['up', 'down'] }, '，所以容易低血糖。'],
+        ['催化 pyruvate → oxaloacetate 的酵素是', { a: 'pc', src: 'enz', lang: 'en', o: ['pc', 'pepck', 'pk', 'pdh'] }, '。'],
+        ['催化 fructose 1,6-bisphosphate → fructose 6-phosphate 的酵素是', { a: 'fbpase', src: 'enz', lang: 'en', o: ['fbpase', 'pfk', 'pgi', 'g6pase'] }, '。'],
+        ['肌肉細胞因為缺乏哪一個酵素，無法把葡萄糖釋放到血液中？', { a: 'g6pase', src: 'enz', lang: 'en', o: ['fum', 'g6pase', 'hk', 'pdh'] }, '']
+      ] },
+    { t: '總複習：全部空白（英文作答）', kind: 'map', force: 'en', plain: true, energy: true, blanks: ['oaa', 'pep', 'fbp', 'f6p', 'g6p'], rows: 'enz', rowsTitle: '每一步的酵素',
+      intro: ['圖上五個中間產物、圖下五個酵素，全部空白。'],
+      tip: '這一關固定用英文作答。答對後，酵素下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   肝醣合成與分解
+   ====================================================================== */
+var GCG = { id: 'gcg', zh: '肝醣合成與分解', en: 'Glycogen metabolism', alias: 'Glycogenesis・Glycogenolysis', layout: 'chain',
+  enz: {
+    hk: { zh: '己糖激酶／葡萄糖激酶', en: 'Hexokinase / glucokinase' }, pgm: { zh: '磷酸葡萄糖變位酶', en: 'Phosphoglucomutase' },
+    ugp: { zh: 'UDP-葡萄糖焦磷酸化酶', en: 'UDP-glucose pyrophosphorylase' }, gs: { zh: '肝醣合成酶', en: 'Glycogen synthase' }, be: { zh: '分支酶', en: 'Branching enzyme' },
+    gp: { zh: '肝醣磷酸化酶', en: 'Glycogen phosphorylase' }, dbe: { zh: '去分支酶', en: 'Debranching enzyme' }, g6pase: { zh: '葡萄糖-6-磷酸酶', en: 'Glucose-6-phosphatase' },
+    pbk: { zh: '磷酸化酶 b 激酶', en: 'Phosphorylase b kinase' }, pka: { zh: '蛋白激酶 A', en: 'Protein kinase A' }, ac: { zh: '腺苷酸環化酶', en: 'Adenylate cyclase' }, pp1: { zh: '蛋白磷酸酶', en: 'Protein phosphatase' },
+    fum: { zh: '延胡索酸酶', en: 'Fumarase' }
+  },
+  dict: {
+    ins: { zh: '胰島素', en: 'Insulin' }, glu: { zh: '升糖素', en: 'Glucagon' }, epi: { zh: '腎上腺素', en: 'Epinephrine' }, cor: { zh: '皮質醇', en: 'Cortisol' },
+    bg: { zh: '維持血糖', en: 'Maintain blood glucose' }, own: { zh: '給肌肉自己用', en: 'Fuel for the muscle itself' }, brn: { zh: '專門送給腦用', en: 'Sent to the brain' }, fat: { zh: '轉成脂肪', en: 'Turned into fat' },
+    udpg: { zh: 'UDP-葡萄糖', en: 'UDP-glucose' }, g1p: { zh: '葡萄糖-1-磷酸', en: 'Glucose 1-phosphate' }, g6p: { zh: '葡萄糖-6-磷酸', en: 'Glucose 6-phosphate' }, glc: { zh: '葡萄糖', en: 'Glucose' },
+    a14: { zh: 'α-1,4', en: 'α-1,4' }, a16: { zh: 'α-1,6', en: 'α-1,6' }, b14: { zh: 'β-1,4', en: 'β-1,4' },
+    b6: { zh: '維生素 B6', en: 'vitamin B6', bi: '維生素 B6' }, b1: { zh: '維生素 B1', en: 'vitamin B1', bi: '維生素 B1' }, bio: { zh: '生物素', en: 'biotin' }, nia: { zh: '菸鹼素', en: 'niacin' },
+    camp: { zh: 'cAMP', en: 'cAMP' }, ca: { zh: 'Ca²⁺', en: 'Ca²⁺' }, amp: { zh: 'AMP', en: 'AMP' }, adp: { zh: 'ADP', en: 'ADP' }, atp: { zh: 'ATP', en: 'ATP' }, cgmp: { zh: 'cGMP', en: 'cGMP' }, ip3: { zh: 'IP₃', en: 'IP₃' }, mg: { zh: 'Mg²⁺', en: 'Mg²⁺' }, na: { zh: 'Na⁺', en: 'Na⁺' },
+    act: { zh: '活化', en: 'activated' }, inh: { zh: '抑制', en: 'inhibited' }, pho: { zh: '磷酸化', en: 'phosphorylated' }, depho: { zh: '去磷酸化', en: 'dephosphorylated' },
+    liv: { zh: '肝臟', en: 'liver' }, mus: { zh: '肌肉', en: 'muscle' }, pi: { zh: '磷酸根', en: 'inorganic phosphate (Pi)' }, h2o: { zh: '水', en: 'water' }
+  },
+  subs: {
+    syn: { layout: 'chain', zh: '肝醣合成', en: 'Glycogenesis',
+      extra: [{ k: 'f6p', zh: '果糖-6-磷酸', en: 'Fructose 6-phosphate', ab: 'F6P' }, { k: 'g3p', zh: '甘油醛-3-磷酸', en: 'Glyceraldehyde 3-phosphate', ab: 'G3P' }],
+      nodes: [
+        { k: 'glc', zh: '葡萄糖', en: 'Glucose', c: 6 }, { k: 'g6p', zh: '葡萄糖-6-磷酸', en: 'Glucose 6-phosphate', ab: 'G6P', c: 6 }, { k: 'g1p', zh: '葡萄糖-1-磷酸', en: 'Glucose 1-phosphate', ab: 'G1P', c: 6 },
+        { k: 'udpg', zh: 'UDP-葡萄糖', en: 'UDP-glucose', c: 6 }, { k: 'lin', zh: '肝醣直鏈（α-1,4）', en: 'Glycogen chain (α-1,4)', fixed: 1 }, { k: 'gly', zh: '肝醣（有 α-1,6 分支）', en: 'Glycogen (α-1,6 branches)', fixed: 1 }
+      ],
+      steps: [
+        { f: 'glc', t: 'g6p', e: 'hk', io: [[{ zh: '用掉 ATP', en: 'uses ATP' }, 'mol']] }, { f: 'g6p', t: 'g1p', e: 'pgm' }, { f: 'g1p', t: 'udpg', e: 'ugp', io: [[{ zh: '用掉 UTP', en: 'uses UTP' }, 'mol']] },
+        { f: 'udpg', t: 'lin', e: 'gs', irr: 1 }, { f: 'lin', t: 'gly', e: 'be' }
+      ] },
+    deg: { layout: 'chain', zh: '肝醣分解', en: 'Glycogenolysis', geo: { x: 132, w: 150, sx: 298, sw: 112 },
+      extra: [{ k: 'udpg', zh: 'UDP-葡萄糖', en: 'UDP-glucose' }, { k: 'f6p', zh: '果糖-6-磷酸', en: 'Fructose 6-phosphate', ab: 'F6P' }],
+      nodes: [
+        { k: 'gly', zh: '肝醣', en: 'Glycogen' }, { k: 'g1p', zh: '葡萄糖-1-磷酸', en: 'Glucose 1-phosphate', ab: 'G1P', c: 6 }, { k: 'g6p', zh: '葡萄糖-6-磷酸', en: 'Glucose 6-phosphate', ab: 'G6P', c: 6 },
+        { k: 'glc', zh: '葡萄糖', en: 'Glucose', c: 6 }, { k: 'gl', zh: '糖解作用（肌肉）', en: 'Glycolysis (muscle)', side: 'g6p', link: 'leaf', fixed: 1 }
+      ],
+      steps: [
+        { f: 'gly', t: 'g1p', e: 'gp', irr: 1, io: [[{ zh: '用磷酸根切，不花 ATP', en: 'cleaved by Pi, no ATP used' }, 'mol']] }, { f: 'g1p', t: 'g6p', e: 'pgm' },
+        { f: 'g6p', t: 'glc', e: 'g6pase', io: [[{ zh: '只有肝臟、腎臟', en: 'liver and kidney only' }, 'mol']] }
+      ] }
+  },
+  levels: [
+    { t: '先看全貌', kind: 'ov', h: 352, legend: [6],
+      intro: ['肝醣是動物儲存葡萄糖的方式：吃飽時把多的葡萄糖一個一個接起來存放，需要時再拆下來用。',
+        '身體有兩個地方存肝醣，用途完全不同。這是國考最愛問的一點。',
+        '合成和分解不是同一條路倒著走，而是兩組不同的酵素，所以可以分開調控：一邊開，另一邊就關。'],
+      svg: function () { var h = PH() / 2;
+        return pill(180, 30, 124, { zh: '葡萄糖', en: 'Glucose' }, 'src k6') + pill(180, 196, 132, { zh: '肝醣', en: 'Glycogen' }) +
+          arrow(152, 31 + h, 152, 194 - h) + arrow(208, 195 - h, 208, 34 + h) + tx(140, 84, T('肝醣合成', 'Glycogenesis'), 'b', 12, 'end') + tx(220, 84, T('肝醣分解', 'Glycogenolysis'), 'b', 12, 'start') +
+          tx(72, 150, T('吃飽時的激素', 'Hormone when fed'), 'm', 10.5) + tx(288, 150, T('飢餓時的激素', 'Hormone when fasting'), 'm', 10.5) +
+          arrow(158, 197 + h, 104, 292 - h) + arrow(202, 197 + h, 256, 292 - h) + tx(118, 244, T('在肝臟', 'in liver'), 'b', 11.5, 'end') + tx(242, 244, T('在肌肉', 'in muscle'), 'b', 11.5, 'start') +
+          tx(92, 328, T('拆成葡萄糖，送進血液', 'glucose released to blood'), 'm', 10) + tx(268, 328, T('變成 G6P 進糖解，出不了細胞', 'G6P enters glycolysis, stays in cell'), 'm', 10); },
+      blanks: [{ id: 'fed', x: 72, y: 118, w: 112, a: 'ins', o: ['ins', 'glu', 'epi', 'cor'] }, { id: 'fast', x: 288, y: 118, w: 112, a: 'glu', o: ['ins', 'glu', 'cor'] },
+        { id: 'liv', x: 92, y: 294, w: 156, a: 'bg', o: ['bg', 'own', 'brn', 'fat'] }, { id: 'mus', x: 268, y: 294, w: 156, a: 'own', o: ['bg', 'own', 'brn', 'fat'] }],
+      done: ['肝臟的肝醣用來[[維持血糖]]；肌肉的肝醣只給[[肌肉自己用]]。', '原因：肌肉沒有葡萄糖-6-磷酸酶（glucose-6-phosphatase），G6P 變不回葡萄糖，出不了細胞。',
+        '開關：胰島素促進合成；升糖素（肝臟）和腎上腺素（肝臟與肌肉）促進分解。', '肝臟的肝醣大約只夠撐不到一天，之後就要靠糖質新生。'] },
+    { t: '合成的路線', kind: 'map', sub: 'syn', blanks: ['g6p', 'g1p', 'udpg'],
+      intro: ['葡萄糖進細胞後先變成 G6P（和糖解第一步一樣），接著把磷酸根從 6 號碳搬到 1 號碳變成 G1P。',
+        '重點在下一步：G1P 要先和 UTP 反應，變成「活化」的 [[UDP-葡萄糖]]，才能被接到肝醣上。所以肝醣合成直接使用的原料是 UDP-葡萄糖，不是 G1P。',
+        '最後先接成直鏈（α-1,4 鍵），再做出分支（α-1,6 鍵）。'],
+      tip: '每接上 1 個葡萄糖要花 1 個 ATP 和 1 個 UTP，共 2 個高能磷酸鍵。' },
+    { t: '合成的酵素', kind: 'map', sub: 'syn', blanks: [], rows: 'enz', rowsTitle: '每一步的酵素',
+      intro: ['五個步驟、五個酵素。名字一樣在說它做的事：<b>變位酶</b>（mutase）把磷酸根搬到同一個分子的另一個位置；<b>合成酶</b>（synthase）把葡萄糖接上去；<b>分支酶</b>（branching enzyme）做出分支。',
+        '速率限制酵素是肝醣合成酶，圖上用實心編號標出來。'],
+      tip: '第 1 步的酵素在肌肉是己糖激酶（hexokinase），在肝臟是葡萄糖激酶（glucokinase）。' },
+    { t: '分解的路線', kind: 'map', sub: 'deg', blanks: ['g1p', 'g6p', 'glc'],
+      intro: ['分解不是把合成倒著走。肝醣磷酸化酶用<b>磷酸根</b>把葡萄糖一個一個切下來（叫做磷酸解，不是水解），切下來的直接就是 G1P，不必花 ATP。',
+        'G1P 再變成 G6P。接下來肝臟和肌肉走不同的路：肝臟有葡萄糖-6-磷酸酶，可以變成葡萄糖送進血液；肌肉沒有，G6P 只能進糖解作用自己用。'],
+      tip: '因為切下來就帶著磷酸根，肌肉用肝醣走糖解時少花 1 個 ATP，1 個葡萄糖單位可以淨得 3 個 ATP。' },
+    { t: '分解的酵素', kind: 'map', sub: 'deg', blanks: [], rows: 'enz', rowsTitle: '每一步的酵素',
+      intro: ['分解的速率限制酵素是肝醣磷酸化酶。它只能切 α-1,4 鍵，切到分支點附近就停下來，要靠<b>去分支酶</b>（debranching enzyme）處理 α-1,6 鍵。',
+        '中間那一步和合成共用同一個酵素，只是方向相反。'] },
+    { t: '調節與國考重點', kind: 'cloze',
+      intro: ['肝醣代謝的考點集中在「激素怎麼透過磷酸化控制兩個關鍵酵素」。',
+        '一句話記：升糖素和腎上腺素讓酵素被磷酸化，[[磷酸化之後，分解的酵素活化、合成的酵素被抑制]]；胰島素相反。',
+        '最後三題的選項只有英文。'],
+      cloze: [
+        ['肝醣合成時，直接提供葡萄糖的分子是', { a: 'udpg', o: ['udpg', 'g1p', 'g6p', 'glc'] }, '。'],
+        ['肝醣磷酸化酶切的是', { a: 'a14', o: ['a14', 'a16', 'b14'] }, '鍵。'],
+        ['分支點的鍵是', { a: 'a16', o: ['a14', 'a16', 'b14'] }, '，由去分支酶處理。'],
+        ['肝醣磷酸化酶是用什麼把葡萄糖切下來？', { a: 'pi', o: ['pi', 'h2o', 'atp'] }, ''],
+        ['肝醣磷酸化酶需要的輔酶 PLP，來自', { a: 'b6', o: ['b6', 'b1', 'bio', 'nia'] }, '。'],
+        ['升糖素和腎上腺素作用後，細胞內上升的第二訊息是', { a: 'camp', o: ['camp', 'cgmp', 'ip3', 'amp'] }, '，接著活化蛋白激酶 A。'],
+        ['肝醣磷酸化酶被磷酸化之後會', { a: 'act', o: ['act', 'inh'] }, '。'],
+        ['肝醣合成酶被磷酸化之後會', { a: 'inh', o: ['act', 'inh'] }, '。'],
+        ['胰島素會讓肝醣合成酶', { a: 'depho', o: ['pho', 'depho'] }, '，因而活化。'],
+        ['肌肉收縮時，哪一個離子也能活化磷酸化酶激酶，讓肝醣分解跟上收縮？', { a: 'ca', o: ['ca', 'mg', 'na'] }, ''],
+        ['肌肉中不需要磷酸化、直接活化 phosphorylase b 的異位調節因子是', { a: 'amp', o: ['adp', 'amp', 'atp', 'camp'] }, '。'],
+        ['升糖素主要作用在', { a: 'liv', o: ['liv', 'mus'] }, '，肌肉沒有它的受體。'],
+        ['直接把 phosphorylase b 變成活性較高的 phosphorylase a 的酵素是', { a: 'pbk', src: 'enz', lang: 'en', o: ['pka', 'pbk', 'ac', 'pp1'] }, '。'],
+        ['肝醣合成的速率限制酵素是', { a: 'gs', src: 'enz', lang: 'en', o: ['gs', 'gp', 'be', 'ugp'] }, '。'],
+        ['肌肉中的肝醣無法轉變成葡萄糖釋出，是因為缺乏', { a: 'g6pase', src: 'enz', lang: 'en', o: ['hk', 'gp', 'g6pase', 'fum'] }, '。']
+      ] },
+    { t: '總複習：合成（英文作答）', kind: 'map', sub: 'syn', force: 'en', plain: true, blanks: ['g6p', 'g1p', 'udpg'], rows: 'enz', rowsTitle: '每一步的酵素',
+      intro: ['肝醣合成：圖上三個中間產物、圖下五個酵素，全部空白。'], tip: '這一關固定用英文作答。答對後，酵素下方會顯示中文。' },
+    { t: '總複習：分解（英文作答）', kind: 'map', sub: 'deg', force: 'en', plain: true, blanks: ['g1p', 'g6p', 'glc'], rows: 'enz', rowsTitle: '每一步的酵素',
+      intro: ['肝醣分解：圖上三個產物、圖下三個酵素，全部空白。'], tip: '這一關固定用英文作答。答對後，酵素下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   五碳糖磷酸途徑
+   ====================================================================== */
+var PPP = { id: 'ppp', zh: '五碳糖磷酸途徑', en: 'Pentose phosphate pathway', alias: 'PPP・HMP shunt・產生 NADPH 和核糖', layout: 'chain',
+  nodes: [
+    { k: 'g6p', zh: '葡萄糖-6-磷酸', en: 'Glucose 6-phosphate', ab: 'G6P', c: 6 },
+    { k: 'pgl', zh: '6-磷酸葡萄糖酸內酯', en: '6-Phosphogluconolactone', c: 6 },
+    { k: 'pg', zh: '6-磷酸葡萄糖酸', en: '6-Phosphogluconate', c: 6 },
+    { k: 'ru5p', zh: '核酮糖-5-磷酸', en: 'Ribulose 5-phosphate', ab: 'Ru5P', c: 5 },
+    { k: 'r5p', zh: '核糖-5-磷酸', en: 'Ribose 5-phosphate', ab: 'R5P', c: 5 },
+    { k: 'fg', zh: 'F6P ＋ G3P（接回糖解）', en: 'F6P + G3P (to glycolysis)', fixed: 1 },
+    { k: 'xu5p', zh: '木酮糖-5-磷酸', en: 'Xylulose 5-phosphate', ab: 'Xu5P', c: 5, side: 'r5p', link: 'branch' }
+  ],
+  phases: [{ a: 'g6p', b: 'ru5p', zh: '氧化階段（不可逆）', en: 'Oxidative', c: '--k6s' }, { a: 'r5p', b: 'fg', zh: '非氧化階段（可逆）', en: 'Non-oxidative', c: '--k5s' }],
+  steps: [
+    { f: 'g6p', t: 'pgl', e: 'g6pd', p: 'nadph', irr: 1 }, { f: 'pgl', t: 'pg', e: 'lac', p: 'none' }, { f: 'pg', t: 'ru5p', e: 'pgd', p: 'nc', irr: 1 },
+    { f: 'ru5p', t: 'r5p', e: 'rpi', p: 'none' }, { f: 'ru5p', t: 'xu5p', e: 'rpe', p: 'none' },
+    { f: 'r5p', t: 'fg', e: 'tk', p: 'none', dots: { zh: '五碳糖互相重組', en: 'pentoses rearranged' }, desc: { zh: 'R5P ＋ Xu5P → F6P ＋ G3P', en: 'R5P + Xu5P → F6P + G3P' } }
+  ],
+  enz: {
+    g6pd: { zh: '葡萄糖-6-磷酸去氫酶', en: 'Glucose-6-phosphate dehydrogenase', ab: 'G6PD' }, lac: { zh: '內酯酶', en: 'Lactonase' }, pgd: { zh: '6-磷酸葡萄糖酸去氫酶', en: '6-Phosphogluconate dehydrogenase' },
+    rpi: { zh: '核糖-5-磷酸異構酶', en: 'Ribose-5-phosphate isomerase' }, rpe: { zh: '核酮糖-5-磷酸差向異構酶', en: 'Ribulose-5-phosphate epimerase' }, tk: { zh: '轉酮酶與轉醛酶', en: 'Transketolase and transaldolase' },
+    gr: { zh: '麩胱甘肽還原酶', en: 'Glutathione reductase' }, gpx: { zh: '麩胱甘肽過氧化酶', en: 'Glutathione peroxidase' }, mdh: { zh: '蘋果酸去氫酶', en: 'Malate dehydrogenase' }, hk: { zh: '己糖激酶', en: 'Hexokinase' }
+  },
+  prod: { nadph: { zh: '產生 NADPH', en: 'Makes NADPH' }, nc: { zh: '產生 NADPH，放出 CO₂', en: 'Makes NADPH + CO₂' }, none: { zh: '都沒有', en: 'Neither' } },
+  tags: { nadph: [['NADPH', 'nadph']], nc: [['NADPH', 'nadph'], ['CO₂', 'co2']] },
+  dict: {
+    cyt: { zh: '細胞質', en: 'Cytosol' }, mat: { zh: '粒線體基質', en: 'Mitochondrial matrix' }, er: { zh: '內質網', en: 'Endoplasmic reticulum' }, nuc: { zh: '細胞核', en: 'Nucleus' },
+    nadph: { zh: 'NADPH', en: 'NADPH' }, nadh: { zh: 'NADH', en: 'NADH' }, atp: { zh: 'ATP', en: 'ATP' }, fadh: { zh: 'FADH₂', en: 'FADH₂' },
+    r5p: { zh: '核糖-5-磷酸', en: 'Ribose 5-phosphate' }, ru5p: { zh: '核酮糖-5-磷酸', en: 'Ribulose 5-phosphate' }, pyr: { zh: '丙酮酸', en: 'Pyruvate' }, aco: { zh: '乙醯輔酶A', en: 'Acetyl-CoA' }, lact: { zh: '乳酸', en: 'Lactate' },
+    f6p: { zh: '果糖-6-磷酸', en: 'Fructose 6-phosphate' }, g3p: { zh: '甘油醛-3-磷酸', en: 'Glyceraldehyde 3-phosphate' },
+    yes: { zh: '會', en: 'does' }, no: { zh: '不會', en: 'does not' }, syn: { zh: '合成反應（脂肪酸、膽固醇）', en: 'biosynthesis (fatty acids, cholesterol)' }, eng: { zh: '送去電子傳遞鏈產生 ATP', en: 'the electron transport chain' },
+    skm: { zh: '骨骼肌', en: 'skeletal muscle' }, liv: { zh: '肝臟', en: 'liver' }, adi: { zh: '脂肪組織', en: 'adipose tissue' }, mam: { zh: '泌乳期的乳腺', en: 'lactating mammary gland' },
+    tpp: { zh: 'TPP', en: 'TPP' }, plp: { zh: 'PLP', en: 'PLP' }, fad: { zh: 'FAD', en: 'FAD' }, biot: { zh: '生物素', en: 'biotin' },
+    b1: { zh: '維生素 B1', en: 'thiamin', bi: '維生素 B1（thiamin）' }, b2: { zh: '維生素 B2', en: 'riboflavin', bi: '維生素 B2（riboflavin）' }, b6: { zh: '維生素 B6', en: 'vitamin B6', bi: '維生素 B6' }, b12: { zh: '維生素 B12', en: 'vitamin B12', bi: '維生素 B12' },
+    red: { zh: '還原態', en: 'reduced' }, oxi: { zh: '氧化態', en: 'oxidized' }, se: { zh: '硒', en: 'selenium' }, zn: { zh: '鋅', en: 'zinc' }, fe: { zh: '鐵', en: 'iron' }, cu: { zh: '銅', en: 'copper' },
+    fav: { zh: '蠶豆症', en: 'favism (G6PD deficiency)' }, pku: { zh: '苯酮尿症', en: 'phenylketonuria' }, gal: { zh: '半乳糖血症', en: 'galactosemia' }, msud: { zh: '楓糖尿症', en: 'maple syrup urine disease' },
+    inc: { zh: '增加', en: 'increases' }, dec: { zh: '減少', en: 'decreases' }
+  },
+  levels: [
+    { t: '先看全貌', kind: 'ov', h: 300, legend: [6, 5],
+      intro: ['葡萄糖變成 G6P 之後，除了往下走糖解，還有一條岔路：五碳糖磷酸途徑。',
+        '這條路[[不是為了產生 ATP]]，而是為了做出兩樣別的路徑做不出來的東西。圖上兩個空格就是這兩樣產物。',
+        '它一開始就進行氧化，這一點和糖解作用、檸檬酸循環都不一樣。'],
+      svg: function () { var h = PH() / 2;
+        return pill(62, 30, 100, { zh: '葡萄糖', en: 'Glucose' }, 'src k6') + arrow(113, 30, 152, 30) + pill(220, 30, 132, { zh: '葡萄糖-6-磷酸', en: 'Glucose 6-phosphate', ab: 'G6P' }, 'pill k6') +
+          arrow(190, 31 + h, 96, 112 - h) + pill(80, 114, 108, { zh: '糖解作用', en: 'Glycolysis' }) + arrow(244, 31 + h, 250, 88) + zone(152, 92, 200, 74) + tx(252, 112, T(PPP.zh, 'Pentose phosphate pathway'), 'b', 12) +
+          arrow(212, 168, 124, 224 - h) + arrow(290, 168, 276, 224 - h) +
+          tx(110, 262, T('脂肪酸、膽固醇的合成', 'fatty acid & cholesterol synthesis'), 'm', 10) + tx(110, 276, T('保護紅血球不被氧化', 'protects red cells from oxidation'), 'm', 10) + tx(268, 262, T('合成核苷酸（DNA、RNA）', 'nucleotides (DNA, RNA)'), 'm', 10); },
+      blanks: [{ id: 'loc', x: 252, y: 140, w: 124, a: 'cyt', o: ['cyt', 'mat', 'er', 'nuc'] }, { id: 'p1', x: 110, y: 228, w: 124, a: 'nadph', o: ['nadph', 'nadh', 'atp', 'fadh'] },
+        { id: 'p2', x: 268, y: 228, w: 150, c: 5, a: 'r5p', o: ['r5p', 'pyr', 'aco', 'lact'] }],
+      done: ['產物一：[[NADPH]]，提供合成脂肪酸和膽固醇需要的還原力，也用來保護紅血球。', '產物二：[[核糖-5-磷酸]]，合成核苷酸（DNA、RNA）的原料。',
+        '位置：細胞質。肝臟、脂肪組織、泌乳期乳腺、紅血球、腎上腺皮質最旺盛。', '開關：吃飽時胰島素讓它加快（因為要合成脂肪）；NADPH 堆積時會回頭抑制第一個酵素。'] },
+    { t: '路線：先氧化，再重組', kind: 'map', blanks: ['pgl', 'pg', 'ru5p', 'r5p', 'xu5p'],
+      intro: ['前半段是<b>氧化階段</b>：G6P 被氧化兩次、掉一個 CO₂，從 6 碳變成 5 碳。這一段不可逆，NADPH 就是在這裡產生的。',
+        '後半段是<b>非氧化階段</b>：5 碳糖之間互相轉換，多的五碳糖可以重組成 F6P 和 G3P，接回糖解作用。這一段可逆。',
+        '名字的線索：「酸」是被氧化過；「核酮糖」（ribulose）和「核糖」（ribose）只差在酮和醛；「木酮糖」（xylulose）是核酮糖的差向異構物。'] },
+    { t: '六個酵素', kind: 'map', blanks: [], rows: 'enz', rowsTitle: '每一步的酵素',
+      intro: ['氧化階段有兩個{d:去氫酶（dehydrogenase）}，NADPH 就是它們做出來的，兩個都不可逆（實心編號）。國考申論考過「兩個不可逆氧化反應的酵素」。',
+        '非氧化階段的酵素名字也在說它做的事：<b>異構酶</b>（isomerase）把酮變成醛；<b>差向異構酶</b>（epimerase）只改一個碳的方向；<b>轉酮酶</b>（transketolase）和<b>轉醛酶</b>（transaldolase）搬 2 碳或 3 碳的片段。'],
+      tip: '第一個酵素 glucose-6-phosphate dehydrogenase（G6PD）是速率限制酵素，也是蠶豆症缺乏的酵素。' },
+    { t: '算帳：哪一步產生什麼', kind: 'map', blanks: [], rows: 'prod', rowsTitle: '每一步產生什麼',
+      intro: ['只要記氧化階段的兩個去氫酶：兩步各產生 1 個 NADPH，第二個去氫酶同時掉 1 個 CO₂（所以 6 碳變 5 碳）。', '非氧化階段只是重組碳骨架，什麼都不產生。全對之後，圖上會出現標籤。'],
+      countsTitle: '1 個 G6P 走完氧化階段', counts: [['產生幾個 NADPH', '2', ['1', '2', '3', '4']], ['放出幾個 CO₂', '1', ['0', '1', '2', '3']], ['產生幾個 ATP', '0', ['0', '1', '2', '4']]] },
+    { t: '調節與國考重點', kind: 'cloze',
+      intro: ['NADPH 的用途、維生素 B1、蠶豆症，是這一章最常考的三件事。', '最後三題的選項只有英文。'],
+      cloze: [
+        ['五碳糖磷酸途徑在細胞的', { a: 'cyt', o: ['cyt', 'mat', 'er', 'nuc'] }, '進行。'],
+        ['速率限制酵素 G6PD 會被自己的產物', { a: 'nadph', o: ['nadph', 'nadh', 'atp', 'r5p'] }, '回饋抑制。'],
+        ['NADPH 主要用在', { a: 'syn', o: ['syn', 'eng'] }, '。'],
+        ['下列哪一個組織的五碳糖磷酸途徑最不活躍？', { a: 'skm', o: ['skm', 'liv', 'adi', 'mam'] }, ''],
+        ['轉酮酶（transketolase）需要的輔酶是', { a: 'tpp', o: ['tpp', 'plp', 'fad', 'biot'] }, '。'],
+        ['臨床上用紅血球的轉酮酶活性，評估哪一種維生素的營養狀況？', { a: 'b1', o: ['b1', 'b2', 'b6', 'b12'] }, ''],
+        ['紅血球用 NADPH 讓麩胱甘肽（glutathione）保持', { a: 'red', o: ['red', 'oxi'] }, '，才能清除過氧化氫。'],
+        ['麩胱甘肽過氧化酶含有的礦物質是', { a: 'se', o: ['se', 'zn', 'fe', 'cu'] }, '。'],
+        ['G6PD 先天缺乏時，吃蠶豆或某些氧化性藥物後會溶血，這個病叫做', { a: 'fav', o: ['fav', 'pku', 'gal', 'msud'] }, '。'],
+        ['吃高醣飲食後，胰島素會', { a: 'inc', o: ['inc', 'dec'] }, '肝臟 G6PD 的量，供應合成脂肪酸需要的 NADPH。'],
+        ['快速分裂的細胞需要大量的', { a: 'r5p', o: ['r5p', 'pyr', 'aco', 'lact'] }, '來合成核苷酸。'],
+        ['NADPH 是下列哪一個酵素反應時需要的輔酶？', { a: 'gr', src: 'enz', lang: 'en', o: ['gr', 'gpx', 'g6pd', 'mdh'] }, ''],
+        ['五碳糖磷酸途徑的速率限制酵素是', { a: 'g6pd', src: 'enz', lang: 'en', o: ['g6pd', 'pgd', 'tk', 'hk'] }, '。'],
+        ['氧化階段最後得到的五碳糖是', { a: 'ru5p', lang: 'en', o: ['ru5p', 'r5p', 'f6p', 'g3p'] }, '。']
+      ] },
+    { t: '總複習：全部空白（英文作答）', kind: 'map', force: 'en', plain: true, energy: true, blanks: ['pgl', 'pg', 'ru5p', 'r5p', 'xu5p'], rows: 'enz', rowsTitle: '每一步的酵素',
+      intro: ['圖上五個中間產物、圖下六個酵素，全部空白。'], tip: '這一關固定用英文作答。答對後，酵素下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   丙酮酸去氫酶複合體
+   ====================================================================== */
+function PDH_E() {      // 三個酵素、五個輔因子的圖（第 2 關和總複習共用）
+  var h = PH() / 2, en = M() === 'en';
+  return pill(58, 34, 100, { zh: '丙酮酸', en: 'Pyruvate' }, 'src k3') + pill(302, 34, 104, { zh: '乙醯輔酶A', en: 'Acetyl-CoA' }, 'pill k2') +
+    arrow(58, 35 + h, 66, 102 - h) + arrow(294, 103 - h, 302, 38 + h) + pill(70, 104, 84, 'E1') + pill(180, 104, 84, 'E2') + pill(290, 104, 84, 'E3') + arrow(113, 104, 136, 104) + arrow(223, 104, 246, 104) +
+    tx(70, 136, en ? 'Pyruvate' : '丙酮酸去氫酶', 'm', 9.5) + tx(70, 147, en ? 'dehydrogenase' : '', 'm', 9.5) + tx(180, 136, en ? 'Dihydrolipoyl' : '二氫硫辛醯轉乙醯酶', 'm', 9.5) + tx(180, 147, en ? 'transacetylase' : '', 'm', 9.5) +
+    tx(290, 136, en ? 'Dihydrolipoyl' : '二氫硫辛醯去氫酶', 'm', 9.5) + tx(290, 147, en ? 'dehydrogenase' : '', 'm', 9.5) + tx(180, 68, 'CO₂', 'm', 10.5) + tx(180, 82, T('在 E1 放出', 'released at E1'), 'm', 9.5) +
+    tx(180, 168, T('↓ 各自需要的輔因子', '↓ cofactors each one needs'), 'm', 9.5);
+}
+var PDH_B = [{ id: 'e1', x: 70, y: 196, w: 100, a: 'tpp', o: ['tpp', 'lip', 'coa', 'fad', 'nad', 'plp', 'biot'] }, { id: 'e2a', x: 180, y: 196, w: 104, a: 'lip', o: ['tpp', 'lip', 'coa', 'fad', 'nad', 'plp', 'biot'] },
+  { id: 'e2b', x: 180, y: 242, w: 104, a: 'coa', o: ['tpp', 'lip', 'coa', 'fad', 'nad', 'plp', 'biot'] }, { id: 'e3a', x: 290, y: 196, w: 100, a: 'fad', o: ['tpp', 'lip', 'coa', 'fad', 'nad', 'plp', 'biot'] },
+  { id: 'e3b', x: 290, y: 242, w: 100, a: 'nad', o: ['tpp', 'lip', 'coa', 'fad', 'nad', 'plp', 'biot'] }];
+var PDH_V = [['TPP（thiamin pyrophosphate）', { a: 'b1', o: ['b1', 'b2', 'b3', 'pan', 'b6', 'nov'] }], ['FAD', { a: 'b2', o: ['b1', 'b2', 'b3', 'pan', 'b6', 'nov'] }], ['NAD⁺', { a: 'b3', o: ['b1', 'b2', 'b3', 'pan', 'b6', 'nov'] }],
+  ['輔酶A（CoA）', { a: 'pan', o: ['b1', 'b2', 'b3', 'pan', 'b6', 'nov'] }], ['硫辛酸（lipoic acid）', { a: 'nov', o: ['b1', 'b2', 'b3', 'pan', 'b6', 'nov'] }]];
+var PDH = { id: 'pdh', zh: '丙酮酸去氫酶複合體', en: 'PDH complex', alias: 'Pyruvate dehydrogenase complex・丙酮酸 → 乙醯輔酶A', layout: 'none',
+  enz: { pdk: { zh: '丙酮酸去氫酶激酶', en: 'Pyruvate dehydrogenase kinase' }, pdp: { zh: '丙酮酸去氫酶磷酸酶', en: 'Pyruvate dehydrogenase phosphatase' }, pc: { zh: '丙酮酸羧化酶', en: 'Pyruvate carboxylase' }, ldh: { zh: '乳酸去氫酶', en: 'Lactate dehydrogenase' },
+    kgd: { zh: 'α-酮戊二酸去氫酶複合體', en: 'α-Ketoglutarate dehydrogenase complex' }, cs: { zh: '檸檬酸合成酶', en: 'Citrate synthase' }, sdh: { zh: '琥珀酸去氫酶', en: 'Succinate dehydrogenase' }, mdh: { zh: '蘋果酸去氫酶', en: 'Malate dehydrogenase' } },
+  dict: {
+    mat: { zh: '粒線體基質', en: 'Mitochondrial matrix' }, cyt: { zh: '細胞質', en: 'Cytosol' }, imm: { zh: '粒線體內膜', en: 'Inner mitochondrial membrane' }, er: { zh: '內質網', en: 'Endoplasmic reticulum' },
+    nadh: { zh: 'NADH', en: 'NADH' }, fadh: { zh: 'FADH₂', en: 'FADH₂' }, atp: { zh: 'ATP', en: 'ATP' }, gtp: { zh: 'GTP', en: 'GTP' }, co2: { zh: 'CO₂', en: 'CO₂' }, o2: { zh: 'O₂', en: 'O₂' }, h2o: { zh: 'H₂O', en: 'H₂O' }, nh3: { zh: 'NH₃', en: 'NH₃' },
+    aco: { zh: '乙醯輔酶A', en: 'Acetyl-CoA' }, lac: { zh: '乳酸', en: 'Lactate' }, oaa: { zh: '草醯乙酸', en: 'Oxaloacetate' }, cit: { zh: '檸檬酸', en: 'Citrate' },
+    tpp: { zh: '硫胺焦磷酸', en: 'Thiamin pyrophosphate', ab: 'TPP' }, lip: { zh: '硫辛酸', en: 'Lipoic acid' }, coa: { zh: '輔酶A', en: 'Coenzyme A', ab: 'CoA' }, fad: { zh: 'FAD', en: 'FAD' }, nad: { zh: 'NAD⁺', en: 'NAD⁺' },
+    plp: { zh: '磷酸吡哆醛', en: 'Pyridoxal phosphate', ab: 'PLP' }, biot: { zh: '生物素', en: 'Biotin' },
+    b1: { zh: '維生素 B1（硫胺）', en: 'Thiamin (B1)', bi: '維生素 B1（硫胺 thiamin）' }, b2: { zh: '維生素 B2（核黃素）', en: 'Riboflavin (B2)', bi: '維生素 B2（核黃素 riboflavin）' }, b3: { zh: '菸鹼素（維生素 B3）', en: 'Niacin (B3)', bi: '菸鹼素（niacin，維生素 B3）' },
+    pan: { zh: '泛酸', en: 'Pantothenic acid' }, b6: { zh: '維生素 B6', en: 'Vitamin B6', bi: '維生素 B6' }, nov: { zh: '不是維生素，人體自己會合成', en: 'Not a vitamin (made in the body)' },
+    off: { zh: '失去活性', en: 'inactive' }, on: { zh: '活化', en: 'active' }, inh: { zh: '抑制', en: 'inhibit' }, act: { zh: '活化', en: 'activate' },
+    lacid: { zh: '乳酸中毒', en: 'lactic acidosis' }, ketoac: { zh: '酮酸中毒', en: 'ketoacidosis' }, hypo: { zh: '高血氨', en: 'hyperammonemia' },
+    kd: { zh: '生酮飲食', en: 'ketogenic diet' }, hc: { zh: '高醣飲食', en: 'high-carbohydrate diet' }, hp: { zh: '高蛋白飲食', en: 'high-protein diet' },
+    worse: { zh: '加重', en: 'worsen' }, better: { zh: '改善', en: 'improve' }, irr: { zh: '不可逆', en: 'irreversible' }, rev: { zh: '可逆', en: 'reversible' },
+    beri: { zh: '腳氣病', en: 'beriberi' }, pell: { zh: '癩皮病', en: 'pellagra' }, scur: { zh: '壞血病', en: 'scurvy' }
+  },
+  levels: [
+    { t: '先看全貌', kind: 'ov', h: 304, legend: [3, 2],
+      intro: ['糖解作用在細胞質把葡萄糖變成丙酮酸。有氧氣時，丙酮酸要進粒線體，先經過這一步變成乙醯輔酶A，才能進檸檬酸循環。',
+        '這一步是「糖解」和「檸檬酸循環」之間的橋，由一個很大的酵素複合體負責：丙酮酸去氫酶複合體（PDH complex）。',
+        '3 碳變成 2 碳，掉了一個碳，同時脫氫。所以想一想，會放出什麼、產生什麼？'],
+      svg: function () { var h = PH() / 2;
+        return pill(180, 30, 124, { zh: '丙酮酸', en: 'Pyruvate' }, 'src k3') + tx(250, 34, T('（細胞質）', '(cytosol)'), 'm', 10.5, 'start') + zone(22, 70, 316, 226) + arrow(180, 31 + h, 180, 166 - h) + tx(96, 136, T('（位置）', '(location)'), 'm', 10) +
+          pill(180, 168, 220, { zh: '丙酮酸去氫酶複合體', en: 'Pyruvate dehydrogenase complex' }, 'src') + arrow(128, 169 + h, 80, 244 - h) + arrow(232, 169 + h, 282, 244 - h) + arrow(180, 169 + h, 180, 268 - h) +
+          tx(44, 216, T('產生', 'makes'), 'm', 10, 'start') + tx(316, 216, T('放出', 'releases'), 'm', 10, 'end'); },
+      blanks: [{ id: 'loc', x: 96, y: 104, w: 124, a: 'mat', o: ['mat', 'cyt', 'imm', 'er'] }, { id: 'car', x: 70, y: 246, w: 88, a: 'nadh', o: ['nadh', 'fadh', 'atp', 'gtp'] },
+        { id: 'gas', x: 290, y: 246, w: 88, a: 'co2', o: ['co2', 'o2', 'h2o', 'nh3'] }, { id: 'prod', x: 180, y: 270, w: 124, c: 2, a: 'aco', o: ['aco', 'lac', 'oaa', 'cit'] }],
+      countsTitle: '1 個葡萄糖（2 個丙酮酸）經過這一步', counts: [['產生幾個 NADH', '2', ['1', '2', '3', '4']], ['放出幾個 CO₂', '2', ['1', '2', '3', '6']], ['這些 NADH 換算成幾個 ATP', '5', ['3', '4', '5', '6']]],
+      done: ['總反應：丙酮酸 ＋ CoA ＋ NAD⁺ → [[乙醯輔酶A ＋ CO₂ ＋ NADH]]。', '位置：[[粒線體基質]]。', '這一步[[不可逆]]，所以乙醯輔酶A 變不回丙酮酸，脂肪酸也就不能用來做葡萄糖。',
+        '開關：細胞能量充足（ATP、NADH、乙醯輔酶A 多）就關掉；胰島素讓它打開。'] },
+    { t: '三個酵素、五個輔因子', kind: 'ov', h: 272, legend: [3, 2],
+      intro: ['複合體由三個酵素（E1、E2、E3）接力完成，一共需要五個輔因子。國考申論直接考過：「丙酮酸轉變為乙醯輔酶A 時，需要哪些酵素與輔酵素參與？」',
+        '照順序想：E1 先把丙酮酸脫羧（掉 CO₂），需要 TPP；E2 把剩下的 2 碳接到輔酶A 上，中間用硫辛酸當手臂傳遞；E3 把硫辛酸恢復原狀，電子經 FAD 交給 NAD⁺。'],
+      tip: '記順序的口訣：TPP → 硫辛酸 → CoA → FAD → NAD⁺。α-酮戊二酸去氫酶複合體用的也是同樣這五個。',
+      svg: PDH_E, blanks: PDH_B },
+    { t: '五個輔因子來自哪些維生素', kind: 'list', listTitle: '輔因子 → 維生素', list: PDH_V,
+      intro: ['國考申論常問：「與能量代謝有關的維生素有哪些？寫出輔酵素的形式、參與的酵素和反應。」這一步就一次用到四種維生素 B 群。',
+        '五個輔因子裡有四個是維生素做成的，剩下一個不是。'],
+      tip: '缺維生素 B1 時 TPP 不夠，丙酮酸卡在這一步進不去，會堆積並轉成乳酸。' },
+    { t: '調節與國考重點', kind: 'cloze',
+      intro: ['這個複合體靠「磷酸化」當開關，而且和大部分酵素相反：[[被磷酸化是關，去磷酸化才是開]]。', '最後三題的選項只有英文。'],
+      cloze: [
+        ['丙酮酸去氫酶複合體位在', { a: 'mat', o: ['mat', 'cyt', 'imm', 'er'] }, '。'],
+        ['這個反應是', { a: 'irr', o: ['irr', 'rev'] }, '的。'],
+        ['E1 被丙酮酸去氫酶激酶磷酸化之後，複合體會', { a: 'off', o: ['on', 'off'] }, '。'],
+        ['細胞裡 ATP、NADH、乙醯輔酶A 很多時，會', { a: 'inh', o: ['act', 'inh'] }, '這個複合體。'],
+        ['胰島素會', { a: 'act', o: ['act', 'inh'] }, '這個複合體，讓吃進來的葡萄糖繼續往下代謝。'],
+        ['先天性丙酮酸去氫酶缺乏症的病人，丙酮酸進不了檸檬酸循環，容易發生', { a: 'lacid', o: ['lacid', 'ketoac', 'hypo'] }, '。'],
+        ['這種病人可以使用', { a: 'kd', o: ['kd', 'hc', 'hp'] }, '，讓能量來源繞過這一步。'],
+        ['會活化丙酮酸去氫酶激酶的藥物，會讓這種病', { a: 'worse', o: ['worse', 'better'] }, '。'],
+        ['維生素 B1 缺乏造成的疾病是', { a: 'beri', o: ['beri', 'pell', 'scur'] }, '，病人的丙酮酸和乳酸會堆積。'],
+        ['輔酶A 的結構裡含有的維生素是', { a: 'pan', o: ['b1', 'b2', 'b3', 'pan'] }, '。'],
+        ['使用和這個複合體相同五個輔因子的酵素是', { a: 'kgd', src: 'enz', lang: 'en', o: ['kgd', 'cs', 'sdh', 'mdh'] }, '。'],
+        ['把複合體磷酸化、使它失去活性的酵素是', { a: 'pdk', src: 'enz', lang: 'en', o: ['pdk', 'pdp', 'pc', 'ldh'] }, '。'],
+        ['基因缺陷時可能導致先天性丙酮酸去氫酶缺乏症、負責把複合體去磷酸化的酵素是', { a: 'pdp', src: 'enz', lang: 'en', o: ['pdk', 'pdp', 'pc', 'ldh'] }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 272, force: 'en', svg: PDH_E, blanks: PDH_B, listTitle: 'Cofactor → vitamin', list: PDH_V,
+      intro: ['圖上五個輔因子、圖下五個維生素來源，全部空白。'], tip: '這一關固定用英文作答。答對後，圖下的答案會顯示中文。' }
+  ] };
+/* ======================================================================
    單元二：檸檬酸循環
    ====================================================================== */
 var TCA = { id: 'tca', zh: '檸檬酸循環', en: 'TCA cycle', alias: 'TCA cycle・Krebs cycle・克氏循環', layout: 'cycle',
@@ -396,6 +761,7 @@ var TCA = { id: 'tca', zh: '檸檬酸循環', en: 'TCA cycle', alias: 'TCA cycle
     { k: 'sco', zh: '琥珀醯輔酶A', en: 'Succinyl-CoA', c: 4 }, { k: 'suc', zh: '琥珀酸', en: 'Succinate', c: 4 }, { k: 'fum', zh: '延胡索酸', en: 'Fumarate', c: 4 },
     { k: 'mal', zh: '蘋果酸', en: 'Malate', c: 4 }, { k: 'oaa', zh: '草醯乙酸', en: 'Oxaloacetate', c: 4 }
   ],
+  top: { zh: '乙醯輔酶A', en: 'Acetyl-CoA', c: 2 },
   ang: { cit: 34, iso: 73, akg: 107, sco: 146, suc: 214, fum: 253, mal: 287, oaa: 326 },
   steps: [
     { f: 'oaa', t: 'cit', e: 'cs', p: 'none', irr: 1 }, { f: 'cit', t: 'iso', e: 'aco', p: 'none' }, { f: 'iso', t: 'akg', e: 'idh', p: 'nc', irr: 1 }, { f: 'akg', t: 'sco', e: 'kgd', p: 'nc', irr: 1 },
@@ -471,17 +837,750 @@ var TCA = { id: 'tca', zh: '檸檬酸循環', en: 'TCA cycle', alias: 'TCA cycle
       tip: '這一關固定用英文作答，因為國考的酵素和中間產物常常只寫英文。答對後，酵素下方會顯示中文。' }
   ] };
 
+/* ======================================================================
+   電子傳遞鏈與氧化磷酸化
+   ====================================================================== */
+function ETC_E(showH) {      // 電子走的路線（第 2 關和總複習共用；showH：顯示每個複合體打出幾個 H⁺）
+  var h = PH() / 2, X = 150, R = 292, s = '';
+  s += pill(X, 30, 112, 'NADH', 'src') + pill(R, 92, 116, { zh: 'FADH₂（來自琥珀酸）', en: 'FADH₂ (from succinate)' }, 'src');
+  [92, 154, 216, 278, 340].forEach(function (y, i) { s += arrow(X, (i ? y - 62 : 30) + 1 + h, X, y - h - 2); });
+  s += arrow(R, 93 + h, R, 152 - h) + arrow(R - 57, 154, X + 66, 154) + arrow(X + 64, 340, R - 54, 340) + pill(R, 340, 104, 'O₂ → H₂O') +
+    tx(R, 372, T('氧是最後的電子接受者', 'O₂: final electron acceptor'), 'm', 9.5) +
+    pill(180, 410, 316, { zh: 'H⁺ 梯度 → ATP 合成酶（複合體 V）→ ATP', en: 'H⁺ gradient → ATP synthase (Complex V) → ATP' }, 'src');
+  if (showH) s += tagC(46, 92, '4 H⁺', 'mol') + tagC(46, 216, '4 H⁺', 'mol') + tagC(46, 340, '2 H⁺', 'mol') + tagC(R, 186, '0 H⁺', 'mol') + tx(46, 68, T('打到膜間隙', 'pumped out'), 'm', 9.5);
+  return s;
+}
+var ETC_O = ['c1', 'c2', 'c3', 'c4', 'q', 'cytc', 'c5'];
+var ETC_B = [{ id: 'b1', x: 150, y: 92, w: 128, a: 'c1', o: ETC_O }, { id: 'b2', x: 150, y: 154, w: 128, a: 'q', o: ETC_O }, { id: 'b3', x: 150, y: 216, w: 128, a: 'c3', o: ETC_O },
+  { id: 'b4', x: 150, y: 278, w: 128, a: 'cytc', o: ETC_O }, { id: 'b5', x: 150, y: 340, w: 128, a: 'c4', o: ETC_O }, { id: 'b6', x: 292, y: 154, w: 112, a: 'c2', o: ETC_O }];
+var ETC = { id: 'etc', zh: '電子傳遞鏈與氧化磷酸化', en: 'Electron transport chain', alias: 'ETC・Oxidative phosphorylation・呼吸鏈', layout: 'none',
+  enz: {}, dict: {
+    imm: { zh: '粒線體內膜', en: 'Inner mitochondrial membrane' }, mat: { zh: '粒線體基質', en: 'Mitochondrial matrix' }, omm: { zh: '粒線體外膜', en: 'Outer mitochondrial membrane' }, cyt: { zh: '細胞質', en: 'Cytosol' },
+    o2: { zh: '氧氣（O₂）', en: 'Oxygen (O₂)' }, co2: { zh: 'CO₂', en: 'CO₂' }, nadp: { zh: 'NADP⁺', en: 'NADP⁺' }, pyr: { zh: '丙酮酸', en: 'Pyruvate' },
+    grad: { zh: '質子（H⁺）梯度', en: 'Proton (H⁺) gradient' }, heat: { zh: '熱', en: 'Heat' }, gtp: { zh: 'GTP', en: 'GTP' }, cre: { zh: '磷酸肌酸', en: 'Phosphocreatine' },
+    c1: { zh: '複合體 I', en: 'Complex I' }, c2: { zh: '複合體 II', en: 'Complex II' }, c3: { zh: '複合體 III', en: 'Complex III' }, c4: { zh: '複合體 IV', en: 'Complex IV' },
+    q: { zh: '輔酶 Q（泛醌）', en: 'Coenzyme Q (ubiquinone)', ab: 'CoQ' }, cytc: { zh: '細胞色素 c', en: 'Cytochrome c' }, c5: { zh: 'ATP 合成酶', en: 'ATP synthase' },
+    unc: { zh: '解偶聯劑', en: 'an uncoupler' }, inhb: { zh: '複合體 I 的抑制劑', en: 'a Complex I inhibitor' }, subs: { zh: '受質', en: 'a substrate' },
+    bat: { zh: '棕色脂肪組織', en: 'brown adipose tissue' }, wat: { zh: '白色脂肪組織', en: 'white adipose tissue' }, liver: { zh: '肝臟', en: 'liver' }, rbc: { zh: '紅血球', en: 'red blood cells' },
+    fmn: { zh: 'FMN', en: 'FMN' }, fad: { zh: 'FAD', en: 'FAD' }, heme: { zh: '血基質', en: 'heme' }, tpp: { zh: 'TPP', en: 'TPP' }, cu: { zh: '銅', en: 'copper' }, zn: { zh: '鋅', en: 'zinc' }, se: { zh: '硒', en: 'selenium' }, mn: { zh: '錳', en: 'manganese' },
+    mas: { zh: '蘋果酸-天門冬胺酸穿梭', en: 'Malate-aspartate shuttle' }, gps: { zh: '甘油磷酸穿梭', en: 'Glycerol phosphate shuttle' }, car: { zh: '肉鹼穿梭', en: 'Carnitine shuttle' }, cits: { zh: '檸檬酸穿梭', en: 'Citrate shuttle' },
+    nadh: { zh: 'NADH', en: 'NADH' }, fadh: { zh: 'FADH₂', en: 'FADH₂' }, slp: { zh: '受質層次磷酸化', en: 'substrate-level phosphorylation' }, oxp: { zh: '氧化磷酸化', en: 'oxidative phosphorylation' },
+    sod: { zh: '超氧化物歧化酶（SOD）', en: 'Superoxide dismutase (SOD)' }, cat: { zh: '過氧化氫酶（catalase）', en: 'Catalase' }, gpx: { zh: '麩胱甘肽過氧化酶', en: 'Glutathione peroxidase' }, amy: { zh: '澱粉酶', en: 'Amylase' },
+    stop: { zh: '停止', en: 'stops' }, go: { zh: '照常進行', en: 'continues' }, rot: { zh: '魚藤酮（rotenone）', en: 'Rotenone' }, anti: { zh: '抗黴素 A（antimycin A）', en: 'Antimycin A' }, cn: { zh: '氰化物（cyanide）', en: 'Cyanide' }, oli: { zh: '寡黴素（oligomycin）', en: 'Oligomycin' }, dnp: { zh: '2,4-二硝基苯酚（DNP）', en: '2,4-Dinitrophenol (DNP)' }
+  },
+  levels: [
+    { t: '先看全貌', kind: 'ov', h: 318,
+      intro: ['前面幾個路徑（糖解、檸檬酸循環、β-氧化）真正直接做出來的 ATP 很少，大部分的能量都先裝在 NADH 和 FADH₂ 這兩種「貨車」上。',
+        '電子傳遞鏈就是卸貨的地方：把貨車上的電子一站一站往下傳，最後交給氧氣；傳的過程釋放的能量，用來把 H⁺ 打到膜的另一邊。',
+        'H⁺ 堆在一邊形成梯度，再從 ATP 合成酶流回來時，就像水流推動水車一樣做出 ATP。這整件事叫做氧化磷酸化。'],
+      svg: function () { var h = PH() / 2;
+        return pill(110, 30, 88, 'NADH', 'src') + pill(250, 30, 88, 'FADH₂', 'src') + arrow(110, 31 + h, 130, 82) + arrow(250, 31 + h, 230, 82) + zone(30, 86, 300, 92) +
+          tx(180, 108, T(ETC.zh.slice(0, 5), 'Electron transport chain'), 'b', 13) + arrow(110, 180, 98, 224 - h) + arrow(250, 180, 262, 224 - h) +
+          tx(26, 199, T('電子最後交給', 'electrons go to'), 'm', 10, 'start') + tx(272, 199, T('打出去的 H⁺ 形成', 'pumped H⁺ builds'), 'm', 10, 'start') +
+          arrow(98, 227 + h, 98, 284 - h) + pill(98, 286, 88, 'H₂O') + arrow(262, 227 + h, 262, 284 - h) + pill(262, 286, 156, { zh: 'ATP 合成酶 → ATP', en: 'ATP synthase → ATP' }, 'src'); },
+      blanks: [{ id: 'loc', x: 180, y: 144, w: 150, a: 'imm', o: ['imm', 'mat', 'omm', 'cyt'] }, { id: 'acc', x: 98, y: 226, w: 104, a: 'o2', o: ['o2', 'co2', 'nadp', 'pyr'] },
+        { id: 'gr', x: 262, y: 226, w: 148, a: 'grad', o: ['grad', 'heat', 'gtp', 'cre'] }],
+      done: ['位置：[[粒線體內膜]]。', '電子的來源是 NADH 和 FADH₂（來自糖解、檸檬酸循環、β-氧化），終點是[[氧氣]]，氧被還原成水。',
+        '電子傳遞（氧化）和做 ATP（磷酸化）是靠 [[H⁺ 梯度]]連在一起的，所以叫氧化磷酸化。', '人體大約九成的 ATP 來自這裡，其餘一成來自受質層次磷酸化。'] },
+    { t: '電子走的路線', kind: 'ov', h: 440,
+      intro: ['鏈上有四個固定在膜上的複合體（I 到 IV），加上兩個在中間跑來跑去的小載體。',
+        'NADH 的電子從第一個複合體進來；FADH₂ 的電子比較晚上車，從另一個複合體進來，兩條線在同一個小載體會合，再一起往下走，最後交給氧。',
+        '順著箭頭把六個空格填出來。'],
+      tip: '複合體 II 就是檸檬酸循環裡的琥珀酸去氫酶，是唯一同時屬於兩條路徑的酵素。',
+      svg: function () { return ETC_E(false); }, blanks: ETC_B },
+    { t: '算帳：H⁺ 和 ATP', kind: 'list',
+      intro: ['每個複合體把 H⁺ 打出去的數量不一樣，其中有一個完全不打。', 'FADH₂ 的電子晚上車、跳過了第一個複合體，少打了 4 個 H⁺，所以做出來的 ATP 比 NADH 少。',
+        '換算 ATP 時，老師的規則是：[[考試沒有特別說明，就用 NADH 2.5、FADH₂ 1.5]]；舊的算法是 3 和 2，題目有指定才用。'],
+      countsTitle: '每一對電子經過時，打出幾個 H⁺', counts: [['複合體 I', '4', ['0', '2', '4']], ['複合體 II', '0', ['0', '2', '4']], ['複合體 III', '4', ['0', '2', '4']], ['複合體 IV', '2', ['0', '2', '4']],
+        ['1 個 NADH 做出幾個 ATP', '2.5', ['1.5', '2', '2.5', '3']], ['1 個 FADH₂ 做出幾個 ATP', '1.5', ['1', '1.5', '2', '2.5']]] },
+    { t: '一個葡萄糖完全氧化的總帳', kind: 'list',
+      intro: ['把糖解、丙酮酸去氫酶、檸檬酸循環、電子傳遞鏈接起來，算一個葡萄糖總共得到多少 ATP。',
+        '有一個小麻煩：糖解在細胞質產生的 NADH 穿不過粒線體內膜，要靠「穿梭」把電子送進去，不同器官用的穿梭不一樣。',
+        '肝臟、心臟、腎臟用<b>蘋果酸-天門冬胺酸穿梭</b>，進去後還是 NADH（2.5 ATP）；肌肉和腦用<b>甘油磷酸穿梭</b>，進去後變成 FADH₂（1.5 ATP）。所以兩種器官的總數差 2。'],
+      countsTitle: '1 個葡萄糖', counts: [['糖解直接得到的 ATP', '2', ['2', '4', '6']], ['糖解產生的 NADH', '2', ['2', '4', '6']], ['丙酮酸 → 乙醯輔酶A 產生的 NADH', '2', ['1', '2', '3']],
+        ['檸檬酸循環（兩圈）產生的 NADH', '6', ['3', '6', '8']], ['檸檬酸循環（兩圈）產生的 FADH₂', '2', ['1', '2', '4']], ['檸檬酸循環（兩圈）產生的 GTP', '2', ['1', '2', '4']],
+        ['肝臟、心臟、腎臟的總 ATP', '32', ['30', '32', '36', '38']], ['肌肉、腦的總 ATP', '30', ['30', '32', '36', '38']]] },
+    { t: '抑制劑、解偶聯與國考重點', kind: 'cloze',
+      intro: ['抑制劑會把鏈卡住，電子傳不下去，氧不再被消耗，ATP 也做不出來。', '解偶聯劑不一樣：電子照樣傳、氧照樣消耗，但 H⁺ 梯度被洩掉，[[能量變成熱，做不出 ATP]]。'],
+      cloze: [
+        ['農藥魚藤酮（rotenone）抑制的是', { a: 'c1', o: ['c1', 'c2', 'c3', 'c4'] }, '。'],
+        ['抗黴素 A（antimycin A）抑制的是', { a: 'c3', o: ['c1', 'c2', 'c3', 'c4'] }, '。'],
+        ['氰化物、一氧化碳、疊氮化物抑制的是', { a: 'c4', o: ['c1', 'c2', 'c3', 'c4'] }, '，氧因此無法被還原。'],
+        ['寡黴素（oligomycin）抑制的是', { a: 'c5', o: ['c1', 'c3', 'c4', 'c5'] }, '。'],
+        ['丙二酸（malonate）抑制的是', { a: 'c2', o: ['c1', 'c2', 'c3', 'c4'] }, '。'],
+        ['2,4-二硝基苯酚（DNP）是', { a: 'unc', o: ['unc', 'inhb', 'subs'] }, '，會讓身體產熱卻做不出 ATP。'],
+        ['人體自己的解偶聯蛋白 UCP1 主要在', { a: 'bat', o: ['bat', 'wat', 'liver', 'rbc'] }, '，用來產熱。'],
+        ['電子進入複合體 I 時，先交給它的輔基', { a: 'fmn', o: ['fmn', 'fad', 'heme', 'tpp'] }, '。'],
+        ['複合體 IV（細胞色素 c 氧化酶）除了鐵，還含有的礦物質是', { a: 'cu', o: ['cu', 'zn', 'se', 'mn'] }, '。'],
+        ['唯一不把 H⁺ 打出去的複合體是', { a: 'c2', o: ['c1', 'c2', 'c3', 'c4'] }, '。'],
+        ['肝臟、心臟、腎臟把細胞質的 NADH 送進粒線體，用的是', { a: 'mas', o: ['mas', 'gps', 'car', 'cits'] }, '。'],
+        ['肌肉和腦用的是', { a: 'gps', o: ['mas', 'gps', 'car', 'cits'] }, '，所以 1 個葡萄糖只得到 30 個 ATP。'],
+        ['糖解第 7、10 步直接做出 ATP 的方式叫做', { a: 'slp', o: ['slp', 'oxp'] }, '，和這裡的方式不同。'],
+        ['電子傳遞的過程會產生少量活性氧（ROS）。把超氧自由基變成過氧化氫的酵素是', { a: 'sod', o: ['sod', 'cat', 'gpx', 'amy'] }, '。'],
+        ['含有硒、用麩胱甘肽把過氧化物還原掉的酵素是', { a: 'gpx', o: ['sod', 'cat', 'gpx', 'amy'] }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 440, force: 'en', svg: function () { return ETC_E(true); }, blanks: ETC_B,
+      intro: ['六個空格全部空白。這次圖上多了每個複合體打出的 H⁺ 數。'], tip: '這一關固定用英文作答。' }
+  ] };
+/* ======================================================================
+   脂肪酸 β-氧化
+   ====================================================================== */
+var BOX = { id: 'box', zh: '脂肪酸 β-氧化', en: 'β-Oxidation', alias: 'β-Oxidation・脂肪酸 → 乙醯輔酶A', layout: 'cycle', czh: 'β-氧化', cen: 'β-Oxidation',
+  geo: { nw: 118 },
+  top: { zh: '活化後，由肉鹼帶進基質', en: 'Activated, carried in by carnitine', w: 190 },
+  nodes: [
+    { k: 'acyl', zh: '脂醯輔酶A', en: 'Fatty acyl-CoA' }, { k: 'enoyl', zh: '反式-Δ²-烯醯輔酶A', en: 'trans-Δ²-Enoyl-CoA' },
+    { k: 'hydroxy', zh: 'L-β-羥脂醯輔酶A', en: 'L-β-Hydroxyacyl-CoA' }, { k: 'keto', zh: 'β-酮脂醯輔酶A', en: 'β-Ketoacyl-CoA' }
+  ],
+  ang: { acyl: 0, enoyl: 90, hydroxy: 180, keto: 270 },
+  steps: [
+    { f: 'acyl', t: 'enoyl', e: 'acad', p: 'fad' }, { f: 'enoyl', t: 'hydroxy', e: 'ech', p: 'wat' }, { f: 'hydroxy', t: 'keto', e: 'hadh', p: 'nadh' }, { f: 'keto', t: 'acyl', e: 'thio', p: 'ac' }
+  ],
+  enz: {
+    acad: { zh: '脂醯輔酶A 去氫酶', en: 'Acyl-CoA dehydrogenase' }, ech: { zh: '烯醯輔酶A 水合酶', en: 'Enoyl-CoA hydratase' }, hadh: { zh: 'β-羥脂醯輔酶A 去氫酶', en: 'β-Hydroxyacyl-CoA dehydrogenase' }, thio: { zh: '硫解酶', en: 'Thiolase' },
+    cpt1: { zh: '肉鹼棕櫚醯轉移酶 I', en: 'Carnitine palmitoyltransferase I', ab: 'CPT-I' }, hsl: { zh: '荷爾蒙敏感性脂解酶', en: 'Hormone-sensitive lipase' }, lpl: { zh: '脂蛋白脂解酶', en: 'Lipoprotein lipase' },
+    acs: { zh: '脂醯輔酶A 合成酶', en: 'Acyl-CoA synthetase' }, iso: { zh: '烯醯輔酶A 異構酶', en: 'Enoyl-CoA isomerase' }, atgl: { zh: '三酸甘油酯脂解酶', en: 'Triacylglycerol lipase' }, mgl: { zh: '單酸甘油酯脂解酶', en: 'Monoacylglycerol lipase' }
+  },
+  prod: { fad: { zh: '產生 FADH₂', en: 'Makes FADH₂' }, wat: { zh: '加水，不產生能量', en: 'Adds water only' }, nadh: { zh: '產生 NADH', en: 'Makes NADH' }, ac: { zh: '切下 1 個乙醯輔酶A', en: 'Releases 1 acetyl-CoA' } },
+  tags: { fad: [['FADH₂', 'fad']], nadh: [['NADH', 'nadh']], ac: [[{ zh: '乙醯輔酶A', en: 'Acetyl-CoA' }, 'out']] },
+  dict: {
+    fa: { zh: '脂肪酸', en: 'Fatty acids' }, glc: { zh: '葡萄糖', en: 'Glucose' }, aa: { zh: '胺基酸', en: 'Amino acids' }, ket: { zh: '酮體', en: 'Ketone bodies' },
+    acoa: { zh: '脂醯輔酶A', en: 'Fatty acyl-CoA' }, aco: { zh: '乙醯輔酶A', en: 'Acetyl-CoA' }, mal: { zh: '丙二醯輔酶A', en: 'Malonyl-CoA' }, pyr: { zh: '丙酮酸', en: 'Pyruvate' }, lac: { zh: '乳酸', en: 'Lactate' }, oaa: { zh: '草醯乙酸', en: 'Oxaloacetate' },
+    car: { zh: '肉鹼', en: 'Carnitine' }, alb: { zh: '白蛋白', en: 'Albumin' }, cit: { zh: '檸檬酸', en: 'Citrate' }, coq: { zh: '輔酶 Q', en: 'Coenzyme Q' },
+    mat: { zh: '粒線體基質', en: 'Mitochondrial matrix' }, cyt: { zh: '細胞質', en: 'Cytosol' }, omm: { zh: '粒線體外膜', en: 'Outer mitochondrial membrane' }, imm: { zh: '粒線體內膜', en: 'Inner mitochondrial membrane' }, per: { zh: '過氧化體', en: 'Peroxisome' }, er: { zh: '內質網', en: 'Endoplasmic reticulum' },
+    n1: { zh: '1', en: '1' }, n2: { zh: '2', en: '2' }, n3: { zh: '3', en: '3' },
+    lm: { zh: '離胺酸和甲硫胺酸', en: 'lysine and methionine' }, gg: { zh: '甘胺酸和麩胺酸', en: 'glycine and glutamate' }, tt: { zh: '酪胺酸和色胺酸', en: 'tyrosine and tryptophan' },
+    need: { zh: '需要', en: 'need' }, noneed: { zh: '不需要', en: 'do not need' },
+    b2: { zh: '維生素 B2（核黃素）', en: 'riboflavin (B2)', bi: '維生素 B2（riboflavin）' }, b3: { zh: '菸鹼素', en: 'niacin', bi: '菸鹼素（niacin）' }, b1: { zh: '維生素 B1', en: 'thiamin (B1)', bi: '維生素 B1（thiamin）' }, b12: { zh: '維生素 B12', en: 'vitamin B12', bi: '維生素 B12' }, biot: { zh: '生物素', en: 'biotin' }, fol: { zh: '葉酸', en: 'folate' },
+    prop: { zh: '丙醯輔酶A（propionyl-CoA）', en: 'Propionyl-CoA', bi: '丙醯輔酶A（propionyl-CoA）' }, suc: { zh: '琥珀醯輔酶A', en: 'Succinyl-CoA' },
+    less: { zh: '少', en: 'less' }, more: { zh: '多', en: 'more' }, act: { zh: '活化', en: 'activates' }, inh: { zh: '抑制', en: 'inhibits' },
+    alpha: { zh: 'α-氧化', en: 'α-oxidation' }, beta: { zh: 'β-氧化', en: 'β-oxidation' }, omega: { zh: 'ω-氧化', en: 'ω-oxidation' }
+  },
+  levels: [
+    { t: '先看全貌：從脂肪組織到粒線體', kind: 'ov', h: 452, legend: [2],
+      intro: ['飢餓或運動時，脂肪組織把三酸甘油酯拆開釋放出來，送到肌肉、肝臟等組織當燃料。',
+        '但脂肪酸不能直接進粒線體燒。它要先被「活化」（接上輔酶A），再靠一個專門的載體帶過粒線體內膜，進到裡面才開始 β-氧化。',
+        '順著箭頭，把這一路上的五個空格填出來。'],
+      svg: function () { var h = PH() / 2;
+        return pill(180, 30, 200, { zh: '三酸甘油酯（脂肪組織）', en: 'Triacylglycerol (adipose tissue)' }, 'src') + arrow(150, 31 + h, 124, 96 - h) + arrow(214, 31 + h, 268, 96 - h) + tx(118, 66, T('脂解', 'lipolysis'), 'm', 10.5, 'end') +
+          pill(276, 98, 100, { zh: '甘油', en: 'Glycerol' }, 'pill k3') + tx(276, 130, T('送到肝臟做葡萄糖', 'to liver → glucose'), 'm', 9.5) + arrow(118, 99 + h, 118, 164 - h) + tx(130, 135, T('由白蛋白運送', 'carried by albumin'), 'm', 9.5, 'start') +
+          tx(192, 163, T('活化：接上輔酶A', 'activation: add CoA'), 'm', 10, 'start') + tx(192, 177, T('花掉 ATP（→ AMP）', 'uses ATP (→ AMP)'), 'm', 10, 'start') + arrow(118, 167 + h, 118, 232 - h) +
+          tx(52, 238, T('由', 'by'), 'm', 11, 'end') + tx(184, 238, T('帶過粒線體內膜', 'across the inner membrane'), 'm', 10.5, 'start') + arrow(118, 235 + h, 118, 380 - h) + zone(22, 296, 316, 140) + tx(254, 354, T('（位置）', '(location)'), 'm', 10) +
+          pill(118, 382, 152, { zh: 'β-氧化（一圈少 2 碳）', en: 'β-Oxidation (−2 C per turn)' }, 'src') + arrow(195, 382, 214, 382) + tx(276, 414, T('再進檸檬酸循環', 'then to the TCA cycle'), 'm', 10); },
+      blanks: [{ id: 'fa', x: 118, y: 98, w: 120, a: 'fa', o: ['fa', 'glc', 'aa', 'ket'] }, { id: 'act', x: 118, y: 166, w: 132, a: 'acoa', o: ['acoa', 'aco', 'mal', 'pyr'] },
+        { id: 'car', x: 118, y: 234, w: 116, a: 'car', o: ['car', 'alb', 'cit', 'coq'] }, { id: 'loc', x: 254, y: 326, w: 132, a: 'mat', o: ['mat', 'cyt', 'omm', 'per'] },
+        { id: 'end', x: 276, y: 382, w: 118, c: 2, a: 'aco', o: ['aco', 'pyr', 'lac', 'oaa'] }],
+      done: ['原料與產物：脂肪酸 → 很多個[[乙醯輔酶A]]，同時產生 FADH₂ 和 NADH。', '位置：[[粒線體基質]]；長鏈脂肪酸要靠[[肉鹼]]帶進來。',
+        '活化在粒線體外膜（細胞質這一側）進行，ATP 變成 AMP，算花掉 2 個 ATP。', '開關：飢餓時升糖素、腎上腺素活化脂解；吃飽時胰島素抑制脂解，丙二醯輔酶A 也會擋住肉鹼穿梭。'] },
+    { t: '一圈四步的中間產物', kind: 'map', blanks: ['enoyl', 'hydroxy', 'keto'],
+      intro: ['進到基質之後，脂醯輔酶A 每轉一圈就被切下 2 個碳（一個乙醯輔酶A），剩下短 2 碳的脂醯輔酶A 再轉下一圈，直到全部切完。',
+        '「β」是指從羧基端數過來的第二個碳（β 碳），四個步驟都是在處理這個碳：先脫氫變成雙鍵（烯）→ 加水變成羥基 → 再脫氫變成酮基 → 從這裡切開。',
+        '所以名字的順序是：[[烯 → 羥 → 酮]]。'],
+      tip: '從最上面的脂醯輔酶A 開始，順時針走。' },
+    { t: '四個酵素', kind: 'map', blanks: [], rows: 'enz', rowsTitle: '每一步的酵素',
+      intro: ['口訣：[[氧化、加水、氧化、硫解]]。', '兩次「氧化」都是{d:去氫酶（dehydrogenase）}；「加水」是<b>水合酶</b>（hydratase）；最後用輔酶A 的硫把碳鏈切開，所以叫<b>硫解酶</b>（thiolase）。'] },
+    { t: '算帳：一圈產生什麼', kind: 'map', blanks: [], rows: 'prod', rowsTitle: '每一步產生什麼',
+      intro: ['兩個去氫酶各產生一種貨車：第一個把氫交給 FAD，第二個交給 NAD⁺。', '以 16 個碳的棕櫚酸（palmitate）為例算總帳。注意：16 個碳切成 8 段，只要切 7 刀，所以是轉 7 圈、得到 8 個乙醯輔酶A。'],
+      tip: '每個乙醯輔酶A 進檸檬酸循環得 10 個 ATP；FADH₂ 算 1.5、NADH 算 2.5。活化時花掉的算 2 個 ATP。',
+      countsTitle: '1 個棕櫚酸（16:0）完全氧化', counts: [['β-氧化要轉幾圈', '7', ['6', '7', '8', '16']], ['得到幾個乙醯輔酶A', '8', ['7', '8', '9', '16']], ['得到幾個 FADH₂', '7', ['7', '8', '14']], ['得到幾個 NADH', '7', ['7', '8', '14']],
+        ['全部換成 ATP（還沒扣活化）', '108', ['96', '106', '108', '131']], ['扣掉活化用的 2 個，淨得', '106', ['104', '106', '108', '129']]] },
+    { t: '換一個脂肪酸算算看', kind: 'list',
+      intro: ['考試不一定考 16 個碳。規則都一樣：碳數除以 2 是乙醯輔酶A 的數目，再減 1 就是圈數。',
+        '不飽和脂肪酸本來就有雙鍵，處理到雙鍵那一圈可以跳過第一個去氫酶，所以[[每多一個雙鍵，少一個 FADH₂（少 1.5 個 ATP）]]。'],
+      tip: '國考申論考過：棕櫚酸和硬脂酸的 ATP 產率差多少？硬脂酸和油酸差多少？',
+      countsTitle: '硬脂酸（18:0）和油酸（18:1）', counts: [['硬脂酸要轉幾圈', '8', ['7', '8', '9']], ['硬脂酸得到幾個乙醯輔酶A', '9', ['8', '9', '10']], ['硬脂酸淨得幾個 ATP', '120', ['106', '118.5', '120', '122']],
+        ['油酸淨得幾個 ATP', '118.5', ['106', '118.5', '120', '122']], ['硬脂酸比棕櫚酸多幾個 ATP', '14', ['10', '12', '14', '16']], ['每轉一圈（1 FADH₂ ＋ 1 NADH ＋ 1 乙醯輔酶A 進 TCA）共幾個 ATP', '14', ['12', '14', '16', '18']]] },
+    { t: '調節與國考重點', kind: 'cloze',
+      intro: ['活化、肉鹼穿梭、特殊的脂肪酸，以及脂解的調控。', '最後三題的選項只有英文。'],
+      cloze: [
+        ['脂肪酸的活化（接上輔酶A）發生在', { a: 'omm', o: ['omm', 'mat', 'imm', 'er'] }, '。'],
+        ['活化時 ATP 變成 AMP，相當於花掉幾個 ATP？', { a: 'n2', o: ['n1', 'n2', 'n3'] }, ''],
+        ['肉鹼在體內由哪兩個胺基酸合成？', { a: 'lm', o: ['lm', 'gg', 'tt'] }, ''],
+        ['短鏈和中鏈脂肪酸進粒線體時', { a: 'noneed', o: ['need', 'noneed'] }, '肉鹼。'],
+        ['脂肪酸合成的中間產物丙二醯輔酶A（malonyl-CoA）會', { a: 'inh', o: ['act', 'inh'] }, '肉鹼穿梭的第一個酵素，所以合成和氧化不會同時進行。'],
+        ['第一個去氫酶的輔酶 FAD 來自', { a: 'b2', o: ['b1', 'b2', 'b3', 'b12'] }, '。'],
+        ['奇數碳脂肪酸切到最後，剩下的 3 碳片段是', { a: 'prop', o: ['prop', 'aco', 'mal', 'suc'] }, '。'],
+        ['上一題的產物要變成琥珀醯輔酶A 才能進檸檬酸循環，最後一步需要的維生素是', { a: 'b12', o: ['b12', 'fol', 'b1', 'b2'] }, '。'],
+        ['同樣碳數時，不飽和脂肪酸完全氧化得到的 ATP 比飽和脂肪酸', { a: 'less', o: ['more', 'less'] }, '。'],
+        ['極長鏈脂肪酸要先在哪裡縮短，才送到粒線體？', { a: 'per', o: ['per', 'er', 'cyt', 'omm'] }, ''],
+        ['處理有支鏈的脂肪酸、每次只去掉 1 個碳、不產生 ATP 的是', { a: 'alpha', o: ['alpha', 'beta', 'omega'] }, '。'],
+        ['飢餓時升糖素和腎上腺素會', { a: 'act', o: ['act', 'inh'] }, '脂肪細胞裡的荷爾蒙敏感性脂解酶；胰島素則相反。'],
+        ['肉鹼穿梭的速率限制酵素、會被 malonyl-CoA 抑制的是', { a: 'cpt1', src: 'enz', lang: 'en', o: ['cpt1', 'acs', 'thio', 'acad'] }, '。'],
+        ['下列哪一個酵素沒有參與脂肪細胞內三酸甘油酯的分解？', { a: 'lpl', src: 'enz', lang: 'en', o: ['hsl', 'lpl', 'atgl', 'mgl'] }, ''],
+        ['不飽和脂肪酸進行 β-氧化時，額外需要的酵素是', { a: 'iso', src: 'enz', lang: 'en', o: ['iso', 'ech', 'thio', 'acs'] }, '。']
+      ] },
+    { t: '總複習：全部空白（英文作答）', kind: 'map', force: 'en', plain: true, energy: true, blanks: ['enoyl', 'hydroxy', 'keto'], rows: 'enz', rowsTitle: '每一步的酵素',
+      intro: ['圖上三個中間產物、圖下四個酵素，全部空白。'], tip: '這一關固定用英文作答。答對後，酵素下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   脂肪酸合成
+   ====================================================================== */
+var FAS_C = ['β-氧化', '脂肪酸合成'];
+var FAS = { id: 'fas', zh: '脂肪酸合成', en: 'Fatty acid synthesis', alias: 'Lipogenesis・乙醯輔酶A → 棕櫚酸', layout: 'cycle', czh: '碳鏈加長', cen: 'Chain elongation',
+  geo: { nw: 118 },
+  top: { zh: '乙醯-ACP（引子，2 碳）', en: 'Acetyl-ACP (primer, 2 C)', w: 190, c: 2 },
+  nodes: [
+    { k: 'acyl', zh: '醯基-ACP', en: 'Acyl-ACP' }, { k: 'keto', zh: 'β-酮醯-ACP', en: 'β-Ketoacyl-ACP' },
+    { k: 'hydroxy', zh: 'β-羥醯-ACP', en: 'β-Hydroxyacyl-ACP' }, { k: 'enoyl', zh: '烯醯-ACP', en: 'Enoyl-ACP' }
+  ],
+  ang: { acyl: 0, keto: 90, hydroxy: 180, enoyl: 270 },
+  steps: [
+    { f: 'acyl', t: 'keto', e: 'kas', p: 'co2', io: [[{ zh: '＋丙二醯-ACP', en: '+ malonyl-ACP' }, 'mol']] }, { f: 'keto', t: 'hydroxy', e: 'kr', p: 'nadph' },
+    { f: 'hydroxy', t: 'enoyl', e: 'dh', p: 'wat' }, { f: 'enoyl', t: 'acyl', e: 'er', p: 'nadph' }
+  ],
+  enz: {
+    kas: { zh: 'β-酮醯-ACP 合成酶（縮合酶）', en: 'β-Ketoacyl-ACP synthase' }, kr: { zh: 'β-酮醯-ACP 還原酶', en: 'β-Ketoacyl-ACP reductase' }, dh: { zh: 'β-羥醯-ACP 脫水酶', en: 'β-Hydroxyacyl-ACP dehydratase' }, er: { zh: '烯醯-ACP 還原酶', en: 'Enoyl-ACP reductase' },
+    acc: { zh: '乙醯輔酶A 羧化酶', en: 'Acetyl-CoA carboxylase', ab: 'ACC' }, acl: { zh: '檸檬酸裂解酶', en: 'ATP-citrate lyase' }, fasn: { zh: '脂肪酸合成酶', en: 'Fatty acid synthase' }, me: { zh: '蘋果酸酶', en: 'Malic enzyme' },
+    te: { zh: '硫酯酶', en: 'Thioesterase' }, cpt1: { zh: '肉鹼棕櫚醯轉移酶 I', en: 'Carnitine palmitoyltransferase I' },
+    d9: { zh: 'Δ9 去飽和酶', en: 'Δ9 desaturase' }, d12: { zh: 'Δ12 去飽和酶', en: 'Δ12 desaturase' }, d15: { zh: 'Δ15 去飽和酶', en: 'Δ15 desaturase' }, e12: { zh: 'Δ12 延長酶', en: 'Δ12 elongase' }, e15: { zh: 'Δ15 延長酶', en: 'Δ15 elongase' }
+  },
+  prod: { co2: { zh: '接上 2 個碳，放出 CO₂', en: 'Adds 2 C, releases CO₂' }, nadph: { zh: '用掉 NADPH', en: 'Uses NADPH' }, wat: { zh: '脫水，不用還原力', en: 'Removes water only' } },
+  tags: { co2: [['CO₂', 'co2']], nadph: [['−NADPH', 'spp']] },
+  dict: {
+    cit: { zh: '檸檬酸', en: 'Citrate' }, oaa: { zh: '草醯乙酸', en: 'Oxaloacetate' }, pyr: { zh: '丙酮酸', en: 'Pyruvate' }, car: { zh: '肉鹼', en: 'Carnitine' },
+    malc: { zh: '丙二醯輔酶A', en: 'Malonyl-CoA' }, hmg: { zh: 'HMG-CoA', en: 'HMG-CoA' }, succ: { zh: '琥珀醯輔酶A', en: 'Succinyl-CoA' }, aac: { zh: '乙醯乙醯輔酶A', en: 'Acetoacetyl-CoA' },
+    nadph: { zh: 'NADPH', en: 'NADPH' }, nadh: { zh: 'NADH', en: 'NADH' }, fadh: { zh: 'FADH₂', en: 'FADH₂' }, atp: { zh: 'ATP', en: 'ATP' },
+    pal: { zh: '棕櫚酸（16:0）', en: 'Palmitate (16:0)' }, ste: { zh: '硬脂酸（18:0）', en: 'Stearate (18:0)' }, ole: { zh: '油酸（18:1）', en: 'Oleate (18:1)' }, lin: { zh: '亞麻油酸（18:2）', en: 'Linoleate (18:2)' },
+    cyt: { zh: '細胞質', en: 'Cytosol' }, mat: { zh: '粒線體基質', en: 'Mitochondrial matrix' }, er: { zh: '內質網', en: 'Endoplasmic reticulum' }, per: { zh: '過氧化體', en: 'Peroxisome' },
+    biot: { zh: '生物素', en: 'biotin' }, b1: { zh: '維生素 B1', en: 'thiamin', bi: '維生素 B1（thiamin）' }, b6: { zh: '維生素 B6', en: 'vitamin B6', bi: '維生素 B6' }, b12: { zh: '維生素 B12', en: 'vitamin B12', bi: '維生素 B12' }, pan: { zh: '泛酸', en: 'pantothenic acid' }, nia: { zh: '菸鹼素', en: 'niacin' },
+    act: { zh: '活化', en: 'activates' }, inh: { zh: '抑制', en: 'inhibits' }, ins: { zh: '胰島素', en: 'insulin' }, glu: { zh: '升糖素', en: 'glucagon' },
+    ppp: { zh: '五碳糖磷酸途徑', en: 'pentose phosphate pathway' }, gly: { zh: '糖解作用', en: 'glycolysis' }, tca: { zh: '檸檬酸循環', en: 'TCA cycle' }, box: { zh: 'β-氧化', en: 'β-oxidation' },
+    d9: { zh: 'Δ9', en: 'Δ9' }, d12: { zh: 'Δ12', en: 'Δ12' }, d15: { zh: 'Δ15', en: 'Δ15' }, d6: { zh: 'Δ6', en: 'Δ6' },
+    can: { zh: '可以', en: 'can' }, cannot: { zh: '不能', en: 'cannot' }, la: { zh: '亞麻油酸（linoleic acid）', en: 'linoleic acid' }, ala: { zh: 'α-次亞麻油酸（α-linolenic acid）', en: 'α-linolenic acid' }, oa: { zh: '油酸（oleic acid）', en: 'oleic acid' }, pa: { zh: '棕櫚酸（palmitic acid）', en: 'palmitic acid' },
+    g3p: { zh: '甘油-3-磷酸', en: 'glycerol 3-phosphate' }, pha: { zh: '磷脂酸', en: 'phosphatidic acid' }, dag: { zh: '雙酸甘油酯', en: 'diacylglycerol' }, chol: { zh: '膽鹼', en: 'choline' },
+    cdp: { zh: 'CDP（來自 CTP，胞苷三磷酸）', en: 'CDP (from cytidine triphosphate)' }, udp: { zh: 'UDP', en: 'UDP' }, adp: { zh: 'ADP', en: 'ADP' }, gdp: { zh: 'GDP', en: 'GDP' }
+  },
+  levels: [
+    { t: '先看全貌：從粒線體到細胞質', kind: 'ov', h: 436, legend: [2],
+      intro: ['吃進來的醣類超過需要時，多的會變成脂肪酸存起來。原料是乙醯輔酶A，但它在粒線體裡，而脂肪酸是在另一個地方合成的。',
+        '乙醯輔酶A 自己穿不過粒線體膜，要先「變裝」成別的分子帶出來，出來後再變回乙醯輔酶A。',
+        '接著先被加上一個 CO₂ 變成 3 碳的活化原料，再由一個很大的酵素每次接上 2 個碳，一共轉 7 圈，做出 16 個碳的脂肪酸。'],
+      svg: function () { var h = PH() / 2;
+        return zone(22, 12, 316, 116, T('粒線體', 'Mitochondria')) + pill(96, 62, 124, { zh: '乙醯輔酶A', en: 'Acetyl-CoA' }, 'src k2') + arrow(159, 62, 192, 62) + tx(176, 50, T('＋草醯乙酸', '+ OAA'), 'm', 9) +
+          tx(96, 96, T('（主要來自丙酮酸）', '(mostly from pyruvate)'), 'm', 9.5) + tx(256, 96, T('穿得過粒線體膜', 'can cross the membrane'), 'm', 9.5) + arrow(256, 104, 256, 184 - h) + tx(244, 148, T('檸檬酸裂解酶', 'citrate lyase'), 'm', 9.5, 'end') +
+          pill(256, 186, 136, { zh: '乙醯輔酶A', en: 'Acetyl-CoA' }, 'pill k2') + arrow(256, 187 + h, 256, 250 - h) + tx(244, 216, T('乙醯輔酶A 羧化酶', 'acetyl-CoA carboxylase'), 'm', 9.5, 'end') + tx(244, 229, T('＋CO₂、ATP（需要生物素）', '+ CO₂, ATP (needs biotin)'), 'm', 9.5, 'end') +
+          arrow(256, 253 + h, 256, 318 - h) + pill(256, 320, 156, { zh: '脂肪酸合成酶（轉 7 圈）', en: 'Fatty acid synthase (7 turns)' }, 'src') + arrow(132, 320, 176, 320) + tx(80, 352, T('還原力', 'reducing power'), 'm', 9.5) +
+          arrow(256, 321 + h, 256, 384 - h) + tx(256, 418, T('16 個碳的飽和脂肪酸', '16-carbon saturated fatty acid'), 'm', 9.5) + tx(76, 160, T('合成的位置', 'where it happens'), 'm', 9.5); },
+      blanks: [{ id: 'out', x: 256, y: 62, w: 124, a: 'cit', o: ['cit', 'oaa', 'pyr', 'car'] }, { id: 'mal', x: 256, y: 252, w: 136, a: 'malc', o: ['malc', 'hmg', 'succ', 'aac'] },
+        { id: 'red', x: 80, y: 320, w: 100, a: 'nadph', o: ['nadph', 'nadh', 'fadh', 'atp'] }, { id: 'prod', x: 256, y: 386, w: 140, a: 'pal', o: ['pal', 'ste', 'ole', 'lin'] },
+        { id: 'loc', x: 76, y: 188, w: 120, a: 'cyt', o: ['cyt', 'mat', 'er', 'per'] }],
+      done: ['原料與產物：8 個乙醯輔酶A → 1 個[[棕櫚酸（16:0）]]，需要 7 ATP 和 14 NADPH。', '位置：[[細胞質]]；乙醯輔酶A 變成[[檸檬酸]]才能從粒線體出來。',
+        '還原力用的是 [[NADPH]]，不是 NADH。NADPH 主要來自五碳糖磷酸途徑和蘋果酸酶。', '開關：吃飽時胰島素打開它；飢餓時升糖素和腎上腺素關掉它。'] },
+    { t: '加長一圈的四個中間產物', kind: 'map', blanks: ['keto', 'hydroxy', 'enoyl'],
+      intro: ['合成時，碳鏈不是接在輔酶A 上，而是接在一個叫 ACP（醯基攜帶蛋白，acyl carrier protein）的蛋白質上。ACP 的手臂構造和輔酶A 一樣，都含有泛酸。',
+        '每一圈先把丙二醯-ACP 的 2 個碳接上去（這時掉一個 CO₂），接上去之後多了一個酮基；再把酮基還原成羥基 → 脫水變成雙鍵 → 再還原成飽和的碳鏈。',
+        '所以順序是：[[酮 → 羥 → 烯]]，剛好和 β-氧化（烯 → 羥 → 酮）相反。'],
+      tip: '從最上面的醯基-ACP 開始，順時針走。轉完一圈回到醯基-ACP，但多了 2 個碳。' },
+    { t: '四個酵素', kind: 'map', blanks: [], rows: 'enz', rowsTitle: '每一步的酵素',
+      intro: ['口訣：[[縮合、還原、脫水、還原]]，和 β-氧化的「氧化、加水、氧化、硫解」剛好倒過來。',
+        '這四個酵素其實都是同一個大酵素「脂肪酸合成酶」（fatty acid synthase）的不同部位，ACP 在中間，帶著碳鏈輪流送到每個部位加工。'],
+      tip: '轉完 7 圈做出 16 個碳後，由硫酯酶（thioesterase）把棕櫚酸從 ACP 上切下來。' },
+    { t: '算帳：做一個棕櫚酸要花多少', kind: 'map', blanks: [], rows: 'prod', rowsTitle: '每一步用掉或放出什麼',
+      intro: ['每一圈有兩次「還原」，各用掉 1 個 NADPH，所以一圈用 2 個。',
+        '每一圈接上的丙二醯輔酶A，都是事先用 1 個 ATP 把 CO₂ 加到乙醯輔酶A 上做出來的；接上去的時候 CO₂ 又掉下來。CO₂ 只是暫時借用，最後不會留在脂肪酸裡。'],
+      tip: '16 個碳 ＝ 第一個乙醯輔酶A 當引子（2 碳）＋ 7 個丙二醯輔酶A（每個貢獻 2 碳）。',
+      countsTitle: '合成 1 個棕櫚酸（16:0）', counts: [['碳鏈加長幾圈', '7', ['6', '7', '8', '16']], ['總共用幾個乙醯輔酶A', '8', ['7', '8', '9', '16']], ['其中幾個要先做成丙二醯輔酶A', '7', ['1', '7', '8']],
+        ['用掉幾個 ATP', '7', ['7', '8', '14']], ['用掉幾個 NADPH', '14', ['7', '8', '14', '16']], ['如果做的是 18 個碳，要用幾個 NADPH', '16', ['14', '16', '18']]] },
+    { t: '合成和 β-氧化的比較', kind: 'list',
+      intro: ['國考常把合成和分解放在一起比。兩條路徑幾乎每一項都相反，而且分開在不同地方，所以不會互相干擾。', '下面每一句說的是哪一條路徑？'],
+      countsTitle: '這是哪一條路徑的特徵', counts: [['在細胞質進行', '脂肪酸合成', FAS_C], ['在粒線體基質進行', 'β-氧化', FAS_C], ['碳鏈接在 ACP 上', '脂肪酸合成', FAS_C], ['碳鏈接在輔酶A 上', 'β-氧化', FAS_C],
+        ['用 NADPH 當還原力', '脂肪酸合成', FAS_C], ['產生 FADH₂ 和 NADH', 'β-氧化', FAS_C], ['每次處理的 2 碳單位來自丙二醯輔酶A', '脂肪酸合成', FAS_C], ['需要肉鹼', 'β-氧化', FAS_C],
+        ['需要生物素', '脂肪酸合成', FAS_C], ['胰島素促進', '脂肪酸合成', FAS_C], ['升糖素、腎上腺素促進', 'β-氧化', FAS_C]] },
+    { t: '調節與國考重點', kind: 'cloze',
+      intro: ['速率限制酵素、NADPH 的來源、必需脂肪酸，以及三酸甘油酯和磷脂質的合成。', '最後三題的選項只有英文。'],
+      cloze: [
+        ['乙醯輔酶A 羧化酶需要的維生素是', { a: 'biot', o: ['biot', 'b1', 'b6', 'b12'] }, '。'],
+        ['檸檬酸在細胞質變多時，會', { a: 'act', o: ['act', 'inh'] }, '乙醯輔酶A 羧化酶。'],
+        ['脂肪酸合成的終產物棕櫚醯輔酶A 變多時，會', { a: 'inh', o: ['act', 'inh'] }, '乙醯輔酶A 羧化酶。'],
+        ['讓乙醯輔酶A 羧化酶去磷酸化而活化的激素是', { a: 'ins', o: ['ins', 'glu'] }, '。'],
+        ['NADPH 的來源除了蘋果酸酶，最主要的是', { a: 'ppp', o: ['ppp', 'gly', 'tca', 'box'] }, '。'],
+        ['ACP 和輔酶A 的構造裡，都含有哪一種維生素？', { a: 'pan', o: ['pan', 'biot', 'nia', 'b6'] }, ''],
+        ['丙二醯輔酶A 會抑制肉鹼穿梭，所以攝取足夠的醣類時，脂肪酸氧化和酮體生成都會被', { a: 'inh', o: ['act', 'inh'] }, '。'],
+        ['棕櫚酸要再加長成硬脂酸，是在哪裡進行？', { a: 'er', o: ['er', 'cyt', 'per'] }, ''],
+        ['人體的去飽和酶最遠只能在哪個位置加上雙鍵？', { a: 'd9', o: ['d6', 'd9', 'd12', 'd15'] }, ''],
+        ['因此人體無法自行合成、必須由食物供應的 n-6 脂肪酸是', { a: 'la', o: ['la', 'oa', 'pa'] }, '。'],
+        ['n-3 和 n-6 兩族脂肪酸在人體內', { a: 'cannot', o: ['can', 'cannot'] }, '互相轉換。'],
+        ['合成三酸甘油酯和磷脂質，都要先把甘油-3-磷酸接上兩個脂肪酸，變成', { a: 'pha', o: ['pha', 'dag', 'chol'] }, '。'],
+        ['合成卵磷脂時，用來活化並攜帶膽鹼的核苷酸是', { a: 'cdp', o: ['cdp', 'udp', 'adp', 'gdp'] }, '。'],
+        ['脂肪酸合成的速率限制酵素是', { a: 'acc', src: 'enz', lang: 'en', o: ['acc', 'fasn', 'acl', 'me'] }, '。'],
+        ['人類因為缺乏哪一個酵素，無法由 linoleic acid 合成 α-linolenic acid？', { a: 'd15', src: 'enz', lang: 'en', o: ['d12', 'e12', 'd15', 'e15'] }, ''],
+        ['會被 malonyl-CoA 抑制的酵素是', { a: 'cpt1', src: 'enz', lang: 'en', o: ['cpt1', 'acc', 'te', 'me'] }, '。']
+      ] },
+    { t: '總複習：全部空白（英文作答）', kind: 'map', force: 'en', plain: true, energy: true, blanks: ['keto', 'hydroxy', 'enoyl'], rows: 'enz', rowsTitle: '每一步的酵素',
+      intro: ['圖上三個中間產物、圖下四個酵素，全部空白。'], tip: '這一關固定用英文作答。答對後，酵素下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   酮體生成
+   ====================================================================== */
+var KET = { id: 'ket', zh: '酮體生成', en: 'Ketogenesis', alias: 'Ketogenesis・乙醯輔酶A → 酮體', layout: 'chain',
+  geo: { x: 132, w: 150, sx: 298, sw: 104 },
+  nodes: [
+    { k: 'aco', zh: '乙醯輔酶A（2 個）', en: 'Acetyl-CoA (× 2)', c: 2 }, { k: 'aac', zh: '乙醯乙醯輔酶A', en: 'Acetoacetyl-CoA', c: 4 }, { k: 'hmg', zh: 'HMG-CoA', en: 'HMG-CoA', c: 6 },
+    { k: 'acac', zh: '乙醯乙酸', en: 'Acetoacetate', c: 4 }, { k: 'bhb', zh: 'β-羥丁酸', en: 'β-Hydroxybutyrate', c: 4 },
+    { k: 'acet', zh: '丙酮', en: 'Acetone', c: 3, side: 'acac', link: 'leaf' }
+  ],
+  steps: [
+    { f: 'aco', t: 'aac', e: 'thio' }, { f: 'aac', t: 'hmg', e: 'hmgs', irr: 1, io: [[{ zh: '再加 1 個乙醯輔酶A', en: '+ 1 acetyl-CoA' }, 'mol']] },
+    { f: 'hmg', t: 'acac', e: 'hmgl', io: [[{ zh: '切下 1 個乙醯輔酶A', en: '− 1 acetyl-CoA' }, 'mol']] }, { f: 'acac', t: 'bhb', e: 'bdh', io: [[{ zh: '用掉 NADH', en: 'uses NADH' }, 'mol']] },
+    { f: 'acac', t: 'acet', e: 'spon' }
+  ],
+  enz: {
+    thio: { zh: '硫解酶', en: 'Thiolase' }, hmgs: { zh: 'HMG-CoA 合成酶', en: 'HMG-CoA synthase' }, hmgl: { zh: 'HMG-CoA 裂解酶', en: 'HMG-CoA lyase' }, bdh: { zh: 'β-羥丁酸去氫酶', en: 'β-Hydroxybutyrate dehydrogenase' },
+    spon: { zh: '不需要酵素（自己脫羧）', en: 'No enzyme (spontaneous)' }, hmgr: { zh: 'HMG-CoA 還原酶', en: 'HMG-CoA reductase' },
+    scot: { zh: '琥珀醯輔酶A 轉移酶', en: 'Succinyl-CoA:3-ketoacid CoA transferase' }, cpt1: { zh: '肉鹼棕櫚醯轉移酶 I', en: 'Carnitine palmitoyltransferase I' }, hsl: { zh: '荷爾蒙敏感性脂解酶', en: 'Hormone-sensitive lipase' }
+  },
+  dict: {
+    aco: { zh: '乙醯輔酶A', en: 'Acetyl-CoA' }, pyr: { zh: '丙酮酸', en: 'Pyruvate' }, lac: { zh: '乳酸', en: 'Lactate' }, glc: { zh: '葡萄糖', en: 'Glucose' },
+    oaa: { zh: '草醯乙酸', en: 'Oxaloacetate' }, cit: { zh: '檸檬酸', en: 'Citrate' }, akg: { zh: 'α-酮戊二酸', en: 'α-Ketoglutarate' }, coa: { zh: '輔酶A', en: 'Coenzyme A' },
+    liv: { zh: '肝臟', en: 'Liver' }, mus: { zh: '肌肉', en: 'Muscle' }, brn: { zh: '腦', en: 'Brain' }, adi: { zh: '脂肪組織', en: 'Adipose tissue' }, kid: { zh: '腎臟', en: 'Kidney' }, hrt: { zh: '心臟', en: 'Heart' },
+    ext: { zh: '腦、心臟、肌肉', en: 'Brain, heart, muscle' }, rbc: { zh: '紅血球', en: 'Red blood cells' }, livo: { zh: '只有肝臟', en: 'Liver only' }, fatc: { zh: '脂肪細胞', en: 'Fat cells' },
+    mat: { zh: '粒線體', en: 'mitochondria' }, cyt: { zh: '細胞質', en: 'cytosol' }, er: { zh: '內質網', en: 'endoplasmic reticulum' },
+    acet: { zh: '丙酮', en: 'acetone' }, bhb: { zh: 'β-羥丁酸', en: 'β-hydroxybutyrate' }, acac: { zh: '乙醯乙酸', en: 'acetoacetate' },
+    t1: { zh: '沒有控制好的第 1 型糖尿病', en: 'uncontrolled type 1 diabetes' }, fed: { zh: '剛吃完高醣的一餐', en: 'just after a high-carbohydrate meal' }, ex: { zh: '短時間激烈運動', en: 'brief intense exercise' },
+    acid: { zh: '酸', en: 'acids' }, base: { zh: '鹼', en: 'bases' }, inh: { zh: '抑制', en: 'inhibits' }, act: { zh: '活化', en: 'activates' }, can: { zh: '可以', en: 'can' }, cannot: { zh: '不能', en: 'cannot' },
+    epi: { zh: '頑固型癲癇', en: 'refractory epilepsy' }, gout: { zh: '痛風', en: 'gout' }, pku: { zh: '苯酮尿症', en: 'phenylketonuria' },
+    suc: { zh: '琥珀醯輔酶A', en: 'succinyl-CoA' }, atp: { zh: 'ATP', en: 'ATP' }, malc: { zh: '丙二醯輔酶A', en: 'malonyl-CoA' },
+    n2: { zh: '2', en: '2' }, n3: { zh: '3', en: '3' }, n4: { zh: '4', en: '4' }
+  },
+  levels: [
+    { t: '先看全貌：為什麼要做酮體', kind: 'ov', h: 376, legend: [2],
+      intro: ['長時間沒吃東西，或是糖尿病沒有控制好的時候，脂肪組織釋放出大量脂肪酸，肝臟拼命做 β-氧化，產生一大堆乙醯輔酶A。',
+        '可是這時候肝臟也忙著做糖質新生，把檸檬酸循環需要的一個分子抽走了，乙醯輔酶A 進不了循環，只好另外找出路：做成酮體。',
+        '酮體溶於水、可以隨血液運送，是飢餓時其他器官（尤其是腦）的替代燃料。但做的器官自己卻用不了。'],
+      svg: function () { var h = PH() / 2;
+        return pill(180, 30, 220, { zh: '大量脂肪酸（飢餓、糖尿病）', en: 'Lots of fatty acids (fasting, diabetes)' }, 'src') + arrow(180, 31 + h, 180, 104 - h) + tx(192, 70, T('β-氧化', 'β-oxidation'), 'm', 10, 'start') +
+          arrow(124, 118, 84, 160) + pill(62, 178, 108, { zh: '檸檬酸循環', en: 'TCA cycle' }) + tx(62, 210, T('進不去，因為缺少', 'blocked: short of'), 'm', 9.5) + tx(62, 270, T('被拿去做糖質新生', 'used for gluconeogenesis'), 'm', 9.5) +
+          arrow(206, 107 + h, 232, 186 - h) + tx(250, 152, T('在哪個器官做成酮體', 'organ that makes them'), 'm', 9.5, 'start') + arrow(244, 189 + h, 244, 254 - h) + pill(244, 256, 132, { zh: '酮體', en: 'Ketone bodies' }, 'src') +
+          arrow(244, 257 + h, 244, 320 - h) + tx(256, 292, T('隨血液運送', 'carried in blood'), 'm', 9.5, 'start') + tx(244, 354, T('拿來當燃料', 'burn them as fuel'), 'm', 9.5) +
+          tx(64, 296, T('不能用酮體的器官', 'cannot use them'), 'm', 9.5); },
+      blanks: [{ id: 'raw', x: 180, y: 106, w: 124, c: 2, a: 'aco', o: ['aco', 'pyr', 'lac', 'glc'] }, { id: 'short', x: 62, y: 238, w: 112, a: 'oaa', o: ['oaa', 'cit', 'akg', 'coa'] },
+        { id: 'org', x: 244, y: 188, w: 112, a: 'liv', o: ['liv', 'mus', 'brn', 'adi'] }, { id: 'use', x: 244, y: 322, w: 156, a: 'ext', o: ['ext', 'rbc', 'livo', 'fatc'] },
+        { id: 'no', x: 64, y: 324, w: 104, a: 'liv', o: ['liv', 'mus', 'brn', 'hrt'] }],
+      done: ['原料：β-氧化產生的[[乙醯輔酶A]]。', '位置：[[肝臟的粒線體]]。', '肝臟只做不用，因為它沒有把酮體活化的酵素；[[腦、心臟、肌肉]]等肝外組織拿來當燃料。',
+        '開關：飢餓、未控制的第 1 型糖尿病、極低醣飲食時大量生成；醣類足夠時胰島素抑制脂解，酮體就不會多。'] },
+    { t: '路線與三種酮體', kind: 'map', blanks: ['aac', 'hmg', 'acac', 'bhb', 'acet'],
+      intro: ['2 碳的乙醯輔酶A 先兩個接成 4 碳，再接第三個變成 6 碳的 HMG-CoA，然後切掉一個乙醯輔酶A，剩下 4 碳的第一種酮體。',
+        '第一種酮體有兩個去處：被還原成第二種酮體（血中最多的一種），或是自己掉一個 CO₂ 變成 3 碳的第三種酮體（揮發性，會從呼吸排出）。',
+        '顏色是碳數，跟著 2 → 4 → 6 → 4 的變化填。'],
+      tip: '「先接成 6 碳再切回 4 碳」看起來繞路，但這樣才能把輔酶A 拿掉，得到不帶輔酶A 的乙醯乙酸。' },
+    { t: '每一步的酵素', kind: 'map', blanks: [], rows: 'enz', rowsTitle: '每一步的酵素',
+      intro: ['名字很直接：做出 HMG-CoA 的是<b>合成酶</b>（synthase），把它切開的是<b>裂解酶</b>（lyase）。速率限制酵素是 HMG-CoA 合成酶（實心編號）。',
+        '最後變成丙酮的那一步不需要酵素。'],
+      tip: 'HMG-CoA 也是合成膽固醇的中間產物，但那是在細胞質，下一個酵素是 HMG-CoA 還原酶；酮體是在粒線體，下一個是 HMG-CoA 裂解酶。兩條路不要混在一起。' },
+    { t: '酮體的利用與國考重點', kind: 'cloze',
+      intro: ['國考申論考過：「何謂酮體？在何種情況會進行酮體生成？」以及「詳述生酮作用和酮體的利用」。', '最後三題的選項只有英文。'],
+      cloze: [
+        ['酮體一共有幾種？', { a: 'n3', o: ['n2', 'n3', 'n4'] }, ''],
+        ['酮體在肝細胞的', { a: 'mat', o: ['mat', 'cyt', 'er'] }, '裡合成。'],
+        ['不能被身體利用、會從呼吸排出（有水果味）的酮體是', { a: 'acet', o: ['acet', 'bhb', 'acac'] }, '。'],
+        ['血液中濃度最高的酮體是', { a: 'bhb', o: ['acet', 'bhb', 'acac'] }, '。'],
+        ['下列哪一種情況會大量生成酮體？', { a: 't1', o: ['t1', 'fed', 'ex'] }, ''],
+        ['肝外組織利用酮體時，要用哪一個分子提供輔酶A，把乙醯乙酸活化？', { a: 'suc', o: ['suc', 'atp', 'malc'] }, ''],
+        ['活化後的乙醯乙醯輔酶A 被切成幾個乙醯輔酶A，進入檸檬酸循環？', { a: 'n2', o: ['n2', 'n3', 'n4'] }, ''],
+        ['紅血球', { a: 'cannot', o: ['can', 'cannot'] }, '利用酮體，因為它沒有粒線體。'],
+        ['乙醯乙酸和 β-羥丁酸都是', { a: 'acid', o: ['acid', 'base'] }, '，大量堆積時血液 pH 下降，就是酮酸中毒。'],
+        ['攝取足夠的醣類時，丙二醯輔酶A 增加，會', { a: 'inh', o: ['act', 'inh'] }, '脂肪酸進入粒線體氧化，酮體就不會過多。'],
+        ['胰島素會', { a: 'inh', o: ['act', 'inh'] }, '脂肪組織的荷爾蒙敏感性脂解酶，所以缺乏胰島素時脂解失控。'],
+        ['生酮飲食在臨床上用來治療', { a: 'epi', o: ['epi', 'gout', 'pku'] }, '，讓腦改用酮體當能量來源。'],
+        ['酮體生成的速率限制酵素是', { a: 'hmgs', src: 'enz', lang: 'en', o: ['hmgs', 'hmgl', 'hmgr', 'thio'] }, '。'],
+        ['肝臟因為缺乏哪一個酵素，無法利用自己做的酮體？', { a: 'scot', src: 'enz', lang: 'en', o: ['scot', 'bdh', 'hmgl', 'cpt1'] }, ''],
+        ['把 acetoacetate 還原成 β-hydroxybutyrate 的酵素是', { a: 'bdh', src: 'enz', lang: 'en', o: ['bdh', 'hmgs', 'thio', 'hsl'] }, '。']
+      ] },
+    { t: '總複習：全部空白（英文作答）', kind: 'map', force: 'en', plain: true, blanks: ['aac', 'hmg', 'acac', 'bhb', 'acet'], rows: 'enz', rowsTitle: '每一步的酵素',
+      intro: ['圖上五個產物、圖下五個酵素，全部空白。'], tip: '這一關固定用英文作答。答對後，酵素下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   膽固醇合成與脂蛋白
+   ====================================================================== */
+var CHO_F = ['bile', 'ster', 'vitd', 'memb', 'ketb', 'pg'], CHO_L = ['cm', 'vldl', 'ldl', 'hdl'], CHO_A = ['b48', 'b100', 'c2', 'a1', 'e'];
+var CHO = { id: 'cho', zh: '膽固醇合成與脂蛋白', en: 'Cholesterol & lipoproteins', alias: 'Cholesterol synthesis・Lipoproteins・Apolipoproteins', layout: 'chain',
+  nodes: [
+    { k: 'aco', zh: '乙醯輔酶A', en: 'Acetyl-CoA', c: 2 }, { k: 'hmg', zh: 'HMG-CoA', en: 'HMG-CoA', c: 6 }, { k: 'mev', zh: '甲羥戊酸', en: 'Mevalonate', c: 6 },
+    { k: 'ipp', zh: '異戊烯焦磷酸', en: 'Isopentenyl pyrophosphate', ab: 'IPP', c: 5 }, { k: 'sq', zh: '鯊烯', en: 'Squalene' }, { k: 'cho', zh: '膽固醇', en: 'Cholesterol', fixed: 1 }
+  ],
+  rowExtra: ['hmgl', 'acc'],
+  extra: [{ k: 'aac', zh: '乙醯乙酸', en: 'Acetoacetate' }, { k: 'malc', zh: '丙二醯輔酶A', en: 'Malonyl-CoA' }],
+  steps: [
+    { f: 'aco', t: 'hmg', e: 'hmgs', io: [[{ zh: '3 個乙醯輔酶A 接起來', en: '3 acetyl-CoA joined' }, 'mol']] }, { f: 'hmg', t: 'mev', e: 'hmgr', irr: 1, io: [[{ zh: '用掉 2 NADPH', en: 'uses 2 NADPH' }, 'mol']] },
+    { f: 'mev', t: 'ipp', io: [[{ zh: '用掉 ATP，掉 1 個 CO₂', en: 'uses ATP, loses CO₂' }, 'mol']] }, { f: 'ipp', t: 'sq', dots: { zh: '5 碳單位接成 30 碳', en: 'C5 units joined into C30' } },
+    { f: 'sq', t: 'cho', dots: { zh: '捲成環，修剪成 27 碳', en: 'cyclized, trimmed to C27' } }
+  ],
+  enz: { hmgs: { zh: 'HMG-CoA 合成酶', en: 'HMG-CoA synthase' }, hmgr: { zh: 'HMG-CoA 還原酶', en: 'HMG-CoA reductase' }, hmgl: { zh: 'HMG-CoA 裂解酶', en: 'HMG-CoA lyase' }, acc: { zh: '乙醯輔酶A 羧化酶', en: 'Acetyl-CoA carboxylase' },
+    lpl: { zh: '脂蛋白脂解酶', en: 'Lipoprotein lipase', ab: 'LPL' }, lcat: { zh: '卵磷脂膽固醇醯基轉移酶', en: 'Lecithin-cholesterol acyltransferase', ab: 'LCAT' }, hsl: { zh: '荷爾蒙敏感性脂解酶', en: 'Hormone-sensitive lipase' }, c7: { zh: '膽固醇 7α-羥化酶', en: 'Cholesterol 7α-hydroxylase' } },
+  dict: {
+    aco: { zh: '乙醯輔酶A', en: 'Acetyl-CoA' }, pyr: { zh: '丙酮酸', en: 'Pyruvate' }, glc: { zh: '葡萄糖', en: 'Glucose' }, aa: { zh: '胺基酸', en: 'Amino acids' },
+    hmgr: { zh: 'HMG-CoA 還原酶', en: 'HMG-CoA reductase' }, hmgs: { zh: 'HMG-CoA 合成酶', en: 'HMG-CoA synthase' }, accd: { zh: '乙醯輔酶A 羧化酶', en: 'Acetyl-CoA carboxylase' }, cpt: { zh: '肉鹼棕櫚醯轉移酶 I', en: 'CPT-I' },
+    nadph: { zh: 'NADPH', en: 'NADPH' }, nadh: { zh: 'NADH', en: 'NADH' }, fadh: { zh: 'FADH₂', en: 'FADH₂' },
+    liv: { zh: '肝臟', en: 'liver' }, mus: { zh: '肌肉', en: 'muscle' }, adi: { zh: '脂肪組織', en: 'adipose tissue' }, si: { zh: '小腸', en: 'small intestine' },
+    cyt: { zh: '細胞質與內質網', en: 'cytosol and ER' }, mat: { zh: '粒線體', en: 'mitochondria' }, nuc: { zh: '細胞核', en: 'nucleus' },
+    act: { zh: '活化', en: 'activates' }, inh: { zh: '抑制', en: 'inhibits' }, dec: { zh: '減少', en: 'decreases' }, inc: { zh: '增加', en: 'increases' },
+    statin: { zh: 'statin 類藥物', en: 'statins' }, fib: { zh: '膳食纖維', en: 'dietary fiber' }, asp: { zh: '阿斯匹靈', en: 'aspirin' },
+    srebp: { zh: 'SREBP', en: 'SREBP' }, lxr: { zh: 'LXR', en: 'LXR' }, ppar: { zh: 'PPAR', en: 'PPAR' },
+    bile: { zh: '膽酸（膽鹽）', en: 'Bile acids' }, ster: { zh: '類固醇激素', en: 'Steroid hormones' }, vitd: { zh: '維生素 D₃', en: 'Vitamin D₃' }, memb: { zh: '細胞膜', en: 'Cell membranes' }, ketb: { zh: '酮體', en: 'Ketone bodies' }, pg: { zh: '前列腺素', en: 'Prostaglandins' },
+    cm: { zh: '乳糜微粒', en: 'Chylomicron' }, vldl: { zh: '極低密度脂蛋白', en: 'VLDL' }, ldl: { zh: '低密度脂蛋白', en: 'LDL' }, hdl: { zh: '高密度脂蛋白', en: 'HDL' },
+    b48: { zh: 'apoB-48', en: 'apoB-48' }, b100: { zh: 'apoB-100', en: 'apoB-100' }, c2: { zh: 'apoC-II', en: 'apoC-II' }, a1: { zh: 'apoA-I', en: 'apoA-I' }, e: { zh: 'apoE', en: 'apoE' },
+    lym: { zh: '淋巴', en: 'lymph' }, pv: { zh: '肝門靜脈', en: 'portal vein' }, endo: { zh: '微血管內皮表面', en: 'capillary endothelium' }, inad: { zh: '脂肪細胞內', en: 'inside fat cells' },
+    ldlr: { zh: 'LDL 受體', en: 'the LDL receptor' }, lplr: { zh: '脂蛋白脂解酶', en: 'lipoprotein lipase' }, hdlr: { zh: 'HDL', en: 'HDL' },
+    fl: { zh: '脂肪肝', en: 'fatty liver' }, gs: { zh: '膽結石', en: 'gallstones' }, n5: { zh: '5', en: '5' }, n2: { zh: '2', en: '2' }, n10: { zh: '10', en: '10' },
+    comp: { zh: '在腸道和膽固醇競爭吸收', en: 'compete with cholesterol for absorption' }, synb: { zh: '抑制肝臟合成膽固醇', en: 'block cholesterol synthesis in the liver' }, gly: { zh: '甘胺酸或牛磺酸', en: 'glycine or taurine' }, glu: { zh: '麩胺酸或天門冬胺酸', en: 'glutamate or aspartate' }
+  },
+  levels: [
+    { t: '先看全貌', kind: 'ov', h: 372, legend: [2],
+      intro: ['體內的膽固醇大約一半來自食物、一半是自己合成的，合成主要在肝臟。',
+        '合成的原料和脂肪酸、酮體一樣，都是同一個 2 碳分子；一樣需要還原力 NADPH。整條路很長，但只要記住一個關鍵酵素。',
+        '膽固醇不是壞東西：它是細胞膜的成分，也是好幾種重要物質的原料。'],
+      svg: function () { var h = PH() / 2;
+        return tx(170, 34, T('原料', 'starting material'), 'm', 9.5, 'end') + arrow(258, 31 + h, 258, 96 - h) + tx(158, 102, T('速率限制酵素', 'rate-limiting enzyme'), 'm', 9.5, 'end') + tx(258, 134, T('還原力來自 NADPH', 'reducing power: NADPH'), 'm', 9.5) +
+          pill(86, 150, 140, { zh: '食物（動物性食品）', en: 'Diet (animal foods)' }, 'src') + arrow(258, 142, 214, 212 - h) + arrow(96, 151 + h, 148, 212 - h) + pill(180, 214, 150, { zh: '膽固醇（27 碳）', en: 'Cholesterol (C27)' }, 'src') +
+          arrow(154, 215 + h, 110, 286 - h) + arrow(206, 215 + h, 250, 286 - h) + pill(98, 288, 156, { zh: '細胞膜的成分', en: 'Cell membranes' }) + pill(262, 288, 156, { zh: '膽酸（幫助脂肪消化）', en: 'Bile acids (fat digestion)' }) +
+          pill(98, 336, 156, { zh: '類固醇激素', en: 'Steroid hormones' }) + pill(262, 336, 156, { zh: '維生素 D', en: 'Vitamin D' }); },
+      blanks: [{ id: 'raw', x: 258, y: 30, w: 124, c: 2, a: 'aco', o: ['aco', 'pyr', 'glc', 'aa'] }, { id: 'key', x: 258, y: 98, w: 176, a: 'hmgr', o: ['hmgr', 'hmgs', 'accd', 'cpt'] }],
+      done: ['原料：[[乙醯輔酶A]]；還原力：NADPH。', '速率限制酵素：[[HMG-CoA 還原酶（HMG-CoA reductase）]]，statin 類降膽固醇藥抑制的就是它。',
+        '位置：細胞質和內質網，主要在肝臟。', '開關：胰島素促進；升糖素抑制；細胞裡膽固醇多的時候，合成會自動減少（回饋抑制）。所以吃進來的膽固醇多，自己合成的就變少。'] },
+    { t: '合成的路線', kind: 'map', blanks: ['hmg', 'mev', 'ipp', 'sq'],
+      intro: ['2 碳的乙醯輔酶A 三個接成 6 碳的 HMG-CoA，被還原成甲羥戊酸，這是整條路的關卡。',
+        '接著掉一個 CO₂ 變成 5 碳的活化單位，六個 5 碳單位接成 30 碳的長鏈，最後捲成四個環、修剪成 27 碳的膽固醇。',
+        '記碳數就好：[[2 → 6 → 6 → 5 → 30 → 27]]。'],
+      tip: '前兩步和酮體生成一樣都是做出 HMG-CoA，但這裡是在細胞質；接下來被「還原」而不是被「裂解」。' },
+    { t: '合成的調節', kind: 'cloze',
+      intro: ['國考考過 HMG-CoA 還原酶的調節方式，也在營養學考過飲食膽固醇和血膽固醇的關係。', '最後兩題的選項只有英文。'],
+      cloze: [
+        ['膽固醇合成主要在哪個器官？', { a: 'liv', o: ['liv', 'mus', 'adi', 'si'] }, ''],
+        ['膽固醇合成在細胞的', { a: 'cyt', o: ['cyt', 'mat', 'nuc'] }, '進行。'],
+        ['合成時需要的還原力是', { a: 'nadph', o: ['nadph', 'nadh', 'fadh'] }, '。'],
+        ['胰島素讓 HMG-CoA 還原酶去磷酸化，結果是', { a: 'act', o: ['act', 'inh'] }, '這個酵素。'],
+        ['升糖素讓它被磷酸化，結果是', { a: 'inh', o: ['act', 'inh'] }, '這個酵素。'],
+        ['吃進來的膽固醇變多時，肝臟自己合成的膽固醇會', { a: 'dec', o: ['inc', 'dec'] }, '。'],
+        ['細胞內膽固醇濃度低時，活化 HMG-CoA 還原酶基因轉錄的轉錄因子是', { a: 'srebp', o: ['srebp', 'lxr', 'ppar'] }, '。'],
+        ['抑制 HMG-CoA 還原酶、用來降低血膽固醇的是', { a: 'statin', o: ['statin', 'fib', 'asp'] }, '。'],
+        ['酮體生成也有 HMG-CoA，但那是在', { a: 'mat', o: ['cyt', 'mat', 'nuc'] }, '裡，兩條路徑各自獨立。'],
+        ['膽固醇合成的速率限制酵素是', { a: 'hmgr', src: 'enz', lang: 'en', o: ['hmgr', 'hmgs', 'hmgl', 'acc'] }, '。'],
+        ['膽固醇變成膽酸的速率限制酵素是', { a: 'c7', src: 'enz', lang: 'en', o: ['c7', 'hmgr', 'lcat', 'lpl'] }, '。']
+      ] },
+    { t: '膽固醇的去路', kind: 'list', listTitle: '膽固醇變成什麼',
+      intro: ['膽固醇的環狀骨架人體拆不掉，不能拿來產生能量，只能改造成別的東西，或是變成膽酸後隨糞便排出。'],
+      list: [['在肝臟被氧化，再接上甘胺酸或牛磺酸，分泌到小腸幫助脂肪乳化', { a: 'bile', o: CHO_F }], ['皮膚裡的 7-脫氫膽固醇照到紫外線後變成', { a: 'vitd', o: CHO_F }],
+        ['腎上腺皮質和性腺拿它來合成', { a: 'ster', o: CHO_F }], ['所有動物細胞都需要它，用來調節流動性的構造是', { a: 'memb', o: CHO_F }]] },
+    { t: '四種脂蛋白', kind: 'list', listTitle: '這是哪一種脂蛋白',
+      intro: ['膽固醇和三酸甘油酯不溶於水，在血液裡要包成「脂蛋白」才能運送：裡面包著脂質，外面是磷脂質和載脂蛋白。',
+        '記法：三酸甘油酯越多，顆粒越大、密度越低；蛋白質越多，密度越高。依密度由低到高是：乳糜微粒 → VLDL → LDL → HDL。'],
+      tip: 'IDL（中密度脂蛋白）是 VLDL 變成 LDL 的中間產物，可以回肝臟，或繼續變成 LDL。',
+      list: [['小腸做的，運送食物中的三酸甘油酯', { a: 'cm', o: CHO_L }], ['肝臟做的，把肝臟合成的三酸甘油酯運出去', { a: 'vldl', o: CHO_L }],
+        ['膽固醇比例最高，把膽固醇送到肝外組織', { a: 'ldl', o: CHO_L }], ['把肝外組織多餘的膽固醇帶回肝臟（膽固醇逆向運輸）', { a: 'hdl', o: CHO_L }],
+        ['顆粒最大、密度最低', { a: 'cm', o: CHO_L }], ['蛋白質比例最高、密度最高', { a: 'hdl', o: CHO_L }]] },
+    { t: '載脂蛋白', kind: 'list', listTitle: '這是哪一個載脂蛋白',
+      intro: ['載脂蛋白（apolipoprotein）有三種工作：當脂蛋白的骨架、當酵素的輔因子、當受體辨認的標籤。國考選擇題常考下面這五個。'],
+      list: [['乳糜微粒特有的骨架蛋白', { a: 'b48', o: CHO_A }], ['VLDL 和 LDL 的骨架蛋白，也是 LDL 受體辨認的對象', { a: 'b100', o: CHO_A }],
+        ['活化血管內皮上的脂蛋白脂解酶（lipoprotein lipase）', { a: 'c2', o: CHO_A }], ['HDL 的主要蛋白，活化 LCAT，和膽固醇逆向運輸有關', { a: 'a1', o: CHO_A }],
+        ['幫助乳糜微粒殘餘物被肝臟吸收', { a: 'e', o: CHO_A }]] },
+    { t: '脂蛋白與國考重點', kind: 'cloze',
+      intro: ['把合成、運送和臨床接起來。', '最後兩題的選項只有英文。'],
+      cloze: [
+        ['乳糜微粒離開小腸細胞後，先進入', { a: 'lym', o: ['lym', 'pv'] }, '，再進入血液。'],
+        ['脂蛋白脂解酶（LPL）位在', { a: 'endo', o: ['endo', 'inad'] }, '，把脂蛋白裡的三酸甘油酯水解，讓組織吸收脂肪酸。'],
+        ['家族性高膽固醇血症是因為先天缺乏', { a: 'ldlr', o: ['ldlr', 'lplr', 'hdlr'] }, '，LDL 無法被細胞回收。'],
+        ['估算 LDL 膽固醇的公式：LDL ＝ 總膽固醇 − HDL −（三酸甘油酯 ÷', { a: 'n5', o: ['n2', 'n5', 'n10'] }, '）。'],
+        ['肝臟做不出足夠的 VLDL 把三酸甘油酯運出去時，會造成', { a: 'fl', o: ['fl', 'gs'] }, '。'],
+        ['膽酸在分泌前會先接上', { a: 'gly', o: ['gly', 'glu'] }, '，變成膽鹽。'],
+        ['植物固醇可以降低血膽固醇，主要機制是', { a: 'comp', o: ['comp', 'synb'] }, '。'],
+        ['HDL 膽固醇偏低時，膽固醇逆向運輸', { a: 'dec', o: ['inc', 'dec'] }, '，比較不利於膽固醇排出。'],
+        ['被 apoC-II 活化的酵素是', { a: 'lpl', src: 'enz', lang: 'en', o: ['lpl', 'lcat', 'hsl', 'hmgr'] }, '。'],
+        ['被 apoA-I 活化、把 HDL 表面的膽固醇酯化的酵素是', { a: 'lcat', src: 'enz', lang: 'en', o: ['lpl', 'lcat', 'hsl', 'c7'] }, '。']
+      ] },
+    { t: '總複習：合成路線（英文作答）', kind: 'map', force: 'en', plain: true, blanks: ['hmg', 'mev', 'ipp', 'sq'], rows: 'enz', rowsTitle: '前兩步的酵素',
+      intro: ['圖上四個中間產物、圖下兩個酵素，全部空白。'], tip: '這一關固定用英文作答。答對後，酵素下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   轉胺作用與尿素循環
+   ====================================================================== */
+var UREA_K = ['pyr', 'oaa', 'akg', 'aco'], UREA_A = ['ala', 'asp', 'glu', 'gln'], UREA_P = ['粒線體', '細胞質'];
+var UREA = { id: 'urea', zh: '轉胺作用與尿素循環', en: 'Transamination & urea cycle', alias: 'Transamination・Urea cycle・氮怎麼離開身體', layout: 'cycle', czh: '尿素循環', cen: 'Urea cycle',
+  geo: { nw: 116 },
+  top: { zh: 'NH₄⁺ + HCO₃⁻', en: 'NH₄⁺ + HCO₃⁻', w: 150 },
+  pre: [{ e: 'cps', p: 'atp2', irr: 1, desc: { zh: 'NH₄⁺ ＋ HCO₃⁻ → 胺甲醯磷酸', en: 'NH₄⁺ + HCO₃⁻ → carbamoyl phosphate' }, io: [[{ zh: '做成胺甲醯磷酸', en: '→ carbamoyl phosphate' }, 'mol']] }],
+  nodes: [
+    { k: 'cit', zh: '瓜胺酸', en: 'Citrulline' }, { k: 'as', zh: '精胺琥珀酸', en: 'Argininosuccinate' }, { k: 'arg', zh: '精胺酸', en: 'Arginine' }, { k: 'orn', zh: '鳥胺酸', en: 'Ornithine' }
+  ],
+  ang: { orn: 315, cit: 45, as: 135, arg: 225 },
+  steps: [
+    { f: 'orn', t: 'cit', e: 'otc', p: 'none' }, { f: 'cit', t: 'as', e: 'ass', p: 'atpamp', io: [[{ zh: '＋天門冬胺酸', en: '+ aspartate' }, 'mol']] },
+    { f: 'as', t: 'arg', e: 'asl', p: 'none', io: [[{ zh: '放出延胡索酸', en: '− fumarate' }, 'mol']] }, { f: 'arg', t: 'orn', e: 'arg1', p: 'none', io: [[{ zh: '放出尿素', en: '− urea' }, 'mol']] }
+  ],
+  enz: {
+    cps: { zh: '胺甲醯磷酸合成酶 I', en: 'Carbamoyl phosphate synthetase I', ab: 'CPS I' }, otc: { zh: '鳥胺酸胺甲醯轉移酶', en: 'Ornithine transcarbamoylase', ab: 'OTC' },
+    ass: { zh: '精胺琥珀酸合成酶', en: 'Argininosuccinate synthetase' }, asl: { zh: '精胺琥珀酸裂解酶', en: 'Argininosuccinate lyase' }, arg1: { zh: '精胺酸酶', en: 'Arginase' },
+    alt: { zh: '丙胺酸轉胺酶', en: 'Alanine aminotransferase', ab: 'ALT' }, ast: { zh: '天門冬胺酸轉胺酶', en: 'Aspartate aminotransferase', ab: 'AST' }, gdh: { zh: '麩胺酸去氫酶', en: 'Glutamate dehydrogenase' },
+    gs: { zh: '麩醯胺酸合成酶', en: 'Glutamine synthetase' }, gls: { zh: '麩醯胺酸酶', en: 'Glutaminase' }
+  },
+  prod: { atp2: { zh: '消耗 2 ATP', en: 'Uses 2 ATP' }, atpamp: { zh: '消耗 1 ATP（變成 AMP）', en: 'Uses 1 ATP (→ AMP)' }, none: { zh: '不消耗能量', en: 'No energy used' } },
+  tags: { atp2: [['−2 ATP', 'sp']], atpamp: [['−1 ATP', 'sp']] },
+  dict: {
+    plp: { zh: '磷酸吡哆醛', en: 'Pyridoxal phosphate', ab: 'PLP' }, tpp: { zh: '硫胺焦磷酸', en: 'Thiamin pyrophosphate', ab: 'TPP' }, biot: { zh: '生物素', en: 'Biotin' }, fad: { zh: 'FAD', en: 'FAD' },
+    glu: { zh: '麩胺酸', en: 'Glutamate' }, gln: { zh: '麩醯胺酸', en: 'Glutamine' }, asp: { zh: '天門冬胺酸', en: 'Aspartate' }, ala: { zh: '丙胺酸', en: 'Alanine' },
+    nh3: { zh: '氨（NH₄⁺）', en: 'Ammonia (NH₄⁺)' }, urea: { zh: '尿素', en: 'Urea' }, ua: { zh: '尿酸', en: 'Uric acid' }, cre: { zh: '肌酸酐', en: 'Creatinine' },
+    liv: { zh: '肝臟', en: 'Liver' }, kid: { zh: '腎臟', en: 'Kidney' }, mus: { zh: '肌肉', en: 'Muscle' }, brn: { zh: '腦', en: 'Brain' },
+    pyr: { zh: '丙酮酸', en: 'Pyruvate' }, oaa: { zh: '草醯乙酸', en: 'Oxaloacetate' }, akg: { zh: 'α-酮戊二酸', en: 'α-Ketoglutarate' }, aco: { zh: '乙醯輔酶A', en: 'Acetyl-CoA' },
+    nag: { zh: 'N-乙醯麩胺酸', en: 'N-acetylglutamate' }, citr: { zh: '檸檬酸', en: 'citrate' }, amp: { zh: 'AMP', en: 'AMP' },
+    tca: { zh: '檸檬酸循環', en: 'the TCA cycle' }, gly: { zh: '糖解作用', en: 'glycolysis' }, ppp: { zh: '五碳糖磷酸途徑', en: 'the pentose phosphate pathway' },
+    inc: { zh: '增加', en: 'increases' }, dec: { zh: '減少', en: 'decreases' }, lowp: { zh: '限制蛋白質攝取', en: 'restrict protein intake' }, highp: { zh: '增加蛋白質攝取', en: 'increase protein intake' },
+    he: { zh: '肝腦病變', en: 'hepatic encephalopathy' }, gout: { zh: '痛風', en: 'gout' }, ket: { zh: '酮酸中毒', en: 'ketoacidosis' }, fum: { zh: '延胡索酸', en: 'fumarate' }
+  },
+  levels: [
+    { t: '先看全貌：氮怎麼離開身體', kind: 'ov', h: 380,
+      intro: ['醣類和脂肪只有碳、氫、氧，燒完變成 CO₂ 和水。胺基酸多了一個「氮」（胺基），要先把胺基拿掉，剩下的碳骨架才能拿去產生能量或做葡萄糖。',
+        '拿下來的胺基會變成氨，氨對腦有毒，不能在血液裡亂跑。身體的做法是：先把各種胺基酸的胺基集中到同一個胺基酸上，再放出來，馬上做成無毒的產物，由腎臟排出。',
+        '順著箭頭，把五個空格填出來。'],
+      svg: function () { var h = PH() / 2;
+        return pill(120, 30, 124, { zh: '胺基酸', en: 'Amino acids' }, 'src') + tx(278, 22, T('轉胺酶的輔酶（來自維生素 B6）', 'coenzyme (from vitamin B6)'), 'm', 9.5) + arrow(120, 31 + h, 120, 100 - h) + tx(132, 70, T('轉胺作用：胺基集中到', 'transamination: collected on'), 'm', 10, 'start') + arrow(120, 103 + h, 120, 172 - h) + tx(132, 140, T('氧化脫胺：把胺基放出來', 'oxidative deamination'), 'm', 10, 'start') +
+          tx(192, 178, T('有毒，要馬上處理', 'toxic — dealt with at once'), 'm', 10, 'start') + arrow(120, 175 + h, 120, 264 - h) + zone(28, 234, 304, 70) + pill(120, 268, 124, { zh: '尿素循環', en: 'Urea cycle' }, 'src') + tx(262, 298, T('（器官）', '(organ)'), 'm', 9.5) +
+          arrow(120, 269 + h, 120, 342 - h) + arrow(183, 344, 204, 344) + pill(274, 344, 136, { zh: '腎臟 → 尿液', en: 'kidney → urine' }); },
+      blanks: [{ id: 'co', x: 278, y: 52, w: 150, a: 'plp', o: ['plp', 'tpp', 'biot', 'fad'] }, { id: 'col', x: 120, y: 102, w: 124, a: 'glu', o: ['glu', 'gln', 'asp', 'ala'] },
+        { id: 'tox', x: 120, y: 174, w: 124, a: 'nh3', o: ['nh3', 'urea', 'ua', 'cre'] }, { id: 'org', x: 262, y: 268, w: 108, a: 'liv', o: ['liv', 'kid', 'mus', 'brn'] },
+        { id: 'prod', x: 120, y: 344, w: 124, a: 'urea', o: ['urea', 'ua', 'cre', 'nh3'] }],
+      done: ['三步驟：[[轉胺作用 → 氧化脫胺 → 尿素循環]]。', '胺基先集中到[[麩胺酸]]（由 α-酮戊二酸接收胺基而來），再由麩胺酸去氫酶放出氨。',
+        '尿素循環只在[[肝臟]]進行，所以肝功能不好時血氨會上升。', '開關：高蛋白飲食，或長期飢餓大量分解蛋白質時，尿素合成增加。'] },
+    { t: '轉胺作用：胺基的交換', kind: 'list', listTitle: '配對',
+      intro: ['轉胺作用是一個胺基酸把胺基交給一個 α-酮酸：交出胺基的胺基酸變成對應的 α-酮酸，接收的 α-酮酸變成新的胺基酸。',
+        '接收的一方通常是 α-酮戊二酸，它接了胺基就變成麩胺酸。所以三組配對要背起來：[[胺基酸拿掉胺基，就是它對應的 α-酮酸]]。',
+        '氨有毒，周邊組織要把氮送到肝臟時，也是靠兩個「無毒的運送形式」。'],
+      tip: 'ALT 又叫 GPT，AST 又叫 GOT，兩個都需要維生素 B6（PLP）。它們主要在肝細胞裡，肝細胞受損時會漏到血液中，所以抽血用來看肝功能。',
+      list: [['丙胺酸（alanine）拿掉胺基後變成', { a: 'pyr', o: UREA_K }], ['天門冬胺酸（aspartate）拿掉胺基後變成', { a: 'oaa', o: UREA_K }], ['麩胺酸（glutamate）拿掉胺基後變成', { a: 'akg', o: UREA_K }],
+        ['ALT（GPT）處理的胺基酸是', { a: 'ala', o: UREA_A }], ['AST（GOT）處理的胺基酸是', { a: 'asp', o: UREA_A }],
+        ['腦等組織把氨接到麩胺酸上，做成無毒的形式送到肝臟', { a: 'gln', o: UREA_A }], ['肌肉把胺基交給丙酮酸，做成這個胺基酸送到肝臟（葡萄糖-丙胺酸循環）', { a: 'ala', o: UREA_A }]] },
+    { t: '尿素循環的四個中間產物', kind: 'map', blanks: ['cit', 'as', 'arg', 'orn'],
+      intro: ['氨先和 HCO₃⁻（CO₂）結合成胺甲醯磷酸（carbamoyl phosphate），從上面進到循環裡。',
+        '循環的載體是鳥胺酸：它接上胺甲醯基變成瓜胺酸 → 再接上天門冬胺酸（第二個氮從這裡來）→ 切掉延胡索酸剩下精胺酸 → 最後把尿素切下來，又變回鳥胺酸。',
+        '尿素循環又叫鳥胺酸循環。從左上角的鳥胺酸開始，順時針填。'],
+      tip: '切下來的延胡索酸可以進檸檬酸循環，所以兩個循環是連在一起的。' },
+    { t: '五個酵素', kind: 'map', blanks: [], rows: 'enz', rowsTitle: '每一步的酵素',
+      intro: ['進循環之前的那一步（①）加上循環裡的四步，一共五個酵素。',
+        '名字照樣在說做了什麼：<b>合成酶</b>（synthetase）把兩個東西接起來，而且要花 ATP；<b>轉移酶</b>（transcarbamoylase）把胺甲醯基搬過去；<b>裂解酶</b>（lyase）把分子切成兩半；最後的<b>精胺酸酶</b>（arginase）把精胺酸水解。'],
+      tip: '第 ① 步的酵素是速率限制酵素，需要 N-乙醯麩胺酸（N-acetylglutamate）才有活性。' },
+    { t: '算帳與位置', kind: 'map', blanks: [], rows: 'prod', rowsTitle: '每一步消耗什麼',
+      intro: ['做尿素是要花能量的。花 ATP 的只有兩個「合成酶」的步驟。', '尿素有兩個氮，來源不一樣；五個步驟的位置也分成兩邊，這兩點國考都考過。'],
+      tip: '第 ③ 步的 ATP 變成 AMP，等於用掉 2 個高能磷酸鍵，所以也有人說做 1 個尿素相當於花 4 個 ATP。',
+      countsTitle: '1 個尿素', counts: [['含有幾個氮原子', '2', ['1', '2', '3']], ['其中幾個來自游離的氨（NH₄⁺）', '1', ['0', '1', '2']], ['其中幾個來自天門冬胺酸', '1', ['0', '1', '2']],
+        ['總共消耗幾個 ATP', '3', ['2', '3', '4', '6']], ['第 ①、② 步在肝細胞的哪裡', '粒線體', UREA_P], ['第 ③、④、⑤ 步在肝細胞的哪裡', '細胞質', UREA_P]] },
+    { t: '調節與國考重點', kind: 'cloze',
+      intro: ['速率限制、和檸檬酸循環的連接、氨的運送，以及先天缺陷。', '最後三題的選項只有英文。'],
+      cloze: [
+        ['尿素循環只在哪個器官進行？', { a: 'liv', o: ['liv', 'kid', 'mus', 'brn'] }, ''],
+        ['速率限制酵素需要哪一個分子來活化？', { a: 'nag', o: ['nag', 'citr', 'amp'] }, ''],
+        ['循環中放出的延胡索酸，把尿素循環和', { a: 'tca', o: ['tca', 'gly', 'ppp'] }, '連在一起。'],
+        ['尿素的第二個氮，由哪一個胺基酸直接提供？', { a: 'asp', o: ['asp', 'glu', 'gln', 'ala'] }, ''],
+        ['吃高蛋白飲食時，尿素的合成量會', { a: 'inc', o: ['inc', 'dec'] }, '。'],
+        ['腦細胞處理氨的方式，是把它接到麩胺酸上變成', { a: 'gln', o: ['gln', 'ala', 'asp', 'urea'] }, '。'],
+        ['肝硬化時尿素循環能力下降，血氨上升，可能造成', { a: 'he', o: ['he', 'gout', 'ket'] }, '。'],
+        ['尿素循環酵素先天部分缺乏的病人，飲食上要', { a: 'lowp', o: ['lowp', 'highp'] }, '。'],
+        ['人體代謝嘌呤（普林）的最終產物是', { a: 'ua', o: ['ua', 'urea', 'cre', 'nh3'] }, '，不是尿素。'],
+        ['尿素循環的速率限制酵素是', { a: 'cps', src: 'enz', lang: 'en', o: ['cps', 'otc', 'ass', 'arg1'] }, '。'],
+        ['第二型高血氨症缺乏的酵素是', { a: 'otc', src: 'enz', lang: 'en', o: ['cps', 'otc', 'asl', 'arg1'] }, '。'],
+        ['把麩胺酸的胺基以氨的形式放出來的酵素是', { a: 'gdh', src: 'enz', lang: 'en', o: ['gdh', 'gs', 'alt', 'ast'] }, '。'],
+        ['在周邊組織把氨接到麩胺酸上的酵素是', { a: 'gs', src: 'enz', lang: 'en', o: ['gs', 'gls', 'gdh', 'alt'] }, '。']
+      ] },
+    { t: '總複習：全部空白（英文作答）', kind: 'map', force: 'en', plain: true, energy: true, blanks: ['cit', 'as', 'arg', 'orn'], rows: 'enz', rowsTitle: '每一步的酵素',
+      intro: ['圖上四個中間產物、圖下五個酵素，全部空白。'], tip: '這一關固定用英文作答。答對後，酵素下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   胺基酸碳骨架與單碳代謝
+   ====================================================================== */
+var AAC_G = ['g1', 'g2', 'g3', 'g4', 'g5', 'g6'], AAC_T = ['純生糖', '純生酮', '兩者都是'];
+var AAC_D = ['cat', 'mel', 'ser', 'nia', 'his', 'gaba', 'no', 'crea', 'tau'], AAC_X = ['pah', 'tyrase', 'hgo', 'bckdh', 'cbs'];
+var AAC = { id: 'aac', zh: '胺基酸碳骨架與單碳代謝', en: 'Amino acid carbon skeletons', alias: '生糖與生酮・甲硫胺酸循環・葉酸與 B12', layout: 'none',
+  enz: {
+    mat: { zh: '甲硫胺酸腺苷轉移酶', en: 'Methionine adenosyltransferase' }, mt: { zh: '甲基轉移酶', en: 'Methyltransferase' }, sahh: { zh: 'SAH 水解酶', en: 'SAH hydrolase' }, ms: { zh: '甲硫胺酸合成酶', en: 'Methionine synthase' },
+    pah: { zh: '苯丙胺酸羥化酶', en: 'Phenylalanine hydroxylase' }, tyrase: { zh: '酪胺酸酶', en: 'Tyrosinase' }, hgo: { zh: '尿黑酸氧化酶', en: 'Homogentisate oxidase' },
+    bckdh: { zh: '支鏈酮酸去氫酶', en: 'Branched-chain α-keto acid dehydrogenase' }, cbs: { zh: '胱硫醚 β-合成酶', en: 'Cystathionine β-synthase' }
+  },
+  dict: {
+    g1: { zh: 'Ala Ser Gly Cys', en: 'Ala Ser Gly Cys' }, g2: { zh: 'Leu Lys', en: 'Leu Lys' }, g3: { zh: 'Glu Gln Pro Arg His', en: 'Glu Gln Pro Arg His' },
+    g4: { zh: 'Val Ile Met Thr', en: 'Val Ile Met Thr' }, g5: { zh: 'Phe Tyr', en: 'Phe Tyr' }, g6: { zh: 'Asp Asn', en: 'Asp Asn' },
+    cat: { zh: '兒茶酚胺（多巴胺、正腎上腺素、腎上腺素）', en: 'Catecholamines (dopamine, norepinephrine, epinephrine)' }, mel: { zh: '黑色素', en: 'Melanin' }, ser: { zh: '血清素、褪黑激素', en: 'Serotonin, melatonin' },
+    nia: { zh: '菸鹼素', en: 'Niacin' }, his: { zh: '組織胺', en: 'Histamine' }, gaba: { zh: 'GABA（γ-胺基丁酸）', en: 'GABA (γ-aminobutyrate)' }, no: { zh: '一氧化氮（NO）', en: 'Nitric oxide (NO)' },
+    crea: { zh: '肌酸', en: 'Creatine' }, tau: { zh: '牛磺酸', en: 'Taurine' },
+    b12: { zh: '維生素 B12', en: 'vitamin B12', bi: '維生素 B12' }, fol: { zh: '葉酸', en: 'folate' }, b6: { zh: '維生素 B6', en: 'vitamin B6', bi: '維生素 B6' }, b1: { zh: '維生素 B1', en: 'thiamin', bi: '維生素 B1' }, b2: { zh: '維生素 B2', en: 'riboflavin', bi: '維生素 B2' }, biot: { zh: '生物素', en: 'biotin' },
+    thf: { zh: '四氫葉酸（THF）', en: 'tetrahydrofolate (THF)' }, sam: { zh: 'SAM', en: 'SAM' }, coa: { zh: '輔酶A', en: 'coenzyme A' }, plp: { zh: 'PLP', en: 'PLP' },
+    hcy: { zh: '同半胱胺酸', en: 'homocysteine' }, met: { zh: '甲硫胺酸', en: 'methionine' }, cys: { zh: '半胱胺酸', en: 'cysteine' }, serine: { zh: '絲胺酸', en: 'serine' }, gly: { zh: '甘胺酸', en: 'glycine' },
+    cvd: { zh: '心血管疾病', en: 'cardiovascular disease' }, gout: { zh: '痛風', en: 'gout' }, dm: { zh: '糖尿病', en: 'diabetes' },
+    mega: { zh: '巨球性貧血', en: 'megaloblastic anemia' }, micro: { zh: '小球性貧血', en: 'microcytic anemia' }, hemo: { zh: '溶血性貧血', en: 'hemolytic anemia' },
+    nerve: { zh: '神經病變', en: 'nerve damage' }, anem: { zh: '貧血', en: 'anemia' }, figlu: { zh: 'FIGLU（甲醯亞胺麩胺酸）', en: 'FIGLU' }, mma: { zh: '甲基丙二酸（MMA）', en: 'methylmalonic acid (MMA)' }, xa: { zh: '黃尿酸', en: 'xanthurenic acid' },
+    n60: { zh: '60', en: '60' }, n6: { zh: '6', en: '6' }, n100: { zh: '100', en: '100' }, mus: { zh: '肌肉', en: 'muscle' }, liv: { zh: '肝臟', en: 'liver' }, kid: { zh: '腎臟', en: 'kidney' },
+    bh4: { zh: '四氫生物蝶呤（BH₄）', en: 'tetrahydrobiopterin (BH₄)' }, tyr: { zh: '酪胺酸', en: 'tyrosine' }, trp: { zh: '色胺酸', en: 'tryptophan' }, phe: { zh: '苯丙胺酸', en: 'phenylalanine' }, lys: { zh: '離胺酸', en: 'lysine' }, glu: { zh: '麩胺酸', en: 'glutamate' }, arg: { zh: '精胺酸', en: 'arginine' },
+    pc: { zh: '卵磷脂（phosphatidylcholine）和肌酸', en: 'phosphatidylcholine and creatine' }, fa: { zh: '脂肪酸和膽固醇', en: 'fatty acids and cholesterol' }, ur: { zh: '尿素和尿酸', en: 'urea and uric acid' }
+  },
+  subs: { met: { layout: 'cycle', zh: '甲硫胺酸循環', en: 'Methionine cycle', geo: { nw: 126 },
+    nodes: [{ k: 'sam', zh: 'S-腺苷甲硫胺酸', en: 'S-Adenosylmethionine', ab: 'SAM' }, { k: 'sah', zh: 'S-腺苷同半胱胺酸', en: 'S-Adenosylhomocysteine', ab: 'SAH' }, { k: 'hcy', zh: '同半胱胺酸', en: 'Homocysteine' }, { k: 'met', zh: '甲硫胺酸', en: 'Methionine' }],
+    ang: { met: 315, sam: 45, sah: 135, hcy: 225 },
+    steps: [
+      { f: 'met', t: 'sam', e: 'mat', io: [[{ zh: '＋ATP', en: '+ ATP' }, 'mol']] }, { f: 'sam', t: 'sah', e: 'mt', io: [[{ zh: '交出甲基', en: 'CH₃ donated' }, 'mol']] },
+      { f: 'sah', t: 'hcy', e: 'sahh' }, { f: 'hcy', t: 'met', e: 'ms', io: [[{ zh: '5-甲基 THF', en: '5-methyl-THF' }, 'mol'], [{ zh: '需要 B12', en: 'needs B12' }, 'mol']] }
+    ] } },
+  levels: [
+    { t: '碳骨架從哪裡進入檸檬酸循環', kind: 'ov', h: 414, legend: [5, 4, 3, 2],
+      intro: ['胺基酸把胺基拿掉之後，剩下的碳骨架會被改造成幾種熟悉的分子，從不同的「站」進到能量代謝的主幹。老師說把代謝途徑當捷運圖看，這張就是胺基酸的轉乘圖。',
+        '20 種胺基酸分成六組，各從一站進來。先看圖右邊每一組，再對照下面的提示。',
+        '國考寫胺基酸多半用英文，圖上用三個字母的縮寫。'],
+      tip: 'Ala 丙胺酸、Ser 絲胺酸、Gly 甘胺酸、Cys 半胱胺酸、Leu 白胺酸、Lys 離胺酸、Glu 麩胺酸、Gln 麩醯胺酸、Pro 脯胺酸、Arg 精胺酸、His 組胺酸、Val 纈胺酸、Ile 異白胺酸、Met 甲硫胺酸、Thr 蘇胺酸、Phe 苯丙胺酸、Tyr 酪胺酸、Asp 天門冬胺酸、Asn 天門冬醯胺。記法：胺基酸拿掉胺基就是對應的酮酸，所以 Ala → 丙酮酸、Glu → α-酮戊二酸、Asp → 草醯乙酸。',
+      svg: function () { var h = PH() / 2, ys = [36, 100, 172, 236, 300, 364], st = [[{ zh: '丙酮酸', en: 'Pyruvate' }, 3], [{ zh: '乙醯輔酶A', en: 'Acetyl-CoA' }, 2], [{ zh: 'α-酮戊二酸', en: 'α-Ketoglutarate' }, 5], [{ zh: '琥珀醯輔酶A', en: 'Succinyl-CoA' }, 4], [{ zh: '延胡索酸', en: 'Fumarate' }, 4], [{ zh: '草醯乙酸', en: 'Oxaloacetate' }, 4]], s = '';
+        s += zone(8, 142, 344, 264) + tx(180, 399, T('這四站都在檸檬酸循環上', 'these four are TCA cycle intermediates'), 'm', 9.5);
+        ys.forEach(function (y, i) { if (i < 5 && i !== 1) s += arrow(88, y + h + 1, 88, ys[i + 1] - h - 2); s += pill(88, y, 132, st[i][0], 'pill k' + st[i][1]) + arrow(190, y, 157, y); });
+        return s + arrow(88, 101 + h, 88, 170 - h, true) + tx(98, 136, T('進循環', 'enters cycle'), 'm', 9, 'start'); },
+      blanks: [{ id: 's1', x: 272, y: 36, w: 160, a: 'g1', o: AAC_G }, { id: 's2', x: 272, y: 100, w: 160, a: 'g2', o: AAC_G }, { id: 's3', x: 272, y: 172, w: 160, a: 'g3', o: AAC_G },
+        { id: 's4', x: 272, y: 236, w: 160, a: 'g4', o: AAC_G }, { id: 's5', x: 272, y: 300, w: 160, a: 'g5', o: AAC_G }, { id: 's6', x: 272, y: 364, w: 160, a: 'g6', o: AAC_G }],
+      done: ['能變成丙酮酸或檸檬酸循環中間產物的，可以拿去做葡萄糖，叫做[[生糖性胺基酸]]。', '只能變成乙醯輔酶A 或乙醯乙醯輔酶A 的，做不出葡萄糖，只能做酮體或脂肪酸，叫做[[生酮性胺基酸]]。',
+        '純生酮的只有兩個：[[Leu（白胺酸）和 Lys（離胺酸）]]，都是 L 開頭。', 'Phe、Tyr、Trp、Ile 兩邊都會進（這張圖只畫了主要的一站），所以是「生糖兼生酮」。'] },
+    { t: '生糖還是生酮', kind: 'list',
+      intro: ['國考的考法通常是：「下列哪一個是純生酮性胺基酸？」或「哪一個不能用來做葡萄糖？」',
+        '背法：純生酮只有 [[Leu、Lys]] 兩個；生糖兼生酮的是三個有苯環的芳香族胺基酸（[[Phe、Tyr、Trp]]）加上 [[Ile]]；其餘都是純生糖。'],
+      tip: '蘇胺酸（Thr）有的課本歸在生糖兼生酮，有的歸在純生糖，題目若出現要看選項判斷。',
+      countsTitle: '每個胺基酸屬於哪一類', counts: [['Leu（白胺酸）', '純生酮', AAC_T], ['Lys（離胺酸）', '純生酮', AAC_T], ['Phe（苯丙胺酸）', '兩者都是', AAC_T], ['Tyr（酪胺酸）', '兩者都是', AAC_T],
+        ['Trp（色胺酸）', '兩者都是', AAC_T], ['Ile（異白胺酸）', '兩者都是', AAC_T], ['Ala（丙胺酸）', '純生糖', AAC_T], ['Glu（麩胺酸）', '純生糖', AAC_T], ['Asp（天門冬胺酸）', '純生糖', AAC_T], ['Val（纈胺酸）', '純生糖', AAC_T]] },
+    { t: '甲硫胺酸循環：甲基怎麼傳遞', kind: 'map', sub: 'met', blanks: ['sam', 'sah', 'hcy', 'met'],
+      intro: ['「單碳代謝」是指只有一個碳的小基團（例如甲基 −CH₃）在分子之間傳來傳去。身體合成肌酸、卵磷脂、腎上腺素，以及 DNA 的甲基化，都需要甲基。',
+        '甲基的直接提供者是 SAM：甲硫胺酸接上 ATP 的腺苷就變成 SAM；SAM 把甲基交出去變成 SAH；SAH 切掉腺苷，剩下同半胱胺酸。',
+        '同半胱胺酸要再拿到一個甲基才能變回甲硫胺酸。這個甲基由葉酸（5-甲基四氫葉酸）提供，而且需要維生素 B12。這一步就是葉酸和 B12 交會的地方。'],
+      tip: '從左上角的甲硫胺酸開始，順時針填。S-腺苷甲硫胺酸縮寫 SAM，S-腺苷同半胱胺酸縮寫 SAH。' },
+    { t: '循環的酵素', kind: 'map', sub: 'met', blanks: [], rows: 'enz', rowsTitle: '每一步的酵素',
+      intro: ['四個酵素裡最重要的是最後一個：把同半胱胺酸變回甲硫胺酸的酵素，它同時需要葉酸和維生素 B12。',
+        '同半胱胺酸還有另一條出路：經過需要維生素 B6 的酵素變成半胱胺酸。所以葉酸、B12、B6 任何一個不夠，同半胱胺酸都會堆積。'] },
+    { t: '葉酸、B12、B6 與國考重點', kind: 'cloze',
+      intro: ['這一關是營養學和生化重疊最多的地方：葉酸陷阱、同半胱胺酸，以及用尿液代謝物評估維生素營養狀況。', '國考申論考過葉酸與 B12 的交互作用，以及 histidine、valine 的代謝檢測指標。'],
+      cloze: [
+        ['攜帶單碳基團的輔酶是', { a: 'thf', o: ['thf', 'coa', 'plp'] }, '。'],
+        ['直接提供甲基給其他分子的是', { a: 'sam', o: ['sam', 'thf', 'coa'] }, '。'],
+        ['缺乏維生素 B12 時，葉酸會卡在 5-甲基四氫葉酸的形式無法再利用，這叫做「葉酸陷阱」。這時候表現出來像是缺乏', { a: 'fol', o: ['fol', 'b6', 'b1'] }, '。'],
+        ['葉酸或 B12 缺乏造成的貧血是', { a: 'mega', o: ['mega', 'micro', 'hemo'] }, '。'],
+        ['補充大量葉酸可以改善 B12 缺乏的貧血，卻改善不了', { a: 'nerve', o: ['nerve', 'anem'] }, '，所以會延誤診斷。'],
+        ['血中同半胱胺酸偏高，和哪一類疾病的風險有關？', { a: 'cvd', o: ['cvd', 'gout', 'dm'] }, ''],
+        ['同半胱胺酸變成半胱胺酸的途徑，需要的維生素是', { a: 'b6', o: ['b6', 'b1', 'b2', 'biot'] }, '。'],
+        ['給組胺酸（histidine）後測尿中的 FIGLU，是用來評估哪一種維生素的營養狀況？', { a: 'fol', o: ['fol', 'b12', 'b6', 'b1'] }, ''],
+        ['尿中甲基丙二酸（MMA）排出量增加，代表缺乏', { a: 'b12', o: ['fol', 'b12', 'b6', 'b1'] }, '；這個檢查可以區分葉酸和 B12 缺乏。'],
+        ['色胺酸負荷試驗測尿中的黃尿酸（xanthurenic acid），評估的是', { a: 'b6', o: ['fol', 'b12', 'b6', 'b1'] }, '。'],
+        ['大約多少毫克的色胺酸可以轉換成 1 毫克的菸鹼素？', { a: 'n60', o: ['n6', 'n60', 'n100'] }, ''],
+        ['支鏈胺基酸（Leu、Ile、Val）主要在哪裡代謝？', { a: 'mus', o: ['mus', 'liv', 'kid'] }, ''],
+        ['體內的轉甲基作用，和下列哪一組物質的合成有關？', { a: 'pc', o: ['pc', 'fa', 'ur'] }, ''],
+        ['把 homocysteine 變回 methionine 的酵素是', { a: 'ms', src: 'enz', lang: 'en', o: ['ms', 'mat', 'cbs', 'mt'] }, '。']
+      ] },
+    { t: '胺基酸變成的重要物質', kind: 'list', listTitle: '這個胺基酸可以變成',
+      intro: ['胺基酸除了當蛋白質的材料，有幾個還會被改造成神經傳導物質、激素等重要的小分子。',
+        '很多是靠「脫羧」（拿掉 CO₂）變成胺類，脫羧酶都需要維生素 B6（PLP）。國考申論考過兒茶酚胺和血清素的合成，以及 B6 的角色。'],
+      tip: '國考選擇題考過：下列何者不是神經傳導物質的前驅物？答案是 lysine（離胺酸）。色胺酸、麩胺酸、酪胺酸都是。',
+      list: [['酪胺酸（Tyr）→ 神經傳導物質與激素', { a: 'cat', o: AAC_D }], ['酪胺酸（Tyr）→ 皮膚和頭髮的色素', { a: 'mel', o: AAC_D }], ['色胺酸（Trp）→ 神經傳導物質與調節睡眠的激素', { a: 'ser', o: AAC_D }],
+        ['色胺酸（Trp）→ 一種維生素', { a: 'nia', o: AAC_D }], ['組胺酸（His）脫羧 →', { a: 'his', o: AAC_D }], ['麩胺酸（Glu）脫羧 → 抑制性神經傳導物質', { a: 'gaba', o: AAC_D }],
+        ['精胺酸（Arg）→ 讓血管擴張的氣體', { a: 'no', o: AAC_D }], ['精胺酸、甘胺酸加上 SAM 的甲基 → 肌肉儲存能量用', { a: 'crea', o: AAC_D }], ['半胱胺酸（Cys）→ 和膽酸結合的含硫物質', { a: 'tau', o: AAC_D }]] },
+    { t: '先天性胺基酸代謝異常', kind: 'list', listTitle: '缺乏的酵素',
+      intro: ['某一個酵素先天缺乏，前面的東西堆積、後面的東西做不出來，就會生病。老師要大家整理成表格，這裡用配對來練。', '酵素的英文名字多半直接寫出受質，可以從名字推回去。'],
+      tip: '苯酮尿症的飲食要限制苯丙胺酸；因為做不出酪胺酸，酪胺酸變成必需胺基酸。楓糖尿症要限制三個支鏈胺基酸。',
+      list: [['苯酮尿症（phenylketonuria，PKU）：苯丙胺酸變不成酪胺酸', { a: 'pah', src: 'enz', o: AAC_X }], ['白化症（albinism）：酪胺酸做不出黑色素', { a: 'tyrase', src: 'enz', o: AAC_X }],
+        ['黑尿症（alkaptonuria）：尿黑酸堆積，尿液放久變黑', { a: 'hgo', src: 'enz', o: AAC_X }], ['楓糖尿症（MSUD）：支鏈胺基酸的酮酸堆積，尿有甜味', { a: 'bckdh', src: 'enz', o: AAC_X }],
+        ['高胱胺酸尿症（homocystinuria）：同半胱胺酸變不成半胱胺酸', { a: 'cbs', src: 'enz', o: AAC_X }]] },
+    { t: '總複習：甲硫胺酸循環（英文作答）', kind: 'map', sub: 'met', force: 'en', plain: true, blanks: ['sam', 'sah', 'hcy', 'met'], rows: 'enz', rowsTitle: '每一步的酵素',
+      intro: ['圖上四個中間產物、圖下四個酵素，全部空白。'], tip: '這一關固定用英文作答。答對後，酵素下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   整合：吃飽與飢餓
+   ====================================================================== */
+var INT_S = ['加快', '變慢'], INT_P = ['細胞質', '粒線體', '兩邊都有'];
+var INT_E = ['pfk', 'fbp', 'gs', 'gp', 'g6pd', 'pdh', 'idh', 'acc', 'cpt', 'hmgs', 'hmgr', 'cps'];
+var INT = { id: 'int', zh: '整合：吃飽與飢餓', en: 'Fed & fasting states', alias: '哪些路徑開、哪些關・速率限制酵素・位置・器官', layout: 'none',
+  enz: {
+    pfk: { zh: '磷酸果糖激酶-1', en: 'Phosphofructokinase-1', ab: 'PFK-1' }, fbp: { zh: '果糖-1,6-雙磷酸酶', en: 'Fructose-1,6-bisphosphatase' }, gs: { zh: '肝醣合成酶', en: 'Glycogen synthase' }, gp: { zh: '肝醣磷酸化酶', en: 'Glycogen phosphorylase' },
+    g6pd: { zh: '葡萄糖-6-磷酸去氫酶', en: 'Glucose-6-phosphate dehydrogenase', ab: 'G6PD' }, pdh: { zh: '丙酮酸去氫酶複合體', en: 'Pyruvate dehydrogenase complex' }, idh: { zh: '異檸檬酸去氫酶', en: 'Isocitrate dehydrogenase' },
+    acc: { zh: '乙醯輔酶A 羧化酶', en: 'Acetyl-CoA carboxylase', ab: 'ACC' }, cpt: { zh: '肉鹼棕櫚醯轉移酶 I', en: 'Carnitine palmitoyltransferase I', ab: 'CPT-I' },
+    hmgs: { zh: 'HMG-CoA 合成酶', en: 'HMG-CoA synthase' }, hmgr: { zh: 'HMG-CoA 還原酶', en: 'HMG-CoA reductase' }, cps: { zh: '胺甲醯磷酸合成酶 I', en: 'Carbamoyl phosphate synthetase I', ab: 'CPS I' },
+    hsl: { zh: '荷爾蒙敏感性脂解酶', en: 'Hormone-sensitive lipase' }, f26: { zh: '果糖-2,6-雙磷酸酶', en: 'Fructose-2,6-bisphosphatase' }, pk: { zh: '丙酮酸激酶', en: 'Pyruvate kinase' }
+  },
+  dict: {
+    ins: { zh: '胰島素', en: 'Insulin' }, glu: { zh: '升糖素', en: 'Glucagon' }, epi: { zh: '腎上腺素', en: 'Epinephrine' }, cor: { zh: '皮質醇', en: 'Cortisol' },
+    glc: { zh: '葡萄糖', en: 'glucose' }, fa: { zh: '脂肪酸', en: 'fatty acids' }, ket: { zh: '酮體', en: 'ketone bodies' }, aa: { zh: '胺基酸', en: 'amino acids' }, lac: { zh: '乳酸', en: 'lactate' },
+    fag: { zh: '脂肪酸和甘油', en: 'fatty acids and glycerol' }, tg: { zh: '三酸甘油酯', en: 'triacylglycerol' }, gly: { zh: '肝醣', en: 'glycogen' },
+    diet: { zh: '剛吃進來的食物', en: 'food just eaten' }, gcg: { zh: '肝醣分解', en: 'glycogenolysis' }, gng: { zh: '糖質新生', en: 'gluconeogenesis' }, kg: { zh: '酮體生成', en: 'ketogenesis' },
+    mp: { zh: '肌肉蛋白質', en: 'muscle protein' }, fat: { zh: '體脂肪', en: 'body fat' }, lg: { zh: '肝醣', en: 'liver glycogen' },
+    pho: { zh: '磷酸化', en: 'phosphorylated' }, depho: { zh: '去磷酸化', en: 'dephosphorylated' }, camp: { zh: 'cAMP', en: 'cAMP' }, cgmp: { zh: 'cGMP', en: 'cGMP' }, ca: { zh: 'Ca²⁺', en: 'Ca²⁺' },
+    cat: { zh: '分解路徑的酵素', en: 'catabolic enzymes' }, ana: { zh: '合成路徑的酵素', en: 'anabolic enzymes' }, act: { zh: '活化', en: 'activates' }, inh: { zh: '抑制', en: 'inhibits' },
+    malc: { zh: '丙二醯輔酶A', en: 'malonyl-CoA' }, aco: { zh: '乙醯輔酶A', en: 'acetyl-CoA' }, cit: { zh: '檸檬酸', en: 'citrate' }, f26: { zh: '果糖-2,6-雙磷酸', en: 'fructose 2,6-bisphosphate' },
+    mito: { zh: '粒線體', en: 'mitochondria' }, nuc: { zh: '細胞核', en: 'a nucleus' }, g6pase: { zh: '葡萄糖-6-磷酸酶', en: 'glucose-6-phosphatase' }, hk: { zh: '己糖激酶', en: 'hexokinase' }, scot: { zh: '活化酮體的酵素', en: 'the enzyme that activates ketone bodies' },
+    gln: { zh: '麩醯胺酸', en: 'glutamine' }, leu: { zh: '白胺酸', en: 'leucine' }, lys: { zh: '離胺酸', en: 'lysine' },
+    low: { zh: '能量不足（AMP 多）', en: 'energy is low (AMP high)' }, high: { zh: '能量充足（ATP 多）', en: 'energy is high (ATP high)' }
+  },
+  levels: [
+    { t: '吃飽的時候（胰島素）', kind: 'list',
+      intro: ['所有路徑學完之後，最重要的是把它們放在一起看：同一個時間，身體不會一邊合成、一邊又把它分解掉。',
+        '吃飽時血糖上升，胰島素分泌。它的意思是「燃料很多，趕快用、趕快存」：[[用葡萄糖當燃料，多的做成肝醣和脂肪存起來]]。',
+        '下面每一條路徑，在吃飽的時候是加快還是變慢？'],
+      countsTitle: '吃飽時，肝臟裡的這條路徑', counts: [['糖解作用', '加快', INT_S], ['肝醣合成', '加快', INT_S], ['五碳糖磷酸途徑', '加快', INT_S], ['脂肪酸合成', '加快', INT_S], ['膽固醇合成', '加快', INT_S],
+        ['肝醣分解', '變慢', INT_S], ['糖質新生', '變慢', INT_S], ['脂肪酸 β-氧化', '變慢', INT_S], ['酮體生成', '變慢', INT_S]] },
+    { t: '飢餓的時候（升糖素）', kind: 'list',
+      intro: ['飢餓時血糖下降，升糖素分泌（壓力或運動時還有腎上腺素）。它的意思是「燃料不夠，把存的拿出來」：[[先分解肝醣，再做糖質新生維持血糖；同時改燒脂肪，把葡萄糖留給腦和紅血球]]。',
+        '每一條路徑的方向，剛好都和吃飽時相反。'],
+      countsTitle: '飢餓時，肝臟裡的這條路徑', counts: [['肝醣分解', '加快', INT_S], ['糖質新生', '加快', INT_S], ['脂肪酸 β-氧化', '加快', INT_S], ['酮體生成', '加快', INT_S], ['尿素循環（因為分解胺基酸）', '加快', INT_S],
+        ['糖解作用', '變慢', INT_S], ['肝醣合成', '變慢', INT_S], ['脂肪酸合成', '變慢', INT_S], ['膽固醇合成', '變慢', INT_S]] },
+    { t: '每條路徑的速率限制酵素', kind: 'list', listTitle: '這條路徑的速率限制酵素',
+      intro: ['每條路徑都有一個「關卡」酵素，整條路的快慢由它決定，激素和各種訊號也都是調控它。這張表是國考選擇題的常客。',
+        '名字本身就是線索：多半就是「那條路徑的起始原料或特有中間產物＋它做的事」。'],
+      list: [['糖解作用', { a: 'pfk', src: 'enz', o: INT_E }], ['糖質新生', { a: 'fbp', src: 'enz', o: INT_E }], ['肝醣合成', { a: 'gs', src: 'enz', o: INT_E }], ['肝醣分解', { a: 'gp', src: 'enz', o: INT_E }],
+        ['五碳糖磷酸途徑', { a: 'g6pd', src: 'enz', o: INT_E }], ['檸檬酸循環', { a: 'idh', src: 'enz', o: INT_E }], ['脂肪酸合成', { a: 'acc', src: 'enz', o: INT_E }], ['脂肪酸 β-氧化（進粒線體的關卡）', { a: 'cpt', src: 'enz', o: INT_E }],
+        ['酮體生成', { a: 'hmgs', src: 'enz', o: INT_E }], ['膽固醇合成', { a: 'hmgr', src: 'enz', o: INT_E }], ['尿素循環', { a: 'cps', src: 'enz', o: INT_E }]] },
+    { t: '每條路徑在細胞的哪裡', kind: 'list',
+      intro: ['方向相反的兩條路徑常常放在不同的地方，這也是一種調控。', '大原則：[[「燒掉產生能量」的多半在粒線體；「合成」的多半在細胞質]]。有兩條路徑橫跨兩邊。'],
+      tip: '糖質新生第一步（丙酮酸羧化酶）在粒線體，最後一步（葡萄糖-6-磷酸酶）在內質網，其餘在細胞質。尿素循環前兩步在粒線體，後三步在細胞質。',
+      countsTitle: '進行的位置', counts: [['糖解作用', '細胞質', INT_P], ['五碳糖磷酸途徑', '細胞質', INT_P], ['肝醣合成與分解', '細胞質', INT_P], ['脂肪酸合成', '細胞質', INT_P],
+        ['丙酮酸 → 乙醯輔酶A', '粒線體', INT_P], ['檸檬酸循環', '粒線體', INT_P], ['電子傳遞鏈', '粒線體', INT_P], ['脂肪酸 β-氧化', '粒線體', INT_P], ['酮體生成', '粒線體', INT_P],
+        ['糖質新生', '兩邊都有', INT_P], ['尿素循環', '兩邊都有', INT_P]] },
+    { t: '各器官用什麼燃料', kind: 'cloze',
+      intro: ['國考申論考過：「禁食或飢餓狀態下，肝臟、腦、脂肪組織、肌肉的代謝情形為何？」', '關鍵是每個器官的限制：有沒有粒線體、有沒有某個酵素、燃料進不進得去。'],
+      cloze: [
+        ['腦在平常幾乎只用', { a: 'glc', o: ['glc', 'fa', 'ket', 'aa'] }, '當燃料。'],
+        ['長期飢餓幾天後，腦改用', { a: 'ket', o: ['glc', 'fa', 'ket', 'lac'] }, '當主要燃料，可以減少對葡萄糖的需求。'],
+        ['脂肪酸不能當腦的燃料，因為它過不了血腦障壁。所以飢餓時肝臟把脂肪酸轉成水溶性的', { a: 'ket', o: ['ket', 'glc', 'lac', 'tg'] }, '送給腦。'],
+        ['成熟紅血球只能靠糖解作用，因為它沒有', { a: 'mito', o: ['mito', 'nuc', 'hk'] }, '。'],
+        ['肝臟會做酮體卻不能用，因為缺少', { a: 'scot', o: ['scot', 'g6pase', 'hk'] }, '。'],
+        ['肌肉的肝醣不能補充血糖，因為肌肉缺少', { a: 'g6pase', o: ['g6pase', 'hk', 'scot'] }, '。'],
+        ['飢餓時脂肪組織釋放到血液裡的是', { a: 'fag', o: ['fag', 'tg', 'ket', 'glc'] }, '。'],
+        ['休息時和長時間低強度運動時，肌肉主要燒的是', { a: 'fa', o: ['fa', 'glc', 'aa', 'lac'] }, '。'],
+        ['肌肉分解蛋白質後，把氮和碳骨架以哪兩種胺基酸為主送到肝臟？答案是丙胺酸和', { a: 'gln', o: ['gln', 'leu', 'lys'] }, '。']
+      ] },
+    { t: '時間軸與激素的作用方式', kind: 'cloze',
+      intro: ['從吃完飯到長期飢餓，血糖的來源會依序改變；激素則是透過「磷酸化」同時控制很多酵素。', '最後三題的選項只有英文。'],
+      cloze: [
+        ['飯後幾個小時內，血糖主要來自', { a: 'diet', o: ['diet', 'gcg', 'gng'] }, '。'],
+        ['兩餐之間到隔夜空腹，血糖主要靠肝臟的', { a: 'gcg', o: ['diet', 'gcg', 'gng', 'kg'] }, '。'],
+        ['空腹超過一天，肝醣用完之後，血糖主要靠', { a: 'gng', o: ['gcg', 'gng', 'kg'] }, '。'],
+        ['飢餓更久之後，腦改用酮體，主要是為了節省', { a: 'mp', o: ['mp', 'fat', 'lg'] }, '，因為糖質新生的原料有一大部分來自它。'],
+        ['升糖素和腎上腺素讓細胞內哪一個第二訊息上升，進而活化蛋白激酶 A？', { a: 'camp', o: ['camp', 'cgmp', 'ca'] }, ''],
+        ['蛋白激酶 A 會讓許多酵素被', { a: 'pho', o: ['pho', 'depho'] }, '。'],
+        ['酵素被磷酸化之後變得有活性的，通常是', { a: 'cat', o: ['cat', 'ana'] }, '，例如肝醣磷酸化酶、荷爾蒙敏感性脂解酶。'],
+        ['胰島素的作用相反，讓酵素', { a: 'depho', o: ['pho', 'depho'] }, '，因此活化的是合成路徑的酵素。'],
+        ['AMPK 在哪一種情況下被活化，進而關掉脂肪酸和膽固醇的合成？', { a: 'low', o: ['low', 'high'] }, ''],
+        ['脂肪酸合成旺盛時，哪一個中間產物會擋住脂肪酸進入粒線體，避免剛做好的脂肪酸又被燒掉？', { a: 'malc', o: ['malc', 'aco', 'cit'] }, ''],
+        ['飢餓時脂肪酸大量氧化，產生的哪一個分子會活化丙酮酸羧化酶、同時抑制丙酮酸去氫酶，把丙酮酸導向糖質新生？', { a: 'aco', o: ['aco', 'malc', 'f26'] }, ''],
+        ['細胞內 cAMP 濃度升高時，活性會增加的酵素是', { a: 'gp', src: 'enz', lang: 'en', o: ['gp', 'gs', 'pfk', 'acc'] }, '。'],
+        ['胰島素會抑制脂肪細胞裡的哪一個酵素，因而減少脂解？', { a: 'hsl', src: 'enz', lang: 'en', o: ['hsl', 'acc', 'gs', 'hmgr'] }, ''],
+        ['會被 fructose 2,6-bisphosphate 活化的酵素是', { a: 'pfk', src: 'enz', lang: 'en', o: ['pfk', 'fbp', 'pk', 'g6pd'] }, '。']
+      ] },
+    { t: '總複習：速率限制酵素（英文作答）', kind: 'list', force: 'en', listTitle: 'Rate-limiting enzyme',
+      intro: ['十一條路徑的速率限制酵素，這次只能用英文作答。'], tip: '答對後，下方會顯示中文。',
+      list: [['Glycolysis（糖解作用）', { a: 'pfk', src: 'enz', o: INT_E }], ['Gluconeogenesis（糖質新生）', { a: 'fbp', src: 'enz', o: INT_E }], ['Glycogenesis（肝醣合成）', { a: 'gs', src: 'enz', o: INT_E }], ['Glycogenolysis（肝醣分解）', { a: 'gp', src: 'enz', o: INT_E }],
+        ['Pentose phosphate pathway（五碳糖磷酸途徑）', { a: 'g6pd', src: 'enz', o: INT_E }], ['TCA cycle（檸檬酸循環）', { a: 'idh', src: 'enz', o: INT_E }], ['Fatty acid synthesis（脂肪酸合成）', { a: 'acc', src: 'enz', o: INT_E }], ['β-Oxidation（脂肪酸 β-氧化）', { a: 'cpt', src: 'enz', o: INT_E }],
+        ['Ketogenesis（酮體生成）', { a: 'hmgs', src: 'enz', o: INT_E }], ['Cholesterol synthesis（膽固醇合成）', { a: 'hmgr', src: 'enz', o: INT_E }], ['Urea cycle（尿素循環）', { a: 'cps', src: 'enz', o: INT_E }]] }
+  ] };
 /* 目錄：照老師上課的順序。有 levels 的才是做好的單元 */
 var GROUPS = [
   { g: '先讀這裡', items: [PRE] },
-  { g: '生化 1・醣類代謝', c: 6, items: [GLY, { zh: '糖質新生', en: 'Gluconeogenesis' }, { zh: '肝醣合成與分解', en: 'Glycogenesis & glycogenolysis' }, { zh: '五碳糖磷酸途徑', en: 'Pentose phosphate pathway' }] },
-  { g: '生化 1・能量代謝', c: 5, items: [{ zh: '丙酮酸去氫酶複合體', en: 'PDH complex' }, TCA, { zh: '電子傳遞鏈與氧化磷酸化', en: 'ETC & oxidative phosphorylation' }] },
-  { g: '生化 1・脂質分解', c: 2, items: [{ zh: '脂肪酸 β-氧化', en: 'β-Oxidation' }] },
-  { g: '生化 2・脂質合成', c: 2, items: [{ zh: '脂肪酸合成', en: 'Fatty acid synthesis' }, { zh: '酮體生成', en: 'Ketogenesis' }, { zh: '膽固醇合成與脂蛋白', en: 'Cholesterol & lipoproteins' }] },
-  { g: '生化 2・蛋白質與胺基酸', c: 3, items: [{ zh: '轉胺作用與尿素循環', en: 'Transamination & urea cycle' }, { zh: '胺基酸碳骨架與單碳代謝', en: 'Carbon skeletons & one-carbon metabolism' }] },
-  { g: '全部學完之後', c: 4, items: [{ zh: '整合：吃飽與飢餓時，哪些路徑開、哪些關', en: 'Fed & fasting states' }] }
+  { g: '生化 1・醣類代謝', c: 6, items: [GLY, GNG, GCG, PPP] },
+  { g: '生化 1・能量代謝', c: 5, items: [PDH, TCA, ETC] },
+  { g: '生化 1・脂質分解', c: 2, items: [BOX] },
+  { g: '生化 2・脂質合成', c: 2, items: [FAS, KET, CHO] },
+  { g: '生化 2・蛋白質與胺基酸', c: 3, items: [UREA, AAC] },
+  { g: '全部學完之後', c: 4, items: [INT] }
 ];
-var UNITS = {}; GROUPS.forEach(function (g) { g.items.forEach(function (u) { if (u.levels) { UNITS[u.id] = u; u.map = {}; u.nodes.forEach(function (n) { u.map[n.k] = n; }); } }); });
+function prep(u, par) {
+  if (par) ['dict', 'enz', 'prod', 'tags', 'zh', 'en'].forEach(function (k) { if (u[k] == null) u[k] = par[k]; });      // 子路徑沒寫的就沿用單元的
+  u.map = {}; (u.nodes || (u.nodes = [])).forEach(function (n) { u.map[n.k] = n; }); (u.extra || []).forEach(function (n) { u.map[n.k] = n; });      // extra：只出現在選項裡的干擾項
+  u.steps = u.steps || []; u.enz = u.enz || {}; u.prod = u.prod || {};
+  for (var k in (u.subs || {})) prep(u.subs[k], u);
+}
+var UNITS = {}; GROUPS.forEach(function (g) { g.items.forEach(function (u) { if (u.levels) { UNITS[u.id] = u; prep(u); } }); });
 
 /* ======================================================================
    程式
@@ -522,47 +1621,73 @@ function home() {
 function firstTodo(p) { for (var i = 0; i < p.levels.length; i++) if (!isDone(p.id, i)) return i; return 0; }
 function open(p, i) { CUR = p; LV = i; ST = null; level(); window.scrollTo(0, 0); }
 
-/* ---------- 版面：每個節點在圖上的位置 ---------- */
-var CY = { cx: 180, cy: 312, rx: 118, ry: 196, w: 360, h: 560 }, CH = { x: 152, w: 168, y0: 36, dy: 66, sx: 302, sw: 104 };
-function cpt(a, rx, ry) { var r = a * Math.PI / 180; return { x: CY.cx + (rx == null ? CY.rx : rx) * Math.sin(r), y: CY.cy - (ry == null ? CY.ry : ry) * Math.cos(r) }; }
+/* ---------- 版面：每個節點在圖上的位置 ----------
+   鏈狀（chain）：主幹由上往下；旁支 side 接在某個主幹節點的同一列，link 決定線怎麼畫：
+     in（預設）前一個主幹 → 旁支，旁支 ⇌ 同列主幹（例：DHAP）；branch 前一個主幹 → 旁支；
+     feed 旁支 → 同列主幹；leaf 同列主幹 → 旁支；at:'seg' 的 feed 接到上一段的中間
+   環狀（cycle）：節點依 ang 角度排在橢圓上；top 是從上面進來的分子；pre 是進環之前的步驟
+   每個單元可用 geo 覆寫尺寸 */
+var CY0 = { cx: 180, cy: 312, rx: 118, ry: 196, h: 560, nw: 100 }, CH0 = { x: 152, w: 168, y0: 36, dy: 66, sx: 302, sw: 104 };
+function G(U) { var b = U.layout === 'cycle' ? CY0 : CH0, g = U.geo || {}, o = {}; for (var k in b) o[k] = g[k] != null ? g[k] : b[k]; return o; }
+function cpt(U, a, drx, dry) { var g = G(U), r = a * Math.PI / 180; return { x: g.cx + (g.rx + (drx || 0)) * Math.sin(r), y: g.cy - (g.ry + (dry || 0)) * Math.cos(r) }; }
 function mainNodes(U) { return U.nodes.filter(function (n) { return !n.side; }); }
 function pos(U, k) {
-  if (U.layout === 'cycle') { var p = cpt(U.ang[k]); return { x: p.x, y: p.y, w: 100 }; }
+  var g = G(U);
+  if (U.layout === 'cycle') { var p = cpt(U, U.ang[k]); return { x: p.x, y: p.y, w: g.nw }; }
   var m = mainNodes(U), n = U.map[k];
-  if (n.side) { var q = pos(U, n.side); return { x: CH.sx, y: q.y, w: CH.sw }; }
-  for (var i = 0; i < m.length; i++) if (m[i].k === k) return { x: CH.x, y: CH.y0 + i * CH.dy, w: CH.w };
+  if (n.side) { var q = pos(U, n.side); return { x: g.sx, y: q.y - (n.at === 'seg' ? g.dy / 2 : 0), w: g.sw }; }
+  for (var i = 0; i < m.length; i++) if (m[i].k === k) return { x: g.x, y: g.y0 + i * g.dy, w: g.w };
 }
-function mapH(U) { return U.layout === 'cycle' ? CY.h : CH.y0 * 2 + (mainNodes(U).length - 1) * CH.dy; }
-function stepNo(U, f, t) { for (var i = 0; i < U.steps.length; i++) if (U.steps[i].f === f && U.steps[i].t === t) return i; return -1; }
+function mapH(U) { var g = G(U); return U.layout === 'cycle' ? g.h : g.y0 * 2 + (mainNodes(U).length - 1) * g.dy; }
+function allSteps(U) { return (U.pre || []).concat(U.steps); }
+function stepNo(U, f, t) { var A = allSteps(U); for (var i = 0; i < A.length; i++) if (A[i].f === f && A[i].t === t) return i; return -1; }
+function asked(L, st) { return !!st && (L.rows === 'enz' ? !!st.e : L.rows === 'prod' ? !!st.p : false); }
 
-function mapSvg(U, L, E) {      // E：'all' 顯示能量標籤、'co2' 只顯示 CO₂、'' 不顯示
-  var s = '', tg = '', pick = function (st) { return (U.tags && U.tags[st.p] || []).filter(function (t) { return E === 'all' || (E === 'co2' && t[1] === 'co2'); }); }, h = PH() / 2, isBlank = function (k) { return L.blanks.indexOf(k) >= 0; };
+function mapSvg(U, L, E) {      // E：'all' 顯示能量標籤、'co2' 只顯示 CO₂、'' 只顯示進出的分子
+  var s = '', tg = '', g = G(U), A = allSteps(U), h = PH() / 2, isBlank = function (k) { return L.blanks.indexOf(k) >= 0; };
+  var pick = function (st) { return ((U.tags && U.tags[st.p] || []).concat(st.io || [])).filter(function (t) { return t[1] === 'mol' || E === 'all' || (E === 'co2' && t[1] === 'co2'); }); };
+  var mark = function (x, y, i, ang) { var st = A[i]; return asked(L, st) ? badge(x, y, i + 1, st.irr) : '<polygon class="ar" points="-7,-6 7,0 -7,6" transform="translate(' + x + ',' + y + ') rotate(' + ang + ')"/>'; };
   if (U.layout === 'cycle') {
-    s += '<ellipse class="ln" cx="' + CY.cx + '" cy="' + CY.cy + '" rx="' + CY.rx + '" ry="' + CY.ry + '" fill="none" stroke-width="3"/>';
-    U.steps.forEach(function (st, i) {
-      var a = U.ang[st.f], b = U.ang[st.t]; if (b < a) b += 360; var m = ((a + b) / 2) % 360, p = cpt(m), r = m * Math.PI / 180, ang = Math.atan2(CY.ry * Math.sin(r), CY.rx * Math.cos(r)) * 180 / Math.PI;
-      s += L.rows ? badge(p.x, p.y, i + 1, st.irr) : '<polygon class="ar" points="-7,-6 7,0 -7,6" transform="translate(' + p.x + ',' + p.y + ') rotate(' + ang + ')"/>';
-      var tl = pick(st), ac = Math.abs(Math.cos(r)), q = cpt(m, CY.rx + 44 + 6 * ac, CY.ry + 14 + 12 * ac); tl.forEach(function (t, j) { tg += tagC(q.x, q.y + (j - (tl.length - 1) / 2) * 18, t[0], t[1]); });
+    s += '<ellipse class="ln" cx="' + g.cx + '" cy="' + g.cy + '" rx="' + g.rx + '" ry="' + g.ry + '" fill="none" stroke-width="3"/>';
+    A.forEach(function (st, i) {
+      if (U.ang[st.f] == null || U.ang[st.t] == null) return;
+      var a = U.ang[st.f], b = U.ang[st.t]; if (b <= a) b += 360; var m = ((a + b) / 2) % 360, p = cpt(U, m), r = m * Math.PI / 180;
+      s += mark(p.x, p.y, i, Math.atan2(g.ry * Math.sin(r), g.rx * Math.cos(r)) * 180 / Math.PI);
+      var tl = pick(st), cr = Math.cos(r), ac = Math.abs(cr), q = cpt(U, m, 44 + 6 * ac, 14 + 12 * ac);
+      var hit = tl.some(function (t, j) { var w = tagW(t[0]), x = Math.max(3 + w / 2, Math.min(357 - w / 2, q.x)); return Math.abs(x - p.x) < w / 2 + 13 && Math.abs(q.y + (j - (tl.length - 1) / 2) * 18 - p.y) < 20; });
+      tl.forEach(function (t, j) { tg += tagC(q.x, hit ? p.y + (cr >= 0 ? -1 : 1) * (22 + 18 * j) : q.y + (j - (tl.length - 1) / 2) * 18, t[0], t[1]); });      // 標籤太長會壓到編號時，改成往外疊
     });
-    s += '<line class="ln" x1="' + CY.cx + '" y1="' + (35 + h) + '" x2="' + CY.cx + '" y2="' + (CY.cy - CY.ry - 14) + '" stroke-width="3"/><polygon class="ar" points="-6,-7 6,-7 0,7" transform="translate(' + CY.cx + ',' + (CY.cy - CY.ry - 12) + ')"/>';
-    s += pill(CY.cx, 34, 128, { zh: U.dict.aco.zh + (L.carbon ? '（2C）' : ''), en: U.dict.aco.en + (L.carbon ? ' (2C)' : '') }, 'src k2');
-    if (M() === 'bi') s += tx(CY.cx, CY.cy - 10, U.zh, 'b', 15) + tx(CY.cx, CY.cy + 7, U.en, 'b', 11.5) + tx(CY.cx, CY.cy + 24, '順時針方向', 'm', 11);
-    else s += tx(CY.cx, CY.cy - 4, T(U.zh, U.en), 'b', 15) + tx(CY.cx, CY.cy + 16, T('順時針方向', 'clockwise'), 'm', 11);
+    if (U.top) { var atTop = U.nodes.some(function (n) { return U.ang[n.k] === 0; }), y1 = 35 + h, y2 = g.cy - g.ry - (atTop ? h + 3 : 14), pre = (U.pre || [])[0];
+      s += '<line class="ln" x1="' + g.cx + '" y1="' + y1 + '" x2="' + g.cx + '" y2="' + y2 + '" stroke-width="3"/><polygon class="ar" points="-6,-7 6,-7 0,7" transform="translate(' + g.cx + ',' + (y2 + 2) + ')"/>';
+      if (pre && asked(L, pre)) s += badge(g.cx, (y1 + y2) / 2 - 3, 1, pre.irr);
+      if (pre) { var x0 = g.cx + 17, xl = g.cx - 17; pick(pre).forEach(function (t) { var w = tagW(t[0]);      // 進出的分子放右邊，能量標籤放左邊
+        if (t[1] === 'mol') { tg += tagC(x0 + w / 2, (y1 + y2) / 2 - 3, t[0], t[1]); x0 += w + 4; } else { tg += tagC(xl - w / 2, (y1 + y2) / 2 - 3, t[0], t[1]); xl -= w + 4; } }); }
+      s += pill(g.cx, 34, U.top.w || 128, { zh: U.top.zh + (L.carbon && U.top.c ? '（' + U.top.c + 'C）' : ''), en: U.top.en + (L.carbon && U.top.c ? ' (' + U.top.c + 'C)' : '') }, 'src' + (U.top.c ? ' k' + U.top.c : '')); }
+    var cz = U.czh || U.zh, ce = U.cen || U.en, iw = 2 * (g.rx - g.nw / 2) + 4;      // 圓心的字：寬度不能超過左右兩個節點之間
+    if (M() === 'bi') s += tx(g.cx, g.cy - 10, cz, 'b', fit(cz, iw, 15)) + tx(g.cx, g.cy + 7, ce, 'b', fit(ce, iw, 11.5)) + tx(g.cx, g.cy + 24, '順時針方向', 'm', 11);
+    else s += tx(g.cx, g.cy - 4, T(cz, ce), 'b', fit(T(cz, ce), iw, 15)) + tx(g.cx, g.cy + 16, T('順時針方向', 'clockwise'), 'm', 11);
   } else {
-    var m = mainNodes(U);
+    var m = mainNodes(U), down = function (x, y) { return '<polygon class="ar" points="-6,-6 6,-6 0,6" transform="translate(' + x + ',' + y + ')"/>'; };
     (U.phases || []).forEach(function (ph) { var a = pos(U, ph.a), b = pos(U, ph.b), my = (a.y + b.y) / 2;
       s += '<line x1="46" y1="' + (a.y - h + 1) + '" x2="46" y2="' + (b.y + h - 1) + '" stroke="var(' + ph.c + ')" stroke-width="4" stroke-linecap="round"/>' +
         '<text x="30" y="' + my + '" text-anchor="middle" font-size="11.5" font-weight="700" style="fill:var(' + ph.c + ')" transform="rotate(-90 30 ' + my + ')">' + esc(T(ph.zh, ph.en)) + '</text>'; });
-    for (var i = 0; i < m.length - 1; i++) { var a = pos(U, m[i].k), b = pos(U, m[i + 1].k), n = stepNo(U, m[i].k, m[i + 1].k);
-      s += '<line class="ln" x1="' + a.x + '" y1="' + (a.y + h) + '" x2="' + b.x + '" y2="' + (b.y - h) + '" stroke-width="3"/>';
-      s += L.rows ? badge(a.x, (a.y + b.y) / 2, n + 1, U.steps[n].irr) : '<polygon class="ar" points="-6,-6 6,-6 0,6" transform="translate(' + a.x + ',' + ((a.y + b.y) / 2 + 1) + ')"/>';
-      var tx0 = a.x + 17; pick(U.steps[n]).forEach(function (t) { var w = tagW(t[0]); tg += tagC(tx0 + w / 2, (a.y + b.y) / 2, t[0], t[1]); tx0 += w + 4; }); }
-    U.nodes.forEach(function (sd) { if (!sd.side) return;      // 旁支：例如 DHAP
-      var p = pos(U, sd.k), q = pos(U, sd.side), n = stepNo(U, sd.k, sd.side), prev = null;
-      for (var i = 0; i < m.length; i++) if (m[i].k === sd.side) prev = pos(U, m[i - 1].k);
-      s += '<line class="ln" x1="' + (prev.x + 50) + '" y1="' + (prev.y + h) + '" x2="' + p.x + '" y2="' + (p.y - h - 1) + '" stroke-width="3"/>';
-      var x1 = q.x + q.w / 2 + 1, x2 = p.x - p.w / 2 - 1; s += '<line class="ln" x1="' + x1 + '" y1="' + p.y + '" x2="' + x2 + '" y2="' + p.y + '" stroke-width="3"/>';
-      if (L.rows) s += badge((x1 + x2) / 2 + 4, p.y + h + 13, n + 1, U.steps[n].irr); else s += tx((x1 + x2) / 2 + 4, p.y + h + 14, '⇌', 'm', 14);
+    for (var i = 0; i < m.length - 1; i++) { var a = pos(U, m[i].k), b = pos(U, m[i + 1].k), n = stepNo(U, m[i].k, m[i + 1].k), st = A[n], my = (a.y + b.y) / 2;
+      s += '<line class="ln" x1="' + a.x + '" y1="' + (a.y + h) + '" x2="' + b.x + '" y2="' + (b.y - h) + '" stroke-width="3"' + (st && st.dots ? ' stroke-dasharray="2 5" stroke-linecap="round"' : '') + '/>';
+      s += asked(L, st) ? badge(a.x, my, n + 1, st.irr) : down(a.x, my + 1);
+      var tl = st ? pick(st) : [], tx0 = a.x + 17; tl.forEach(function (t) { var w = tagW(t[0]); tg += tagC(tx0 + w / 2, my, t[0], t[1]); tx0 += w + 4; });
+      if (st && st.dots && !tl.length) s += tx(a.x + 16, my + 3.5, T(st.dots.zh, st.dots.en), 'nt', 10, 'start'); }
+    U.nodes.forEach(function (sd) { if (!sd.side) return;
+      var p = pos(U, sd.k), q = pos(U, sd.side), link = sd.link || 'in', prev = null, pk = null;
+      for (var i = 1; i < m.length; i++) if (m[i].k === sd.side) { prev = pos(U, m[i - 1].k); pk = m[i - 1].k; }
+      var x1 = q.x + q.w / 2 + 1, x2 = p.x - p.w / 2 - 1, xm = (x1 + x2) / 2, n;
+      if (link === 'in' || link === 'branch') { n = stepNo(U, pk, sd.k);
+        if (link === 'branch') s += arrow(prev.x + 50, prev.y + h, p.x, p.y - h - 3); else s += '<line class="ln" x1="' + (prev.x + 50) + '" y1="' + (prev.y + h) + '" x2="' + p.x + '" y2="' + (p.y - h - 1) + '" stroke-width="3"/>';
+        if (link === 'branch' && asked(L, A[n])) s += badge((prev.x + 50 + p.x) / 2 + 4, (prev.y + p.y) / 2 - 1, n + 1, A[n].irr); }
+      if (link === 'in') { n = stepNo(U, sd.k, sd.side); s += '<line class="ln" x1="' + x1 + '" y1="' + p.y + '" x2="' + x2 + '" y2="' + p.y + '" stroke-width="3"/>';
+        s += asked(L, A[n]) ? badge(xm + 4, p.y + h + 13, n + 1, A[n].irr) : tx(xm + 4, p.y + h + 14, '⇌', 'm', 14); }
+      if (link === 'feed' || link === 'leaf') { n = link === 'feed' ? stepNo(U, sd.k, sd.side) : stepNo(U, sd.side, sd.k); var into = sd.at === 'seg' ? q.x + 6 : x1 + 2;
+        s += link === 'feed' ? arrow(x2, p.y, into, p.y) : arrow(x1, p.y, x2 - 2, p.y);
+        if (asked(L, A[n])) s += badge(xm, p.y - 15, n + 1, A[n].irr); }
     });
   }
   U.nodes.forEach(function (n) { var p = pos(U, n.k);
@@ -577,11 +1702,12 @@ function buildBlanks(U, L) {
   var B = [];
   if (L.kind === 'ov') L.blanks.forEach(function (b) { B.push({ id: b.id, where: 'node', ans: b.a, src: U.dict, opts: shuffle(b.o), x: b.x, y: b.y, w: b.w, c: b.c }); });
   if (L.kind === 'map') {
-    var keys = U.nodes.filter(function (n) { return n !== U.nodes[0] || U.layout === 'cycle'; }).map(function (n) { return n.k; });
+    var keys = U.nodes.filter(function (n) { return (n !== U.nodes[0] || U.layout === 'cycle') && !n.fixed; }).concat(U.extra || []).map(function (n) { return n.k; });
     L.blanks.forEach(function (k) { var p = pos(U, k); B.push({ id: 'n_' + k, where: 'node', ans: k, src: U.map, enFirst: true, opts: shuffle(keys), x: p.x, y: p.y, w: p.w, c: L.plain ? null : U.map[k].c }); });
-    if (L.rows) U.steps.forEach(function (s, i) { var d = L.rows === 'enz' ? U.enz : U.prod, ks = Object.keys(d).filter(function (k) { return L.rows !== 'enz' || U.steps.some(function (t) { return t.e === k; }); });
-      B.push({ id: 'r' + i, where: 'row', ans: L.rows === 'enz' ? s.e : s.p, src: d, enFirst: true, opts: shuffle(ks), step: i }); });
+    if (L.rows) { var A = allSteps(U), fld = L.rows === 'enz' ? 'e' : 'p', d = L.rows === 'enz' ? U.enz : U.prod, ks = Object.keys(d).filter(function (k) { return A.some(function (t) { return t[fld] === k; }) || (U.rowExtra || []).indexOf(k) >= 0; });      // rowExtra：額外的干擾選項
+      A.forEach(function (s, i) { if (s[fld]) B.push({ id: 'r' + i, where: 'row', ans: s[fld], src: d, enFirst: true, opts: shuffle(ks), step: i, st: s }); }); }
   }
+  (L.list || []).forEach(function (it, i) { var x = it[1]; B.push({ id: 'l' + i, where: 'row', li: i, desc: it[0], ans: x.a, lang: x.lang, src: x.src === 'enz' ? U.enz : U.dict, enFirst: x.src === 'enz', opts: shuffle(x.o) }); });
   (L.counts || []).forEach(function (c, i) { B.push({ id: 'c' + i, where: 'count', ans: c[1], label: c[0], opts: c[2] }); });
   if (L.kind === 'cloze') L.cloze.forEach(function (row, i) { row.forEach(function (x) { if (typeof x === 'object') B.push({ id: 'z' + i, where: 'cloze', ans: x.a, lang: x.lang, src: x.src === 'enz' ? U.enz : U.dict, enFirst: x.src === 'enz', opts: shuffle(x.o) }); }); });
   return B;
@@ -591,16 +1717,18 @@ function label(b, v) { return b.src ? one(b.src[v], b.lang, b.enFirst) : v; }
 function face(b) {
   var v = ST.ans[b.id] || '';
   if (b.where === 'node') { if (!v) return '<b style="font-size:17px">？</b>'; var L = two(b.src[v], b.lang, b.w);
-    return '<b style="font-size:' + (fit(L[0], b.w, L[1] ? 11.5 : 12.5) / .75).toFixed(1) + 'px">' + esc(L[0]) + '</b>' + (L[1] ? '<small style="font-size:' + (fit(L[1], b.w, 10) / .75).toFixed(1) + 'px">' + esc(L[1]) + '</small>' : ''); }
+    return '<b style="font-size:' + (fit(L[0], b.w - 8, L[1] ? 11.5 : 12.5) / .75).toFixed(1) + 'px">' + esc(L[0]) + '</b>' + (L[1] ? '<small style="font-size:' + (fit(L[1], b.w - 4, 10) / .75).toFixed(1) + 'px">' + esc(L[1]) + '</small>' : ''); }
   if (!v) return '<b class="muted" style="font-weight:400">請選擇</b>';
   if (b.where === 'row' || b.enFirst) { var R = two(b.src[v], b.lang); return '<b>' + esc(R[0]) + '</b>' + (R[1] ? '<small>' + esc(R[1]) + '</small>' : ''); }
   return '<b>' + esc(label(b, v)) + '</b>';
 }
-/* 空格的顏色：圖上的空格＝這個位置的碳數；圖下的空格＝選到的答案是哪一類（激酶與 ATP 橘色、去氫酶與 NADH 藍色、FADH₂ 紫色） */
+/* 空格的顏色：圖上的空格＝這個位置的碳數；圖下的空格＝選到的答案是哪一類
+   （激酶與 ATP、GTP 橘色；去氫酶與 NADH 藍色；FADH₂ 紫色；NADPH 青色） */
+function kind(e) { e = e || ''; return /NADPH/.test(e) ? 'tp' : /kinase|ATP|GTP|UTP/.test(e) ? 'tk' : /dehydrogenase|NADH/.test(e) ? 'td' : /FADH/.test(e) ? 'tf' : ''; }
 function faceCls(b) {
   var v = ST.ans[b.id] || '', c = 'face';
   if (b.where === 'node' && b.c) c += ' k' + b.c;
-  if (b.where === 'row' && v) { var e = b.src[v].en || ''; c += /kinase|ATP|GTP/.test(e) ? ' tk' : /dehydrogenase|NADH/.test(e) ? ' td' : /FADH/.test(e) ? ' tf' : ''; }
+  if (b.where === 'row' && b.li == null && v) c += ' ' + kind(b.src[v].en);
   return c;
 }
 function sel(b) {
@@ -610,28 +1738,35 @@ function sel(b) {
 }
 
 /* ---------- 一關的畫面 ---------- */
+var KLAB = { enz: { tk: '激酶 kinase', td: '去氫酶 dehydrogenase' }, prod: { tk: 'ATP、GTP', td: 'NADH', tf: 'FADH₂', tp: 'NADPH' } };
 function level() {
-  var U = CUR, L = U.levels[LV], n = U.levels.length; FORCE = L.force || null;
+  var P = CUR, L = P.levels[LV], U = L.sub ? P.subs[L.sub] : P, n = P.levels.length; FORCE = L.force || null;
   if (!ST) ST = { blanks: buildBlanks(U, L), ans: {}, checked: false, shown: false };
-  $('title').textContent = U.zh; $('subtitle').textContent = '第 ' + (LV + 1) + ' 關，共 ' + n + ' 關・' + L.t;
+  $('title').textContent = P.zh; $('subtitle').textContent = '第 ' + (LV + 1) + ' 關，共 ' + n + ' 關・' + L.t;
   $('back').hidden = false; seg();
-  $('lv').hidden = false; $('lv').innerHTML = U.levels.map(function (_, i) { var d = isDone(U.id, i); return '<button type="button" data-i="' + i + '" class="' + (i === LV ? 'on' : '') + (d ? ' done' : '') + '" aria-label="第 ' + (i + 1) + ' 關' + (d ? '（已完成）' : '') + '">' + (i + 1) + (d ? ' ✓' : '') + '</button>'; }).join('');
-  $('lv').querySelectorAll('button').forEach(function (b) { b.onclick = function () { open(U, +b.getAttribute('data-i')); }; });
+  $('lv').hidden = false; $('lv').innerHTML = P.levels.map(function (_, i) { var d = isDone(P.id, i); return '<button type="button" data-i="' + i + '" class="' + (i === LV ? 'on' : '') + (d ? ' done' : '') + '" aria-label="第 ' + (i + 1) + ' 關' + (d ? '（已完成）' : '') + '">' + (i + 1) + (d ? ' ✓' : '') + '</button>'; }).join('');
+  $('lv').querySelectorAll('button').forEach(function (b) { b.onclick = function () { open(P, +b.getAttribute('data-i')); }; });
   var on = $('lv').querySelector('.on'); if (on && on.scrollIntoView) on.scrollIntoView({ block: 'nearest', inline: 'center' });
 
   var h = '<div class="card pad"><h2>' + esc(L.t) + '</h2>' + L.intro.map(function (p) { return '<p>' + fmt(p) + '</p>'; }).join('') + (L.tip ? '<div class="tip">' + fmt(esc(L.tip)) + '</div>' : '') + '</div>';
-  var by = function (w) { return ST.blanks.filter(function (b) { return b.where === w; }); }, nodes = by('node'), rows = by('row'), cnt = by('count');
+  var by = function (w) { return ST.blanks.filter(function (b) { return b.where === w; }); }, nodes = by('node'), rows = by('row').filter(function (b) { return b.li == null; }), lst = by('row').filter(function (b) { return b.li != null; }), cnt = by('count');
   var passed = ST.checked && !ST.shown && ST.blanks.every(function (b) { return ST.ans[b.id] === b.ans; });
   var E = L.energy || (L.rows === 'prod' && (ST.shown || passed)) ? 'all' : L.carbon ? 'co2' : '';      // 算帳那一關：全對或看答案後，圖上才出現能量標籤
-  var lg = (L.legend || (L.kind === 'map' && !L.plain ? U.nodes.map(function (n) { return n.c; }).concat(U.layout === 'cycle' ? [2] : []).filter(function (c, i, a) { return c && a.indexOf(c) === i; }).sort(function (a, b) { return b - a; }) : []))
+  var lg = (L.legend || (L.kind === 'map' && !L.plain ? U.nodes.map(function (n) { return n.c; }).concat(U.top ? [U.top.c] : []).filter(function (c, i, a) { return c && a.indexOf(c) === i; }).sort(function (a, b) { return b - a; }) : []))
     .map(function (c) { return '<span><i class="k' + c + '"></i>' + c + ' 碳</span>'; });
-  if (L.kind === 'map' && L.rows && U.steps.some(function (s) { return s.irr; })) lg.push('<span><i class="irr">1</i>實心編號＝不可逆步驟</span>');
-  if (L.kind !== 'cloze') { var H = L.kind === 'ov' ? L.h : mapH(U), fh = Math.round(PH() / .75);
-    h += '<div class="card pad"><div class="dia" id="dia"><svg viewBox="0 0 360 ' + H + '" role="img" aria-label="' + esc(U.zh) + '路徑圖">' + (L.kind === 'ov' ? L.svg() : mapSvg(U, L, E)) + '</svg>' +
+  if (lg.length) lg.unshift('<span>底色＝碳數</span>');
+  if (L.kind === 'map' && L.rows && allSteps(U).some(function (s) { return s.irr && asked(L, s); })) lg.push('<span><i class="irr">1</i>實心編號＝不可逆步驟</span>');
+  if (L.kind === 'ov' || L.kind === 'map') { var H = L.kind === 'ov' ? L.h : mapH(U), fh = Math.round(PH() / .75);
+    h += '<div class="card pad"><div class="dia" id="dia"><svg viewBox="0 0 360 ' + H + '" role="img" aria-label="' + esc(P.zh) + '路徑圖">' + (L.kind === 'ov' ? L.svg() : mapSvg(U, L, E)) + '</svg>' +
       nodes.map(function (b) { return '<span class="bk" data-k="' + b.id + '" style="left:' + (b.x / 360 * 100) + '%;top:' + (b.y / H * 100) + '%"><span style="display:block;width:' + Math.round(b.w / .75) + 'px;height:' + fh + 'px">' + sel(b) + '</span><i class="mk"></i></span>'; }).join('') + '</div>' +
-      (lg.length ? '<div class="lgd">' + (L.kind === 'ov' || !L.plain ? '<span>底色＝碳數</span>' : '') + lg.join('') + '</div>' : '') + (nodes.length ? '<div class="small muted" style="text-align:center;margin-top:6px">點虛線框選答案</div>' : '') + '</div>'; }
-  if (rows.length) h += '<div class="card pad"><h2>' + esc(L.rowsTitle || '') + '</h2><div class="lgd" style="justify-content:flex-start;margin:0 0 4px">' + (L.rows === 'enz' ? '<span><i class="tk"></i>激酶 kinase</span><span><i class="td"></i>去氫酶 dehydrogenase</span>' : '<span><i class="tk"></i>ATP、GTP</span><span><i class="td"></i>NADH</span>' + (U.prod.fad ? '<span><i class="tf"></i>FADH₂</span>' : '')) + '</div>' + rows.map(function (b) { var s = U.steps[b.step];
-    return '<div class="st" data-k="' + b.id + '"><span class="n">' + (b.step + 1) + '</span><span class="d">' + esc(short(U.map[s.f])) + ' → ' + esc(short(U.map[s.t])) + (s.also ? ' ＋ ' + esc(short(U.map[s.also])) : '') + '</span><span class="w">' + sel(b) + '<div class="r"></div></span></div>'; }).join('') + '</div>';
+      (lg.length ? '<div class="lgd">' + lg.join('') + '</div>' : '') + (nodes.length ? '<div class="small muted" style="text-align:center;margin-top:6px">點虛線框選答案</div>' : '') + '</div>'; }
+  if (rows.length) { var seen = {}, kl = ''; rows[0].opts.forEach(function (o) { var k = kind(rows[0].src[o].en); if (k && !seen[k] && KLAB[L.rows][k]) { seen[k] = 1; } });
+    ['tk', 'td', 'tf', 'tp'].forEach(function (k) { if (seen[k]) kl += '<span><i class="' + k + '"></i>' + KLAB[L.rows][k] + '</span>'; });
+    h += '<div class="card pad"><h2>' + esc(L.rowsTitle || '') + '</h2>' + (kl ? '<div class="lgd" style="justify-content:flex-start;margin:0 0 4px">' + kl + '</div>' : '') + rows.map(function (b) { var s = b.st;
+      var d = s.desc ? T(s.desc.zh, s.desc.en) : short(U.map[s.f]) + ' → ' + short(U.map[s.t]) + (s.also ? ' ＋ ' + short(U.map[s.also]) : '');
+      return '<div class="st" data-k="' + b.id + '"><span class="n">' + (b.step + 1) + '</span><span class="d">' + esc(d) + '</span><span class="w">' + sel(b) + '<div class="r"></div></span></div>'; }).join('') + '</div>'; }
+  if (lst.length) h += '<div class="card pad"><h2>' + esc(L.listTitle || '') + '</h2>' + lst.map(function (b) {
+    return '<div class="st" data-k="' + b.id + '"><span class="n">' + (b.li + 1) + '</span><span class="d" style="font-size:14px;color:var(--ink)">' + fmt(esc(b.desc)) + '</span><span class="w">' + sel(b) + '<div class="r"></div></span></div>'; }).join('') + '</div>';
   if (cnt.length) h += '<div class="card pad"><h2>' + esc(L.countsTitle || '') + '</h2>' + cnt.map(function (b) {
     return '<div class="st c" data-k="' + b.id + '"><span class="d">' + esc(b.label) + '</span><span class="w">' + sel(b) + '<div class="r"></div></span></div>'; }).join('') + '</div>';
   if (L.kind === 'cloze') { var zb = by('cloze'); h += '<div class="card pad"><ol class="cz">' + L.cloze.map(function (row, i) {

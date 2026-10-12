@@ -1,0 +1,1664 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>圖解食品科學</title>
+<style>
+  :root {
+    --bg: #f4f5f2; --card: #ffffff; --ink: #1f2a24; --muted: #5f6a63; --line: #e2e5df; --rail: #c9d2cb;
+    --brand: #2f6b4f; --brand-soft: #e3efe8; --on-brand: #ffffff; --ok: #2e7d4f; --ok-soft: #e1f2e7;
+    --bad: #b3261e; --bad-soft: #fbe5e3; --warm: #fff3d6; --chip: #eef0eb; --shadow: 0 1px 2px rgba(0,0,0,.06), 0 2px 8px rgba(0,0,0,.04);
+    --k6: #fbe9c6; --k6s: #b8791c; --k5: #dce9f7; --k5s: #3f73a8; --k4: #d4eeee; --k4s: #2c8088; --k3: #f9e0e6; --k3s: #b8506c; --k2: #e9e2f6; --k2s: #6f57ab;
+    --e-atp: #c96f14; --e-nadh: #4558b8; --e-fad: #7a4fb0; --e-co2: #77817a; --on-tag: #ffffff; --hl: #fff1a8; --w-k: #a8560a; --w-d: #3c4fb0;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+    --bg: #121614; --card: #1b201d; --ink: #e8ece9; --muted: #9aa49e; --line: #2c332f; --rail: #3a443e; --brand: #7cc4a0; --brand-soft: #1f3329; --on-brand: #10251a;
+    --ok: #7cc4a0; --ok-soft: #1d3127; --bad: #ff8a80; --bad-soft: #3a1f1d; --warm: #3a3220; --chip: #252b27; --shadow: none; color-scheme: dark;
+    --k6: #3b2e12; --k6s: #e0b878; --k5: #1b2b3c; --k5s: #9cb7d6; --k4: #16302f; --k4s: #7fc4c4; --k3: #3a1e27; --k3s: #e0a1b0; --k2: #2a2340; --k2s: #b9a8e6;
+    --e-atp: #f0a44c; --e-nadh: #9aa8f0; --e-fad: #c3a2ee; --e-co2: #9aa49e; --on-tag: #14181a; --hl: #5a4d12; --w-k: #f0a44c; --w-d: #9aa8f0; } }
+  :root[data-theme="dark"] {
+    --bg: #121614; --card: #1b201d; --ink: #e8ece9; --muted: #9aa49e; --line: #2c332f; --rail: #3a443e; --brand: #7cc4a0; --brand-soft: #1f3329; --on-brand: #10251a;
+    --ok: #7cc4a0; --ok-soft: #1d3127; --bad: #ff8a80; --bad-soft: #3a1f1d; --warm: #3a3220; --chip: #252b27; --shadow: none; color-scheme: dark;
+    --k6: #3b2e12; --k6s: #e0b878; --k5: #1b2b3c; --k5s: #9cb7d6; --k4: #16302f; --k4s: #7fc4c4; --k3: #3a1e27; --k3s: #e0a1b0; --k2: #2a2340; --k2s: #b9a8e6;
+    --e-atp: #f0a44c; --e-nadh: #9aa8f0; --e-fad: #c3a2ee; --e-co2: #9aa49e; --on-tag: #14181a; --hl: #5a4d12; --w-k: #f0a44c; --w-d: #9aa8f0; }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html, body { margin: 0; background: var(--bg); color: var(--ink);
+    font: 15px/1.6 -apple-system, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif; -webkit-text-size-adjust: 100%; }
+  header { position: sticky; top: 0; z-index: 5; background: var(--bg); padding: 12px 16px 8px; }
+  .hd { display: flex; align-items: center; gap: 8px; max-width: 720px; margin: 0 auto; }
+  .hd .tt { flex: 1; min-width: 0; }
+  h1 { font-size: 19px; margin: 0; letter-spacing: .02em; }
+  .sub { color: var(--muted); font-size: 13px; margin-top: 2px; }
+  main { padding: 4px 16px 40px; max-width: 720px; margin: 0 auto; }
+  button, select { font: inherit; color: inherit; }
+  button:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+  .card { background: var(--card); border-radius: 16px; box-shadow: var(--shadow); border: 1px solid var(--line); margin: 12px 0; overflow: hidden; }
+  .pad { padding: 14px; }
+  .card h2 { font-size: 17px; margin: 0 0 6px; }
+  .card p { margin: 6px 0; }
+  .card ul { margin: 6px 0; padding-left: 20px; } .card li { margin: 4px 0; }
+  .muted { color: var(--muted); } .small { font-size: 12px; }
+  .xbtn { border: 1px solid var(--line); background: var(--card); border-radius: 9px; padding: 6px 10px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+  .seg { display: flex; border: 1px solid var(--line); border-radius: 9px; overflow: hidden; background: var(--card); flex: 0 0 auto; }
+  .seg button { border: 0; background: transparent; padding: 6px 8px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+  .seg button.on { background: var(--brand); color: var(--on-brand); }
+  .btn { display: block; width: 100%; border: 1px solid var(--brand); background: var(--brand); color: var(--on-brand); border-radius: 12px; padding: 13px 12px; font-weight: 700; font-size: 16px; cursor: pointer; }
+  .btn.plain { background: transparent; color: var(--ink); border-color: var(--line); font-weight: 600; }
+  .btn[disabled] { opacity: .4; cursor: default; }
+  .row { display: flex; gap: 8px; } .row > * { flex: 1; min-width: 0; }
+  .glab { font-size: 12px; font-weight: 700; color: var(--brand); margin: 18px 2px 6px; }
+  .item { display: flex; width: 100%; text-align: left; gap: 10px; align-items: center; border: 1px solid var(--line); background: var(--card); border-radius: 12px; padding: 12px; margin-top: 8px; cursor: pointer; }
+  .item b { flex: 1; min-width: 0; font-size: 15px; } .item b span { display: block; font-weight: 400; font-size: 12px; color: var(--muted); }
+  .item i { font-style: normal; font-size: 12px; color: var(--muted); white-space: nowrap; }
+  .item[disabled] { opacity: .5; cursor: default; }
+  .lv { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; margin-top: 8px; max-width: 720px; margin-left: auto; margin-right: auto; }
+  .lv::-webkit-scrollbar { display: none; }
+  .lv button { flex: 0 0 auto; min-width: 38px; border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 5px 11px; font-size: 13px; cursor: pointer; font-variant-numeric: tabular-nums; }
+  .lv button.on { background: var(--brand); border-color: var(--brand); color: var(--on-brand); }
+  .lv button.done:not(.on) { border-color: var(--ok); color: var(--ok); }
+  /* 路徑圖：SVG 在下，空格疊在圖上 */
+  .dia { position: relative; width: 100%; max-width: 420px; margin: 0 auto; }
+  .dia svg { display: block; width: 100%; height: auto; }
+  .dia .ln { stroke: var(--rail); } .dia .ar { fill: var(--muted); }
+  .dia .pill { fill: var(--chip); stroke: var(--line); } .dia .src { fill: var(--brand-soft); stroke: var(--brand); }
+  .dia text { fill: var(--ink); font-family: inherit; }
+  .dia text.m { fill: var(--muted); } .dia text.b { fill: var(--brand); font-weight: 700; }
+  .dia .num circle { fill: var(--card); stroke: var(--brand); } .dia .num text { fill: var(--brand); font-weight: 700; }
+  .bk { position: absolute; transform: translate(-50%, -50%) scale(var(--s, .75)); transform-origin: center; }
+  /* 空格：看得到的是 .face，真正的下拉選單透明地蓋在上面（字級 16px，iPhone 點選時畫面才不會自動放大） */
+  .pick { position: relative; display: inline-flex; max-width: 100%; vertical-align: middle; }
+  .pick select { position: absolute; top: 0; left: 0; width: 100%; height: 100%; margin: 0; border: 0; opacity: 0; font-size: 16px; cursor: pointer; -webkit-appearance: none; appearance: none; }
+  .pick select:disabled { cursor: default; }
+  .face { position: relative; display: flex; flex-direction: column; justify-content: center; min-width: 0; min-height: 40px; line-height: 1.25; padding: 4px 30px 4px 10px;
+    border: 2px dashed var(--brand); border-radius: 10px; background: var(--card); color: var(--ink); }
+  .face::after { content: ""; position: absolute; right: 11px; top: 50%; width: 7px; height: 7px; margin-top: -6px; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(45deg); }
+  .face b { font-weight: 600; font-size: 15px; overflow-wrap: anywhere; } .face small { font-size: 12px; color: var(--muted); overflow-wrap: anywhere; }
+  .pick.has .face { border-style: solid; background: var(--brand-soft); }
+  .pick.ok .face { border: 2px solid var(--ok); background: var(--ok-soft); }
+  .pick:focus-within .face { outline: 2px solid var(--brand); outline-offset: 2px; }
+  .bk .pick { display: flex; width: 100%; height: 100%; }
+  .bk .face { width: 100%; height: 100%; min-height: 0; padding: 0 6px; border-radius: 999px; align-items: center; text-align: center; white-space: nowrap; overflow: hidden; line-height: 1.2; }
+  .bk .face::after { display: none; }
+  .bk .face b, .bk .face small { max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+  .mk { position: absolute; right: -8px; top: -10px; width: 22px; height: 22px; border-radius: 50%; display: none; place-items: center; font-size: 13px; font-weight: 700; font-style: normal; color: #fff; }
+  .bk.ok .mk { display: grid; background: var(--ok); } .bk.no .mk { display: grid; background: var(--bad); }
+  .st { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 6px 10px; padding: 12px 0; border-top: 1px solid var(--line); align-items: center; }
+  .st:first-of-type { border-top: 0; }
+  .st .n { width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--brand); color: var(--brand); display: grid; place-items: center; font-weight: 700; font-size: 13px; }
+  .st .d { font-size: 13px; color: var(--muted); overflow-wrap: anywhere; }
+  .st .w { grid-column: 2; min-width: 0; }
+  .st.c { grid-template-columns: minmax(0, 1fr) auto; } .st.c .d { font-size: 15px; color: var(--ink); } .st.c .w { grid-column: auto; text-align: right; }
+  .st:not(.c) .pick { display: flex; } .st:not(.c) .face { width: 100%; }
+  .st .r, .cz .r { display: none; font-size: 12px; font-weight: 700; margin-top: 3px; }
+  .st.ok .r, .cz li.ok .r { display: block; color: var(--ok); } .st.no .r, .cz li.no .r { display: block; color: var(--bad); }
+  .cz { margin: 0; padding: 0; list-style: none; } .cz li { padding: 12px 0; border-top: 1px solid var(--line); line-height: 2; margin: 0; } .cz li:first-child { border-top: 0; }
+  .cz .pick { margin: 3px 2px; } .cz .face { min-height: 36px; }
+  .res { border-radius: 12px; padding: 10px 12px; margin: 12px 0 0; font-size: 14px; }
+  .res.ok { background: var(--ok-soft); } .res.bad { background: var(--bad-soft); } .res b { font-size: 15px; }
+  .res.ok b { color: var(--ok); } .res.bad b { color: var(--bad); }
+  .tip { background: var(--warm); border-radius: 12px; padding: 10px 12px; font-size: 13px; margin-top: 10px; }
+  .note { color: var(--muted); font-size: 12px; margin: 16px 2px; }
+  .foot { position: sticky; bottom: 0; background: var(--bg); padding: 10px 0 calc(10px + env(safe-area-inset-bottom, 0px)); margin-top: 4px; }
+  /* 顏色的意思：名稱框的底色＝碳數；小標籤＝這一步花掉或產生什麼；實心編號＝不可逆步驟 */
+  .dia rect.k6 { fill: var(--k6); stroke: var(--k6s); } .dia rect.k5 { fill: var(--k5); stroke: var(--k5s); } .dia rect.k4 { fill: var(--k4); stroke: var(--k4s); }
+  .dia rect.k3 { fill: var(--k3); stroke: var(--k3s); } .dia rect.k2 { fill: var(--k2); stroke: var(--k2s); }
+  .dia .num.irr circle { fill: var(--brand); } .dia .num.irr text { fill: var(--on-brand); }
+  .dia .tag rect { stroke-width: 1.2; } .dia .tag text { fill: var(--on-tag); font-weight: 700; }
+  .dia .tag.atp rect { fill: var(--e-atp); stroke: var(--e-atp); } .dia .tag.nadh rect { fill: var(--e-nadh); stroke: var(--e-nadh); } .dia .tag.fad rect { fill: var(--e-fad); stroke: var(--e-fad); }
+  .dia .tag.co2 rect { fill: var(--e-co2); stroke: var(--e-co2); } .dia .tag.sp rect { fill: var(--card); stroke: var(--e-atp); } .dia .tag.sp text { fill: var(--w-k); }
+  .dia .tag.spn rect { fill: var(--card); stroke: var(--e-nadh); } .dia .tag.spn text { fill: var(--w-d); }
+  .dia .tag.nadph rect { fill: var(--k4s); stroke: var(--k4s); } .dia .tag.spp rect { fill: var(--card); stroke: var(--k4s); } .dia .tag.spp text { fill: var(--k4s); } .dia .tag.mol rect, .dia .tag.out rect { fill: var(--card); stroke: var(--muted); } .dia .tag.mol text, .dia .tag.out text { fill: var(--ink); }
+  .dia text.nt { fill: var(--muted); }
+  .pick .face.k6 { background: var(--k6); } .pick .face.k5 { background: var(--k5); } .pick .face.k4 { background: var(--k4); } .pick .face.k3 { background: var(--k3); } .pick .face.k2 { background: var(--k2); }
+  .pick:not(.ok):not(.no) .face.k6 { border-color: var(--k6s); } .pick:not(.ok):not(.no) .face.k5 { border-color: var(--k5s); } .pick:not(.ok):not(.no) .face.k4 { border-color: var(--k4s); }
+  .pick:not(.ok):not(.no) .face.k3 { border-color: var(--k3s); } .pick:not(.ok):not(.no) .face.k2 { border-color: var(--k2s); }
+  .pick.no .face { border: 2px solid var(--bad); background: var(--bad-soft); }
+  .face.tk { box-shadow: inset 6px 0 0 var(--e-atp); padding-left: 16px; } .face.td { box-shadow: inset 6px 0 0 var(--e-nadh); padding-left: 16px; } .face.tf { box-shadow: inset 6px 0 0 var(--e-fad); padding-left: 16px; } .face.tp { box-shadow: inset 6px 0 0 var(--k4s); padding-left: 16px; }
+  .lgd { display: flex; flex-wrap: wrap; gap: 4px 12px; justify-content: center; margin-top: 8px; font-size: 12px; color: var(--muted); }
+  .lgd span { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+  .lgd i { display: inline-grid; place-items: center; width: 14px; height: 14px; border-radius: 4px; border: 1.5px solid; font-style: normal; font-size: 9px; font-weight: 700; }
+  .lgd i.k6 { background: var(--k6); border-color: var(--k6s); } .lgd i.k5 { background: var(--k5); border-color: var(--k5s); } .lgd i.k4 { background: var(--k4); border-color: var(--k4s); }
+  .lgd i.k3 { background: var(--k3); border-color: var(--k3s); } .lgd i.k2 { background: var(--k2); border-color: var(--k2s); }
+  .lgd i.irr { border-radius: 50%; background: var(--brand); border-color: var(--brand); color: var(--on-brand); }
+  .lgd i.tk { background: var(--e-atp); border-color: var(--e-atp); } .lgd i.td { background: var(--e-nadh); border-color: var(--e-nadh); } .lgd i.tf { background: var(--e-fad); border-color: var(--e-fad); } .lgd i.tp { background: var(--k4s); border-color: var(--k4s); }
+  mark { background: var(--hl); color: inherit; padding: 0 2px; border-radius: 3px; }
+  .wk { color: var(--w-k); font-weight: 700; } .wd { color: var(--w-d); font-weight: 700; }
+  .glab.k6 { color: var(--k6s); } .glab.k5 { color: var(--k5s); } .glab.k4 { color: var(--k4s); } .glab.k3 { color: var(--k3s); } .glab.k2 { color: var(--k2s); }
+  .item.k6 { border-left: 5px solid var(--k6s); } .item.k5 { border-left: 5px solid var(--k5s); } .item.k4 { border-left: 5px solid var(--k4s); } .item.k3 { border-left: 5px solid var(--k3s); } .item.k2 { border-left: 5px solid var(--k2s); }
+  /* 分生：底色與線的顏色＝分子種類（DNA 藍、新合成的 DNA 青、RNA 玫瑰、蛋白質琥珀） */
+  .dia rect.kD, .dia .kD { fill: var(--k5); stroke: var(--k5s); } .dia rect.kN, .dia .kN { fill: var(--k4); stroke: var(--k4s); } .dia rect.kR, .dia .kR { fill: var(--k3); stroke: var(--k3s); } .dia rect.kP, .dia .kP { fill: var(--k6); stroke: var(--k6s); }
+  .pick .face.kD { background: var(--k5); } .pick .face.kN { background: var(--k4); } .pick .face.kR { background: var(--k3); } .pick .face.kP { background: var(--k6); }
+  .pick:not(.ok):not(.no) .face.kD { border-color: var(--k5s); } .pick:not(.ok):not(.no) .face.kN { border-color: var(--k4s); } .pick:not(.ok):not(.no) .face.kR { border-color: var(--k3s); } .pick:not(.ok):not(.no) .face.kP { border-color: var(--k6s); }
+  .lgd i.kD { background: var(--k5); border-color: var(--k5s); } .lgd i.kN { background: var(--k4); border-color: var(--k4s); } .lgd i.kR { background: var(--k3); border-color: var(--k3s); } .lgd i.kP { background: var(--k6); border-color: var(--k6s); }
+  .lgd i.sD { background: var(--k5s); border-color: var(--k5s); } .lgd i.sN { background: var(--k4s); border-color: var(--k4s); } .lgd i.sR { background: var(--k3s); border-color: var(--k3s); } .lgd i.sP { background: var(--k6s); border-color: var(--k6s); }
+  .glab.kD { color: var(--k5s); } .glab.kR { color: var(--k3s); } .glab.kP { color: var(--k6s); } .glab.kN { color: var(--k4s); }
+  .item.kD { border-left: 5px solid var(--k5s); } .item.kR { border-left: 5px solid var(--k3s); } .item.kP { border-left: 5px solid var(--k6s); } .item.kN { border-left: 5px solid var(--k4s); }
+  .wD { color: var(--k5s); font-weight: 700; } .wN { color: var(--k4s); font-weight: 700; } .wR { color: var(--k3s); font-weight: 700; } .wP { color: var(--w-k); font-weight: 700; }
+  /* 生理：E＝興奮、交感、去極化（玫瑰）；I＝抑制、副交感、再極化（藍）；H＝激素、耗能（琥珀）；C＝鈣與第二傳訊者（紫）；T＝被動、水（青） */
+  .dia rect.kE, .dia .kE { fill: var(--k3); stroke: var(--k3s); } .pick .face.kE { background: var(--k3); } .pick:not(.ok):not(.no) .face.kE { border-color: var(--k3s); } .lgd i.kE { background: var(--k3); border-color: var(--k3s); } .lgd i.sE { background: var(--k3s); border-color: var(--k3s); } .glab.kE { color: var(--k3s); } .item.kE { border-left: 5px solid var(--k3s); } .wE { color: var(--k3s); font-weight: 700; }
+  .dia rect.kI, .dia .kI { fill: var(--k5); stroke: var(--k5s); } .pick .face.kI { background: var(--k5); } .pick:not(.ok):not(.no) .face.kI { border-color: var(--k5s); } .lgd i.kI { background: var(--k5); border-color: var(--k5s); } .lgd i.sI { background: var(--k5s); border-color: var(--k5s); } .glab.kI { color: var(--k5s); } .item.kI { border-left: 5px solid var(--k5s); } .wI { color: var(--k5s); font-weight: 700; }
+  .dia rect.kH, .dia .kH { fill: var(--k6); stroke: var(--k6s); } .pick .face.kH { background: var(--k6); } .pick:not(.ok):not(.no) .face.kH { border-color: var(--k6s); } .lgd i.kH { background: var(--k6); border-color: var(--k6s); } .lgd i.sH { background: var(--k6s); border-color: var(--k6s); } .glab.kH { color: var(--k6s); } .item.kH { border-left: 5px solid var(--k6s); } .wH { color: var(--w-k); font-weight: 700; }
+  .dia rect.kC, .dia .kC { fill: var(--k2); stroke: var(--k2s); } .pick .face.kC { background: var(--k2); } .pick:not(.ok):not(.no) .face.kC { border-color: var(--k2s); } .lgd i.kC { background: var(--k2); border-color: var(--k2s); } .lgd i.sC { background: var(--k2s); border-color: var(--k2s); } .glab.kC { color: var(--k2s); } .item.kC { border-left: 5px solid var(--k2s); } .wC { color: var(--k2s); font-weight: 700; }
+  .dia rect.kT, .dia .kT { fill: var(--k4); stroke: var(--k4s); } .pick .face.kT { background: var(--k4); } .pick:not(.ok):not(.no) .face.kT { border-color: var(--k4s); } .lgd i.kT { background: var(--k4); border-color: var(--k4s); } .lgd i.sT { background: var(--k4s); border-color: var(--k4s); } .glab.kT { color: var(--k4s); } .item.kT { border-left: 5px solid var(--k4s); } .wT { color: var(--k4s); font-weight: 700; }
+  /* 首頁的分頁 */
+  .tabs { display: flex; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--card); margin: 4px 0 0; }
+  .tabs button { flex: 1; min-width: 0; border: 0; background: transparent; padding: 10px 4px; font-size: 15px; font-weight: 700; cursor: pointer; color: var(--muted); }
+  .tabs button.on { background: var(--brand); color: var(--on-brand); }
+  details.card > summary { cursor: pointer; font-weight: 700; font-size: 15px; list-style: none; display: flex; align-items: center; justify-content: space-between; }
+  details.card > summary::-webkit-details-marker { display: none; }
+  details.card > summary::after { content: "展開"; font-size: 12px; font-weight: 400; color: var(--muted); } details.card[open] > summary::after { content: "收起"; }
+</style>
+</head>
+<body>
+<header>
+  <div class="hd">
+    <div class="tt"><h1 id="title">圖解食品科學</h1><div class="sub" id="subtitle"></div></div>
+    <div class="seg" id="lang" role="group" aria-label="名稱顯示的語言"><button type="button" data-l="zh">中</button><button type="button" data-l="bi">中英</button><button type="button" data-l="en">EN</button></div>
+    <button type="button" class="xbtn" id="back" hidden>目錄</button>
+  </div>
+  <div class="lv" id="lv" hidden></div>
+</header>
+<main id="main"></main>
+
+<script>
+/* ======================================================================
+   名稱的顯示：三種模式  zh 中文／bi 中英對照／en 英文
+   每個名詞是 { zh, en, ab(縮寫，可省略), bi(中英對照時的特別寫法，可省略) }
+   ====================================================================== */
+var LANG = 'bi', FORCE = null;                       // FORCE：某一關固定用某種語言（總複習固定英文）
+function M() { return FORCE || LANG; }
+function T(zh, en) { return M() === 'en' ? en : zh; }
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+function fit(t, w, cap) { var n = 0; for (var i = 0; i < t.length; i++) n += t.charCodeAt(i) > 255 ? 1 : .56; return Math.max(6, Math.min(cap || 12.5, Math.floor((w - 12) / n * 10) / 10)); }
+/* 一行的寫法（下拉選單的選項、句子裡的空格） */
+function one(o, m, enFirst) {
+  m = m || M(); var e = o.en || o.zh; if (m === 'zh' || e === o.zh) return o.zh;
+  var E = o.ab ? e + ' (' + o.ab + ')' : e; if (m === 'en') return E;
+  if (o.bi) return o.bi; return enFirst ? E + '　' + o.zh : o.zh + '（' + e + '）';
+}
+/* 兩行的寫法（圖上的名稱、酵素的空格）：英文在上、中文在下。w 是圖上的寬度，英文太長就改用縮寫 */
+function two(o, m, w) {
+  m = m || M(); var e = o.en || o.zh; if (m === 'zh' || e === o.zh) return [o.zh, ''];
+  var ab = o.ab && w && fit(e, w, 12) < 8.5;
+  if (m === 'en') return ab ? [o.ab, ''] : [e, o.ab || ''];
+  return ab ? [o.ab, o.zh] : [e, (o.sub != null ? o.sub : o.zh) + (o.ab ? '・' + o.ab : '')];      // sub：中英對照時第二行的寫法（例：mRNA 下面寫「傳訊 RNA」）
+}
+function short(o) { return M() === 'zh' ? o.zh : (o.ab || o.en || o.zh); }
+
+/* ---------- 畫圖用的小工具 ---------- */
+function PH() { return M() === 'zh' ? 30 : 38; }    // 圖上名稱框的高度：有兩行時高一點
+function tx(x, y, t, cls, size, anchor) { return '<text class="' + (cls || '') + '" x="' + x + '" y="' + y + '" text-anchor="' + (anchor || 'middle') + '" font-size="' + (size || 12) + '">' + esc(t) + '</text>'; }
+function pill(x, y, w, o, cls) {
+  var L = typeof o === 'string' ? [o, ''] : two(o, null, w), h = PH();
+  var r = '<rect class="' + (cls || 'pill') + '" x="' + (x - w / 2) + '" y="' + (y - h / 2) + '" width="' + w + '" height="' + h + '" rx="' + (h / 2) + '"/>';
+  if (!L[1]) return r + tx(x, y + 4.5, L[0], '', fit(L[0], w, 12.5));
+  return r + tx(x, y - 2, L[0], '', fit(L[0], w, 11.5)) + tx(x, y + 12, L[1], 'm', fit(L[1], w, 10));
+}
+function arrow(x1, y1, x2, y2, dash) { var a = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI; return '<line class="ln" x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '" stroke-width="3"' + (dash ? ' stroke-dasharray="3 3"' : '') + '/><polygon class="ar" points="-8,-6 5,0 -8,6" transform="translate(' + x2 + ',' + y2 + ') rotate(' + a + ')"/>'; }
+function badge(x, y, n, irr) { return '<g class="num' + (irr ? ' irr' : '') + '"><circle cx="' + x + '" cy="' + y + '" r="11" stroke-width="1.5"/><text x="' + x + '" y="' + (y + 4.5) + '" text-anchor="middle" font-size="12">' + n + '</text></g>'; }
+
+function tagT(t) { return typeof t === 'string' ? t : (M() === 'zh' ? t.zh : t.en); }      // 標籤的字：可以是字串，或 { zh, en }
+function tagW(t) { t = tagT(t); var n = 0; for (var i = 0; i < t.length; i++) n += t.charCodeAt(i) > 255 && !/[₀-₉⁺⁻−→]/.test(t.charAt(i)) ? 1 : .6; return Math.round(n * 9.5 + 12); }
+function tagC(x, y, t, k) { var w = tagW(t); x = Math.max(3 + w / 2, Math.min(357 - w / 2, x)); return '<g class="tag ' + k + '"><rect x="' + (x - w / 2) + '" y="' + (y - 7.5) + '" width="' + w + '" height="15" rx="4"/><text x="' + x + '" y="' + (y + 3.5) + '" text-anchor="middle" font-size="9.5">' + esc(tagT(t)) + '</text></g>'; }
+/* 分生用的畫圖工具：有顏色的線、箭頭、蛋白質的橢圓、有顏色的字、「說明＋空格」的一列
+   顏色代號 D＝DNA（舊股）、N＝新合成的 DNA、R＝RNA、P＝蛋白質、M＝灰 */
+var KS = { D: '--k5s', N: '--k4s', R: '--k3s', P: '--k6s', M: '--muted', E: '--k3s', I: '--k5s', H: '--k6s', C: '--k2s', T: '--k4s', K: '--ink' };
+function sl(pts, k, w, dash) { return '<polyline points="' + pts + '" fill="none" stroke="var(' + KS[k] + ')" stroke-width="' + (w || 4) + '" stroke-linecap="round" stroke-linejoin="round"' + (dash ? ' stroke-dasharray="' + dash + '"' : '') + '/>'; }
+function sp(d, k, w, dash) { return '<path d="' + d + '" fill="none" stroke="var(' + KS[k] + ')" stroke-width="' + (w || 4) + '" stroke-linecap="round" stroke-linejoin="round"' + (dash ? ' stroke-dasharray="' + dash + '"' : '') + '/>'; }
+function hd(x, y, a, k) { return '<polygon points="-10,-6.5 4,0 -10,6.5" fill="var(' + KS[k] + ')" transform="translate(' + x + ',' + y + ') rotate(' + a + ')"/>'; }
+function blob(cx, cy, rx, ry, k) { return '<ellipse class="k' + (k || 'P') + '" cx="' + cx + '" cy="' + cy + '" rx="' + rx + '" ry="' + ry + '" stroke-width="1.5"/>'; }
+function kt(x, y, t, k, size, anchor, bold) { return '<text x="' + x + '" y="' + y + '" text-anchor="' + (anchor || 'middle') + '" font-size="' + (size || 12) + '"' + (bold === false ? '' : ' font-weight="700"') + ' style="fill:var(' + KS[k] + ')">' + esc(t) + '</text>'; }
+function rungs(x1, y1, x2, y2, n, dx, dy) { var s = ''; for (var i = 0; i < n; i++) s += '<line x1="' + (x1 + dx * i) + '" y1="' + (y1 + dy * i) + '" x2="' + (x2 + dx * i) + '" y2="' + (y2 + dy * i) + '" stroke="var(--rail)" stroke-width="1.5"/>'; return s; }
+function box(x, y, w, h, k, r) { return '<rect class="' + (k ? 'k' + k : 'pill') + '" x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="' + (r == null ? 10 : r) + '" stroke-width="1.5"/>'; }
+function dot(x, y, r, k) { return '<circle class="k' + k + '" cx="' + x + '" cy="' + y + '" r="' + r + '" stroke-width="1.5"/>'; }
+/* 直排的流程：items 是名稱（{zh,en} 或字串）或 null（留給空格）；ks 是每一格的顏色代號（可省略）。第一格用 src 樣式 */
+function flow(x, y0, dy, w, items, ks) { var s = '', h = PH() / 2; items.forEach(function (it, i) { var y = y0 + i * dy; if (i) s += arrow(x, y - dy + h + 1, x, y - h - 2); if (it) s += pill(x, y, w, it, (i ? 'pill' : 'src') + (ks && ks[i] ? ' k' + ks[i] : '')); }); return s; }
+function lab(x, y, o, w, cls) { var L = typeof o === 'string' ? [o, ''] : two(o, null, w); if (!L[1]) return tx(x, y + 4.5, L[0], cls || '', fit(L[0], w, 12)); return tx(x, y - 2, L[0], cls || '', fit(L[0], w, 11.5)) + tx(x, y + 12, L[1], 'm', fit(L[1], w, 10)); }      // 沒有框的名稱（中英對照時兩行）
+function caps(y0, dy, list, w) { return list.map(function (c, i) { return cap(y0 + i * dy, c[0], c[1], w); }).join(''); }      // 好幾列「說明＋空格」
+function vtx(x, y, t, cls, size) { return '<text class="' + (cls || 'm') + '" x="' + x + '" y="' + y + '" text-anchor="middle" font-size="' + (size || 10.5) + '" transform="rotate(-90 ' + x + ' ' + y + ')">' + esc(t) + '</text>'; }      // 直寫的字
+function cap(y, zh, en, w) { var t = T(zh, en); return tx(14, y + 4.5, t, '', fit(t, w || 168, 12), 'start'); }      // 圖上的一列：左邊說明，右邊放空格
+
+/* 全貌圖用：虛線框（例如細胞、粒線體）和框上的小字 */
+function zone(x, y, w, h, t) { return '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="16" fill="none" stroke="var(--rail)" stroke-width="1.5" stroke-dasharray="5 4"/>' + (t ? tx(x + 12, y + 16, t, 'm', 10.5, 'start') : ''); }
+/* 說明文字裡的記號：[[必背]]、{k:激酶這一類}、{d:去氫酶這一類}；分生用 {D:DNA}、{N:新合成的 DNA}、{R:RNA}、{P:蛋白質} */
+function fmt(s) { return s.replace(/\[\[(.+?)\]\]/g, '<mark>$1</mark>').replace(/\{k:(.+?)\}/g, '<span class="wk">$1</span>').replace(/\{d:(.+?)\}/g, '<span class="wd">$1</span>').replace(/\{([DNRPEIHCT]):(.+?)\}/g, '<span class="w$1">$2</span>'); }
+/* ======================================================================
+   先讀這裡：食品微生物學簡介（授課單元 1）
+   ====================================================================== */
+function FPRE_OV() {
+  var s = '';
+  [[64, '細菌', 'Bacteria', 'I'], [180, '真菌（黴菌、酵母）', 'Fungi (molds, yeasts)', 'T'], [296, '病毒', 'Viruses', 'C']].forEach(function (g) { s += pill(g[0], 34, 108, { zh: g[1], en: g[2] }, 'pill k' + g[3]); });
+  s += tx(180, 70, T('細胞的構造', 'cell structure'), 'm', 9.5) + tx(180, 134, T('要用什麼才看得到', 'seen with'), 'm', 9.5);
+  s += '<line x1="14" y1="190" x2="346" y2="190" stroke="var(--rail)" stroke-width="1.5" stroke-dasharray="5 4"/>' + tx(180, 214, T('在食品裡造成的三種結果', 'three outcomes in food'), 'm', 10);
+  [[64, '腐敗', 'Spoilage'], [180, '發酵', 'Fermentation'], [296, '食品中毒', 'Food poisoning']].forEach(function (g) { s += pill(g[0], 248, 104, { zh: g[1], en: g[2] }, 'pill kH'); });
+  s += tx(180, 282, T('代表的微生物', 'typical microbe'), 'm', 9.5);
+  return s;
+}
+var FPRE_ST = ['prok', 'euk', 'acell'], FPRE_MS = ['lm', 'em'], FPRE_EX = ['pseu', 'labx', 'salm'];
+function FPRE_B() {
+  return [{ id: 's1', x: 64, y: 96, w: 108, c: 'I', a: 'prok', o: FPRE_ST }, { id: 's2', x: 180, y: 96, w: 108, c: 'T', a: 'euk', o: FPRE_ST }, { id: 's3', x: 296, y: 96, w: 108, c: 'C', a: 'acell', o: FPRE_ST },
+    { id: 'm1', x: 64, y: 158, w: 108, a: 'lm', o: FPRE_MS }, { id: 'm2', x: 180, y: 158, w: 108, a: 'lm', o: FPRE_MS }, { id: 'm3', x: 296, y: 158, w: 108, a: 'em', o: FPRE_MS },
+    { id: 'x1', x: 64, y: 312, w: 108, c: 'I', a: 'pseu', o: FPRE_EX }, { id: 'x2', x: 180, y: 312, w: 108, c: 'I', a: 'labx', o: FPRE_EX }, { id: 'x3', x: 296, y: 312, w: 108, c: 'I', a: 'salm', o: FPRE_EX }];
+}
+function FPRE_KO() {
+  var s = '', ys = [40, 112, 184, 256];
+  ys.forEach(function (y, i) { s += badge(26, y, i + 1); if (i) s += arrow(190, ys[i - 1] + 22, 190, y - 24); });
+  return s;
+}
+var FPRE_K = ['k1', 'k2', 'k3', 'k4'];
+function FPRE_O2() {
+  var s = '', xs = [52, 116, 180, 244, 308];
+  function dots(x, ys) { return ys.map(function (y, i) { return dot(x - 8 + (i % 3) * 8, y, 3, 'I'); }).join(''); }
+  xs.forEach(function (x) { s += '<path d="M' + (x - 20) + ',30 L' + (x - 20) + ',150 Q' + (x - 20) + ',170 ' + x + ',170 Q' + (x + 20) + ',170 ' + (x + 20) + ',150 L' + (x + 20) + ',30" fill="none" stroke="var(--muted)" stroke-width="1.5"/>'; });
+  s += dots(52, [36, 38, 40, 42, 44, 46]);
+  s += dots(116, [140, 146, 150, 152, 156, 160]);
+  s += dots(180, [36, 38, 40, 42, 44, 70, 90, 110, 130, 150]);
+  s += dots(244, [58, 60, 62, 64, 66, 68]);
+  s += dots(308, [40, 60, 80, 100, 120, 140, 160]);
+  s += tx(14, 22, T('培養基表面（接觸空氣、氧最多）↓ 越往下氧越少', 'Surface (most O₂) ↓ less O₂ deeper'), 'm', 9, 'start');
+  return s;
+}
+var FPRE_O = ['obae', 'oban', 'facu', 'micr', 'aero'];
+function FPRE_OB() { return [52, 116, 180, 244, 308].map(function (x, i) { return { id: 'o' + i, x: x, y: 194 + (i % 2) * 40, w: 96, c: 'I', a: FPRE_O[i], o: FPRE_O }; }); }
+var FPRE_PE = ['leeu', 'past', 'koch', 'flem', 'jenn', 'linn'];
+var FPRE = { id: 'fpre', zh: '先讀這裡：食品微生物學簡介', en: 'Introduction to food microbiology', alias: '細菌・真菌・病毒・柯霍氏法則・命名・氧氣需求・發酵', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    prok: { zh: '原核細胞（沒有細胞核）', en: 'Prokaryotic' }, euk: { zh: '真核細胞（有細胞核）', en: 'Eukaryotic' }, acell: { zh: '沒有細胞構造', en: 'Acellular' },
+    lm: { zh: '光學顯微鏡', en: 'Light microscope' }, em: { zh: '電子顯微鏡', en: 'Electron microscope' },
+    pseu: { zh: '假單胞菌', en: 'Pseudomonas' }, labx: { zh: '乳酸菌、酵母', en: 'Lactic acid bacteria, yeasts' }, salm: { zh: '沙門氏菌', en: 'Salmonella' },
+    leeu: { zh: '雷文霍克', en: 'Leeuwenhoek' }, past: { zh: '巴斯德', en: 'Pasteur' }, koch: { zh: '柯霍', en: 'Koch' }, flem: { zh: '佛萊明', en: 'Fleming' }, jenn: { zh: '簡納', en: 'Jenner' }, linn: { zh: '林奈', en: 'Linnaeus' },
+    k1: { zh: '病人身上都找得到，健康的人沒有', en: 'Found in all sick hosts, not in healthy ones' }, k2: { zh: '分離出來，純培養', en: 'Isolated and grown in pure culture' },
+    k3: { zh: '接種到健康宿主，引起同樣的病', en: 'Causes the same disease in a healthy host' }, k4: { zh: '從新宿主再分離出同一種', en: 'Re-isolated and identical to the original' },
+    kp: { zh: '柯霍氏法則', en: 'Koch\'s postulates' }, spg: { zh: '自然發生說', en: 'Spontaneous generation' },
+    bin: { zh: '二名法：屬名＋種名', en: 'Binomial: genus + species' }, cap: { zh: '屬名第一個字母大寫，種名小寫，斜體', en: 'Genus capitalized, species lowercase, italic' },
+    cocc: { zh: '球菌', en: 'Coccus' }, baci: { zh: '桿菌', en: 'Bacillus (rod)' }, spir: { zh: '螺旋菌', en: 'Spirillum' },
+    gp: { zh: '革蘭氏陽性（紫色）', en: 'Gram-positive (purple)' }, gn: { zh: '革蘭氏陰性（紅色）', en: 'Gram-negative (red)' },
+    obae: { zh: '絕對好氧菌', en: 'Obligate aerobe' }, oban: { zh: '絕對厭氧菌', en: 'Obligate anaerobe' }, facu: { zh: '兼性厭氧菌', en: 'Facultative anaerobe' }, micr: { zh: '微需氧菌', en: 'Microaerophile' }, aero: { zh: '耐氧厭氧菌', en: 'Aerotolerant anaerobe' },
+    clos: { zh: '梭狀芽孢桿菌（Clostridium）', en: 'Clostridium' }, yeast: { zh: '釀酒酵母', en: 'Saccharomyces cerevisiae' }, camp: { zh: '彎曲桿菌（Campylobacter）', en: 'Campylobacter' },
+    resp: { zh: '有氧呼吸', en: 'Aerobic respiration' }, anr: { zh: '無氧呼吸', en: 'Anaerobic respiration' }, ferm: { zh: '發酵', en: 'Fermentation' },
+    alc: { zh: '酒精發酵（產生 CO₂）', en: 'Alcoholic fermentation (CO₂)' }, lac: { zh: '乳酸發酵（不產生 CO₂）', en: 'Lactic acid fermentation (no CO₂)' },
+    a2: { zh: '2 個', en: '2' }, a30: { zh: '30 個以上', en: '30 or more' }, auto: { zh: '自營菌', en: 'Autotroph' }, hetero: { zh: '異營菌', en: 'Heterotroph' },
+    vkb: { zh: '維生素 K、B12', en: 'Vitamins K and B12' }, vac: { zh: '維生素 A、C', en: 'Vitamins A and C' }
+  },
+  levels: [
+    { t: '先看全貌：三類微生物、三種結果', kind: 'ov', h: 340, svg: FPRE_OV, blanks: FPRE_B(),
+      legend: [['kI', '細菌'], ['kT', '真菌'], ['kC', '病毒與寄生蟲'], ['kE', '毒素'], ['kH', '食品與條件']], legendTitle: '這一頁的顏色',
+      intro: ['食品微生物學關心三類微生物。細菌沒有細胞核；黴菌和酵母（合稱真菌）有細胞核，和人的細胞同一類；病毒根本不是細胞，只能在活的細胞裡複製，所以不會在食物上「長大」。',
+        '細菌和真菌用光學顯微鏡就看得到（解像力約 0.2 μm），病毒太小，要用電子顯微鏡。',
+        '微生物在食品裡造成三種結果：品質變壞（腐敗）、做出我們想要的產品（發酵）、讓人生病（食品中毒）。同一種微生物在不同食品裡，可能是好也可能是壞。'],
+      done: ['[[細菌：原核；真菌（黴菌、酵母）：真核；病毒：沒有細胞構造，只能在活細胞內複製。]]', '腐敗菌（例如假單胞菌）讓食品變質；發酵菌（乳酸菌、酵母）做出優格、醬油、酒；病原菌（例如沙門氏菌）造成食品中毒。',
+        '這一頁的顏色固定：藍＝細菌、青＝真菌、紫＝病毒與寄生蟲、玫瑰＝毒素、琥珀＝食品與條件。'] },
+    { t: '微生物學的發展', kind: 'list',
+      intro: ['十七世紀，荷蘭人用自己磨的顯微鏡第一次看到細菌。',
+        '十九世紀後半，兩個人奠定了微生物學：一位法國化學家證明發酵和腐敗都是微生物造成的（不是自己「自然發生」的），並發明了用溫和加熱保存酒和牛奶的方法，被稱為微生物學之父；一位德國醫生找出炭疽病和霍亂的病原菌，並提出判定「某種微生物造成某種疾病」的四個條件。',
+        '之後，有人用牛痘預防天花（疫苗的開始），也有人發現青黴菌分泌的物質可以殺細菌（第一個抗生素）。'],
+      listTitle: '是誰',
+      list: [['第一個用顯微鏡看到細菌', { a: 'leeu', o: FPRE_PE }], ['證明發酵與腐敗由微生物造成，被稱為微生物學之父', { a: 'past', o: FPRE_PE }], ['發現炭疽桿菌、霍亂弧菌，提出判定病原菌的四個條件', { a: 'koch', o: FPRE_PE }],
+        ['發現青黴菌產生青黴素（盤尼西林）', { a: 'flem', o: FPRE_PE }], ['用牛痘預防天花，開始了疫苗', { a: 'jenn', o: FPRE_PE }], ['提出生物命名的二名法', { a: 'linn', o: FPRE_PE }]],
+      done: ['[[巴斯德（Pasteur）：微生物學之父，證明發酵與腐敗由微生物引起，巴斯德殺菌法以他命名。]]', '[[柯霍（Koch）：柯霍氏法則（Koch\'s postulates）。]]', '投影片把虎克寫成 Robert Hooker，正確是 Robert Hooke。'] },
+    { t: '柯霍氏法則', kind: 'ov', h: 284, svg: FPRE_KO, blanks: [0, 1, 2, 3].map(function (i) { return { id: 'p' + i, x: 190, y: 40 + i * 72, w: 300, c: 'I', a: FPRE_K[i], o: FPRE_K }; }),
+      intro: ['要證明「某種微生物就是造成某種疾病的原因」，柯霍提出四個條件，要依序全部成立。',
+        '想像你在調查一件食品中毒：先確定病人身上都有、健康的人沒有；再把它單獨培養出來；用培養出來的菌讓健康的動物得到同樣的病；最後從這隻動物身上再找到同一種菌。',
+        '把四個步驟依順序填好。'],
+      done: ['[[柯霍氏法則：①病者都有、健者沒有 → ②分離純培養 → ③接種健康宿主引起同樣疾病 → ④再分離出相同病原。]]', '要確定食品中毒的原因菌，用的就是柯霍氏法則，不是自然發生說或巴斯德效應。',
+        '有些病原（例如病毒、無法培養的菌）不能完全符合第 2 條，這是這個法則的限制。'] },
+    { t: '命名、形狀與革蘭氏染色', kind: 'list',
+      intro: ['微生物的學名用二名法：前面是屬名，後面是種名，都用拉丁文、斜體。第二次出現可以把屬名縮寫成第一個字母，例如 Escherichia coli 寫成 E. coli。分類由大到小是界、門、綱、目、科、屬、種。',
+        '細菌依形狀分三類：圓的、棒狀的、螺旋狀的。',
+        '革蘭氏染色依細胞壁分成兩群。細胞壁的肽聚醣很厚的，染色後留住紫色；肽聚醣很薄、外面多一層外膜的，紫色被洗掉，複染成紅色。這個分類和很多性質有關，例如抗熱性、對抑菌劑的敏感度。'],
+      listTitle: '是哪一個',
+      list: [['Lactobacillus acidophilus 的 acidophilus 是', { a: 'spe', o: ['gen', 'spe'] }], ['學名的寫法', { a: 'cap', o: ['cap', 'bin'] }], ['葡萄球菌、鏈球菌的形狀', { a: 'cocc', o: ['cocc', 'baci', 'spir'] }],
+        ['大腸桿菌、仙人掌桿菌的形狀', { a: 'baci', o: ['cocc', 'baci', 'spir'] }], ['肽聚醣厚、染成紫色', { a: 'gp', o: ['gp', 'gn'] }], ['有外膜（含脂多醣）、染成紅色', { a: 'gn', o: ['gp', 'gn'] }],
+        ['金黃色葡萄球菌、肉毒桿菌、仙人掌桿菌、李斯特菌、乳酸菌', { a: 'gp', o: ['gp', 'gn'] }], ['沙門氏菌、大腸桿菌、弧菌、假單胞菌、彎曲桿菌', { a: 'gn', o: ['gp', 'gn'] }]],
+      done: ['[[學名＝屬名（大寫）＋種名（小寫），斜體。]]', '[[常見食品病原菌：革蘭氏陽性—金黃色葡萄球菌、肉毒桿菌、產氣莢膜桿菌、仙人掌桿菌、李斯特菌；陰性—沙門氏菌、大腸桿菌、弧菌、彎曲桿菌、志賀氏菌、耶爾辛氏菌。]]',
+        '會產生耐熱內孢子（芽孢）的都是革蘭氏陽性桿菌：梭狀芽孢桿菌屬（Clostridium，厭氧）和桿菌屬（Bacillus，好氧或兼性）。'] },
+    { t: '對氧氣的需求', kind: 'ov', h: 260, svg: FPRE_O2, blanks: FPRE_OB(),
+      intro: ['把細菌接種在試管的半固體培養基裡，培養基上方接觸空氣、氧多，越往下氧越少。細菌長在哪裡，就看出它和氧氣的關係。',
+        '只長在最上面的，一定要氧；只長在最下面的，氧對它有毒；整管都長、上面比較多的，有氧沒氧都可以，有氧時長得更好；長在表面稍下方一點的，要氧但只要一點點；整管平均分布的，用不到氧、但也不怕氧。'],
+      listTitle: '例子',
+      list: [['肉毒桿菌、產氣莢膜桿菌（Clostridium）', { a: 'oban', o: FPRE_O }], ['大腸桿菌、沙門氏菌、釀酒酵母', { a: 'facu', o: FPRE_O }], ['彎曲桿菌（Campylobacter）', { a: 'micr', o: FPRE_O }],
+        ['乳酸菌', { a: 'aero', o: FPRE_O }], ['大多數的黴菌、假單胞菌', { a: 'obae', o: FPRE_O }]],
+      done: ['[[絕對厭氧：梭狀芽孢桿菌（肉毒桿菌、產氣莢膜桿菌），氧對它有毒，靠發酵產能。]]', '[[兼性厭氧：大腸桿菌、沙門氏菌、金黃色葡萄球菌、釀酒酵母。]]釀酒酵母是兼性，不是絕對厭氧。',
+        '大多數黴菌是好氧的，所以真空包裝可以抑制黴菌，但反而給厭氧的肉毒桿菌機會。'] },
+    { t: '微生物怎麼取得能量', kind: 'list',
+      intro: ['大部分食品微生物是異營菌：分解有機物取得能量。',
+        '有氧時，葡萄糖可以完全氧化成二氧化碳和水，產生的 ATP 最多。沒有氧時，有些微生物改用其他物質（例如硝酸鹽、硫酸鹽）接收電子，叫無氧呼吸。',
+        '還有一種只靠糖解作用賺 2 個 ATP，再把丙酮酸還原成別的有機物，把 NAD⁺ 還回來，叫發酵。酵母做成乙醇和二氧化碳；乳酸菌做成乳酸，不產氣。',
+        '腸道裡的正常菌群還會合成一些維生素給我們用。'],
+      listTitle: '是哪一個',
+      list: [['葡萄糖完全氧化成 CO₂ 和水', { a: 'resp', o: ['resp', 'anr', 'ferm'] }], ['只靠糖解作用，丙酮酸被還原成乳酸或乙醇', { a: 'ferm', o: ['resp', 'anr', 'ferm'] }], ['發酵一個葡萄糖淨得幾個 ATP', { a: 'a2', o: ['a2', 'a30'] }],
+        ['酵母在無氧時進行', { a: 'alc', o: ['alc', 'lac'] }], ['乳酸菌、劇烈運動時的肌肉進行', { a: 'lac', o: ['alc', 'lac'] }], ['氧化有機物取得能量的', { a: 'hetero', o: ['auto', 'hetero'] }],
+        ['大腸裡的大腸桿菌可以合成', { a: 'vkb', o: ['vkb', 'vac'] }]],
+      done: ['[[酒精發酵：葡萄糖 → 2 乙醇 ＋ 2 CO₂ ＋ 2 ATP。乳酸發酵：葡萄糖 → 2 乳酸 ＋ 2 ATP，不產生 CO₂。]]', '狹義的發酵是無氧下分解醣類取得能量；廣義的發酵指利用微生物把原料轉變成產品的過程。',
+        '有氧呼吸的 ATP 數，投影片用舊的 36；以新的換算（NADH 2.5、FADH₂ 1.5）約 30～32。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['要確定某食品中毒的原因菌，依據的是', { a: 'kp', o: ['kp', 'spg'] }, '。'],
+        ['被稱為微生物學之父的是', { a: 'past', o: FPRE_PE }, '。'],
+        ['釀酒酵母屬於', { a: 'facu', o: FPRE_O }, '，不是絕對厭氧菌。'],
+        ['肉毒桿菌屬於', { a: 'oban', o: FPRE_O }, '。'],
+        ['酒精發酵和乳酸發酵的差別之一是：酒精發酵', { a: 'alc', o: ['alc', 'lac'] }, '。'],
+        ['沙門氏菌、腸炎弧菌是', { a: 'gn', o: ['gp', 'gn'] }, '。'],
+        ['Clostridium、Bacillus 都是', { a: 'gp', o: ['gp', 'gn'], lang: 'en' }, '，會產生內孢子。'],
+        ['Campylobacter 屬於', { a: 'micr', o: FPRE_O, lang: 'en' }, '。'],
+        ['只有在活細胞內才能複製的是', { a: 'acell', o: FPRE_ST, lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 260, force: 'en', svg: FPRE_O2, blanks: FPRE_OB(),
+      intro: ['對氧氣需求的五支試管，全部用英文作答；下面再加上柯霍氏法則。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: 'Koch\'s postulates', list: [['Step 1', { a: 'k1', o: FPRE_K }], ['Step 2', { a: 'k2', o: FPRE_K }], ['Step 3', { a: 'k3', o: FPRE_K }], ['Step 4', { a: 'k4', o: FPRE_K }]] }
+  ] };
+(function () { var d = FPRE.dict; d.gen = { zh: '屬名', en: 'Genus' }; d.spe = { zh: '種名', en: 'Species' }; })();
+/* ======================================================================
+   影響微生物生長的因子（授課單元 2 前半）
+   ====================================================================== */
+function FGRW_OV() {
+  var s = zone(8, 8, 168, 322, '') + zone(184, 8, 168, 196, '');
+  [['氫離子濃度（pH）', 'pH', 80], ['水活性', 'Water activity', 122], [null, null, 164], ['營養成分', 'Nutrient content', 206], ['天然抗菌成分', 'Antimicrobial constituents', 248], ['生物結構（外殼、表皮）', 'Biological structures', 290]].forEach(function (r) {
+    if (r[0]) s += pill(92, r[2], 152, { zh: r[0], en: r[1] }, 'pill kH'); });
+  [[null, null, 80], ['環境中的氣體', 'Gases in the environment', 122], ['相對濕度', 'Relative humidity', 164]].forEach(function (r) { if (r[0]) s += pill(268, r[2], 152, { zh: r[0], en: r[1] }, 'pill kH'); });
+  s += tx(268, 236, T('（還有保存方式、添加物）', '(also storage method, additives)'), 'm', 9.5);
+  return s;
+}
+function FGRW_B() {
+  return [{ id: 'z1', x: 92, y: 32, w: 152, a: 'intr', o: ['intr', 'extr'] }, { id: 'z2', x: 268, y: 32, w: 152, a: 'extr', o: ['intr', 'extr'] },
+    { id: 'f1', x: 92, y: 164, w: 152, c: 'H', a: 'eh', o: ['eh', 'temp', 'rh'] }, { id: 'f2', x: 268, y: 80, w: 152, c: 'H', a: 'temp', o: ['temp', 'eh', 'aw'] }];
+}
+function FGRW_GC() {
+  var s = sl('40,20 40,236 346,236', 'M', 1.5) + vtx(18, 128, T('菌數（對數）', 'log count'), 'm', 9.5) + tx(196, 254, T('時間', 'time'), 'm', 9.5);
+  s += sp('M40,200 C70,200 80,200 100,196 C130,186 150,90 180,74 C200,64 240,62 270,64 C300,66 320,110 346,150', 'I', 3);
+  [100, 180, 272].forEach(function (x) { s += '<line x1="' + x + '" y1="30" x2="' + x + '" y2="236" stroke="var(--rail)" stroke-width="1" stroke-dasharray="3 3"/>'; });
+  return s;
+}
+var FGRW_PH = ['lag', 'logp', 'stat', 'death'];
+function FGRW_GB() { return [{ id: 'g1', x: 70, y: 160, w: 60, a: 'lag', o: FGRW_PH }, { id: 'g2', x: 140, y: 214, w: 76, a: 'logp', o: FGRW_PH }, { id: 'g3', x: 226, y: 100, w: 88, a: 'stat', o: FGRW_PH }, { id: 'g4', x: 310, y: 204, w: 70, a: 'death', o: FGRW_PH }]; }
+var FGRW_AW = [['0.99', '新鮮肉、魚、蔬果', 'fresh foods', 1], ['0.94', 'mbot'], ['0.91', 'mbac'], ['0.88', 'myea'], ['0.86', 'msau'], ['0.80', 'mmol'], ['0.75', 'mhal'], ['0.61', 'mxer']];
+function FGRW_AWS() {
+  var s = sp('M76,26 L76,346', 'H', 6) + tx(76, 18, T('水活性', 'aw'), 'm', 9.5);
+  FGRW_AW.forEach(function (r, i) { var y = 36 + i * 44; s += dot(76, y, 5, 'H') + tx(60, y + 4, r[0], '', 11, 'end'); if (r[3]) s += tx(96, y + 4, T(r[1], r[2]), 'm', 10.5, 'start'); });
+  s += tx(200, 384, T('數字＝能生長的最低水活性', 'minimum aw for growth'), 'm', 9.5);
+  return s;
+}
+var FGRW_MO = ['mbot', 'mbac', 'myea', 'msau', 'mmol', 'mhal', 'mxer'];
+function FGRW_AWB() { return FGRW_AW.slice(1).map(function (r, i) { return { id: 'w' + i, x: 228, y: 36 + (i + 1) * 44, w: 220, c: r[1] === 'myea' || r[1] === 'mmol' || r[1] === 'mxer' ? 'T' : 'I', a: r[1], o: FGRW_MO }; }); }
+var FGRW_T = ['psyc', 'psyt', 'meso', 'ther'];
+var FGRW = { id: 'fgrw', zh: '影響微生物生長的因子', en: 'Factors affecting microbial growth', alias: '內在與外在因子・生長曲線・pH・水活性・溫度・天然抗菌成分', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    intr: { zh: '食品內在因子', en: 'Intrinsic factors' }, extr: { zh: '外在環境因子', en: 'Extrinsic factors' },
+    eh: { zh: '氧化還原電位', en: 'Redox potential (Eh)' }, temp: { zh: '儲存溫度', en: 'Storage temperature' }, rh: { zh: '相對濕度', en: 'Relative humidity' }, aw: { zh: '水活性', en: 'Water activity' },
+    lag: { zh: '遲滯期', en: 'Lag phase' }, logp: { zh: '對數期', en: 'Log phase' }, stat: { zh: '穩定期', en: 'Stationary phase' }, death: { zh: '死亡期', en: 'Death phase' },
+    longer: { zh: '延長', en: 'Longer' }, shorter: { zh: '縮短', en: 'Shorter' },
+    ph1: { zh: 'pH 6.5～7.5（接近中性）', en: 'pH 6.5–7.5' }, ph2: { zh: 'pH 4～6', en: 'pH 4–6' }, ph3: { zh: 'pH 2～8（範圍最寬）', en: 'pH 2–8 (widest)' },
+    lacid: { zh: '低酸性食品（pH > 4.6）', en: 'Low-acid food (pH > 4.6)' }, acid: { zh: '酸性食品（pH 3.7～4.6）', en: 'Acid food (pH 3.7–4.6)' }, hacid: { zh: '高酸性食品（pH < 3.7）', en: 'High-acid food (pH < 3.7)' },
+    mbot: { zh: '肉毒桿菌', en: 'Clostridium botulinum' }, mbac: { zh: '大多數細菌', en: 'Most bacteria' }, myea: { zh: '大多數酵母', en: 'Most yeasts' }, msau: { zh: '金黃色葡萄球菌', en: 'Staphylococcus aureus' },
+    mmol: { zh: '大多數黴菌', en: 'Most molds' }, mhal: { zh: '好鹽細菌', en: 'Halophilic bacteria' }, mxer: { zh: '耐乾黴菌、耐滲透壓酵母', en: 'Xerophilic molds, osmophilic yeasts' },
+    sugar: { zh: '加蔗糖、加鹽', en: 'Adding sugar or salt' }, agar: { zh: '加洋菜做成凍', en: 'Adding agar' }, hpp: { zh: '高靜水壓處理', en: 'High-pressure processing' },
+    s085: { zh: '水活性 0.85', en: 'aw 0.85' }, s070: { zh: '水活性 0.70', en: 'aw 0.70' }, sau: { zh: '金黃色葡萄球菌', en: 'S. aureus' },
+    bmy: { zh: '細菌 > 酵母 > 黴菌', en: 'Bacteria > yeasts > molds' }, myb: { zh: '黴菌 > 酵母 > 細菌', en: 'Molds > yeasts > bacteria' },
+    psyc: { zh: '嗜冷菌', en: 'Psychrophile' }, psyt: { zh: '低溫菌', en: 'Psychrotroph' }, meso: { zh: '嗜中溫菌', en: 'Mesophile' }, ther: { zh: '嗜高溫菌', en: 'Thermophile' },
+    pflu: { zh: '螢光假單胞菌', en: 'Pseudomonas fluorescens' }, lis: { zh: '李斯特菌', en: 'Listeria monocytogenes' }, bst: { zh: '嗜熱脂肪芽孢桿菌', en: 'Geobacillus (Bacillus) stearothermophilus' }, taq: { zh: '水生棲熱菌', en: 'Thermus aquaticus' },
+    t760: { zh: '7～60℃', en: '7–60 °C' }, t1050: { zh: '10～50℃', en: '10–50 °C' },
+    posh: { zh: '正值（氧化態）', en: 'Positive (oxidized)' }, negl: { zh: '負值（還原態）', en: 'Negative (reduced)' },
+    lyso: { zh: '溶菌酶', en: 'Lysozyme' }, avid: { zh: '抗生物素蛋白', en: 'Avidin' }, conal: { zh: '伴白蛋白', en: 'Conalbumin' }, nisin: { zh: '乳酸鏈球菌素', en: 'Nisin' },
+    gpw: { zh: '革蘭氏陽性菌的細胞壁', en: 'Gram-positive cell walls' }, biot: { zh: '生物素', en: 'Biotin' }, iron: { zh: '鐵', en: 'Iron' },
+    co2a: { zh: '降低細胞內 pH、抑制酵素', en: 'Lowers internal pH, inhibits enzymes' }, co2b: { zh: '提高水活性', en: 'Raises aw' },
+    anta: { zh: '拮抗作用', en: 'Antagonism' }, symb: { zh: '共生作用', en: 'Symbiosis' }
+  },
+  levels: [
+    { t: '先看全貌：食品本身與外在環境', kind: 'ov', h: 340, svg: FGRW_OV, blanks: FGRW_B(),
+      intro: ['食物就是微生物的培養基。哪一種微生物能在某個食品裡長起來、長多快，取決於兩組條件。',
+        '一組是食品本身的性質，例如酸鹼、可利用的水、氧化還原狀態、營養、裡面天然的抑菌物質、有沒有完整的外殼或表皮。',
+        '另一組是食品放在什麼環境，例如溫度、周圍的氣體、空氣濕度。',
+        '這兩組條件決定了食品會被哪一種微生物「攻下」，也是所有保存方法的根據。'],
+      done: ['[[內在因子：pH、水活性、氧化還原電位、營養成分、天然抗菌成分、生物結構，以及微生物之間的拮抗與共生。]]', '[[外在因子：儲存溫度、環境氣體、相對濕度。]]儲存溫度是外在因子，不是內在因子。',
+        '保存食品就是調整這些條件，讓微生物長不起來。'] },
+    { t: '細菌的生長曲線', kind: 'ov', h: 266, svg: FGRW_GC, blanks: FGRW_GB(),
+      intro: ['把細菌接種到新的培養基，每隔一段時間計數，畫成「菌數的對數 vs. 時間」，會得到四個階段。',
+        '剛進新環境時要先調整、合成酵素，菌數幾乎不增加；接著以固定速度一分為二，菌數直線上升；養分用完、代謝物堆積後，新生和死亡相當，菌數持平；最後死亡多於新生。',
+        '不利的環境（低溫、低 pH、低水活性）會讓第一個階段拉長、第二個階段變慢。'],
+      listTitle: '再想一想', list: [['低 pH 對遲滯期的影響', { a: 'longer', o: ['longer', 'shorter'] }], ['適合的溫度下，遲滯期會', { a: 'shorter', o: ['longer', 'shorter'] }], ['抗熱性最強的時期', { a: 'stat', o: FGRW_PH }], ['仙人掌桿菌下痢毒素開始產生的時期', { a: 'logp', o: FGRW_PH }]],
+      done: ['[[遲滯期 → 對數期 → 穩定期 → 死亡期。]]', '保存食品的目標是盡量拉長遲滯期：低溫、低 pH、低水活性、防腐劑都有這個效果。', '處在穩定期的菌，抗熱性比對數期的高。'] },
+    { t: '酸鹼值（pH）', kind: 'list',
+      intro: ['大多數細菌喜歡接近中性的環境；酵母偏好微酸；黴菌能忍受的範圍最寬，從很酸到微鹼都長得起來。所以酸性的水果多半被黴菌和酵母弄壞，肉和魚則多半被細菌弄壞。',
+        '食品依 pH 分三類。最重要的界線是 4.6：肉毒桿菌在 pH 4.6 以下不能生長、不產毒，所以 pH 高於 4.6 的低酸性罐頭一定要用高溫高壓殺菌。',
+        '食品本身的緩衝能力也有影響：肉類緩衝力強，pH 不容易降；蔬菜汁緩衝力弱，乳酸菌一長，pH 很快降下來（例如泡菜）。'],
+      listTitle: '是哪一個',
+      list: [['大多數細菌適合的 pH', { a: 'ph1', o: ['ph1', 'ph2', 'ph3'] }], ['酵母適合的 pH', { a: 'ph2', o: ['ph1', 'ph2', 'ph3'] }], ['黴菌能生長的 pH', { a: 'ph3', o: ['ph1', 'ph2', 'ph3'] }],
+        ['畜禽肉、魚、乳品、大部分蔬菜', { a: 'lacid', o: ['lacid', 'acid', 'hacid'] }], ['番茄、多數水果', { a: 'acid', o: ['lacid', 'acid', 'hacid'] }], ['檸檬、酸性飲料', { a: 'hacid', o: ['lacid', 'acid', 'hacid'] }]],
+      done: ['[[pH 4.6 是肉毒桿菌生長的界線：pH > 4.6 為低酸性食品，罐頭必須達到商業滅菌。]]', '常溫販售的真空包裝即食食品，除非本身 pH 或水活性已經低到能抑制肉毒桿菌，否則要做到商業滅菌。', '酸性水果的腐敗以黴菌、酵母為主；蔬菜接近中性，細菌和黴菌都會造成腐敗。'] },
+    { t: '水活性（aw）', kind: 'list',
+      intro: ['水活性是食品中「微生物拿得到的水」的比例：在密閉容器裡，食品上方的水蒸氣壓除以同溫度純水的水蒸氣壓。它和平衡相對濕度的關係是 aw ＝ RH ÷ 100。純水是 1.0。',
+        '水分「含量」高不等於水活性高。溶在水裡的糖和鹽、和水結合的膠體，都會把水綁住，水活性就下降。所以糖漬、鹽漬、乾燥、冷凍（水變成冰）都能降低水活性。',
+        '新鮮的肉、魚、蔬果水活性在 0.99 左右；半乾的中濕性食品約 0.60～0.85。'],
+      listTitle: '是哪一個',
+      list: [['能降低水活性、延長保存期限的方法', { a: 'sugar', o: ['sugar', 'agar', 'hpp'] }], ['不是靠降低水活性，而是破壞微生物蛋白質和細胞膜的方法', { a: 'hpp', o: ['sugar', 'agar', 'hpp'] }],
+        ['「潛在危害食品」的水活性界線', { a: 's085', o: ['s085', 's070'] }], ['這條界線是依哪一種菌能生長的最低水活性訂的', { a: 'sau', o: ['sau', 'mbot'] }], ['需要的水活性由高到低', { a: 'bmy', o: ['bmy', 'myb'] }]],
+      done: ['[[aw ＝ P ÷ P₀ ＝ ERH ÷ 100。]]', '[[需要的水活性：細菌 > 酵母 > 黴菌]]，所以乾的食品（穀物、麵包、果乾）多半是黴菌造成腐敗。', '水活性 0.85 以上又不是酸性的食品，屬於潛在危害食品，要冷藏或熱藏。'] },
+    { t: '各種微生物的最低水活性', kind: 'ov', h: 396, svg: FGRW_AWS, blanks: FGRW_AWB(),
+      intro: ['左邊是水活性，由上往下越來越乾。每一個點是某一群微生物能生長的最低水活性：在它以下，這群微生物就長不起來。',
+        '從上往下依序是：一種厭氧的產孢菌、大多數細菌、大多數酵母、一種會耐鹽的病原菌、大多數黴菌、喜歡高鹽的細菌，最後是最耐乾、耐高糖的一群黴菌和酵母（會讓蜂蜜、果醬變壞）。'],
+      tip: '藍色空格是細菌，青色空格是黴菌和酵母。',
+      done: ['[[最低水活性：肉毒桿菌約 0.94、大多數細菌 0.91、大多數酵母 0.88、金黃色葡萄球菌 0.86、大多數黴菌 0.80、好鹽菌 0.75、耐乾黴菌與耐滲透壓酵母約 0.61。]]',
+        '水活性降到 0.60 以下，幾乎所有微生物都不能生長。', '耐滲透壓酵母（例如魯氏酵母）會讓蜂蜜、楓糖漿、果醬發酵變質。'] },
+    { t: '溫度', kind: 'list',
+      intro: ['依最適生長溫度，微生物分成幾群。最怕的是那些在冰箱裡還能慢慢長的：它們最適溫度其實在 20～30℃，但在 7℃ 以下也能生長，是冷藏食品腐敗的主角，其中還有幾種病原菌。',
+        '大多數病原菌是嗜中溫菌，最適溫度和體溫差不多。',
+        '另一端是嗜高溫菌，最適溫度在 45℃ 以上，它們的孢子很耐熱，會讓罐頭變壞。',
+        '餐飲衛生上，把細菌最容易繁殖的溫度範圍稱為危險溫度帶：熱的食物要保持在它以上，冷的要保持在它以下。'],
+      listTitle: '是哪一個',
+      list: [['最適 5～15℃，0℃ 以下也能長', { a: 'psyc', o: FGRW_T }], ['最適 20～30℃，但冷藏溫度下仍能生長', { a: 'psyt', o: FGRW_T }], ['最適 30～40℃，大多數病原菌', { a: 'meso', o: FGRW_T }], ['最適 45℃ 以上', { a: 'ther', o: FGRW_T }],
+        ['冷藏肉品腐敗、產生螢光綠色的', { a: 'pflu', o: ['pflu', 'lis', 'bst'] }], ['冷藏的鮮奶、即食食品中仍能生長的病原菌', { a: 'lis', o: ['pflu', 'lis', 'bst'] }], ['造成低酸性罐頭平酸腐敗的嗜高溫菌', { a: 'bst', o: ['pflu', 'lis', 'bst'] }],
+        ['危險溫度帶', { a: 't760', o: ['t760', 't1050'] }]],
+      done: ['[[低溫菌（psychrotroph）：假單胞菌、李斯特菌、耶爾辛氏菌、親水性產氣單胞菌，冷藏中仍會生長。]]', '嗜高溫菌：嗜熱脂肪芽孢桿菌（平酸腐敗）、熱解糖梭菌（膨罐）；水生棲熱菌屬於嗜超高溫菌。',
+        '[[危險溫度帶 7～60℃]]：熱藏 60℃ 以上、冷藏 7℃ 以下。'] },
+    { t: '其他內在因子', kind: 'list',
+      intro: ['氧化還原電位反映環境是氧化態還是還原態：接觸空氣的表面是正值，適合好氧菌；香腸、罐頭、大塊肉的內部是負值，適合厭氧菌。',
+        '有些食品天生就有抑菌成分。蛋白就是最好的例子：一種酵素能分解某一類細菌的細胞壁，一種蛋白質會抓住一種維生素讓細菌拿不到，另一種會抓住鐵，加上蛋白 pH 高達 9 以上。',
+        '乳酸菌會產生一種可以合法添加的細菌素。外殼、表皮、魚鱗這些構造也能擋住微生物，一旦切開、絞碎，微生物就長得快。',
+        '環境的二氧化碳可以抑制很多好氧菌。微生物彼此之間也會競爭，或互相幫忙。'],
+      listTitle: '是哪一個',
+      list: [['蛋白中破壞細胞壁的酵素', { a: 'lyso', o: ['lyso', 'avid', 'conal', 'nisin'] }], ['溶菌酶主要對付', { a: 'gpw', o: ['gpw', 'biot', 'iron'] }], ['抗生物素蛋白結合的是', { a: 'biot', o: ['gpw', 'biot', 'iron'] }], ['伴白蛋白結合的是', { a: 'iron', o: ['gpw', 'biot', 'iron'] }],
+        ['乳酸菌產生、抑制梭菌與李斯特菌的細菌素', { a: 'nisin', o: ['lyso', 'avid', 'conal', 'nisin'] }], ['適合厭氧菌的氧化還原電位', { a: 'negl', o: ['posh', 'negl'] }], ['二氧化碳抑菌的機制', { a: 'co2a', o: ['co2a', 'co2b'] }],
+        ['某種菌勝出、其他菌被壓下去', { a: 'anta', o: ['anta', 'symb'] }], ['優格的兩種菌互相促進生長', { a: 'symb', o: ['anta', 'symb'] }]],
+      done: ['[[蛋白的抑菌成分：溶菌酶（破壞革蘭氏陽性菌細胞壁）、抗生物素蛋白（結合生物素）、伴白蛋白（結合鐵），加上高 pH。]]', '二氧化碳抑菌：降低細胞內 pH、抑制酵素的合成與反應，不是作用在細胞壁。',
+        '絞肉比整塊肉容易腐敗：表面積大、絞的過程帶入更多菌、器具不潔；不是因為水活性變高。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['下列何者不是內在因子？', { a: 'temp', o: ['temp', 'aw', 'eh'] }, ''],
+        ['「潛在危害食品」以', { a: 's085', o: ['s085', 's070'] }, '為界，依據的是金黃色葡萄球菌。'],
+        ['乾燥的穀物和麵包最常被', { a: 'mmol', o: ['mbac', 'myea', 'mmol'] }, '弄壞。'],
+        ['低 pH 會讓遲滯期', { a: 'longer', o: ['longer', 'shorter'] }, '。'],
+        ['在巴斯德殺菌的冷藏鮮奶中仍能生長的病原菌是', { a: 'lis', o: ['pflu', 'lis', 'bst'] }, '。'],
+        ['蛋白中的抗生物素蛋白會結合', { a: 'biot', o: ['gpw', 'biot', 'iron'] }, '。'],
+        ['冷藏肉品出現螢光綠色，多半是', { a: 'pflu', o: ['pflu', 'lis', 'bst'], lang: 'en' }, '。'],
+        ['最適生長溫度 20～30℃、但冰箱裡也能長的叫', { a: 'psyt', o: FGRW_T, lang: 'en' }, '。'],
+        ['水活性 0.86 以下就不能生長的病原菌是', { a: 'msau', o: ['msau', 'mbot', 'mmol'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 396, force: 'en', svg: FGRW_AWS, blanks: FGRW_AWB(),
+      intro: ['水活性的梯子，全部用英文作答；下面再加上生長曲線。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: 'Growth curve', list: [['Phase 1', { a: 'lag', o: FGRW_PH }], ['Phase 2', { a: 'logp', o: FGRW_PH }], ['Phase 3', { a: 'stat', o: FGRW_PH }], ['Phase 4', { a: 'death', o: FGRW_PH }]] }
+  ] };
+/* ======================================================================
+   食品成分的分解與腐敗現象（授課單元 2 後半）
+   ====================================================================== */
+function FDEG_OV() {
+  var s = '', xs = [64, 180, 296], h = PH() / 2;
+  [['醣類', 'Carbohydrates'], ['脂質', 'Lipids'], ['蛋白質', 'Proteins']].forEach(function (c, i) { s += pill(xs[i], 32, 104, { zh: c[0], en: c[1] }, 'src kH'); s += arrow(xs[i], 33 + h, xs[i], 100 - h - 2) + arrow(xs[i], 101 + h, xs[i], 168 - h - 2) + arrow(xs[i], 169 + h, xs[i], 236 - h - 2); });
+  return s;
+}
+var FDEG_EZ = ['amy', 'lip', 'pro'], FDEG_PR = ['acid', 'ffa', 'amine'], FDEG_PH = ['ferm', 'ranc', 'putr'];
+function FDEG_B() {
+  var b = [], xs = [64, 180, 296];
+  [FDEG_EZ, FDEG_PR, FDEG_PH].forEach(function (L, r) { L.forEach(function (k, i) { b.push({ id: 'b' + r + i, x: xs[i], y: 100 + r * 68, w: 108, c: r ? null : null, a: k, o: L }); }); });
+  return b;
+}
+var FDEG_FT = ['homo', 'hete', 'prop', 'buty', 'acet', 'diac'];
+var FDEG = { id: 'fdeg', zh: '食品成分的分解與腐敗現象', en: 'Degradation of food components', alias: '醣類發酵・脂肪酸敗・蛋白質腐敗・變色與黏液', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    amy: { zh: '澱粉酶、果膠酶', en: 'Amylase, pectinase' }, lip: { zh: '脂解酶、脂氧化酶', en: 'Lipase, lipoxygenase' }, pro: { zh: '蛋白酶', en: 'Protease' },
+    acid: { zh: '有機酸、醇、CO₂', en: 'Organic acids, alcohols, CO₂' }, ffa: { zh: '游離脂肪酸、醛、酮', en: 'Fatty acids, aldehydes' }, amine: { zh: '胺、氨、硫化氫、吲哚', en: 'Amines, NH₃, H₂S, indole' },
+    ferm: { zh: '發酵（多半可接受）', en: 'Fermentation (often acceptable)' }, ranc: { zh: '酸敗（油耗味）', en: 'Rancidity' }, putr: { zh: '腐敗（腐臭味）', en: 'Putrefaction' },
+    pect: { zh: '果膠', en: 'Pectin' }, starch: { zh: '澱粉', en: 'Starch' }, softr: { zh: '蔬果軟腐', en: 'Soft rot of produce' }, erw: { zh: '歐文氏菌（Erwinia）', en: 'Erwinia' },
+    homo: { zh: '同質乳酸發酵', en: 'Homolactic fermentation' }, hete: { zh: '異質乳酸發酵', en: 'Heterolactic fermentation' }, prop: { zh: '丙酸發酵', en: 'Propionic fermentation' },
+    buty: { zh: '丁酸發酵', en: 'Butyric fermentation' }, acet: { zh: '醋酸發酵', en: 'Acetic fermentation' }, diac: { zh: '雙乙醯發酵', en: 'Diacetyl fermentation' }, mixa: { zh: '混合酸發酵', en: 'Mixed-acid fermentation' },
+    hyd: { zh: '水解酸敗', en: 'Hydrolytic rancidity' }, oxi: { zh: '氧化酸敗', en: 'Oxidative rancidity' },
+    bitter: { zh: '變苦，但還不臭', en: 'Bitter, not yet foul' }, foul: { zh: '產生腐臭味', en: 'Foul odor' },
+    hist: { zh: '組織胺', en: 'Histamine' }, h2s: { zh: '硫化氫', en: 'Hydrogen sulfide' }, indole: { zh: '吲哚', en: 'Indole' }, nh3: { zh: '氨', en: 'Ammonia' },
+    decarb: { zh: '脫羧作用', en: 'Decarboxylation' }, deam: { zh: '脫胺作用', en: 'Deamination' }, prot: { zh: '普通變形桿菌（Proteus vulgaris）', en: 'Proteus vulgaris' },
+    serr: { zh: '紅色（沙雷氏菌 Serratia）', en: 'Red (Serratia)' }, flav: { zh: '黃色（黃桿菌 Flavobacterium）', en: 'Yellow (Flavobacterium)' }, green: { zh: '螢光綠（螢光假單胞菌）', en: 'Fluorescent green (Pseudomonas)' },
+    dext: { zh: '聚葡萄糖（dextran）黏液', en: 'Dextran slime' }, leu: { zh: '明串珠菌（Leuconostoc）', en: 'Leuconostoc' },
+    peri: { zh: '易腐敗食品', en: 'Perishable' }, semi: { zh: '半易腐敗食品', en: 'Semi-perishable' }, stab: { zh: '不易腐敗食品', en: 'Stable (nonperishable)' }
+  },
+  levels: [
+    { t: '先看全貌：三大成分各怎麼壞', kind: 'ov', h: 260, tip: '每一欄由上往下：成分 → 微生物分泌的酵素 → 產物 → 造成的現象。', svg: FDEG_OV, blanks: FDEG_B(),
+      intro: ['食品腐敗是外觀、氣味、味道、顏色、質地變得無法接受。原因可能是昆蟲、鼠、食品自己的酵素或化學變化，但最主要是微生物。',
+        '微生物先分泌酵素，把食品的大分子切小，再吸收利用。三大成分各有一套酵素和產物。',
+        '分解醣類多半產生酸、醇和氣體，帶來風味，通常是人們接受的發酵，而且產生的酸和酒精還能壓住其他兩類分解；分解脂質產生油耗味；分解蛋白質產生最難聞的味道。'],
+      done: ['[[醣類 → 有機酸、醇、CO₂（發酵）；脂質 → 游離脂肪酸、醛、酮（酸敗）；蛋白質 → 胺、氨、H₂S、吲哚（腐敗）。]]', '高醣食品（蔬果、穀類、甜點）多半發酵或發霉；高蛋白食品（肉、魚、蛋）多半腐臭。',
+        '醣類發酵產生的酸和酒精會抑制分解蛋白質與脂肪的微生物，這就是發酵能保存食品的原因。'] },
+    { t: '醣類的分解與發酵類型', kind: 'list',
+      intro: ['多醣先被切小。植物細胞之間的黏合物被切開，蔬果就變軟爛；澱粉被切成麥芽糖、葡萄糖。',
+        '單醣經糖解作用變成丙酮酸，接下來依微生物不同，做成不同的產物：只有乳酸的；乳酸加上醋酸、乙醇和 CO₂ 的；丙酸加 CO₂ 的（瑞士乾酪的孔洞）；丁酸的（臭味，梭菌）；把乙醇氧化成醋酸的；以及產生奶油香氣的。',
+        '大腸桿菌則做成好幾種酸加上 CO₂ 和氫氣，叫混合酸發酵。'],
+      listTitle: '是哪一個',
+      list: [['蔬果被切開細胞間的果膠而軟爛', { a: 'softr', o: ['softr', 'ranc'] }], ['蔬菜細菌性軟腐最常見的菌', { a: 'erw', o: ['erw', 'prot'] }], ['鏈球菌、乳酸球菌只產生乳酸', { a: 'homo', o: FDEG_FT }],
+        ['明串珠菌產生乳酸、醋酸、乙醇和 CO₂', { a: 'hete', o: FDEG_FT }], ['丙酸菌產生丙酸和 CO₂', { a: 'prop', o: FDEG_FT }], ['梭狀芽孢桿菌產生丁酸', { a: 'buty', o: FDEG_FT }],
+        ['醋酸菌把乙醇氧化', { a: 'acet', o: FDEG_FT }], ['奶油、酪乳的香氣成分', { a: 'diac', o: FDEG_FT }], ['大腸桿菌產生多種酸、CO₂ 和 H₂', { a: 'mixa', o: ['mixa', 'homo'] }]],
+      done: ['[[同質乳酸發酵只產生乳酸；異質乳酸發酵（明串珠菌）另外產生醋酸、乙醇、CO₂，會產氣。]]', '雙乙醯（diacetyl）是奶油香氣的來源；丁酸發酵帶來惡臭，是梭菌造成的腐敗。',
+        '大腸桿菌群在檢驗上的特徵就是發酵乳糖產酸產氣。'] },
+    { t: '脂質的分解：兩種酸敗', kind: 'list',
+      intro: ['脂肪被微生物破壞有兩條路。',
+        '一條是水解：脂解酶把三酸甘油酯的脂肪酸切下來。短鏈脂肪酸（例如奶油裡的丁酸）一被放出來就有強烈的酸臭，所以牛奶、奶油特別明顯。',
+        '另一條是氧化：脂氧化酶把不飽和脂肪酸的雙鍵氧化，生成醛、酮等有油耗味的小分子。黴菌常這樣做。',
+        '對某些乾酪來說，適度的脂肪分解反而是特殊風味的來源。'],
+      listTitle: '是哪一種',
+      list: [['假單胞菌、桿菌的脂解酶切下游離脂肪酸', { a: 'hyd', o: ['hyd', 'oxi'] }], ['青黴菌、麴菌的脂氧化酶產生醛、酮', { a: 'oxi', o: ['hyd', 'oxi'] }], ['牛奶出現酸臭味最常見的是', { a: 'hyd', o: ['hyd', 'oxi'] }]],
+      done: ['[[水解酸敗：脂解酶 → 游離脂肪酸（牛奶、奶油）。氧化酸敗：脂氧化酶 → 醛、酮（不飽和油脂）。]]'] },
+    { t: '蛋白質的分解：腐敗', kind: 'list',
+      intro: ['蛋白酶先把蛋白質切成胜肽。切到小胜肽時食品會變苦，但還不會有臭味。',
+        '胺基酸再被進一步分解才產生臭味：拿掉羧基變成各種胺（其中一種會造成類似過敏的中毒）；拿掉胺基放出氨；含硫胺基酸放出硫化氫；色胺酸分解成有糞臭的分子。',
+        '這類分解在肉、魚、蛋最明顯，稱為腐敗。'],
+      listTitle: '是哪一個',
+      list: [['蛋白質剛被水解成小胜肽時', { a: 'bitter', o: ['bitter', 'foul'] }], ['胺基酸拿掉羧基，生成胺', { a: 'decarb', o: ['decarb', 'deam'] }], ['胺基酸拿掉胺基，放出氨', { a: 'deam', o: ['decarb', 'deam'] }],
+        ['組胺酸脫羧的產物（鯖魚中毒）', { a: 'hist', o: ['hist', 'h2s', 'indole', 'nh3'] }], ['含硫胺基酸分解，有臭蛋味', { a: 'h2s', o: ['hist', 'h2s', 'indole', 'nh3'] }], ['色胺酸分解，有糞臭', { a: 'indole', o: ['hist', 'h2s', 'indole', 'nh3'] }],
+        ['分解蛋白質產生屍臭、魚腥味的代表菌', { a: 'prot', o: ['prot', 'leu'] }]],
+      done: ['[[蛋白質 → 胜肽（苦）→ 胺基酸 → 脫羧產生胺（組織胺、屍胺、腐胺）、脫胺產生氨，另有 H₂S、吲哚。]]', '組織胺是魚肉中的組胺酸被細菌脫羧產生的，加熱也破壞不了。'] },
+    { t: '看得到的腐敗現象', kind: 'list',
+      intro: ['除了味道，腐敗也看得到：表面長出各色菌絲（發霉）；能產生色素的細菌讓食品變色；有些菌把蔗糖做成黏稠的多醣，表面出現黏液。',
+        '食品依多容易壞分三類：水分多、營養多的最容易壞；有外皮保護或比較乾的次之；乾燥、高糖的最不容易壞。'],
+      listTitle: '是哪一個',
+      list: [['沙雷氏菌造成的變色', { a: 'serr', o: ['serr', 'flav', 'green'] }], ['冷藏肉、蛋白出現的螢光色', { a: 'green', o: ['serr', 'flav', 'green'] }], ['蔗糖被明串珠菌做成的黏液', { a: 'dext', o: ['dext', 'ranc'] }],
+        ['肉、魚、禽肉、多數蔬果', { a: 'peri', o: ['peri', 'semi', 'stab'] }], ['馬鈴薯、蘋果、堅果仁', { a: 'semi', o: ['peri', 'semi', 'stab'] }], ['糖、麵粉、乾豆', { a: 'stab', o: ['peri', 'semi', 'stab'] }]],
+      done: ['[[變色：沙雷氏菌（紅）、黃桿菌（黃）、螢光假單胞菌（螢光綠）。黏液：明串珠菌把蔗糖做成聚葡萄糖（dextran）。]]', '易腐敗食品要冷藏或冷凍；不易腐敗食品只要保持乾燥。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['明串珠菌進行的是', { a: 'hete', o: ['homo', 'hete'] }, '，所以會產氣。'],
+        ['蛋白質剛被水解成小胜肽時，食品會', { a: 'bitter', o: ['bitter', 'foul'] }, '。'],
+        ['牛奶的脂肪被脂解酶分解，屬於', { a: 'hyd', o: ['hyd', 'oxi'] }, '。'],
+        ['組織胺是組胺酸經', { a: 'decarb', o: ['decarb', 'deam'] }, '產生的。'],
+        ['奶油的香氣主要來自', { a: 'diac', o: FDEG_FT }, '。'],
+        ['蔬菜的細菌性軟腐，是因為細菌分解了', { a: 'pect', o: ['pect', 'starch'], lang: 'en' }, '。'],
+        ['分解蛋白質的產物包括', { a: 'amine', o: FDEG_PR, lang: 'en' }, '。'],
+        ['Serratia 造成食品變成', { a: 'serr', o: ['serr', 'flav', 'green'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 260, force: 'en', svg: FDEG_OV, blanks: FDEG_B(),
+      intro: ['第一關的圖，全部用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: 'Fermentation types', list: [['Lactic acid only', { a: 'homo', o: FDEG_FT }], ['Lactic acid + acetic acid + ethanol + CO₂', { a: 'hete', o: FDEG_FT }], ['Holes in Swiss cheese', { a: 'prop', o: FDEG_FT }], ['Ethanol oxidized by Acetobacter', { a: 'acet', o: FDEG_FT }]] }
+  ] };
+/* ======================================================================
+   各類食品的腐敗（授課單元 3）
+   ====================================================================== */
+var FSPL_F = [['冷藏的生鮮肉', 'Chilled fresh meat', 'pseu'], ['冰藏的海魚', 'Iced marine fish', 'pseu'], ['殺菌後冷藏的鮮奶', 'Pasteurized chilled milk', 'psyt'], ['穀類、麵包', 'Grains, bread', 'mold'],
+  ['水果', 'Fruits', 'mold'], ['蔬菜', 'Vegetables', 'erw'], ['低酸性罐頭', 'Low-acid canned food', 'spore']];
+var FSPL_O = ['pseu', 'psyt', 'mold', 'erw', 'spore'];
+function FSPL_OV() { var s = tx(92, 18, T('食品', 'food'), 'm', 9.5) + tx(262, 18, T('最主要的腐敗微生物', 'main spoilage microbe'), 'm', 9.5); FSPL_F.forEach(function (r, i) { var y = 44 + i * 46; s += pill(92, y, 156, { zh: r[0], en: r[1] }, 'pill kH') + arrow(172, y, 178, y); }); return s; }
+function FSPL_B() { return FSPL_F.map(function (r, i) { return { id: 'f' + i, x: 266, y: 44 + i * 46, w: 168, c: r[2] === 'mold' ? 'T' : 'I', a: r[2], o: FSPL_O }; }); }
+var FSPL_CN = [['平酸腐敗', 'Flat sour', 'flat', 'bst'], ['嗜熱厭氧菌腐敗', 'Thermophilic anaerobe (TA)', 'swell', 'cth'], ['硫臭腐敗', 'Sulfide stinker', 'flat', 'dnig'], ['腐臭厭氧菌腐敗', 'Putrefactive anaerobe', 'swell', 'cbot']];
+var FSPL_CO = ['bst', 'cth', 'dnig', 'cbot'];
+function FSPL_CV() {
+  var s = tx(70, 22, T('腐敗型式', 'type'), 'm', 9.5) + tx(184, 22, T('罐頭外觀', 'can'), 'm', 9.5) + tx(292, 22, T('原因菌', 'organism'), 'm', 9.5);
+  FSPL_CN.forEach(function (r, i) { s += pill(70, 56 + i * 66, 120, { zh: r[0], en: r[1] }, 'pill kH'); });
+  s += tx(180, 314, T('都是耐熱的產孢菌；也可能是殺菌後罐子漏氣再污染', 'all spore-formers; or post-process leakage'), 'm', 9.5);
+  return s;
+}
+function FSPL_CB() { var b = []; FSPL_CN.forEach(function (r, i) { var y = 56 + i * 66; b.push({ id: 'a' + i, x: 184, y: y, w: 88, a: r[2], o: ['flat', 'swell'] }); b.push({ id: 'o' + i, x: 292, y: y, w: 124, c: 'I', a: r[3], o: FSPL_CO }); }); return b; }
+var FSPL_MK = ['sour', 'bitter', 'gas', 'ropy', 'blue'];
+var FSPL = { id: 'fspl', zh: '各類食品的腐敗', en: 'Spoilage of specific foods', alias: '肉・魚・乳・穀類・蔬果・罐頭・蛋', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    pseu: { zh: '假單胞菌等革蘭氏陰性桿菌', en: 'Pseudomonas and other Gram-negative rods' }, psyt: { zh: '殺菌後再污染的低溫菌', en: 'Post-pasteurization psychrotrophs' }, mold: { zh: '黴菌（加上酵母）', en: 'Molds (and yeasts)' },
+    erw: { zh: '歐文氏菌（細菌性軟腐）', en: 'Erwinia (bacterial soft rot)' }, spore: { zh: '耐熱的產孢菌', en: 'Heat-resistant spore-formers' },
+    h2o2: { zh: '過氧化氫', en: 'Hydrogen peroxide' }, h2s: { zh: '硫化氫', en: 'Hydrogen sulfide' }, cured: { zh: '醃漬、真空包裝肉品開封後', en: 'Cured/vacuum-packed meat after opening' }, fresh: { zh: '低溫真空包裝的生鮮紅肉', en: 'Chilled vacuum-packed fresh red meat' },
+    nit: { zh: '亞硝酸鹽', en: 'Nitrite' }, salt: { zh: '食鹽', en: 'Salt' }, asc: { zh: '抗壞血酸鈉', en: 'Sodium ascorbate' }, phos: { zh: '磷酸鹽', en: 'Phosphates' },
+    bruc: { zh: '布氏桿菌（波狀熱）', en: 'Brucella (undulant fever)' }, coxi: { zh: 'Q 熱立克次體', en: 'Coxiella burnetii (Q fever)' }, anth: { zh: '炭疽桿菌', en: 'Bacillus anthracis' },
+    tmao: { zh: '氧化三甲胺（TMAO）', en: 'Trimethylamine oxide (TMAO)' }, tma: { zh: '三甲胺（TMA）', en: 'Trimethylamine (TMA)' }, vbn: { zh: '揮發性鹽基態氮（VBN）', en: 'Volatile basic nitrogen (VBN)' },
+    gill: { zh: '魚鰓', en: 'Gills' }, muscle: { zh: '背部肌肉', en: 'Dorsal muscle' }, shew: { zh: '腐敗希瓦氏菌', en: 'Shewanella putrefaciens' },
+    hi: { zh: '比較高', en: 'Higher' }, lo: { zh: '比較低', en: 'Lower' },
+    sour: { zh: '變酸', en: 'Souring' }, bitter: { zh: '變苦', en: 'Bitterness' }, gas: { zh: '產氣', en: 'Gas' }, ropy: { zh: '牽絲、黏稠', en: 'Ropiness' }, blue: { zh: '變藍', en: 'Blue color' },
+    rhiz: { zh: '匍枝根黴（麵包黴，黑色）', en: 'Rhizopus stolonifer (black bread mold)' }, neur: { zh: '好食脈孢菌（紅色麵包黴）', en: 'Neurospora sitophila (red bread mold)' }, rope: { zh: '地衣芽孢桿菌（家製麵包牽絲）', en: 'Bacillus licheniformis (ropy bread)' },
+    bcer: { zh: '仙人掌桿菌', en: 'Bacillus cereus' }, m13: { zh: '13% 以下', en: 'Below 13%' }, m20: { zh: '20% 以上', en: 'Above 20%' },
+    botr: { zh: '灰黴菌（灰黴腐敗）', en: 'Botrytis cinerea (gray mold rot)' }, peni: { zh: '青黴菌（藍黴腐敗）', en: 'Penicillium (blue mold rot)' }, geot: { zh: '白地黴（酸腐）', en: 'Geotrichum candidum (sour rot)' },
+    flat: { zh: '平罐', en: 'Flat' }, swell: { zh: '膨罐', en: 'Swell' },
+    bst: { zh: '嗜熱脂肪芽孢桿菌', en: 'Geobacillus stearothermophilus' }, bco: { zh: '凝結芽孢桿菌', en: 'Bacillus coagulans' }, cth: { zh: '熱解糖梭菌', en: 'Clostridium thermosaccharolyticum' },
+    dnig: { zh: '致黑脫硫腸狀菌', en: 'Desulfotomaculum nigrificans' }, cbot: { zh: '肉毒桿菌', en: 'Clostridium botulinum' },
+    egrn: { zh: '綠色腐敗', en: 'Green rot' }, eblk: { zh: '黑色腐敗', en: 'Black rot' }, ered: { zh: '紅色腐敗', en: 'Red rot' },
+    zygo: { zh: '耐滲透壓酵母（接合酵母）', en: 'Osmophilic yeasts (Zygosaccharomyces)' }
+  },
+  levels: [
+    { t: '先看全貌：誰讓哪一種食品壞掉', kind: 'ov', h: 368, svg: FSPL_OV, blanks: FSPL_B(),
+      intro: ['上一個單元說過，食品本身的條件決定了哪一種微生物會勝出。把那些規則套到各類食品上，就能推出主要的腐敗菌。',
+        '肉、魚、牛奶接近中性、水分多、又放在冰箱：贏的是在低溫還能長的好氧革蘭氏陰性桿菌。牛奶經過殺菌，原本的菌大多死了，壞掉多半是殺菌後又污染的菌。',
+        '穀類和麵包很乾、水果很酸：細菌不容易長，換黴菌和酵母。蔬菜接近中性：細菌和黴菌都會。',
+        '罐頭經過高溫殺菌：活下來的只有耐熱的孢子。'],
+      done: ['[[冷藏肉、魚：假單胞菌等革蘭氏陰性好氧桿菌；穀類、麵包、水果：黴菌；蔬菜：歐文氏菌等細菌（加上黴菌）；罐頭：耐熱產孢菌。]]', '真空包裝或醃漬後，環境變成厭氧、低 pH、高鹽，主角換成乳酸菌。',
+        '殺菌鮮奶的腐敗多半是殺菌後再污染的低溫菌，或是殺菌前就在、耐熱的低溫產孢菌。'] },
+    { t: '禽畜肉', kind: 'list',
+      intro: ['健康動物的肌肉內部幾乎無菌，微生物來自毛皮、腸道、刀具、容器、手和環境。屠宰後肌肉的肝醣變成乳酸，pH 降到約 5.6。',
+        '冷藏的生肉，表面的好氧菌最先繁殖，產生黏液和異味。真空包裝或醃製的肉則以乳酸菌為主。',
+        '肉變綠有兩種原因：醃製肉開封接觸空氣後，乳酸菌產生的一種氧化物和醃肉的紅色色素反應；或是低溫真空包裝的生鮮紅肉，細菌產生的一種含硫氣體和肌紅素結合（pH 低於 6 時不會發生）。',
+        '醃製時加的幾種東西各有功能；有一種專門用來保持紅色、增加風味、抑制梭菌孢子發芽。肉品也可能帶有人畜共通的病原。'],
+      listTitle: '是哪一個',
+      list: [['醃漬肉開封後變綠的原因', { a: 'h2o2', o: ['h2o2', 'h2s'] }], ['低溫真空包裝的生鮮紅肉變綠的原因', { a: 'h2s', o: ['h2o2', 'h2s'] }], ['保持肉色、抑制肉毒桿菌孢子', { a: 'nit', o: ['nit', 'salt', 'asc', 'phos'] }],
+        ['增加保水性', { a: 'phos', o: ['nit', 'salt', 'asc', 'phos'] }], ['加速醃製、幫助維持肉色、減少亞硝胺', { a: 'asc', o: ['nit', 'salt', 'asc', 'phos'] }], ['人感染後出現反覆發燒（波狀熱）', { a: 'bruc', o: ['bruc', 'coxi', 'anth'] }],
+        ['經呼吸道、乳汁傳染的 Q 熱', { a: 'coxi', o: ['bruc', 'coxi', 'anth'] }]],
+      done: ['[[肉變綠：過氧化氫（醃漬肉開封後，乳酸菌）；硫化氫與肌紅素結合成硫肌紅素（低溫真空包裝生鮮紅肉，假單胞菌等）。]]', '香腸的腐敗：表面黏液、變酸、變綠。培根、火腿鹽分高、水活性低，以黴菌腐敗為主。',
+        '亞硝酸鹽是保色劑：保持肉色、產生風味、抑制肉毒桿菌孢子發芽。'] },
+    { t: '水產品', kind: 'list',
+      intro: ['魚比畜肉更容易壞：肌肉組織比較脆弱、水分多，死後 pH 比較高（約 6～6.5），自己的酵素多，不飽和脂肪多容易氧化。',
+        '海魚肌肉裡有一種含氮化合物，細菌把它還原後產生典型的「魚腥臭」。新鮮魚幾乎沒有這個產物，所以可以用來判斷鮮度；另外胺類和氨的總量也是常用的鮮度指標。',
+        '冰藏的魚主要被不產孢的革蘭氏陰性菌弄壞。判斷鮮度時，聞某個部位最準。'],
+      listTitle: '是哪一個',
+      list: [['魚腥臭的前驅物（新鮮海魚中就有）', { a: 'tmao', o: ['tmao', 'tma', 'vbn'] }], ['細菌還原 TMAO 的產物', { a: 'tma', o: ['tmao', 'tma', 'vbn'] }], ['胺類與氨的總和，是常用的鮮度指標', { a: 'vbn', o: ['tmao', 'tma', 'vbn'] }],
+        ['冰藏海魚的代表性腐敗菌', { a: 'shew', o: ['shew', 'bco'] }], ['最容易判斷魚是否腐敗的部位', { a: 'gill', o: ['gill', 'muscle'] }], ['魚死後的 pH 比畜肉', { a: 'hi', o: ['hi', 'lo'] }]],
+      done: ['[[細菌把氧化三甲胺（TMAO）還原成三甲胺（TMA），產生魚腥臭；VBN、TMA、組織胺都可用來判斷魚的鮮度。]]', '冰藏魚的腐敗菌：假單胞菌、腐敗希瓦氏菌、不動桿菌、摩拉克氏菌等不產孢的革蘭氏陰性菌。',
+        '貝類含肝醣較多，腐敗後期會變酸，以乳酸菌、腸球菌、酵母為主。'] },
+    { t: '乳品', kind: 'list',
+      intro: ['生乳的微生物來自乳房、擠乳器具和容器。生乳要冷藏、要加熱殺菌，所以乳品的腐敗多半是低溫菌，或殺菌後又污染的菌。',
+        '腐敗的樣子有很多種，各有代表的原因：溫度偏高時乳酸菌讓它變酸；低溫菌分解酪蛋白讓它變苦；大腸桿菌群、梭菌、異質發酵菌讓它產氣；有些菌做出黏稠的多醣讓它牽絲；兩種菌同時存在時會變色。'],
+      listTitle: '是哪一種',
+      list: [['耐熱乳酸菌在溫度較高時', { a: 'sour', o: FSPL_MK }], ['低溫下假單胞菌分解酪蛋白', { a: 'bitter', o: FSPL_MK }], ['大腸桿菌群、梭菌、異質乳酸發酵菌', { a: 'gas', o: FSPL_MK }],
+        ['產鹼桿菌、假單胞菌產生黏質多醣', { a: 'ropy', o: FSPL_MK }], ['成藍假單胞菌和乳酸鏈球菌同時生長', { a: 'blue', o: FSPL_MK }]],
+      done: ['[[乳品腐敗：變酸（乳酸菌）、變苦（低溫菌分解蛋白質）、產氣（大腸桿菌群、梭菌、異質發酵菌）、牽絲（產鹼桿菌、假單胞菌）、變色、發霉。]]', '變紅是沙雷氏菌；變藍是兩種菌共生的結果。'] },
+    { t: '穀類與烘焙食品', kind: 'list',
+      intro: ['穀類收穫後要乾燥，水分壓低到一定程度以下，細菌就長不起來；儲存時要注意的是黴菌，有些還會產生黴菌毒素。',
+        '米飯、麵食有一種土壤來的產孢菌，煮飯的溫度殺不死它的孢子，飯放涼後孢子發芽，是食品中毒的常見原因。',
+        '麵包水分低，主要是黴菌在表面長：最常見的是黑色的那種，也有紅色的。家裡自己做的麵包有時切開會牽絲，是一種產孢桿菌做的黏液。'],
+      listTitle: '是哪一個',
+      list: [['穀物儲存時的水分應低於', { a: 'm13', o: ['m13', 'm20'] }], ['米飯中常見、孢子耐煮的病原菌', { a: 'bcer', o: ['bcer', 'rope'] }], ['麵包上的黑色黴（麵包黴）', { a: 'rhiz', o: ['rhiz', 'neur', 'rope'] }],
+        ['麵包上的紅色黴', { a: 'neur', o: ['rhiz', 'neur', 'rope'] }], ['家製麵包切開牽絲', { a: 'rope', o: ['rhiz', 'neur', 'rope'] }]],
+      done: ['[[穀類：儲藏性黴菌（麴菌、青黴菌、鐮刀菌），水分保持在 13% 以下。]]', '[[麵包：根黴（黑）、脈孢菌（紅）；牽絲是地衣芽孢桿菌或枯草桿菌。]]', '米飯：仙人掌桿菌的孢子耐煮，飯要趁熱吃，或保持 60℃ 以上、或迅速冷藏。'] },
+    { t: '蔬菜與水果', kind: 'list',
+      intro: ['蔬菜水分約 88%、接近中性，細菌和黴菌都能長。最常見的是細菌分解果膠造成的軟爛。',
+        '水果有機酸多、pH 低，細菌不容易長，主要是黴菌：柑橘和蘋果常見藍綠色的黴，草莓、葡萄常見灰色的黴（高濕、中溫時特別多）。有些靠果蠅帶到傷口的黴菌會讓蔬果變酸爛。'],
+      listTitle: '是哪一個',
+      list: [['蔬菜最常見的細菌性軟腐', { a: 'erw', o: ['erw', 'botr', 'peni', 'geot'] }], ['草莓、葡萄長灰色菌絲', { a: 'botr', o: ['erw', 'botr', 'peni', 'geot'] }], ['柑橘、蘋果的藍黴腐敗', { a: 'peni', o: ['erw', 'botr', 'peni', 'geot'] }],
+        ['由果蠅攜帶、造成酸腐', { a: 'geot', o: ['erw', 'botr', 'peni', 'geot'] }]],
+      done: ['[[蔬菜：歐文氏菌、假單胞菌的細菌性軟腐（分解果膠）；水果：黴菌為主（青黴菌的藍黴腐敗、灰黴菌的灰黴腐敗）。]]', '蘋果的青黴菌（擴展青黴）會產生棒麴黴素（patulin），腐爛的蘋果不能拿去做果汁。'] },
+    { t: '罐頭食品的腐敗', kind: 'ov', h: 326, svg: FSPL_CV, blanks: FSPL_CB(),
+      intro: ['罐頭經過高溫高壓殺菌，能活下來的是很耐熱的產孢菌，而且是兼性或厭氧的。另一個原因是殺菌後封口不良、漏氣再污染。',
+        '依有沒有產氣分成平罐和膨罐：只產酸、不產氣的，罐子外觀正常但內容物變酸；產氣的罐子會鼓起來。',
+        '有一種會把食品中的硫酸鹽還原，產生臭蛋味並讓內容物變黑，但不產生其他氣體，罐子是平的。最危險的那一種分解蛋白質，產生惡臭和氣體，還會產生毒素。'],
+      done: ['[[平酸腐敗：嗜熱脂肪芽孢桿菌（低酸性罐頭），酸性罐頭則是凝結芽孢桿菌；產酸不產氣，罐子正常。]]', '嗜熱厭氧菌腐敗：熱解糖梭菌，產酸產氣、膨罐、丁酸味。硫臭腐敗：脫硫腸狀菌，平罐、硫化氫、內容物變黑。',
+        '腐臭厭氧菌腐敗：肉毒桿菌等，分解蛋白質、膨罐、惡臭。膨罐的罐頭絕對不能吃。'] },
+    { t: '蛋與其他食品', kind: 'list',
+      intro: ['蛋有多重防線：外面的蠟質膜、蛋殼、殼膜，蛋白裡的抑菌蛋白，加上蛋白 pH 可高達 9 以上。所以蛋要壞，通常是防線被破壞後，耐得住這些條件的細菌進來。',
+        '腐敗的蛋依顏色命名：產生螢光色素的、分解蛋白質變黑的、產生紅色色素的，還有黴菌長出小斑點的。',
+        '糖果、蜂蜜、果醬水分少、滲透壓高，只有特別耐高糖的酵母能弄壞它們。'],
+      listTitle: '是哪一個',
+      list: [['螢光假單胞菌造成', { a: 'egrn', o: ['egrn', 'eblk', 'ered'] }], ['變形桿菌、假單胞菌造成', { a: 'eblk', o: ['egrn', 'eblk', 'ered'] }], ['沙雷氏菌造成', { a: 'ered', o: ['egrn', 'eblk', 'ered'] }],
+        ['弄壞蜂蜜、糖漿、果醬的', { a: 'zygo', o: ['zygo', 'pseu'] }]],
+      done: ['[[蛋的腐敗：綠色（螢光假單胞菌）、黑色（變形桿菌）、紅色（沙雷氏菌）、針點狀（青黴菌、枝孢菌）。]]', '脫水的蛋粉、奶粉每公克菌數可能很高：乾燥時死掉的菌有限，換算成乾重之後數字反而變大。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['低溫貯存的肉品變綠，是', { a: 'h2s', o: ['h2o2', 'h2s'] }, '和肌紅素作用的結果。'],
+        ['海魚的腥臭來自細菌把 TMAO 還原成', { a: 'tma', o: ['tmao', 'tma', 'vbn'] }, '。'],
+        ['乳品變苦，通常是低溫下的', { a: 'pseu', o: ['pseu', 'mold'] }, '分解酪蛋白。'],
+        ['平酸腐敗的罐頭外觀是', { a: 'flat', o: ['flat', 'swell'] }, '。'],
+        ['水果的腐敗以', { a: 'mold', o: ['pseu', 'mold', 'erw'] }, '為主。'],
+        ['低酸性罐頭平酸腐敗的原因菌是', { a: 'bst', o: FSPL_CO, lang: 'en' }, '。'],
+        ['冰藏海魚的代表性腐敗菌是', { a: 'shew', o: ['shew', 'bco'], lang: 'en' }, '。'],
+        ['麵包上的黑色黴是', { a: 'rhiz', o: ['rhiz', 'neur', 'rope'], lang: 'en' }, '。'],
+        ['產生硫化氫、內容物變黑但罐子平的是', { a: 'dnig', o: FSPL_CO, lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 326, force: 'en', svg: FSPL_CV, blanks: FSPL_CB(),
+      intro: ['罐頭的四種腐敗，全部用英文作答；下面再加上各類食品的主要腐敗菌。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: 'Main spoilage microbes', list: FSPL_F.slice(0, 7).map(function (r) { return [r[1], { a: r[2], o: FSPL_O }]; }) }
+  ] };
+/* ======================================================================
+   利用微生物製造食品（授課單元 4）
+   ====================================================================== */
+var FFRM_F = [['優格（酸凝酪）', 'Yogurt', 'lbst'], ['醬油、味噌（製麴）', 'Soy sauce, miso (koji)', 'aory'], ['啤酒、葡萄酒、麵包', 'Beer, wine, bread', 'scer'], ['食醋', 'Vinegar', 'acet'],
+  ['泡菜（發酵初期）', 'Sauerkraut (early stage)', 'leu'], ['紅麴', 'Red yeast rice', 'mona']];
+var FFRM_O = ['lbst', 'aory', 'scer', 'acet', 'leu', 'mona'];
+function FFRM_OV() { var s = tx(92, 18, T('發酵食品', 'fermented food'), 'm', 9.5) + tx(262, 18, T('主要的微生物', 'key microbe'), 'm', 9.5); FFRM_F.forEach(function (r, i) { var y = 46 + i * 50; s += pill(92, y, 156, { zh: r[0], en: r[1] }, 'pill kH') + arrow(172, y, 178, y); }); return s; }
+function FFRM_B() { return FFRM_F.map(function (r, i) { return { id: 'f' + i, x: 266, y: 46 + i * 50, w: 168, c: r[2] === 'aory' || r[2] === 'scer' || r[2] === 'mona' ? 'T' : 'I', a: r[2], o: FFRM_O }; }); }
+var FFRM = { id: 'ffrm', zh: '利用微生物製造食品', en: 'Food fermentations', alias: '乳酸菌・優格與乾酪・泡菜・醬油・醋・紅麴・安姆氏試驗', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    lbst: { zh: '保加利亞乳桿菌＋嗜熱鏈球菌', en: 'L. bulgaricus + S. thermophilus' }, aory: { zh: '米麴菌', en: 'Aspergillus oryzae' }, scer: { zh: '釀酒酵母', en: 'Saccharomyces cerevisiae' },
+    acet: { zh: '醋酸菌', en: 'Acetobacter' }, leu: { zh: '腸膜明串珠菌', en: 'Leuconostoc mesenteroides' }, mona: { zh: '紅麴菌', en: 'Monascus' },
+    homo: { zh: '同質乳酸發酵菌', en: 'Homofermentative' }, hete: { zh: '異質乳酸發酵菌', en: 'Heterofermentative' },
+    nocyc: { zh: '沒有電子傳遞鏈，不能走檸檬酸循環', en: 'No electron transport chain or TCA cycle' }, yescyc: { zh: '有完整的有氧呼吸', en: 'Full aerobic respiration' },
+    pro: { zh: '益生菌', en: 'Probiotic' }, pre: { zh: '益生質（益菌元）', en: 'Prebiotic' }, bifi: { zh: '比菲德氏菌（雙歧桿菌）', en: 'Bifidobacterium' }, fos: { zh: '果寡糖', en: 'Fructooligosaccharides' },
+    st: { zh: '嗜熱鏈球菌', en: 'Streptococcus thermophilus' }, lb: { zh: '保加利亞乳桿菌', en: 'Lactobacillus bulgaricus' }, rennin: { zh: '凝乳酶', en: 'Rennin (chymosin)' }, pepsin: { zh: '胃蛋白酶', en: 'Pepsin' },
+    diac: { zh: '雙乙醯', en: 'Diacetyl' }, meso: { zh: '嗜中溫菌酛', en: 'Mesophilic starter' }, ther: { zh: '嗜高溫菌酛', en: 'Thermophilic starter' },
+    lpl: { zh: '植物乳桿菌', en: 'Lactobacillus plantarum' }, film: { zh: '產膜酵母', en: 'Film yeasts' }, chin: { zh: '中式香腸（靠醃漬和乾燥）', en: 'Chinese sausage (curing, drying)' }, ferm: { zh: '發酵香腸', en: 'Fermented sausage' },
+    salt18: { zh: '約 18%', en: 'About 18%' }, salt3: { zh: '約 3%', en: 'About 3%' }, tetra: { zh: '好鹽乳酸菌（Tetragenococcus halophilus）', en: 'Tetragenococcus halophilus' }, zygo: { zh: '魯氏接合酵母', en: 'Zygosaccharomyces rouxii' },
+    mcpd: { zh: '3-單氯丙二醇（3-MCPD）', en: '3-MCPD' }, afla: { zh: '黃麴毒素', en: 'Aflatoxin' }, hcl: { zh: '鹽酸水解', en: 'Acid (HCl) hydrolysis' }, brew: { zh: '微生物發酵', en: 'Microbial fermentation' },
+    aero: { zh: '要氧氣', en: 'Requires oxygen' }, anae: { zh: '不需氧氣', en: 'Anaerobic' },
+    monak: { zh: '莫那可林 K', en: 'Monacolin K' }, citr: { zh: '橘黴素', en: 'Citrinin' }, hmg: { zh: 'HMG-CoA 還原酶', en: 'HMG-CoA reductase' }, kidney: { zh: '腎臟', en: 'Kidney' },
+    ergo: { zh: '麥角固醇', en: 'Ergosterol' }, vd2: { zh: '維生素 D₂', en: 'Vitamin D₂' }, lent: { zh: '香菇多醣', en: 'Lentinan' }, antro: { zh: '牛樟芝', en: 'Antrodia cinnamomea' },
+    scp: { zh: '單細胞蛋白', en: 'Single-cell protein' },
+    his: { zh: '組胺酸', en: 'Histidine' }, trp: { zh: '色胺酸', en: 'Tryptophan' }, salm: { zh: '鼠傷寒沙門氏菌', en: 'Salmonella typhimurium' }, s9: { zh: '模擬肝臟把物質代謝活化', en: 'Mimics liver metabolic activation' },
+    mut: { zh: '致突變性', en: 'Mutagenicity' }, nutv: { zh: '營養價值', en: 'Nutritional value' }, revt: { zh: '回復突變後能自己合成組胺酸', en: 'Revertants synthesize histidine' }, die: { zh: '菌死亡數增加', en: 'More bacteria die' },
+    vc: { zh: '增加維生素 C', en: 'More vitamin C' }, shelf: { zh: '延長保存期限', en: 'Longer shelf life' }
+  },
+  levels: [
+    { t: '先看全貌：每一種發酵食品的主角', kind: 'ov', h: 330, svg: FFRM_OV, blanks: FFRM_B(),
+      intro: ['發酵食品利用微生物把原料變成新的產品：延長保存、產生風味、改變質地，有時還增加營養。',
+        '原料的條件決定誰當主角：酸度高、以單醣為主的原料（果汁、麥芽汁）利於酵母做酒精；低鹽、含單雙醣的原料（牛奶、蔬菜）利於乳酸菌做乳酸；黃豆、穀類的大分子要先靠黴菌分泌酵素切開。',
+        '藍色空格是細菌，青色空格是黴菌和酵母。'],
+      done: ['[[優格：保加利亞乳桿菌＋嗜熱鏈球菌；醬油、味噌：米麴菌製麴；酒、麵包：釀酒酵母；醋：醋酸菌；泡菜初期：明串珠菌；紅麴：紅麴菌。]]',
+        '發酵的好處：延長保存期限、增加風味與多樣性、提高營養（例如合成部分 B 群維生素、分解不易消化的成分）。發酵不會增加維生素 C。'] },
+    { t: '乳酸菌', kind: 'list',
+      intro: ['乳酸菌是能把六碳糖發酵成乳酸的革蘭氏陽性菌。它們沒有電子傳遞鏈，不能用氧產能，只靠發酵，但不怕氧（耐氧）。',
+        '依產物分兩群：一群幾乎只產生乳酸，產能是另一群的兩倍；另一群走另一條代謝路徑，除了乳酸還產生醋酸、乙醇和二氧化碳。',
+        '腸道裡有些乳酸菌和比菲德氏菌對人有益。吃下去有益健康的活菌，和吃下去專門給這些好菌當食物的成分，名稱只差一個字，要分清楚。'],
+      listTitle: '是哪一個',
+      list: [['乳酸球菌、鏈球菌、片球菌、部分乳桿菌', { a: 'homo', o: ['homo', 'hete'] }], ['明串珠菌、短乳桿菌、魏斯氏菌', { a: 'hete', o: ['homo', 'hete'] }], ['乳酸菌的能量代謝', { a: 'nocyc', o: ['nocyc', 'yescyc'] }],
+        ['吃下去對宿主有益的活菌', { a: 'pro', o: ['pro', 'pre'] }], ['不易消化、能促進好菌生長的成分（例如寡糖）', { a: 'pre', o: ['pro', 'pre'] }], ['常加在發酵乳裡、俗稱 B 菌的', { a: 'bifi', o: ['bifi', 'st'] }]],
+      done: ['[[同質乳酸發酵：只產乳酸（乳酸球菌、鏈球菌、片球菌）；異質乳酸發酵：乳酸＋醋酸＋乙醇＋CO₂（明串珠菌、短乳桿菌）。]]', '[[益生菌（probiotic）是活菌；益生質（prebiotic）是好菌的食物，例如寡糖、膳食纖維。]]',
+        '乳酸菌的好處：分解乳糖、降低腸道 pH、產生細菌素（例如乳酸鏈球菌素）、和病原菌競爭。'] },
+    { t: '發酵乳製品', kind: 'list',
+      intro: ['優格用兩種菌混合發酵，在 40～45℃ 進行，pH 降到 4.2～4.6 左右凝固。兩種菌互相幫忙：球菌先長，降低氧化還原電位、產生甲酸等，刺激桿菌；桿菌分解蛋白質放出胺基酸，再讓球菌長得更快。',
+        '乾酪先用乳酸菌讓牛奶變酸，再加一種酵素讓酪蛋白凝固，切塊、排乳清、加鹽、熟成。',
+        '北歐的發酵乳多用中溫菌在 20～30℃ 發酵；優格這類則用高溫菌。酪乳和奶油的香氣來自明串珠菌把檸檬酸代謝成的一種分子。'],
+      listTitle: '是哪一個',
+      list: [['優格發酵初期長得比較快、降低氧化還原電位的', { a: 'st', o: ['st', 'lb'] }], ['蛋白質分解能力強、提供胺基酸給夥伴的', { a: 'lb', o: ['st', 'lb'] }], ['加入牛奶使酪蛋白凝固做乾酪的酵素', { a: 'rennin', o: ['rennin', 'pepsin'] }],
+        ['酪乳、奶油的香氣', { a: 'diac', o: ['diac', 'mcpd'] }], ['乳酸球菌、明串珠菌（20～30℃）', { a: 'meso', o: ['meso', 'ther'] }], ['優格的兩種菌（40～45℃）', { a: 'ther', o: ['meso', 'ther'] }]],
+      done: ['[[優格：保加利亞乳桿菌＋嗜熱鏈球菌，互利共生，混合培養時兩者生長和產酸都比單獨培養多。]]', '乾酪：乳酸菌酸化＋凝乳酶凝固；低水活性加上酸性，可以長期保存。', '雙乙醯是酪乳、奶油的香氣，由明串珠菌或丁二酮乳酸球菌產生。'] },
+    { t: '發酵蔬菜與肉品', kind: 'list',
+      intro: ['新鮮蔬菜上原本以好氧的革蘭氏陰性菌和酵母為主，乳酸菌不多。加鹽、壓緊隔絕空氣後，環境轉為厭氧、高鹽，乳酸菌才慢慢勝出。',
+        '菌相有接棒順序：先是異質發酵、耐酸性差一點的球菌產酸產氣；酸度升高後，耐酸性更強的乳桿菌接手，把 pH 降到約 3.5。發酵後期表面若長出一層白膜，是一類好氧的酵母。',
+        '歐洲的發酵香腸靠乳酸菌把 pH 降到 5.3 以下、加鹽把水活性降到 0.9 以下來確保安全；中式香腸主要靠醃漬和乾燥，很少靠發酵。'],
+      listTitle: '是哪一個',
+      list: [['泡菜發酵初期的乳酸菌', { a: 'leu', o: ['leu', 'lpl'] }], ['泡菜發酵後期、最耐酸的乳酸菌', { a: 'lpl', o: ['leu', 'lpl'] }], ['醃漬物表面的白膜', { a: 'film', o: ['film', 'leu'] }],
+        ['幾乎不靠微生物發酵的香腸', { a: 'chin', o: ['chin', 'ferm'] }]],
+      done: ['[[泡菜：腸膜明串珠菌（初期，異質發酵）→ 植物乳桿菌（後期，耐酸）。]]', '鹽濃度太低時，醋酸菌、丁酸菌等雜菌會讓醃漬物變酸臭；表面白膜是產膜酵母。'] },
+    { t: '醬油、味噌與食醋', kind: 'list',
+      intro: ['醬油的原料是黃豆、小麥、鹽和水。先把麴菌接到蒸熟的黃豆和炒過的小麥上製麴，麴菌分泌蛋白酶和澱粉酶。種麴菌一定要選不產生黴菌毒素的菌株。',
+        '接著加入高濃度鹽水做成醬醪，長時間發酵。高鹽篩掉了大部分雜菌，只剩耐鹽的菌：先是一種耐鹽的乳酸菌產酸，pH 降到約 5，再換耐鹽酵母做酒精和香氣。',
+        '另一種做法完全不用微生物：用強酸在高溫下把蛋白質水解，快但會產生一種氯化物。',
+        '食醋分兩段：酵母先把糖變成酒精，醋酸菌再把酒精氧化成醋酸，這一段需要氧氣。'],
+      listTitle: '是哪一個',
+      list: [['醬醪的鹽濃度', { a: 'salt18', o: ['salt18', 'salt3'] }], ['醬醪發酵初期的耐鹽乳酸菌', { a: 'tetra', o: ['tetra', 'zygo'] }], ['醬醪後期產生酒精與香氣的耐鹽酵母', { a: 'zygo', o: ['tetra', 'zygo'] }],
+        ['化學（水解）醬油的做法', { a: 'hcl', o: ['hcl', 'brew'] }], ['化學醬油可能產生的有害副產物', { a: 'mcpd', o: ['mcpd', 'afla'] }], ['選擇種麴菌時一定不能產生', { a: 'afla', o: ['mcpd', 'afla'] }],
+        ['醋酸菌把酒精氧化成醋酸時', { a: 'aero', o: ['aero', 'anae'] }]],
+      done: ['[[醬油：米麴菌製麴 → 18% 左右鹽水的醬醪 → 好鹽乳酸菌（產酸）→ 魯氏接合酵母（酒精、香氣）。]]', '[[化學醬油（胺基酸液）用鹽酸水解蛋白質，可能產生 3-MCPD。]]', '食醋：酵母酒精發酵 → 醋酸菌（好氧）氧化成醋酸，釀造醋含 4～6% 醋酸。'] },
+    { t: '菌體食品與保健菌藻', kind: 'list',
+      intro: ['微生物長得快、可以用工業副產物培養，菌體本身也能當蛋白質來源。',
+        '菇類含有一種固醇，照紫外線後變成維生素 D 的一種形式；也含有能調節免疫的多醣。台灣特有、長在牛樟樹裡的一種真菌也很有名。',
+        '紅麴菌的二級代謝產物裡，有一種和降血脂藥完全一樣的分子，會抑制膽固醇合成的速率限制酵素；但紅麴菌也可能產生一種傷腎的黴菌毒素，所以紅麴製品要檢驗它。'],
+      listTitle: '是哪一個',
+      list: [['用酵母、細菌、藻類大量培養得到的蛋白質', { a: 'scp', o: ['scp', 'lent'] }], ['菇類照紫外線後產生', { a: 'vd2', o: ['vd2', 'ergo'] }], ['維生素 D₂ 的前驅物', { a: 'ergo', o: ['vd2', 'ergo'] }], ['香菇的抗腫瘤多醣', { a: 'lent', o: ['lent', 'scp'] }],
+        ['只寄生在台灣牛樟樹的真菌', { a: 'antro', o: ['antro', 'mona'] }], ['紅麴中的降膽固醇成分（等同 lovastatin）', { a: 'monak', o: ['monak', 'citr'] }], ['莫那可林 K 抑制的酵素', { a: 'hmg', o: ['hmg', 'rennin'] }],
+        ['紅麴可能產生、有腎毒性的黴菌毒素', { a: 'citr', o: ['monak', 'citr', 'afla'] }]],
+      done: ['[[紅麴：莫那可林 K（monacolin K，即 lovastatin）抑制 HMG-CoA 還原酶；要注意橘黴素（citrinin，腎毒性）。]]', '菇類的麥角固醇（ergosterol）照紫外線變成維生素 D₂。'] },
+    { t: '安全性：安姆氏試驗', kind: 'list',
+      intro: ['發酵或加工的過程可能產生有害物質，評估一個物質會不會造成基因突變，最常用的初步篩檢是安姆氏試驗（Ames test）。',
+        '它用一株「自己不會合成某種胺基酸」的沙門氏菌，放在缺乏這種胺基酸的培養基上。正常情況下它長不起來；如果待測物質讓它發生回復突變，恢復合成能力，就長出菌落。菌落越多，致突變性越強。',
+        '很多物質本身無害，要經過肝臟代謝才變成致突變物，所以試驗裡會加入大鼠肝臟的萃取物來模擬。',
+        '陽性代表致突變性，不能直接等於致癌，還需要其他試驗確認。'],
+      listTitle: '是哪一個',
+      list: [['安姆氏試驗檢測的是', { a: 'mut', o: ['mut', 'nutv'] }], ['使用的菌株', { a: 'salm', o: ['salm', 'scer'] }], ['菌株缺乏合成能力的胺基酸', { a: 'his', o: ['his', 'trp'] }],
+        ['判定有致突變性的依據', { a: 'revt', o: ['revt', 'die'] }], ['加入 S9 的目的', { a: 's9', o: ['s9', 'mut'] }]],
+      done: ['[[安姆氏試驗：組胺酸缺陷的鼠傷寒沙門氏菌，回復突變後能在無組胺酸培養基生長 → 具致突變性。]]', '[[S9（大鼠肝臟萃取物）模擬肝臟的代謝活化。]]致突變性陽性不等於致癌性。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['發酵食品的益處不包括', { a: 'vc', o: ['vc', 'shelf'] }, '。'],
+        ['明串珠菌屬於', { a: 'hete', o: ['homo', 'hete'] }, '。'],
+        ['使牛奶凝固製作乾酪的酵素是', { a: 'rennin', o: ['rennin', 'pepsin'] }, '。'],
+        ['化學醬油以鹽酸水解，可能產生', { a: 'mcpd', o: ['mcpd', 'afla'] }, '。'],
+        ['紅麴製品應注意的腎毒性黴菌毒素是', { a: 'citr', o: ['monak', 'citr', 'afla'] }, '。'],
+        ['安姆氏試驗使用的沙門氏菌，需要的胺基酸是', { a: 'his', o: ['his', 'trp'], lang: 'en' }, '。'],
+        ['醬油製麴使用的黴菌是', { a: 'aory', o: FFRM_O, lang: 'en' }, '。'],
+        ['優格發酵初期生長較快的是', { a: 'st', o: ['st', 'lb'], lang: 'en' }, '。'],
+        ['食醋的第二段發酵由', { a: 'acet', o: FFRM_O, lang: 'en' }, '進行。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 330, force: 'en', svg: FFRM_OV, blanks: FFRM_B(),
+      intro: ['第一關的圖，全部用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: '名詞', list: [['Only lactic acid produced', { a: 'homo', o: ['homo', 'hete'] }], ['Live microbes that benefit the host', { a: 'pro', o: ['pro', 'pre'] }], ['Red yeast rice compound identical to lovastatin', { a: 'monak', o: ['monak', 'citr'] }],
+        ['Ames test detects', { a: 'mut', o: ['mut', 'nutv'] }]] }
+  ] };
+/* ======================================================================
+   細菌性食品中毒（一）：分類與革蘭氏陽性的產毒菌（授課單元 5）
+   ====================================================================== */
+function FBA1_OV() {
+  var s = '', xs = [64, 180, 296], h = PH() / 2;
+  [['感染型', 'Infection'], ['毒素型', 'Intoxication'], ['中間型', 'Toxicoinfection']].forEach(function (c, i) { s += pill(xs[i], 32, 108, { zh: c[0], en: c[1] }, 'src'); s += arrow(xs[i], 33 + h, xs[i], 100 - h - 2) + arrow(xs[i], 101 + h, xs[i], 174 - h - 2); });
+  s += tx(180, 140, T('代表菌', 'examples'), 'm', 9.5);
+  [['腸炎弧菌', 'Vibrio parahaemolyticus'], ['肉毒桿菌', 'Clostridium botulinum'], ['病原性大腸桿菌', 'Pathogenic E. coli']].forEach(function (c, i) { s += pill(xs[i], 222, 108, { zh: c[0], en: c[1] }, 'pill kI'); });
+  s += tx(180, 268, T('仙人掌桿菌：嘔吐型屬毒素型，下痢型屬中間型', 'B. cereus: emetic = intoxication; diarrheal = toxicoinfection'), 'm', 9.5);
+  return s;
+}
+var FBA1_M = ['inv', 'pre', 'gut'], FBA1_X = ['salm', 'sau', 'cper'];
+function FBA1_B() {
+  var xs = [64, 180, 296], b = [];
+  FBA1_M.forEach(function (k, i) { b.push({ id: 'm' + i, x: xs[i], y: 100, w: 108, a: k, o: FBA1_M }); });
+  FBA1_X.forEach(function (k, i) { b.push({ id: 'x' + i, x: xs[i], y: 174, w: 108, c: 'I', a: k, o: FBA1_X }); });
+  return b;
+}
+var FBA1_R = [['金黃色葡萄球菌', 'Staphylococcus aureus', 'stab', 'h16'], ['肉毒桿菌', 'Clostridium botulinum', 'lab', 'h1236'], ['產氣莢膜桿菌', 'Clostridium perfringens', 'lab', 'h824'], ['仙人掌桿菌（嘔吐型）', 'Bacillus cereus (emetic)', 'stab', 'h16']];
+function FBA1_CV() { var s = tx(70, 22, T('病原菌', 'organism'), 'm', 9.5) + tx(196, 22, T('毒素耐熱嗎', 'toxin heat'), 'm', 9.5) + tx(298, 22, T('潛伏期', 'onset'), 'm', 9.5); FBA1_R.forEach(function (r, i) { s += pill(70, 56 + i * 64, 124, { zh: r[0], en: r[1] }, 'pill kI'); }); return s; }
+function FBA1_CB() { var b = []; FBA1_R.forEach(function (r, i) { var y = 56 + i * 64; b.push({ id: 'h' + i, x: 196, y: y, w: 96, c: 'E', a: r[2], o: ['stab', 'lab'] }); b.push({ id: 't' + i, x: 298, y: y, w: 100, a: r[3], o: ['h16', 'h824', 'h1236'] }); }); return b; }
+var FBA1 = { id: 'fba1', zh: '細菌性食品中毒（一）：分類與產毒菌', en: 'Bacterial foodborne illness I', alias: '感染型・毒素型・中間型・金黃色葡萄球菌・肉毒桿菌・產氣莢膜桿菌・仙人掌桿菌', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    inv: { zh: '活菌在腸道增殖、侵入', en: 'Live cells multiply and invade' }, pre: { zh: '吃進食物裡已有的毒素', en: 'Toxin preformed in food' }, gut: { zh: '吃進活菌，在腸道產毒', en: 'Toxin made in the gut' },
+    salm: { zh: '沙門氏菌', en: 'Salmonella' }, sau: { zh: '金黃色葡萄球菌', en: 'Staphylococcus aureus' }, cper: { zh: '產氣莢膜桿菌', en: 'Clostridium perfringens' }, cbot: { zh: '肉毒桿菌', en: 'Clostridium botulinum' }, bcer: { zh: '仙人掌桿菌', en: 'Bacillus cereus' },
+    two: { zh: '2 人以上吃了相同食物、出現相似症狀', en: '2+ people, same food, similar symptoms' }, one: { zh: '1 人就算（肉毒桿菌、急性化學性中毒）', en: 'Even 1 case (botulism, acute chemical)' },
+    stab: { zh: '耐熱', en: 'Heat-stable' }, lab: { zh: '不耐熱', en: 'Heat-labile' }, h16: { zh: '1～6 小時', en: '1–6 h' }, h824: { zh: '8～24 小時', en: '8–24 h' }, h1236: { zh: '12～36 小時', en: '12–36 h' },
+    nose: { zh: '人的鼻腔、皮膚、化膿傷口', en: 'Human nose, skin, infected wounds' }, soil: { zh: '土壤、灰塵', en: 'Soil and dust' },
+    vomit: { zh: '噁心、劇烈嘔吐，通常不發燒', en: 'Nausea, vomiting, usually no fever' }, paral: { zh: '複視、吞嚥困難、呼吸麻痺', en: 'Double vision, dysphagia, paralysis' }, diar: { zh: '腹痛、腹瀉，很少嘔吐和發燒', en: 'Cramps, diarrhea; little vomiting or fever' },
+    ach: { zh: '阻斷乙醯膽鹼釋放', en: 'Blocks acetylcholine release' }, ache: { zh: '抑制乙醯膽鹼酯酶', en: 'Inhibits acetylcholinesterase' },
+    honey: { zh: '蜂蜜', en: 'Honey' }, milk: { zh: '牛奶', en: 'Milk' }, y1: { zh: '1 歲以下', en: 'Under 1 year' },
+    ph46: { zh: 'pH 4.6 以下', en: 'pH ≤ 4.6' }, aw94: { zh: '水活性 0.94 以下', en: 'aw < 0.94' }, nit: { zh: '亞硝酸鹽', en: 'Nitrite' }, co2: { zh: '二氧化碳', en: 'Carbon dioxide' },
+    stew: { zh: '大量烹煮、慢慢冷卻的肉類燉菜', en: 'Large batches of meat stew cooled slowly' }, rice: { zh: '室溫放太久的米飯、炒飯', en: 'Rice left at room temperature' },
+    t74: { zh: '中心溫度 74℃ 以上', en: 'Core ≥ 74 °C' }, t60: { zh: '保溫 60℃ 以上', en: 'Hold above 60 °C' }, once: { zh: '只能復熱一次', en: 'Reheat only once' },
+    cere: { zh: '嘔吐毒素（cereulide）', en: 'Emetic toxin (cereulide)' }, diat: { zh: '下痢毒素', en: 'Diarrheal toxin' }
+  },
+  levels: [
+    { t: '先看全貌：細菌性食品中毒的三型', kind: 'ov', h: 284, svg: FBA1_OV, blanks: FBA1_B(),
+      intro: ['依細菌怎麼讓人生病，細菌性食品中毒分三型。',
+        '第一型要吃進大量活菌，它們在腸道繼續增殖、侵入腸壁才發病，所以潛伏期比較長，常會發燒。',
+        '第二型是細菌在食物裡已經長大並放出毒素，吃進去的是毒素，就算菌已經被加熱殺死也照樣中毒，潛伏期通常短（肉毒桿菌例外）。',
+        '第三型介於兩者之間：吃進活菌，活菌在腸道裡才產生毒素。'],
+      done: ['[[感染型：沙門氏菌、腸炎弧菌。毒素型：金黃色葡萄球菌、肉毒桿菌、仙人掌桿菌（嘔吐型）。中間型：產氣莢膜桿菌、病原性大腸桿菌、仙人掌桿菌（下痢型）。]]',
+        '分類方式各書略有不同，投影片的表格也和這裡不完全一樣；判斷時抓住「毒素在食物裡產生，還是在腸道裡產生」。', '食品中毒案件：2 人以上吃了相同食物、出現相似症狀；肉毒桿菌中毒或急性化學性、天然毒素中毒，1 人也算一件。'] },
+    { t: '金黃色葡萄球菌', kind: 'list',
+      intro: ['革蘭氏陽性球菌，排列成葡萄串，兼性厭氧、耐鹽。它住在很多健康人的身上，特別是某些部位和傷口，所以食品主要是被製作的人污染。',
+        '它在食物裡長大時放出腸毒素。這個毒素是蛋白質，但非常耐熱，煮沸 30 分鐘還有毒性，也不怕消化酵素。所以「重新加熱」救不回來。',
+        '吃下去很快就發作，主要是劇烈嘔吐，通常不發燒，一兩天內恢復。常見的原因食品是用手捏、做好後放在室溫的熟食：便當、飯糰、三明治、生菜沙拉。'],
+      listTitle: '是哪一個',
+      list: [['主要的污染來源', { a: 'nose', o: ['nose', 'soil'] }], ['腸毒素對熱', { a: 'stab', o: ['stab', 'lab'] }], ['潛伏期', { a: 'h16', o: ['h16', 'h824', 'h1236'] }], ['主要症狀', { a: 'vomit', o: ['vomit', 'paral', 'diar'] }]],
+      done: ['[[金黃色葡萄球菌：毒素型；來自人的鼻腔、皮膚、化膿傷口；腸毒素耐熱（100℃ 30 分鐘仍有毒性）；潛伏期短，以嘔吐為主。]]',
+        '預防：手部有傷口、化膿、濕疹者不得從事調理；戴口罩與手套；熟食不立即吃要保存在 7℃ 以下（投影片寫 5℃）。', '最低生長水活性約 0.86，比其他病原菌耐乾、耐鹽。'] },
+    { t: '肉毒桿菌', kind: 'list',
+      intro: ['革蘭氏陽性桿菌，絕對厭氧，會形成極耐熱的內孢子，要高溫高壓才殺得死。',
+        '它在缺氧、低酸、水活性夠高的食品裡發芽，產生神經毒素。這個毒素是目前已知最毒的物質之一，但對熱不穩定，充分加熱可以破壞。毒素阻斷神經末梢釋放一種神經傳導物質，造成由頭部往下的弛緩性麻痺，嚴重時呼吸衰竭。',
+        '原因食品是低酸性罐頭、真空包裝食品、自製醃漬品。1 歲以下的嬰兒腸道菌相還沒建立，孢子可以在腸道裡發芽產毒，所以有一種食物不能給嬰兒吃。',
+        '控制的方法：pH 4.6 以下、水活性降低、冷藏、加亞硝酸鹽、罐頭用 12D 殺菌。注意調氣包裝常用的一種氣體反而對它有利。'],
+      listTitle: '是哪一個',
+      list: [['毒素對熱', { a: 'lab', o: ['stab', 'lab'] }], ['毒素的作用', { a: 'ach', o: ['ach', 'ache'] }], ['主要症狀', { a: 'paral', o: ['vomit', 'paral', 'diar'] }], ['不能給 1 歲以下嬰兒吃的食物', { a: 'honey', o: ['honey', 'milk'] }],
+        ['肉毒桿菌不能生長的酸鹼值', { a: 'ph46', o: ['ph46', 'aw94'] }], ['醃肉中抑制肉毒桿菌孢子的添加物', { a: 'nit', o: ['nit', 'co2'] }], ['會促進肉毒桿菌生長的', { a: 'co2', o: ['nit', 'co2'] }]],
+      done: ['[[肉毒桿菌：絕對厭氧、孢子極耐熱；神經毒素不耐熱，阻斷乙醯膽鹼釋放，造成弛緩性麻痺。]]', '[[常溫或冷藏販售的真空包裝即食食品，控制的對象就是肉毒桿菌。]]A、B、E 型最常引起人類中毒；E 型和魚類有關，低溫下也能生長。',
+        '嬰兒肉毒桿菌症：1 歲以下不要餵蜂蜜。'] },
+    { t: '產氣莢膜桿菌', kind: 'list',
+      intro: ['革蘭氏陽性桿菌，絕對厭氧，會產孢，到處都有（土壤、人和動物的糞便）。最適生長溫度很高，約 43～47℃，繁殖非常快。',
+        '典型情境是團膳：一大鍋肉類燉菜，加熱把氧趕出去、又把孢子「熱活化」；接著慢慢冷卻，在溫熱的溫度停留太久，孢子發芽大量繁殖。',
+        '吃進大量活菌後，它們在腸道裡形成孢子時放出腸毒素，引起腹痛、水瀉，通常不嘔吐、不發燒，一天內恢復。它在傷口還會造成組織壞死。'],
+      listTitle: '是哪一個',
+      list: [['最典型的原因食品', { a: 'stew', o: ['stew', 'rice'] }], ['主要症狀', { a: 'diar', o: ['vomit', 'paral', 'diar'] }], ['烹煮時食物中心至少要達到', { a: 't74', o: ['t74', 't60'] }], ['煮好後不馬上吃要', { a: 't60', o: ['t74', 't60'] }], ['剩菜復熱', { a: 'once', o: ['once', 't60'] }]],
+      done: ['[[產氣莢膜桿菌：中間型；大量烹煮的肉類、慢慢冷卻；在腸道形成孢子時釋放腸毒素；腹瀉、腹痛為主。]]', '預防：中心溫度 74℃ 以上、快速冷卻、保溫 60℃ 以上、復熱只做一次（孢子耐熱，反覆加熱讓孢子不斷發芽）。'] },
+    { t: '仙人掌桿菌', kind: 'list',
+      intro: ['革蘭氏陽性桿菌，兼性厭氧，會產孢，來自土壤和灰塵，穀類特別常見。煮飯的溫度殺不死它的孢子。',
+        '它有兩種毒素，各對應一型中毒。一種在食物裡產生，非常耐熱、也不怕胃酸和消化酵素，吃下後很快嘔吐，常和放太久的米飯、炒飯有關。',
+        '另一種是在腸道裡產生的蛋白質毒素，不耐熱，潛伏期比較長，症狀是腹瀉，原因食品多是肉類、湯、醬汁、布丁。'],
+      listTitle: '是哪一型',
+      list: [['在食物中產生、耐熱，引起嘔吐', { a: 'cere', o: ['cere', 'diat'] }], ['在腸道中產生、不耐熱，引起腹瀉', { a: 'diat', o: ['cere', 'diat'] }], ['嘔吐型最常見的原因食品', { a: 'rice', o: ['stew', 'rice'] }], ['嘔吐型的潛伏期', { a: 'h16', o: ['h16', 'h824', 'h1236'] }]],
+      done: ['[[仙人掌桿菌嘔吐型：毒素在米飯中產生、耐熱（炒飯症候群），潛伏期 1～5 小時。下痢型：腸道中產毒、不耐熱，潛伏期 8～16 小時。]]', '米飯要趁熱吃，保溫要在 60℃ 以上，否則要迅速冷藏；保溫在 60℃ 以下最危險。'] },
+    { t: '四種產毒菌比一比', kind: 'ov', h: 284, svg: FBA1_CV, blanks: FBA1_CB(),
+      intro: ['把四種常考的產毒菌放在一起比：毒素怕不怕熱，和吃下去多久發作。',
+        '在食物裡先產生的毒素，吃進去就作用，發作快；需要先在腸道繁殖的，發作慢。肉毒桿菌的毒素雖然是在食物裡先產生，但要經腸道吸收、作用到神經，所以比較慢。'],
+      done: ['[[毒素耐熱：金黃色葡萄球菌腸毒素、仙人掌桿菌嘔吐毒素。毒素不耐熱：肉毒桿菌神經毒素、產氣莢膜桿菌腸毒素。]]', '潛伏期：金黃色葡萄球菌、仙人掌桿菌嘔吐型最短（1～6 小時）；產氣莢膜桿菌 8～24 小時；肉毒桿菌 12～36 小時。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['用餐後 1～2 小時就劇烈嘔吐，最可能是', { a: 'sau', o: ['sau', 'cbot', 'salm'] }, '。'],
+        ['肉毒桿菌毒素對熱', { a: 'lab', o: ['stab', 'lab'] }, '。'],
+        ['米飯放在 60℃ 以下保溫太久，容易滋生', { a: 'bcer', o: ['bcer', 'cper', 'sau'] }, '。'],
+        ['大量烹煮的燉肉慢慢冷卻，容易引起', { a: 'cper', o: ['bcer', 'cper', 'sau'] }, '中毒。'],
+        ['1 歲以下嬰兒不宜吃蜂蜜，是因為', { a: 'cbot', o: ['cbot', 'sau'] }, '的孢子。'],
+        ['產氣莢膜桿菌屬於', { a: 'gut', o: FBA1_M }, '的中毒。'],
+        ['肉毒桿菌毒素的作用是', { a: 'ach', o: ['ach', 'ache'], lang: 'en' }, '。'],
+        ['金黃色葡萄球菌腸毒素對熱', { a: 'stab', o: ['stab', 'lab'], lang: 'en' }, '。'],
+        ['毒素型中毒是', { a: 'pre', o: FBA1_M, lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 284, force: 'en', svg: FBA1_OV, blanks: FBA1_B(),
+      intro: ['第一關的三型分類，全部用英文作答；下面再比一次四種產毒菌。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: 'Toxin and onset', list: [['S. aureus enterotoxin', { a: 'stab', o: ['stab', 'lab'] }], ['C. botulinum neurotoxin', { a: 'lab', o: ['stab', 'lab'] }], ['B. cereus emetic toxin', { a: 'stab', o: ['stab', 'lab'] }],
+        ['Onset of C. botulinum', { a: 'h1236', o: ['h16', 'h824', 'h1236'] }], ['Onset of C. perfringens', { a: 'h824', o: ['h16', 'h824', 'h1236'] }]] }
+  ] };
+/* ======================================================================
+   細菌性食品中毒（二）：感染型與其他病原菌（授課單元 5）
+   ====================================================================== */
+var FBA2_F = [['沙門氏菌', 'Salmonella', 'egg'], ['腸炎弧菌', 'Vibrio parahaemolyticus', 'sea'], ['大腸桿菌 O157:H7', 'E. coli O157:H7', 'beef'], ['李斯特菌', 'Listeria monocytogenes', 'rte'],
+  ['創傷弧菌', 'Vibrio vulnificus', 'wound'], ['彎曲桿菌', 'Campylobacter jejuni', 'chick'], ['耶爾辛氏菌', 'Yersinia enterocolitica', 'pork']];
+var FBA2_O = ['egg', 'sea', 'beef', 'rte', 'wound', 'chick', 'pork'];
+function FBA2_OV() { var s = tx(86, 18, T('病原菌', 'pathogen'), 'm', 9.5) + tx(262, 18, T('最典型的來源', 'typical source'), 'm', 9.5); FBA2_F.forEach(function (r, i) { var y = 44 + i * 46; s += pill(86, y, 144, { zh: r[0], en: r[1] }, 'pill kI') + arrow(160, y, 172, y); }); return s; }
+function FBA2_B() { return FBA2_F.map(function (r, i) { return { id: 'f' + i, x: 264, y: 44 + i * 46, w: 176, c: 'H', a: r[2], o: FBA2_O }; }); }
+var FBA2_EC = ['epec', 'eiec', 'etec', 'ehec'];
+var FBA2 = { id: 'fba2', zh: '細菌性食品中毒（二）：感染型與其他病原菌', en: 'Bacterial foodborne illness II', alias: '沙門氏菌・弧菌・病原性大腸桿菌・李斯特菌・耶爾辛氏菌・彎曲桿菌', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    egg: { zh: '蛋、禽肉', en: 'Eggs, poultry' }, sea: { zh: '海鮮、切過海鮮的砧板', en: 'Seafood, cross-contamination' }, beef: { zh: '未熟的牛絞肉、生菜', en: 'Undercooked ground beef, sprouts' },
+    rte: { zh: '冷藏即食食品、軟質乾酪', en: 'Chilled ready-to-eat foods' }, wound: { zh: '處理海鮮時的傷口', en: 'Wounds from seafood, seawater' },
+    chick: { zh: '未煮熟的雞肉', en: 'Undercooked chicken' }, pork: { zh: '冷藏的豬肉、乳品', en: 'Chilled pork, milk' },
+    gn: { zh: '革蘭氏陰性', en: 'Gram-negative' }, gp: { zh: '革蘭氏陽性', en: 'Gram-positive' }, weak: { zh: '不耐熱（60℃、20 分鐘可殺死）', en: 'Heat-sensitive (60 °C, 20 min)' }, strong: { zh: '耐熱，不易殺死', en: 'Heat-resistant' },
+    carr: { zh: '可能成為帶原者', en: 'Can become carriers' }, fever: { zh: '常有發燒', en: 'Fever common' },
+    halo: { zh: '好鹽性（需要 2～4% 鹽）', en: 'Halophilic (needs 2–4% salt)' }, tap: { zh: '用自來水沖洗', en: 'Rinsing with tap water' }, freeze: { zh: '冷凍', en: 'Freezing' },
+    hem: { zh: '耐熱性溶血素', en: 'Thermostable hemolysin' }, liver: { zh: '肝病（血鐵高）的人', en: 'People with liver disease (high iron)' }, nec: { zh: '壞死性筋膜炎、敗血症', en: 'Necrotizing fasciitis, sepsis' },
+    rice: { zh: '米湯狀水瀉', en: 'Rice-water diarrhea' }, blood: { zh: '血便', en: 'Bloody diarrhea' },
+    epec: { zh: '腸道病原型（EPEC）', en: 'Enteropathogenic (EPEC)' }, eiec: { zh: '腸道侵襲型（EIEC）', en: 'Enteroinvasive (EIEC)' }, etec: { zh: '腸毒素型（ETEC）', en: 'Enterotoxigenic (ETEC)' }, ehec: { zh: '腸道出血型（EHEC）', en: 'Enterohemorrhagic (EHEC)' },
+    hus: { zh: '溶血性尿毒症候群', en: 'Hemolytic uremic syndrome' }, stx: { zh: '志賀毒素（Stx）', en: 'Shiga toxin (Stx)' }, lt: { zh: 'LT 與 ST 腸毒素', en: 'LT and ST enterotoxins' },
+    preg: { zh: '孕婦、新生兒、老人、免疫力低下者', en: 'Pregnant women, newborns, elderly, immunocompromised' }, healthy: { zh: '健康的年輕人', en: 'Healthy young adults' },
+    cold: { zh: '冷藏溫度下仍能生長', en: 'Grows at refrigeration temperature' }, spore: { zh: '形成內孢子', en: 'Forms endospores' }, nospore: { zh: '不產孢', en: 'No spores' },
+    appe: { zh: '類似闌尾炎的腹痛', en: 'Pseudoappendicitis' }, gbs: { zh: '格林－巴利症候群', en: 'Guillain–Barré syndrome' },
+    micro: { zh: '微需氧、42℃ 長得好', en: 'Microaerophilic, grows at 42 °C' }, human: { zh: '只有人類是宿主，少量菌就能致病', en: 'Humans only; low infective dose' },
+    undu: { zh: '波狀熱', en: 'Undulant fever' }, rawm: { zh: '未殺菌的生乳、乳酪', en: 'Unpasteurized milk and cheese' }
+  },
+  levels: [
+    { t: '先看全貌：哪一種菌、來自哪裡', kind: 'ov', h: 368, svg: FBA2_OV, blanks: FBA2_B(),
+      intro: ['這個單元的病原菌大多是感染型：要吃進活菌，在腸道增殖、侵入。所以充分加熱、避免生熟交叉污染就能預防大部分。',
+        '每一種菌都有它最典型的來源，記住來源，就記住了預防方法和常見題目的情境：吃生雞蛋、生魚片、半生熟的漢堡肉、冰箱裡的即食冷盤、處理生蠔時被割傷。'],
+      done: ['[[沙門氏菌：蛋、禽肉；腸炎弧菌：海鮮；O157:H7：牛絞肉、生菜；李斯特菌：冷藏即食食品；創傷弧菌：傷口接觸海水海鮮；彎曲桿菌：雞肉；耶爾辛氏菌：冷藏豬肉、乳品。]]',
+        '糞口傳染為主的：沙門氏菌、彎曲桿菌、志賀氏菌、病原性大腸桿菌。腸炎弧菌來自海水；布氏桿菌來自生乳和病畜。'] },
+    { t: '沙門氏菌', kind: 'list',
+      intro: ['革蘭氏陰性桿菌，兼性厭氧，有周生鞭毛會運動，不產孢。它廣泛存在動物的腸道：家禽、豬、牛，還有鼠、蒼蠅、蟑螂、貓狗、烏龜。',
+        '它不耐熱，充分加熱就能殺死；問題出在沒煮熟，或煮熟後被生肉、生蛋、蛋殼、髒手再污染。',
+        '吃進去後在腸道增殖、侵入，潛伏期通常一天左右，症狀是腹痛、腹瀉、嘔吐、發燒。有些人痊癒後糞便還會持續排菌。'],
+      listTitle: '是哪一個',
+      list: [['革蘭氏染色', { a: 'gn', o: ['gn', 'gp'] }], ['對熱', { a: 'weak', o: ['weak', 'strong'] }], ['痊癒後', { a: 'carr', o: ['carr', 'human'] }], ['最典型的原因食品', { a: 'egg', o: ['egg', 'sea'] }]],
+      done: ['[[沙門氏菌：感染型、革蘭氏陰性、不耐熱（60℃ 20 分鐘）、人畜共通，來自蛋與禽肉；可能成為帶原者。]]', '預防：充分加熱、生熟分開、蛋殼先洗、防鼠防蟲、洗手。'] },
+    { t: '弧菌', kind: 'list',
+      intro: ['弧菌是彎曲的革蘭氏陰性桿菌，住在海水裡。',
+        '腸炎弧菌是喜歡鹽的菌，在淡水裡活不久；在溫暖的季節繁殖極快，大約 10 分鐘就倍增一次。它曾經是台灣細菌性食品中毒最常見的原因，除了生食海鮮，更常見的是用切過海鮮的砧板、刀子再切熟食。它的致病力和一種溶血素有關。',
+        '另一種弧菌主要經傷口感染：處理海鮮時被魚刺、蚵殼割傷，或傷口泡到海水，幾小時內紅腫、壞死。特別危險的是肝臟不好的人，因為這種菌需要鐵。',
+        '霍亂弧菌的毒素讓小腸細胞大量分泌水和電解質，造成嚴重的水瀉和脫水。'],
+      listTitle: '是哪一個',
+      list: [['腸炎弧菌的特性', { a: 'halo', o: ['halo', 'cold'] }], ['處理海鮮後，能有效減少腸炎弧菌的方法', { a: 'tap', o: ['tap', 'freeze'] }], ['腸炎弧菌的主要致病因子', { a: 'hem', o: ['hem', 'stx'] }],
+        ['創傷弧菌的高危險群', { a: 'liver', o: ['liver', 'healthy'] }], ['創傷弧菌傷口感染的後果', { a: 'nec', o: ['nec', 'hus'] }], ['霍亂的典型症狀', { a: 'rice', o: ['rice', 'blood'] }]],
+      done: ['[[腸炎弧菌：革蘭氏陰性、好鹽、不產孢、繁殖快；怕淡水，用自來水沖洗、生熟砧板分開、充分加熱可預防。]]', '[[創傷弧菌：經傷口感染（處理海鮮刺傷），肝病患者最危險，造成壞死性筋膜炎、敗血症。]]',
+        '霍亂弧菌（O1、O139）：霍亂毒素讓小腸分泌大量水分，米湯狀水瀉。'] },
+    { t: '病原性大腸桿菌', kind: 'list',
+      intro: ['大腸桿菌大多無害，但有幾群會致病，依致病方式分類。',
+        '一群黏在小腸細胞表面、破壞微絨毛，主要讓 2 歲以下的嬰幼兒水瀉；一群像痢疾桿菌一樣侵入大腸細胞，造成帶血的腹瀉；一群產生兩種腸毒素（一種不耐熱、一種耐熱），是「旅行者腹瀉」最常見的原因。',
+        '最危險的是產生志賀毒素的那一群，代表是 O157:H7，來自牛的腸道。很少的菌量就能致病，造成出血性大腸炎，兒童可能併發腎衰竭和溶血。'],
+      listTitle: '是哪一群',
+      list: [['嬰幼兒水瀉，破壞微絨毛', { a: 'epec', o: FBA2_EC }], ['侵入大腸上皮，類似痢疾', { a: 'eiec', o: FBA2_EC }], ['旅行者腹瀉', { a: 'etec', o: FBA2_EC }], ['O157:H7，出血性大腸炎', { a: 'ehec', o: FBA2_EC }],
+        ['O157:H7 產生的毒素', { a: 'stx', o: ['stx', 'lt'] }], ['O157:H7 在兒童的嚴重併發症', { a: 'hus', o: ['hus', 'nec'] }], ['生菜沙拉處理不當造成腸出血的病原菌來源', { a: 'beef', o: ['beef', 'sea'] }]],
+      done: ['[[EPEC：嬰兒腹瀉；EIEC：侵入性、類痢疾；ETEC：LT/ST 腸毒素、旅行者腹瀉；EHEC（O157:H7）：志賀毒素、出血性大腸炎、溶血性尿毒症候群。]]', 'O157:H7 來自牛，常見原因是未熟的牛絞肉、受糞便污染的生菜和豆芽、未殺菌的果汁。'] },
+    { t: '冷藏也擋不住的病原菌', kind: 'list',
+      intro: ['大多數病原菌在冰箱裡不會長，但有幾種例外，它們在 4℃ 左右仍然能慢慢繁殖，所以冷藏太久的即食食品也有風險。',
+        '其中最重要的是一種革蘭氏陽性桿菌，不產孢，在室溫下會翻滾運動。它能鑽進細胞、在細胞之間移動，躲過免疫系統。健康的成人通常只是輕微腸胃炎，但對某幾群人可能造成敗血症、腦膜炎，孕婦感染會造成流產或死產。',
+        '另一種革蘭氏陰性的腸道菌也能在冷藏溫度生長，常和豬肉、乳品有關，在青少年會造成類似盲腸炎的腹痛。'],
+      listTitle: '是哪一個',
+      list: [['李斯特菌的高危險群', { a: 'preg', o: ['preg', 'healthy'] }], ['李斯特菌的特性', { a: 'cold', o: ['cold', 'spore'] }], ['李斯特菌會不會產孢', { a: 'nospore', o: ['spore', 'nospore'] }],
+        ['李斯特菌的革蘭氏染色', { a: 'gp', o: ['gn', 'gp'] }], ['耶爾辛氏菌在青少年的特殊症狀', { a: 'appe', o: ['appe', 'gbs'] }]],
+      done: ['[[李斯特菌：革蘭氏陽性、不產孢、低溫菌（冷藏中可生長）；高危險群是孕婦、新生兒、老人、免疫力低下者。]]', '巴斯德殺菌後的冷藏鮮奶若再受污染，李斯特菌可以在冰箱裡繁殖。', '耶爾辛氏菌：低溫生長，豬肉、乳品，假性闌尾炎。親水性產氣單胞菌也是低溫病原菌。'] },
+    { t: '其他病原菌', kind: 'list',
+      intro: ['彎曲桿菌是螺旋形的革蘭氏陰性菌，只要一點點氧，在 42℃（禽類體溫）長得最好，所以雞肉帶菌最多。潛伏期 2～7 天，腹瀉常帶血；少數人之後出現一種會癱瘓的神經病變。',
+        '志賀氏菌只以人為宿主，經糞口傳染，十幾個菌就能致病，造成桿菌性痢疾。',
+        '布氏桿菌來自病畜和未殺菌的生乳，人感染後發燒反覆起伏。'],
+      listTitle: '是哪一個',
+      list: [['彎曲桿菌的生長條件', { a: 'micro', o: ['micro', 'human'] }], ['彎曲桿菌感染後可能的神經併發症', { a: 'gbs', o: ['appe', 'gbs'] }], ['志賀氏菌的特性', { a: 'human', o: ['micro', 'human'] }],
+        ['布氏桿菌的感染來源', { a: 'rawm', o: ['rawm', 'chick'] }], ['布氏桿菌病的症狀', { a: 'undu', o: ['undu', 'rice'] }]],
+      done: ['[[彎曲桿菌：微需氧、42℃、雞肉，可能併發格林－巴利症候群。志賀氏菌：只感染人、感染劑量低、桿菌性痢疾。布氏桿菌：生乳、病畜，波狀熱。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['腸炎弧菌是', { a: 'gn', o: ['gn', 'gp'] }, '，好鹽、不產孢。'],
+        ['處理海鮮後用自來水沖洗，可以減少', { a: 'vpar', o: ['vpar', 'lmon'] }, '。'],
+        ['痊癒後可能成為帶原者的是', { a: 'salmx', o: ['salmx', 'vpar'] }, '。'],
+        ['可能造成冷藏乳品中毒的是', { a: 'yent', o: ['yent', 'vpar'] }, '。'],
+        ['處理生鮮水產品時刺傷，幾小時後壞死性筋膜炎，最可能是', { a: 'vvul', o: ['vvul', 'vpar'] }, '。'],
+        ['O157:H7 屬於', { a: 'ehec', o: FBA2_EC }, '。'],
+        ['旅行者腹瀉最常見的是', { a: 'etec', o: FBA2_EC, lang: 'en' }, '。'],
+        ['在冷藏溫度仍能生長、對孕婦危險的是', { a: 'lmon', o: ['lmon', 'vpar', 'salmx'], lang: 'en' }, '。'],
+        ['彎曲桿菌屬於', { a: 'micro', o: ['micro', 'human'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 368, force: 'en', svg: FBA2_OV, blanks: FBA2_B(),
+      intro: ['第一關的圖，全部用英文作答；下面再加上病原性大腸桿菌的分類。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: 'Pathogenic E. coli', list: [['Infant diarrhea', { a: 'epec', o: FBA2_EC }], ['Dysentery-like', { a: 'eiec', o: FBA2_EC }], ['Traveler\'s diarrhea', { a: 'etec', o: FBA2_EC }], ['O157:H7, hemorrhagic colitis', { a: 'ehec', o: FBA2_EC }]] }
+  ] };
+(function () { var d = FBA2.dict; d.vpar = { zh: '腸炎弧菌', en: 'Vibrio parahaemolyticus' }; d.lmon = { zh: '李斯特菌', en: 'Listeria monocytogenes' }; d.salmx = { zh: '沙門氏菌', en: 'Salmonella' };
+  d.yent = { zh: '耶爾辛氏菌', en: 'Yersinia enterocolitica' }; d.vvul = { zh: '創傷弧菌', en: 'Vibrio vulnificus' }; })();
+/* ======================================================================
+   病毒、寄生蟲與黴菌毒素（授課單元 5）
+   ====================================================================== */
+function FVPM_OV() {
+  var s = '', xs = [64, 180, 296];
+  [['病毒', 'Viruses', 'C'], ['寄生蟲', 'Parasites', 'C'], ['黴菌毒素', 'Mycotoxins', 'E']].forEach(function (c, i) { s += pill(xs[i], 30, 108, { zh: c[0], en: c[1] }, 'pill k' + c[2]); });
+  s += tx(180, 64, T('會在食物裡增加嗎', 'increases in food?'), 'm', 9.5) + tx(180, 130, T('一般烹調加熱可以破壞嗎', 'destroyed by cooking?'), 'm', 9.5) + tx(180, 196, T('代表', 'example'), 'm', 9.5);
+  return s;
+}
+var FVPM_R3 = ['noro', 'clon', 'afla'];
+function FVPM_B() {
+  var xs = [64, 180, 296], a1 = ['no', 'no', 'yes'], a2 = ['yes', 'yes', 'no'], b = [];
+  xs.forEach(function (x, i) { b.push({ id: 'a' + i, x: x, y: 92, w: 108, a: a1[i], o: ['yes', 'no'] }); b.push({ id: 'b' + i, x: x, y: 158, w: 108, a: a2[i], o: ['yes', 'no'] }); b.push({ id: 'c' + i, x: x, y: 224, w: 108, c: i < 2 ? 'C' : 'E', a: FVPM_R3[i], o: FVPM_R3 }); });
+  return b;
+}
+var FVPM_P = [['中華肝吸蟲', 'Clonorchis sinensis', 'fwf'], ['衛氏肺吸蟲', 'Paragonimus westermani', 'crab'], ['海獸胃線蟲', 'Anisakis', 'sea'], ['旋毛蟲、有鉤絛蟲', 'Trichinella, Taenia solium', 'pork'],
+  ['無鉤絛蟲', 'Taenia saginata', 'beefp'], ['弓漿蟲', 'Toxoplasma gondii', 'cat'], ['蛔蟲', 'Ascaris lumbricoides', 'veg']];
+var FVPM_PO = ['fwf', 'crab', 'sea', 'pork', 'beefp', 'cat', 'veg'];
+function FVPM_PV() { var s = tx(86, 18, T('寄生蟲', 'parasite'), 'm', 9.5) + tx(262, 18, T('怎麼吃進去', 'how it is eaten'), 'm', 9.5); FVPM_P.forEach(function (r, i) { var y = 44 + i * 46; s += pill(86, y, 144, { zh: r[0], en: r[1] }, 'pill kC') + arrow(160, y, 172, y); }); return s; }
+function FVPM_PB() { return FVPM_P.map(function (r, i) { return { id: 'p' + i, x: 264, y: 44 + i * 46, w: 176, c: 'H', a: r[2], o: FVPM_PO }; }); }
+var FVPM_M = [['黃麴毒素', 'Aflatoxin', 'aflm'], ['赭麴毒素 A', 'Ochratoxin A', 'ochm'], ['棒麴毒素（展青黴素）', 'Patulin', 'patm'], ['橘黴素', 'Citrinin', 'citm'], ['嘔吐毒素（DON）、玉米赤黴烯酮', 'DON, zearalenone', 'fusm'], ['麥角生物鹼', 'Ergot alkaloids', 'ergm']];
+var FVPM_MO = ['aflm', 'ochm', 'patm', 'citm', 'fusm', 'ergm'];
+function FVPM_MV() { var s = tx(86, 18, T('黴菌毒素', 'mycotoxin'), 'm', 9.5) + tx(262, 18, T('產生的黴菌', 'produced by'), 'm', 9.5); FVPM_M.forEach(function (r, i) { var y = 44 + i * 48; s += pill(86, y, 144, { zh: r[0], en: r[1] }, 'pill kE') + arrow(160, y, 172, y); }); return s; }
+function FVPM_MB() { return FVPM_M.map(function (r, i) { return { id: 'm' + i, x: 264, y: 44 + i * 48, w: 176, c: 'T', a: r[2], o: FVPM_MO }; }); }
+var FVPM = { id: 'fvpm', zh: '病毒、寄生蟲與黴菌毒素', en: 'Viruses, parasites and mycotoxins', alias: '諾羅病毒・A 型肝炎・普利昂・吸蟲與線蟲・黃麴毒素・橘黴素', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    yes: { zh: '會（可以）', en: 'Yes' }, no: { zh: '不會（不行）', en: 'No' },
+    noro: { zh: '諾羅病毒', en: 'Norovirus' }, clon: { zh: '中華肝吸蟲', en: 'Clonorchis sinensis' }, afla: { zh: '黃麴毒素', en: 'Aflatoxin' },
+    hav: { zh: 'A 型肝炎病毒', en: 'Hepatitis A virus' }, rota: { zh: '輪狀病毒', en: 'Rotavirus' }, aden: { zh: '腺病毒', en: 'Adenovirus' }, prion: { zh: '普利昂（prion）', en: 'Prion' },
+    cell: { zh: '活細胞（組織培養、雞胚）', en: 'Living cells (tissue culture, eggs)' }, agar: { zh: '一般培養基', en: 'Ordinary culture media' },
+    bl5: { zh: '5,000 ppm 漂白水', en: '5,000 ppm bleach' }, alc: { zh: '75% 酒精', en: '75% alcohol' }, auto: { zh: '134～138℃ 高壓蒸氣滅菌', en: 'Autoclave at 134–138 °C' }, boil: { zh: '煮沸 10 分鐘', en: 'Boiling 10 min' },
+    oyst: { zh: '生蠔等貝類', en: 'Raw oysters and shellfish' }, child: { zh: '5 歲以下幼兒', en: 'Children under 5' }, jaun: { zh: '黃疸、肝炎', en: 'Jaundice, hepatitis' },
+    fwf: { zh: '生的淡水魚', en: 'Raw freshwater fish' }, crab: { zh: '生的或醃的淡水蟹（醉蟹）', en: 'Raw or pickled freshwater crabs' }, sea: { zh: '生魚片（鮭魚、鯖魚等海魚）', en: 'Raw marine fish (sashimi)' },
+    pork: { zh: '未熟豬肉', en: 'Undercooked pork' }, beefp: { zh: '未熟牛肉', en: 'Undercooked beef' }, cat: { zh: '貓糞污染、未熟肉', en: 'Cat feces, undercooked meat' }, veg: { zh: '沒洗乾淨的蔬菜（糞肥）', en: 'Unwashed vegetables (night soil)' },
+    defh: { zh: '最終宿主', en: 'Definitive host' }, inth: { zh: '中間宿主', en: 'Intermediate host' }, catx: { zh: '貓科動物', en: 'Cats' }, pigx: { zh: '豬', en: 'Pigs' },
+    ent: { zh: '痢疾阿米巴', en: 'Entamoeba histolytica' }, cryp: { zh: '隱孢子蟲', en: 'Cryptosporidium' }, tryp: { zh: '錐蟲（采采蠅）', en: 'Trypanosoma (tsetse fly)' }, frz: { zh: '冷凍（-20℃ 數天）', en: 'Freezing (−20 °C, days)' },
+    aflm: { zh: '黃麴菌（Aspergillus flavus）', en: 'Aspergillus flavus' }, ochm: { zh: '赭麴菌、疣孢青黴', en: 'A. ochraceus, Penicillium verrucosum' }, patm: { zh: '擴展青黴（Penicillium expansum）', en: 'Penicillium expansum' },
+    citm: { zh: '紅麴菌、橘青黴', en: 'Monascus, Penicillium citrinum' }, fusm: { zh: '鐮刀菌（Fusarium）', en: 'Fusarium' }, ergm: { zh: '麥角菌（Claviceps purpurea）', en: 'Claviceps purpurea' },
+    liver: { zh: '肝臟（肝癌）', en: 'Liver (liver cancer)' }, kidney: { zh: '腎臟', en: 'Kidney' }, estro: { zh: '類雌激素作用', en: 'Estrogenic effects' }, fire: { zh: '聖安東尼之火（壞疽、痙攣）', en: 'St. Anthony\'s fire' },
+    beri: { zh: '心臟性腳氣病', en: 'Cardiac beriberi' }, b1: { zh: '黃麴毒素 B₁', en: 'Aflatoxin B₁' }, m1: { zh: '黃麴毒素 M₁', en: 'Aflatoxin M₁' },
+    apple: { zh: '腐爛蘋果做的果汁', en: 'Juice from rotten apples' }, peanut: { zh: '花生、玉米', en: 'Peanuts, corn' }, stab: { zh: '耐熱，一般烹調破壞不了', en: 'Heat-stable' }, lab: { zh: '加熱就分解', en: 'Destroyed by heat' },
+    nisin: { zh: '乳酸鏈球菌素', en: 'Nisin' }, lute: { zh: '黃米毒素', en: 'Luteoskyrin' }, m13: { zh: '穀物水分 13% 以下、低溫乾燥儲存', en: 'Grain moisture < 13%, cool dry storage' }, m20: { zh: '20℃ 以上潮濕儲存', en: 'Warm humid storage' }
+  },
+  levels: [
+    { t: '先看全貌：三種非細菌的危害', kind: 'ov', h: 252, svg: FVPM_OV, blanks: FVPM_B(),
+      intro: ['除了細菌，食品還可能帶來三種生物性危害。',
+        '病毒和寄生蟲都要靠宿主：食物只是把它們帶進人體的載具，它們不會在食物上繁殖，所以「放久了會變多」這件事不適用，少量就可能致病。它們大多可以被充分加熱破壞。',
+        '黴菌毒素正好相反：黴菌在保存不當的穀物、堅果上生長，把毒素留在食物裡。毒素非常耐熱，就算把黴菌煮死、把發黴的部分切掉，毒素還在。'],
+      done: ['[[病毒、寄生蟲：不在食物中繁殖，加熱可破壞；黴菌毒素：黴菌在食物中生長產生，耐熱，烹調破壞不了。]]', '預防病毒、寄生蟲：不生食、充分加熱、注意個人與飲水衛生；預防黴菌毒素：乾燥低溫儲存、發霉的整批丟掉。'] },
+    { t: '食因性病毒', kind: 'list',
+      intro: ['病毒只能在活細胞裡複製，所以實驗室要用細胞培養或雞胚，不能用一般培養基。常經食物和水傳播的有幾種。',
+        '諾羅病毒是群體腸胃炎最常見的原因：天冷的月份、學校、安養機構、遊輪；很少的病毒量就能感染，症狀是嘔吐、腹瀉。生蠔等貝類會把海水裡的病毒濃縮起來。它對酒精有抵抗力，要用漂白水消毒，處理嘔吐物要用高濃度。',
+        'A 型肝炎病毒經糞口傳染，造成黃疸和肝炎；輪狀病毒主要感染幼兒，破壞小腸絨毛。',
+        '狂牛症的病原不是病毒，而是構造異常的蛋白質，一般消毒方法對它無效。'],
+      listTitle: '是哪一個',
+      list: [['病毒要用什麼培養', { a: 'cell', o: ['cell', 'agar'] }], ['機構群聚的嘔吐、腹瀉', { a: 'noro', o: ['noro', 'hav', 'rota'] }], ['造成黃疸的', { a: 'hav', o: ['noro', 'hav', 'rota'] }], ['主要造成幼兒腹瀉、破壞絨毛的', { a: 'rota', o: ['noro', 'hav', 'rota'] }],
+        ['處理諾羅病毒患者的嘔吐物、糞便', { a: 'bl5', o: ['bl5', 'alc'] }], ['常把病毒濃縮在體內的食物', { a: 'oyst', o: ['oyst', 'veg'] }], ['最能有效去除普利昂活性的方法', { a: 'auto', o: ['auto', 'boil', 'alc'] }]],
+      done: ['[[諾羅病毒：群聚感染最常見；酒精無效，嘔吐物與排泄物用 5,000 ppm 漂白水，一般環境表面用 1,000 ppm。]]', '腸胃型的食因性病毒：諾羅病毒、輪狀病毒、腺病毒；A 型肝炎病毒雖然經口傳染，主要傷害的是肝臟。',
+        '普利昂是異常的蛋白質，要 134～138℃ 高壓蒸氣滅菌才有效。'] },
+    { t: '寄生蟲：從哪種食物來', kind: 'ov', h: 368, svg: FVPM_PV, blanks: FVPM_PB(),
+      intro: ['寄生蟲的生活史常要經過好幾個宿主。幼蟲住的叫中間宿主，成蟲住在裡面、在那裡生殖的叫最終宿主。人吃到中間宿主體內的幼蟲而感染。',
+        '所以只要記住每一種寄生蟲的「中間宿主」是什麼食物，就知道哪種吃法危險：生的淡水魚、醉蟹、生魚片、半生熟的豬肉牛肉、沒洗乾淨的生菜。'],
+      done: ['[[中華肝吸蟲：生淡水魚；衛氏肺吸蟲：生或醃的淡水蟹；海獸胃線蟲：生海魚；旋毛蟲、有鉤絛蟲：豬肉；無鉤絛蟲：牛肉；弓漿蟲：貓糞、生肉；蛔蟲：沒洗淨的蔬菜。]]', '預防：不生食、充分加熱；海魚生食前先冷凍可殺死海獸胃線蟲幼蟲；蔬菜徹底清洗。'] },
+    { t: '寄生蟲的宿主與其他', kind: 'list',
+      intro: ['寄生蟲傷害人的方式：搶養分、用吸盤或鉤子傷害腸壁、大量蟲體堵塞管道、分泌毒素。進入人體的途徑有經皮膚（例如赤腳踩到含鉤蟲幼蟲的土）、經昆蟲叮咬、經口，其中經口最主要。',
+        '弓漿蟲只有在一種動物體內才能完成有性生殖；人和其他溫血動物只是中間宿主。孕婦初次感染可能傷害胎兒。',
+        '原蟲類也很重要：一種會造成阿米巴痢疾和腸潰瘍，經受污染的水和食物傳播；一種的卵囊能抵抗氯，自來水消毒殺不死。'],
+      listTitle: '是哪一個',
+      list: [['幼蟲期寄生的宿主', { a: 'inth', o: ['defh', 'inth'] }], ['成蟲寄生、在其中生殖的宿主', { a: 'defh', o: ['defh', 'inth'] }], ['弓漿蟲的最終宿主', { a: 'catx', o: ['catx', 'pigx'] }],
+        ['經污染的水或食物傳播、造成大腸潰瘍與痢疾', { a: 'ent', o: ['ent', 'cryp', 'tryp'] }], ['卵囊耐氯、自來水消毒殺不死', { a: 'cryp', o: ['ent', 'cryp', 'tryp'] }], ['經采采蠅叮咬傳染、造成睡眠病', { a: 'tryp', o: ['ent', 'cryp', 'tryp'] }],
+        ['殺死海魚中海獸胃線蟲幼蟲的方法', { a: 'frz', o: ['frz', 'alc'] }]],
+      done: ['[[弓漿蟲的最終宿主是貓科動物。]]中華肝吸蟲：第一中間宿主是淡水螺，第二中間宿主是淡水魚、蝦，最終宿主是人、貓、狗等。', '痢疾阿米巴經糞口傳播；隱孢子蟲耐氯。'] },
+    { t: '黴菌毒素：誰產生的', kind: 'ov', h: 316, svg: FVPM_MV, blanks: FVPM_MB(),
+      intro: ['產生黴菌毒素的主要是三屬黴菌：麴菌、青黴菌、鐮刀菌，另外還有一種長在麥穗上的。',
+        '最有名的一種由麴菌產生，污染花生、玉米、堅果，是已知最強的天然致癌物之一。一種污染爛蘋果，一種和紅麴有關，一種讓人吃了嘔吐。歷史上最早有記載的黴菌中毒，是吃了被某種黴菌感染的黑麥。'],
+      tip: '青色空格是黴菌。',
+      done: ['[[黃麴毒素：黃麴菌；赭麴毒素 A：赭麴菌、疣孢青黴；棒麴毒素：擴展青黴；橘黴素：紅麴菌、橘青黴；嘔吐毒素（DON）與玉米赤黴烯酮：鐮刀菌；麥角生物鹼：麥角菌。]]'] },
+    { t: '黴菌毒素：傷害哪裡、怎麼預防', kind: 'list',
+      intro: ['黃麴毒素有好幾種，毒性最強的那一種主要傷害肝臟，長期吃會導致肝癌。乳牛吃了被污染的飼料，毒素會轉成另一種形式出現在牛奶裡。',
+        '赭麴毒素 A 和橘黴素主要傷害腎臟；棒麴毒素存在腐爛蘋果做成的果汁；玉米赤黴烯酮有類似雌激素的作用。日本曾經發生過吃了發霉的黃色米而得心臟性腳氣病的事件。',
+        '黴菌毒素大多耐熱，所以預防靠的是不讓黴菌長：穀物乾燥到一定水分以下、低溫低濕儲存、必要時用抗黴劑。'],
+      listTitle: '是哪一個',
+      list: [['毒性最強的黃麴毒素', { a: 'b1', o: ['b1', 'm1'] }], ['出現在牛奶中的黃麴毒素', { a: 'm1', o: ['b1', 'm1'] }], ['黃麴毒素主要傷害', { a: 'liver', o: ['liver', 'kidney', 'estro'] }],
+        ['赭麴毒素 A、橘黴素主要傷害', { a: 'kidney', o: ['liver', 'kidney', 'estro'] }], ['玉米赤黴烯酮的作用', { a: 'estro', o: ['liver', 'kidney', 'estro'] }], ['麥角中毒', { a: 'fire', o: ['fire', 'beri'] }],
+        ['棒麴毒素常見於', { a: 'apple', o: ['apple', 'peanut'] }], ['黴菌毒素對熱', { a: 'stab', o: ['stab', 'lab'] }], ['不是黴菌毒素的是', { a: 'nisin', o: ['nisin', 'lute', 'citr2'] }],
+        ['防止黴菌毒素的儲存方式', { a: 'm13', o: ['m13', 'm20'] }]],
+      done: ['[[黃麴毒素 B₁ 毒性最強、傷肝致癌，對熱、酸穩定；牛奶中為 M₁。赭麴毒素 A、橘黴素傷腎。]]', '黃綠青黴素（citreoviridin）與日本「黃變米」的心臟性腳氣病有關；黃米毒素（luteoskyrin）也來自黃變米。',
+        '乳酸鏈球菌素（nisin）是乳酸菌的細菌素，不是黴菌毒素。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['未充分煮熟的淡水魚，主要可能帶有', { a: 'clon', o: ['clon', 'afla', 'noro'] }, '。'],
+        ['弓漿蟲的最終宿主是', { a: 'catx', o: ['catx', 'pigx'] }, '。'],
+        ['生食醉蟹可能感染', { a: 'parx', o: ['parx', 'clon'] }, '。'],
+        ['使用紅麴原料的食品應注意', { a: 'citr2', o: ['citr2', 'afla'] }, '。'],
+        ['黃麴毒素對熱、酸', { a: 'stab', o: ['stab', 'lab'] }, '。'],
+        ['諾羅病毒污染的嘔吐物，應該用', { a: 'bl5', o: ['bl5', 'alc'] }, '消毒。'],
+        ['聖安東尼之火的原因毒素來自', { a: 'ergm', o: FVPM_MO, lang: 'en' }, '。'],
+        ['棒麴毒素主要由', { a: 'patm', o: FVPM_MO, lang: 'en' }, '產生。'],
+        ['不屬於腸胃型病毒的是', { a: 'hav', o: ['hav', 'noro', 'rota'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 368, force: 'en', svg: FVPM_PV, blanks: FVPM_PB(),
+      intro: ['寄生蟲與食物的對應，全部用英文作答；下面再加上黴菌毒素。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: 'Mycotoxins', list: FVPM_M.map(function (r) { return [r[1], { a: r[2], o: FVPM_MO }]; }) }
+  ] };
+(function () { var d = FVPM.dict; d.citr2 = { zh: '橘黴素', en: 'Citrinin' }; d.parx = { zh: '衛氏肺吸蟲', en: 'Paragonimus westermani' }; })();
+/* ======================================================================
+   食品的保存（授課單元 6）
+   ====================================================================== */
+var FPRS_F = [['加熱殺菌', 'Heat', 'den'], ['冷藏、冷凍', 'Chilling, freezing', 'slow'], ['乾燥、糖漬、鹽漬', 'Drying, sugaring, salting', 'law'], ['有機酸類防腐劑', 'Organic-acid preservatives', 'undis'],
+  ['輻射照射', 'Irradiation', 'dna'], ['調氣、真空包裝', 'Modified atmosphere, vacuum', 'gas'], ['欄柵技術', 'Hurdle technology', 'comb']];
+var FPRS_O = ['den', 'slow', 'law', 'undis', 'dna', 'gas', 'comb'];
+function FPRS_OV() { var s = tx(86, 18, T('保存方法', 'method'), 'm', 9.5) + tx(262, 18, T('抑制微生物的原理', 'how it works'), 'm', 9.5); FPRS_F.forEach(function (r, i) { var y = 44 + i * 46; s += pill(86, y, 144, { zh: r[0], en: r[1] }, 'pill kH') + arrow(160, y, 172, y); }); return s; }
+function FPRS_B() { return FPRS_F.map(function (r, i) { return { id: 'f' + i, x: 264, y: 44 + i * 46, w: 176, a: r[2], o: FPRS_O }; }); }
+function FPRS_HT() {
+  var s = '', xs = [64, 180, 296];
+  [['滅菌', 'Sterilization'], ['商業滅菌', 'Commercial sterility'], ['巴斯德殺菌', 'Pasteurization']].forEach(function (c, i) { s += pill(xs[i], 30, 108, { zh: c[0], en: c[1] }, 'pill kH'); });
+  [['121℃ 15 分鐘以上', '≥121 °C, 15 min'], ['依產品計算的 F 值', 'Process-specific F value'], ['63℃ 30 分或 72℃ 15 秒', '63 °C 30 min or 72 °C 15 s']].forEach(function (c, i) { s += tx(xs[i], 64, T(c[0], c[1]), 'm', 9); });
+  s += tx(180, 90, T('殺死哪些', 'kills'), 'm', 9.5) + tx(180, 160, T('例子', 'example'), 'm', 9.5);
+  return s;
+}
+var FPRS_K = ['kall', 'kcom', 'kpat'], FPRS_E = ['emed', 'ecan', 'emilk'];
+function FPRS_HB() { var xs = [64, 180, 296], b = []; xs.forEach(function (x, i) { b.push({ id: 'k' + i, x: x, y: 120, w: 108, a: FPRS_K[i], o: FPRS_K }); b.push({ id: 'e' + i, x: x, y: 190, w: 108, a: FPRS_E[i], o: FPRS_E }); }); return b; }
+var FPRS = { id: 'fprs', zh: '食品的保存', en: 'Food preservation', alias: '防腐劑・滅菌與巴斯德殺菌・D 值 Z 值 F 值・低溫・輻射・調氣・欄柵技術', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    den: { zh: '使蛋白質、酵素變性', en: 'Denatures proteins and enzymes' }, slow: { zh: '減慢代謝，但不殺菌', en: 'Slows metabolism; does not sterilize' }, law: { zh: '降低水活性', en: 'Lowers water activity' },
+    undis: { zh: '未解離的酸進入細胞，降低胞內 pH', en: 'Undissociated acid lowers internal pH' }, dna: { zh: '游離輻射破壞 DNA', en: 'Ionizing radiation damages DNA' }, gas: { zh: '降低氧氣、提高 CO₂ 或氮氣', en: 'Low O₂, high CO₂ or N₂' }, comb: { zh: '多個溫和的抑菌因子組合', en: 'Several mild hurdles combined' },
+    benz: { zh: '苯甲酸', en: 'Benzoic acid' }, sorb: { zh: '己二烯酸', en: 'Sorbic acid' }, prop: { zh: '丙酸鈣、丙酸鈉', en: 'Calcium/sodium propionate' }, nitr: { zh: '亞硝酸鹽', en: 'Nitrite' }, sulf: { zh: '亞硫酸鹽', en: 'Sulfite' }, h2o2: { zh: '過氧化氫', en: 'Hydrogen peroxide' }, bht: { zh: 'BHT', en: 'BHT' },
+    pres: { zh: '防腐劑', en: 'Preservative' }, colr: { zh: '保色劑', en: 'Color fixative' }, blea: { zh: '漂白劑', en: 'Bleaching agent' }, bact: { zh: '殺菌劑', en: 'Bactericide' }, anti: { zh: '抗氧化劑', en: 'Antioxidant' },
+    lowph: { zh: 'pH 越低，效果越好', en: 'Better at lower pH' }, hiph: { zh: 'pH 越高，效果越好', en: 'Better at higher pH' },
+    p70: { zh: '70 ppm（以 NO₂ 殘留量計）', en: '70 ppm (as NO₂ residue)' }, nitro: { zh: '亞硝胺', en: 'Nitrosamines' },
+    kall: { zh: '全部，含孢子', en: 'Everything, incl. spores' }, kcom: { zh: '病原菌與腐敗菌', en: 'Pathogens, spoilers' }, kpat: { zh: '只殺病原菌', en: 'Pathogens only' },
+    emed: { zh: '實驗室培養基', en: 'Lab media' }, ecan: { zh: '罐頭、殺菌軟袋食品', en: 'Cans, retort pouches' }, emilk: { zh: '冷藏鮮乳', en: 'Chilled milk' },
+    dval: { zh: 'D 值', en: 'D value' }, zval: { zh: 'Z 值', en: 'z value' }, fval: { zh: 'F 值', en: 'F value' }, d12: { zh: '12D', en: '12D' },
+    cbot: { zh: '肉毒桿菌孢子', en: 'C. botulinum spores' }, salm: { zh: '沙門氏菌', en: 'Salmonella' },
+    more: { zh: '比較耐熱', en: 'More heat-resistant' }, less: { zh: '比較不耐熱', en: 'Less heat-resistant' },
+    chinj: { zh: '低溫傷害', en: 'Chilling injury' }, frzb: { zh: '凍燒', en: 'Freezer burn' }, t7: { zh: '0～7℃', en: '0–7 °C' }, t18: { zh: '-18℃ 以下', en: '≤ −18 °C' },
+    nost: { zh: '不能殺菌，只是停止生長', en: 'No sterilization, only stops growth' }, ster: { zh: '可以殺死大部分細菌', en: 'Kills most bacteria' },
+    co60: { zh: '鈷-60 的 γ 射線', en: 'Gamma rays from cobalt-60' }, mw: { zh: '微波', en: 'Microwaves' }, viru: { zh: '病毒', en: 'Viruses' }, insc: { zh: '昆蟲', en: 'Insects' }, lowo: { zh: '降低氧分壓、低溫照射', en: 'Lower O₂, irradiate cold' },
+    imf: { zh: '0.60～0.85', en: '0.60–0.85' }, aw95: { zh: '0.90～0.95', en: '0.90–0.95' }, eth: { zh: '去除乙烯', en: 'Remove ethylene' }, addeth: { zh: '添加乙烯', en: 'Add ethylene' }, n2: { zh: '充氮包裝抑制好氧菌', en: 'N₂ flushing inhibits aerobes' }
+  },
+  levels: [
+    { t: '先看全貌：每一種保存法的原理', kind: 'ov', h: 368, svg: FPRS_OV, blanks: FPRS_B(),
+      intro: ['所有保存方法都在做同一件事：把前面學過的生長條件調到微生物不喜歡的方向。',
+        '有些方法直接殺死微生物（加熱、輻射），有些只是讓它們長不起來（低溫、低水活性、酸、缺氧）。後者一旦條件解除，微生物又會開始生長。',
+        '最後一種不是單一方法，而是把幾種溫和的條件疊在一起，效果比單用一種強烈的條件好，對食品品質的傷害也小。'],
+      done: ['[[加熱：蛋白質變性；低溫：減慢代謝（不殺菌）；乾燥、糖漬、鹽漬：降低水活性；有機酸：未解離酸進入細胞；輻射：破壞 DNA；調氣：改變氣體組成；欄柵：多因子組合。]]', '冷凍、冷藏只能抑菌，不能殺菌；解凍後微生物會繼續生長。'] },
+    { t: '化學保存：防腐劑與相關添加物', kind: 'list',
+      intro: ['我國的食品添加物分成十幾類，和抑制微生物有關的主要是防腐劑，另外有些分在別的類別，但也有抑菌效果。',
+        '有機酸類防腐劑（苯甲酸、己二烯酸、丙酸）都要在「沒有解離」的狀態才能穿過細胞膜，進到細胞裡解離、降低胞內 pH，干擾主動運輸。所以食品的 pH 越低，未解離的比例越高，效果越好。',
+        '苯甲酸用於醬油、飲料、醬菜；己二烯酸對黴菌和酵母特別好，用於乾酪、果汁、肉製品；丙酸鹽主要抑制黴菌、對酵母影響小，所以適合用在麵包。',
+        '保持肉色的那一類也能抑制肉毒桿菌，但有用量限制，也不能用於生鮮肉。'],
+      listTitle: '是哪一個',
+      list: [['麵包、糕餅中抑制黴菌', { a: 'prop', o: ['benz', 'sorb', 'prop'] }], ['對黴菌、酵母效果最好，用於乾酪、果汁', { a: 'sorb', o: ['benz', 'sorb', 'prop'] }], ['有機酸防腐劑的效果和 pH 的關係', { a: 'lowph', o: ['lowph', 'hiph'] }],
+        ['亞硝酸鹽屬於', { a: 'colr', o: ['pres', 'colr', 'blea'] }], ['亞硝酸鹽的用量限制', { a: 'p70', o: ['p70', 'nitro'] }], ['亞硝酸鹽可能和胺類反應生成的致癌物', { a: 'nitro', o: ['p70', 'nitro'] }],
+        ['亞硫酸鹽屬於', { a: 'blea', o: ['pres', 'colr', 'blea'] }], ['過氧化氫屬於', { a: 'bact', o: ['bact', 'pres', 'anti'] }], ['BHT 屬於', { a: 'anti', o: ['bact', 'pres', 'anti'] }]],
+      done: ['[[有機酸防腐劑：未解離的酸才有效，pH 越低效果越好。]]', '[[丙酸鹽：麵包、糕餅防黴；己二烯酸：黴菌、酵母；苯甲酸：醬油、飲料。]]',
+        '亞硝酸鹽是保色劑（肉製品殘留量 70 ppm 以下，不得用於生鮮肉）；亞硫酸鹽是漂白劑；過氧化氫是殺菌劑（不得殘留）；BHT 是抗氧化劑，不是防腐劑。', '細菌素（乳酸鏈球菌素 nisin、納他黴素）也被用來抑菌。'] },
+    { t: '加熱：三種程度', kind: 'ov', h: 222, svg: FPRS_HT, blanks: FPRS_HB(),
+      intro: ['加熱殺菌依程度分三種。',
+        '最徹底的把所有微生物連孢子都殺光，用在實驗室；但食品這樣加熱，品質會變很差。',
+        '罐頭追求的是「商業上的無菌」：殺死病原菌、產毒菌和在常溫下會讓食品壞掉的菌，可能還有少數耐熱孢子，但在一般常溫儲運下不會發芽。',
+        '最溫和的那一種只殺病原菌和大部分不產孢的菌，產品還要冷藏，保存期限短。'],
+      done: ['[[滅菌：121℃ 15 分鐘以上，殺死全部微生物與孢子。商業滅菌：罐頭，可能殘留耐熱孢子但常溫下不會生長。巴斯德殺菌：低溫長時間 63℃ 30 分鐘，或高溫短時間 72℃ 15 秒，只殺病原菌，產品需冷藏。]]',
+        '經商業滅菌的食品，可能殘留的是耐熱性孢子。', '投影片把高溫短時間殺菌寫成「約 70℃」，一般標準是 72℃（161°F）15 秒。'] },
+    { t: 'D 值、Z 值、F 值', kind: 'list',
+      intro: ['把菌放在固定溫度下加熱，存活菌數的對數隨時間直線下降。每下降一個對數（死掉 90%）所需的時間，就是那個溫度的 D 值。D 值越大，越耐熱。',
+        '溫度越高，D 值越小。讓 D 值變成十分之一（或十倍）所需改變的溫度，叫 Z 值。',
+        '在特定溫度（通常是 121℃）下，殺死一定數量微生物所需的時間，叫 F 值。它和 D 值的關係是：F ＝ D ×（初始菌數的對數 − 最後菌數的對數）。',
+        '低酸性罐頭以肉毒桿菌孢子為對象，要求把孢子減少 10¹² 倍，也就是加熱 12 個 D 值。'],
+      listTitle: '是哪一個',
+      list: [['特定溫度下，使菌數減少 90% 所需的時間', { a: 'dval', o: ['dval', 'zval', 'fval'] }], ['使 D 值改變 10 倍所需改變的溫度', { a: 'zval', o: ['dval', 'zval', 'fval'] }], ['121℃ 下殺死一定數量微生物所需的時間', { a: 'fval', o: ['dval', 'zval', 'fval'] }],
+        ['12D 的設計對象', { a: 'cbot', o: ['cbot', 'salm'] }], ['D 值越大表示', { a: 'more', o: ['more', 'less'] }]],
+      countsTitle: '算算看',
+      counts: [['肉毒桿菌孢子 D₁₂₁ ＝ 0.21 分鐘，12D 需要幾分鐘', '2.52', ['0.21', '1.26', '2.52', '12']], ['D ＝ 2 分鐘，把 10⁵ 降到 10⁻¹，F 值是幾分鐘', '12', ['6', '10', '12', '20']],
+        ['110℃ 的 D 值是 10 分鐘、Z 值 10℃，120℃ 的 D 值是幾分鐘', '1', ['0.1', '1', '5', '100']]],
+      done: ['[[D 值：死滅 90% 的時間（D 越大越耐熱）；Z 值：D 值變化 10 倍的溫度差；F 值：特定溫度下殺死一定菌數的時間，F ＝ D（log a − log b）。]]', '[[12D：低酸性罐頭以肉毒桿菌孢子為對象，減少 10¹² 倍。]]D 值是「時間」，不是溫度。',
+        '酸性罐頭（例如鳳梨）肉毒桿菌長不起來，殺菌條件比低酸性罐頭溫和。'] },
+    { t: '影響耐熱性的因素', kind: 'list',
+      intro: ['同樣的加熱，不同的菌、不同的食品，結果差很多。',
+        '微生物方面：最適溫度越高的越耐熱；孢子遠比營養細胞耐熱；革蘭氏陽性菌比陰性菌耐熱；酵母和黴菌對熱很敏感。菌數越多、處在穩定期的菌，也越耐熱。',
+        '食品方面：糖、脂肪、蛋白質、澱粉多、比較濃稠的食品，會保護微生物，讓它更耐熱；酸則讓微生物比較不耐熱。'],
+      listTitle: '比較耐熱還是比較不耐熱',
+      list: [['孢子（相對於營養細胞）', { a: 'more', o: ['more', 'less'] }], ['革蘭氏陰性菌（相對於陽性菌）', { a: 'less', o: ['more', 'less'] }], ['穩定期的細胞（相對於對數期）', { a: 'more', o: ['more', 'less'] }],
+        ['在高糖、高脂的食品裡', { a: 'more', o: ['more', 'less'] }], ['在酸性食品裡', { a: 'less', o: ['more', 'less'] }], ['酵母與黴菌', { a: 'less', o: ['more', 'less'] }]],
+      done: ['[[耐熱性：高溫菌 > 中溫菌 > 低溫菌；孢子 > 營養細胞；革蘭氏陽性 > 陰性；穩定期 > 對數期。]]', '高糖、高脂、高蛋白、濃稠的食品會提高微生物的耐熱性；酸性降低耐熱性。'] },
+    { t: '低溫保存', kind: 'list',
+      intro: ['低溫讓酵素反應和微生物代謝變慢，但不會殺菌。依溫度分三段：比冰箱高一點的冷卻溫度、冷藏、冷凍。',
+        '有些熱帶、亞熱帶的蔬果（香蕉、番茄、甘藷、鳳梨）放到太低溫，反而代謝異常、品質變壞。',
+        '冷藏可以抑制大部分病原菌，但有幾種低溫菌照樣會長。冷凍可以讓微生物停止生長，也會殺死一部分（冰晶刺破細胞、溶質濃縮、溫度急降的衝擊），還能殺死寄生蟲，但不能當作殺菌。'],
+      listTitle: '是哪一個',
+      list: [['冷藏溫度', { a: 't7', o: ['t7', 't18'] }], ['冷凍溫度', { a: 't18', o: ['t7', 't18'] }], ['香蕉放冰箱變黑', { a: 'chinj', o: ['chinj', 'frzb'] }], ['冷凍對微生物', { a: 'nost', o: ['nost', 'ster'] }],
+        ['冷藏中仍能生長的病原菌', { a: 'lmonx', o: ['lmonx', 'salm'] }]],
+      done: ['[[冷藏 0～7℃、冷凍 -18℃ 以下；低溫只能抑菌，不能殺菌。]]', '冷藏食品仍有食物中毒的風險（李斯特菌、耶爾辛氏菌、E 型肉毒桿菌）。冷藏蔬果不是越接近 0℃ 越好，要注意低溫傷害。',
+        '慢速冷凍形成大而不規則的冰晶，對細胞（包括食品組織）破壞較大。'] },
+    { t: '輻射、乾燥、調氣與欄柵技術', kind: 'list',
+      intro: ['食品照射用的是游離輻射，最常用的放射源是鈷-60 發出的 γ 射線。它可以殺菌、殺蟲、抑制發芽。越低等的生物越耐輻射，所以殺病毒需要的劑量最高，殺昆蟲最低。照射會產生自由基，讓食品成分變化，在低溫、低氧下照射可以減輕。',
+        '乾燥是古老的方法。中濕性食品（例如果乾、肉乾）含水量介於新鮮和乾燥之間，室溫下可以保存。',
+        '調氣保存降低氧氣、提高二氧化碳或氮氣，讓蔬果的呼吸變慢；蔬果會放出一種促進成熟的氣體，要把它去掉。真空或缺氧包裝要小心厭氧的肉毒桿菌。',
+        '欄柵技術把溫度、pH、水活性、氧化還原電位、防腐劑、競爭菌相等溫和的因子疊在一起，各因子之間有相乘效果。'],
+      listTitle: '是哪一個',
+      list: [['食品照射最常用的放射源', { a: 'co60', o: ['co60', 'mw'] }], ['需要最高輻射劑量才殺得死的', { a: 'viru', o: ['viru', 'insc'] }], ['降低照射不良影響的方法', { a: 'lowo', o: ['lowo', 'aw95'] }],
+        ['中濕性食品的水活性', { a: 'imf', o: ['imf', 'aw95'] }], ['延長蔬果保存的調氣做法', { a: 'eth', o: ['eth', 'addeth'] }], ['正確的調氣應用', { a: 'n2', o: ['n2', 'addeth'] }],
+        ['包裝內充 CO₂ 再冷藏，屬於', { a: 'comb', o: ['comb', 'law'] }]],
+      done: ['[[輻射照射：鈷-60 γ 射線；越低等的生物越耐輻射（病毒 > 細菌孢子 > 營養細胞 > 昆蟲）；低溫、低氧照射可減少不良影響。]]', '中濕性食品水活性 0.60～0.85；乾燥到 0.70 以下最耐保存。',
+        '[[欄柵技術（hurdle technology）：多個溫和因子組合，彼此有相乘效果，最適合冷藏調理食品與半乾性產品。]]單用 121℃ 殺菌或單靠降低 pH 不算欄柵。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['弱有機酸以', { a: 'undis', o: ['undis', 'den'] }, '的方式抑菌。'],
+        ['丙酸鈣在麵包中的用途是', { a: 'pres', o: ['pres', 'colr', 'blea'] }, '。'],
+        ['D 值指的是使 90% 菌數死亡所需的', { a: 'timex', o: ['timex', 'tempx'] }, '。'],
+        ['經商業滅菌的食品可能殘留', { a: 'sporex', o: ['sporex', 'pathx'] }, '。'],
+        ['冷凍對微生物', { a: 'nost', o: ['nost', 'ster'] }, '。'],
+        ['降低輻射照射不良影響的方法是', { a: 'lowo', o: ['lowo', 'aw95'] }, '。'],
+        ['利用一個以上的次要因子控制微生物，叫', { a: 'comb', o: ['comb', 'law'], lang: 'en' }, '。'],
+        ['低酸性罐頭的 12D 是針對', { a: 'cbot', o: ['cbot', 'salm'], lang: 'en' }, '。'],
+        ['使 D 值改變 10 倍所需的溫度差是', { a: 'zval', o: ['dval', 'zval', 'fval'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 368, force: 'en', svg: FPRS_OV, blanks: FPRS_B(),
+      intro: ['第一關的圖，全部用英文作答；下面再加上加熱的三種程度。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: 'Heat treatments', list: [['Sterilization kills', { a: 'kall', o: FPRS_K }], ['Commercial sterility kills', { a: 'kcom', o: FPRS_K }], ['Pasteurization kills', { a: 'kpat', o: FPRS_K }]] }
+  ] };
+(function () { var d = FPRS.dict; d.lmonx = { zh: '李斯特菌', en: 'Listeria monocytogenes' }; d.timex = { zh: '時間', en: 'Time' }; d.tempx = { zh: '溫度', en: 'Temperature' };
+  d.sporex = { zh: '耐熱性孢子', en: 'Heat-resistant spores' }; d.pathx = { zh: '病原菌', en: 'Pathogens' }; })();
+/* ======================================================================
+   食品微生物的檢測（授課單元 7）
+   ====================================================================== */
+function FDET_OV() {
+  var s = '', xs = [64, 180, 296];
+  [['直接計數法', 'Direct counts'], ['間接計數法', 'Indirect counts'], ['快速檢驗法', 'Rapid methods']].forEach(function (c, i) { s += pill(xs[i], 30, 108, { zh: c[0], en: c[1] }, 'src'); });
+  s += pill(64, 90, 108, { zh: '直接鏡檢', en: 'Microscopic count' }, 'pill kI') + pill(64, 270, 108, { zh: '膜過濾法', en: 'Membrane filtration' }, 'pill kI');
+  s += pill(180, 90, 108, { zh: '混濁度', en: 'Turbidity' }, 'pill kI') + pill(296, 90, 108, { zh: '酵素免疫分析', en: 'ELISA' }, 'pill kI') + pill(296, 270, 108, { zh: '乳膠凝集', en: 'Latex agglutination' }, 'pill kI');
+  [[64, 150, '數菌落（CFU）', 'count colonies (CFU)'], [64, 210, '查表（MPN）', 'look up table (MPN)'], [180, 150, '偵測時間', 'detection time'], [180, 210, '冷光（RLU）', 'light (RLU)'], [296, 150, '放大特定基因', 'amplify a gene']].forEach(function (r) { s += tx(r[0], r[1] - 26, T(r[2], r[3]), 'm', 9); });
+  return s;
+}
+var FDET_M = ['plate', 'mpn', 'imp', 'atp', 'pcr'];
+function FDET_B() { return [{ id: 'm0', x: 64, y: 150, w: 108, c: 'I', a: 'plate', o: FDET_M }, { id: 'm1', x: 64, y: 210, w: 108, c: 'I', a: 'mpn', o: FDET_M }, { id: 'm2', x: 180, y: 150, w: 108, c: 'I', a: 'imp', o: FDET_M }, { id: 'm3', x: 180, y: 210, w: 108, c: 'I', a: 'atp', o: FDET_M }, { id: 'm4', x: 296, y: 150, w: 108, c: 'I', a: 'pcr', o: FDET_M }]; }
+var FDET = { id: 'fdet', zh: '食品微生物的檢測', en: 'Detection and enumeration', alias: '平板計數・最確數法・膜過濾・ATP・電阻抗・ELISA・PCR', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    plate: { zh: '標準平板計數', en: 'Standard plate count' }, mpn: { zh: '最確數法', en: 'Most probable number' }, imp: { zh: '電阻抗法', en: 'Impedance' }, atp: { zh: 'ATP 生物冷光法', en: 'ATP bioluminescence' }, pcr: { zh: '聚合酶連鎖反應', en: 'PCR' },
+    tot: { zh: '總菌數（死菌加活菌）', en: 'Total count (dead + live)' }, via: { zh: '生菌數（只算活菌）', en: 'Viable count' },
+    pour: { zh: '傾注平板法', en: 'Pour plate' }, spread: { zh: '塗佈平板法', en: 'Spread plate' }, ml1: { zh: '1 mL', en: '1 mL' }, ml01: { zh: '0.1 mL', en: '0.1 mL' },
+    c25: { zh: '25～250 個', en: '25–250' }, c300: { zh: '300 個以上', en: 'Over 300' }, inv: { zh: '倒置', en: 'Upside down' }, up: { zh: '正放', en: 'Right side up' },
+    one: { zh: '每一個活菌長成一個菌落', en: 'Each viable cell forms one colony' }, rand: { zh: '樣品中的菌隨機分布', en: 'Cells randomly distributed' },
+    meso: { zh: '中溫好氣性菌', en: 'Mesophilic aerobes' }, allv: { zh: '所有的活菌', en: 'All viable microbes' },
+    stom: { zh: '鐵胃（拍擊式均質機）', en: 'Stomacher' }, blen: { zh: '攪拌式均質機', en: 'Blender' },
+    gas: { zh: '產氣', en: 'Gas production' }, acid: { zh: '產酸', en: 'Acid production' }, lst: { zh: 'LST 培養液（推定試驗）', en: 'LST broth (presumptive)' }, bglb: { zh: 'BGLB 培養液（確定試驗）', en: 'BGLB broth (confirmed)' },
+    low: { zh: '菌量低（每克 100 以下）', en: 'Low counts (< 100/g)' }, high: { zh: '菌量高', en: 'High counts' }, water: { zh: '飲用水', en: 'Drinking water' }, juice: { zh: '含果肉的果汁', en: 'Juice with pulp' },
+    m045: { zh: '0.45 μm', en: '0.45 μm' }, m10: { zh: '10 μm', en: '10 μm' },
+    e7: { zh: '每毫升 10⁷ 個以上', en: '≥ 10⁷ cells/mL' }, e2: { zh: '每毫升 100 個', en: '100 cells/mL' }, short: { zh: '偵測時間越短', en: 'Shorter detection time' }, long: { zh: '偵測時間越長', en: 'Longer detection time' },
+    luci: { zh: '螢光素－螢光素酶', en: 'Luciferin–luciferase' }, acr: { zh: '吖啶橙', en: 'Acridine orange' }, surf: { zh: '器具、設備表面的清潔度', en: 'Cleanliness of surfaces' },
+    pre: { zh: '需要預增殖培養', en: 'Needs pre-enrichment' }, none: { zh: '不需要培養', en: 'No culture needed' }, s16: { zh: '16S rRNA 基因或毒素基因', en: '16S rRNA or toxin genes' },
+    simple: { zh: '樣品前處理簡單', en: 'Simple sample preparation' }, sens: { zh: '靈敏度高', en: 'High sensitivity' },
+    blue: { zh: '藍色菌落（β-葡萄糖醛酸酶）', en: 'Blue colonies (β-glucuronidase)' }, redg: { zh: '紅色、旁邊有氣泡的菌落', en: 'Red colonies with gas bubbles' }
+  },
+  levels: [
+    { t: '先看全貌：怎麼知道食品裡有多少菌', kind: 'ov', h: 296, svg: FDET_OV, blanks: FDET_B(),
+      intro: ['食品裡的微生物數量和腐敗程度、安全性有關，所以「數菌」是食品衛生檢驗的基本功。沒有一種方法能數得到所有微生物，要依目的選方法。',
+        '直接計數法是直接看到菌或它長出來的菌落；間接計數法是量微生物活動造成的變化（混濁、導電度、ATP），換算回菌數；快速檢驗法用抗體或 DNA 找特定的病原菌。',
+        '每個空格下方的小字是這個方法最後讀出來的東西，用它來判斷。'],
+      done: ['[[直接計數：直接鏡檢、標準平板計數（CFU）、膜過濾法、最確數法（MPN）。間接計數：混濁度、電阻抗、ATP 冷光。快速檢驗：ELISA、乳膠凝集、DNA 探針、PCR。]]',
+        '直接鏡檢和混濁度數到的是總菌數（死菌也算）；平板計數、最確數、ATP 數到的是活菌。'] },
+    { t: '標準平板計數', kind: 'list',
+      intro: ['最常用的方法。樣品先均質、做成 10 倍稀釋液，再一系列 10 倍稀釋，接到洋菜培養基上培養，數長出來的菌落，乘回稀釋倍數。單位是 CFU（菌落形成單位）。',
+        '它有兩個前提：每一個活菌都會長成一個菌落；菌在樣品裡是平均分散的。',
+        '接種有兩種做法：一種把 1 mL 稀釋液和冷卻到約 45℃ 的液態培養基混合；另一種把 0.1 mL 塗在已凝固的培養基表面。前者菌落長在培養基裡面和表面，會讓怕熱的菌受傷；後者菌落都在表面，比較適合好氧菌，也比較好挑菌。',
+        '平板要倒著放進培養箱，數 25～250 個菌落的那一片。一般的「生菌數」是在 35℃ 左右、有氧下培養得到的。'],
+      listTitle: '是哪一個',
+      list: [['取 1 mL 稀釋液和 45℃ 的液態培養基混合', { a: 'pour', o: ['pour', 'spread'] }], ['取 0.1 mL 塗在凝固的培養基表面', { a: 'spread', o: ['pour', 'spread'] }], ['怕熱的菌比較適合', { a: 'spread', o: ['pour', 'spread'] }],
+        ['平板計數最重要的假設', { a: 'one', o: ['one', 'rand'] }], ['計數用的平板菌落數', { a: 'c25', o: ['c25', 'c300'] }], ['培養時平板要', { a: 'inv', o: ['inv', 'up'] }],
+        ['「生菌數」計數的是', { a: 'meso', o: ['meso', 'allv'] }], ['不會發熱、用完不用洗的均質機', { a: 'stom', o: ['stom', 'blen'] }]],
+      countsTitle: '算算看',
+      counts: [['10⁻³ 稀釋液 1 mL 傾注，長出 120 個菌落，每公克幾 CFU', '1.2×10⁵', ['1.2×10³', '1.2×10⁴', '1.2×10⁵', '1.2×10⁶']], ['10⁻² 稀釋液 0.1 mL 塗佈，長出 45 個菌落，每公克幾 CFU', '4.5×10⁴', ['4.5×10²', '4.5×10³', '4.5×10⁴', '4.5×10⁵']]],
+      done: ['[[平板計數的假設：每個活菌形成一個菌落。傾注法 1 mL、塗佈法 0.1 mL（菌數要再乘 10）。]]', '生菌數（好氣性平板計數，APC）＝在一定條件下能長出來的中溫好氣性菌，不是所有的活菌。',
+        '整個稀釋過程要在 15 分鐘內完成，避免菌在稀釋液裡繁殖。'] },
+    { t: '最確數法與膜過濾法', kind: 'list',
+      intro: ['最確數法適合菌量很低、或含有顆粒會干擾平板計數的樣品。把稀釋液分別接種到三支（或五支）試管，培養後看幾支「陽性」，查統計表得到最可能的數目（MPN）。',
+        '用來數大腸桿菌群時，第一步的培養液看的是能不能發酵乳糖產生氣體；產氣的管子再移到選擇性更強的培養液確認。',
+        '膜過濾法用孔徑很小的濾膜把大量液體裡的菌攔下來，再把濾膜放到培養基上數菌落。最典型的用途是檢驗水；有果肉、會塞住濾膜的樣品不適用。'],
+      listTitle: '是哪一個',
+      list: [['最確數法適合', { a: 'low', o: ['low', 'high'] }], ['大腸桿菌群推定試驗用的培養液', { a: 'lst', o: ['lst', 'bglb'] }], ['確定試驗用的培養液', { a: 'bglb', o: ['lst', 'bglb'] }],
+        ['LST 培養液判定陽性的依據', { a: 'gas', o: ['gas', 'acid'] }], ['膜過濾法的濾膜孔徑', { a: 'm045', o: ['m045', 'm10'] }], ['膜過濾法最適合的樣品', { a: 'water', o: ['water', 'juice'] }]],
+      done: ['[[最確數法（MPN）：統計方法，適合低菌量；大腸桿菌群用 LST（產氣）推定 → BGLB 確定。]]', '[[膜過濾法：0.45 μm 濾膜，適合水等清澈液體。]]'] },
+    { t: '間接計數法', kind: 'list',
+      intro: ['混濁度法：菌越多，培養液越混濁，用分光光度計量吸光度，對照標準曲線。快，但至少要每毫升一千萬個菌才看得出混濁，死菌也算進去，常用來畫生長曲線。',
+        '電阻抗法：微生物把大分子分解成帶電的小分子，培養液的導電度上升、阻抗下降。達到可偵測變化所需的時間叫偵測時間：原始菌數越多，偵測時間越短。',
+        'ATP 冷光法：每個活細胞都有 ATP，細胞死後很快分解。用螢火蟲的發光反應測 ATP，光的強弱以 RLU 表示。幾分鐘就有結果，常用來檢查器具和設備表面洗得乾不乾淨；缺點是食物本身的 ATP 也會被算進去。'],
+      listTitle: '是哪一個',
+      list: [['混濁度法數到的是', { a: 'tot', o: ['tot', 'via'] }], ['混濁度法需要的菌量', { a: 'e7', o: ['e7', 'e2'] }], ['電阻抗法中，原始菌數越多', { a: 'short', o: ['short', 'long'] }],
+        ['ATP 冷光法用的反應', { a: 'luci', o: ['luci', 'acr'] }], ['ATP 冷光法最常見的用途', { a: 'surf', o: ['surf', 'water'] }], ['顯微鏡下區分死活菌可用的螢光染劑', { a: 'acr', o: ['luci', 'acr'] }]],
+      done: ['[[ATP 冷光法：螢光素－螢光素酶反應，冷光儀測 RLU，用於設備表面清潔度；會受食品本身 ATP 干擾。]]', '電阻抗法：偵測時間與原始菌數成反比，需要先做標準曲線。混濁度法：總菌數，需 10⁷ cells/mL 以上。'] },
+    { t: '快速檢驗法', kind: 'list',
+      intro: ['傳統培養、分離、鑑定要 3～10 天。快速方法以蛋白質或核酸為目標。',
+        '免疫方法用專一的抗體抓病原菌的抗原或毒素：酵素免疫分析把抗體固定在微孔盤上，再用帶酵素的第二抗體呈色；乳膠凝集把抗體塗在小塑膠珠上，遇到抗原就凝集。它們的靈敏度不夠高，樣品通常要先增殖培養。',
+        'PCR 把病原菌特有的一段 DNA 大量複製，幾個小時就有結果、靈敏又專一；但容易被外來 DNA 污染，食品成分也可能抑制反應，需要特殊設備和熟練人員。',
+        '市售的快速測試片已經把培養基和呈色劑做好：大腸桿菌和大腸桿菌群可以在同一片上分辨。'],
+      listTitle: '是哪一個',
+      list: [['ELISA 檢測病原菌時', { a: 'pre', o: ['pre', 'none'] }], ['PCR 常用的引子目標', { a: 's16', o: ['s16', 'luci'] }], ['PCR 的優點', { a: 'sens', o: ['sens', 'simple'] }], ['PCR 的缺點', { a: 'simple', o: ['sens', 'simple'] }],
+        ['測試片上的大腸桿菌', { a: 'blue', o: ['blue', 'redg'] }], ['測試片上的大腸桿菌群', { a: 'redg', o: ['blue', 'redg'] }]],
+      done: ['[[PCR：快速、靈敏、專一；缺點是易受外來 DNA 污染、食品成分干擾、需要設備與技術，樣品前處理並不單純。]]', 'ELISA：抗原－抗體專一結合，但需要約 10⁵ cells/mL，要先預增殖。', '大腸桿菌有 β-葡萄糖醛酸酶，在測試片上呈藍色。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['「每一個細菌都能形成單一菌落」是', { a: 'plate', o: FDET_M }, '的假設。'],
+        ['生菌數是指在固定條件下可生長的', { a: 'meso', o: ['meso', 'allv'] }, '。'],
+        ['以 MPN 法測大腸桿菌群，LST 培養基利用的是', { a: 'gas', o: ['gas', 'acid'] }, '。'],
+        ['ATP 冷光法利用的是 ATP 與', { a: 'luci', o: ['luci', 'acr'] }, '的反應。'],
+        ['塗佈法每片接種', { a: 'ml01', o: ['ml1', 'ml01'] }, '稀釋液。'],
+        ['電阻抗法中，原始菌數越高', { a: 'short', o: ['short', 'long'] }, '。'],
+        ['與傳統方法相比，PCR 的優點不包括', { a: 'simple', o: ['sens', 'simple'], lang: 'en' }, '。'],
+        ['最適合檢驗飲用水的方法是', { a: 'mfx', o: ['mfx', 'turb'], lang: 'en' }, '。'],
+        ['可用來檢查設備表面清潔度的是', { a: 'atp', o: FDET_M, lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 296, force: 'en', svg: FDET_OV, blanks: FDET_B(),
+      intro: ['第一關的圖，全部用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: '名詞', list: [['1 mL mixed with molten agar', { a: 'pour', o: ['pour', 'spread'] }], ['0.1 mL spread on solid agar', { a: 'spread', o: ['pour', 'spread'] }], ['Presumptive broth for coliforms', { a: 'lst', o: ['lst', 'bglb'] }], ['Turbidity measures', { a: 'tot', o: ['tot', 'via'] }]] }
+  ] };
+(function () { var d = FDET.dict; d.mfx = { zh: '膜過濾法', en: 'Membrane filtration' }; d.turb = { zh: '混濁度法', en: 'Turbidity' }; })();
+/* ======================================================================
+   食品指標性微生物與衛生標準（授課單元 8）
+   ====================================================================== */
+var FIND_F = [['總生菌數（APC）', 'Aerobic plate count', 'qual'], ['大腸桿菌群', 'Coliforms', 'hyg'], ['大腸桿菌', 'Escherichia coli', 'fec'], ['腸桿菌科', 'Enterobacteriaceae', 'post'], ['腸球菌', 'Enterococcus', 'froz']];
+var FIND_O = ['qual', 'hyg', 'fec', 'post', 'froz'];
+function FIND_OV() { var s = tx(86, 18, T('指標', 'indicator'), 'm', 9.5) + tx(262, 18, T('主要告訴我們什麼', 'what it tells us'), 'm', 9.5); FIND_F.forEach(function (r, i) { var y = 46 + i * 52; s += pill(86, y, 144, { zh: r[0], en: r[1] }, 'pill kI') + arrow(160, y, 172, y); }); return s; }
+function FIND_B() { return FIND_F.map(function (r, i) { return { id: 'f' + i, x: 264, y: 46 + i * 52, w: 176, a: r[2], o: FIND_O }; }); }
+var FIND_S = [['乳品（鮮乳、乳粉、發酵乳）', 'Milk products', 'sae'], ['嬰兒配方食品', 'Infant formula', 'cron'], ['生鮮即食水產品', 'Ready-to-eat raw seafood', 'vpar'], ['生鮮即食蔬果', 'Ready-to-eat raw produce', 'o157'],
+  ['包裝、盛裝飲用水', 'Packaged drinking water', 'pae'], ['罐頭食品', 'Canned foods', 'incub'], ['未殺菌液蛋', 'Unpasteurized liquid egg', 'apc']];
+var FIND_SO = ['sae', 'cron', 'vpar', 'o157', 'pae', 'incub', 'apc'];
+function FIND_SV() { var s = tx(86, 18, T('食品類別', 'food category'), 'm', 9.5) + tx(262, 18, T('特有的檢驗項目', 'distinctive criterion'), 'm', 9.5); FIND_S.forEach(function (r, i) { var y = 44 + i * 46; s += pill(86, y, 144, { zh: r[0], en: r[1] }, 'pill kH') + arrow(160, y, 172, y); }); return s; }
+function FIND_SB() { return FIND_S.map(function (r, i) { return { id: 's' + i, x: 264, y: 44 + i * 46, w: 176, c: r[2] === 'incub' ? null : 'I', a: r[2], o: FIND_SO }; }); }
+var FIND = { id: 'find', zh: '指標微生物與衛生標準', en: 'Indicator organisms and microbiological standards', alias: '總生菌數・大腸桿菌群・大腸桿菌・腸球菌・食品中微生物衛生標準', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    qual: { zh: '一般品質、處理過程的衛生', en: 'General quality and handling' }, hyg: { zh: '環境與加工衛生（可能受糞便污染）', en: 'Sanitation; possible fecal contamination' }, fec: { zh: '確定受到糞便污染', en: 'Definite fecal contamination' },
+    post: { zh: '加熱後再污染、衛生管理', en: 'Post-process contamination' }, froz: { zh: '冷凍食品的衛生', en: 'Hygiene of frozen foods' },
+    easy: { zh: '含量很低也容易檢出、計數', en: 'Easily detected even at low levels' }, inter: { zh: '檢出會受其他菌干擾', en: 'Detection disturbed by other microbes' },
+    pos: { zh: '和病原菌呈正相關', en: 'Positively correlated with pathogens' }, neg: { zh: '和病原菌呈負相關', en: 'Negatively correlated with pathogens' },
+    slowd: { zh: '比病原菌死得慢或差不多', en: 'Dies no faster than pathogens' }, fastd: { zh: '比病原菌死得快', en: 'Dies faster than pathogens' },
+    lac: { zh: '48 小時內發酵乳糖產酸產氣', en: 'Ferments lactose with acid and gas in 48 h' }, glc: { zh: '發酵葡萄糖產酸', en: 'Ferments glucose to acid' },
+    gn: { zh: '革蘭氏陰性、不產孢的桿菌', en: 'Gram-negative, non-spore rods' }, gp: { zh: '革蘭氏陽性球菌', en: 'Gram-positive cocci' },
+    citro: { zh: '大腸桿菌、檸檬酸桿菌、克雷伯氏菌、腸桿菌', en: 'E. coli, Citrobacter, Klebsiella, Enterobacter' }, salm: { zh: '沙門氏菌、志賀氏菌', en: 'Salmonella, Shigella' },
+    entc: { zh: '腸球菌', en: 'Enterococcus' }, colif: { zh: '大腸桿菌群', en: 'Coliforms' }, phage: { zh: '大腸桿菌噬菌體', en: 'Coliphages' }, bifi: { zh: '比菲德氏菌', en: 'Bifidobacterium' },
+    ferm: { zh: '發酵食品', en: 'Fermented foods' }, fresh: { zh: '一般生鮮食品', en: 'Ordinary fresh foods' },
+    sae: { zh: '金黃色葡萄球菌腸毒素', en: 'S. aureus enterotoxin' }, cron: { zh: '阪崎腸桿菌', en: 'Cronobacter sakazakii' }, vpar: { zh: '腸炎弧菌', en: 'Vibrio parahaemolyticus' }, o157: { zh: '大腸桿菌 O157:H7', en: 'E. coli O157:H7' },
+    pae: { zh: '綠膿桿菌、糞便性鏈球菌', en: 'Pseudomonas aeruginosa, fecal streptococci' }, incub: { zh: '37℃、10 天保溫試驗', en: '37 °C 10-day incubation test' }, apc: { zh: '總生菌數', en: 'Aerobic plate count' },
+    sal: { zh: '沙門氏菌', en: 'Salmonella' }, entb: { zh: '腸桿菌科、沙門氏菌', en: 'Enterobacteriaceae, Salmonella' },
+    lv1: { zh: '業者自主管理', en: 'Self-management by industry' }, lv2: { zh: '第三方驗證', en: 'Third-party certification' }, lv3: { zh: '政府稽查抽驗', en: 'Government inspection' }
+  },
+  levels: [
+    { t: '先看全貌：每一種指標告訴我們什麼', kind: 'ov', h: 300, svg: FIND_OV, blanks: FIND_B(),
+      intro: ['食品裡可能有的病原菌太多，不可能一種一種驗。所以改驗幾種「指標」：它們容易驗、和衛生狀況或病原菌的存在有關。',
+        '指標有兩種用途：反映品質（新不新鮮、處理過程乾不乾淨），或反映安全衛生（有沒有被糞便污染，所以可能有腸道病原菌）。',
+        '五種指標各有側重：一種只反映整體菌量；一群包含糞便和環境來源的腸道菌；其中一種只來自腸道；一個更大的家族常用來看加熱後有沒有再污染；還有一種在冷凍時比較耐得住。'],
+      done: ['[[總生菌數：品質指標；大腸桿菌群：衛生指標；大腸桿菌：糞便污染指標；腸桿菌科：加熱後再污染；腸球菌：冷凍食品的衛生指標。]]', '總生菌數不適用於發酵食品（本來就有大量菌）、冷凍食品和高溫殺菌食品，只能做一般食品的初步判定。'] },
+    { t: '指標微生物的條件', kind: 'list',
+      intro: ['一個好的衛生指標菌要符合幾個條件。',
+        '好驗：就算數量很少也容易檢出、計數，最好一天內完成；容易和其他菌分辨，不會被其他菌抑制或干擾。',
+        '有代表性：病原菌在的時候它一定也在，數量和病原菌呈正相關；它在食品裡的生長條件和病原菌一樣好，死得不會比病原菌快，所以「驗不到指標菌」才能代表病原菌也不在。'],
+      listTitle: '符合還是不符合',
+      list: [['檢出的容易度', { a: 'easy', o: ['easy', 'inter'] }], ['和病原菌的關係', { a: 'pos', o: ['pos', 'neg'] }], ['死滅速率', { a: 'slowd', o: ['slowd', 'fastd'] }], ['總生菌數不適合用來評估', { a: 'ferm', o: ['ferm', 'fresh'] }]],
+      done: ['[[指標菌的條件：容易檢出計數、容易分辨、不受其他菌干擾、與病原菌正相關、病原菌在時它一定在、死滅速率不比病原菌快。]]', '從食品檢出指標菌，可以推測可能有病原菌；但指標菌本身不等於病原菌。'] },
+    { t: '大腸桿菌群、大腸桿菌與腸球菌', kind: 'list',
+      intro: ['大腸桿菌群不是一個分類上的菌群，而是用檢驗方法定義的一群菌：革蘭氏陰性、不產孢、兼性厭氧的桿菌，在 48 小時內能發酵乳糖產酸產氣。它包含四個屬，其中幾個也存在土壤和植物上。',
+        '大腸桿菌只存在人和溫血動物的腸道，所以檢出大腸桿菌，比較確定是受到糞便污染。',
+        '冷凍食品裡，大腸桿菌群容易死掉，腸球菌比較耐，所以冷凍前用大腸桿菌群、冷凍後用腸球菌當指標比較好。',
+        '大腸桿菌群和腸病毒的存活情形不一樣，所以有人提議用感染大腸桿菌的病毒來當水中病毒的指標。'],
+      listTitle: '是哪一個',
+      list: [['大腸桿菌群的定義', { a: 'lac', o: ['lac', 'glc'] }], ['大腸桿菌群的形態', { a: 'gn', o: ['gn', 'gp'] }], ['大腸桿菌群包含的屬', { a: 'citro', o: ['citro', 'salm'] }],
+        ['冷凍調理食品最常用的衛生指標', { a: 'entc', o: ['entc', 'colif'] }], ['提議用來反映水中腸病毒的指標', { a: 'phage', o: ['phage', 'bifi'] }]],
+      done: ['[[大腸桿菌群：革蘭氏陰性、不產孢、兼性厭氧桿菌，48 小時內發酵乳糖產酸產氣；包括大腸桿菌、檸檬酸桿菌、克雷伯氏菌、腸桿菌。]]', '[[冷凍食品用腸球菌當指標。]]', '比菲德氏菌曾被提議當糞便指標，但現在大量用於發酵乳，不適合。'] },
+    { t: '食品中微生物衛生標準', kind: 'ov', h: 368, svg: FIND_SV, blanks: FIND_SB(),
+      intro: ['衛生福利部的「食品中微生物衛生標準」把食品分類，每一類規定要驗哪些微生物和上限。大部分類別都要求沙門氏菌陰性；下面列的是每一類比較特別、常考的項目。',
+        '想一想每一類食品最怕什麼：乳品最怕耐熱的葡萄球菌腸毒素；嬰兒配方奶粉怕一種會讓新生兒腦膜炎的腸桿菌；生食海鮮怕弧菌；生食蔬果怕糞便來的出血性大腸桿菌；飲用水驗糞便和水中常見的伺機性病原；罐頭沒辦法逐一培養，就整罐放著看會不會膨罐。'],
+      tip: '標準會修訂，數值與項目以衛生福利部最新公告為準。',
+      done: ['[[乳品：金黃色葡萄球菌腸毒素陰性；嬰兒配方：阪崎腸桿菌陰性；生鮮即食水產：腸炎弧菌；生鮮即食蔬果：大腸桿菌 O157:H7 陰性；包裝飲用水：大腸桿菌群、糞便性鏈球菌、綠膿桿菌陰性。]]',
+        '罐頭類：37℃ 保溫 10 天，不得因微生物繁殖而膨罐、變形或 pH 異常。', '食用冰塊與冰品：腸桿菌科、沙門氏菌（冷凍即食食品另驗大腸桿菌）；殺菌液蛋：沙門氏菌陰性；未殺菌液蛋：總生菌數。'] },
+    { t: '食品安全的三級品管', kind: 'list',
+      intro: ['食品安全衛生管理法建立三層把關：最基本的是業者自己管理；再上一層由獨立的機構來驗證；最後由政府稽查、抽驗。'],
+      listTitle: '是哪一級',
+      list: [['一級品管', { a: 'lv1', o: ['lv1', 'lv2', 'lv3'] }], ['二級品管', { a: 'lv2', o: ['lv1', 'lv2', 'lv3'] }], ['三級品管', { a: 'lv3', o: ['lv1', 'lv2', 'lv3'] }]],
+      done: ['[[一級：業者自主管理；二級：第三方驗證；三級：政府稽查抽驗。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['冷凍調理食品最常用的衛生指標菌是', { a: 'entc', o: ['entc', 'colif'] }, '。'],
+        ['大腸桿菌群的定義是', { a: 'lac', o: ['lac', 'glc'] }, '。'],
+        ['指標微生物應該', { a: 'easy', o: ['easy', 'inter'] }, '。'],
+        ['乳品須檢驗', { a: 'sae', o: FIND_SO }, '。'],
+        ['嬰兒配方食品特別要求陰性的是', { a: 'cron', o: FIND_SO }, '。'],
+        ['二級品管是', { a: 'lv2', o: ['lv1', 'lv2', 'lv3'] }, '。'],
+        ['生鮮即食蔬果須檢驗', { a: 'o157', o: FIND_SO, lang: 'en' }, '。'],
+        ['罐頭食品的檢驗方式是', { a: 'incub', o: FIND_SO, lang: 'en' }, '。'],
+        ['確定受到糞便污染的指標是', { a: 'fec', o: FIND_O, lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 368, force: 'en', svg: FIND_SV, blanks: FIND_SB(),
+      intro: ['衛生標準的對應，全部用英文作答；下面再加上五種指標。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: 'Indicators', list: FIND_F.map(function (r) { return [r[1], { a: r[2], o: FIND_O }]; }) }
+  ] };
+/* 圖解食品科學的目錄。食品微生物照老師《食品微生物學》授課單元的順序；營養化學、食品衛生與安全等教材來了再做。有 levels 的才是做好的單元 */
+function TODO(id, zh, en) { return { id: id, zh: zh, en: en }; }
+var GROUPS = [
+  { tab: 'micro', g: '先讀這裡', items: [FPRE] },
+  { tab: 'micro', g: '單元 2・影響微生物生長的因子', c: 6, items: [FGRW] },
+  { tab: 'micro', g: '單元 2～3・食品的腐敗', c: 5, items: [FDEG, FSPL] },
+  { tab: 'micro', g: '單元 4・利用微生物製造食品', c: 4, items: [FFRM] },
+  { tab: 'micro', g: '單元 5・細菌性食品中毒', c: 5, items: [FBA1, FBA2] },
+  { tab: 'micro', g: '單元 5・病毒、寄生蟲與黴菌毒素', c: 2, items: [FVPM] },
+  { tab: 'micro', g: '單元 6・食品的保存', c: 6, items: [FPRS] },
+  { tab: 'micro', g: '單元 7・食品微生物的檢測', c: 4, items: [FDET] },
+  { tab: 'micro', g: '單元 8・指標微生物與衛生標準', c: 5, items: [FIND] },
+  { tab: 'chem', g: '營養化學', items: [TODO('chem0', '製作中：等老師的投影片', 'Nutritional chemistry')] },
+  { tab: 'safe', g: '食品衛生與安全', items: [TODO('safe0', '製作中：等老師的投影片', 'Food sanitation and safety')] }
+];
+function prep(u, par) {
+  if (par) ['dict', 'enz', 'prod', 'tags', 'zh', 'en'].forEach(function (k) { if (u[k] == null) u[k] = par[k]; });
+  u.map = {}; (u.nodes || (u.nodes = [])).forEach(function (n) { u.map[n.k] = n; }); (u.extra || []).forEach(function (n) { u.map[n.k] = n; });
+  u.steps = u.steps || []; u.enz = u.enz || {}; u.prod = u.prod || {};
+  for (var k in (u.subs || {})) prep(u.subs[k], u);
+}
+var UNITS = {}; GROUPS.forEach(function (g) { g.items.forEach(function (u) { if (u.levels) { UNITS[u.id] = u; u.tab = g.tab; prep(u); } }); });
+/* 圖解食品科學的設定（共用 pw/tail.html 的程式）。LINE 選單 D 格：食品微生物、營養化學、食品衛生與安全三科 */
+window.CFG = {
+  key: 'food-v1', title: '圖解食品科學',
+  tabs: [['micro', '食品微生物'], ['chem', '營養化學'], ['safe', '食品衛生安全']],
+  hint: { micro: '藍色是細菌、青色是黴菌和酵母、紫色是病毒與寄生蟲、玫瑰色是毒素、琥珀色是食品本身的條件，', chem: '每個單元的圖例會說明顏色，', safe: '藍色是細菌、青色是黴菌、紫色是病毒與寄生蟲、玫瑰色是毒素，' },
+  howto: '<p>上面三個分頁是三個科目：食品微生物學、營養化學、食品衛生與安全。國考「食品衛生與安全」會考到食品微生物的內容，兩科可以對照著讀。菌名一律附上學名，國考常常只寫學名，要練到看得懂。</p>',
+  note: function () { return '衛生標準與添加物限量依衛生福利部公告，法規會修正，請以最新公告與老師上課的說明為準。'; }
+};
+/* ======================================================================
+   程式
+   ====================================================================== */
+function $(id) { return document.getElementById(id); }
+function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+
+/* 進度與語言：只存在這支手機的瀏覽器 */
+var CFG = window.CFG || {};
+var KEY = CFG.key || 'pathway-v1', OK = true, SAVE = { done: {}, lang: 'bi' };
+try { var s0 = JSON.parse(localStorage.getItem(KEY) || '{}'); if (s0 && s0.done) SAVE = s0; localStorage.setItem(KEY + '-t', '1'); } catch (e) { OK = false; }
+function save() { try { localStorage.setItem(KEY, JSON.stringify(SAVE)); } catch (e) { OK = false; } }
+LANG = SAVE.lang === 'en' || SAVE.lang === 'zh' ? SAVE.lang : 'bi';
+function isDone(pid, i) { return !!(SAVE.done[pid] && SAVE.done[pid][i]); }
+var CUR = null, LV = 0, ST = null;   // 目前單元、關卡、作答狀態
+function seg() { var s = $('lang'); s.hidden = !!FORCE; s.querySelectorAll('button').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-l') === LANG); b.setAttribute('aria-pressed', b.getAttribute('data-l') === LANG ? 'true' : 'false'); }); }
+
+/* ---------- 目錄 ---------- */
+var TABS = CFG.tabs || [['met', '生化代謝'], ['mb', '分子生物'], ['phy', '人體生理']], TAB0 = TABS[0][0], TITLE = CFG.title || '圖解生理生化';
+var HINT = CFG.hint || { met: '圖上名稱的底色是碳數（6 碳、3 碳…），小標籤是這一步花掉或產生什麼，', mb: '藍色是 DNA、青色是新合成的 DNA、玫瑰色是 RNA、琥珀色是蛋白質（酵素、因子、核糖體），', phy: '玫瑰色是興奮、交感、去極化；藍色是抑制、副交感、再極化；琥珀色是激素或要花能量的步驟；每張圖下面都有圖例，' };
+function home() {
+  CUR = null; FORCE = null; $('title').textContent = TITLE; $('subtitle').textContent = '看圖、填空，一關一關記起來';
+  $('back').hidden = true; $('lv').hidden = true; seg();
+  var tab = TABS.some(function (x) { return x[0] === SAVE.tab; }) ? SAVE.tab : TAB0, fresh = !Object.keys(SAVE.done).length;
+  var h = (CFG.top || '') + '<div class="tabs" role="tablist">' + TABS.map(function (x) { return '<button type="button" role="tab" data-t="' + x[0] + '" class="' + (x[0] === tab ? 'on' : '') + '" aria-selected="' + (x[0] === tab) + '">' + x[1] + '</button>'; }).join('') + '</div>';
+  h += '<details class="card pad"' + (fresh ? ' open' : '') + '><summary>怎麼用</summary><p>每個單元分成幾關，從只看大方向開始，一次多記一點，最後整張圖自己填出來。</p>' +
+    '<p>虛線框的空格是下拉選單，點一下選答案，填完按「對答案」。</p>' + (CFG.howto || '') +
+    '<ul class="small muted"><li>右上角可以切換名稱：中文、中英對照、英文。預設是中英對照。</li><li>顏色都有意思：' + HINT[tab] + '<mark>黃底的字</mark>是必背。</li><li>國考的專有名詞常常只寫英文，所以每個單元最後的總複習固定用英文作答。考的是選擇題，練到看到認得就夠了，不必會拼。</li><li>第一次來，請先做最上面「先讀這裡」的單元。</li></ul></details>';
+  GROUPS.forEach(function (g) {
+    if ((g.tab || TAB0) !== tab) return;
+    h += '<div class="glab' + (g.c ? ' k' + g.c : '') + '">' + esc(g.g) + '</div>';
+    g.items.forEach(function (p) {
+      if (p.levels) { var n = p.levels.length, d = p.levels.filter(function (_, i) { return isDone(p.id, i); }).length;
+        h += '<button type="button" class="item' + (g.c ? ' k' + g.c : '') + '" data-p="' + p.id + '"><b>' + esc(p.zh) + '<span>' + esc(p.alias || p.en) + '</span></b><i>' + (d === n ? '已完成' : d + ' ／ ' + n + ' 關') + '</i></button>';
+      } else h += '<button type="button" class="item' + (g.c ? ' k' + g.c : '') + '" disabled><b>' + esc(p.zh) + '<span>' + esc(p.en) + '</span></b><i>製作中</i></button>';
+    });
+  });
+  h += OK ? '<p class="note">完成的關卡只記在這支手機的瀏覽器。清除瀏覽器資料、換手機，或 iPhone 超過一週沒打開，紀錄會消失；內容不受影響。</p>' : '<p class="note">這個瀏覽器無法儲存資料，完成紀錄不會保留。</p>';
+  h += '<p class="note">名詞以營養師國考題目的寫法為主。' + (CFG.note ? CFG.note(tab) : tab === 'met' ? '換算 ATP 時，沒有特別說明就用 NADH 2.5、FADH₂ 1.5。' : '') + '內容是教學用的重點整理，細節以課本與老師上課為準。</p>';
+  $('main').innerHTML = h;
+  document.querySelectorAll('.tabs button').forEach(function (b) { b.onclick = function () { SAVE.tab = b.getAttribute('data-t'); save(); home(); }; });
+  document.querySelectorAll('.item[data-p]').forEach(function (b) { b.onclick = function () { var u = UNITS[b.getAttribute('data-p')]; open(u, firstTodo(u)); }; });
+  window.scrollTo(0, 0);
+}
+function firstTodo(p) { for (var i = 0; i < p.levels.length; i++) if (!isDone(p.id, i)) return i; return 0; }
+function open(p, i) { CUR = p; LV = i; ST = null; if (p.tab && SAVE.tab !== p.tab) { SAVE.tab = p.tab; save(); } level(); window.scrollTo(0, 0); }
+
+/* ---------- 版面：每個節點在圖上的位置 ----------
+   鏈狀（chain）：主幹由上往下；旁支 side 接在某個主幹節點的同一列，link 決定線怎麼畫：
+     in（預設）前一個主幹 → 旁支，旁支 ⇌ 同列主幹（例：DHAP）；branch 前一個主幹 → 旁支；
+     feed 旁支 → 同列主幹；leaf 同列主幹 → 旁支；at:'seg' 的 feed 接到上一段的中間
+   環狀（cycle）：節點依 ang 角度排在橢圓上；top 是從上面進來的分子；pre 是進環之前的步驟
+   每個單元可用 geo 覆寫尺寸 */
+var CY0 = { cx: 180, cy: 312, rx: 118, ry: 196, h: 560, nw: 100 }, CH0 = { x: 152, w: 168, y0: 36, dy: 66, sx: 302, sw: 104 };
+function G(U) { var b = U.layout === 'cycle' ? CY0 : CH0, g = U.geo || {}, o = {}; for (var k in b) o[k] = g[k] != null ? g[k] : b[k]; return o; }
+function cpt(U, a, drx, dry) { var g = G(U), r = a * Math.PI / 180; return { x: g.cx + (g.rx + (drx || 0)) * Math.sin(r), y: g.cy - (g.ry + (dry || 0)) * Math.cos(r) }; }
+function mainNodes(U) { return U.nodes.filter(function (n) { return !n.side; }); }
+function pos(U, k) {
+  var g = G(U);
+  if (U.layout === 'cycle') { var p = cpt(U, U.ang[k]); return { x: p.x, y: p.y, w: g.nw }; }
+  var m = mainNodes(U), n = U.map[k];
+  if (n.side) { var q = pos(U, n.side); return { x: g.sx, y: q.y - (n.at === 'seg' ? g.dy / 2 : 0), w: g.sw }; }
+  for (var i = 0; i < m.length; i++) if (m[i].k === k) return { x: g.x, y: g.y0 + i * g.dy, w: g.w };
+}
+function mapH(U) { var g = G(U); return U.layout === 'cycle' ? g.h : g.y0 * 2 + (mainNodes(U).length - 1) * g.dy; }
+function allSteps(U) { return (U.pre || []).concat(U.steps); }
+function stepNo(U, f, t) { var A = allSteps(U); for (var i = 0; i < A.length; i++) if (A[i].f === f && A[i].t === t) return i; return -1; }
+function asked(L, st) { return !!st && (L.rows === 'enz' ? !!st.e : L.rows === 'prod' ? !!st.p : false); }
+
+function mapSvg(U, L, E) {      // E：'all' 顯示能量標籤、'co2' 只顯示 CO₂、'' 只顯示進出的分子
+  var s = '', tg = '', g = G(U), A = allSteps(U), h = PH() / 2, isBlank = function (k) { return L.blanks.indexOf(k) >= 0; };
+  var pick = function (st) { return ((U.tags && U.tags[st.p] || []).concat(st.io || [])).filter(function (t) { return t[1] === 'mol' || E === 'all' || (E === 'co2' && t[1] === 'co2'); }); };
+  var mark = function (x, y, i, ang) { var st = A[i]; return asked(L, st) ? badge(x, y, i + 1, st.irr) : '<polygon class="ar" points="-7,-6 7,0 -7,6" transform="translate(' + x + ',' + y + ') rotate(' + ang + ')"/>'; };
+  if (U.layout === 'cycle') {
+    s += '<ellipse class="ln" cx="' + g.cx + '" cy="' + g.cy + '" rx="' + g.rx + '" ry="' + g.ry + '" fill="none" stroke-width="3"/>';
+    A.forEach(function (st, i) {
+      if (U.ang[st.f] == null || U.ang[st.t] == null) return;
+      var a = U.ang[st.f], b = U.ang[st.t]; if (b <= a) b += 360; var m = ((a + b) / 2) % 360, p = cpt(U, m), r = m * Math.PI / 180;
+      s += mark(p.x, p.y, i, Math.atan2(g.ry * Math.sin(r), g.rx * Math.cos(r)) * 180 / Math.PI);
+      var tl = pick(st), cr = Math.cos(r), ac = Math.abs(cr), q = cpt(U, m, 44 + 6 * ac, 14 + 12 * ac);
+      var hit = tl.some(function (t, j) { var w = tagW(t[0]), x = Math.max(3 + w / 2, Math.min(357 - w / 2, q.x)); return Math.abs(x - p.x) < w / 2 + 13 && Math.abs(q.y + (j - (tl.length - 1) / 2) * 18 - p.y) < 20; });
+      tl.forEach(function (t, j) { tg += tagC(q.x, hit ? p.y + (cr >= 0 ? -1 : 1) * (22 + 18 * j) : q.y + (j - (tl.length - 1) / 2) * 18, t[0], t[1]); });      // 標籤太長會壓到編號時，改成往外疊
+    });
+    if (U.top) { var atTop = U.nodes.some(function (n) { return U.ang[n.k] === 0; }), y1 = 35 + h, y2 = g.cy - g.ry - (atTop ? h + 3 : 14), pre = (U.pre || [])[0];
+      s += '<line class="ln" x1="' + g.cx + '" y1="' + y1 + '" x2="' + g.cx + '" y2="' + y2 + '" stroke-width="3"/><polygon class="ar" points="-6,-7 6,-7 0,7" transform="translate(' + g.cx + ',' + (y2 + 2) + ')"/>';
+      if (pre && asked(L, pre)) s += badge(g.cx, (y1 + y2) / 2 - 3, 1, pre.irr);
+      if (pre) { var x0 = g.cx + 17, xl = g.cx - 17; pick(pre).forEach(function (t) { var w = tagW(t[0]);      // 進出的分子放右邊，能量標籤放左邊
+        if (t[1] === 'mol') { tg += tagC(x0 + w / 2, (y1 + y2) / 2 - 3, t[0], t[1]); x0 += w + 4; } else { tg += tagC(xl - w / 2, (y1 + y2) / 2 - 3, t[0], t[1]); xl -= w + 4; } }); }
+      s += pill(g.cx, 34, U.top.w || 128, { zh: U.top.zh + (L.carbon && U.top.c ? '（' + U.top.c + 'C）' : ''), en: U.top.en + (L.carbon && U.top.c ? ' (' + U.top.c + 'C)' : '') }, 'src' + (U.top.c ? ' k' + U.top.c : '')); }
+    var cz = U.czh || U.zh, ce = U.cen || U.en, iw = 2 * (g.rx - g.nw / 2) + 4;      // 圓心的字：寬度不能超過左右兩個節點之間
+    if (M() === 'bi') s += tx(g.cx, g.cy - 10, cz, 'b', fit(cz, iw, 15)) + tx(g.cx, g.cy + 7, ce, 'b', fit(ce, iw, 11.5)) + tx(g.cx, g.cy + 24, '順時針方向', 'm', 11);
+    else s += tx(g.cx, g.cy - 4, T(cz, ce), 'b', fit(T(cz, ce), iw, 15)) + tx(g.cx, g.cy + 16, T('順時針方向', 'clockwise'), 'm', 11);
+  } else {
+    var m = mainNodes(U), down = function (x, y) { return '<polygon class="ar" points="-6,-6 6,-6 0,6" transform="translate(' + x + ',' + y + ')"/>'; };
+    (U.phases || []).forEach(function (ph) { var a = pos(U, ph.a), b = pos(U, ph.b), my = (a.y + b.y) / 2;
+      s += '<line x1="46" y1="' + (a.y - h + 1) + '" x2="46" y2="' + (b.y + h - 1) + '" stroke="var(' + ph.c + ')" stroke-width="4" stroke-linecap="round"/>' +
+        '<text x="30" y="' + my + '" text-anchor="middle" font-size="11.5" font-weight="700" style="fill:var(' + ph.c + ')" transform="rotate(-90 30 ' + my + ')">' + esc(T(ph.zh, ph.en)) + '</text>'; });
+    for (var i = 0; i < m.length - 1; i++) { var a = pos(U, m[i].k), b = pos(U, m[i + 1].k), n = stepNo(U, m[i].k, m[i + 1].k), st = A[n], my = (a.y + b.y) / 2;
+      s += '<line class="ln" x1="' + a.x + '" y1="' + (a.y + h) + '" x2="' + b.x + '" y2="' + (b.y - h) + '" stroke-width="3"' + (st && st.dots ? ' stroke-dasharray="2 5" stroke-linecap="round"' : '') + '/>';
+      s += asked(L, st) ? badge(a.x, my, n + 1, st.irr) : down(a.x, my + 1);
+      var tl = st ? pick(st) : [], tx0 = a.x + 17; tl.forEach(function (t) { var w = tagW(t[0]); tg += tagC(tx0 + w / 2, my, t[0], t[1]); tx0 += w + 4; });
+      if (st && st.dots && !tl.length) s += tx(a.x + 16, my + 3.5, T(st.dots.zh, st.dots.en), 'nt', 10, 'start'); }
+    U.nodes.forEach(function (sd) { if (!sd.side) return;
+      var p = pos(U, sd.k), q = pos(U, sd.side), link = sd.link || 'in', prev = null, pk = null;
+      for (var i = 1; i < m.length; i++) if (m[i].k === sd.side) { prev = pos(U, m[i - 1].k); pk = m[i - 1].k; }
+      var x1 = q.x + q.w / 2 + 1, x2 = p.x - p.w / 2 - 1, xm = (x1 + x2) / 2, n;
+      if (link === 'in' || link === 'branch') { n = stepNo(U, pk, sd.k);
+        if (link === 'branch') s += arrow(prev.x + 50, prev.y + h, p.x, p.y - h - 3); else s += '<line class="ln" x1="' + (prev.x + 50) + '" y1="' + (prev.y + h) + '" x2="' + p.x + '" y2="' + (p.y - h - 1) + '" stroke-width="3"/>';
+        if (link === 'branch' && asked(L, A[n])) s += badge((prev.x + 50 + p.x) / 2 + 4, (prev.y + p.y) / 2 - 1, n + 1, A[n].irr); }
+      if (link === 'in') { n = stepNo(U, sd.k, sd.side); s += '<line class="ln" x1="' + x1 + '" y1="' + p.y + '" x2="' + x2 + '" y2="' + p.y + '" stroke-width="3"/>';
+        s += asked(L, A[n]) ? badge(xm + 4, p.y + h + 13, n + 1, A[n].irr) : tx(xm + 4, p.y + h + 14, '⇌', 'm', 14); }
+      if (link === 'feed' || link === 'leaf') { n = link === 'feed' ? stepNo(U, sd.k, sd.side) : stepNo(U, sd.side, sd.k); var into = sd.at === 'seg' ? q.x + 6 : x1 + 2;
+        s += link === 'feed' ? arrow(x2, p.y, into, p.y) : arrow(x1, p.y, x2 - 2, p.y);
+        if (asked(L, A[n])) s += badge(xm, p.y - 15, n + 1, A[n].irr); }
+    });
+  }
+  U.nodes.forEach(function (n) { var p = pos(U, n.k);
+    if (!isBlank(n.k)) s += pill(p.x, p.y, p.w, n, (U.layout === 'chain' && n === U.nodes[0] ? 'src' : 'pill') + (n.c ? ' k' + n.c : ''));
+    if (L.carbon && n.c) s += '<text x="' + p.x + '" y="' + (p.y + h + 13) + '" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--k' + n.c + 's)">' + n.c + 'C</text>';
+  });
+  return s + tg;
+}
+
+/* ---------- 一關的空格清單 ---------- */
+function buildBlanks(U, L) {
+  var B = [];
+  if (L.kind === 'ov') L.blanks.forEach(function (b) { B.push({ id: b.id, where: 'node', ans: b.a, src: U.dict, opts: shuffle(b.o), x: b.x, y: b.y, w: b.w, c: b.c }); });
+  if (L.kind === 'map') {
+    var keys = U.nodes.filter(function (n) { return (n !== U.nodes[0] || U.layout === 'cycle') && !n.fixed; }).concat(U.extra || []).map(function (n) { return n.k; });
+    L.blanks.forEach(function (k) { var p = pos(U, k); B.push({ id: 'n_' + k, where: 'node', ans: k, src: U.map, enFirst: true, opts: shuffle(keys), x: p.x, y: p.y, w: p.w, c: L.plain ? null : U.map[k].c }); });
+    if (L.rows) { var A = allSteps(U), fld = L.rows === 'enz' ? 'e' : 'p', d = L.rows === 'enz' ? U.enz : U.prod, ks = Object.keys(d).filter(function (k) { return A.some(function (t) { return t[fld] === k; }) || (U.rowExtra || []).indexOf(k) >= 0; });      // rowExtra：額外的干擾選項
+      A.forEach(function (s, i) { if (s[fld]) B.push({ id: 'r' + i, where: 'row', ans: s[fld], src: d, enFirst: true, opts: shuffle(ks), step: i, st: s }); }); }
+  }
+  (L.list || []).forEach(function (it, i) { var x = it[1]; B.push({ id: 'l' + i, where: 'row', li: i, desc: it[0], ans: x.a, lang: x.lang, src: x.src === 'enz' ? U.enz : U.dict, enFirst: x.src === 'enz', opts: shuffle(x.o) }); });
+  (L.counts || []).forEach(function (c, i) { B.push({ id: 'c' + i, where: 'count', ans: c[1], label: c[0], opts: c[2] }); });
+  if (L.kind === 'cloze') L.cloze.forEach(function (row, i) { row.forEach(function (x) { if (typeof x === 'object') B.push({ id: 'z' + i, where: 'cloze', ans: x.a, lang: x.lang, src: x.src === 'enz' ? U.enz : U.dict, enFirst: x.src === 'enz', opts: shuffle(x.o) }); }); });
+  return B;
+}
+function label(b, v) { return b.src ? one(b.src[v], b.lang, b.enFirst) : v; }
+/* 空格上看得到的字 */
+function face(b) {
+  var v = ST.ans[b.id] || '';
+  if (b.where === 'node') { if (!v) return '<b style="font-size:17px">？</b>'; var L = two(b.src[v], b.lang, b.w);
+    return '<b style="font-size:' + (fit(L[0], b.w - 8, L[1] ? 11.5 : 12.5) / .75).toFixed(1) + 'px">' + esc(L[0]) + '</b>' + (L[1] ? '<small style="font-size:' + (fit(L[1], b.w - 4, 10) / .75).toFixed(1) + 'px">' + esc(L[1]) + '</small>' : ''); }
+  if (!v) return '<b class="muted" style="font-weight:400">請選擇</b>';
+  if (b.where === 'row' || b.enFirst) { var R = two(b.src[v], b.lang); return '<b>' + esc(R[0]) + '</b>' + (R[1] ? '<small>' + esc(R[1]) + '</small>' : ''); }
+  return '<b>' + esc(label(b, v)) + '</b>';
+}
+/* 空格的顏色：圖上的空格＝這個位置的碳數；圖下的空格＝選到的答案是哪一類
+   （激酶與 ATP、GTP 橘色；去氫酶與 NADH 藍色；FADH₂ 紫色；NADPH 青色） */
+function kind(e) { e = e || ''; return /NADPH/.test(e) ? 'tp' : /kinase|ATP|GTP|UTP/.test(e) ? 'tk' : /dehydrogenase|NADH/.test(e) ? 'td' : /FADH/.test(e) ? 'tf' : ''; }
+function faceCls(b) {
+  var v = ST.ans[b.id] || '', c = 'face';
+  if (b.where === 'node' && b.c) c += ' k' + b.c;
+  if (b.where === 'row' && b.li == null && v) c += ' ' + kind(b.src[v].en);
+  return c;
+}
+function sel(b) {
+  var v = ST.ans[b.id] || '';
+  return '<span class="pick' + (v ? ' has' : '') + '"><span class="' + faceCls(b) + '">' + face(b) + '</span><select data-b="' + b.id + '" aria-label="空格"><option value="">' + (b.where === 'node' ? '？' : '請選擇') + '</option>' +
+    b.opts.map(function (o) { return '<option value="' + esc(o) + '"' + (o === v ? ' selected' : '') + '>' + esc(label(b, o)) + '</option>'; }).join('') + '</select></span>';
+}
+
+/* ---------- 一關的畫面 ---------- */
+var KLAB = { enz: { tk: '激酶 kinase', td: '去氫酶 dehydrogenase' }, prod: { tk: 'ATP、GTP', td: 'NADH', tf: 'FADH₂', tp: 'NADPH' } };
+function level() {
+  var P = CUR, L = P.levels[LV], U = L.sub ? P.subs[L.sub] : P, n = P.levels.length; FORCE = L.force || null;
+  if (!ST) ST = { blanks: buildBlanks(U, L), ans: {}, checked: false, shown: false };
+  $('title').textContent = P.zh; $('subtitle').textContent = '第 ' + (LV + 1) + ' 關，共 ' + n + ' 關・' + L.t;
+  $('back').hidden = false; seg();
+  $('lv').hidden = false; $('lv').innerHTML = P.levels.map(function (_, i) { var d = isDone(P.id, i); return '<button type="button" data-i="' + i + '" class="' + (i === LV ? 'on' : '') + (d ? ' done' : '') + '" aria-label="第 ' + (i + 1) + ' 關' + (d ? '（已完成）' : '') + '">' + (i + 1) + (d ? ' ✓' : '') + '</button>'; }).join('');
+  $('lv').querySelectorAll('button').forEach(function (b) { b.onclick = function () { open(P, +b.getAttribute('data-i')); }; });
+  var on = $('lv').querySelector('.on'); if (on && on.scrollIntoView) on.scrollIntoView({ block: 'nearest', inline: 'center' });
+
+  var h = '<div class="card pad"><h2>' + esc(L.t) + '</h2>' + L.intro.map(function (p) { return '<p>' + fmt(p) + '</p>'; }).join('') + (L.tip ? '<div class="tip">' + fmt(esc(L.tip)) + '</div>' : '') + '</div>';
+  var by = function (w) { return ST.blanks.filter(function (b) { return b.where === w; }); }, nodes = by('node'), rows = by('row').filter(function (b) { return b.li == null; }), lst = by('row').filter(function (b) { return b.li != null; }), cnt = by('count');
+  var passed = ST.checked && !ST.shown && ST.blanks.every(function (b) { return ST.ans[b.id] === b.ans; });
+  var E = L.energy || (L.rows === 'prod' && (ST.shown || passed)) ? 'all' : L.carbon ? 'co2' : '';      // 算帳那一關：全對或看答案後，圖上才出現能量標籤
+  var lgS = L.legend || (L.kind === 'map' && !L.plain ? U.nodes.map(function (n) { return n.c; }).concat(U.top ? [U.top.c] : []).filter(function (c, i, a) { return c && a.indexOf(c) === i; }).sort(function (a, b) { return b - a; }) : []);
+  var lg = lgS.map(function (c) { return typeof c === 'object' ? '<span><i class="' + c[0] + '"></i>' + esc(c[1]) + '</span>' : '<span><i class="k' + c + '"></i>' + c + ' 碳</span>'; });      // 圖例：數字＝碳數；[樣式, 文字]＝自訂
+  if (lg.length && (L.legendTitle || typeof lgS[0] !== 'object')) lg.unshift('<span>' + esc(L.legendTitle || '底色＝碳數') + '</span>');
+  if (L.kind === 'map' && L.rows && allSteps(U).some(function (s) { return s.irr && asked(L, s); })) lg.push('<span><i class="irr">1</i>實心編號＝不可逆步驟</span>');
+  if (L.kind === 'ov' || L.kind === 'map') { var H = L.kind === 'ov' ? L.h : mapH(U), fh = Math.round(PH() / .75);
+    h += '<div class="card pad"><div class="dia" id="dia"><svg viewBox="0 0 360 ' + H + '" role="img" aria-label="' + esc(P.zh) + '路徑圖">' + (L.kind === 'ov' ? L.svg() : mapSvg(U, L, E)) + '</svg>' +
+      nodes.map(function (b) { return '<span class="bk" data-k="' + b.id + '" style="left:' + (b.x / 360 * 100) + '%;top:' + (b.y / H * 100) + '%"><span style="display:block;width:' + Math.round(b.w / .75) + 'px;height:' + fh + 'px">' + sel(b) + '</span><i class="mk"></i></span>'; }).join('') + '</div>' +
+      (lg.length ? '<div class="lgd">' + lg.join('') + '</div>' : '') + (nodes.length ? '<div class="small muted" style="text-align:center;margin-top:6px">點虛線框選答案</div>' : '') + '</div>'; }
+  if (rows.length) { var seen = {}, kl = ''; rows[0].opts.forEach(function (o) { var k = kind(rows[0].src[o].en); if (k && !seen[k] && KLAB[L.rows][k]) { seen[k] = 1; } });
+    ['tk', 'td', 'tf', 'tp'].forEach(function (k) { if (seen[k]) kl += '<span><i class="' + k + '"></i>' + KLAB[L.rows][k] + '</span>'; });
+    h += '<div class="card pad"><h2>' + esc(L.rowsTitle || '') + '</h2>' + (kl ? '<div class="lgd" style="justify-content:flex-start;margin:0 0 4px">' + kl + '</div>' : '') + rows.map(function (b) { var s = b.st;
+      var d = s.desc ? T(s.desc.zh, s.desc.en) : short(U.map[s.f]) + ' → ' + short(U.map[s.t]) + (s.also ? ' ＋ ' + short(U.map[s.also]) : '');
+      return '<div class="st" data-k="' + b.id + '"><span class="n">' + (b.step + 1) + '</span><span class="d">' + esc(d) + '</span><span class="w">' + sel(b) + '<div class="r"></div></span></div>'; }).join('') + '</div>'; }
+  if (lst.length) h += '<div class="card pad"><h2>' + esc(L.listTitle || '') + '</h2>' + lst.map(function (b) {
+    return '<div class="st" data-k="' + b.id + '"><span class="n">' + (b.li + 1) + '</span><span class="d" style="font-size:14px;color:var(--ink)">' + fmt(esc(b.desc)) + '</span><span class="w">' + sel(b) + '<div class="r"></div></span></div>'; }).join('') + '</div>';
+  if (cnt.length) h += '<div class="card pad"><h2>' + esc(L.countsTitle || '') + '</h2>' + cnt.map(function (b) {
+    return '<div class="st c" data-k="' + b.id + '"><span class="d">' + esc(b.label) + '</span><span class="w">' + sel(b) + '<div class="r"></div></span></div>'; }).join('') + '</div>';
+  if (L.kind === 'cloze') { var zb = by('cloze'); h += '<div class="card pad"><ol class="cz">' + L.cloze.map(function (row, i) {
+    return '<li data-k="z' + i + '">' + row.map(function (x) { return typeof x === 'string' ? (x === '。' ? '' : esc(x)) : sel(zb[i]); }).join('') + '<div class="r"></div></li>'; }).join('') + '</ol></div>'; }
+  h += '<div id="res"></div><div class="foot"><div class="row" id="acts"></div></div>';
+  $('main').innerHTML = h;
+  document.querySelectorAll('.pick select').forEach(function (el) { el.onchange = function () {
+    var id = el.getAttribute('data-b'), b = ST.blanks.filter(function (x) { return x.id === id; })[0];
+    ST.ans[id] = el.value; el.parentNode.classList.toggle('has', !!el.value); var fe = el.parentNode.querySelector('.face'); fe.className = faceCls(b); fe.innerHTML = face(b);
+    if (ST.checked) { ST.checked = false; clearMarks(); acts(); }
+  }; });
+  if (ST.shown) document.querySelectorAll('.pick select').forEach(function (el) { el.disabled = true; });
+  scaleDia(); if (ST.checked) mark(); acts();
+}
+function scaleDia() { var d = $('dia'); if (d) d.style.setProperty('--s', (d.clientWidth / 360 * .75).toFixed(3)); }
+window.addEventListener('resize', scaleDia);
+function holder(b) { return document.querySelector('[data-k="' + b.id + '"]'); }
+function clearMarks() {
+  document.querySelectorAll('.pick').forEach(function (el) { el.classList.remove('ok', 'no'); });
+  document.querySelectorAll('[data-k]').forEach(function (el) { el.classList.remove('ok', 'no'); var r = el.querySelector('.r'); if (r) r.textContent = ''; var m = el.querySelector('.mk'); if (m) m.textContent = ''; });
+  $('res').innerHTML = '';
+}
+function mark() {
+  var right = 0, total = ST.blanks.length, L = CUR.levels[LV];
+  ST.blanks.forEach(function (b) {
+    var v = ST.ans[b.id] || '', ok = v === b.ans, el = holder(b), s = el.querySelector('.pick');
+    if (ok) right++;
+    s.classList.remove('ok', 'no'); el.classList.remove('ok', 'no'); s.classList.add(ok ? 'ok' : 'no'); el.classList.add(ok ? 'ok' : 'no');
+    var m = el.querySelector('.mk'); if (m) m.textContent = ok ? '✓' : '✕';
+    var o = b.src && b.src[b.ans], zh = o && (b.lang || M()) === 'en' && o.zh !== (o.en || o.zh) ? o.zh : '';      // 用英文作答的空格，答對後補上中文
+    var r = el.querySelector('.r'); if (r) r.textContent = ok ? '✓ 正確' + (zh ? '：' + zh : '') : (v ? '✕ 再想想' : '✕ 還沒填');
+  });
+  var all = right === total, last = LV === CUR.levels.length - 1;
+  if (all && !ST.shown) { if (!SAVE.done[CUR.id]) SAVE.done[CUR.id] = {}; SAVE.done[CUR.id][LV] = 1; save(); var c = $('lv').querySelectorAll('button')[LV]; c.classList.add('done'); if (c.textContent.indexOf('✓') < 0) c.textContent += ' ✓'; }
+  $('res').innerHTML = '<div class="res ' + (all ? 'ok' : 'bad') + '"><b>' + (ST.shown ? '這是正確答案' : all ? '全對！' : '答對 ' + right + ' ／ ' + total) + '</b>　' +
+    (ST.shown ? '看熟之後按「重來」，自己再填一次才算過關。' : all ? (last ? '這個單元完成了。' : '可以進下一關了。') : '紅色的空格再改一次，改完再按「對答案」。') + '</div>' +
+    (all && !ST.shown && L.done ? '<div class="card pad"><h2>記住這幾件事</h2><ul>' + L.done.map(function (t) { return '<li>' + fmt(esc(t)) + '</li>'; }).join('') + '</ul></div>' : '');
+  return all;
+}
+function acts() {
+  var last = LV === CUR.levels.length - 1, all = ST.checked && ST.blanks.every(function (b) { return ST.ans[b.id] === b.ans; }) && !ST.shown, h = '';
+  if (all) h = '<button type="button" class="btn plain" id="redo">重來</button><button type="button" class="btn" id="next">' + (last ? '回目錄' : '下一關') + '</button>';
+  else if (ST.checked) h = '<button type="button" class="btn plain" id="' + (ST.shown ? 'redo' : 'show') + '">' + (ST.shown ? '重來' : '看正確答案') + '</button><button type="button" class="btn" id="chk"' + (ST.shown ? ' disabled' : '') + '>對答案</button>';
+  else h = '<button type="button" class="btn" id="chk">對答案</button>';
+  $('acts').innerHTML = h;
+  if ($('chk')) $('chk').onclick = function () { ST.checked = true; var L = CUR.levels[LV]; if (L.rows === 'prod' && ST.blanks.every(function (b) { return ST.ans[b.id] === b.ans; })) level(); else { mark(); acts(); } var r = $('res'); if (r.scrollIntoView) r.scrollIntoView({ block: 'nearest' }); };
+  if ($('show')) $('show').onclick = function () { ST.shown = true; ST.blanks.forEach(function (b) { ST.ans[b.id] = b.ans; }); level(); };
+  if ($('redo')) $('redo').onclick = function () { ST = null; level(); window.scrollTo(0, 0); };
+  if ($('next')) $('next').onclick = function () { if (last) home(); else open(CUR, LV + 1); };
+}
+
+$('back').onclick = home;
+$('lang').querySelectorAll('button').forEach(function (b) { b.onclick = function () { LANG = b.getAttribute('data-l'); SAVE.lang = LANG; save(); if (CUR) { var y = window.pageYOffset; level(); window.scrollTo(0, y); } else home(); }; });
+(function () { var m = (location.search.match(/[?&]p=([a-z]+)/) || [])[1]; if (m && UNITS[m]) open(UNITS[m], firstTodo(UNITS[m])); else home(); })();
+</script>
+</body>
+</html>

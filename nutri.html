@@ -335,6 +335,486 @@ var NMAP = { id: 'nmap', zh: '先讀這裡：營養學地圖', en: 'The science 
       listTitle: '營養照護流程', list: [['Step 1', { a: 'ncpa', o: NMAP_NC }], ['Step 2', { a: 'ncpd', o: NMAP_NC }], ['Step 3', { a: 'ncpi', o: NMAP_NC }], ['Step 4', { a: 'ncpm', o: NMAP_NC }]] }
   ] };
 /* ======================================================================
+   飲食指標：DRIs、每日飲食指南、食物代換與營養標示（第 2 章，照國考補）
+   ====================================================================== */
+function DRI_OV() {
+  var s = '<line x1="16" y1="190" x2="350" y2="190" stroke="var(--muted)" stroke-width="1.5"/>' + tx(350, 206, T('每天攝取量 →', 'daily intake →'), 'm', 9, 'end');
+  s += sp('M 30 190 C 80 190 92 62 120 62 C 148 62 160 190 210 190', 'M', 3) + tx(14, 86, T('每人需要量', 'needs vary'), 'm', 9, 'start');
+  s += sp('M 262 186 C 300 184 322 140 350 70', 'M', 3, '6 4') + tx(284, 130, T('過量的風險', 'risk of excess'), 'm', 9, 'end');
+  [[120, 58], [176, 58], [290, 58]].forEach(function (p) { s += sl(p[0] + ',' + p[1] + ' ' + p[0] + ',190', 'M', 1.5, '4 3'); });
+  s += tx(120, 50, T('一半的人夠', 'meets 50%'), 'm', 9) + tx(186, 34, T('97～98% 的人夠', 'meets 97–98%'), 'm', 9) + tx(296, 60, T('安全上限', 'safe ceiling'), 'm', 9, 'start');
+  return s;
+}
+var DRI_O = ['ear', 'rda', 'ul', 'ai'];
+function DRI_B() { return [{ id: 'q1', x: 100, y: 236, w: 120, a: 'ear', o: DRI_O }, { id: 'q2', x: 196, y: 282, w: 120, a: 'rda', o: DRI_O }, { id: 'q3', x: 290, y: 236, w: 120, a: 'ul', o: DRI_O }]; }
+var DRI_FG = ['grain', 'pmeat', 'dairy', 'veg', 'fruit', 'oil'];
+var DRI = { id: 'dri', zh: '飲食指標：DRIs、飲食指南、代換與標示', en: 'Tools for diet planning', alias: 'EAR・RDA・AI・UL・AMDR・每日飲食指南・我的餐盤・食物代換・營養標示', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    ear: { zh: '平均需要量（EAR）', en: 'EAR' }, rda: { zh: '建議量（RDA）', en: 'RDA' }, ai: { zh: '足夠攝取量（AI）', en: 'Adequate Intake (AI)' }, ul: { zh: '上限攝取量（UL）', en: 'Upper Level (UL)' },
+    amdr: { zh: '巨量營養素可接受範圍（AMDR）', en: 'Acceptable Macronutrient Distribution Range (AMDR)' }, cdrr: { zh: '慢性病風險降低攝取量（CDRR）', en: 'Chronic Disease Risk Reduction intake (CDRR)' },
+    grain: { zh: '全穀雜糧類', en: 'Whole grains and starchy foods' }, pmeat: { zh: '豆魚蛋肉類', en: 'Legumes, fish, eggs, meat' }, dairy: { zh: '乳品類', en: 'Dairy' }, veg: { zh: '蔬菜類', en: 'Vegetables' }, fruit: { zh: '水果類', en: 'Fruits' }, oil: { zh: '油脂與堅果種子類', en: 'Oils, nuts and seeds' },
+    nd: { zh: '營養素密度高', en: 'High nutrient density' }, ed: { zh: '熱量密度高', en: 'High energy density' },
+    fresh: { zh: '新鮮蔬果、全穀、豆類', en: 'Fresh produce, whole grains, legumes' }, cake: { zh: '蛋糕、油炸點心、含糖飲料', en: 'Cakes, fried snacks, sugary drinks' }
+  },
+  levels: [
+    { t: '先看全貌：DRIs 的幾條線', kind: 'ov', h: 310, svg: DRI_OV, blanks: DRI_B(),
+      intro: ['同樣年齡性別的健康人，每個人對某營養素的需要量不一樣，畫起來大致是一條鐘形曲線。',
+        '曲線正中間那條線，剛好能滿足一半人的需要；往右兩個標準差，幾乎所有人（97～98%）都夠了，這就是給個人的建議目標。再往右是長期吃到這個量也不會有害的上限，超過以後風險增加（右邊的虛線）。',
+        '填上這三條線的名稱。國人用的是「國人膳食營養素參考攝取量」第八版。'],
+      done: ['[[EAR 滿足 50% 的人；RDA ＝ EAR ＋ 2 個標準差，滿足 97～98%；UL 是不會造成危害的最高量。]]', '資料不足、算不出 EAR 時，改訂 AI（觀察健康人群的攝取量）。'] },
+    { t: 'DRIs 的六個名詞', kind: 'list',
+      intro: ['除了上面三條線，還有三個名詞：資料不夠時用健康人實際吃的量訂一個「夠用」的量；三大營養素各佔總熱量的合理範圍；以及以降低慢性病風險為目標訂的量（第八版用在鈉）。',
+        '使用原則：評估「一群人」的攝取是否足夠，用 EAR；給「一個人」當目標，用 RDA 或 AI；長期攝取不要超過 UL。'],
+      listTitle: '是哪一個', list: [['評估團體攝取不足的盛行率', { a: 'ear', o: DRI_O }], ['給個人的攝取目標', { a: 'rda', o: DRI_O }], ['資料不足時訂定，例如鈣、維生素 D、膳食纖維', { a: 'ai', o: DRI_O }],
+        ['醣類佔熱量 50～65%', { a: 'amdr', o: ['amdr', 'cdrr'] }], ['鈉 2,300 mg', { a: 'cdrr', o: ['amdr', 'cdrr'] }], ['長期攝取不宜超過', { a: 'ul', o: DRI_O }]],
+      done: ['[[EAR → 評估團體；RDA、AI → 個人目標；UL → 上限；AMDR → 三大營養素熱量比例；CDRR → 降低慢性病風險（鈉）。]]', '國人 AMDR：醣類 50～65%、脂質 20～30%、蛋白質 10～20%。'] },
+    { t: '每日飲食指南與我的餐盤', kind: 'list',
+      intro: ['國健署的每日飲食指南把食物分成六大類。主食強調未精製的全穀雜糧；蛋白質依「豆、魚、蛋、肉」的順序選擇；每天都要有乳品、蔬菜、水果，還有一份堅果種子。',
+        '「我的餐盤」把它變成好記的口訣：每天早晚一杯奶、每餐水果拳頭大、菜比水果多一點、飯跟蔬菜一樣多、豆魚蛋肉一掌心、堅果種子一茶匙。',
+        '選食物時看營養素密度：同樣的熱量裡，含的維生素、礦物質、纖維越多越好。'],
+      listTitle: '是哪一類', list: [['糙米、地瓜、玉米、紅豆', { a: 'grain', o: DRI_FG }], ['黃豆、豆腐、雞蛋、魚', { a: 'pmeat', o: DRI_FG }], ['牛奶、優酪乳、起司', { a: 'dairy', o: DRI_FG }], ['花生、腰果、芝麻', { a: 'oil', o: DRI_FG }],
+        ['「每餐拳頭大」指的是', { a: 'fruit', o: DRI_FG }], ['「比水果多一點」指的是', { a: 'veg', o: DRI_FG }], ['營養素密度高的食物', { a: 'fresh', o: ['fresh', 'cake'] }], ['熱量密度高、營養素密度低', { a: 'cake', o: ['fresh', 'cake'] }]],
+      done: ['[[六大類：全穀雜糧、豆魚蛋肉、乳品、蔬菜、水果、油脂與堅果種子。]]', '[[我的餐盤：早晚一杯奶、水果拳頭大、菜比水果多、飯跟蔬菜一樣多、豆魚蛋肉一掌心、堅果種子一茶匙。]]', '紅豆、綠豆、蠶豆屬於全穀雜糧類；黃豆、黑豆、毛豆屬於豆魚蛋肉類。'] },
+    { t: '食物代換：一份有多少', kind: 'list',
+      intro: ['食物代換表把同一類食物整理成「一份」，一份的三大營養素和熱量大致相同，可以互相交換。這是排菜單、計算飲食的基本工具。',
+        '記住每一類一份的醣類、蛋白質、脂肪克數，熱量就可以自己算出來（醣類、蛋白質 4 大卡／公克，脂肪 9 大卡／公克）。'],
+      countsTitle: '每一份的熱量（大卡）', counts: [['全穀雜糧類一份（蛋白質 2 g、醣類 15 g）', '70', ['60', '70', '75', '80']], ['豆魚蛋肉類中脂一份（蛋白質 7 g、脂肪 5 g）', '75', ['55', '75', '120', '135']], ['低脂乳品一份（蛋白質 8 g、脂肪 4 g、醣類 12 g）', '120', ['80', '120', '150', '160']],
+        ['蔬菜類一份（蛋白質 1 g、醣類 5 g）', '25', ['10', '25', '45', '60']], ['水果類一份（醣類 15 g）', '60', ['45', '60', '70', '80']], ['油脂類一份（脂肪 5 g）', '45', ['25', '45', '60', '75']],
+        ['早餐吃 2 份全穀 ＋ 1 份中脂肉 ＋ 1 份低脂奶，共幾大卡', '335', ['265', '315', '335', '360']]],
+      done: ['[[一份：全穀 70、豆魚蛋肉低脂 55／中脂 75、乳品全脂 150／低脂 120／脫脂 80、蔬菜 25、水果 60、油脂 45 大卡。]]', '計算：70 × 2 ＋ 75 ＋ 120 ＝ 335 大卡。'] },
+    { t: '包裝食品的營養標示', kind: 'list',
+      intro: ['台灣規定包裝食品要標示熱量和七項營養素：蛋白質、脂肪、飽和脂肪、反式脂肪、碳水化合物、糖、鈉。份量可以用「每份」或「每 100 公克（毫升）」表示。',
+        '「每日參考值百分比」是以一天 2,000 大卡為基準：蛋白質 60 g、脂肪 60 g、飽和脂肪 18 g、碳水化合物 300 g、鈉 2,000 mg。',
+        '看標示時先看份量：一包常常不只一份，或要從每 100 公克換算整包。'],
+      countsTitle: '算算看', counts: [['每 100 g 含鈉 400 mg，整包 250 g 共幾 mg 鈉', '1000', ['400', '650', '1000', '1250']], ['一份含脂肪 15 g，佔每日參考值幾 %', '25', ['15', '20', '25', '30']], ['一份含 500 大卡，佔每日參考值幾 %', '25', ['10', '20', '25', '50']]],
+      done: ['[[營養標示：熱量 ＋ 蛋白質、脂肪、飽和脂肪、反式脂肪、碳水化合物、糖、鈉。]]', '[[每日參考值：熱量 2,000 kcal、蛋白質 60 g、脂肪 60 g、飽和脂肪 18 g、碳水化合物 300 g、鈉 2,000 mg。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['評估一群人攝取不足的比例，應該用', { a: 'ear', o: DRI_O }, '。'],
+        ['RDA 是 EAR 加上兩個標準差；資料不足時訂的是', { a: 'ai', o: DRI_O }, '。'],
+        ['紅豆、綠豆屬於', { a: 'grain', o: DRI_FG }, '。'],
+        ['黃豆、毛豆屬於', { a: 'pmeat', o: DRI_FG }, '。'],
+        ['三大營養素佔總熱量的合理範圍叫', { a: 'amdr', o: ['amdr', 'cdrr'] }, '。'],
+        ['長期攝取不宜超過的量是', { a: 'ul', o: DRI_O, lang: 'en' }, '。'],
+        ['我的餐盤裡「一掌心」指的是', { a: 'pmeat', o: DRI_FG, lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 310, force: 'en', svg: DRI_OV, blanks: DRI_B(),
+      intro: ['第一關的圖，全部用英文作答；下面再加幾個名詞。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: '名詞', list: [['Set when EAR cannot be determined', { a: 'ai', o: DRI_O }], ['Sodium 2,300 mg target', { a: 'cdrr', o: ['amdr', 'cdrr'] }], ['Milk, yogurt, cheese', { a: 'dairy', o: DRI_FG }]] }
+  ] };
+/* ======================================================================
+   食物供應與食品安全（照國考補；微生物細節在 food.html）
+   ====================================================================== */
+function FSS_OV() {
+  var s = tx(70, 22, T('溫度', 'temperature'), 'm', 9.5);
+  s += box(52, 34, 36, 70, null, 8) + box(52, 108, 36, 150, null, 8) + '<rect x="52" y="108" width="36" height="150" rx="8" fill="none" stroke="var(--muted)" stroke-width="2" stroke-dasharray="5 3"/>' + box(52, 262, 36, 50, null, 8) + box(52, 316, 36, 40, null, 8);
+  s += tx(98, 106, '60 °C', '', 10, 'start') + tx(98, 264, '7 °C', '', 10, 'start') + tx(98, 318, '−18 °C', '', 10, 'start');
+  s += tx(30, 190, T('細菌', 'bacteria'), 'm', 9) + tx(30, 204, T('快速繁殖', 'grow fast'), 'm', 9);
+  return s;
+}
+var FSS_O = ['hot', 'dz', 'cold', 'frz'];
+function FSS_B() { return [{ id: 'h1', x: 250, y: 70, w: 180, a: 'hot', o: FSS_O }, { id: 'h2', x: 250, y: 184, w: 180, a: 'dz', o: FSS_O }, { id: 'h3', x: 250, y: 286, w: 180, a: 'cold', o: FSS_O }, { id: 'h4', x: 250, y: 340, w: 180, a: 'frz', o: FSS_O }]; }
+var FSS_AD = ['pres', 'aox', 'nit', 'swt'];
+var FSS_CT = ['afl', 'hg', 'cd', 'diox'];
+var FSS = { id: 'fss', zh: '食物供應與食品安全', en: 'Food supply and food safety', alias: '危險溫度帶・食品中毒預防五要・食品添加物與 ADI・亞硝酸鹽・黃麴毒素與重金屬', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    hot: { zh: '熱藏（60 °C 以上）', en: 'Hot holding (≥ 60 °C)' }, dz: { zh: '危險溫度帶（7～60 °C）', en: 'Danger zone (7–60 °C)' }, cold: { zh: '冷藏（7 °C 以下）', en: 'Refrigeration (≤ 7 °C)' }, frz: { zh: '冷凍（−18 °C 以下）', en: 'Freezing (≤ −18 °C)' },
+    kill: { zh: '殺死大部分細菌', en: 'Kills most bacteria' }, stop: { zh: '只是停止生長，解凍後會再長', en: 'Stops growth only; resumes after thawing' },
+    sep: { zh: '生熟食分開', en: 'Separate raw and cooked' }, wash: { zh: '洗手', en: 'Wash hands' }, heat: { zh: '徹底加熱', en: 'Cook thoroughly' },
+    vp: { zh: '腸炎弧菌', en: 'Vibrio parahaemolyticus' }, sa: { zh: '金黃色葡萄球菌', en: 'Staphylococcus aureus' }, cb: { zh: '肉毒桿菌', en: 'Clostridium botulinum' },
+    pres: { zh: '防腐劑（己二烯酸、苯甲酸）', en: 'Preservatives (sorbic, benzoic acid)' }, aox: { zh: '抗氧化劑（BHA、BHT、維生素 E）', en: 'Antioxidants (BHA, BHT, vitamin E)' }, nit: { zh: '亞硝酸鹽（保色、抑制肉毒桿菌）', en: 'Nitrite (color, anti-botulinum)' }, swt: { zh: '甜味劑（阿斯巴甜）', en: 'Sweeteners (aspartame)' },
+    nsa: { zh: '亞硝胺', en: 'Nitrosamines' }, pku: { zh: '苯酮尿症患者', en: 'People with phenylketonuria' },
+    afl: { zh: '黃麴毒素', en: 'Aflatoxin' }, hg: { zh: '甲基汞', en: 'Methylmercury' }, cd: { zh: '鎘', en: 'Cadmium' }, diox: { zh: '戴奧辛', en: 'Dioxins' },
+    haccp: { zh: '食品安全管制系統（HACCP）', en: 'HACCP' }, gmp: { zh: '只看最終產品檢驗', en: 'Testing only the end product' }
+  },
+  levels: [
+    { t: '先看全貌：溫度與細菌', kind: 'ov', h: 370, svg: FSS_OV, blanks: FSS_B(),
+      intro: ['大多數引起食品中毒的細菌，在室溫到體溫之間長得最快，有些幾十分鐘就能加倍。所以保存食物最重要的是「不要讓它待在中間那段溫度」。',
+        '左邊的溫度計從上到下分成四段，虛線框起來的是細菌快速繁殖的範圍。右邊填上每一段的名稱（依台灣的規定）。',
+        '細菌本身、毒素型和感染型中毒的細節，在 <a href="food.html">《圖解營養化學與食品》</a>的「食品微生物」分頁。'],
+      done: ['[[熱藏 60 °C 以上；危險溫度帶 7～60 °C；冷藏 7 °C 以下；冷凍 −18 °C 以下。]]', '煮好的食物在室溫放置不要超過 2 小時；冷凍只能讓細菌停止生長，不會殺死它們。'] },
+    { t: '預防食品中毒', kind: 'list',
+      intro: ['衛福部的預防食品中毒五要原則：要洗手、要新鮮、要生熟食分開、要徹底加熱、要低溫保存。',
+        '台灣最常見的病因：海鮮裡一種喜歡鹽分的細菌；手上傷口化膿帶來的細菌（產生的毒素加熱也破壞不了）；以及罐頭、真空包裝低酸食品中一種厭氧、產生神經毒素的細菌。'],
+      listTitle: '是哪一個', list: [['切生魚的砧板直接切熟食', { a: 'sep', o: ['sep', 'wash', 'heat'] }], ['廚師手上有傷口', { a: 'wash', o: ['sep', 'wash', 'heat'] }], ['雞肉中心溫度不夠', { a: 'heat', o: ['sep', 'wash', 'heat'] }],
+        ['生食海鮮、嗜鹽性', { a: 'vp', o: ['vp', 'sa', 'cb'] }], ['手部傷口、耐熱腸毒素', { a: 'sa', o: ['vp', 'sa', 'cb'] }], ['真空包裝、罐頭、神經毒素', { a: 'cb', o: ['vp', 'sa', 'cb'] }], ['冷凍對細菌的作用', { a: 'stop', o: ['kill', 'stop'] }]],
+      done: ['[[預防食品中毒五要：洗手、新鮮、生熟食分開、徹底加熱、低溫保存。]]', '[[腸炎弧菌（海鮮、嗜鹽）、金黃色葡萄球菌（傷口、耐熱毒素）、肉毒桿菌（厭氧、低酸罐頭）。]]'] },
+    { t: '食品添加物與 ADI', kind: 'list',
+      intro: ['食品添加物必須是衛福部公告准用的品項，並依規定的範圍和用量使用。',
+        '安全量的訂法：先找出動物實驗中不會產生任何不良反應的最高劑量，再除以 100 的安全係數（物種差異 10 × 個體差異 10），得到人每天每公斤體重可以終生攝取的量（ADI）。',
+        '肉品加的亞硝酸鹽可以保持紅色、抑制肉毒桿菌，但在胃裡可能和胺類作用形成致癌物；維生素 C 可以抑制這個反應。阿斯巴甜含苯丙胺酸，某種遺傳代謝疾病的人不能吃。'],
+      listTitle: '是哪一類', list: [['醬油、果醬裡抑制黴菌和細菌', { a: 'pres', o: FSS_AD }], ['油脂中防止酸敗', { a: 'aox', o: FSS_AD }], ['香腸、火腿的保色劑', { a: 'nit', o: FSS_AD }], ['代糖', { a: 'swt', o: FSS_AD }], ['亞硝酸鹽在胃中可能形成', { a: 'nsa', o: ['nsa', 'afl'] }], ['不能使用阿斯巴甜的人', { a: 'pku', o: ['pku', 'cb'] }]],
+      countsTitle: '算算看', counts: [['無不良反應劑量 500 mg/kg，ADI ＝ 幾 mg/kg', '5', ['0.5', '5', '50', '500']], ['ADI 5 mg/kg，60 公斤成人每天可攝取幾 mg', '300', ['30', '60', '300', '500']]],
+      done: ['[[ADI ＝ NOAEL ÷ 100（安全係數）。]]', '[[亞硝酸鹽：保色、抑制肉毒桿菌；可能形成亞硝胺，維生素 C 可抑制。阿斯巴甜：苯酮尿症患者禁用。]]'] },
+    { t: '天然毒素與環境汙染物', kind: 'list',
+      intro: ['花生、玉米、穀類保存在溫暖潮濕處，會長出黴菌，產生一種耐熱、和肝癌有關的毒素。',
+        '工業排放的汞在水中被微生物轉成有機汞，經食物鏈累積在大型掠食魚（鯊魚、旗魚、鮪魚）體內，傷害胎兒神經發育，孕婦要限制。',
+        '另一種重金屬汙染稻米，曾在日本造成骨頭疼痛、易骨折的病，也傷腎臟。焚化不完全產生的一類有機汙染物，脂溶性、會累積在動物脂肪和乳汁中。'],
+      listTitle: '是哪一個', list: [['花生、玉米發霉', { a: 'afl', o: FSS_CT }], ['大型魚類、影響胎兒神經', { a: 'hg', o: FSS_CT }], ['汙染稻米、骨痛病', { a: 'cd', o: FSS_CT }], ['焚化產生、累積在脂肪', { a: 'diox', o: FSS_CT }],
+        ['事先找出製程中的危害點並管制', { a: 'haccp', o: ['haccp', 'gmp'] }]],
+      done: ['[[黃麴毒素：花生、玉米，肝癌；甲基汞：大型魚，胎兒神經；鎘：稻米，痛痛病；戴奧辛：脂溶性，累積在脂肪。]]', 'HACCP：危害分析重要管制點，事前預防而不是事後檢驗。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['台灣規定冷藏的溫度是', { a: 'cold', o: FSS_O }, '。'],
+        ['手部傷口化膿造成、毒素耐熱的是', { a: 'sa', o: ['vp', 'sa', 'cb'] }, '。'],
+        ['亞硝酸鹽在胃裡可能和胺類形成', { a: 'nsa', o: ['nsa', 'afl'] }, '，維生素 C 可以抑制。'],
+        ['花生、玉米發霉產生、與肝癌有關的是', { a: 'afl', o: FSS_CT }, '。'],
+        ['大型掠食魚類累積的是', { a: 'hg', o: FSS_CT, lang: 'en' }, '。'],
+        ['細菌快速繁殖的 7～60 °C 叫', { a: 'dz', o: FSS_O, lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 370, force: 'en', svg: FSS_OV, blanks: FSS_B(),
+      intro: ['第一關的圖，全部用英文作答；下面再加幾個名詞。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: '名詞', list: [['Seafood, salt-loving bacterium', { a: 'vp', o: ['vp', 'sa', 'cb'] }], ['Keeps cured meat red', { a: 'nit', o: FSS_AD }], ['Preventive hazard control system', { a: 'haccp', o: ['haccp', 'gmp'] }]] }
+  ] };
+/* ======================================================================
+   消化與吸收（重點對照，第 4 章；詳細生理在《圖解生理生化》）
+   ====================================================================== */
+var DIG_R = [['口腔', 'Mouth', 'mo'], ['胃', 'Stomach', 'st'], ['肝臟與膽囊', 'Liver and gallbladder', 'lv'], ['胰臟', 'Pancreas', 'pc'], ['小腸', 'Small intestine', 'si'], ['大腸', 'Large intestine', 'li']];
+var DIG_O = DIG_R.map(function (r) { return r[2]; });
+function DIG_OV() {
+  var s = tx(64, 22, T('器官', 'organ'), 'm', 9.5) + tx(250, 22, T('主要的工作', 'main job'), 'm', 9.5);
+  DIG_R.forEach(function (r, i) { var y = 50 + i * 58; s += pill(64, y, 110, { zh: r[0], en: r[1] }, 'pill') + arrow(120, y, 140, y); });
+  return s;
+}
+function DIG_B() { return DIG_R.map(function (r, i) { return { id: 'o' + i, x: 252, y: 50 + i * 58, w: 196, a: r[2], o: DIG_O }; }); }
+var DIG_EZ = ['amy', 'pep', 'lip', 'tryp', 'lact'], DIG_HM = ['gas', 'sec', 'cck'];
+var DIG = { id: 'dig', zh: '消化與吸收（重點對照）', en: 'Digestion and absorption', alias: '消化道分工・消化酵素・腸道荷爾蒙・吸收方式與路線・常見消化問題', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    mo: { zh: '咀嚼，唾液澱粉酶開始分解澱粉', en: 'Chewing; salivary amylase starts on starch' }, st: { zh: '胃酸與胃蛋白酶開始分解蛋白質', en: 'Acid and pepsin start on protein' }, lv: { zh: '膽汁乳化脂肪', en: 'Bile emulsifies fat' },
+    pc: { zh: '分泌多種消化酵素與碳酸氫鹽', en: 'Secretes enzymes and bicarbonate' }, si: { zh: '大部分營養素的消化與吸收', en: 'Most digestion and absorption' }, li: { zh: '吸收水分，細菌發酵纖維', en: 'Absorbs water; bacteria ferment fiber' },
+    amy: { zh: '澱粉酶', en: 'Amylase' }, pep: { zh: '胃蛋白酶', en: 'Pepsin' }, lip: { zh: '胰脂解酶', en: 'Pancreatic lipase' }, tryp: { zh: '胰蛋白酶', en: 'Trypsin' }, lact: { zh: '乳糖酶（刷狀緣）', en: 'Lactase (brush border)' },
+    gas: { zh: '胃泌素', en: 'Gastrin' }, sec: { zh: '胰泌素', en: 'Secretin' }, cck: { zh: '膽囊收縮素（CCK）', en: 'Cholecystokinin (CCK)' },
+    sglt: { zh: '鈉依賴型主動運輸', en: 'Sodium-dependent active transport' }, fac: { zh: '促進性擴散', en: 'Facilitated diffusion' },
+    port: { zh: '門靜脈 → 肝臟', en: 'Portal vein → liver' }, lymph: { zh: '乳糜微粒 → 淋巴', en: 'Chylomicrons → lymph' },
+    ile: { zh: '迴腸', en: 'Ileum' }, duo: { zh: '十二指腸', en: 'Duodenum' }, scfa: { zh: '短鏈脂肪酸', en: 'Short-chain fatty acids' },
+    lacti: { zh: '乳糖不耐', en: 'Lactose intolerance' }, gerd: { zh: '胃食道逆流', en: 'Gastroesophageal reflux' }, hp: { zh: '幽門螺旋桿菌', en: 'Helicobacter pylori' }, cons: { zh: '便祕', en: 'Constipation' }
+  },
+  levels: [
+    { t: '先看全貌：消化道的分工', kind: 'ov', h: 380, svg: DIG_OV, blanks: DIG_B(),
+      intro: ['消化是把食物裡的大分子切成能吸收的小分子；吸收是把它們送進血液或淋巴。食物經過的管子（口腔、胃、小腸、大腸）和旁邊分泌消化液進來的器官（肝膽、胰臟）各有分工。',
+        '右邊填上每個器官最主要的工作。器官本身的構造、神經和荷爾蒙調控，在<a href="pathway.html">《圖解生理生化》</a>的「消化道與胃」「肝、膽、胰與消化的調控」「消化與吸收」三個單元有詳細的圖。'],
+      done: ['[[口腔：澱粉開始分解；胃：蛋白質開始分解；膽汁：乳化脂肪；胰臟：酵素 ＋ 碳酸氫鹽；小腸：主要的消化吸收；大腸：水分、電解質、細菌發酵。]]', '胃只吸收少量的水、酒精和某些藥物；脂肪的消化幾乎都在小腸。'] },
+    { t: '消化酵素與腸道荷爾蒙', kind: 'list',
+      intro: ['三大營養素各有負責的酵素：澱粉從口腔開始，在小腸由胰臟的同一種酵素接手，最後由小腸刷狀緣的雙醣酶切成單醣；蛋白質從胃開始，在小腸由胰臟的蛋白酶繼續；脂肪則幾乎都靠胰臟的脂解酶。',
+        '三種腸道荷爾蒙協調整個過程：食物進胃時，胃分泌一種荷爾蒙讓胃酸增加；酸性食糜進入十二指腸時，小腸分泌一種荷爾蒙，讓胰臟送出碳酸氫鹽中和；脂肪和蛋白質進入十二指腸時，另一種荷爾蒙讓膽囊收縮、胰臟分泌酵素。'],
+      listTitle: '是哪一個', list: [['口腔和胰臟都會分泌，分解澱粉', { a: 'amy', o: DIG_EZ }], ['胃裡分解蛋白質', { a: 'pep', o: DIG_EZ }], ['在小腸分解三酸甘油酯', { a: 'lip', o: DIG_EZ }], ['在小腸分解蛋白質', { a: 'tryp', o: DIG_EZ }], ['缺乏時喝牛奶脹氣腹瀉', { a: 'lact', o: DIG_EZ }],
+        ['刺激胃酸分泌', { a: 'gas', o: DIG_HM }], ['刺激胰臟分泌碳酸氫鹽', { a: 'sec', o: DIG_HM }], ['刺激膽囊收縮、胰臟分泌酵素', { a: 'cck', o: DIG_HM }]],
+      done: ['[[胃泌素 → 胃酸；胰泌素 → 碳酸氫鹽；CCK → 膽囊收縮與胰酵素。]]', '胰蛋白酶原由小腸的腸激酶活化，再活化其他胰臟蛋白酶原。'] },
+    { t: '吸收的方式與路線', kind: 'list',
+      intro: ['小腸有環狀皺褶、絨毛、微絨毛，表面積大到像一個網球場。',
+        '葡萄糖和半乳糖要和鈉一起、消耗能量才能進入小腸細胞；果糖則順著濃度差，由載體幫忙進入。胺基酸多半也是主動運輸。',
+        '水溶性的營養素（單醣、胺基酸、水溶性維生素、礦物質）從微血管進入門靜脈，先到肝臟；長鏈脂肪酸和脂溶性維生素則在細胞內包成乳糜微粒，從淋巴進入血液，先繞過肝臟。中短鏈脂肪酸例外，可以直接走門靜脈。',
+        '小腸的最後一段負責吸收 B12 和回收膽鹽；鐵和鈣主要在第一段吸收。大腸的細菌發酵纖維，產生能被大腸細胞利用的小分子脂肪酸。'],
+      listTitle: '是哪一個', list: [['葡萄糖、半乳糖的吸收', { a: 'sglt', o: ['sglt', 'fac'] }], ['果糖的吸收', { a: 'fac', o: ['sglt', 'fac'] }], ['胺基酸、單醣的運送路線', { a: 'port', o: ['port', 'lymph'] }], ['長鏈脂肪酸、脂溶性維生素', { a: 'lymph', o: ['port', 'lymph'] }],
+        ['吸收 B12、回收膽鹽', { a: 'ile', o: ['ile', 'duo'] }], ['鐵、鈣主要的吸收部位', { a: 'duo', o: ['ile', 'duo'] }], ['大腸細菌發酵纖維的產物', { a: 'scfa', o: ['scfa', 'lymph'] }]],
+      done: ['[[水溶性營養素 → 門靜脈 → 肝臟；長鏈脂肪與脂溶性維生素 → 乳糜微粒 → 淋巴。]]', '[[十二指腸：鐵、鈣；迴腸：B12、膽鹽（腸肝循環）。]]'] },
+    { t: '常見的消化問題', kind: 'list',
+      intro: ['乳糖酶在斷奶後活性下降，很多亞洲成人喝奶會不舒服；少量多次、改喝優酪乳或起司通常可以接受。',
+        '下食道括約肌鬆弛讓胃酸往上跑，造成胸口灼熱；飯後不要立刻躺下、少吃大餐和高脂食物。',
+        '大部分消化性潰瘍和一種胃裡的細菌有關，也和長期使用止痛藥有關。',
+        '纖維和水分不足、活動量少，是排便困難最常見的原因。'],
+      listTitle: '是哪一個', list: [['喝牛奶後脹氣、腹瀉', { a: 'lacti', o: ['lacti', 'gerd', 'cons'] }], ['胸口灼熱、飯後躺下更嚴重', { a: 'gerd', o: ['lacti', 'gerd', 'cons'] }], ['消化性潰瘍最常見的病因', { a: 'hp', o: ['hp', 'lact'] }], ['多吃纖維、多喝水可以改善', { a: 'cons', o: ['lacti', 'gerd', 'cons'] }]],
+      done: ['[[乳糖不耐：乳糖酶不足；消化性潰瘍：幽門螺旋桿菌、止痛藥；便祕：纖維與水分不足。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['刺激胰臟分泌碳酸氫鹽的荷爾蒙是', { a: 'sec', o: DIG_HM }, '。'],
+        ['果糖在小腸的吸收方式是', { a: 'fac', o: ['sglt', 'fac'] }, '。'],
+        ['B12 與膽鹽在', { a: 'ile', o: ['ile', 'duo'] }, '吸收。'],
+        ['長鏈脂肪酸吸收後的路線是', { a: 'lymph', o: ['port', 'lymph'] }, '。'],
+        ['刺激膽囊收縮的荷爾蒙是', { a: 'cck', o: DIG_HM, lang: 'en' }, '。'],
+        ['在胃裡分解蛋白質的酵素是', { a: 'pep', o: DIG_EZ, lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 400, force: 'en', svg: DIG_OV, blanks: DIG_B(),
+      intro: ['第一關的圖，全部用英文作答；下面再加幾個名詞。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: '名詞', list: [['Stimulates gastric acid', { a: 'gas', o: DIG_HM }], ['Glucose and galactose uptake', { a: 'sglt', o: ['sglt', 'fac'] }], ['Main cause of peptic ulcers', { a: 'hp', o: ['hp', 'lact'] }]] }
+  ] };
+/* ======================================================================
+   能量代謝（重點對照，第 9 章；詳細路徑在《圖解生理生化》）
+   ====================================================================== */
+function EMT_OV() {
+  var s = pill(60, 40, 104, { zh: '葡萄糖', en: 'Glucose' }, 'pill kH') + pill(180, 40, 104, { zh: '脂肪酸', en: 'Fatty acids' }, 'pill kC') + pill(300, 40, 104, { zh: '胺基酸', en: 'Amino acids' }, 'pill kE');
+  [60, 180, 300].forEach(function (x) { s += arrow(x, 60, x, 90) + sl(x + ',130 ' + x + ',150 180,166', 'M', 2); });
+  s += pill(180, 188, 130, { zh: '乙醯輔酶 A', en: 'Acetyl-CoA' }, 'pill') + arrow(180, 208, 180, 232) + arrow(180, 278, 180, 302) + arrow(180, 346, 180, 366);
+  s += tx(180, 386, 'ATP', '', 13) + tx(316, 256, T('粒線體', 'mitochondria'), 'm', 9) + tx(316, 324, T('粒線體內膜', 'inner membrane'), 'm', 9);
+  return s;
+}
+var EMT_O = ['glyc', 'box', 'deam', 'tca', 'etc'];
+function EMT_B() { return [{ id: 'w1', x: 60, y: 110, w: 108, a: 'glyc', o: EMT_O }, { id: 'w2', x: 180, y: 110, w: 108, a: 'box', o: EMT_O }, { id: 'w3', x: 300, y: 110, w: 108, a: 'deam', o: EMT_O }, { id: 'w4', x: 180, y: 256, w: 150, a: 'tca', o: EMT_O }, { id: 'w5', x: 180, y: 324, w: 150, a: 'etc', o: EMT_O }]; }
+var EMT_ST = ['gly2', 'gng', 'ket'];
+var EMT = { id: 'emt', zh: '能量代謝（重點對照）', en: 'Energy metabolism', alias: '糖解・β-氧化・檸檬酸循環・電子傳遞鏈・有氧與無氧・吃飽與飢餓・酮體', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    glyc: { zh: '糖解作用', en: 'Glycolysis' }, box: { zh: 'β-氧化', en: 'β-Oxidation' }, deam: { zh: '去胺作用', en: 'Deamination' }, tca: { zh: '檸檬酸循環', en: 'Citric acid cycle' }, etc: { zh: '電子傳遞鏈', en: 'Electron transport chain' },
+    cyto: { zh: '細胞質', en: 'Cytosol' }, mito: { zh: '粒線體', en: 'Mitochondria' }, lac: { zh: '乳酸', en: 'Lactate' }, acoa: { zh: '乙醯輔酶 A', en: 'Acetyl-CoA' },
+    cori: { zh: '柯里氏循環', en: 'Cori cycle' }, ala: { zh: '葡萄糖–丙胺酸循環', en: 'Glucose–alanine cycle' },
+    gly3: { zh: '甘油', en: 'Glycerol' }, fa: { zh: '偶數碳脂肪酸', en: 'Even-chain fatty acids' },
+    ins: { zh: '胰島素', en: 'Insulin' }, gcg: { zh: '升糖素', en: 'Glucagon' },
+    gly2: { zh: '肝醣分解', en: 'Glycogenolysis' }, gng: { zh: '糖質新生', en: 'Gluconeogenesis' }, ket: { zh: '酮體生成', en: 'Ketogenesis' },
+    brain: { zh: '腦（長期飢餓後）', en: 'Brain (after prolonged fasting)' }, rbc: { zh: '紅血球', en: 'Red blood cells' }
+  },
+  levels: [
+    { t: '先看全貌：三大營養素怎麼變成 ATP', kind: 'ov', h: 400, svg: EMT_OV, blanks: EMT_B(),
+      intro: ['醣類（琥珀色）、脂肪（紫色）、蛋白質（玫瑰色）走不同的路，最後幾乎都匯集成同一個兩碳分子，進入粒線體裡的一個循環，產生的 NADH、FADH₂ 再交給內膜上的一連串蛋白質，做出大部分的 ATP。',
+        '填上每一條路的名稱。每條路的步驟、酵素和調控，在<a href="pathway.html">《圖解生理生化》</a>的糖解、β-氧化、檸檬酸循環、電子傳遞鏈等單元有逐步的圖；這裡只整理營養學要的重點。'],
+      done: ['[[葡萄糖 →（糖解）丙酮酸 → 乙醯輔酶 A；脂肪酸 →（β-氧化）乙醯輔酶 A；胺基酸 →（去胺）碳骨架；乙醯輔酶 A →（檸檬酸循環）→（電子傳遞鏈）ATP。]]'] },
+    { t: '有氧與無氧、可逆與不可逆', kind: 'list',
+      intro: ['糖解在細胞質，不需要氧，一個葡萄糖淨得 2 個 ATP。氧氣不夠（激烈運動）或沒有粒線體（紅血球）時，丙酮酸變成乳酸；乳酸送到肝臟再做回葡萄糖。',
+        '有氧時丙酮酸進入粒線體，變成乙醯輔酶 A，這一步不能逆轉。所以：葡萄糖可以變成脂肪，但脂肪酸不能變回葡萄糖；只有三酸甘油酯的甘油部分可以。',
+        '一個葡萄糖完全氧化約可產生 30～32 個 ATP。肌肉分解的胺基酸（主要是丙胺酸）也會送到肝臟做葡萄糖。'],
+      listTitle: '是哪一個', list: [['糖解作用發生的位置', { a: 'cyto', o: ['cyto', 'mito'] }], ['β-氧化、檸檬酸循環的位置', { a: 'mito', o: ['cyto', 'mito'] }], ['缺氧時丙酮酸的去向', { a: 'lac', o: ['lac', 'acoa'] }], ['肌肉乳酸送到肝臟做回葡萄糖', { a: 'cori', o: ['cori', 'ala'] }],
+        ['三酸甘油酯中可以做成葡萄糖的', { a: 'gly3', o: ['gly3', 'fa'] }], ['只能用葡萄糖、不能用脂肪酸產能的細胞', { a: 'rbc', o: ['rbc', 'brain'] }]],
+      countsTitle: '算算看', counts: [['糖解作用一個葡萄糖淨得幾個 ATP', '2', ['2', '4', '30', '38']], ['一個葡萄糖完全氧化約得幾個 ATP（新的換算）', '32', ['2', '12', '32', '38']]],
+      done: ['[[糖解：細胞質、無氧、淨 2 ATP；丙酮酸 → 乙醯輔酶 A 不可逆，所以脂肪酸不能做成葡萄糖（甘油可以）。]]', '[[柯里氏循環：肌肉乳酸 → 肝臟葡萄糖；葡萄糖–丙胺酸循環：肌肉丙胺酸 → 肝臟葡萄糖。]]'] },
+    { t: '吃飽與飢餓', kind: 'list',
+      intro: ['吃飽時血糖上升，胰島素讓肝臟和肌肉存肝醣、讓脂肪組織存脂肪、讓肌肉合成蛋白質。',
+        '空腹時升糖素增加。前大約一天，肝臟先分解肝醣維持血糖；肝醣用完後，肝臟用乳酸、甘油、胺基酸做新的葡萄糖；飢餓持續好幾天，肝臟把脂肪酸做成酮體，腦逐漸改用酮體，減少肌肉蛋白質的分解。',
+        '每天至少要吃 130 公克醣類，就是根據腦部對葡萄糖的需要訂的；醣類吃太少時，就會大量產生酮體。'],
+      listTitle: '是哪一個', list: [['吃飽時主導的荷爾蒙', { a: 'ins', o: ['ins', 'gcg'] }], ['空腹時主導的荷爾蒙', { a: 'gcg', o: ['ins', 'gcg'] }], ['空腹第一天維持血糖的主要方式', { a: 'gly2', o: EMT_ST }], ['肝醣用完後維持血糖的方式', { a: 'gng', o: EMT_ST }], ['長期飢餓、醣類吃太少時增加', { a: 'ket', o: EMT_ST }], ['長期飢餓後能改用酮體的', { a: 'brain', o: ['rbc', 'brain'] }]],
+      done: ['[[吃飽：胰島素 → 合成肝醣、脂肪、蛋白質；空腹：升糖素 → 肝醣分解 → 糖質新生 → 酮體。]]', '醣類 RDA 130 g 是以腦部的葡萄糖需要量為依據，可以避免酮症、節省蛋白質。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['糖解作用在', { a: 'cyto', o: ['cyto', 'mito'] }, '進行。'],
+        ['脂肪酸不能做成葡萄糖，但三酸甘油酯的', { a: 'gly3', o: ['gly3', 'fa'] }, '可以。'],
+        ['肝醣用完後，肝臟靠', { a: 'gng', o: EMT_ST }, '維持血糖。'],
+        ['肌肉的乳酸送回肝臟做成葡萄糖，叫', { a: 'cori', o: ['cori', 'ala'] }, '。'],
+        ['脂肪酸分解成乙醯輔酶 A 的過程是', { a: 'box', o: EMT_O, lang: 'en' }, '。'],
+        ['吃飽時主導的荷爾蒙是', { a: 'ins', o: ['ins', 'gcg'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 400, force: 'en', svg: EMT_OV, blanks: EMT_B(),
+      intro: ['第一關的圖，全部用英文作答；下面再加幾個名詞。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: '名詞', list: [['Fasting hormone', { a: 'gcg', o: ['ins', 'gcg'] }], ['Made from fatty acids in prolonged fasting', { a: 'ket', o: EMT_ST }], ['Cells that rely only on glucose', { a: 'rbc', o: ['rbc', 'brain'] }]] }
+  ] };
+/* ======================================================================
+   運動營養（照國考補）
+   ====================================================================== */
+function SPT_OV() {
+  var s = '<line x1="20" y1="200" x2="350" y2="200" stroke="var(--muted)" stroke-width="1.5"/>' + tx(350, 216, T('運動持續時間 →', 'duration →'), 'm', 9, 'end');
+  s += tx(50, 216, T('幾秒', 'seconds'), 'm', 9) + tx(160, 216, T('1～2 分鐘', '1–2 min'), 'm', 9) + tx(290, 228, T('數分鐘以上', 'minutes to hours'), 'm', 9);
+  s += sp('M 20 70 C 50 70 70 190 110 196', 'M', 3) + sp('M 30 196 C 90 60 150 60 230 196', 'M', 3, '6 4') + sp('M 60 196 C 140 150 200 80 350 70', 'M', 3);
+  s += tx(16, 40, T('提供 ATP 的比例', 'share of ATP'), 'm', 9, 'start');
+  s += tx(30, 62, '①', '', 13) + tx(130, 78, '②', '', 13) + tx(340, 58, '③', '', 13);
+  s += tx(70, 244, '①', 'm', 11) + tx(180, 288, '②', 'm', 11) + tx(290, 244, '③', 'm', 11);
+  return s;
+}
+var SPT_O = ['pcr', 'anae', 'aer'];
+function SPT_B() { return [{ id: 's1', x: 70, y: 270, w: 120, a: 'pcr', o: SPT_O }, { id: 's2', x: 180, y: 314, w: 130, a: 'anae', o: SPT_O }, { id: 's3', x: 290, y: 270, w: 120, a: 'aer', o: SPT_O }]; }
+var SPT = { id: 'spt', zh: '運動營養', en: 'Nutrition and fitness', alias: '三種能量系統・運動強度與燃料・肝醣與醣類負荷・運動員蛋白質・水分與電解質・肌酸', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    pcr: { zh: 'ATP–磷酸肌酸系統', en: 'ATP–creatine phosphate system' }, anae: { zh: '無氧糖解', en: 'Anaerobic glycolysis' }, aer: { zh: '有氧系統', en: 'Aerobic system' },
+    cho: { zh: '醣類（肝醣）', en: 'Carbohydrate (glycogen)' }, fat: { zh: '脂肪', en: 'Fat' },
+    wall: { zh: '肌肉肝醣耗盡', en: 'Muscle glycogen depleted' }, dehy: { zh: '脫水', en: 'Dehydration' },
+    load: { zh: '醣類負荷（肝醣超補）', en: 'Carbohydrate loading' }, keto: { zh: '比賽前一週大量吃肉', en: 'High-meat week before race' },
+    rec: { zh: '醣類 ＋ 蛋白質', en: 'Carbohydrate + protein' }, fato: { zh: '只吃油脂', en: 'Fat only' },
+    hypo: { zh: '低血鈉', en: 'Hyponatremia' }, spd: { zh: '含醣與鈉的運動飲料', en: 'Sports drink with carbs and sodium' },
+    crea: { zh: '肌酸', en: 'Creatine' }, caff: { zh: '咖啡因', en: 'Caffeine' },
+    red: { zh: '運動相對能量不足（RED-S）', en: 'Relative energy deficiency in sport (RED-S)' }, iron: { zh: '鐵', en: 'Iron' }, vitc: { zh: '維生素 C', en: 'Vitamin C' }
+  },
+  levels: [
+    { t: '先看全貌：三種能量系統', kind: 'ov', h: 340, svg: SPT_OV, blanks: SPT_B(),
+      intro: ['肌肉只能直接用 ATP，但存量只夠幾秒。身體用三套系統補充 ATP，依運動時間長短接力：',
+        '最快的一套用肌肉裡現成的高能磷酸化合物，把 ADP 立刻變回 ATP，撐大約 10 秒（衝刺、舉重）；接著是不需要氧、分解葡萄糖的糖解，速度快但會產生乳酸，撐 1～2 分鐘（400 公尺）；超過幾分鐘以後主要靠需要氧的粒線體，燃燒醣類和脂肪，產量最多但最慢（馬拉松）。',
+        '圖上三條線分別是三套系統的貢獻（①實線先高後落、②虛線中間最高、③實線越久越高），填上名稱。'],
+      done: ['[[ATP–磷酸肌酸：約 10 秒；無氧糖解：約 1～2 分鐘，產生乳酸；有氧系統：長時間，燃燒醣類與脂肪。]]', '三套系統是同時運作的，只是在不同時間點，誰的比例最大不同。'] },
+    { t: '燃料：醣類與脂肪', kind: 'list',
+      intro: ['運動強度越高，用醣類的比例越高；低到中強度、持續越久，脂肪的比例越高。但即使是長時間運動，燃燒脂肪也需要一些醣類幫忙。',
+        '肌肉和肝臟的肝醣存量有限，激烈運動大約 1.5～2 小時就會用完，選手會突然「撞牆」、跑不動。耐力比賽前幾天提高醣類比例、減少訓練量，可以把肌肉肝醣存得更多。',
+        '運動後的恢復期，同時補充醣類和蛋白質，能加快肝醣回補和肌肉修復。'],
+      listTitle: '是哪一個', list: [['高強度運動主要的燃料', { a: 'cho', o: ['cho', 'fat'] }], ['低強度、長時間運動比例增加的燃料', { a: 'fat', o: ['cho', 'fat'] }], ['馬拉松後段突然跑不動', { a: 'wall', o: ['wall', 'dehy'] }], ['耐力賽前增加肝醣存量的方法', { a: 'load', o: ['load', 'keto'] }], ['運動後恢復餐', { a: 'rec', o: ['rec', 'fato'] }]],
+      done: ['[[強度越高 → 醣類比例越高；時間越長、強度越低 → 脂肪比例越高。]]', '[[肝醣耗盡 → 撞牆；醣類負荷可增加肌肉肝醣；運動後補充醣類 ＋ 蛋白質。]]'] },
+    { t: '蛋白質、水分與電解質', kind: 'list',
+      intro: ['規律訓練的人蛋白質需要量比一般人高，一般建議每公斤體重 1.2～2.0 公克，分散在各餐，從食物就能吃到，不一定需要補充品。',
+        '流汗會失去水分和鈉。運動前、中、後都要補水；運動後每減少 1 公斤體重，約補充 1.25～1.5 公升水。超過一小時的運動，可以喝含醣和鈉的運動飲料。',
+        '長時間運動只大量喝白開水、不補鈉，反而可能造成血鈉被稀釋，嚴重時會意識混亂、抽搐。'],
+      listTitle: '是哪一個', list: [['長時間運動只喝大量白開水', { a: 'hypo', o: ['hypo', 'dehy'] }], ['超過一小時的運動適合喝', { a: 'spd', o: ['spd', 'fato'] }]],
+      countsTitle: '算算看', counts: [['60 公斤選手，蛋白質以 1.5 g/kg 計，每天幾公克', '90', ['48', '60', '90', '120']], ['運動後體重少了 1 公斤，至少補充幾公升水', '1.25', ['0.5', '1', '1.25', '2.5']]],
+      done: ['[[運動員蛋白質 1.2～2.0 g/kg；運動後每減 1 kg 補 1.25～1.5 L 水。]]', '超過一小時的運動喝含 6～8% 醣類和鈉的運動飲料；只喝白開水可能低血鈉。'] },
+    { t: '補充品與特殊問題', kind: 'list',
+      intro: ['有證據能提升表現的補充品不多：一種能增加肌肉裡高能磷酸化合物的存量，對短時間爆發運動有幫助；另一種常見的提神成分，能延後疲勞感。',
+        '為了體重而長期吃太少的運動員，可能出現月經失調、骨質流失、免疫力下降等一連串問題，現在稱為運動相對能量不足。女性耐力運動員也容易缺乏一種與運送氧有關的礦物質。'],
+      listTitle: '是哪一個', list: [['增加肌肉磷酸肌酸、幫助爆發力', { a: 'crea', o: ['crea', 'caff'] }], ['延後疲勞感', { a: 'caff', o: ['crea', 'caff'] }], ['長期吃太少、月經失調、骨質流失', { a: 'red', o: ['red', 'hypo'] }], ['女性耐力運動員容易缺乏', { a: 'iron', o: ['iron', 'vitc'] }]],
+      done: ['[[肌酸：短時間爆發；咖啡因：延後疲勞；RED-S：能量不足 → 月經失調、骨質流失（舊稱女運動員三合症）；女性運動員注意鐵。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['10 秒內的衝刺主要靠', { a: 'pcr', o: SPT_O }, '。'],
+        ['運動強度越高，越依賴', { a: 'cho', o: ['cho', 'fat'] }, '。'],
+        ['耐力賽前增加肝醣存量的方法是', { a: 'load', o: ['load', 'keto'] }, '。'],
+        ['長時間運動只喝白開水，可能造成', { a: 'hypo', o: ['hypo', 'dehy'] }, '。'],
+        ['馬拉松主要的能量系統是', { a: 'aer', o: SPT_O, lang: 'en' }, '。'],
+        ['增加肌肉磷酸肌酸的補充品是', { a: 'crea', o: ['crea', 'caff'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 340, force: 'en', svg: SPT_OV, blanks: SPT_B(),
+      intro: ['第一關的圖，全部用英文作答；下面再加幾個名詞。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: '名詞', list: [['Running out of muscle glycogen', { a: 'wall', o: ['wall', 'dehy'] }], ['Main fuel at high intensity', { a: 'cho', o: ['cho', 'fat'] }], ['Low energy availability syndrome', { a: 'red', o: ['red', 'hypo'] }]] }
+  ] };
+/* ======================================================================
+   能量平衡與體重控制（第 10 章）
+   ====================================================================== */
+function EBW_OV() {
+  var s = tx(70, 24, T('一天的總熱量消耗', 'total energy expenditure'), 'm', 9.5);
+  s += box(20, 36, 100, 180, null, 8) + tx(70, 130, '60～70%', '', 12);
+  s += box(20, 222, 100, 76, null, 8) + tx(70, 264, '15～30%', '', 11);
+  s += box(20, 304, 100, 28, null, 6) + tx(70, 322, T('約 10%', '≈ 10%'), '', 10);
+  s += box(20, 338, 100, 10, null, 3) + tx(70, 366, T('很少', 'small'), 'm', 9);
+  [126, 260, 318, 343].forEach(function (y, i) { var by = [126, 260, 318, 380][i]; s += sl('124,' + y + ' 168,' + by, 'M', 1.5, '3 3'); });
+  return s;
+}
+var EBW_C = ['bmr', 'pa', 'tef', 'at'];
+function EBW_B() { return [{ id: 'g1', x: 262, y: 126, w: 180, a: 'bmr', o: EBW_C }, { id: 'g2', x: 262, y: 260, w: 180, a: 'pa', o: EBW_C }, { id: 'g3', x: 262, y: 318, w: 180, a: 'tef', o: EBW_C }, { id: 'g4', x: 262, y: 380, w: 180, a: 'at', o: EBW_C }]; }
+var EBW_BMI = ['uw', 'nw', 'ow', 'ob'];
+var EBW_HM = ['ghr', 'lep', 'cck'];
+var EBW = { id: 'ebw', zh: '能量平衡與體重控制', en: 'Energy balance and weight control', alias: '基礎代謝・食物熱效應・測量能量消耗・飢餓與飽足荷爾蒙・BMI 與體脂・減重原則・飲食障礙', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    bmr: { zh: '基礎代謝', en: 'Basal metabolism' }, pa: { zh: '身體活動', en: 'Physical activity' }, tef: { zh: '食物熱效應', en: 'Thermic effect of food' }, at: { zh: '適應性產熱', en: 'Adaptive thermogenesis' },
+    up: { zh: '使基礎代謝上升', en: 'Raises BMR' }, down: { zh: '使基礎代謝下降', en: 'Lowers BMR' },
+    pro: { zh: '蛋白質', en: 'Protein' }, cho: { zh: '醣類', en: 'Carbohydrate' }, fat: { zh: '脂肪', en: 'Fat' },
+    bat: { zh: '褐色脂肪（解偶聯蛋白）', en: 'Brown fat (uncoupling protein)' }, wat: { zh: '白色脂肪', en: 'White fat' },
+    dir: { zh: '直接測熱法（測散熱）', en: 'Direct calorimetry (heat)' }, ind: { zh: '間接測熱法（測 O₂、CO₂）', en: 'Indirect calorimetry (O₂, CO₂)' }, dlw: { zh: '雙標記水法', en: 'Doubly labeled water' },
+    ghr: { zh: '飢餓素（ghrelin）', en: 'Ghrelin' }, lep: { zh: '瘦體素（leptin）', en: 'Leptin' }, cck: { zh: '膽囊收縮素、PYY、GLP-1', en: 'CCK, PYY, GLP-1' }, hyp: { zh: '下視丘', en: 'Hypothalamus' }, pit: { zh: '腦下垂體', en: 'Pituitary' },
+    hun: { zh: '飢餓（生理）', en: 'Hunger (physiological)' }, app: { zh: '食慾（心理）', en: 'Appetite (psychological)' },
+    uw: { zh: '過輕', en: 'Underweight' }, nw: { zh: '健康體重', en: 'Healthy weight' }, ow: { zh: '過重', en: 'Overweight' }, ob: { zh: '肥胖', en: 'Obese' },
+    andr: { zh: '蘋果型（腹部肥胖）', en: 'Android (apple, abdominal)' }, gyn: { zh: '西洋梨型（臀腿肥胖）', en: 'Gynoid (pear)' },
+    dexa: { zh: '雙能量 X 光（DEXA）', en: 'DEXA' }, bia: { zh: '生物電阻法（BIA）', en: 'Bioelectrical impedance (BIA)' }, uww: { zh: '水中秤重法', en: 'Underwater weighing' },
+    water: { zh: '肝醣減少帶走的水', en: 'Water lost with glycogen' }, fatl: { zh: '體脂肪', en: 'Body fat' },
+    stim: { zh: '刺激控制', en: 'Stimulus control' }, self: { zh: '自我監測', en: 'Self-monitoring' }, orl: { zh: '抑制胰脂解酶的藥物', en: 'Pancreatic lipase inhibitor' },
+    an: { zh: '神經性厭食症', en: 'Anorexia nervosa' }, bn: { zh: '神經性暴食症', en: 'Bulimia nervosa' }, bed: { zh: '嗜食症（狂食症）', en: 'Binge-eating disorder' }
+  },
+  levels: [
+    { t: '先看全貌：一天的熱量花到哪裡', kind: 'ov', h: 400, svg: EBW_OV, blanks: EBW_B(),
+      intro: ['吃進的熱量等於消耗的熱量，體重就不變；吃得多於用掉的叫「正能量平衡」，懷孕、嬰兒和成長期本來就應該如此；反過來是負能量平衡，體重下降。',
+        '左邊的長條是一天的總熱量消耗，分成四塊。最大的一塊是清醒、靜止、空腹時維持心跳呼吸、體溫、細胞運作的熱量；第二塊是一天之中所有的動作，也是個人差異最大、最能自己改變的部分；第三塊是消化、吸收、處理食物所花的熱量；最小的一塊是因應寒冷、過食等情況，額外產生的熱。'],
+      done: ['[[總熱量消耗 ＝ 基礎代謝（60～70%）＋ 身體活動（15～30%，變化最大）＋ 食物熱效應（約 10%）＋ 適應性產熱（很少）。]]'] },
+    { t: '基礎代謝、食物熱效應與測量方法', kind: 'list',
+      intro: ['基礎代謝和身上的瘦體組織（肌肉、器官）最有關，所以男性、肌肉多、體表面積大的人比較高。甲狀腺素是主要的調控荷爾蒙。發燒、寒冷、生長、懷孕會讓它升高；年紀增加、長期節食或飢餓會讓它下降。',
+        '粗估成人基礎代謝：男性每公斤每小時約 1 大卡，女性約 0.9 大卡。',
+        '三大營養素的食物熱效應差很多：處理蛋白質最耗能，醣類其次，脂肪最省。',
+        '褐色脂肪細胞有大量粒線體和一種「解偶聯」蛋白，讓能量直接變成熱，不產生 ATP，嬰兒身上較多。',
+        '測熱量消耗的方法：把人放在密閉房間測散出的熱；測呼吸的氧氣和二氧化碳換算；或喝下含特殊同位素的水，測一到兩週的排出速度，最適合自由生活的人。'],
+      listTitle: '是哪一個', list: [['甲狀腺功能亢進、發燒、懷孕', { a: 'up', o: ['up', 'down'] }], ['老化、長期節食、甲狀腺功能低下', { a: 'down', o: ['up', 'down'] }], ['食物熱效應最高的營養素', { a: 'pro', o: ['pro', 'cho', 'fat'] }], ['食物熱效應最低的營養素', { a: 'fat', o: ['pro', 'cho', 'fat'] }],
+        ['產熱、不產生 ATP 的脂肪組織', { a: 'bat', o: ['bat', 'wat'] }], ['測呼吸氣體換算熱量', { a: 'ind', o: ['dir', 'ind', 'dlw'] }], ['適合測自由生活者 1～2 週消耗量', { a: 'dlw', o: ['dir', 'ind', 'dlw'] }]],
+      countsTitle: '算算看', counts: [['60 公斤男性，一天基礎代謝約幾大卡（1 kcal/kg/h）', '1440', ['1200', '1440', '1600', '1800']], ['50 公斤女性，一天基礎代謝約幾大卡（0.9 kcal/kg/h）', '1080', ['900', '1080', '1200', '1350']], ['呼吸商（RQ）：只燒醣類時是', '1.0', ['0.7', '0.8', '0.85', '1.0']], ['只燒脂肪時的呼吸商', '0.7', ['0.7', '0.8', '0.85', '1.0']]],
+      done: ['[[BMR 主要由瘦體組織決定；甲狀腺素是主要調控者；男 ≈ 1、女 ≈ 0.9 kcal/kg/h。]]', '[[食物熱效應：蛋白質 20～30%、醣類 5～10%、脂肪 0～5%。]]', '[[呼吸商 RQ ＝ CO₂ ÷ O₂：醣類 1.0、蛋白質約 0.8、脂肪 0.7。]]'] },
+    { t: '飢餓、食慾與飽足', kind: 'list',
+      intro: ['「餓」是身體需要能量的生理訊號；「想吃」是看到、聞到、習慣、情緒引起的心理驅力。兩者由腦部同一個中樞整合。',
+        '空腹時胃分泌一種荷爾蒙，讓人想吃，吃完就下降。進食後，小腸分泌好幾種荷爾蒙，讓人覺得飽、胃排空變慢。',
+        '長期的訊號來自脂肪組織本身：脂肪越多，分泌的某種荷爾蒙越多，告訴腦部「存量夠了」。但多數肥胖者血中這種荷爾蒙並不低，而是腦部對它反應變差。'],
+      listTitle: '是哪一個', list: [['胃分泌、促進食慾', { a: 'ghr', o: EBW_HM }], ['脂肪組織分泌、長期抑制進食', { a: 'lep', o: EBW_HM }], ['小腸分泌、短期產生飽足感', { a: 'cck', o: EBW_HM }], ['調控飢餓與飽足的中樞', { a: 'hyp', o: ['hyp', 'pit'] }],
+        ['剛吃飽看到甜點還想吃', { a: 'app', o: ['hun', 'app'] }]],
+      done: ['[[飢餓素（胃）↑ 食慾；瘦體素（脂肪組織）長期 ↓ 攝食；CCK、PYY、GLP-1（小腸）短期飽足；中樞在下視丘。]]', '肥胖者常有瘦體素阻抗。'] },
+    { t: '評估體重與體脂肪', kind: 'list',
+      intro: ['身體質量指數（BMI）＝ 體重（公斤）÷ 身高（公尺）²。國人的切點比歐美低：低於 18.5 過輕，18.5 到未滿 24 健康，24 到未滿 27 過重，27 以上肥胖。BMI 不分辨肌肉和脂肪，不適用於孕婦、兒童、運動員。',
+        '脂肪長在哪裡比總量更重要。囤積在腹部的蘋果型，和心血管疾病、第 2 型糖尿病、高血壓的關係最密切。國人腰圍男性 90 公分、女性 80 公分以上就算腹部肥胖。',
+        '測體脂的方法：在水中秤重、空氣置換、皮脂厚度、微弱電流（家用體脂計）、雙能量 X 光（最準確，也能測骨密度）。'],
+      listTitle: '是哪一個', list: [['BMI 17.5', { a: 'uw', o: EBW_BMI }], ['BMI 22', { a: 'nw', o: EBW_BMI }], ['BMI 25', { a: 'ow', o: EBW_BMI }], ['BMI 28', { a: 'ob', o: EBW_BMI }],
+        ['代謝疾病風險較高的體脂分布', { a: 'andr', o: ['andr', 'gyn'] }], ['最準確、也可測骨密度的方法', { a: 'dexa', o: ['dexa', 'bia', 'uww'] }], ['家用體脂計的原理', { a: 'bia', o: ['dexa', 'bia', 'uww'] }]],
+      countsTitle: '算算看', counts: [['身高 160 公分、體重 64 公斤，BMI ＝', '25', ['22', '24', '25', '27']], ['國人男性腹部肥胖的腰圍（公分，以上）', '90', ['80', '85', '90', '102']], ['國人女性腹部肥胖的腰圍（公分，以上）', '80', ['75', '80', '85', '88']]],
+      done: ['[[國人 BMI：< 18.5 過輕；18.5～< 24 健康；24～< 27 過重；≥ 27 肥胖。腰圍：男 ≥ 90、女 ≥ 80 公分。]]', 'BMI 計算：64 ÷ (1.6 × 1.6) ＝ 25。'] },
+    { t: '減重與增重的原則', kind: 'list',
+      intro: ['一公斤體脂約含 7,700 大卡，所以每天少吃（或多消耗）500 大卡，大約一週減 0.5 公斤，這是建議的速度。熱量不宜太低，否則肌肉流失、基礎代謝下降、營養素不足。',
+        '低醣飲食頭幾天體重掉很快，主要是肝醣用掉時一起釋出的水，並不是脂肪。',
+        '成功的體重管理是三件事一起做：控制熱量、規律運動（加上阻力訓練保住肌肉）、改變行為。常用的行為技巧有：把零食收起來、只在餐桌吃飯（刺激控制）；記錄飲食和體重（自我監測）等。',
+        '藥物方面，有一種藥抑制小腸的脂肪分解酵素，讓約三成的脂肪不被吸收；嚴重肥胖可考慮減重手術。過輕的人則每天多吃約 500 大卡、選熱量密度高的食物，並配合阻力運動。'],
+      listTitle: '是哪一個', list: [['低醣飲食第一週減掉的主要是', { a: 'water', o: ['water', 'fatl'] }], ['只在餐桌吃飯、不把零食放在眼前', { a: 'stim', o: ['stim', 'self'] }], ['記錄每天吃了什麼', { a: 'self', o: ['stim', 'self'] }], ['會造成脂肪便的減重藥物', { a: 'orl', o: ['orl', 'lep'] }]],
+      countsTitle: '算算看', counts: [['1 公斤體脂約含幾大卡', '7700', ['3500', '7000', '7700', '9000']], ['每天少 550 大卡，一週約減幾公斤', '0.5', ['0.25', '0.5', '1', '2']]],
+      done: ['[[1 kg 體脂 ≈ 7,700 kcal；每天少 500 大卡 ≈ 每週減 0.5 kg。]]', '減重三要素：飲食、運動、行為改變；低醣飲食早期的體重下降主要是水分。'] },
+    { t: '飲食障礙', kind: 'list',
+      intro: ['飲食障礙是需要醫師、營養師、心理師一起治療的精神疾病，好發於青少年和年輕女性，運動員也是高風險群。',
+        '一種是極度限制進食、體重過低、害怕變胖、看不清自己的體型；身體會出現月經停止、心跳變慢、怕冷、長出細毛、骨質流失。',
+        '一種是反覆大吃後用催吐、瀉藥、過度運動等方式補償，體重常在正常範圍，所以不容易被發現；長期催吐會造成牙齒琺瑯質被胃酸侵蝕、唾液腺腫大、低血鉀。',
+        '一種是反覆失控大吃，但沒有補償行為，常合併肥胖。',
+        '營養治療的重點是恢復規律進食與營養狀態，而不是只看體重數字。如果你或身邊的人有這樣的困擾，請找學校諮商中心或專業人員聊聊。'],
+      listTitle: '是哪一個', list: [['體重過低、閉經、怕胖', { a: 'an', o: ['an', 'bn', 'bed'] }], ['體重正常、催吐、牙齒被侵蝕', { a: 'bn', o: ['an', 'bn', 'bed'] }], ['反覆失控大吃、沒有補償行為', { a: 'bed', o: ['an', 'bn', 'bed'] }]],
+      done: ['[[神經性厭食症：體重過低、閉經、心跳慢、胎毛；神經性暴食症：大吃 ＋ 補償（催吐、瀉劑），牙齒侵蝕、低血鉀；嗜食症：大吃無補償。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['一天熱量消耗中佔最多的是', { a: 'bmr', o: EBW_C }, '。'],
+        ['食物熱效應最高的營養素是', { a: 'pro', o: ['pro', 'cho', 'fat'] }, '。'],
+        ['由脂肪組織分泌、長期抑制進食的是', { a: 'lep', o: EBW_HM }, '。'],
+        ['國人 BMI 24～未滿 27 屬於', { a: 'ow', o: EBW_BMI }, '。'],
+        ['心血管疾病風險較高的體脂分布是', { a: 'andr', o: ['andr', 'gyn'] }, '。'],
+        ['個人差異最大、最能自己改變的熱量消耗是', { a: 'pa', o: EBW_C, lang: 'en' }, '。'],
+        ['胃分泌、促進食慾的荷爾蒙是', { a: 'ghr', o: EBW_HM, lang: 'en' }, '。'],
+        ['適合測自由生活者熱量消耗的是', { a: 'dlw', o: ['dir', 'ind', 'dlw'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 400, force: 'en', svg: EBW_OV, blanks: EBW_B(),
+      intro: ['第一關的圖，全部用英文作答；下面再加幾個名詞。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: '名詞', list: [['Fat that makes heat, not ATP', { a: 'bat', o: ['bat', 'wat'] }], ['BMI 28 (Taiwan cut-off)', { a: 'ob', o: EBW_BMI }], ['Binge, then purge', { a: 'bn', o: ['an', 'bn', 'bed'] }]] }
+  ] };
+/* ======================================================================
+   酒精（第 8 章）
+   ====================================================================== */
+function ALC_OV() {
+  var s = pill(100, 40, 120, { zh: '乙醇（酒精）', en: 'Ethanol' }, 'pill') + pill(100, 350, 130, { zh: '乙醯輔酶 A', en: 'Acetyl-CoA' }, 'pill');
+  s += arrow(100, 60, 100, 128) + arrow(100, 172, 100, 238) + arrow(100, 282, 100, 330);
+  s += tx(262, 70, T('第一步（細胞質）', 'step 1 (cytosol)'), 'm', 9) + tx(262, 180, T('第二步（粒線體）', 'step 2 (mitochondria)'), 'm', 9) + tx(262, 290, T('兩步都把 NAD⁺ 變成', 'both steps turn NAD⁺ into'), 'm', 9);
+  s += tx(180, 392, T('大量喝酒時，肝臟內質網的另一個系統（MEOS）也會加入', 'Heavy drinking also recruits MEOS in the liver ER'), 'm', 9);
+  return s;
+}
+var ALC_EZ = ['adh', 'aldh', 'meos'], ALC_P = ['acal', 'acet', 'nadh'];
+function ALC_B() { return [{ id: 'e1', x: 262, y: 94, w: 150, a: 'adh', o: ALC_EZ }, { id: 'e2', x: 262, y: 204, w: 150, a: 'aldh', o: ALC_EZ }, { id: 'e3', x: 262, y: 314, w: 150, a: 'nadh', o: ALC_P },
+  { id: 'p1', x: 100, y: 150, w: 130, a: 'acal', o: ALC_P }, { id: 'p2', x: 100, y: 260, w: 130, a: 'acet', o: ALC_P }]; }
+var ALC_LV = ['fat', 'hep', 'cir'];
+var ALC = { id: 'alc', zh: '酒精', en: 'Alcohol', alias: '酒精單位・ADH 與 ALDH・MEOS・NADH 過多的後果・酒精性肝病・營養素缺乏・胎兒酒精症候群', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    adh: { zh: '醇去氫酶（ADH）', en: 'Alcohol dehydrogenase (ADH)' }, aldh: { zh: '乙醛去氫酶（ALDH）', en: 'Aldehyde dehydrogenase (ALDH)' }, meos: { zh: '微粒體乙醇氧化系統（MEOS）', en: 'Microsomal ethanol-oxidizing system (MEOS)' },
+    acal: { zh: '乙醛', en: 'Acetaldehyde' }, acet: { zh: '乙酸', en: 'Acetate' }, nadh: { zh: 'NADH', en: 'NADH' },
+    stom: { zh: '胃吸收約 20%，其餘在小腸', en: 'Stomach ~20%, the rest small intestine' }, dig: { zh: '先消化成更小的分子', en: 'Digested first' },
+    food: { zh: '吃東西時喝（尤其含油脂）', en: 'Drinking with food (esp. fat)' }, empty: { zh: '空腹喝', en: 'Drinking on an empty stomach' },
+    f: { zh: '女性', en: 'Women' }, m: { zh: '男性', en: 'Men' }, flush: { zh: 'ALDH2 活性低，乙醛堆積、臉紅', en: 'Low ALDH2: acetaldehyde builds up, flushing' }, tol: { zh: 'MEOS 增加，耐受性變高', en: 'MEOS induced, higher tolerance' },
+    fat: { zh: '脂肪肝', en: 'Fatty liver' }, hep: { zh: '酒精性肝炎', en: 'Alcoholic hepatitis' }, cir: { zh: '肝硬化', en: 'Cirrhosis' },
+    glu: { zh: '糖質新生受抑制 → 低血糖', en: 'Gluconeogenesis blocked → hypoglycemia' }, lac: { zh: '乳酸增加 → 尿酸排出減少', en: 'More lactate → less uric acid excreted' }, fas: { zh: '脂肪酸合成增加、氧化減少', en: 'More fat made, less burned' },
+    b1: { zh: '硫胺素（B1）', en: 'Thiamin' }, fol: { zh: '葉酸', en: 'Folate' }, mg: { zh: '鎂', en: 'Magnesium' }, vk: { zh: '維生素 K', en: 'Vitamin K' },
+    fasd: { zh: '胎兒酒精症候群', en: 'Fetal alcohol syndrome' }, ntd: { zh: '神經管缺陷', en: 'Neural tube defects' },
+    disu: { zh: '戒酒硫（抑制 ALDH）', en: 'Disulfiram (blocks ALDH)' }, nalt: { zh: '納曲酮（降低渴望）', en: 'Naltrexone (reduces craving)' }
+  },
+  levels: [
+    { t: '先看全貌：酒精在肝臟的代謝', kind: 'ov', h: 400, svg: ALC_OV, blanks: ALC_B(),
+      intro: ['酒精（乙醇）每公克提供 7 大卡，卻不是營養素。身體沒辦法儲存它，所以一喝下去，肝臟就優先處理它，其他代謝都得讓路。',
+        '主要路線分兩步：第一步在細胞質，把乙醇變成一個有毒的醛；第二步在粒線體，把醛變成一個酸，再接上輔酶 A 進入能量代謝。兩步都是「去氫」，都會把同一種輔酶還原。',
+        '左邊填中間產物，右邊填負責的酵素和被還原後的輔酶。'],
+      done: ['[[乙醇 →（ADH，細胞質）乙醛 →（ALDH，粒線體）乙酸 → 乙醯輔酶 A；兩步都產生 NADH。]]', '大量或長期飲酒時，MEOS（肝臟內質網的細胞色素 P450 系統）也會代謝酒精，而且會被誘導增加，所以酒量會「練」大，但也加快某些藥物的代謝。'] },
+    { t: '吸收、酒精單位與個別差異', kind: 'list',
+      intro: ['酒精不需要消化，一部分在胃就被吸收，大部分在小腸前段吸收。同時吃東西，尤其含油脂的食物，會讓胃排空變慢，酒精進入血液也變慢。',
+        '台灣以 10 公克純酒精為「一個酒精單位（一份）」。適量飲酒的上限：女性每天 1 份、男性每天 2 份。不喝酒的人，不建議為了健康開始喝。',
+        '女性身體水分比例較低、胃裡的 ADH 也較少，同樣的酒量血中濃度較高。很多東亞人的 ALDH2 基因變異，乙醛排不掉，喝一點就臉紅心跳，長期喝酒食道癌風險明顯升高。'],
+      listTitle: '是哪一個', list: [['酒精的吸收', { a: 'stom', o: ['stom', 'dig'] }], ['血中酒精濃度上升較慢', { a: 'food', o: ['food', 'empty'] }], ['同樣酒量，血中濃度較高的', { a: 'f', o: ['f', 'm'] }],
+        ['喝一點就臉紅的原因', { a: 'flush', o: ['flush', 'tol'] }], ['長期飲酒酒量變大的原因', { a: 'tol', o: ['flush', 'tol'] }]],
+      countsTitle: '算算看', counts: [['1 公克酒精提供幾大卡', '7', ['4', '7', '9', '0']], ['台灣一份酒精是幾公克純酒精', '10', ['10', '14', '20', '30']], ['330 mL、5% 的啤酒，含幾公克酒精（密度 0.8）', '13', ['8', '13', '16', '20']], ['兩份酒精提供幾大卡', '140', ['70', '80', '140', '180']]],
+      done: ['[[酒精 7 kcal/g；台灣 1 份 ＝ 10 g 酒精；適量：女 ≤ 1 份、男 ≤ 2 份／天。]]', '酒精克數 ＝ 容量（mL）× 酒精濃度 × 0.8。'] },
+    { t: 'NADH 太多：喝酒的代謝後果', kind: 'list',
+      intro: ['代謝酒精產生大量 NADH，細胞裡氧化還原的平衡被打亂，很多反應跟著改變方向：',
+        '丙酮酸被推向乳酸，能拿來做葡萄糖的原料變少，所以空腹喝酒容易低血糖；乳酸多了會和尿酸搶著從腎臟排出，痛風的人喝酒容易發作；脂肪酸氧化被抑制、合成增加，肝臟堆積脂肪。'],
+      listTitle: '是哪一個', list: [['空腹大量喝酒容易', { a: 'glu', o: ['glu', 'lac', 'fas'] }], ['喝酒讓痛風發作', { a: 'lac', o: ['glu', 'lac', 'fas'] }], ['長期喝酒的第一個肝臟變化', { a: 'fas', o: ['glu', 'lac', 'fas'] }]],
+      done: ['[[酒精代謝 → NADH ↑ → 乳酸 ↑、糖質新生 ↓（低血糖）、尿酸排泄 ↓、脂肪合成 ↑（脂肪肝）。]]'] },
+    { t: '長期飲酒：肝臟與營養狀況', kind: 'list',
+      intro: ['酒精性肝病分三個階段：最早是脂肪堆積，戒酒可以完全恢復；繼續喝會發炎，出現黃疸、發燒；最後肝細胞被纖維組織取代，功能喪失、腹水，無法逆轉。',
+        '長期大量喝酒的人，熱量多由酒精提供，飲食品質差，加上吸收和代謝受損，很多營養素都缺：最典型的是一種 B 群（造成腦病變）、做 DNA 需要的一種 B 群（造成巨球性貧血），以及一種礦物質（造成肌肉抽搐）。肝臟受損也讓凝血需要的脂溶性維生素利用不良。',
+        '懷孕期間喝酒會傷害胎兒，造成臉部特徵異常、生長遲緩與中樞神經損傷，沒有已知的安全量。'],
+      listTitle: '是哪一個', list: [['戒酒後可以恢復的', { a: 'fat', o: ALC_LV }], ['出現黃疸、發燒、肝臟發炎', { a: 'hep', o: ALC_LV }], ['纖維化、腹水，無法逆轉', { a: 'cir', o: ALC_LV }],
+        ['缺乏會造成魏尼凱–柯沙可夫症候群', { a: 'b1', o: ['b1', 'fol', 'mg', 'vk'] }], ['缺乏會造成巨球性貧血', { a: 'fol', o: ['b1', 'fol', 'mg', 'vk'] }], ['缺乏會造成肌肉抽搐', { a: 'mg', o: ['b1', 'fol', 'mg', 'vk'] }],
+        ['懷孕期間飲酒', { a: 'fasd', o: ['fasd', 'ntd'] }], ['讓人喝酒就嘔吐不適的藥物', { a: 'disu', o: ['disu', 'nalt'] }]],
+      done: ['[[酒精性肝病：脂肪肝（可逆）→ 酒精性肝炎 → 肝硬化（不可逆）。]]', '[[酗酒者常缺：B1、葉酸、B6、B12、鎂、鋅、維生素 A、D、K。]]', '[[胎兒酒精症候群：臉部異常、生長遲緩、中樞神經損傷；懷孕和準備懷孕都不應喝酒。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['乙醇在細胞質中先被', { a: 'adh', o: ALC_EZ }, '轉成乙醛。'],
+        ['東亞人喝酒容易臉紅，是因為', { a: 'flush', o: ['flush', 'tol'] }, '。'],
+        ['酒精代謝產生大量 NADH，空腹喝酒會', { a: 'glu', o: ['glu', 'lac', 'fas'] }, '。'],
+        ['酗酒者缺乏', { a: 'b1', o: ['b1', 'fol', 'mg', 'vk'] }, '會造成魏尼凱–柯沙可夫症候群。'],
+        ['酒精性肝病中唯一可以完全恢復的是', { a: 'fat', o: ALC_LV }, '。'],
+        ['大量飲酒時被誘導增加的是', { a: 'meos', o: ALC_EZ, lang: 'en' }, '。'],
+        ['乙醛去氫酶位在粒線體，產物是', { a: 'acet', o: ALC_P, lang: 'en' }, '。'],
+        ['戒酒硫抑制的是', { a: 'aldh', o: ALC_EZ, lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 400, force: 'en', svg: ALC_OV, blanks: ALC_B(),
+      intro: ['第一關的圖，全部用英文作答；下面再加幾個名詞。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: '名詞', list: [['Irreversible scarring of the liver', { a: 'cir', o: ALC_LV }], ['Drinking during pregnancy', { a: 'fasd', o: ['fasd', 'ntd'] }], ['Why some people flush after one drink', { a: 'flush', o: ['flush', 'tol'] }]] }
+  ] };
+/* ======================================================================
    醣類（一）：種類、膳食纖維與甜味劑（第 5 章前半）
    ====================================================================== */
 var CHO_ROWS = [80, 142, 204, 266, 328];
@@ -1547,8 +2027,8 @@ var TRM = { id: 'trm', zh: '微量礦物質', en: 'Trace minerals', alias: '鐵�
 function TODO(id, zh, en) { return { id: id, zh: zh, en: en }; }
 var GROUPS = [
   { tab: 'base', g: '先讀這裡', items: [NMAP] },
-  { tab: 'base', g: '基礎 1・設計飲食的工具', c: 4, items: [TODO('dri', '飲食指標：DRIs、每日飲食指南、營養標示', 'Tools for diet planning'), TODO('fss', '食物供應與食品安全', 'Food supply and food safety')] },
-  { tab: 'base', g: '基礎 2・消化與能量', c: 5, items: [TODO('dig', '消化與吸收（重點對照）', 'Digestion and absorption'), TODO('emt', '能量代謝（重點對照）', 'Energy metabolism'), TODO('ebw', '能量平衡與體重控制', 'Energy balance and weight control'), TODO('spt', '運動營養', 'Nutrition and fitness'), TODO('alc', '酒精', 'Alcohol')] },
+  { tab: 'base', g: '基礎 1・設計飲食的工具', c: 4, items: [DRI, FSS] },
+  { tab: 'base', g: '基礎 2・消化與能量', c: 5, items: [DIG, EMT, EBW, SPT, ALC] },
   { tab: 'macro', g: '醣類', c: 6, items: [CHO, CHM] },
   { tab: 'macro', g: '脂質', c: 2, items: [LIP, LPT] },
   { tab: 'macro', g: '蛋白質', c: 3, items: [PRO, PRM] },

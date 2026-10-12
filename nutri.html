@@ -1090,6 +1090,459 @@ var PRM = { id: 'prm', zh: '蛋白質（二）：功能、需要量與缺乏', e
       listTitle: '名詞', list: [['Severe wasting, no edema', { a: 'mar', o: ['mar', 'kwa'] }], ['Edema, fatty liver, low albumin', { a: 'kwa', o: ['mar', 'kwa'] }], ['Carries iron in blood', { a: 'tf', o: PRM_F }],
         ['Maintains colloid osmotic pressure', { a: 'alb', o: PRM_F }], ['Burns, fever, starvation', { a: 'neg', o: ['pos', 'neg', 'eq'] }], ['Main antibody in food allergy', { a: 'ige', o: ['ige', 'igg'] }]] }
   ] };
+/* ======================================================================
+   脂溶性維生素 A、D、E、K（第 12 章）
+   ====================================================================== */
+var FSV_V = [['維生素 A', 'Vitamin A', 'vis', 'nb'], ['維生素 D', 'Vitamin D', 'boneca', 'rick'], ['維生素 E', 'Vitamin E', 'antiox', 'hemo'], ['維生素 K', 'Vitamin K', 'clot', 'bleed']];
+var FSV_FN = ['vis', 'boneca', 'antiox', 'clot'], FSV_DF = ['nb', 'rick', 'hemo', 'bleed'];
+function FSV_OV() {
+  var s = tx(50, 24, T('維生素', 'vitamin'), 'm', 9.5) + tx(166, 24, T('主要功能', 'main function'), 'm', 9.5) + tx(296, 24, T('缺乏時', 'deficiency'), 'm', 9.5);
+  FSV_V.forEach(function (r, i) { var y = 60 + i * 70; s += pill(50, y, 84, { zh: r[0], en: r[1] }, 'pill kT') + arrow(92, y, 100, y); });
+  s += tx(180, 340, T('四種都要跟著油脂一起吸收', 'All four are absorbed with dietary fat'), 'm', 9.5);
+  return s;
+}
+function FSV_B() {
+  var b = [];
+  FSV_V.forEach(function (r, i) { var y = 60 + i * 70; b.push({ id: 'a' + i, x: 166, y: y, w: 128, a: r[2], o: FSV_FN }); b.push({ id: 'd' + i, x: 296, y: y, w: 118, a: r[3], o: FSV_DF }); });
+  return b;
+}
+function FSV_DV() {
+  var s = '', rows = [['皮膚 ＋ 紫外線', 'Skin + UV light', 60], ['肝臟', 'Liver', 130], ['腎臟（PTH 促進）', 'Kidney (PTH stimulates)', 200], ['作用在小腸', 'Acts on intestine', 270]];
+  s += tx(250, 24, T('7-去氫膽固醇（皮膚裡）', '7-dehydrocholesterol (in skin)'), 'm', 9.5);
+  rows.forEach(function (r) { s += tx(14, r[2] + 4, T(r[0], r[1]), '', 11, 'start'); });
+  [95, 165, 235].forEach(function (y) { s += arrow(250, y - 8, 250, y + 8); });
+  s += tx(250, 316, T('血鈣低 → PTH 上升 → 腎臟活化增加', 'Low blood Ca → PTH ↑ → more activation'), 'm', 9.5);
+  return s;
+}
+var FSV_DO = ['chol', 'cald', 'calt', 'ergo'];
+function FSV_DB() { return [{ id: 'v1', x: 250, y: 60, w: 176, a: 'chol', o: FSV_DO }, { id: 'v2', x: 250, y: 130, w: 176, a: 'cald', o: FSV_DO }, { id: 'v3', x: 250, y: 200, w: 176, a: 'calt', o: FSV_DO }, { id: 'v4', x: 250, y: 270, w: 176, a: 'absca', o: ['absca', 'clotf', 'rhod'] }]; }
+var FSV_SRC = ['liver', 'carot', 'fish', 'oil', 'green'];
+var FSV = { id: 'fsv', zh: '脂溶性維生素', en: 'Fat-soluble vitamins', alias: '維生素 A・視紫質・維生素 D 活化・維生素 E 抗氧化・維生素 K 凝血', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    vis: { zh: '視覺、上皮與免疫', en: 'Vision, epithelium, immunity' }, boneca: { zh: '鈣磷吸收、骨骼', en: 'Ca/P absorption, bone' }, antiox: { zh: '抗氧化、保護細胞膜', en: 'Antioxidant, protects membranes' }, clot: { zh: '凝血、骨骼蛋白', en: 'Blood clotting, bone proteins' },
+    nb: { zh: '夜盲、乾眼症', en: 'Night blindness, xerophthalmia' }, rick: { zh: '佝僂症、軟骨症', en: 'Rickets, osteomalacia' }, hemo: { zh: '溶血性貧血', en: 'Hemolytic anemia' }, bleed: { zh: '凝血不良、出血', en: 'Poor clotting, bleeding' },
+    lymph: { zh: '乳糜微粒 → 淋巴', en: 'Chylomicrons → lymph' }, blood: { zh: '直接進入門靜脈血液', en: 'Directly into portal blood' },
+    lvr: { zh: '肝臟', en: 'Liver' }, adip: { zh: '脂肪組織', en: 'Adipose tissue' }, vk: { zh: '維生素 K', en: 'Vitamin K' }, vad: { zh: '維生素 A 和 D', en: 'Vitamins A and D' },
+    rol: { zh: '視網醇', en: 'Retinol' }, ral: { zh: '視網醛', en: 'Retinal' }, rac: { zh: '視網酸', en: 'Retinoic acid' }, rhod: { zh: '視紫質（暗處視覺）', en: 'Rhodopsin (dim-light vision)' },
+    rbp: { zh: '視網醇結合蛋白（RBP）', en: 'Retinol-binding protein (RBP)' }, tf: { zh: '運鐵蛋白', en: 'Transferrin' },
+    bitot: { zh: '畢托氏斑', en: "Bitot's spots" }, kera: { zh: '角膜軟化症', en: 'Keratomalacia' }, fhk: { zh: '毛囊角化', en: 'Follicular hyperkeratosis' },
+    terat: { zh: '致畸胎', en: 'Birth defects' }, carot2: { zh: '皮膚變黃，無害', en: 'Yellow skin, harmless' },
+    chol: { zh: '維生素 D3（膽鈣化醇）', en: 'Vitamin D3 (cholecalciferol)' }, cald: { zh: '25(OH)D（鈣化二醇）', en: '25(OH)D (calcidiol)' }, calt: { zh: '1,25(OH)₂D（鈣化三醇）', en: '1,25(OH)₂D (calcitriol)' }, ergo: { zh: '維生素 D2（麥角鈣化醇）', en: 'Vitamin D2 (ergocalciferol)' },
+    absca: { zh: '增加鈣、磷吸收', en: 'Increases Ca and P absorption' }, clotf: { zh: '活化凝血因子', en: 'Activates clotting factors' },
+    mush: { zh: '曬過太陽的菇類', en: 'Sun-dried mushrooms' }, child: { zh: '兒童', en: 'Children' }, adult: { zh: '成人', en: 'Adults' },
+    atoc: { zh: 'α-生育醇', en: 'α-Tocopherol' }, gtoc: { zh: 'γ-生育醇', en: 'γ-Tocopherol' }, vc: { zh: '維生素 C', en: 'Vitamin C' }, se: { zh: '硒（麩胱甘肽過氧化酶）', en: 'Selenium (glutathione peroxidase)' },
+    pre: { zh: '早產兒', en: 'Premature infants' }, k1: { zh: '葉醌（K1）', en: 'Phylloquinone (K1)' }, k2: { zh: '甲萘醌類（K2）', en: 'Menaquinones (K2)' }, k3: { zh: '甲萘醌（K3，合成）', en: 'Menadione (K3, synthetic)' },
+    gla: { zh: '麩胺酸的 γ-羧化', en: 'γ-Carboxylation of glutamate' }, hyd: { zh: '脯胺酸的羥化', en: 'Hydroxylation of proline' },
+    newb: { zh: '新生兒', en: 'Newborns' }, abx: { zh: '長期使用抗生素', en: 'Long-term antibiotics' }, warf: { zh: '抗凝血劑 warfarin', en: 'Warfarin (anticoagulant)' },
+    liver: { zh: '肝臟、蛋黃、全脂奶', en: 'Liver, egg yolk, whole milk' }, carot: { zh: '胡蘿蔔、地瓜、深綠色蔬菜', en: 'Carrots, sweet potato, dark greens' }, fish: { zh: '多脂魚、魚肝油、日曬', en: 'Fatty fish, fish liver oil, sunlight' },
+    oil: { zh: '植物油、堅果、小麥胚芽', en: 'Vegetable oils, nuts, wheat germ' }, green: { zh: '深綠色葉菜、納豆', en: 'Dark leafy greens, natto' }
+  },
+  levels: [
+    { t: '先看全貌：A、D、E、K', kind: 'ov', h: 350, svg: FSV_OV, blanks: FSV_B(),
+      intro: ['維生素是身體需要量很少、自己做不出來（或做不夠）的有機物，不提供熱量，但很多產能反應少不了它們。依照能溶在油或水裡，分成脂溶性和水溶性兩大類。',
+        '脂溶性的有四種：A、D、E、K。左邊是維生素，中間填它最主要的工作，右邊填缺乏時最典型的病。',
+        '記法：A 跟「看」有關；D 跟「鈣和骨頭」有關；E 是油裡的「抗氧化劑」；K 的名字來自德文的凝血（Koagulation）。'],
+      done: ['[[A：視覺、上皮、免疫 → 缺乏夜盲、乾眼症；D：鈣磷吸收 → 兒童佝僂症、成人軟骨症；E：抗氧化 → 溶血性貧血；K：凝血 → 出血。]]'] },
+    { t: '吸收、運送與儲存', kind: 'list',
+      intro: ['脂溶性維生素要和食物裡的油脂、膽汁一起形成微膠粒才吸收得進來，所以油脂吸收不良（膽道阻塞、胰臟疾病、脂肪瀉）的人四種都容易缺。',
+        '吸收後跟著油脂包進乳糜微粒，先進淋巴，再進血液，最後大多到肝臟。水溶性的則直接進入血液。',
+        '脂溶性的會存在身體裡，所以缺乏要比較久才出現，吃太多也比較容易累積中毒。其中有一種存得少、排得快；有兩種補充劑吃太多最容易中毒。'],
+      listTitle: '是哪一個', list: [['脂溶性維生素吸收後的路線', { a: 'lymph', o: ['lymph', 'blood'] }], ['維生素 A 主要存放在', { a: 'lvr', o: ['lvr', 'adip'] }], ['維生素 E 主要存放在', { a: 'adip', o: ['lvr', 'adip'] }],
+        ['存量最少、最容易排出的脂溶性維生素', { a: 'vk', o: ['vk', 'vad'] }], ['補充劑過量最容易中毒的', { a: 'vad', o: ['vk', 'vad'] }]],
+      done: ['[[脂溶性維生素：需要油脂與膽汁、經乳糜微粒進淋巴；可儲存、不易排出 → 過量易中毒（尤其 A、D）。]]', '維生素 A 約 90% 存在肝臟；維生素 E 主要在脂肪組織；維生素 K 存量少、周轉快。'] },
+    { t: '維生素 A 與類胡蘿蔔素', kind: 'list',
+      intro: ['動物性食物裡是已經做好的維生素 A，有三種形式：醇型、醛型、酸型。醇和醛可以互相轉換；醛氧化成酸以後就回不去了。',
+        '眼睛視網膜的桿細胞用醛型和一種蛋白質組成感光色素，負責暗處的視覺。光照時色素分解，需要不斷補充醛型，所以缺乏時最早出現的是夜盲。酸型則進入細胞核調控基因，影響細胞分化。',
+        '維生素 A 從肝臟出來時，要靠一種專門的結合蛋白載運；這個蛋白質是肝臟做的，所以蛋白質缺乏也會造成維生素 A 不足。',
+        '蔬果裡的 β-胡蘿蔔素是「維生素 A 原」，在體內可以切成維生素 A。國人 DRIs 用「視網醇當量（RE）」計算：1 μg RE ＝ 1 μg 視網醇 ＝ 6 μg β-胡蘿蔔素。'],
+      listTitle: '是哪一個', list: [['和視蛋白組成視紫質的', { a: 'ral', o: ['rol', 'ral', 'rac'] }], ['不能再轉回其他形式、調控基因表現的', { a: 'rac', o: ['rol', 'ral', 'rac'] }], ['在血液中載運視網醇的', { a: 'rbp', o: ['rbp', 'tf'] }],
+        ['眼睛結膜上的灰白色泡沫斑', { a: 'bitot', o: ['bitot', 'kera', 'fhk'] }], ['最嚴重、可能失明的眼睛病變', { a: 'kera', o: ['bitot', 'kera', 'fhk'] }], ['皮膚粗糙像雞皮', { a: 'fhk', o: ['bitot', 'kera', 'fhk'] }],
+        ['懷孕初期大量服用維生素 A', { a: 'terat', o: ['terat', 'carot2'] }], ['吃太多胡蘿蔔', { a: 'carot2', o: ['terat', 'carot2'] }]],
+      countsTitle: '算算看', counts: [['600 μg β-胡蘿蔔素 ＝ 幾 μg RE', '100', ['50', '100', '300', '600']], ['國人成年女性維生素 A 的 RDA（μg RE）', '500', ['500', '600', '700', '900']], ['成人維生素 A 的上限 UL（μg RE）', '3000', ['1000', '2000', '3000', '10000']]],
+      done: ['[[視網醛 ＋ 視蛋白 ＝ 視紫質（桿細胞，暗處視覺）；視網酸調控基因、細胞分化，不能轉回。]]', '[[缺乏順序：夜盲 → 結膜乾燥 → 畢托氏斑 → 角膜軟化（失明）；皮膚毛囊角化；感染增加。]]',
+        '[[國人成人 RDA：男 600、女 500 μg RE；UL 3,000 μg RE。1 μg RE ＝ 6 μg β-胡蘿蔔素。]]', '大量預成維生素 A 會致畸胎；β-胡蘿蔔素吃多只會皮膚變黃（胡蘿蔔素血症），不會中毒。'] },
+    { t: '維生素 D 的活化', kind: 'ov', h: 330, svg: FSV_DV, blanks: FSV_DB(),
+      intro: ['維生素 D 其實更像荷爾蒙：皮膚曬到紫外線就能自己做。原料是皮膚裡的一種固醇。',
+        '剛做好（或吃進來）的形式沒有活性，要先到肝臟加一個羥基，再到腎臟加第二個羥基，才變成活性最強的形式。血中最適合用來評估維生素 D 營養狀況的，是第一步的產物，因為它量多、半衰期長。',
+        '血鈣下降時，副甲狀腺素增加，促進腎臟做出活性形式，使小腸多吸收鈣和磷，血鈣回升。植物和菇類裡的是 D2，由麥角固醇照紫外線形成。'],
+      listTitle: '是哪一個', list: [['評估維生素 D 營養狀況的血液指標', { a: 'cald', o: FSV_DO }], ['菇類照紫外線產生的', { a: 'ergo', o: FSV_DO }], ['佝僂症發生在', { a: 'child', o: ['child', 'adult'] }], ['軟骨症發生在', { a: 'adult', o: ['child', 'adult'] }]],
+      countsTitle: '算算看', counts: [['1 μg 維生素 D ＝ 40 IU，10 μg ＝ 幾 IU', '400', ['40', '100', '400', '1000']], ['國人 51 歲以上維生素 D 的 AI（μg）', '15', ['5', '10', '15', '20']], ['成人維生素 D 的上限 UL（μg）', '50', ['25', '50', '100', '250']]],
+      done: ['[[7-去氫膽固醇 →（紫外線）D3 →（肝）25(OH)D →（腎，PTH 促進）1,25(OH)₂D。]]', '[[血中 25(OH)D 是評估維生素 D 狀況的指標；活性形式是 1,25(OH)₂D（鈣化三醇）。]]',
+        '[[國人 AI：50 歲以下 10 μg（400 IU）、51 歲以上 15 μg；懷孕、哺乳不另外增加；UL 50 μg。]]', '曬太陽不會造成維生素 D 中毒；過量來自補充劑，會造成高血鈣、軟組織鈣化。'] },
+    { t: '維生素 E 與維生素 K', kind: 'list',
+      intro: ['維生素 E 是一群分子，其中活性最高的一種被拿來當計算單位（α-TE）。它躲在細胞膜的脂質裡，搶先把自由基的電子補上，阻止多元不飽和脂肪酸被連鎖氧化。用掉的維生素 E 可以靠另一種水溶性維生素還原回來；另一個含微量礦物質的酵素也幫忙清除過氧化物。',
+        '缺乏時紅血球膜容易破，造成溶血，最容易發生在體內存量少的嬰兒。吃太多會干擾維生素 K，增加出血。',
+        '維生素 K 有三種：植物裡的、腸道細菌做的、人工合成的。它的工作是幫肝臟把凝血因子上的麩胺酸加上羧基，凝血因子才能抓住鈣、發揮作用；骨鈣素也需要它。',
+        '新生兒腸道還沒有細菌、母乳含量又少，所以出生時要打一劑維生素 K。抗凝血藥物就是和維生素 K 作對。'],
+      listTitle: '是哪一個', list: [['維生素 E 活性最高的形式', { a: 'atoc', o: ['atoc', 'gtoc'] }], ['把用掉的維生素 E 還原的', { a: 'vc', o: ['vc', 'se'] }], ['協助清除過氧化物的礦物質', { a: 'se', o: ['vc', 'se'] }], ['維生素 E 缺乏最常見於', { a: 'pre', o: ['pre', 'adult'] }],
+        ['綠色蔬菜裡的維生素 K', { a: 'k1', o: ['k1', 'k2', 'k3'] }], ['腸道細菌合成的維生素 K', { a: 'k2', o: ['k1', 'k2', 'k3'] }], ['維生素 K 的作用', { a: 'gla', o: ['gla', 'hyd'] }],
+        ['出生時常規注射維生素 K 的是', { a: 'newb', o: ['newb', 'adult'] }], ['抑制維生素 K 作用的藥物', { a: 'warf', o: ['warf', 'abx'] }]],
+      done: ['[[維生素 E：α-生育醇，細胞膜內的抗氧化劑，靠維生素 C 再生；硒是麩胱甘肽過氧化酶的成分。]]', '[[維生素 E 缺乏 → 溶血性貧血（早產兒）；過量 → 干擾維生素 K、出血。國人 AI 12 mg α-TE。]]',
+        '[[維生素 K：凝血因子（II、VII、IX、X）與骨鈣素的 γ-羧化；新生兒出生時注射。]]', '服用 warfarin 的人，維生素 K 的攝取量要保持穩定，不必完全不吃綠色蔬菜。'] },
+    { t: '食物來源', kind: 'list',
+      intro: ['脂溶性維生素多半藏在有油的食物裡，或是顏色很深的蔬菜。'],
+      listTitle: '最好的來源', list: [['預成維生素 A', { a: 'liver', o: FSV_SRC }], ['β-胡蘿蔔素', { a: 'carot', o: FSV_SRC }], ['維生素 D', { a: 'fish', o: FSV_SRC }], ['維生素 E', { a: 'oil', o: FSV_SRC }], ['維生素 K', { a: 'green', o: FSV_SRC }], ['素食者的維生素 D2 來源', { a: 'mush', o: ['mush', 'oil'] }]],
+      done: ['[[A：肝臟、蛋黃；β-胡蘿蔔素：深綠、深黃橘色蔬果；D：多脂魚、魚肝油、日曬；E：植物油、堅果、胚芽；K：深綠色葉菜、納豆。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['構成視紫質的維生素 A 形式是', { a: 'ral', o: ['rol', 'ral', 'rac'] }, '。'],
+        ['評估維生素 D 營養狀況最常用的血液指標是', { a: 'cald', o: FSV_DO }, '。'],
+        ['促進腎臟活化維生素 D 的荷爾蒙是副甲狀腺素，活性形式是', { a: 'calt', o: FSV_DO }, '。'],
+        ['早產兒維生素 E 缺乏會出現', { a: 'hemo', o: FSV_DF }, '。'],
+        ['維生素 K 的作用是', { a: 'gla', o: ['gla', 'hyd'] }, '。'],
+        ['腸道細菌合成的維生素 K 是', { a: 'k2', o: ['k1', 'k2', 'k3'], lang: 'en' }, '。'],
+        ['維生素 E 用掉以後靠', { a: 'vc', o: ['vc', 'se'], lang: 'en' }, '再生。'],
+        ['在血液中載運視網醇的是', { a: 'rbp', o: ['rbp', 'tf'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 350, force: 'en', svg: FSV_OV, blanks: FSV_B(),
+      intro: ['第一關的圖，全部用英文作答；下面再加幾個名詞。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: '名詞', list: [['Pigment for dim-light vision', { a: 'rhod', o: ['rhod', 'absca'] }], ['Active hormone form of vitamin D', { a: 'calt', o: FSV_DO }], ['Synthetic vitamin K', { a: 'k3', o: ['k1', 'k2', 'k3'] }], ['Routinely injected with vitamin K', { a: 'newb', o: ['newb', 'adult'] }]] }
+  ] };
+/* ======================================================================
+   水溶性維生素（一）：B 群與能量代謝（第 13 章前半）
+   ====================================================================== */
+var WSB_R = [['丙酮酸 → 乙醯輔酶 A（去羧）', 'Pyruvate → acetyl-CoA', 'thia'], ['輔酶 A 本身的成分', 'Part of coenzyme A itself', 'pant'], ['接收氫：NAD⁺、NADP⁺', 'Carries H: NAD⁺, NADP⁺', 'niac'],
+  ['接收氫：FAD、FMN', 'Carries H: FAD, FMN', 'ribo'], ['胺基酸的轉胺作用', 'Transamination of amino acids', 'pyr'], ['丙酮酸 → 草醋酸（羧化）', 'Pyruvate → oxaloacetate', 'biot']];
+var WSB_O = ['thia', 'ribo', 'niac', 'pant', 'biot', 'pyr'];
+function WSB_OV() {
+  var s = '', L = [['葡萄糖', 'Glucose', 40, 'pill kH'], ['丙酮酸', 'Pyruvate', 120, 'pill kH'], ['乙醯輔酶 A', 'Acetyl-CoA', 200, 'pill'], ['檸檬酸循環', 'Citric acid cycle', 280, 'pill'], ['電子傳遞鏈', 'Electron transport chain', 360, 'pill'], ['ATP', 'ATP', 430, 'pill']];
+  L.forEach(function (r, i) { s += pill(70, r[2], 120, { zh: r[0], en: r[1] }, r[3]); if (i) s += arrow(70, L[i - 1][2] + 18, 70, r[2] - 18); });
+  s += tx(270, 18, T('哪一種 B 群維生素', 'which B vitamin'), 'm', 9.5);
+  WSB_R.forEach(function (r, i) { var y = 70 + i * 72; s += tx(270, y - 24, T(r[0], r[1]), 'm', 9.5); });
+  return s;
+}
+function WSB_B() { return WSB_R.map(function (r, i) { return { id: 'b' + i, x: 270, y: 70 + i * 72, w: 150, a: r[2], o: WSB_O }; }); }
+var WSB_DF = ['beri', 'cheil', 'pella', 'micro', 'rare'];
+var WSB_SRC = ['pork', 'milk', 'meat', 'egg2'];
+var WSB = { id: 'wsb', zh: '水溶性維生素（一）：B 群與能量代謝', en: 'B vitamins and energy metabolism', alias: '硫胺素・核黃素・菸鹼素・泛酸・生物素・維生素 B6・輔酶', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    thia: { zh: '維生素 B1（硫胺素）', en: 'Thiamin (B1)' }, ribo: { zh: '維生素 B2（核黃素）', en: 'Riboflavin (B2)' }, niac: { zh: '菸鹼素（B3）', en: 'Niacin (B3)' }, pant: { zh: '泛酸（B5）', en: 'Pantothenic acid (B5)' }, biot: { zh: '生物素（B7）', en: 'Biotin (B7)' }, pyr: { zh: '維生素 B6', en: 'Vitamin B6' },
+    tpp: { zh: 'TPP（硫胺素焦磷酸）', en: 'TPP (thiamin pyrophosphate)' }, fad: { zh: 'FAD、FMN', en: 'FAD, FMN' }, nad: { zh: 'NAD⁺、NADP⁺', en: 'NAD⁺, NADP⁺' }, coa: { zh: '輔酶 A', en: 'Coenzyme A' }, plp: { zh: 'PLP（磷酸吡哆醛）', en: 'PLP (pyridoxal phosphate)' },
+    tk: { zh: '轉酮酶（五碳糖磷酸路徑）', en: 'Transketolase (pentose phosphate pathway)' }, gpx: { zh: '麩胱甘肽還原酶', en: 'Glutathione reductase' },
+    beri: { zh: '腳氣病', en: 'Beriberi' }, cheil: { zh: '口角炎、舌炎', en: 'Angular cheilitis, glossitis' }, pella: { zh: '癩皮病', en: 'Pellagra' }, micro: { zh: '小球性貧血、抽搐', en: 'Microcytic anemia, convulsions' }, rare: { zh: '很少見', en: 'Rare' },
+    wet: { zh: '濕性腳氣病（心臟衰竭、水腫）', en: 'Wet beriberi (heart failure, edema)' }, dry: { zh: '乾性腳氣病（周邊神經病變）', en: 'Dry beriberi (peripheral neuropathy)' }, wks: { zh: '魏尼凱–柯沙可夫症候群', en: 'Wernicke-Korsakoff syndrome' },
+    alco: { zh: '長期大量飲酒', en: 'Chronic heavy drinking' }, rawf: { zh: '生魚貝類的硫胺素分解酶', en: 'Thiaminase in raw fish and shellfish' },
+    light: { zh: '光線', en: 'Light' }, heat: { zh: '加熱', en: 'Heat' },
+    trp: { zh: '色胺酸', en: 'Tryptophan' }, lys: { zh: '離胺酸', en: 'Lysine' }, corn: { zh: '玉米', en: 'Corn' }, rice: { zh: '糙米', en: 'Brown rice' },
+    flush: { zh: '皮膚潮紅', en: 'Skin flushing' }, nerve: { zh: '感覺神經病變', en: 'Sensory neuropathy' },
+    avid: { zh: '卵白素（生蛋白）', en: 'Avidin (raw egg white)' }, cook: { zh: '熟蛋白', en: 'Cooked egg white' },
+    ser: { zh: '血清素、多巴胺、GABA', en: 'Serotonin, dopamine, GABA' }, heme: { zh: '血基質', en: 'Heme' }, gp: { zh: '肝醣磷解酶', en: 'Glycogen phosphorylase' },
+    pork: { zh: '豬肉、全穀、豆類', en: 'Pork, whole grains, legumes' }, milk: { zh: '牛奶、乳製品', en: 'Milk and dairy' }, meat: { zh: '肉、魚、花生、菇類', en: 'Meat, fish, peanuts, mushrooms' }, egg2: { zh: '蛋黃、肝臟（腸道細菌也會做）', en: 'Egg yolk, liver (gut bacteria make some)' }
+  },
+  levels: [
+    { t: '先看全貌：B 群在產能路上的位置', kind: 'ov', h: 460, svg: WSB_OV, blanks: WSB_B(),
+      intro: ['B 群維生素本身不提供熱量，但它們會變成「輔酶」，幫酵素把醣類、脂肪、蛋白質轉成能量。所以吃得越多、動得越多，B 群也需要越多。',
+        '左邊是葡萄糖產生 ATP 的路線（紫色、玫瑰色的營養素最後也會接進乙醯輔酶 A）。右邊每一格寫了一個步驟，填上負責這一步的 B 群維生素。',
+        '提示：丙酮酸去掉一個二氧化碳要靠一種含硫的維生素；輔酶 A 的名字就藏著答案；兩個搬運氫的輔酶，一個來自菸鹼素，一個來自核黃素；轉胺和胺基酸代謝最離不開 B6；加上一個二氧化碳（羧化）要靠生物素。'],
+      done: ['[[B1 → TPP（去羧）；B2 → FAD、FMN；菸鹼素 → NAD⁺、NADP⁺；泛酸 → 輔酶 A；生物素 → 羧化酶；B6 → PLP（轉胺）。]]', '水溶性維生素排出快、存量少，需要天天吃；B12 和 B6 是例外，體內存量較多。'] },
+    { t: '硫胺素（B1）與核黃素（B2）', kind: 'list',
+      intro: ['硫胺素的輔酶是加上兩個磷酸的形式，除了幫丙酮酸去羧，也是五碳糖磷酸路徑裡一個酵素的輔酶；測紅血球中這個酵素的活性，可以評估 B1 營養狀況。它怕熱、怕鹼。',
+        '缺乏 B1 的病，分成以神經症狀為主的「乾性」和以心臟衰竭、水腫為主的「濕性」。酗酒者因為吃得少、吸收差、排得多，容易缺 B1，嚴重時出現眼球運動異常、步態不穩、記憶與虛構的腦病變。',
+        '核黃素是黃色的，怕光，所以牛奶不用透明瓶裝。它做成兩種黃素輔酶，參與氧化還原；也是麩胱甘肽還原酶的輔酶，評估 B2 營養狀況就是測這個酵素。缺乏時嘴巴和皮膚先出問題。'],
+      listTitle: '是哪一個', list: [['B1 的輔酶形式', { a: 'tpp', o: ['tpp', 'fad', 'nad', 'plp'] }], ['評估 B1 狀況所測的紅血球酵素', { a: 'tk', o: ['tk', 'gpx'] }], ['評估 B2 狀況所測的紅血球酵素', { a: 'gpx', o: ['tk', 'gpx'] }],
+        ['以周邊神經病變為主的', { a: 'dry', o: ['dry', 'wet'] }], ['以心臟衰竭、水腫為主的', { a: 'wet', o: ['dry', 'wet'] }], ['酗酒者缺 B1 的腦病變', { a: 'wks', o: ['wks', 'pella'] }],
+        ['會破壞 B1 的食物成分', { a: 'rawf', o: ['rawf', 'avid'] }], ['最容易破壞 B2 的是', { a: 'light', o: ['light', 'heat'] }]],
+      countsTitle: '算算看', counts: [['國人 19～30 歲男性 B1 的 RDA（mg）', '1.2', ['0.9', '1.2', '1.5', '2.4']], ['國人 19～30 歲女性 B2 的 RDA（mg）', '1.0', ['0.9', '1.0', '1.3', '1.6']]],
+      done: ['[[B1：TPP，丙酮酸去氫酶與轉酮酶的輔酶；缺乏 → 腳氣病（乾性：神經；濕性：心臟、水腫）；酗酒 → 魏尼凱–柯沙可夫症候群。]]', '[[B2：FAD、FMN；怕光；缺乏 → 口角炎、舌炎、脂漏性皮膚炎。]]',
+        '國人 B1、B2、菸鹼素的建議量依熱量需求訂定，所以吃得多（熱量高）的人需要較多。'] },
+    { t: '菸鹼素（B3）', kind: 'list',
+      intro: ['菸鹼素有兩種形式：菸鹼酸和菸鹼醯胺，都能做成 NAD⁺ 和 NADP⁺。NAD⁺ 多用在分解產能，NADP⁺（還原後的 NADPH）多用在合成脂肪酸、膽固醇。',
+        '身體可以用一種必需胺基酸自己做菸鹼素，約 60 mg 換 1 mg，這一步還需要 B2 和 B6。所以計算時用「菸鹼素當量（NE）」，把吃進的菸鹼素和這種胺基酸換算的加在一起。',
+        '以玉米為主食的地區，因為玉米裡的菸鹼素和其他成分結合吸收不到，這種胺基酸又少，曾經流行缺乏症，症狀是 4D：皮膚炎、腹瀉、失智、死亡。用石灰水處理玉米可以把菸鹼素放出來。',
+        '大劑量的菸鹼酸會讓血管擴張，臉和脖子發紅發熱，也可能傷肝。'],
+      listTitle: '是哪一個', list: [['可以在體內轉成菸鹼素的胺基酸', { a: 'trp', o: ['trp', 'lys'] }], ['以它為主食容易缺菸鹼素', { a: 'corn', o: ['corn', 'rice'] }], ['4D 症狀的缺乏症', { a: 'pella', o: WSB_DF }], ['大劑量菸鹼酸最常見的副作用', { a: 'flush', o: ['flush', 'nerve'] }]],
+      countsTitle: '算算看', counts: [['幾 mg 色胺酸換 1 mg 菸鹼素', '60', ['6', '16', '60', '100']], ['一天吃進 600 mg 色胺酸，可換成幾 mg NE', '10', ['1', '6', '10', '60']], ['成人菸鹼素的 UL（mg）', '35', ['16', '35', '80', '100']]],
+      done: ['[[菸鹼素 → NAD⁺、NADP⁺；60 mg 色胺酸 ＝ 1 mg NE；缺乏 → 癩皮病（4D：皮膚炎、腹瀉、失智、死亡）。]]', '國人成人 RDA：男 16、女 14 mg NE；UL 35 mg（補充劑的菸鹼酸，會造成潮紅）。'] },
+    { t: '泛酸、生物素與維生素 B6', kind: 'list',
+      intro: ['泛酸在食物中到處都有（名字的意思就是「到處」），是輔酶 A 和醯基載體蛋白的成分，缺乏非常少見。',
+        '生物素是羧化酶的輔酶，把二氧化碳加到分子上，例如丙酮酸變成草醋酸、乙醯輔酶 A 變成丙二醯輔酶 A（合成脂肪酸的第一步）。腸道細菌也會做。長期大量吃生蛋白會缺，因為生蛋白裡的一種蛋白質會牢牢抓住它；煮熟就沒問題。',
+        '維生素 B6 的輔酶 PLP 是胺基酸代謝的萬用工具：轉胺、去羧做出神經傳導物質、做血紅素的血基質、肝醣分解酵素也需要它。缺乏時血基質做不夠，造成紅血球小而顏色淡的貧血；神經傳導物質不足會抽搐。',
+        'B6 是少數補充劑吃太多會傷神經的水溶性維生素。'],
+      listTitle: '是哪一個', list: [['生食會造成生物素缺乏的', { a: 'avid', o: ['avid', 'cook'] }], ['B6 的輔酶形式', { a: 'plp', o: ['tpp', 'fad', 'nad', 'plp'] }], ['PLP 去羧後做出的', { a: 'ser', o: ['ser', 'heme', 'gp'] }],
+        ['B6 缺乏造成小球性貧血，是因為做不出', { a: 'heme', o: ['ser', 'heme', 'gp'] }], ['肌肉中存了大量 PLP 的酵素', { a: 'gp', o: ['ser', 'heme', 'gp'] }], ['B6 補充劑過量會造成', { a: 'nerve', o: ['flush', 'nerve'] }]],
+      countsTitle: '算算看', counts: [['國人成人 B6 的 UL（mg）', '80', ['35', '80', '100', '1000']], ['國人 19～50 歲 B6 的 RDA（mg）', '1.5', ['1.2', '1.5', '2.0', '2.4']]],
+      done: ['[[泛酸 → 輔酶 A；生物素 → 羧化酶（生蛋白的卵白素會抓住它）；B6 → PLP（轉胺、去羧、血基質合成、肝醣磷解酶）。]]', '[[B6 缺乏 → 小球性低色素貧血、抽搐、脂漏性皮膚炎；過量（補充劑）→ 感覺神經病變。國人 UL 80 mg。]]'] },
+    { t: '缺乏症與食物來源', kind: 'list',
+      intro: ['把六種 B 群的缺乏症和主要來源對起來。B 群溶在水裡，洗、泡、煮久了會流到湯汁中；蒸、快炒、微波保留得比較多。精製穀類去掉胚芽和麩皮，B1 也跟著不見。'],
+      listTitle: '缺乏症', list: [['B1', { a: 'beri', o: WSB_DF }], ['B2', { a: 'cheil', o: WSB_DF }], ['菸鹼素', { a: 'pella', o: WSB_DF }], ['B6', { a: 'micro', o: WSB_DF }], ['泛酸', { a: 'rare', o: WSB_DF }],
+        ['B1 的好來源', { a: 'pork', o: WSB_SRC }], ['B2 的好來源', { a: 'milk', o: WSB_SRC }], ['菸鹼素的好來源', { a: 'meat', o: WSB_SRC }], ['生物素的好來源', { a: 'egg2', o: WSB_SRC }]],
+      done: ['[[B1：豬肉、全穀、豆類；B2：奶類；菸鹼素：肉、魚、花生、菇類；生物素：蛋黃、肝臟。]]', '白米飯為主又少吃肉的飲食，最容易缺 B1。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['丙酮酸去氫酶需要的 TPP 來自', { a: 'thia', o: WSB_O }, '。'],
+        ['評估核黃素營養狀況是測紅血球的', { a: 'gpx', o: ['tk', 'gpx'] }, '活性。'],
+        ['色胺酸轉成菸鹼素，比例約為 60 mg 換 1 mg，缺乏菸鹼素會得', { a: 'pella', o: WSB_DF }, '。'],
+        ['生蛋白中會抓住生物素的是', { a: 'avid', o: ['avid', 'cook'] }, '。'],
+        ['轉胺作用的輔酶是', { a: 'plp', o: ['tpp', 'fad', 'nad', 'plp'] }, '。'],
+        ['輔酶 A 的成分是', { a: 'pant', o: WSB_O, lang: 'en' }, '。'],
+        ['酗酒者缺乏 B1 的腦病變是', { a: 'wks', o: ['wks', 'pella'], lang: 'en' }, '。'],
+        ['維生素 B6 缺乏造成', { a: 'micro', o: WSB_DF, lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 460, force: 'en', svg: WSB_OV, blanks: WSB_B(),
+      intro: ['第一關的圖，全部用英文作答；下面再加幾個缺乏症。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: '名詞', list: [['Thiamin deficiency', { a: 'beri', o: WSB_DF }], ['Dermatitis, diarrhea, dementia, death', { a: 'pella', o: WSB_DF }], ['Converted to niacin in the body', { a: 'trp', o: ['trp', 'lys'] }], ['Destroyed easily by light', { a: 'ribo', o: WSB_O }]] }
+  ] };
+/* ======================================================================
+   水溶性維生素（二）：葉酸、B12、C 與膽素（第 13 章後半）
+   ====================================================================== */
+function WSC_OV() {
+  var s = '';
+  s += pill(180, 46, 120, { zh: '甲硫胺酸', en: 'Methionine' }, 'pill kE') + pill(180, 176, 130, { zh: '同半胱胺酸', en: 'Homocysteine' }, 'pill kE') + pill(180, 306, 120, { zh: '半胱胺酸', en: 'Cysteine' }, 'pill kE');
+  s += arrow(180, 156, 180, 68) + arrow(180, 198, 180, 284);
+  s += tx(76, 96, T('甲硫胺酸合成酶', 'methionine synthase'), 'm', 9) + tx(290, 96, T('提供甲基', 'methyl donor'), 'm', 9) + tx(290, 226, T('另一條路（轉硫）', 'transsulfuration'), 'm', 9);
+  s += tx(52, 210, T('太高 → 心血管風險', 'Too high → CVD risk'), 'm', 9);
+  s += tx(180, 350, T('甲硫胺酸 → SAM，提供全身的甲基化反應', 'Methionine → SAM, the body’s methyl donor'), 'm', 9.5);
+  return s;
+}
+var WSC_O = ['b12', 'fol', 'b6', 'vc'];
+function WSC_B() { return [{ id: 'm1', x: 76, y: 120, w: 128, a: 'b12', o: WSC_O }, { id: 'm2', x: 290, y: 120, w: 128, a: 'fol', o: WSC_O }, { id: 'm3', x: 290, y: 250, w: 128, a: 'b6', o: WSC_O }]; }
+var WSC_AN = ['mega', 'mcyt', 'hemo'];
+var WSC = { id: 'wsc', zh: '水溶性維生素（二）：葉酸、B12、C 與膽素', en: 'Folate, vitamin B12, vitamin C and choline', alias: '同半胱胺酸・DFE・神經管缺陷・內在因子・惡性貧血・膠原蛋白・壞血病・膽素', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    b12: { zh: '維生素 B12', en: 'Vitamin B12' }, fol: { zh: '葉酸', en: 'Folate' }, b6: { zh: '維生素 B6', en: 'Vitamin B6' }, vc: { zh: '維生素 C', en: 'Vitamin C' },
+    poly: { zh: '多麩胺酸形式（食物天然）', en: 'Polyglutamate (natural in food)' }, mono: { zh: '單麩胺酸形式（葉酸補充劑）', en: 'Monoglutamate (folic acid)' },
+    conj: { zh: '葉酸結合酶（需要鋅）', en: 'Folate conjugase (zinc-dependent)' }, ifac: { zh: '內在因子', en: 'Intrinsic factor' }, rpro: { zh: 'R 蛋白', en: 'R-protein' }, tc: { zh: '運鈷胺蛋白 II', en: 'Transcobalamin II' },
+    ntd: { zh: '神經管缺陷', en: 'Neural tube defects' }, mega: { zh: '巨球性貧血', en: 'Megaloblastic (macrocytic) anemia' }, mcyt: { zh: '小球性低色素貧血', en: 'Microcytic hypochromic anemia' }, hemo: { zh: '溶血性貧血', en: 'Hemolytic anemia' },
+    mask: { zh: '掩蓋 B12 缺乏的貧血', en: 'Masks B12-deficiency anemia' }, kid: { zh: '腎結石', en: 'Kidney stones' },
+    pari: { zh: '胃壁細胞', en: 'Parietal cells' }, chief: { zh: '主細胞', en: 'Chief cells' }, ileum: { zh: '迴腸', en: 'Ileum' }, duo: { zh: '十二指腸', en: 'Duodenum' },
+    pern: { zh: '惡性貧血', en: 'Pernicious anemia' }, vegan: { zh: '全素者', en: 'Vegans' }, old: { zh: '胃酸減少的長者', en: 'Older adults with low stomach acid' },
+    mma: { zh: '甲基丙二酸', en: 'Methylmalonic acid' }, hcy: { zh: '同半胱胺酸', en: 'Homocysteine' }, nerve2: { zh: '神經病變', en: 'Nerve damage' }, anemia: { zh: '貧血', en: 'Anemia' },
+    algae: { zh: '藻類、發酵豆製品（多是無活性類似物）', en: 'Algae, fermented soy (mostly inactive analogs)' }, animal: { zh: '動物性食物', en: 'Animal foods' },
+    coll: { zh: '膠原蛋白的脯胺酸羥化', en: 'Hydroxylation of proline in collagen' }, gla2: { zh: '凝血因子的 γ-羧化', en: 'γ-Carboxylation of clotting factors' },
+    feab: { zh: '把三價鐵還原成二價鐵、促進吸收', en: 'Reduces Fe³⁺ to Fe²⁺, aids absorption' }, scur: { zh: '壞血病', en: 'Scurvy' }, smk: { zh: '抽菸者', en: 'Smokers' },
+    carn: { zh: '肉鹼、正腎上腺素', en: 'Carnitine, norepinephrine' }, unst: { zh: '最不穩定（怕熱、氧、鹼）', en: 'Least stable (heat, oxygen, alkali)' }, diar: { zh: '腹瀉', en: 'Diarrhea' },
+    ach: { zh: '乙醯膽鹼', en: 'Acetylcholine' }, lec: { zh: '卵磷脂（磷脂醯膽鹼）', en: 'Lecithin (phosphatidylcholine)' }, fliv: { zh: '脂肪肝', en: 'Fatty liver' }, fish2: { zh: '魚腥味體臭', en: 'Fishy body odor' },
+    zinc: { zh: '鋅', en: 'Zinc' }, iron: { zh: '鐵', en: 'Iron' }
+  },
+  levels: [
+    { t: '先看全貌：同半胱胺酸的兩條出路', kind: 'ov', h: 360, svg: WSC_OV, blanks: WSC_B(),
+      intro: ['葉酸、B12、B6 三種維生素在一個地方碰頭：同半胱胺酸。它是甲硫胺酸代謝的中間產物，堆積太多和心血管疾病風險有關。',
+        '一條路是把它「加回一個甲基」變回甲硫胺酸：甲基由葉酸提供，負責轉手的酵素需要 B12。另一條路是把它轉成半胱胺酸，這需要 B6。',
+        '所以三者任何一個不足，血中同半胱胺酸都會上升。'],
+      done: ['[[同半胱胺酸 →（B12 ＋ 5-甲基四氫葉酸）甲硫胺酸 → SAM（甲基供應者）；同半胱胺酸 →（B6）半胱胺酸。]]', '缺乏 B12 時，葉酸卡在 5-甲基四氫葉酸的形式回不來，叫「甲基陷阱」，所以 B12 缺乏也會造成葉酸功能不足。'] },
+    { t: '葉酸', kind: 'list',
+      intro: ['食物裡的葉酸帶著一串麩胺酸，要在小腸被一種含鋅的酵素修剪成只剩一個才吸收；補充劑和強化食品用的是只有一個麩胺酸的形式，吸收率高很多。所以用「膳食葉酸當量（DFE）」換算：和食物一起吃的合成葉酸要乘以 1.7。',
+        '葉酸的輔酶形式是四氫葉酸，負責搬運一個碳，做 DNA 的原料。缺乏時分裂最快的細胞先受影響：骨髓裡的紅血球前驅細胞長大了卻分裂不了，變成大而不成熟的紅血球。',
+        '懷孕最初幾週（很多人還不知道懷孕）胎兒的神經管就要閉合，葉酸不足會造成脊柱裂、無腦症，所以建議準備懷孕的女性就要補充。',
+        '大量補充葉酸可以把 B12 缺乏造成的貧血「矯正」過來，卻擋不住神經損傷，反而延誤發現，所以合成葉酸訂有上限。'],
+      listTitle: '是哪一個', list: [['食物中葉酸的天然形式', { a: 'poly', o: ['poly', 'mono'] }], ['修剪麩胺酸鏈的酵素需要', { a: 'zinc', o: ['zinc', 'iron'] }], ['懷孕初期葉酸不足', { a: 'ntd', o: ['ntd', 'mega'] }], ['葉酸缺乏的貧血', { a: 'mega', o: WSC_AN }], ['合成葉酸過量的問題', { a: 'mask', o: ['mask', 'kid'] }]],
+      countsTitle: '算算看', counts: [['200 μg 食物葉酸 ＋ 隨餐吃 120 μg 合成葉酸 ＝ 幾 μg DFE', '404', ['320', '340', '404', '440']], ['國人成人葉酸的 RDA（μg DFE）', '400', ['200', '400', '600', '1000']], ['國人懷孕期葉酸（μg DFE）', '600', ['400', '500', '600', '800']], ['合成葉酸的 UL（μg）', '1000', ['400', '600', '1000', '2000']]],
+      done: ['[[DFE ＝ 食物葉酸 ＋ 1.7 × 合成葉酸（隨餐）。國人 RDA 400 μg DFE，懷孕 ＋200，UL 1,000 μg（合成葉酸）。]]', '[[葉酸缺乏 → 巨球性貧血、神經管缺陷；過量 → 掩蓋 B12 缺乏。]]', '巨球性貧血的紅血球是大而顏色正常（正色素）；小而淡的是缺鐵或缺 B6。'] },
+    { t: '維生素 B12', kind: 'list',
+      intro: ['B12 是唯一含礦物質（鈷）的維生素，只有微生物會做，所以天然來源只有動物性食物。',
+        '它的吸收是最複雜的：胃酸和胃蛋白酶先把它從食物蛋白質上放出來，交給唾液來的 R 蛋白；到了小腸，胰蛋白酶把 R 蛋白切掉，B12 改和胃分泌的內在因子結合，一路走到小腸最後一段才被吸收；進入血液後由一種運輸蛋白送到肝臟，肝臟可以存好幾年。',
+        '胃壁細胞被自體免疫破壞、做不出內在因子，吃再多都吸收不了，叫惡性貧血，要用注射補充。長者胃酸少、全素者吃不到，也是高風險群。',
+        'B12 也是另一個酵素的輔酶，負責奇數碳脂肪酸的代謝；缺乏時那個中間產物會堆積，所以它是 B12 缺乏專屬的指標。缺 B12 還會傷神經髓鞘。'],
+      listTitle: '是哪一個', list: [['分泌內在因子的細胞', { a: 'pari', o: ['pari', 'chief'] }], ['B12 主要吸收的部位', { a: 'ileum', o: ['ileum', 'duo'] }], ['血中運送 B12 的蛋白', { a: 'tc', o: ['tc', 'rpro', 'ifac'] }], ['缺乏內在因子造成的', { a: 'pern', o: ['pern', 'hemo'] }],
+        ['只有 B12 缺乏才會升高的', { a: 'mma', o: ['mma', 'hcy'] }], ['B12 和葉酸缺乏都會升高的', { a: 'hcy', o: ['mma', 'hcy'] }], ['補充葉酸也擋不住的 B12 缺乏症狀', { a: 'nerve2', o: ['nerve2', 'anemia'] }], ['B12 可靠的天然來源', { a: 'animal', o: ['animal', 'algae'] }]],
+      countsTitle: '算算看', counts: [['國人成人 B12 的 RDA（μg）', '2.4', ['1.2', '2.4', '4.0', '6.0']]],
+      done: ['[[B12 吸收：胃酸釋放 → R 蛋白 → 內在因子（胃壁細胞）→ 迴腸吸收 → 運鈷胺蛋白 II。]]', '[[惡性貧血：缺內在因子 → B12 吸收不良，需注射。缺 B12 → 巨球性貧血 ＋ 神經病變；甲基丙二酸與同半胱胺酸都上升。]]', '全素者、長者（萎縮性胃炎、胃酸少）、胃切除者容易缺乏。'] },
+    { t: '維生素 C', kind: 'list',
+      intro: ['維生素 C 就是抗壞血酸，名字直接說明了缺乏症。它是電子的提供者：自己被氧化，把別人還原。人類（還有天竺鼠）自己做不出來，必須從食物攝取。',
+        '它最重要的工作是讓膠原蛋白的兩種胺基酸加上羥基，膠原纖維才能交織牢固。缺乏時血管壁脆弱、牙齦出血、毛囊周圍出血點、傷口癒合不良。',
+        '它也參與肉鹼、正腎上腺素的合成；能把植物性食物中的三價鐵還原成二價鐵，幫助吸收；還能把用掉的維生素 E 還原回來。',
+        '它是最不穩定的維生素。抽菸者的氧化壓力大，需要量較高。吃太多主要是腸胃不適，容易結石的人要注意。'],
+      listTitle: '是哪一個', list: [['維生素 C 在膠原蛋白合成的角色', { a: 'coll', o: ['coll', 'gla2'] }], ['維生素 C 對鐵的作用', { a: 'feab', o: ['feab', 'mask'] }], ['維生素 C 的缺乏症', { a: 'scur', o: ['scur', 'pern'] }], ['需要量比一般人高的', { a: 'smk', o: ['smk', 'vegan'] }],
+        ['也需要維生素 C 才能合成的', { a: 'carn', o: ['carn', 'lec'] }], ['在烹調保存中的特性', { a: 'unst', o: ['unst', 'scur'] }], ['過量最常見的症狀', { a: 'diar', o: ['diar', 'fliv'] }]],
+      countsTitle: '算算看', counts: [['國人成人維生素 C 的 RDA（mg）', '100', ['60', '75', '100', '120']], ['國人哺乳期維生素 C 增加（mg）', '40', ['10', '20', '40', '60']], ['成人維生素 C 的 UL（mg）', '2000', ['500', '1000', '2000', '3000']]],
+      done: ['[[維生素 C：膠原蛋白的脯胺酸、離胺酸羥化；缺乏 → 壞血病（牙齦出血、毛囊周圍出血、傷口難癒合）。]]', '[[促進非血基質鐵吸收；再生維生素 E；國人 RDA 100 mg，懷孕 ＋10、哺乳 ＋40；UL 2,000 mg。]]', '來源：芭樂、柑橘、奇異果、甜椒、深綠色蔬菜；生吃或快炒保留較多。'] },
+    { t: '膽素', kind: 'list',
+      intro: ['膽素不屬於 B 群，身體也能自己做一些，但量不夠，所以訂有足夠攝取量。',
+        '它是細胞膜上最多的一種磷脂質的頭部，也是一種神經傳導物質的原料，還能轉成甜菜鹼提供甲基。',
+        '肝臟要把脂肪用 VLDL 送出去，需要這種磷脂質；膽素不足時脂肪送不出去，堆在肝臟裡。吃太多（補充劑）會有魚腥味的體味。'],
+      listTitle: '是哪一個', list: [['含膽素的磷脂質', { a: 'lec', o: ['lec', 'ach'] }], ['以膽素為原料的神經傳導物質', { a: 'ach', o: ['lec', 'ach'] }], ['膽素缺乏', { a: 'fliv', o: ['fliv', 'fish2'] }], ['膽素過量', { a: 'fish2', o: ['fliv', 'fish2'] }]],
+      done: ['[[膽素：卵磷脂、乙醯膽鹼、甜菜鹼（甲基）；缺乏 → 脂肪肝；過量 → 魚腥味體臭、低血壓。]]', '國人成人 AI：男 450、女 390 mg；UL 3,500 mg。來源：蛋黃、肝臟、黃豆、肉類。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['葉酸和 B12 缺乏都會造成', { a: 'mega', o: WSC_AN }, '。'],
+        ['分泌內在因子的是', { a: 'pari', o: ['pari', 'chief'] }, '。'],
+        ['只有 B12 缺乏才會升高的是', { a: 'mma', o: ['mma', 'hcy'] }, '。'],
+        ['懷孕初期葉酸不足會造成', { a: 'ntd', o: ['ntd', 'mega'] }, '。'],
+        ['維生素 C 缺乏時膠原蛋白無法完成', { a: 'coll', o: ['coll', 'gla2'] }, '。'],
+        ['同半胱胺酸轉成半胱胺酸需要', { a: 'b6', o: WSC_O, lang: 'en' }, '。'],
+        ['B12 主要在', { a: 'ileum', o: ['ileum', 'duo'], lang: 'en' }, '吸收。'],
+        ['膽素缺乏造成', { a: 'fliv', o: ['fliv', 'fish2'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 360, force: 'en', svg: WSC_OV, blanks: WSC_B(),
+      intro: ['第一關的圖，全部用英文作答；下面再加幾個名詞。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: '名詞', list: [['Lack of intrinsic factor', { a: 'pern', o: ['pern', 'hemo'] }], ['Vitamin C deficiency', { a: 'scur', o: ['scur', 'pern'] }], ['Iron or B6 deficiency anemia', { a: 'mcyt', o: WSC_AN }], ['Phospholipid that contains choline', { a: 'lec', o: ['lec', 'ach'] }]] }
+  ] };
+/* ======================================================================
+   水與巨量礦物質（第 14 章）
+   ====================================================================== */
+function WMM_OV() {
+  var s = box(8, 34, 168, 180, 'I', 14) + box(184, 34, 168, 180, 'T', 14);
+  s += tx(92, 58, T('細胞內液（約 2/3）', 'Intracellular fluid (≈ 2/3)'), '', 11) + tx(268, 58, T('細胞外液（約 1/3）', 'Extracellular fluid (≈ 1/3)'), '', 11);
+  [92, 268].forEach(function (x) { s += tx(x, 88, T('主要陽離子', 'main cation'), 'm', 9) + tx(x, 158, T('主要陰離子', 'main anion'), 'm', 9); });
+  s += tx(180, 240, T('鈉鉀幫浦：3 個 Na⁺ 送出、2 個 K⁺ 送進（消耗 ATP）', 'Na⁺/K⁺ pump: 3 Na⁺ out, 2 K⁺ in (uses ATP)'), 'm', 9.5);
+  s += tx(180, 262, T('細胞外液 ＝ 組織間液 ＋ 血漿與淋巴', 'ECF = interstitial fluid + plasma and lymph'), 'm', 9.5);
+  return s;
+}
+var WMM_IO = ['na', 'k', 'cl', 'po4'];
+function WMM_B() { return [{ id: 'i1', x: 92, y: 112, w: 140, a: 'k', o: WMM_IO }, { id: 'i2', x: 92, y: 182, w: 140, a: 'po4', o: WMM_IO }, { id: 'i3', x: 268, y: 112, w: 140, a: 'na', o: WMM_IO }, { id: 'i4', x: 268, y: 182, w: 140, a: 'cl', o: WMM_IO }]; }
+var WMM_HM = ['adh', 'aldo', 'ang'];
+var WMM_CA = ['pth', 'calci', 'ctn'];
+var WMM = { id: 'wmm', zh: '水與巨量礦物質', en: 'Water and major minerals', alias: '體液分布・ADH 與醛固酮・鈉鉀氯・高血壓與 DASH・鈣與骨骼・磷・鎂', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    na: { zh: '鈉 Na⁺', en: 'Sodium (Na⁺)' }, k: { zh: '鉀 K⁺', en: 'Potassium (K⁺)' }, cl: { zh: '氯 Cl⁻', en: 'Chloride (Cl⁻)' }, po4: { zh: '磷酸根', en: 'Phosphate' },
+    adh: { zh: '抗利尿激素（ADH）', en: 'Antidiuretic hormone (ADH)' }, aldo: { zh: '醛固酮', en: 'Aldosterone' }, ang: { zh: '血管收縮素 II', en: 'Angiotensin II' },
+    hypo: { zh: '低血鈉', en: 'Hyponatremia' }, deh: { zh: '脫水', en: 'Dehydration' },
+    proc: { zh: '加工食品與外食', en: 'Processed foods and eating out' }, table: { zh: '餐桌上加的鹽', en: 'Salt added at the table' },
+    kidney: { zh: '腎臟功能不良', en: 'Kidney failure' }, diur: { zh: '使用利尿劑、嘔吐腹瀉', en: 'Diuretics, vomiting, diarrhea' }, kcl: { zh: '氯化鉀（代鹽）', en: 'Potassium chloride (salt substitute)' },
+    dash: { zh: 'DASH 飲食', en: 'DASH diet' }, keto: { zh: '生酮飲食', en: 'Ketogenic diet' }, hcl: { zh: '胃酸（HCl）', en: 'Stomach acid (HCl)' },
+    hap: { zh: '羥基磷灰石', en: 'Hydroxyapatite' }, pth: { zh: '副甲狀腺素', en: 'Parathyroid hormone' }, calci: { zh: '1,25(OH)₂D', en: '1,25(OH)₂D (calcitriol)' }, ctn: { zh: '降鈣素', en: 'Calcitonin' },
+    oblast: { zh: '成骨細胞', en: 'Osteoblasts' }, oclast: { zh: '蝕骨細胞', en: 'Osteoclasts' },
+    oxal: { zh: '草酸（菠菜）', en: 'Oxalate (spinach)' }, lact: { zh: '乳糖、維生素 D', en: 'Lactose, vitamin D' },
+    carb: { zh: '碳酸鈣（隨餐吃）', en: 'Calcium carbonate (with meals)' }, citr: { zh: '檸檬酸鈣（胃酸少也能吸收）', en: 'Calcium citrate (absorbed with low acid)' },
+    tet: { zh: '手足抽搐（低血鈣）', en: 'Tetany (low blood calcium)' }, dexa: { zh: '雙能量 X 光（DEXA）', en: 'Dual-energy X-ray (DEXA)' }, ct: { zh: '電腦斷層', en: 'CT scan' },
+    atp: { zh: 'ATP、DNA、磷脂質', en: 'ATP, DNA, phospholipids' }, phyt: { zh: '植酸（穀類、豆類）', en: 'Phytate (grains, legumes)' },
+    chlor: { zh: '葉綠素', en: 'Chlorophyll' }, heme2: { zh: '血基質', en: 'Heme' }, mgatp: { zh: '和 ATP 結合，穩定 ATP', en: 'Binds and stabilizes ATP' }, diar: { zh: '腹瀉', en: 'Diarrhea' },
+    sulf: { zh: '含硫胺基酸', en: 'Sulfur amino acids' }, hyperp: { zh: '高血磷', en: 'Hyperphosphatemia' }
+  },
+  levels: [
+    { t: '先看全貌：體液與電解質', kind: 'ov', h: 280, svg: WMM_OV, blanks: WMM_B(),
+      intro: ['成人體重約 55～60% 是水，肌肉多的人比例較高，脂肪多的人較低。三分之二在細胞裡面，三分之一在細胞外面（組織間液、血漿、淋巴）。',
+        '細胞內外的離子組成完全不同。藍色框是細胞內液，青色框是細胞外液，填上兩邊最主要的陽離子和陰離子。',
+        '這個差異是細胞膜上的幫浦用 ATP 維持的；水則跟著溶質濃度，用滲透作用在兩邊移動。'],
+      done: ['[[細胞內液：K⁺ 和磷酸根（其次是 Mg²⁺）；細胞外液：Na⁺ 和 Cl⁻（其次是 HCO₃⁻）。]]', '[[鈉鉀幫浦：3 Na⁺ 出、2 K⁺ 進，消耗 ATP。]]', '巨量礦物質每天需要 100 mg 以上：鈣、磷、鎂、鈉、鉀、氯、硫；少於 100 mg 的是微量礦物質。'] },
+    { t: '水：平衡、調節與需要量', kind: 'list',
+      intro: ['水是溶劑、運輸工具、潤滑劑，參與水解反應，也靠出汗蒸發散熱，並把代謝廢物從尿液排出。身體沒有地方「儲存」多的水。',
+        '缺水時血液變濃，下視丘感受到滲透壓上升，讓腦下垂體後葉放出一種激素，叫腎臟回收水分；血壓或血量下降時，腎臟放出腎素，最後產生一種強力收縮血管的物質，並促使腎上腺皮質分泌另一種激素，留住鈉（水跟著鈉留下）。',
+        '短時間喝進大量白開水、腎臟來不及排出，血鈉被稀釋，細胞腫脹，嚴重時致命。',
+        '一般成人每天水分需要量可以用「每 1 大卡約 1 mL」或「每公斤體重 30～35 mL」粗估。'],
+      listTitle: '是哪一個', list: [['讓腎臟回收水分（腦下垂體後葉）', { a: 'adh', o: WMM_HM }], ['讓腎臟保留鈉（腎上腺皮質）', { a: 'aldo', o: WMM_HM }], ['強力收縮血管、刺激醛固酮分泌', { a: 'ang', o: WMM_HM }], ['短時間喝太多水', { a: 'hypo', o: ['hypo', 'deh'] }], ['發燒、嘔吐、腹瀉、高溫運動', { a: 'deh', o: ['hypo', 'deh'] }]],
+      countsTitle: '算算看', counts: [['每天吃 2,000 大卡，水分約需幾 mL', '2000', ['1000', '1500', '2000', '3000']], ['60 公斤成人，以每公斤 30 mL 估計，約需幾 mL', '1800', ['1200', '1500', '1800', '2400']]],
+      done: ['[[ADH：保留水；醛固酮：保留鈉（排鉀）；腎素 → 血管收縮素 II → 血管收縮、醛固酮分泌。]]', '每日尿量約 1～2 L；長期少於 600 mL，腎結石風險增加。'] },
+    { t: '鈉、鉀、氯與高血壓', kind: 'list',
+      intro: ['鈉是細胞外液的主要陽離子，維持血量、血壓與神經肌肉功能，也協助葡萄糖、胺基酸在小腸吸收。食鹽約 40% 是鈉。大部分的鈉不是自己加的鹽，而是來自加工食品與外食。',
+        '鈉吃太多與高血壓、中風、胃癌和尿鈣流失有關。國人 DRIs 第八版訂了以降低慢性病風險為目標的鈉攝取上限 2,300 mg；國健署也建議每天鹽不超過 6 公克。',
+        '鉀是細胞內液的主要陽離子，能幫助排鈉、降血壓。蔬菜、水果、豆類、全穀都富含鉀。但腎臟病人排不出鉀，血鉀太高會心律不整；這類病人也不能用以鉀代鈉的低鈉鹽。',
+        '氯跟著鈉走，是細胞外液的主要陰離子，也是胃酸的成分。',
+        '一種研究證實能降血壓的飲食型態：多蔬果、全穀、低脂乳品、堅果，少紅肉、甜食和飽和脂肪，富含鉀、鎂、鈣與纖維。'],
+      listTitle: '是哪一個', list: [['飲食中鈉的最大來源', { a: 'proc', o: ['proc', 'table'] }], ['腎臟病人血鉀過高的原因', { a: 'kidney', o: ['kidney', 'diur'] }], ['低血鉀常見的原因', { a: 'diur', o: ['kidney', 'diur'] }], ['腎臟病人不宜使用的', { a: 'kcl', o: ['kcl', 'hcl'] }],
+        ['氯在消化道的角色', { a: 'hcl', o: ['kcl', 'hcl'] }], ['降血壓的飲食型態', { a: 'dash', o: ['dash', 'keto'] }]],
+      countsTitle: '算算看', counts: [['6 g 食鹽約含幾 mg 鈉', '2400', ['600', '1200', '2400', '6000']], ['國人 DRIs 鈉的慢性病風險降低攝取量（mg）', '2300', ['1500', '2000', '2300', '2400']], ['國人成年男性鉀的 AI（mg）', '2800', ['2000', '2500', '2800', '4700']]],
+      done: ['[[食鹽 1 g ≈ 鈉 400 mg；國人鈉 CDRR 2,300 mg，鹽 < 6 g／天；75% 以上的鈉來自加工食品與外食。]]', '[[鉀 AI：男 2,800、女 2,500 mg；腎臟病 → 高血鉀，避免低鈉鹽（KCl）。]]', 'DASH 飲食：多蔬果、全穀、低脂乳品，富含鉀、鎂、鈣、纖維，可明顯降低血壓；再加上減鈉效果更好。'] },
+    { t: '鈣與骨骼', kind: 'list',
+      intro: ['身體 99% 的鈣在骨骼和牙齒，以一種含鈣和磷的結晶沉積在膠原蛋白上；剩下 1% 在血液和細胞，負責凝血、神經傳導、肌肉收縮。這 1% 比骨頭重要，所以血鈣被嚴格控制，骨頭只是「銀行」。',
+        '血鈣低時，一種荷爾蒙讓骨頭釋出鈣、腎臟少排鈣，並活化維生素 D 讓小腸多吸收；血鈣高時，甲狀腺分泌另一種荷爾蒙抑制骨頭分解。',
+        '骨頭一直在重建：一種細胞造骨，一種細胞吃骨。約 30 歲時骨量達到最高，之後慢慢流失，停經後雌激素下降，流失更快。骨密度用一種 X 光檢查測量。',
+        '鈣的吸收率只有約 25～30%，生長期和懷孕較高。維生素 D、乳糖有幫助；菠菜的草酸、穀類的植酸、太多的磷會妨礙。鈣片一次吃 500 mg 以下吸收最好。'],
+      listTitle: '是哪一個', list: [['骨骼中的礦物質結晶', { a: 'hap', o: ['hap', 'atp'] }], ['血鈣低時讓骨頭釋出鈣的', { a: 'pth', o: WMM_CA }], ['抑制骨頭分解、降低血鈣的', { a: 'ctn', o: WMM_CA }], ['增加小腸吸收鈣的', { a: 'calci', o: WMM_CA }],
+        ['建造骨骼的細胞', { a: 'oblast', o: ['oblast', 'oclast'] }], ['分解骨骼的細胞', { a: 'oclast', o: ['oblast', 'oclast'] }], ['妨礙鈣吸收', { a: 'oxal', o: ['oxal', 'lact'] }], ['幫助鈣吸收', { a: 'lact', o: ['oxal', 'lact'] }],
+        ['含鈣比例最高、要隨餐吃的鈣片', { a: 'carb', o: ['carb', 'citr'] }], ['胃酸分泌少的長者較適合', { a: 'citr', o: ['carb', 'citr'] }], ['診斷骨質疏鬆的標準檢查', { a: 'dexa', o: ['dexa', 'ct'] }], ['血鈣急速下降的症狀', { a: 'tet', o: ['tet', 'diar'] }]],
+      countsTitle: '算算看', counts: [['國人成人鈣的 AI（mg）', '1000', ['800', '1000', '1200', '1500']], ['國人 13～18 歲鈣的 AI（mg）', '1200', ['1000', '1200', '1300', '1500']], ['碳酸鈣含鈣 40%，1,250 mg 碳酸鈣含幾 mg 鈣', '500', ['250', '400', '500', '1250']], ['成人鈣的 UL（mg）', '2500', ['1500', '2000', '2500', '3000']]],
+      done: ['[[99% 的鈣在骨骼（羥基磷灰石）；血鈣低 → PTH ↑、1,25(OH)₂D ↑；血鈣高 → 降鈣素 ↑。]]', '[[國人鈣 AI：成人 1,000 mg、13～18 歲 1,200 mg；UL 2,500 mg。]]',
+        '骨質疏鬆：DEXA 的 T 值 ≤ −2.5；預防靠年輕時累積骨本（鈣、維生素 D、負重運動），並避免菸、酒、過量咖啡因與鈉。'] },
+    { t: '磷、鎂與硫', kind: 'list',
+      intro: ['磷約 80% 在骨骼和牙齒，其餘做成 ATP、磷酸肌酸、DNA、RNA、細胞膜的磷脂質，也是細胞內的主要陰離子與緩衝劑。磷幾乎所有食物都有，加工食品的磷酸鹽添加物更多，很少缺乏；腎臟病人反而排不出去。',
+        '鎂是細胞內第二多的陽離子，約一半在骨頭。它要先和 ATP 結合，ATP 才能被酵素利用，所以和能量代謝、神經肌肉、胰島素作用都有關。綠色蔬菜之所以含鎂，是因為一種色素的中心就是鎂。缺鎂會讓副甲狀腺素分泌減少，連帶血鈣也低。補充劑吃太多會拉肚子。',
+        '硫主要來自兩種含硫胺基酸，蛋白質吃夠就不會缺，沒有訂建議量。'],
+      listTitle: '是哪一個', list: [['磷除了骨骼以外的重要角色', { a: 'atp', o: ['atp', 'hap'] }], ['降低植物性食物中磷、鈣、鋅吸收的', { a: 'phyt', o: ['phyt', 'lact'] }], ['腎臟病人容易出現', { a: 'hyperp', o: ['hyperp', 'hypo'] }],
+        ['綠色蔬菜含鎂的原因', { a: 'chlor', o: ['chlor', 'heme2'] }], ['鎂在能量代謝的角色', { a: 'mgatp', o: ['mgatp', 'atp'] }], ['非食物來源的鎂過量', { a: 'diar', o: ['diar', 'tet'] }], ['硫的主要來源', { a: 'sulf', o: ['sulf', 'phyt'] }]],
+      countsTitle: '算算看', counts: [['國人成人磷的 RDA（mg）', '800', ['700', '800', '1000', '1250']], ['10 歲以上非食物來源鎂的 UL（mg）', '350', ['250', '350', '500', '700']]],
+      done: ['[[磷：骨骼、ATP、DNA、磷脂質；植酸形式難吸收；腎臟病 → 高血磷。]]', '[[鎂：Mg-ATP、細胞內第二多的陽離子；綠色蔬菜（葉綠素）、堅果、全穀；缺鎂 → PTH ↓、低血鈣；UL 350 mg（只算補充劑與藥物）。]]', '國人成人鎂 RDA：男 380、女 320 mg（19～50 歲）。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['細胞內液最主要的陽離子是', { a: 'k', o: WMM_IO }, '。'],
+        ['讓腎臟保留鈉的激素是', { a: 'aldo', o: WMM_HM }, '。'],
+        ['血鈣低時增加分泌的是', { a: 'pth', o: WMM_CA }, '。'],
+        ['飲食中鈉最主要的來源是', { a: 'proc', o: ['proc', 'table'] }, '。'],
+        ['國人成人鈣的 AI 是 1,000 mg，含鈣比例最高的鈣片是', { a: 'carb', o: ['carb', 'citr'] }, '。'],
+        ['分解骨骼的細胞是', { a: 'oclast', o: ['oblast', 'oclast'], lang: 'en' }, '。'],
+        ['讓腎臟回收水分的激素是', { a: 'adh', o: WMM_HM, lang: 'en' }, '。'],
+        ['以降血壓為目標的飲食型態是', { a: 'dash', o: ['dash', 'keto'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 280, force: 'en', svg: WMM_OV, blanks: WMM_B(),
+      intro: ['第一關的圖，全部用英文作答；下面再加幾個名詞。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: '名詞', list: [['Mineral crystal in bone', { a: 'hap', o: ['hap', 'atp'] }], ['Lowers blood calcium', { a: 'ctn', o: WMM_CA }], ['Too much plain water too fast', { a: 'hypo', o: ['hypo', 'deh'] }], ['Magnesium in green plants', { a: 'chlor', o: ['chlor', 'heme2'] }]] }
+  ] };
+/* ======================================================================
+   微量礦物質（照國考補）
+   ====================================================================== */
+var TRM_R = [['鐵 Fe', 'Iron (Fe)', 'f_fe'], ['鋅 Zn', 'Zinc (Zn)', 'f_zn'], ['銅 Cu', 'Copper (Cu)', 'f_cu'], ['碘 I', 'Iodine (I)', 'f_i'], ['硒 Se', 'Selenium (Se)', 'f_se'], ['氟 F', 'Fluoride (F)', 'f_f'], ['鉻 Cr', 'Chromium (Cr)', 'f_cr']];
+var TRM_FO = TRM_R.map(function (r) { return r[2]; });
+function TRM_OV() {
+  var s = tx(60, 22, T('礦物質', 'mineral'), 'm', 9.5) + tx(250, 22, T('最具代表性的角色', 'signature role'), 'm', 9.5);
+  TRM_R.forEach(function (r, i) { var y = 50 + i * 50; s += pill(60, y, 96, { zh: r[0], en: r[1] }, 'pill kI') + arrow(110, y, 140, y); });
+  return s;
+}
+function TRM_B() { return TRM_R.map(function (r, i) { return { id: 't' + i, x: 250, y: 50 + i * 50, w: 200, a: r[2], o: TRM_FO }; }); }
+var TRM_FS = ['ferr', 'tsat', 'hb'];
+var TRM = { id: 'trm', zh: '微量礦物質', en: 'Trace minerals', alias: '鐵的吸收與缺乏三階段・鋅與金屬硫蛋白・銅藍蛋白・碘與甲狀腺・硒・氟・鉻', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    f_fe: { zh: '血紅素、肌紅素運送氧', en: 'Hemoglobin, myoglobin (oxygen)' }, f_zn: { zh: '上百種酵素、味覺、傷口癒合', en: 'Hundreds of enzymes, taste, wound healing' }, f_cu: { zh: '銅藍蛋白、膠原交聯', en: 'Ceruloplasmin, collagen cross-links' },
+    f_i: { zh: '甲狀腺素', en: 'Thyroid hormones' }, f_se: { zh: '麩胱甘肽過氧化酶', en: 'Glutathione peroxidase' }, f_f: { zh: '氟磷灰石、預防齲齒', en: 'Fluorapatite, prevents caries' }, f_cr: { zh: '增強胰島素作用', en: 'Enhances insulin action' },
+    heme: { zh: '血基質鐵（肉、魚）', en: 'Heme iron (meat, fish)' }, nonh: { zh: '非血基質鐵（蔬菜、穀類、蛋）', en: 'Non-heme iron (plants, grains, eggs)' },
+    vc: { zh: '維生素 C、肉魚家禽因子', en: 'Vitamin C, meat-fish-poultry factor' }, tea: { zh: '茶的單寧、植酸、鈣', en: 'Tea tannins, phytate, calcium' },
+    fe2: { zh: '二價鐵 Fe²⁺', en: 'Ferrous iron (Fe²⁺)' }, fe3: { zh: '三價鐵 Fe³⁺', en: 'Ferric iron (Fe³⁺)' },
+    tf: { zh: '運鐵蛋白', en: 'Transferrin' }, ferr: { zh: '血清鐵蛋白下降', en: 'Serum ferritin falls' }, tsat: { zh: '運鐵蛋白飽和度下降、TIBC 上升', en: 'Transferrin saturation ↓, TIBC ↑' }, hb: { zh: '血紅素下降、小球性貧血', en: 'Hemoglobin ↓, microcytic anemia' },
+    hep: { zh: '鐵調素（hepcidin）', en: 'Hepcidin' }, hemo: { zh: '血色素沉著症', en: 'Hemochromatosis' },
+    mt: { zh: '金屬硫蛋白', en: 'Metallothionein' }, cudef: { zh: '銅缺乏', en: 'Copper deficiency' }, ade: { zh: '腸病性肢端皮膚炎', en: 'Acrodermatitis enteropathica' }, dwarf: { zh: '生長遲緩、性腺發育不全', en: 'Growth retardation, hypogonadism' },
+    cer: { zh: '銅藍蛋白', en: 'Ceruloplasmin' }, wil: { zh: '威爾森氏症（銅堆積）', en: "Wilson's disease (copper buildup)" }, menk: { zh: '孟克斯症（銅吸收缺陷）', en: 'Menkes disease (copper absorption defect)' },
+    gtr: { zh: '甲狀腺腫', en: 'Goiter' }, cret: { zh: '呆小症（胎兒期缺碘）', en: 'Cretinism (iodine lack before birth)' }, gtg: { zh: '甲狀腺腫素（十字花科生食）', en: 'Goitrogens (raw crucifers)' },
+    kes: { zh: '克山病（心肌病變）', en: 'Keshan disease (cardiomyopathy)' }, selo: { zh: '掉髮、指甲變脆、蒜味口氣', en: 'Hair and nail loss, garlic breath' }, dei: { zh: '脫碘酶（T4 → T3）', en: 'Deiodinase (T4 → T3)' },
+    mott: { zh: '牙齒斑釉（氟斑牙）', en: 'Mottled enamel (dental fluorosis)' }, cari: { zh: '齲齒', en: 'Dental caries' },
+    mn: { zh: '錳', en: 'Manganese' }, mo: { zh: '鉬', en: 'Molybdenum' }, co: { zh: '鈷', en: 'Cobalt' }, cr: { zh: '鉻', en: 'Chromium' }
+  },
+  levels: [
+    { t: '先看全貌：七種微量礦物質', kind: 'ov', h: 380, svg: TRM_OV, blanks: TRM_B(),
+      intro: ['微量礦物質每天只需要幾毫克甚至幾微克，但每一種都有身體別人取代不了的工作，大多是酵素或荷爾蒙裡不可少的一個原子。',
+        '左邊是七種國考最常出現的微量礦物質，右邊填它最具代表性的角色。',
+        '要注意：微量礦物質的「夠」和「太多」距離很近，補充劑最容易過量；而且彼此會搶吸收（鐵和鋅、鋅和銅）。'],
+      done: ['[[鐵：血紅素、肌紅素；鋅：酵素、味覺、免疫、傷口；銅：銅藍蛋白；碘：甲狀腺素；硒：麩胱甘肽過氧化酶；氟：氟磷灰石；鉻：增強胰島素作用。]]'] },
+    { t: '鐵：吸收、運送與缺乏', kind: 'list',
+      intro: ['食物中的鐵分兩種：肉、魚裡和血紅素在一起的那種，吸收率約 15～35%，不太受其他食物影響；植物、蛋、奶裡的那種吸收率只有 2～20%，受同一餐其他成分影響很大。',
+        '植物性的鐵要先還原成二價才能被吸收。同一餐有維生素 C 或肉類會幫忙；茶和咖啡的多酚、穀類的植酸、大量的鈣會妨礙。',
+        '進入血液後由一種運輸蛋白載送；存在肝臟、骨髓時和一種儲存蛋白結合，血液中這種蛋白的濃度最能反映「庫存」。身體沒有主動排鐵的辦法，只靠調整吸收；肝臟做的一種荷爾蒙會關閉吸收的大門。',
+        '缺鐵分三階段：先是庫存用光，接著運送的鐵不夠、造血原料不足，最後血紅素才下降，紅血球變小、顏色淡。缺鐵是全世界最常見的營養素缺乏。'],
+      listTitle: '是哪一個', list: [['吸收率較高的鐵', { a: 'heme', o: ['heme', 'nonh'] }], ['促進非血基質鐵吸收', { a: 'vc', o: ['vc', 'tea'] }], ['妨礙非血基質鐵吸收', { a: 'tea', o: ['vc', 'tea'] }], ['小腸吸收的鐵的形式', { a: 'fe2', o: ['fe2', 'fe3'] }],
+        ['在血液中運送鐵的', { a: 'tf', o: ['tf', 'mt', 'cer'] }], ['關閉小腸鐵吸收的荷爾蒙', { a: 'hep', o: ['hep', 'cer'] }], ['遺傳性鐵吸收過多', { a: 'hemo', o: ['hemo', 'wil'] }],
+        ['缺鐵第一階段（庫存耗盡）', { a: 'ferr', o: TRM_FS }], ['缺鐵第二階段（造血原料不足）', { a: 'tsat', o: TRM_FS }], ['缺鐵第三階段（缺鐵性貧血）', { a: 'hb', o: TRM_FS }]],
+      countsTitle: '算算看', counts: [['國人 19～50 歲女性鐵的 RDA（mg）', '15', ['8', '10', '15', '18']], ['國人成年男性鐵的 RDA（mg）', '10', ['8', '10', '12', '15']], ['懷孕第三期與哺乳期鐵要增加幾 mg', '30', ['5', '10', '15', '30']], ['成人鐵的 UL（mg）', '40', ['25', '35', '40', '45']]],
+      done: ['[[血基質鐵吸收率高；非血基質鐵：維生素 C、肉類促進，茶、植酸、草酸、鈣抑制。]]', '[[運鐵蛋白運送、鐵蛋白儲存（血清鐵蛋白反映庫存）；鐵調素抑制吸收。]]', '[[缺鐵三階段：鐵蛋白 ↓ → 運鐵蛋白飽和度 ↓、TIBC ↑ → 血紅素 ↓（小球性低色素貧血）。]]',
+        '國人鐵 RDA：男 10、女 15 mg（51 歲以上女性 10 mg）；懷孕第三期與哺乳 ＋30 mg；UL 40 mg。'] },
+    { t: '鋅與銅', kind: 'list',
+      intro: ['鋅是上百種酵素的成分（例如碳酸酐酶、醇去氫酶），也和味覺、免疫、傷口癒合、生長及性成熟有關。來源以牡蠣、紅肉、海鮮最好，植物性的鋅受植酸影響吸收差。',
+        '1960 年代在中東發現，以未發酵麵餅為主食的青少年身材矮小、性腺發育不全，就是缺鋅。另有一種遺傳性鋅吸收障礙，嬰兒斷奶後出現肢端和口周皮膚炎。',
+        '小腸細胞裡有一種結合金屬的蛋白質，鋅吃多時它會大量增加，連帶把銅也抓住，隨細胞脫落排掉，所以長期補充大量鋅會造成另一種礦物質缺乏。',
+        '銅最重要的是血液中一種含銅的藍色蛋白，能把二價鐵氧化成三價鐵，鐵才能裝上運輸蛋白；所以缺銅也會貧血。銅也是膠原蛋白、彈性蛋白交聯所需酵素的成分。兩種遺傳病：一種銅排不出去堆在肝和腦，一種銅吸收不進來。'],
+      listTitle: '是哪一個', list: [['腸細胞內抓住鋅和銅的蛋白', { a: 'mt', o: ['tf', 'mt', 'cer'] }], ['長期大量補鋅會造成', { a: 'cudef', o: ['cudef', 'hemo'] }], ['以未發酵麵餅為主食的青少年缺鋅', { a: 'dwarf', o: ['dwarf', 'ade'] }], ['遺傳性鋅吸收障礙', { a: 'ade', o: ['dwarf', 'ade'] }],
+        ['含銅、把 Fe²⁺ 氧化成 Fe³⁺ 的蛋白', { a: 'cer', o: ['tf', 'mt', 'cer'] }], ['銅堆積在肝臟和腦', { a: 'wil', o: ['wil', 'menk'] }], ['銅吸收缺陷', { a: 'menk', o: ['wil', 'menk'] }]],
+      countsTitle: '算算看', counts: [['國人成年男性鋅的 RDA（mg）', '15', ['8', '11', '12', '15']], ['國人成年女性鋅的 RDA（mg）', '12', ['8', '10', '12', '15']], ['成人鋅的 UL（mg）', '35', ['25', '35', '40', '50']]],
+      done: ['[[鋅：酵素、味覺、免疫、生長；缺乏 → 生長遲緩、性腺發育不全、味覺減退；大量補鋅 → 金屬硫蛋白 ↑ → 銅缺乏。]]', '[[銅：銅藍蛋白（Fe²⁺ → Fe³⁺）、離胺酸氧化酶；缺銅 → 貧血；威爾森氏症是銅堆積。]]'] },
+    { t: '碘、硒與氟', kind: 'list',
+      intro: ['碘只有一個用途：做甲狀腺素。缺碘時腦下垂體拚命刺激甲狀腺，甲狀腺變大；懷孕時缺碘會使胎兒腦部和生長嚴重受損。台灣用加碘鹽預防，海帶、紫菜、海魚都含碘。生的十字花科蔬菜裡有干擾碘利用的物質。',
+        '硒是一種抗氧化酵素的成分，和維生素 E 合作；也是把甲狀腺素轉成活性形式的酵素成分。中國土壤缺硒的地區曾流行一種心肌病。硒的安全範圍窄，過量會掉頭髮、指甲變脆、口氣有大蒜味。',
+        '氟會取代牙齒結晶中的羥基，形成更耐酸的結晶，降低齲齒；但牙齒發育期攝取過多，會在牙齒上留下白斑或褐斑。'],
+      listTitle: '是哪一個', list: [['缺碘最常見的症狀', { a: 'gtr', o: ['gtr', 'cret'] }], ['懷孕期嚴重缺碘，影響胎兒', { a: 'cret', o: ['gtr', 'cret'] }], ['生的高麗菜、花椰菜裡的', { a: 'gtg', o: ['gtg', 'tea'] }],
+        ['缺硒造成的心肌病', { a: 'kes', o: ['kes', 'wil'] }], ['硒中毒的症狀', { a: 'selo', o: ['selo', 'mott'] }], ['含硒、活化甲狀腺素的酵素', { a: 'dei', o: ['dei', 'cer'] }], ['氟攝取過量', { a: 'mott', o: ['mott', 'cari'] }], ['氟攝取不足', { a: 'cari', o: ['mott', 'cari'] }]],
+      countsTitle: '算算看', counts: [['國人成人碘的 RDA（μg）', '150', ['100', '140', '150', '200']], ['國人懷孕期碘（μg）', '225', ['150', '200', '225', '250']], ['國人成人硒的 RDA（μg）', '55', ['40', '55', '70', '100']], ['成人硒的 UL（μg）', '400', ['200', '300', '400', '1000']]],
+      done: ['[[碘：甲狀腺素；缺乏 → 甲狀腺腫、呆小症；國人 RDA 150 μg，懷孕 225 μg，UL 1,000 μg。]]', '[[硒：麩胱甘肽過氧化酶、脫碘酶；缺乏 → 克山病；RDA 55 μg，UL 400 μg。]]', '[[氟：氟磷灰石；不足 → 齲齒；過量 → 氟斑牙。國人 AI 3 mg，UL 10 mg。]]'] },
+    { t: '其他微量元素', kind: 'list',
+      intro: ['還有幾種需要量更少、國考偶爾出現的元素：一種能增強胰島素作用、和醣類耐受性有關；一種是粒線體超氧化物歧化酶和丙酮酸羧化酶的成分；一種是黃嘌呤氧化酶和亞硫酸鹽氧化酶的成分；還有一種只以 B12 的形式被人體利用。'],
+      listTitle: '是哪一個', list: [['增強胰島素作用', { a: 'cr', o: ['cr', 'mn', 'mo', 'co'] }], ['粒線體超氧化物歧化酶的成分', { a: 'mn', o: ['cr', 'mn', 'mo', 'co'] }], ['黃嘌呤氧化酶的成分', { a: 'mo', o: ['cr', 'mn', 'mo', 'co'] }], ['維生素 B12 的中心原子', { a: 'co', o: ['cr', 'mn', 'mo', 'co'] }]],
+      done: ['[[鉻：葡萄糖耐受；錳：Mn-SOD、丙酮酸羧化酶、精胺酸酶；鉬：黃嘌呤氧化酶、亞硫酸鹽氧化酶；鈷：B12。]]', '細胞質的超氧化物歧化酶含銅和鋅，粒線體的含錳。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['最能反映體內鐵儲存量的是', { a: 'ferr', o: TRM_FS }, '。'],
+        ['促進非血基質鐵吸收的是', { a: 'vc', o: ['vc', 'tea'] }, '。'],
+        ['長期大量補鋅會造成', { a: 'cudef', o: ['cudef', 'hemo'] }, '。'],
+        ['把 Fe²⁺ 氧化成 Fe³⁺ 的含銅蛋白是', { a: 'cer', o: ['tf', 'mt', 'cer'] }, '。'],
+        ['缺硒造成的心肌病是', { a: 'kes', o: ['kes', 'wil'] }, '。'],
+        ['在血液中運送鐵的是', { a: 'tf', o: ['tf', 'mt', 'cer'], lang: 'en' }, '。'],
+        ['缺碘最常見的症狀是', { a: 'gtr', o: ['gtr', 'cret'], lang: 'en' }, '。'],
+        ['牙齒發育期氟太多會造成', { a: 'mott', o: ['mott', 'cari'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 380, force: 'en', svg: TRM_OV, blanks: TRM_B(),
+      intro: ['第一關的圖，全部用英文作答；下面再加幾個名詞。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: '名詞', list: [['Iron storage protein (first to fall)', { a: 'ferr', o: TRM_FS }], ['Copper buildup in liver and brain', { a: 'wil', o: ['wil', 'menk'] }], ['Iodine lack before birth', { a: 'cret', o: ['gtr', 'cret'] }], ['Center of vitamin B12', { a: 'co', o: ['cr', 'mn', 'mo', 'co'] }]] }
+  ] };
 /* 圖解營養學的目錄：照《透視營養學》12 版的章節順序。有 levels 的才是做好的單元，沒有的顯示「製作中」 */
 function TODO(id, zh, en) { return { id: id, zh: zh, en: en }; }
 var GROUPS = [
@@ -1099,8 +1552,8 @@ var GROUPS = [
   { tab: 'macro', g: '醣類', c: 6, items: [CHO, CHM] },
   { tab: 'macro', g: '脂質', c: 2, items: [LIP, LPT] },
   { tab: 'macro', g: '蛋白質', c: 3, items: [PRO, PRM] },
-  { tab: 'micro', g: '維生素', c: 4, items: [TODO('fsv', '脂溶性維生素', 'Fat-soluble vitamins'), TODO('wsb', '水溶性維生素：B 群', 'B vitamins'), TODO('wsc', '水溶性維生素：C 與膽素', 'Vitamin C and choline')] },
-  { tab: 'micro', g: '水與礦物質', c: 5, items: [TODO('wmm', '水與巨量礦物質', 'Water and major minerals'), TODO('trm', '微量礦物質', 'Trace minerals')] },
+  { tab: 'micro', g: '維生素', c: 4, items: [FSV, WSB, WSC] },
+  { tab: 'micro', g: '水與礦物質', c: 5, items: [WMM, TRM] },
   { tab: 'life', g: '生命期營養', c: 3, items: [TODO('prg', '懷孕與哺乳', 'Pregnancy and lactation'), TODO('inf', '嬰兒、兒童與青少年', 'Infancy through adolescence'), TODO('adl', '成人與老年', 'Adulthood and aging'), TODO('glb', '全球的營養問題', 'Undernutrition throughout the world')] }
 ];
 function prep(u, par) {

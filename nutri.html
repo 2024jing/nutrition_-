@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>圖解營養學</title>
+<style>
+  :root {
+    --bg: #f4f5f2; --card: #ffffff; --ink: #1f2a24; --muted: #5f6a63; --line: #e2e5df; --rail: #c9d2cb;
+    --brand: #2f6b4f; --brand-soft: #e3efe8; --on-brand: #ffffff; --ok: #2e7d4f; --ok-soft: #e1f2e7;
+    --bad: #b3261e; --bad-soft: #fbe5e3; --warm: #fff3d6; --chip: #eef0eb; --shadow: 0 1px 2px rgba(0,0,0,.06), 0 2px 8px rgba(0,0,0,.04);
+    --k6: #fbe9c6; --k6s: #b8791c; --k5: #dce9f7; --k5s: #3f73a8; --k4: #d4eeee; --k4s: #2c8088; --k3: #f9e0e6; --k3s: #b8506c; --k2: #e9e2f6; --k2s: #6f57ab;
+    --e-atp: #c96f14; --e-nadh: #4558b8; --e-fad: #7a4fb0; --e-co2: #77817a; --on-tag: #ffffff; --hl: #fff1a8; --w-k: #a8560a; --w-d: #3c4fb0;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+    --bg: #121614; --card: #1b201d; --ink: #e8ece9; --muted: #9aa49e; --line: #2c332f; --rail: #3a443e; --brand: #7cc4a0; --brand-soft: #1f3329; --on-brand: #10251a;
+    --ok: #7cc4a0; --ok-soft: #1d3127; --bad: #ff8a80; --bad-soft: #3a1f1d; --warm: #3a3220; --chip: #252b27; --shadow: none; color-scheme: dark;
+    --k6: #3b2e12; --k6s: #e0b878; --k5: #1b2b3c; --k5s: #9cb7d6; --k4: #16302f; --k4s: #7fc4c4; --k3: #3a1e27; --k3s: #e0a1b0; --k2: #2a2340; --k2s: #b9a8e6;
+    --e-atp: #f0a44c; --e-nadh: #9aa8f0; --e-fad: #c3a2ee; --e-co2: #9aa49e; --on-tag: #14181a; --hl: #5a4d12; --w-k: #f0a44c; --w-d: #9aa8f0; } }
+  :root[data-theme="dark"] {
+    --bg: #121614; --card: #1b201d; --ink: #e8ece9; --muted: #9aa49e; --line: #2c332f; --rail: #3a443e; --brand: #7cc4a0; --brand-soft: #1f3329; --on-brand: #10251a;
+    --ok: #7cc4a0; --ok-soft: #1d3127; --bad: #ff8a80; --bad-soft: #3a1f1d; --warm: #3a3220; --chip: #252b27; --shadow: none; color-scheme: dark;
+    --k6: #3b2e12; --k6s: #e0b878; --k5: #1b2b3c; --k5s: #9cb7d6; --k4: #16302f; --k4s: #7fc4c4; --k3: #3a1e27; --k3s: #e0a1b0; --k2: #2a2340; --k2s: #b9a8e6;
+    --e-atp: #f0a44c; --e-nadh: #9aa8f0; --e-fad: #c3a2ee; --e-co2: #9aa49e; --on-tag: #14181a; --hl: #5a4d12; --w-k: #f0a44c; --w-d: #9aa8f0; }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html, body { margin: 0; background: var(--bg); color: var(--ink);
+    font: 15px/1.6 -apple-system, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif; -webkit-text-size-adjust: 100%; }
+  header { position: sticky; top: 0; z-index: 5; background: var(--bg); padding: 12px 16px 8px; }
+  .hd { display: flex; align-items: center; gap: 8px; max-width: 720px; margin: 0 auto; }
+  .hd .tt { flex: 1; min-width: 0; }
+  h1 { font-size: 19px; margin: 0; letter-spacing: .02em; }
+  .sub { color: var(--muted); font-size: 13px; margin-top: 2px; }
+  main { padding: 4px 16px 40px; max-width: 720px; margin: 0 auto; }
+  button, select { font: inherit; color: inherit; }
+  button:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+  .card { background: var(--card); border-radius: 16px; box-shadow: var(--shadow); border: 1px solid var(--line); margin: 12px 0; overflow: hidden; }
+  .pad { padding: 14px; }
+  .card h2 { font-size: 17px; margin: 0 0 6px; }
+  .card p { margin: 6px 0; }
+  .card ul { margin: 6px 0; padding-left: 20px; } .card li { margin: 4px 0; }
+  .muted { color: var(--muted); } .small { font-size: 12px; }
+  .xbtn { border: 1px solid var(--line); background: var(--card); border-radius: 9px; padding: 6px 10px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+  .seg { display: flex; border: 1px solid var(--line); border-radius: 9px; overflow: hidden; background: var(--card); flex: 0 0 auto; }
+  .seg button { border: 0; background: transparent; padding: 6px 8px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+  .seg button.on { background: var(--brand); color: var(--on-brand); }
+  .btn { display: block; width: 100%; border: 1px solid var(--brand); background: var(--brand); color: var(--on-brand); border-radius: 12px; padding: 13px 12px; font-weight: 700; font-size: 16px; cursor: pointer; }
+  .btn.plain { background: transparent; color: var(--ink); border-color: var(--line); font-weight: 600; }
+  .btn[disabled] { opacity: .4; cursor: default; }
+  .row { display: flex; gap: 8px; } .row > * { flex: 1; min-width: 0; }
+  .glab { font-size: 12px; font-weight: 700; color: var(--brand); margin: 18px 2px 6px; }
+  .item { display: flex; width: 100%; text-align: left; gap: 10px; align-items: center; border: 1px solid var(--line); background: var(--card); border-radius: 12px; padding: 12px; margin-top: 8px; cursor: pointer; }
+  .item b { flex: 1; min-width: 0; font-size: 15px; } .item b span { display: block; font-weight: 400; font-size: 12px; color: var(--muted); }
+  .item i { font-style: normal; font-size: 12px; color: var(--muted); white-space: nowrap; }
+  .item[disabled] { opacity: .5; cursor: default; }
+  .lv { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; margin-top: 8px; max-width: 720px; margin-left: auto; margin-right: auto; }
+  .lv::-webkit-scrollbar { display: none; }
+  .lv button { flex: 0 0 auto; min-width: 38px; border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 5px 11px; font-size: 13px; cursor: pointer; font-variant-numeric: tabular-nums; }
+  .lv button.on { background: var(--brand); border-color: var(--brand); color: var(--on-brand); }
+  .lv button.done:not(.on) { border-color: var(--ok); color: var(--ok); }
+  /* 路徑圖：SVG 在下，空格疊在圖上 */
+  .dia { position: relative; width: 100%; max-width: 420px; margin: 0 auto; }
+  .dia svg { display: block; width: 100%; height: auto; }
+  .dia .ln { stroke: var(--rail); } .dia .ar { fill: var(--muted); }
+  .dia .pill { fill: var(--chip); stroke: var(--line); } .dia .src { fill: var(--brand-soft); stroke: var(--brand); }
+  .dia text { fill: var(--ink); font-family: inherit; }
+  .dia text.m { fill: var(--muted); } .dia text.b { fill: var(--brand); font-weight: 700; }
+  .dia .num circle { fill: var(--card); stroke: var(--brand); } .dia .num text { fill: var(--brand); font-weight: 700; }
+  .bk { position: absolute; transform: translate(-50%, -50%) scale(var(--s, .75)); transform-origin: center; }
+  /* 空格：看得到的是 .face，真正的下拉選單透明地蓋在上面（字級 16px，iPhone 點選時畫面才不會自動放大） */
+  .pick { position: relative; display: inline-flex; max-width: 100%; vertical-align: middle; }
+  .pick select { position: absolute; top: 0; left: 0; width: 100%; height: 100%; margin: 0; border: 0; opacity: 0; font-size: 16px; cursor: pointer; -webkit-appearance: none; appearance: none; }
+  .pick select:disabled { cursor: default; }
+  .face { position: relative; display: flex; flex-direction: column; justify-content: center; min-width: 0; min-height: 40px; line-height: 1.25; padding: 4px 30px 4px 10px;
+    border: 2px dashed var(--brand); border-radius: 10px; background: var(--card); color: var(--ink); }
+  .face::after { content: ""; position: absolute; right: 11px; top: 50%; width: 7px; height: 7px; margin-top: -6px; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(45deg); }
+  .face b { font-weight: 600; font-size: 15px; overflow-wrap: anywhere; } .face small { font-size: 12px; color: var(--muted); overflow-wrap: anywhere; }
+  .pick.has .face { border-style: solid; background: var(--brand-soft); }
+  .pick.ok .face { border: 2px solid var(--ok); background: var(--ok-soft); }
+  .pick:focus-within .face { outline: 2px solid var(--brand); outline-offset: 2px; }
+  .bk .pick { display: flex; width: 100%; height: 100%; }
+  .bk .face { width: 100%; height: 100%; min-height: 0; padding: 0 6px; border-radius: 999px; align-items: center; text-align: center; white-space: nowrap; overflow: hidden; line-height: 1.2; }
+  .bk .face::after { display: none; }
+  .bk .face b, .bk .face small { max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+  .mk { position: absolute; right: -8px; top: -10px; width: 22px; height: 22px; border-radius: 50%; display: none; place-items: center; font-size: 13px; font-weight: 700; font-style: normal; color: #fff; }
+  .bk.ok .mk { display: grid; background: var(--ok); } .bk.no .mk { display: grid; background: var(--bad); }
+  .st { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 6px 10px; padding: 12px 0; border-top: 1px solid var(--line); align-items: center; }
+  .st:first-of-type { border-top: 0; }
+  .st .n { width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--brand); color: var(--brand); display: grid; place-items: center; font-weight: 700; font-size: 13px; }
+  .st .d { font-size: 13px; color: var(--muted); overflow-wrap: anywhere; }
+  .st .w { grid-column: 2; min-width: 0; }
+  .st.c { grid-template-columns: minmax(0, 1fr) auto; } .st.c .d { font-size: 15px; color: var(--ink); } .st.c .w { grid-column: auto; text-align: right; }
+  .st:not(.c) .pick { display: flex; } .st:not(.c) .face { width: 100%; }
+  .st .r, .cz .r { display: none; font-size: 12px; font-weight: 700; margin-top: 3px; }
+  .st.ok .r, .cz li.ok .r { display: block; color: var(--ok); } .st.no .r, .cz li.no .r { display: block; color: var(--bad); }
+  .cz { margin: 0; padding: 0; list-style: none; } .cz li { padding: 12px 0; border-top: 1px solid var(--line); line-height: 2; margin: 0; } .cz li:first-child { border-top: 0; }
+  .cz .pick { margin: 3px 2px; } .cz .face { min-height: 36px; }
+  .res { border-radius: 12px; padding: 10px 12px; margin: 12px 0 0; font-size: 14px; }
+  .res.ok { background: var(--ok-soft); } .res.bad { background: var(--bad-soft); } .res b { font-size: 15px; }
+  .res.ok b { color: var(--ok); } .res.bad b { color: var(--bad); }
+  .tip { background: var(--warm); border-radius: 12px; padding: 10px 12px; font-size: 13px; margin-top: 10px; }
+  .note { color: var(--muted); font-size: 12px; margin: 16px 2px; }
+  .foot { position: sticky; bottom: 0; background: var(--bg); padding: 10px 0 calc(10px + env(safe-area-inset-bottom, 0px)); margin-top: 4px; }
+  /* 顏色的意思：名稱框的底色＝碳數；小標籤＝這一步花掉或產生什麼；實心編號＝不可逆步驟 */
+  .dia rect.k6 { fill: var(--k6); stroke: var(--k6s); } .dia rect.k5 { fill: var(--k5); stroke: var(--k5s); } .dia rect.k4 { fill: var(--k4); stroke: var(--k4s); }
+  .dia rect.k3 { fill: var(--k3); stroke: var(--k3s); } .dia rect.k2 { fill: var(--k2); stroke: var(--k2s); }
+  .dia .num.irr circle { fill: var(--brand); } .dia .num.irr text { fill: var(--on-brand); }
+  .dia .tag rect { stroke-width: 1.2; } .dia .tag text { fill: var(--on-tag); font-weight: 700; }
+  .dia .tag.atp rect { fill: var(--e-atp); stroke: var(--e-atp); } .dia .tag.nadh rect { fill: var(--e-nadh); stroke: var(--e-nadh); } .dia .tag.fad rect { fill: var(--e-fad); stroke: var(--e-fad); }
+  .dia .tag.co2 rect { fill: var(--e-co2); stroke: var(--e-co2); } .dia .tag.sp rect { fill: var(--card); stroke: var(--e-atp); } .dia .tag.sp text { fill: var(--w-k); }
+  .dia .tag.spn rect { fill: var(--card); stroke: var(--e-nadh); } .dia .tag.spn text { fill: var(--w-d); }
+  .dia .tag.nadph rect { fill: var(--k4s); stroke: var(--k4s); } .dia .tag.spp rect { fill: var(--card); stroke: var(--k4s); } .dia .tag.spp text { fill: var(--k4s); } .dia .tag.mol rect, .dia .tag.out rect { fill: var(--card); stroke: var(--muted); } .dia .tag.mol text, .dia .tag.out text { fill: var(--ink); }
+  .dia text.nt { fill: var(--muted); }
+  .pick .face.k6 { background: var(--k6); } .pick .face.k5 { background: var(--k5); } .pick .face.k4 { background: var(--k4); } .pick .face.k3 { background: var(--k3); } .pick .face.k2 { background: var(--k2); }
+  .pick:not(.ok):not(.no) .face.k6 { border-color: var(--k6s); } .pick:not(.ok):not(.no) .face.k5 { border-color: var(--k5s); } .pick:not(.ok):not(.no) .face.k4 { border-color: var(--k4s); }
+  .pick:not(.ok):not(.no) .face.k3 { border-color: var(--k3s); } .pick:not(.ok):not(.no) .face.k2 { border-color: var(--k2s); }
+  .pick.no .face { border: 2px solid var(--bad); background: var(--bad-soft); }
+  .face.tk { box-shadow: inset 6px 0 0 var(--e-atp); padding-left: 16px; } .face.td { box-shadow: inset 6px 0 0 var(--e-nadh); padding-left: 16px; } .face.tf { box-shadow: inset 6px 0 0 var(--e-fad); padding-left: 16px; } .face.tp { box-shadow: inset 6px 0 0 var(--k4s); padding-left: 16px; }
+  .lgd { display: flex; flex-wrap: wrap; gap: 4px 12px; justify-content: center; margin-top: 8px; font-size: 12px; color: var(--muted); }
+  .lgd span { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+  .lgd i { display: inline-grid; place-items: center; width: 14px; height: 14px; border-radius: 4px; border: 1.5px solid; font-style: normal; font-size: 9px; font-weight: 700; }
+  .lgd i.k6 { background: var(--k6); border-color: var(--k6s); } .lgd i.k5 { background: var(--k5); border-color: var(--k5s); } .lgd i.k4 { background: var(--k4); border-color: var(--k4s); }
+  .lgd i.k3 { background: var(--k3); border-color: var(--k3s); } .lgd i.k2 { background: var(--k2); border-color: var(--k2s); }
+  .lgd i.irr { border-radius: 50%; background: var(--brand); border-color: var(--brand); color: var(--on-brand); }
+  .lgd i.tk { background: var(--e-atp); border-color: var(--e-atp); } .lgd i.td { background: var(--e-nadh); border-color: var(--e-nadh); } .lgd i.tf { background: var(--e-fad); border-color: var(--e-fad); } .lgd i.tp { background: var(--k4s); border-color: var(--k4s); }
+  mark { background: var(--hl); color: inherit; padding: 0 2px; border-radius: 3px; }
+  .wk { color: var(--w-k); font-weight: 700; } .wd { color: var(--w-d); font-weight: 700; }
+  .glab.k6 { color: var(--k6s); } .glab.k5 { color: var(--k5s); } .glab.k4 { color: var(--k4s); } .glab.k3 { color: var(--k3s); } .glab.k2 { color: var(--k2s); }
+  .item.k6 { border-left: 5px solid var(--k6s); } .item.k5 { border-left: 5px solid var(--k5s); } .item.k4 { border-left: 5px solid var(--k4s); } .item.k3 { border-left: 5px solid var(--k3s); } .item.k2 { border-left: 5px solid var(--k2s); }
+  /* 分生：底色與線的顏色＝分子種類（DNA 藍、新合成的 DNA 青、RNA 玫瑰、蛋白質琥珀） */
+  .dia rect.kD, .dia .kD { fill: var(--k5); stroke: var(--k5s); } .dia rect.kN, .dia .kN { fill: var(--k4); stroke: var(--k4s); } .dia rect.kR, .dia .kR { fill: var(--k3); stroke: var(--k3s); } .dia rect.kP, .dia .kP { fill: var(--k6); stroke: var(--k6s); }
+  .pick .face.kD { background: var(--k5); } .pick .face.kN { background: var(--k4); } .pick .face.kR { background: var(--k3); } .pick .face.kP { background: var(--k6); }
+  .pick:not(.ok):not(.no) .face.kD { border-color: var(--k5s); } .pick:not(.ok):not(.no) .face.kN { border-color: var(--k4s); } .pick:not(.ok):not(.no) .face.kR { border-color: var(--k3s); } .pick:not(.ok):not(.no) .face.kP { border-color: var(--k6s); }
+  .lgd i.kD { background: var(--k5); border-color: var(--k5s); } .lgd i.kN { background: var(--k4); border-color: var(--k4s); } .lgd i.kR { background: var(--k3); border-color: var(--k3s); } .lgd i.kP { background: var(--k6); border-color: var(--k6s); }
+  .lgd i.sD { background: var(--k5s); border-color: var(--k5s); } .lgd i.sN { background: var(--k4s); border-color: var(--k4s); } .lgd i.sR { background: var(--k3s); border-color: var(--k3s); } .lgd i.sP { background: var(--k6s); border-color: var(--k6s); }
+  .glab.kD { color: var(--k5s); } .glab.kR { color: var(--k3s); } .glab.kP { color: var(--k6s); } .glab.kN { color: var(--k4s); }
+  .item.kD { border-left: 5px solid var(--k5s); } .item.kR { border-left: 5px solid var(--k3s); } .item.kP { border-left: 5px solid var(--k6s); } .item.kN { border-left: 5px solid var(--k4s); }
+  .wD { color: var(--k5s); font-weight: 700; } .wN { color: var(--k4s); font-weight: 700; } .wR { color: var(--k3s); font-weight: 700; } .wP { color: var(--w-k); font-weight: 700; }
+  /* 生理：E＝興奮、交感、去極化（玫瑰）；I＝抑制、副交感、再極化（藍）；H＝激素、耗能（琥珀）；C＝鈣與第二傳訊者（紫）；T＝被動、水（青） */
+  .dia rect.kE, .dia .kE { fill: var(--k3); stroke: var(--k3s); } .pick .face.kE { background: var(--k3); } .pick:not(.ok):not(.no) .face.kE { border-color: var(--k3s); } .lgd i.kE { background: var(--k3); border-color: var(--k3s); } .lgd i.sE { background: var(--k3s); border-color: var(--k3s); } .glab.kE { color: var(--k3s); } .item.kE { border-left: 5px solid var(--k3s); } .wE { color: var(--k3s); font-weight: 700; }
+  .dia rect.kI, .dia .kI { fill: var(--k5); stroke: var(--k5s); } .pick .face.kI { background: var(--k5); } .pick:not(.ok):not(.no) .face.kI { border-color: var(--k5s); } .lgd i.kI { background: var(--k5); border-color: var(--k5s); } .lgd i.sI { background: var(--k5s); border-color: var(--k5s); } .glab.kI { color: var(--k5s); } .item.kI { border-left: 5px solid var(--k5s); } .wI { color: var(--k5s); font-weight: 700; }
+  .dia rect.kH, .dia .kH { fill: var(--k6); stroke: var(--k6s); } .pick .face.kH { background: var(--k6); } .pick:not(.ok):not(.no) .face.kH { border-color: var(--k6s); } .lgd i.kH { background: var(--k6); border-color: var(--k6s); } .lgd i.sH { background: var(--k6s); border-color: var(--k6s); } .glab.kH { color: var(--k6s); } .item.kH { border-left: 5px solid var(--k6s); } .wH { color: var(--w-k); font-weight: 700; }
+  .dia rect.kC, .dia .kC { fill: var(--k2); stroke: var(--k2s); } .pick .face.kC { background: var(--k2); } .pick:not(.ok):not(.no) .face.kC { border-color: var(--k2s); } .lgd i.kC { background: var(--k2); border-color: var(--k2s); } .lgd i.sC { background: var(--k2s); border-color: var(--k2s); } .glab.kC { color: var(--k2s); } .item.kC { border-left: 5px solid var(--k2s); } .wC { color: var(--k2s); font-weight: 700; }
+  .dia rect.kT, .dia .kT { fill: var(--k4); stroke: var(--k4s); } .pick .face.kT { background: var(--k4); } .pick:not(.ok):not(.no) .face.kT { border-color: var(--k4s); } .lgd i.kT { background: var(--k4); border-color: var(--k4s); } .lgd i.sT { background: var(--k4s); border-color: var(--k4s); } .glab.kT { color: var(--k4s); } .item.kT { border-left: 5px solid var(--k4s); } .wT { color: var(--k4s); font-weight: 700; }
+  /* 首頁的分頁 */
+  .tabs { display: flex; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--card); margin: 4px 0 0; }
+  .tabs button { flex: 1; min-width: 0; border: 0; background: transparent; padding: 10px 4px; font-size: 15px; font-weight: 700; cursor: pointer; color: var(--muted); }
+  .tabs button.on { background: var(--brand); color: var(--on-brand); }
+  details.card > summary { cursor: pointer; font-weight: 700; font-size: 15px; list-style: none; display: flex; align-items: center; justify-content: space-between; }
+  details.card > summary::-webkit-details-marker { display: none; }
+  details.card > summary::after { content: "展開"; font-size: 12px; font-weight: 400; color: var(--muted); } details.card[open] > summary::after { content: "收起"; }
+</style>
+</head>
+<body>
+<header>
+  <div class="hd">
+    <div class="tt"><h1 id="title">圖解營養學</h1><div class="sub" id="subtitle"></div></div>
+    <div class="seg" id="lang" role="group" aria-label="名稱顯示的語言"><button type="button" data-l="zh">中</button><button type="button" data-l="bi">中英</button><button type="button" data-l="en">EN</button></div>
+    <button type="button" class="xbtn" id="back" hidden>目錄</button>
+  </div>
+  <div class="lv" id="lv" hidden></div>
+</header>
+<main id="main"></main>
+
+<script>
+/* ======================================================================
+   名稱的顯示：三種模式  zh 中文／bi 中英對照／en 英文
+   每個名詞是 { zh, en, ab(縮寫，可省略), bi(中英對照時的特別寫法，可省略) }
+   ====================================================================== */
+var LANG = 'bi', FORCE = null;                       // FORCE：某一關固定用某種語言（總複習固定英文）
+function M() { return FORCE || LANG; }
+function T(zh, en) { return M() === 'en' ? en : zh; }
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+function fit(t, w, cap) { var n = 0; for (var i = 0; i < t.length; i++) n += t.charCodeAt(i) > 255 ? 1 : .56; return Math.max(6, Math.min(cap || 12.5, Math.floor((w - 12) / n * 10) / 10)); }
+/* 一行的寫法（下拉選單的選項、句子裡的空格） */
+function one(o, m, enFirst) {
+  m = m || M(); var e = o.en || o.zh; if (m === 'zh' || e === o.zh) return o.zh;
+  var E = o.ab ? e + ' (' + o.ab + ')' : e; if (m === 'en') return E;
+  if (o.bi) return o.bi; return enFirst ? E + '　' + o.zh : o.zh + '（' + e + '）';
+}
+/* 兩行的寫法（圖上的名稱、酵素的空格）：英文在上、中文在下。w 是圖上的寬度，英文太長就改用縮寫 */
+function two(o, m, w) {
+  m = m || M(); var e = o.en || o.zh; if (m === 'zh' || e === o.zh) return [o.zh, ''];
+  var ab = o.ab && w && fit(e, w, 12) < 8.5;
+  if (m === 'en') return ab ? [o.ab, ''] : [e, o.ab || ''];
+  return ab ? [o.ab, o.zh] : [e, (o.sub != null ? o.sub : o.zh) + (o.ab ? '・' + o.ab : '')];      // sub：中英對照時第二行的寫法（例：mRNA 下面寫「傳訊 RNA」）
+}
+function short(o) { return M() === 'zh' ? o.zh : (o.ab || o.en || o.zh); }
+
+/* ---------- 畫圖用的小工具 ---------- */
+function PH() { return M() === 'zh' ? 30 : 38; }    // 圖上名稱框的高度：有兩行時高一點
+function tx(x, y, t, cls, size, anchor) { return '<text class="' + (cls || '') + '" x="' + x + '" y="' + y + '" text-anchor="' + (anchor || 'middle') + '" font-size="' + (size || 12) + '">' + esc(t) + '</text>'; }
+function pill(x, y, w, o, cls) {
+  var L = typeof o === 'string' ? [o, ''] : two(o, null, w), h = PH();
+  var r = '<rect class="' + (cls || 'pill') + '" x="' + (x - w / 2) + '" y="' + (y - h / 2) + '" width="' + w + '" height="' + h + '" rx="' + (h / 2) + '"/>';
+  if (!L[1]) return r + tx(x, y + 4.5, L[0], '', fit(L[0], w, 12.5));
+  return r + tx(x, y - 2, L[0], '', fit(L[0], w, 11.5)) + tx(x, y + 12, L[1], 'm', fit(L[1], w, 10));
+}
+function arrow(x1, y1, x2, y2, dash) { var a = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI; return '<line class="ln" x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '" stroke-width="3"' + (dash ? ' stroke-dasharray="3 3"' : '') + '/><polygon class="ar" points="-8,-6 5,0 -8,6" transform="translate(' + x2 + ',' + y2 + ') rotate(' + a + ')"/>'; }
+function badge(x, y, n, irr) { return '<g class="num' + (irr ? ' irr' : '') + '"><circle cx="' + x + '" cy="' + y + '" r="11" stroke-width="1.5"/><text x="' + x + '" y="' + (y + 4.5) + '" text-anchor="middle" font-size="12">' + n + '</text></g>'; }
+
+function tagT(t) { return typeof t === 'string' ? t : (M() === 'zh' ? t.zh : t.en); }      // 標籤的字：可以是字串，或 { zh, en }
+function tagW(t) { t = tagT(t); var n = 0; for (var i = 0; i < t.length; i++) n += t.charCodeAt(i) > 255 && !/[₀-₉⁺⁻−→]/.test(t.charAt(i)) ? 1 : .6; return Math.round(n * 9.5 + 12); }
+function tagC(x, y, t, k) { var w = tagW(t); x = Math.max(3 + w / 2, Math.min(357 - w / 2, x)); return '<g class="tag ' + k + '"><rect x="' + (x - w / 2) + '" y="' + (y - 7.5) + '" width="' + w + '" height="15" rx="4"/><text x="' + x + '" y="' + (y + 3.5) + '" text-anchor="middle" font-size="9.5">' + esc(tagT(t)) + '</text></g>'; }
+/* 分生用的畫圖工具：有顏色的線、箭頭、蛋白質的橢圓、有顏色的字、「說明＋空格」的一列
+   顏色代號 D＝DNA（舊股）、N＝新合成的 DNA、R＝RNA、P＝蛋白質、M＝灰 */
+var KS = { D: '--k5s', N: '--k4s', R: '--k3s', P: '--k6s', M: '--muted', E: '--k3s', I: '--k5s', H: '--k6s', C: '--k2s', T: '--k4s', K: '--ink' };
+function sl(pts, k, w, dash) { return '<polyline points="' + pts + '" fill="none" stroke="var(' + KS[k] + ')" stroke-width="' + (w || 4) + '" stroke-linecap="round" stroke-linejoin="round"' + (dash ? ' stroke-dasharray="' + dash + '"' : '') + '/>'; }
+function sp(d, k, w, dash) { return '<path d="' + d + '" fill="none" stroke="var(' + KS[k] + ')" stroke-width="' + (w || 4) + '" stroke-linecap="round" stroke-linejoin="round"' + (dash ? ' stroke-dasharray="' + dash + '"' : '') + '/>'; }
+function hd(x, y, a, k) { return '<polygon points="-10,-6.5 4,0 -10,6.5" fill="var(' + KS[k] + ')" transform="translate(' + x + ',' + y + ') rotate(' + a + ')"/>'; }
+function blob(cx, cy, rx, ry, k) { return '<ellipse class="k' + (k || 'P') + '" cx="' + cx + '" cy="' + cy + '" rx="' + rx + '" ry="' + ry + '" stroke-width="1.5"/>'; }
+function kt(x, y, t, k, size, anchor, bold) { return '<text x="' + x + '" y="' + y + '" text-anchor="' + (anchor || 'middle') + '" font-size="' + (size || 12) + '"' + (bold === false ? '' : ' font-weight="700"') + ' style="fill:var(' + KS[k] + ')">' + esc(t) + '</text>'; }
+function rungs(x1, y1, x2, y2, n, dx, dy) { var s = ''; for (var i = 0; i < n; i++) s += '<line x1="' + (x1 + dx * i) + '" y1="' + (y1 + dy * i) + '" x2="' + (x2 + dx * i) + '" y2="' + (y2 + dy * i) + '" stroke="var(--rail)" stroke-width="1.5"/>'; return s; }
+function box(x, y, w, h, k, r) { return '<rect class="' + (k ? 'k' + k : 'pill') + '" x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="' + (r == null ? 10 : r) + '" stroke-width="1.5"/>'; }
+function dot(x, y, r, k) { return '<circle class="k' + k + '" cx="' + x + '" cy="' + y + '" r="' + r + '" stroke-width="1.5"/>'; }
+/* 直排的流程：items 是名稱（{zh,en} 或字串）或 null（留給空格）；ks 是每一格的顏色代號（可省略）。第一格用 src 樣式 */
+function flow(x, y0, dy, w, items, ks) { var s = '', h = PH() / 2; items.forEach(function (it, i) { var y = y0 + i * dy; if (i) s += arrow(x, y - dy + h + 1, x, y - h - 2); if (it) s += pill(x, y, w, it, (i ? 'pill' : 'src') + (ks && ks[i] ? ' k' + ks[i] : '')); }); return s; }
+function lab(x, y, o, w, cls) { var L = typeof o === 'string' ? [o, ''] : two(o, null, w); if (!L[1]) return tx(x, y + 4.5, L[0], cls || '', fit(L[0], w, 12)); return tx(x, y - 2, L[0], cls || '', fit(L[0], w, 11.5)) + tx(x, y + 12, L[1], 'm', fit(L[1], w, 10)); }      // 沒有框的名稱（中英對照時兩行）
+function caps(y0, dy, list, w) { return list.map(function (c, i) { return cap(y0 + i * dy, c[0], c[1], w); }).join(''); }      // 好幾列「說明＋空格」
+function vtx(x, y, t, cls, size) { return '<text class="' + (cls || 'm') + '" x="' + x + '" y="' + y + '" text-anchor="middle" font-size="' + (size || 10.5) + '" transform="rotate(-90 ' + x + ' ' + y + ')">' + esc(t) + '</text>'; }      // 直寫的字
+function cap(y, zh, en, w) { var t = T(zh, en); return tx(14, y + 4.5, t, '', fit(t, w || 168, 12), 'start'); }      // 圖上的一列：左邊說明，右邊放空格
+
+/* 全貌圖用：虛線框（例如細胞、粒線體）和框上的小字 */
+function zone(x, y, w, h, t) { return '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="16" fill="none" stroke="var(--rail)" stroke-width="1.5" stroke-dasharray="5 4"/>' + (t ? tx(x + 12, y + 16, t, 'm', 10.5, 'start') : ''); }
+/* 說明文字裡的記號：[[必背]]、{k:激酶這一類}、{d:去氫酶這一類}；分生用 {D:DNA}、{N:新合成的 DNA}、{R:RNA}、{P:蛋白質} */
+function fmt(s) { return s.replace(/\[\[(.+?)\]\]/g, '<mark>$1</mark>').replace(/\{k:(.+?)\}/g, '<span class="wk">$1</span>').replace(/\{d:(.+?)\}/g, '<span class="wd">$1</span>').replace(/\{([DNRPEIHCT]):(.+?)\}/g, '<span class="w$1">$2</span>'); }
+/* ======================================================================
+   先讀這裡：營養學地圖（第 1 章 營養科學）
+   ====================================================================== */
+function NMAP_OV() {
+  var s = zone(10, 8, 340, 250, '') + zone(10, 270, 340, 92, '');
+  s += tx(268, 64, T('每公克產生', 'Energy per gram'), 'm', 10);
+  [['醣類', 'Carbohydrate', 'H', 92], ['脂質', 'Lipid', 'C', 136], ['蛋白質', 'Protein', 'E', 180], ['水', 'Water', 'I', 224]].forEach(function (r) {
+    s += pill(96, r[3], 136, { zh: r[0], en: r[1] }, 'pill k' + r[2]); });
+  s += pill(96, 332, 120, { zh: '維生素', en: 'Vitamins' }, 'pill kT') + pill(260, 332, 120, { zh: '礦物質', en: 'Minerals' }, 'pill kI');
+  s += pill(96, 396, 136, { zh: '酒精', en: 'Alcohol' }) + tx(96, 424, T('不是營養素，但有熱量', 'not a nutrient, but has energy'), 'm', 9.5);
+  return s;
+}
+var NMAP_K = ['k0', 'k4', 'k7', 'k9'], NMAP_G = ['macro', 'micro'];
+function NMAP_B() {
+  return [{ id: 'g1', x: 180, y: 30, w: 220, a: 'macro', o: NMAP_G }, { id: 'g2', x: 180, y: 292, w: 220, a: 'micro', o: NMAP_G },
+    { id: 'e1', x: 268, y: 92, w: 104, c: 'H', a: 'k4', o: NMAP_K }, { id: 'e2', x: 268, y: 136, w: 104, c: 'C', a: 'k9', o: NMAP_K },
+    { id: 'e3', x: 268, y: 180, w: 104, c: 'E', a: 'k4', o: NMAP_K }, { id: 'e4', x: 268, y: 224, w: 104, c: 'I', a: 'k0', o: NMAP_K }, { id: 'e5', x: 268, y: 396, w: 104, a: 'k7', o: NMAP_K }];
+}
+function NMAP_NCP() {
+  var s = '', ys = [40, 112, 184, 256];
+  ys.forEach(function (y, i) { s += box(70, y - 24, 220, 48, ['H', 'C', 'E', 'T'][i], 12) + badge(50, y, i + 1); if (i) s += arrow(180, ys[i - 1] + 25, 180, y - 26); });
+  s += sp('M292,256 C340,256 340,40 292,40', 'M', 2, '4 4') + hd(294, 40, 180, 'M') + vtx(344, 148, T('沒達到目標就再來一輪', 'repeat if goals not met'), 'm', 9.5);
+  return s;
+}
+var NMAP_NC = ['ncpa', 'ncpd', 'ncpi', 'ncpm'];
+var NMAP = { id: 'nmap', zh: '先讀這裡：營養學地圖', en: 'The science of nutrition', alias: '六大類營養素・熱量計算・營養狀況評估', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    macro: { zh: '巨量營養素（每天以公克計）', en: 'Macronutrients (grams per day)' }, micro: { zh: '微量營養素（每天以毫克、微克計）', en: 'Micronutrients (mg or μg per day)' },
+    k0: { zh: '0 大卡', en: '0 kcal' }, k4: { zh: '4 大卡', en: '4 kcal' }, k7: { zh: '7 大卡', en: '7 kcal' }, k9: { zh: '9 大卡', en: '9 kcal' }, k2: { zh: '2 大卡', en: '2 kcal' },
+    ess: { zh: '必需營養素', en: 'Essential nutrient' }, ness: { zh: '不是必需營養素', en: 'Not an essential nutrient' },
+    org: { zh: '有機（含碳）', en: 'Organic' }, inorg: { zh: '無機（不含碳）', en: 'Inorganic' },
+    vit: { zh: '維生素', en: 'Vitamins' }, min: { zh: '礦物質', en: 'Minerals' }, wat: { zh: '水', en: 'Water' }, cho: { zh: '醣類', en: 'Carbohydrate' }, fat: { zh: '脂質', en: 'Lipid' }, pro: { zh: '蛋白質', en: 'Protein' },
+    adek: { zh: 'A、D、E、K', en: 'A, D, E, K' }, bc: { zh: 'B 群與 C', en: 'B vitamins and C' },
+    regu: { zh: '調節生理功能', en: 'Regulate body processes' }, ener: { zh: '提供能量', en: 'Provide energy' }, grow: { zh: '建構與修補組織', en: 'Build and repair tissue' },
+    hunger: { zh: '飢餓', en: 'Hunger' }, appet: { zh: '食慾', en: 'Appetite' },
+    ncpa: { zh: '營養評估', en: 'Nutrition assessment' }, ncpd: { zh: '營養診斷', en: 'Nutrition diagnosis' }, ncpi: { zh: '營養介入', en: 'Nutrition intervention' }, ncpm: { zh: '營養監測與評值', en: 'Monitoring and evaluation' },
+    anth: { zh: '人體測量（Anthropometric）', en: 'Anthropometric' }, bioc: { zh: '生化檢驗（Biochemical）', en: 'Biochemical' }, clin: { zh: '臨床檢查（Clinical）', en: 'Clinical' }, diet: { zh: '飲食評估（Dietary）', en: 'Dietary' },
+    under: { zh: '營養不足', en: 'Undernutrition' }, over: { zh: '營養過剩', en: 'Overnutrition' }, desir: { zh: '理想的營養狀況', en: 'Desirable nutrition' }, subc: { zh: '亞臨床（還沒出現症狀）', en: 'Subclinical' },
+    cancer: { zh: '癌症', en: 'Cancer' }, heart: { zh: '心臟疾病', en: 'Heart disease' }, dm: { zh: '糖尿病', en: 'Diabetes' }, acc: { zh: '事故傷害', en: 'Accidents' },
+    func: { zh: '機能性食品', en: 'Functional foods' }, ferm: { zh: '發酵食品', en: 'Fermented foods' }, phyto: { zh: '植化素', en: 'Phytochemicals' }, zoo: { zh: '動化素', en: 'Zoochemicals' },
+    kcal: { zh: '1 公斤水升高 1 °C', en: 'Raise 1 kg of water by 1 °C' }, cal: { zh: '1 公克水升高 1 °C', en: 'Raise 1 g of water by 1 °C' }
+  },
+  levels: [
+    { t: '先看全貌：六大類營養素', kind: 'ov', h: 436, svg: NMAP_OV, blanks: NMAP_B(),
+      legend: [['kH', '醣類'], ['kC', '脂質'], ['kE', '蛋白質'], ['kT', '維生素'], ['kI', '礦物質與水']], legendTitle: '這一頁的顏色',
+      intro: ['營養素（nutrient）是身體維持健康需要、但自己做不出來（或做得不夠）的物質，一共六大類：醣類、脂質、蛋白質、維生素、礦物質、水。',
+        '依每天需要的量，可以分成兩群：需要量大、以公克計的，和需要量很小、以毫克或微克計的。',
+        '其中三類可以產生能量，另外三類不行。圖上也放了酒精：它有熱量，但不是營養素。',
+        '這一頁的顏色固定代表同一類營養素，之後每個單元都一樣。'],
+      done: ['[[醣類 4、脂質 9、蛋白質 4、酒精 7 大卡／公克]]；水、維生素、礦物質不產生能量。', '巨量營養素：醣類、脂質、蛋白質、水；微量營養素：維生素、礦物質。',
+        '維生素和礦物質不提供能量，但很多是酵素的輔酶或輔因子，幫助產能營養素釋出能量。', '營養標示計算熱量時，膳食纖維另外以每公克 2 大卡計。'] },
+    { t: '營養素的定義與分類', kind: 'list',
+      intro: ['必需營養素（essential nutrient）有三個特性：在身體裡有專一的功能；飲食中缺少它，這個功能就會出問題；在造成永久傷害之前補回來，功能可以恢復。',
+        '營養素的功能分三種：提供能量、建構與修補組織、調節身體的運作。有些營養素身兼好幾種。',
+        '另外還有一群「有益但不必需」的成分：植物裡的叫植化素，動物性食物裡的叫動化素。少了它們不會出現缺乏症，所以不算必需營養素。'],
+      listTitle: '是哪一個',
+      list: [['人體不能合成或合成不夠、一定要從食物取得', { a: 'ess', o: ['ess', 'ness'] }], ['茄紅素、兒茶素、花青素這類植化素', { a: 'ness', o: ['ess', 'ness'] }],
+        ['維生素屬於', { a: 'org', o: ['org', 'inorg'] }], ['礦物質屬於', { a: 'inorg', o: ['org', 'inorg'] }], ['脂溶性維生素有', { a: 'adek', o: ['adek', 'bc'] }],
+        ['加熱烹調時容易被破壞的是', { a: 'vit', o: ['vit', 'min'] }], ['身體需要量最多的營養素', { a: 'wat', o: ['wat', 'pro', 'cho'] }],
+        ['維生素和礦物質主要的功能', { a: 'regu', o: ['regu', 'ener', 'grow'] }], ['可以提供能量，也能建構組織、調節生理，三種功能都有的是', { a: 'pro', o: ['pro', 'cho', 'vit'] }],
+        ['生理性、內在的進食需求', { a: 'hunger', o: ['hunger', 'appet'] }], ['心理性、受外在刺激引起的進食慾望，和餓不餓無關', { a: 'appet', o: ['hunger', 'appet'] }]],
+      done: ['[[必需營養素：身體做不出來、缺乏會出問題、補回來可以恢復。]]', '有機營養素（含碳）：醣類、脂質、蛋白質、維生素；無機：礦物質、水。',
+        '水溶性維生素（B 群、C）容易在烹調與排尿時流失；脂溶性維生素（A、D、E、K）會儲存在體內，吃太多容易中毒。', '植化素（phytochemicals）與動化素（zoochemicals）有保健效果，但不是必需營養素。'] },
+    { t: '算一算：食物的熱量', kind: 'list',
+      intro: ['熱量的單位是大卡（kcal）：讓 1 公斤的水升高 1 °C 需要的熱量，等於 1,000 卡。食物標示上寫的「卡」其實都是大卡。',
+        '算食物的熱量只要把每一種產能營養素的克數乘上它的生理燃料值再加起來：醣類 × 4、脂質 × 9、蛋白質 × 4、酒精 × 7。',
+        '某一種營養素佔總熱量的百分比，就是它提供的大卡數除以總熱量。'],
+      tip: '例：一份點心含醣類 30 g、脂質 10 g、蛋白質 5 g。熱量 ＝ 30 × 4 ＋ 10 × 9 ＋ 5 × 4 ＝ 120 ＋ 90 ＋ 20 ＝ 230 大卡；脂質佔 90 ÷ 230 ≈ 39%。',
+      listTitle: '定義', list: [['1 大卡（kcal）的定義', { a: 'kcal', o: ['kcal', 'cal'] }]],
+      countsTitle: '一杯含醣類 40 g、脂質 8 g、蛋白質 10 g 的飲料',
+      counts: [['醣類提供幾大卡', '160', ['40', '120', '160', '360']], ['脂質提供幾大卡', '72', ['32', '56', '72', '80']], ['蛋白質提供幾大卡', '40', ['10', '40', '70', '90']],
+        ['總熱量是幾大卡', '272', ['232', '272', '320', '412']], ['醣類約佔總熱量的幾 %', '59', ['40', '50', '59', '65']], ['如果再加 14 g 酒精，總熱量是幾大卡', '370', ['328', '370', '398', '410']]],
+      done: ['[[熱量 ＝ 醣類 g × 4 ＋ 脂質 g × 9 ＋ 蛋白質 g × 4 ＋ 酒精 g × 7]]。', '百分比要用「大卡」算，不能用克數算：同樣 10 g，脂質的熱量是醣類的兩倍多。'] },
+    { t: '營養狀況與營養照護流程', kind: 'ov', h: 296, svg: NMAP_NCP,
+      blanks: [{ id: 'n1', x: 180, y: 40, w: 196, c: 'H', a: 'ncpa', o: NMAP_NC }, { id: 'n2', x: 180, y: 112, w: 196, c: 'C', a: 'ncpd', o: NMAP_NC },
+        { id: 'n3', x: 180, y: 184, w: 196, c: 'E', a: 'ncpi', o: NMAP_NC }, { id: 'n4', x: 180, y: 256, w: 196, c: 'T', a: 'ncpm', o: NMAP_NC }],
+      intro: ['營養狀況分三種：理想、營養不足、營養過剩。營養不足在出現明顯症狀之前，會先有一段只能靠檢驗發現的時期，叫亞臨床期。',
+        '評估一個人的營養狀況，常用 ABCD 四類資料，再加上病史、家族史與生活環境。',
+        '營養師照顧一個人的營養，照固定的四個步驟走（營養照護流程，Nutrition Care Process）：先收集資料，判斷問題在哪裡，再擬定計畫去改善，最後追蹤有沒有效。'],
+      listTitle: '評估的方法', list: [['身高、體重、腰圍、皮脂厚度', { a: 'anth', o: ['anth', 'bioc', 'clin', 'diet'] }], ['血紅素、白蛋白、血糖', { a: 'bioc', o: ['anth', 'bioc', 'clin', 'diet'] }],
+        ['看皮膚、頭髮、指甲、口角有沒有異常', { a: 'clin', o: ['anth', 'bioc', 'clin', 'diet'] }], ['24 小時飲食回憶、飲食紀錄、食物頻率問卷', { a: 'diet', o: ['anth', 'bioc', 'clin', 'diet'] }],
+        ['血清鐵蛋白已經下降，但還沒有貧血的症狀', { a: 'subc', o: ['subc', 'desir', 'over'] }], ['長期吃超過需要的熱量或營養素', { a: 'over', o: ['under', 'over', 'desir'] }]],
+      done: ['[[營養照護流程：評估 → 診斷 → 介入 → 監測與評值（ADIME）]]。', '[[營養評估 ABCD：人體測量、生化檢驗、臨床檢查、飲食評估]]。',
+        '營養缺乏的症狀常常沒有專一性（例如疲倦），而且要很久才出現。年輕時鈣攝取不足，可能到中老年才以骨質疏鬆表現出來。'] },
+    { t: '營養與健康', kind: 'list',
+      intro: ['2024 年國人十大死因，前幾名大多和飲食有關：第一名是癌症，第二名是心臟疾病，接著是肺炎、腦血管疾病、糖尿病、高血壓性疾病；腎臟疾病也在十名之內。',
+        '基因決定了一個人比較容易得哪些病，但飲食、運動、體重、抽菸這些生活型態，決定了基因會不會「發作」。家族裡有一等親（父母、兄弟姊妹、子女）早發這些疾病的人，更需要從年輕開始注意。',
+        '除了營養素，市面上還有很多標榜保健的食品。'],
+      listTitle: '是哪一個',
+      list: [['2024 年國人十大死因的第一名', { a: 'cancer', o: ['cancer', 'heart', 'dm'] }], ['2024 年國人十大死因的第二名', { a: 'heart', o: ['cancer', 'heart', 'dm'] }],
+        ['除了基本營養之外，還能提供保健效果、幫助降低疾病風險的食物', { a: 'func', o: ['func', 'ferm'] }], ['靠細菌、酵母或黴菌把醣類轉成乳酸、酒精等，延長保存的食物（如優格、泡菜）', { a: 'ferm', o: ['func', 'ferm'] }],
+        ['植物裡有生理活性、但不是必需營養素的成分', { a: 'phyto', o: ['phyto', 'zoo'] }], ['動物性食物裡有生理活性、但不是必需營養素的成分', { a: 'zoo', o: ['phyto', 'zoo'] }]],
+      done: ['和飲食關係最密切的慢性病：癌症、心血管疾病、糖尿病、高血壓、腎臟病、骨質疏鬆、肥胖。', '降低風險的生活型態：均衡多樣的飲食、多蔬果全穀、少飽和與反式脂肪、限酒、不抽菸、規律運動、維持健康體重。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的觀念走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['每公克脂質產生', { a: 'k9', o: ['k4', 'k7', 'k9'] }, '。'],
+        ['每公克酒精產生', { a: 'k7', o: ['k4', 'k7', 'k9'] }, '。'],
+        ['營養標示計算熱量時，膳食纖維每公克以', { a: 'k2', o: ['k0', 'k2', 'k4'] }, '計。'],
+        ['水、維生素、礦物質每公克產生', { a: 'k0', o: ['k0', 'k2', 'k4'] }, '。'],
+        ['營養照護流程的第一步是', { a: 'ncpa', o: NMAP_NC }, '。'],
+        ['皮脂厚度和腰圍屬於營養評估的', { a: 'anth', o: ['anth', 'bioc', 'clin', 'diet'] }, '。'],
+        ['身體做不出來、一定要從飲食取得的是', { a: 'ess', o: ['ess', 'ness'], lang: 'en' }, '。'],
+        ['維生素與礦物質合稱', { a: 'micro', o: NMAP_G, lang: 'en' }, '。'],
+        ['24 小時飲食回憶屬於', { a: 'diet', o: ['anth', 'bioc', 'clin', 'diet'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 436, force: 'en', svg: NMAP_OV, blanks: NMAP_B(),
+      intro: ['第一關的圖，全部用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: '營養照護流程', list: [['Step 1', { a: 'ncpa', o: NMAP_NC }], ['Step 2', { a: 'ncpd', o: NMAP_NC }], ['Step 3', { a: 'ncpi', o: NMAP_NC }], ['Step 4', { a: 'ncpm', o: NMAP_NC }]] }
+  ] };
+/* ======================================================================
+   醣類（一）：種類、膳食纖維與甜味劑（第 5 章前半）
+   ====================================================================== */
+var CHO_ROWS = [80, 142, 204, 266, 328];
+function CHO_OV() {
+  var s = pill(180, 28, 200, { zh: '醣類', en: 'Carbohydrates' }, 'src') + sl('180,47 180,56 18,56 18,' + CHO_ROWS[4], 'M', 2);
+  var n = [['1 個醣單元', '1 sugar unit'], ['2 個醣單元', '2 sugar units'], ['3～10 個', '3–10 units'], ['很多個，人體能消化', 'many, digestible'], ['很多個，人體不能消化', 'many, indigestible']];
+  CHO_ROWS.forEach(function (y, i) { s += sl('18,' + y + ' 26,' + y, 'M', 2) + tx(90, y + 32, T(n[i][0], n[i][1]), 'm', 9.5); });
+  s += lab(90, 266, { zh: '多醣', en: 'Polysaccharides' }, 130) + lab(90, 328, { zh: '多醣', en: 'Polysaccharides' }, 130);
+  [['葡萄糖、果糖、半乳糖', 'Glucose, fructose, galactose'], ['麥芽糖、蔗糖、乳糖', 'Maltose, sucrose, lactose'], ['棉籽糖、水蘇糖', 'Raffinose, stachyose']].forEach(function (e, i) {
+    s += pill(258, CHO_ROWS[i], 192, { zh: e[0], en: e[1] }, 'pill kH'); });
+  s += tx(258, 360, T('（單醣和雙醣合稱簡單醣類）', '(mono + di = simple sugars)'), 'm', 9.5);
+  return s;
+}
+var CHO_CL = ['mono', 'di', 'oligo'], CHO_PE = ['stgly', 'fib', 'rafs'];
+function CHO_B() {
+  return [{ id: 'a1', x: 90, y: 80, w: 130, c: 'H', a: 'mono', o: CHO_CL }, { id: 'a2', x: 90, y: 142, w: 130, c: 'H', a: 'di', o: CHO_CL }, { id: 'a3', x: 90, y: 204, w: 130, c: 'H', a: 'oligo', o: CHO_CL },
+    { id: 'b1', x: 258, y: 266, w: 192, c: 'H', a: 'stgly', o: CHO_PE }, { id: 'b2', x: 258, y: 328, w: 192, c: 'H', a: 'fib', o: CHO_PE }];
+}
+function CHO_DI() {
+  var s = '', rows = [['g', 'g', 'α-1,4'], ['g', 'f', 'α1-β2'], ['l', 'g', 'β-1,4'], ['g', 'g', 'α-1,1']], nm = { g: ['葡', 'Glc'], f: ['果', 'Fru'], l: ['半', 'Gal'] };
+  rows.forEach(function (r, i) { var y = 40 + i * 62;
+    s += dot(48, y, 19, 'H') + tx(48, y + 5, T(nm[r[0]][0], nm[r[0]][1]), '', 12) + sl('67,' + y + ' 109,' + y, 'H', 3) + tx(88, y - 8, r[2], 'm', 9.5) + dot(128, y, 19, 'H') + tx(128, y + 5, T(nm[r[1]][0], nm[r[1]][1]), '', 12) + arrow(154, y, 180, y); });
+  s += tx(180, 274, T('葡＝葡萄糖　果＝果糖　半＝半乳糖', 'Glc = glucose, Fru = fructose, Gal = galactose'), 'm', 10);
+  return s;
+}
+var CHO_DO = ['mal', 'suc', 'lac', 'tre'];
+function CHO_DB() { return [0, 1, 2, 3].map(function (i) { return { id: 'd' + i, x: 270, y: 40 + i * 62, w: 150, c: 'H', a: CHO_DO[i], o: CHO_DO }; }); }
+function chain(x0, y, n, k, dx) { var s = sl(x0 + ',' + y + ' ' + (x0 + (n - 1) * dx) + ',' + y, k, 2); for (var i = 0; i < n; i++) s += dot(x0 + i * dx, y, 5, k); return s; }
+function CHO_PS() {
+  var s = '', dx = 16;
+  s += chain(20, 40, 12, 'H', dx) + tx(108, 64, T('直鏈，只有 α-1,4', 'linear, α-1,4 only'), 'm', 9.5);
+  s += chain(20, 118, 12, 'H', dx) + sl('84,118 100,100', 'H', 2) + chain(100, 100, 6, 'H', dx) + tx(108, 142, T('每 24～30 個分一支（α-1,6）', 'branch every 24–30 (α-1,6)'), 'm', 9.5);
+  s += chain(20, 206, 12, 'H', dx) + sl('52,206 68,188', 'H', 2) + chain(68, 188, 4, 'H', dx) + sl('132,206 148,188', 'H', 2) + chain(148, 188, 3, 'H', dx) + sl('84,188 100,172', 'H', 2) + chain(100, 172, 3, 'H', dx) + sl('100,206 116,224', 'H', 2) + chain(116, 224, 3, 'H', dx) + tx(108, 244, T('每 8～12 個就分一支', 'branch every 8–12'), 'm', 9.5);
+  s += chain(20, 290, 12, 'H', dx) + tx(108, 314, T('直鏈，β-1,4（人體切不開）', 'linear, β-1,4 (indigestible)'), 'm', 9.5);
+  return s;
+}
+var CHO_PO = ['amyl', 'amyp', 'glyc', 'cell'];
+function CHO_PB() { return [40, 118, 206, 290].map(function (y, i) { return { id: 'p' + i, x: 288, y: y, w: 132, c: 'H', a: CHO_PO[i], o: CHO_PO }; }); }
+var CHO_SW = ['hfcs', 'salc', 'asp', 'sucl', 'sacc', 'stev'];
+var CHO = { id: 'cho', zh: '醣類（一）：種類與甜味劑', en: 'Carbohydrates: types and sweeteners', alias: '單醣・雙醣・寡醣・澱粉與肝醣・膳食纖維・代糖', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    mono: { zh: '單醣', en: 'Monosaccharides' }, di: { zh: '雙醣', en: 'Disaccharides' }, oligo: { zh: '寡醣', en: 'Oligosaccharides' },
+    stgly: { zh: '澱粉、肝醣', en: 'Starch, glycogen' }, fib: { zh: '膳食纖維', en: 'Dietary fiber' }, rafs: { zh: '棉籽糖、水蘇糖', en: 'Raffinose, stachyose' },
+    glc: { zh: '葡萄糖', en: 'Glucose' }, fru: { zh: '果糖', en: 'Fructose' }, gal: { zh: '半乳糖', en: 'Galactose' }, rib: { zh: '核糖', en: 'Ribose' },
+    mal: { zh: '麥芽糖', en: 'Maltose' }, suc: { zh: '蔗糖', en: 'Sucrose' }, lac: { zh: '乳糖', en: 'Lactose' }, tre: { zh: '海藻糖', en: 'Trehalose' },
+    salc: { zh: '糖醇（山梨醇、木糖醇）', en: 'Sugar alcohols' }, agal: { zh: 'α-半乳糖苷酶', en: 'α-Galactosidase' }, lactase: { zh: '乳糖酶', en: 'Lactase' }, treh: { zh: '海藻糖酶', en: 'Trehalase' },
+    amyl: { zh: '直鏈澱粉', en: 'Amylose' }, amyp: { zh: '支鏈澱粉', en: 'Amylopectin' }, glyc: { zh: '肝醣', en: 'Glycogen' }, cell: { zh: '纖維素', en: 'Cellulose' },
+    livmus: { zh: '肝臟和肌肉', en: 'Liver and muscle' }, adi: { zh: '脂肪組織', en: 'Adipose tissue' }, g6p: { zh: '葡萄糖-6-磷酸酶', en: 'Glucose-6-phosphatase' }, hk: { zh: '己醣激酶', en: 'Hexokinase' },
+    fast: { zh: '比較快', en: 'Faster' }, slow: { zh: '比較慢', en: 'Slower' }, rs: { zh: '抗性澱粉', en: 'Resistant starch' },
+    sol: { zh: '可溶性纖維', en: 'Soluble fiber' }, insol: { zh: '不可溶性纖維', en: 'Insoluble fiber' }, scfa: { zh: '短鏈脂肪酸', en: 'Short-chain fatty acids' }, glcx: { zh: '葡萄糖', en: 'Glucose' },
+    beta: { zh: 'β 鍵（人體沒有切開它的酵素）', en: 'β bonds (no human enzyme)' }, alpha: { zh: 'α 鍵', en: 'α bonds' }, notcho: { zh: '不是醣類（是酚類聚合物）', en: 'Not a carbohydrate' },
+    hfcs: { zh: '高果糖玉米糖漿', en: 'High-fructose corn syrup' }, asp: { zh: '阿斯巴甜', en: 'Aspartame' }, sucl: { zh: '蔗糖素', en: 'Sucralose' }, sacc: { zh: '糖精', en: 'Saccharin' }, stev: { zh: '甜菊', en: 'Stevia' },
+    pku: { zh: '苯酮尿症', en: 'Phenylketonuria (PKU)' }, gout: { zh: '痛風', en: 'Gout' }, osm: { zh: '腹瀉、脹氣', en: 'Diarrhea, gas' }, caries: { zh: '蛀牙', en: 'Dental caries' },
+    adi2: { zh: '每日容許攝取量（ADI）', en: 'Acceptable daily intake (ADI)' }, ul: { zh: '上限攝取量（UL）', en: 'Tolerable upper intake level (UL)' },
+    nutr: { zh: '營養性甜味劑（有熱量）', en: 'Nutritive sweetener' }, nonn: { zh: '非營養性甜味劑（幾乎沒熱量）', en: 'Non-nutritive sweetener' },
+    glu: { zh: '糯米', en: 'Glutinous rice' }, jap: { zh: '在來米（秈米）', en: 'Indica rice' }
+  },
+  levels: [
+    { t: '先看全貌：醣類怎麼分', kind: 'ov', h: 372, svg: CHO_OV, blanks: CHO_B(),
+      intro: ['醣類（碳水化合物）由碳、氫、氧組成，幾乎都來自植物：植物用光合作用把二氧化碳和水做成葡萄糖。',
+        '分類的依據是「幾個醣單元連在一起」。只有一個的最小；兩個連在一起的次之；三到十個的叫寡醣；更多的叫多醣。',
+        '多醣再看人體能不能消化：能消化的是植物和動物儲存葡萄糖的形式；不能消化的就是膳食纖維。'],
+      done: ['[[單醣：葡萄糖、果糖、半乳糖。雙醣：麥芽糖、蔗糖、乳糖。]]單醣和雙醣合稱簡單醣類。', '寡醣（3～10 個）：棉籽糖、水蘇糖，存在豆類、洋蔥、甘藍菜。',
+        '多醣：澱粉（植物儲存）、肝醣（動物儲存）、膳食纖維（不能消化）。寡醣和多醣合稱複合醣類。'] },
+    { t: '雙醣：誰和誰接在一起', kind: 'ov', h: 290, svg: CHO_DI, blanks: CHO_DB(),
+      intro: ['兩個單醣以縮合反應接在一起（放出一分子水），就是雙醣；消化時反過來，加水切開（水解）。',
+        '圖上每一列是一種雙醣：看它由哪兩個單醣組成、中間是什麼鍵，填出它的名字。',
+        '第四種課本只提一句，但國考考過：兩個葡萄糖的「頭對頭」接在一起，存在菇類、酵母和蝦蟹裡。'],
+      done: ['[[麥芽糖＝葡萄糖＋葡萄糖；蔗糖＝葡萄糖＋果糖；乳糖＝半乳糖＋葡萄糖（β 鍵）]]。', '海藻糖（trehalose）＝ 2 個葡萄糖以 α-1,1 鍵結合，在小腸由海藻糖酶分解成葡萄糖，一樣是每公克 4 大卡，甜度大約是蔗糖的一半。',
+        '所有雙醣都含有至少一個葡萄糖。'] },
+    { t: '單醣、雙醣、寡醣的來源', kind: 'list',
+      intro: ['飲食中的單醣以葡萄糖和果糖為主；半乳糖幾乎都是乳糖分解出來的，很少單獨存在。',
+        '單醣還有兩類衍生物要認得：五碳醣（組成 RNA 和 DNA）和糖醇（單醣還原後的產物，常用來做無糖口香糖）。',
+        '豆類吃多了會脹氣，是因為裡面的寡醣人體切不開，到了大腸被細菌發酵產氣。市售的豆類消化酵素就是補上人體缺少的那一個酵素。'],
+      listTitle: '是哪一個',
+      list: [['自然界最多的單醣，也是血液裡的糖', { a: 'glc', o: ['glc', 'fru', 'gal'] }], ['水果和蜂蜜裡最甜的天然糖', { a: 'fru', o: ['glc', 'fru', 'gal'] }], ['主要來自乳糖，在肝臟轉成葡萄糖', { a: 'gal', o: ['glc', 'fru', 'gal'] }],
+        ['組成 RNA 的五碳醣', { a: 'rib', o: ['rib', 'glc'] }], ['甘蔗、甜菜做的砂糖', { a: 'suc', o: ['mal', 'suc', 'lac'] }], ['發芽穀類（麥芽）和澱粉分解時產生', { a: 'mal', o: ['mal', 'suc', 'lac'] }],
+        ['乳汁裡唯一的醣', { a: 'lac', o: ['mal', 'suc', 'lac'] }], ['山梨醇、甘露醇、木糖醇', { a: 'salc', o: ['salc', 'oligo'] }],
+        ['豆類裡的棉籽糖、水蘇糖不能消化，是因為人體缺乏', { a: 'agal', o: ['agal', 'lactase', 'treh'] }]],
+      done: ['[[果糖最甜；乳糖甜度最低。]]', '棉籽糖、水蘇糖含有 α-1,6 接上的半乳糖，人體沒有 α-半乳糖苷酶，所以到大腸被發酵產氣。（課本投影片寫成「β 鍵」，以這裡為準。）',
+        '糖醇吸收慢、熱量比糖低，口腔細菌不易利用，所以不易蛀牙；吃多了會滲透性腹瀉。'] },
+    { t: '多醣：澱粉、肝醣與纖維素', kind: 'ov', h: 330, svg: CHO_PS, blanks: CHO_PB(),
+      intro: ['四種多醣都是一長串葡萄糖，差別在鍵結和分支。',
+        '植物儲存葡萄糖用澱粉，分兩種：一種是直的長鏈；另一種每隔一段就分出一支，像一棵樹。分支越多，酵素可以同時從越多個末端切，消化越快、血糖升得越快。',
+        '動物儲存葡萄糖用的那一種，分支比植物的更密，所以需要時能很快放出葡萄糖。',
+        '最後一種也是葡萄糖組成，但鍵的方向不同，人體沒有酵素切得開，屬於膳食纖維。'],
+      listTitle: '再想一想',
+      list: [['糯米的澱粉幾乎全部是', { a: 'amyp', o: ['amyl', 'amyp'] }], ['分支越多的澱粉，消化和血糖上升', { a: 'fast', o: ['fast', 'slow'] }],
+        ['肝醣主要存在', { a: 'livmus', o: ['livmus', 'adi'] }], ['肌肉的肝醣不能補充血糖，因為肌肉缺乏', { a: 'g6p', o: ['g6p', 'hk'] }],
+        ['煮熟後冷卻（例如隔夜飯、冷的馬鈴薯）的澱粉，部分變得不易消化，叫作', { a: 'rs', o: ['rs', 'glyc'] }]],
+      done: ['[[直鏈澱粉只有 α-1,4；支鏈澱粉和肝醣有 α-1,6 分支，肝醣分支最多。]]纖維素是 β-1,4，人體不能消化。', '肝臟的肝醣可以分解成葡萄糖補充血糖；肌肉的肝醣只供肌肉自己用。',
+        '抗性澱粉在小腸不被消化，到大腸被細菌發酵，作用像膳食纖維。'] },
+    { t: '膳食纖維', kind: 'list',
+      intro: ['膳食纖維是人體消化酵素分解不了的植物成分，大多是多醣（β 鍵），另外還有一種不是醣類的木質素。',
+        '依能不能溶於水分兩類。不溶的那一類是植物細胞壁的骨架，主要在全穀、麩皮、蔬菜的莖；可溶的那一類在細胞裡面或周圍，遇水變成膠狀，主要在燕麥、豆類、水果、海藻、洋車前子。',
+        '兩類的作用不一樣：一類像海綿，吸水撐大糞便、讓它走快一點；另一類像膠，讓胃排空變慢、把膽酸和膽固醇黏住帶走，也比較容易被大腸細菌發酵。'],
+      listTitle: '可溶還是不可溶',
+      list: [['纖維素、半纖維素（大部分）、木質素', { a: 'insol', o: ['sol', 'insol'] }], ['果膠、樹膠、黏膠質、燕麥的 β-葡聚醣', { a: 'sol', o: ['sol', 'insol'] }],
+        ['增加糞便體積、縮短通過腸道的時間，預防便秘', { a: 'insol', o: ['sol', 'insol'] }], ['延緩胃排空和葡萄糖吸收，幫助控制血糖', { a: 'sol', o: ['sol', 'insol'] }],
+        ['結合膽酸、減少它回收，降低血膽固醇', { a: 'sol', o: ['sol', 'insol'] }], ['被大腸細菌發酵的程度比較高', { a: 'sol', o: ['sol', 'insol'] }],
+        ['細菌發酵纖維的產物，可以給大腸細胞當能量', { a: 'scfa', o: ['scfa', 'glcx'] }], ['人體不能消化纖維素，因為它的鍵結是', { a: 'beta', o: ['beta', 'alpha'] }], ['木質素', { a: 'notcho', o: ['notcho', 'insol'] }]],
+      done: ['[[可溶性纖維：降血膽固醇、緩和血糖。不可溶性纖維：增加糞便體積、預防便秘與憩室病。]]', '膳食纖維在大腸被發酵成短鏈脂肪酸（乙酸、丙酸、丁酸），所以營養標示以每公克 2 大卡計。',
+        '纖維吃太多（每天超過 50～60 g）又喝水不夠，反而會便秘，也會減少鐵、鋅、鈣的吸收。'] },
+    { t: '甜味劑', kind: 'list',
+      intro: ['甜味劑分兩類：會產生熱量的（營養性），和幾乎沒有熱量、只用一點點就很甜的（非營養性，俗稱代糖）。',
+        '高果糖玉米糖漿是把玉米澱粉水解成葡萄糖，再用酵素把一部分轉成果糖，最常見的配方約含 55% 果糖，甜度和蔗糖差不多，便宜，大量用在含糖飲料。',
+        '非營養性甜味劑要經過審查，並訂出每日容許攝取量：一個人一輩子每天吃到這個量（每公斤體重），也不會有健康風險。',
+        '其中一種是由兩個胺基酸組成的，含有苯丙胺酸，所以有一種先天代謝疾病的病人不能吃，產品上也要標示。它加熱會分解，不適合烘焙。'],
+      listTitle: '是哪一個',
+      list: [['用玉米澱粉做、含果糖約 55%', { a: 'hfcs', o: CHO_SW }], ['不易被口腔細菌利用、吃多了會腹瀉', { a: 'salc', o: CHO_SW }], ['由苯丙胺酸和天門冬胺酸組成', { a: 'asp', o: CHO_SW }],
+        ['用蔗糖改造而成、耐熱、可以烘焙', { a: 'sucl', o: CHO_SW }], ['使用歷史最久的代糖，甜度約為蔗糖的 300 倍', { a: 'sacc', o: CHO_SW }], ['從植物葉子萃取的甜味成分', { a: 'stev', o: CHO_SW }],
+        ['不能吃阿斯巴甜的病人', { a: 'pku', o: ['pku', 'gout'] }], ['一生每天吃這個量也不會有健康風險', { a: 'adi2', o: ['adi2', 'ul'] }], ['糖醇屬於', { a: 'nutr', o: ['nutr', 'nonn'] }]],
+      done: ['[[苯酮尿症（PKU）病人不能吃阿斯巴甜]]，因為它會分解出苯丙胺酸。', '糖醇有少量熱量（營養性甜味劑），不易蛀牙，吃多了會腹瀉、脹氣。', '代糖的安全標準是每日容許攝取量（ADI），以每公斤體重計。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['蔗糖由葡萄糖和', { a: 'fru', o: ['glc', 'fru', 'gal'] }, '組成。'],
+        ['乳糖由葡萄糖和', { a: 'gal', o: ['glc', 'fru', 'gal'] }, '以 β-1,4 鍵組成。'],
+        ['海藻糖在小腸由', { a: 'treh', o: ['treh', 'lactase', 'agal'] }, '分解成兩個葡萄糖。'],
+        ['糯米製品比較黏、消化比較慢，是因為支鏈澱粉含量', { a: 'hi', o: ['hi', 'lo'] }, '。'],
+        ['可溶性纖維能降低血膽固醇，主要因為它會結合', { a: 'bilea', o: ['bilea', 'glcx'] }, '。'],
+        ['甜度最高的天然糖是', { a: 'fru', o: ['glc', 'fru', 'lac'] }, '。'],
+        ['苯酮尿症病人應避免的甜味劑是', { a: 'asp', o: ['asp', 'sucl', 'sacc'], lang: 'en' }, '。'],
+        ['動物儲存葡萄糖的形式是', { a: 'glyc', o: CHO_PO, lang: 'en' }, '。'],
+        ['只有 α-1,4 鍵、沒有分支的是', { a: 'amyl', o: CHO_PO, lang: 'en' }, '。'],
+        ['豆類引起脹氣的寡醣，例如', { a: 'rafs', o: CHO_PE, lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 372, force: 'en', svg: CHO_OV, blanks: CHO_B(),
+      intro: ['第一關的分類圖，加上雙醣與多醣，全部用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: '名稱', list: [['Glucose + fructose', { a: 'suc', o: CHO_DO }], ['Galactose + glucose', { a: 'lac', o: CHO_DO }], ['Glucose + glucose (α-1,4)', { a: 'mal', o: CHO_DO }],
+        ['Glucose + glucose (α-1,1)', { a: 'tre', o: CHO_DO }], ['Most highly branched storage form in animals', { a: 'glyc', o: CHO_PO }], ['β-1,4 glucose polymer', { a: 'cell', o: CHO_PO }]] }
+  ] };
+(function () { var d = CHO.dict; d.hi = { zh: '高', en: 'High' }; d.lo = { zh: '低', en: 'Low' }; d.bilea = { zh: '膽酸', en: 'Bile acids' }; })();
+/* ======================================================================
+   醣類（二）：消化吸收、功能、建議量與血糖（第 5 章後半）
+   ====================================================================== */
+function CHM_OV() {
+  var s = '', h = PH() / 2;
+  s += pill(110, 30, 170, { zh: '澱粉', en: 'Starch' }, 'src kH') + arrow(110, 31 + h, 110, 92 - h - 2) + arrow(110, 93 + h, 110, 154 - h - 2) + arrow(110, 155 + h, 110, 216 - h - 2);
+  s += tx(280, 38, T('口腔、小腸裡的', 'in mouth and small intestine'), 'm', 9.5) + tx(280, 100, T('小腸刷狀緣上的', 'on the brush border'), 'm', 9.5) + tx(200, 189, T('吸收進微血管 → 肝門靜脈', 'absorbed → portal vein'), 'm', 9.5, 'start');
+  s += arrow(80, 233, 56, 266) + arrow(110, 235, 180, 266) + arrow(140, 233, 300, 266);
+  s += pill(56, 290, 100, { zh: '血糖', en: 'Blood glucose' }, 'pill kH') + tx(180, 324, T('存起來', 'stored as'), 'm', 9.5) + tx(300, 324, T('肝醣存滿之後', 'when glycogen is full'), 'm', 9.5);
+  return s;
+}
+var CHM_N = ['dexm', 'mono', 'liver', 'mus'], CHM_E = ['amy', 'bbd', 'pep'], CHM_D = ['glyc', 'fat', 'prot'];
+function CHM_B() {
+  return [{ id: 'e1', x: 280, y: 66, w: 150, a: 'amy', o: CHM_E }, { id: 'n1', x: 110, y: 92, w: 170, c: 'H', a: 'dexm', o: CHM_N },
+    { id: 'e2', x: 280, y: 128, w: 150, a: 'bbd', o: CHM_E }, { id: 'n2', x: 110, y: 154, w: 170, c: 'H', a: 'mono', o: CHM_N }, { id: 'n3', x: 110, y: 216, w: 170, a: 'liver', o: CHM_N },
+    { id: 'd1', x: 180, y: 290, w: 104, c: 'H', a: 'glyc', o: CHM_D }, { id: 'd2', x: 300, y: 290, w: 104, c: 'C', a: 'fat', o: CHM_D }];
+}
+function CHM_BG() {
+  var s = pill(92, 40, 164, { zh: '飯後：血糖升高', en: 'After a meal: glucose ↑' }, 'pill kH') + arrow(176, 40, 196, 40) + tx(278, 16, T('胰臟 β 細胞分泌', 'from pancreatic β cells'), 'm', 9.5);
+  s += cap(90, '肝臟、肌肉把葡萄糖存成', 'Liver and muscle store it as', 168) + cap(134, '肌肉、脂肪細胞吸收葡萄糖靠', 'Muscle and fat take it up via', 168);
+  s += '<line x1="14" y1="164" x2="346" y2="164" stroke="var(--rail)" stroke-width="1.5" stroke-dasharray="5 4"/>';
+  s += pill(92, 200, 164, { zh: '空腹：血糖下降', en: 'Fasting: glucose ↓' }, 'pill kH') + arrow(176, 200, 196, 200) + tx(278, 176, T('胰臟 α 細胞分泌', 'from pancreatic α cells'), 'm', 9.5);
+  s += cap(250, '肝臟把肝醣分解成葡萄糖，叫作', 'Liver breaks down glycogen:', 168) + cap(294, '肝臟用胺基酸、乳酸、甘油做葡萄糖', 'Liver makes glucose from amino acids, lactate, glycerol:', 168) + cap(338, '緊急時腎上腺髓質分泌、也會升血糖', 'Adrenal medulla, in stress:', 168);
+  return s;
+}
+var CHM_H = ['ins', 'gcg', 'epi', 'cort'], CHM_P = ['gsyn', 'glyl', 'gng', 'lipo'];
+function CHM_BGB() {
+  return [{ id: 'h1', x: 278, y: 40, w: 150, a: 'ins', o: CHM_H }, { id: 'p1', x: 262, y: 90, w: 168, c: 'H', a: 'glyc', o: ['glyc', 'fat', 'prot'] }, { id: 'p2', x: 262, y: 134, w: 168, a: 'glut4', o: ['glut4', 'glut2', 'sglt'] },
+    { id: 'h2', x: 278, y: 200, w: 150, a: 'gcg', o: CHM_H }, { id: 'p3', x: 262, y: 250, w: 168, a: 'glyl', o: CHM_P }, { id: 'p4', x: 262, y: 294, w: 168, a: 'gng', o: CHM_P }, { id: 'h3', x: 262, y: 338, w: 168, a: 'epi', o: CHM_H }];
+}
+var CHM = { id: 'chm', zh: '醣類（二）：消化、功能與血糖', en: 'Carbohydrates: digestion, functions and blood glucose', alias: '消化吸收・乳糖不耐・建議量・血糖調節・GI 與 GL・糖尿病', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    dexm: { zh: '糊精、麥芽糖', en: 'Dextrins, maltose' }, mono: { zh: '單醣', en: 'Monosaccharides' }, liver: { zh: '肝臟', en: 'Liver' }, mus: { zh: '肌肉', en: 'Muscle' },
+    amy: { zh: '澱粉酶', en: 'Amylase' }, bbd: { zh: '雙醣酶', en: 'Disaccharidases' }, pep: { zh: '胃蛋白酶', en: 'Pepsin' },
+    glyc: { zh: '肝醣', en: 'Glycogen' }, fat: { zh: '脂肪', en: 'Fat' }, prot: { zh: '蛋白質', en: 'Protein' },
+    sglt: { zh: 'SGLT1（和 Na⁺ 一起主動運輸）', en: 'SGLT1 (Na⁺-dependent active transport)' }, glut5: { zh: 'GLUT5（促進性擴散）', en: 'GLUT5 (facilitated diffusion)' }, glut2: { zh: 'GLUT2', en: 'GLUT2' }, glut4: { zh: 'GLUT4（受胰島素調控）', en: 'GLUT4 (insulin-regulated)' },
+    lacp: { zh: '原發性乳糖不耐', en: 'Primary lactose intolerance' }, lacs: { zh: '續發性乳糖不耐', en: 'Secondary lactose intolerance' }, yog: { zh: '優格、硬質起司', en: 'Yogurt, hard cheese' }, milk: { zh: '一大杯全脂鮮奶空腹喝', en: 'A large glass of milk on an empty stomach' },
+    rbc: { zh: '紅血球和腦', en: 'Red blood cells and brain' }, mus2: { zh: '休息時的骨骼肌', en: 'Resting skeletal muscle' }, spare: { zh: '節省蛋白質', en: 'Protein sparing' }, keto: { zh: '酮症', en: 'Ketosis' },
+    g50: { zh: '50～100 公克', en: '50–100 g' }, g10: { zh: '10 公克', en: '10 g' }, g130: { zh: '130 公克', en: '130 g' }, g100: { zh: '100 公克', en: '100 g' }, g300: { zh: '300 公克', en: '300 g' },
+    a5065: { zh: '總熱量的 50～65%', en: '50–65% of energy' }, a4565: { zh: '總熱量的 45～65%', en: '45–65% of energy' }, a1020: { zh: '總熱量的 10～20%', en: '10–20% of energy' },
+    f14: { zh: '每 1,000 大卡 14 公克', en: '14 g per 1,000 kcal' }, f25: { zh: '每天 25 公克', en: '25 g per day' }, s10: { zh: '總熱量的 10% 以下', en: '< 10% of energy' }, s25: { zh: '總熱量的 25% 以下', en: '< 25% of energy' },
+    ins: { zh: '胰島素', en: 'Insulin' }, gcg: { zh: '升糖素', en: 'Glucagon' }, epi: { zh: '腎上腺素', en: 'Epinephrine' }, cort: { zh: '皮質醇', en: 'Cortisol' },
+    gsyn: { zh: '肝醣合成', en: 'Glycogenesis' }, glyl: { zh: '肝醣分解', en: 'Glycogenolysis' }, gng: { zh: '糖質新生', en: 'Gluconeogenesis' }, lipo: { zh: '脂肪分解', en: 'Lipolysis' },
+    gi: { zh: '升糖指數（GI）', en: 'Glycemic index (GI)' }, gl: { zh: '升糖負荷（GL）', en: 'Glycemic load (GL)' }, av50: { zh: '50 公克可利用醣類', en: '50 g available carbohydrate' }, av100: { zh: '100 公克食物', en: '100 g of the food' },
+    ref: { zh: '葡萄糖或白麵包', en: 'Glucose or white bread' }, lower: { zh: '降低', en: 'Lowers' }, raise: { zh: '升高', en: 'Raises' },
+    dm1: { zh: '第 1 型糖尿病', en: 'Type 1 diabetes' }, dm2: { zh: '第 2 型糖尿病', en: 'Type 2 diabetes' }, gdm: { zh: '妊娠糖尿病', en: 'Gestational diabetes' },
+    m126: { zh: '126 mg/dL 以上', en: '≥ 126 mg/dL' }, m100: { zh: '100～125 mg/dL', en: '100–125 mg/dL' }, m70: { zh: '70 mg/dL 以下', en: '< 70 mg/dL' }, m200: { zh: '200 mg/dL 以上', en: '≥ 200 mg/dL' }, h65: { zh: '6.5% 以上', en: '≥ 6.5%' },
+    ms3: { zh: '五項中有三項以上', en: '3 or more of 5' }, ms1: { zh: '五項中有任一項', en: 'Any 1 of 5' }, w90: { zh: '男 ≥ 90、女 ≥ 80 公分', en: 'Men ≥ 90, women ≥ 80 cm' }, w102: { zh: '男 ≥ 102、女 ≥ 88 公分', en: 'Men ≥ 102, women ≥ 88 cm' }
+  },
+  levels: [
+    { t: '先看全貌：澱粉的一生', kind: 'ov', h: 336, svg: CHM_OV, blanks: CHM_B(),
+      intro: ['烹煮讓澱粉吸水膨脹，消化從口腔就開始：唾液裡的酵素把澱粉切成比較短的片段；這個酵素到了胃被酸破壞，小腸再由胰臟分泌的同一種酵素接手。',
+        '這些短片段和雙醣，由黏在小腸細胞表面（刷狀緣）的一群酵素切成單醣，才能被吸收。',
+        '單醣吸收後經肝門靜脈先到一個器官。在這裡，果糖和半乳糖被轉成葡萄糖；葡萄糖一部分送到血液，多的先存起來，存滿了才變成脂肪。'],
+      done: ['[[唾液澱粉酶 → 胰澱粉酶 → 刷狀緣雙醣酶（麥芽糖酶、蔗糖酶、乳糖酶）→ 單醣]]。', '醣類消化吸收主要在小腸；不能消化的部分（纖維、抗性澱粉、寡醣）到大腸被細菌發酵。',
+        '單醣先到肝臟：果糖、半乳糖在肝臟轉成葡萄糖；多的葡萄糖存成肝醣，肝醣滿了才合成脂肪。'] },
+    { t: '吸收與乳糖不耐', kind: 'list',
+      intro: ['三種單醣進入小腸細胞的方式不一樣：葡萄糖和半乳糖和鈉一起，用主動運輸進來，速度快；果糖靠自己的載體以促進性擴散進來，比較慢。三者出細胞進血液都走同一個載體。',
+        '小時候乳糖酶很多，斷奶後很多人的乳糖酶慢慢減少，這叫原發性乳糖不耐，華人很常見。另一種是腸炎、腹瀉、克隆氏症傷了小腸黏膜，暫時做不出乳糖酶，叫續發性。',
+        '乳糖不耐不等於完全不能喝奶：少量多次、和餐一起吃、改吃發酵過的乳製品，大多可以耐受。'],
+      listTitle: '是哪一個',
+      list: [['葡萄糖、半乳糖進入腸細胞', { a: 'sglt', o: ['sglt', 'glut5', 'glut2'] }], ['果糖進入腸細胞', { a: 'glut5', o: ['sglt', 'glut5', 'glut2'] }], ['三種單醣離開腸細胞、進入血液', { a: 'glut2', o: ['sglt', 'glut5', 'glut2'] }],
+        ['斷奶後乳糖酶自然減少', { a: 'lacp', o: ['lacp', 'lacs'] }], ['急性腸胃炎後暫時喝奶就腹瀉', { a: 'lacs', o: ['lacp', 'lacs'] }], ['乳糖不耐的人比較能耐受', { a: 'yog', o: ['yog', 'milk'] }]],
+      done: ['[[葡萄糖、半乳糖：SGLT1 主動運輸；果糖：GLUT5 促進性擴散；出細胞都走 GLUT2。]]', '乳糖不耐的症狀：腹脹、脹氣、腹痛、腹瀉。沒消化的乳糖在大腸留住水分，又被細菌發酵產氣。',
+        '優格裡的細菌會分解一部分乳糖，硬質起司的乳糖大多在製作時隨乳清流掉，所以比較能耐受。'] },
+    { t: '醣類在身體裡的功能', kind: 'list',
+      intro: ['可消化的醣類最重要的工作是提供葡萄糖。紅血球沒有粒線體，只能用葡萄糖；腦平常也以葡萄糖為主要燃料。',
+        '醣類吃得夠，身體就不必分解肌肉蛋白質來做葡萄糖，蛋白質可以留著做它該做的事。',
+        '醣類太少時，胰島素下降，脂肪大量分解，肝臟來不及完全氧化，就做出一堆酮體。每天至少吃到一定量的醣類可以避免。',
+        '不能消化的醣類（膳食纖維）則照顧腸道，並幫助控制體重、血糖和血膽固醇。'],
+      listTitle: '是哪一個',
+      list: [['幾乎只能用葡萄糖當燃料的是', { a: 'rbc', o: ['rbc', 'mus2'] }], ['醣類足夠時不必分解肌肉來做葡萄糖，叫作', { a: 'spare', o: ['spare', 'keto'] }],
+        ['醣類攝取太少、脂肪分解不完全，血中酮體增加', { a: 'keto', o: ['spare', 'keto'] }], ['避免酮症，每天至少要吃到的醣類', { a: 'g50', o: ['g10', 'g50', 'g300'] }],
+        ['成人醣類的 RDA（以腦需要的葡萄糖量訂定）', { a: 'g130', o: ['g100', 'g130', 'g300'] }]],
+      done: ['[[可消化醣類的功能：提供能量（4 大卡／公克）、節省蛋白質、預防酮症。]]', '醣類的 RDA 130 g 是依據大腦每天需要的葡萄糖量訂定的，是最低需要量，不是理想攝取量。',
+        '膳食纖維的功能：增加糞便體積、預防便秘與憩室病、增加飽足感、延緩血糖上升、降低血膽固醇。'] },
+    { t: '建議量（國人 DRIs）', kind: 'list',
+      intro: ['課本列的是美國的數值。國考考的是國人膳食營養素參考攝取量（DRIs）第八版，兩者有幾個地方不一樣，要記國人的。',
+        '醣類訂了 RDA，也訂了佔總熱量的可接受範圍；國人的範圍下限比美國高。膳食纖維沒有足夠資料訂 RDA，用足夠攝取量（AI），而且是跟著熱量走的。',
+        '添加糖（製造或烹調時加進去的糖，不包括水果、牛奶天然含有的糖）建議不超過總熱量的一定比例。'],
+      listTitle: '國人的數值',
+      list: [['成人醣類 RDA', { a: 'g130', o: ['g100', 'g130', 'g300'] }], ['國人醣類的 AMDR', { a: 'a5065', o: ['a5065', 'a4565', 'a1020'] }], ['美國醣類的 AMDR', { a: 'a4565', o: ['a5065', 'a4565', 'a1020'] }],
+        ['國人膳食纖維的足夠攝取量（AI）', { a: 'f14', o: ['f14', 'f25'] }], ['添加糖的建議', { a: 's10', o: ['s10', 's25'] }]],
+      countsTitle: '一位每天吃 2,000 大卡的成人',
+      counts: [['膳食纖維 AI 是幾公克', '28', ['14', '20', '25', '28']], ['添加糖最多幾公克（每公克 4 大卡）', '50', ['25', '40', '50', '100']], ['醣類 AMDR 的下限是幾公克', '250', ['130', '200', '250', '325']]],
+      done: ['[[國人醣類 AMDR 50～65%；RDA 130 g；膳食纖維 AI 每 1,000 大卡 14 g；添加糖 < 總熱量 10%。]]', '美國醣類 AMDR 是 45～65%，課本的數字要換成國人的。',
+        '2,000 大卡的 10% 是 200 大卡，除以 4 等於 50 g 添加糖，大約一杯全糖手搖飲就超過了。'] },
+    { t: '血糖的調節', kind: 'ov', h: 362, svg: CHM_BG, blanks: CHM_BGB(),
+      intro: ['血糖要維持在一個窄的範圍裡，主要靠肝臟和胰臟。',
+        '飯後血糖升高，胰臟的一種細胞分泌一個降血糖的激素：讓肌肉和脂肪細胞把葡萄糖收進去、讓肝臟和肌肉把它存起來、多的做成脂肪。',
+        '空腹時血糖下降，胰臟另一種細胞分泌一個作用相反的激素，叫肝臟把存貨拿出來，存貨不夠就自己做新的葡萄糖。',
+        '緊張、受傷時，腎上腺和其他激素也會讓血糖升高。降血糖的激素只有一個。'],
+      done: ['[[胰島素（β 細胞）是唯一降血糖的激素；升糖素（α 細胞）、腎上腺素、皮質醇、生長激素都升血糖。]]', '胰島素讓 GLUT4 移到肌肉和脂肪細胞的細胞膜上，葡萄糖才進得去。肝臟和腦吸收葡萄糖不靠胰島素。',
+        '升糖素作用在肝臟：肝醣分解、糖質新生。肌肉沒有升糖素受體，肌肉肝醣也不能變成血糖。'] },
+    { t: '升糖指數與升糖負荷', kind: 'list',
+      intro: ['升糖指數（GI）比的是「吃了含 50 g 可利用醣類的某種食物」和「吃了等量醣類的標準食物」，兩小時內血糖曲線下面積的比值，乘以 100。',
+        '它的限制是：50 g 醣類常常不是平常吃的份量。例如胡蘿蔔的 GI 不低，但要吃很多才吃到 50 g 醣類。',
+        '所以又有升糖負荷（GL）：把實際吃的醣類克數乘上 GI 再除以 100，比較能反映一餐對血糖的真正影響。',
+        '同一種食物的 GI 會變：煮得越久越爛、磨得越細、支鏈澱粉越多，GI 越高；纖維、脂肪、蛋白質、酸（醋）會讓它變低。'],
+      tip: '一般分級：GI ≥ 70 為高、≤ 55 為低；GL ≥ 20 為高、≤ 10 為低。',
+      listTitle: '是哪一個',
+      list: [['測定 GI 時，受試食物的份量要含', { a: 'av50', o: ['av50', 'av100'] }], ['測定 GI 的標準食物', { a: 'ref', o: ['ref', 'fru'] }], ['同時考慮醣類份量和 GI 的指標', { a: 'gl', o: ['gi', 'gl'] }],
+        ['搭配蛋白質、脂肪和纖維一起吃，對一餐的血糖反應', { a: 'lower', o: ['lower', 'raise'] }], ['把米煮成稀飯，GI 會', { a: 'raise', o: ['lower', 'raise'] }]],
+      countsTitle: '算算看',
+      counts: [['一碗飯含醣類 60 g、GI 80，GL 是多少', '48', ['20', '48', '60', '80']], ['一份水果含醣類 15 g、GI 40，GL 是多少', '6', ['6', '15', '40', '55']], ['一片吐司含醣類約 15 g，測 GI 約要吃幾片（四捨五入）', '3', ['1', '2', '3', '5']]],
+      done: ['[[GI：含 50 g 可利用醣類的食物 vs. 標準食物（葡萄糖或白麵包）的血糖曲線面積 × 100。]]', '[[GL ＝ 食用量的醣類克數 × GI ÷ 100]]。', '高 GL 的飲食讓胰島素分泌多，血糖下降後很快又餓，長期可能增加肝臟合成脂肪。'] },
+    { t: '血糖相關的疾病', kind: 'list',
+      intro: ['血糖太高或太低都是問題。太高最常見的原因是糖尿病；這裡先記住診斷標準與分型，飲食治療在膳食療養再詳細學。',
+        '第一型是自體免疫破壞了胰臟 β 細胞，胰島素幾乎沒有，一定要打胰島素，好發於年輕人。第二型最常見，和肥胖、少動有關，細胞對胰島素反應變差（胰島素阻抗）。懷孕期間第一次出現的叫妊娠糖尿病。',
+        '代謝症候群是一群一起出現的危險因子，會增加糖尿病和心血管疾病的風險。國人的判定標準有五項，腰圍的切點比美國小。'],
+      listTitle: '標準與分型',
+      list: [['空腹血糖診斷糖尿病', { a: 'm126', o: ['m100', 'm126', 'm200'] }], ['空腹血糖異常（糖尿病前期）', { a: 'm100', o: ['m100', 'm126', 'm200'] }], ['口服葡萄糖耐受試驗 2 小時血糖診斷糖尿病', { a: 'm200', o: ['m100', 'm126', 'm200'] }],
+        ['糖化血色素（HbA1c）診斷糖尿病', { a: 'h65', o: ['h65', 'm126'] }], ['低血糖', { a: 'm70', o: ['m70', 'm100'] }],
+        ['自體免疫破壞 β 細胞，需要胰島素治療', { a: 'dm1', o: ['dm1', 'dm2', 'gdm'] }], ['胰島素阻抗，和肥胖、少動有關，最常見', { a: 'dm2', o: ['dm1', 'dm2', 'gdm'] }],
+        ['國人代謝症候群的腰圍標準', { a: 'w90', o: ['w90', 'w102'] }], ['國人代謝症候群的判定', { a: 'ms3', o: ['ms3', 'ms1'] }]],
+      done: ['[[糖尿病：空腹血糖 ≥ 126、HbA1c ≥ 6.5%、OGTT 2 小時 ≥ 200 mg/dL；低血糖 < 70 mg/dL。]]', '國人代謝症候群五項（三項以上即成立）：腰圍男 ≥ 90、女 ≥ 80 公分；血壓 ≥ 130/85 mmHg；空腹血糖 ≥ 100 mg/dL；三酸甘油酯 ≥ 150 mg/dL；HDL 男 < 40、女 < 50 mg/dL。',
+        '課本投影片列的是美國標準，而且寫成「任一項」，正確是「三項以上」。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['國人膳食營養素參考攝取量中，醣類的 AMDR 是', { a: 'a5065', o: ['a5065', 'a4565', 'a1020'] }, '。'],
+        ['國人膳食纖維的足夠攝取量是', { a: 'f14', o: ['f14', 'f25'] }, '。'],
+        ['測定 GI 時，受試食物要含', { a: 'av50', o: ['av50', 'av100'] }, '。'],
+        ['胰島素讓肌肉和脂肪細胞吸收葡萄糖，靠的載體是', { a: 'glut4', o: ['glut4', 'glut2', 'sglt'] }, '。'],
+        ['醣類攝取足夠時，可以減少體蛋白質分解，叫作', { a: 'spare', o: ['spare', 'keto'] }, '。'],
+        ['腸胃炎後暫時出現的乳糖不耐，屬於', { a: 'lacs', o: ['lacp', 'lacs'] }, '。'],
+        ['空腹時分泌、促進肝醣分解的激素是', { a: 'gcg', o: CHM_H, lang: 'en' }, '。'],
+        ['肝臟用非醣類前驅物製造葡萄糖，叫作', { a: 'gng', o: CHM_P, lang: 'en' }, '。'],
+        ['果糖進入小腸細胞靠的是', { a: 'glut5', o: ['sglt', 'glut5', 'glut2'], lang: 'en' }, '。'],
+        ['胰島素阻抗是哪一型糖尿病的主要問題？', { a: 'dm2', o: ['dm1', 'dm2', 'gdm'], lang: 'en' }, '']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 336, force: 'en', svg: CHM_OV, blanks: CHM_B(),
+      intro: ['第一關的圖，全部用英文作答；下面再加上血糖調節。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: '血糖調節', list: [['Lowers blood glucose; from β cells', { a: 'ins', o: CHM_H }], ['Raises blood glucose; from α cells', { a: 'gcg', o: CHM_H }], ['Breakdown of liver glycogen', { a: 'glyl', o: CHM_P }],
+        ['Making glucose from amino acids, lactate, glycerol', { a: 'gng', o: CHM_P }], ['Grams of carbohydrate × GI ÷ 100', { a: 'gl', o: ['gi', 'gl'] }]] }
+  ] };
+(function () { CHM.dict.fru = { zh: '果糖', en: 'Fructose' }; })();
+/* ======================================================================
+   脂質（一）：種類、脂肪酸、必需脂肪酸與建議量（第 6 章前半）
+   ====================================================================== */
+function zz(x, y, n, dx, amp) { var p = []; for (var i = 0; i < n; i++) p.push((x + i * dx) + ',' + (y + (i % 2 ? amp : -amp))); return p.join(' '); }
+function LIP_OV() {
+  var s = '';
+  // 三酸甘油酯：甘油＋三條脂肪酸
+  s += box(30, 20, 26, 66, 'C', 6) + [32, 53, 76].map(function (y) { return sl(zz(56, y, 9, 12, 4), 'C', 2.5); }).join('') + tx(43, 100, T('甘油', 'glycerol'), 'm', 9.5);
+  // 脂肪酸：一條
+  s += sl(zz(30, 140, 12, 12, 4), 'C', 2.5) + tx(30, 160, 'COOH', 'm', 9.5, 'start');
+  // 磷脂質：親水頭＋甘油＋兩條
+  s += dot(30, 222, 13, 'I') + tx(30, 226, 'P', '', 11) + box(46, 200, 22, 46, 'C', 6) + [212, 234].map(function (y) { return sl(zz(68, y, 8, 12, 4), 'C', 2.5); }).join('') + tx(30, 262, T('親水的頭', 'polar head'), 'm', 9.5, 'start') + tx(120, 262, T('疏水的尾', 'nonpolar tails'), 'm', 9.5, 'start');
+  // 固醇：四個環
+  function hex(cx, cy, r) { var p = []; for (var i = 0; i < 6; i++) { var a = Math.PI / 6 + i * Math.PI / 3; p.push((cx + r * Math.cos(a)).toFixed(1) + ',' + (cy + r * Math.sin(a)).toFixed(1)); } return '<polygon points="' + p.join(' ') + '" class="kC" stroke-width="1.5"/>'; }
+  s += hex(46, 324, 16) + hex(74, 324, 16) + hex(60, 300, 16) + hex(88, 300, 16) + tx(140, 330, T('四個相連的環', 'four fused rings'), 'm', 9.5, 'start');
+  return s;
+}
+var LIP_C = ['tg', 'fa', 'pl', 'st'];
+function LIP_B() { return [{ id: 'k1', x: 268, y: 53, w: 150, c: 'C', a: 'tg', o: LIP_C }, { id: 'k2', x: 268, y: 140, w: 150, c: 'C', a: 'fa', o: LIP_C }, { id: 'k3', x: 268, y: 223, w: 150, c: 'C', a: 'pl', o: LIP_C }, { id: 'k4', x: 268, y: 312, w: 150, c: 'C', a: 'st', o: LIP_C }]; }
+function LIP_FA() {
+  var s = '', x = function (i) { return 40 + i * 16.5; }, y = function (i) { return i % 2 ? 92 : 76; }, P = [];
+  for (var i = 1; i <= 18; i++) P.push(x(i - 1) + ',' + y(i));
+  s += sl(P.join(' '), 'C', 2.5);
+  [9, 12].forEach(function (c) { var x1 = x(c - 1), y1 = y(c), x2 = x(c), y2 = y(c + 1), L = Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)), nx = (y2 - y1) / L * 5, ny = -(x2 - x1) / L * 5, sx = (x2 - x1) * .2, sy = (y2 - y1) * .2;
+    if (ny < 0) { nx = -nx; ny = -ny; } s += sl((x1 + sx + nx).toFixed(1) + ',' + (y1 + sy + ny).toFixed(1) + ' ' + (x2 - sx + nx).toFixed(1) + ',' + (y2 - sy + ny).toFixed(1), 'C', 2); });
+  s += tx(24, 66, 'COOH', '', 11) + tx(334, 66, 'CH₃', '', 11);
+  [[1, 'C1'], [9, 'Δ9'], [12, 'Δ12']].forEach(function (r) { s += tx(x(r[0] - 1), y(r[0]) + (y(r[0]) > 80 ? 16 : -10), r[1], 'm', 9); });
+  s += tx(x(12), 118, T('甲基端數過來第 6 個碳', '6th carbon from methyl end'), 'm', 9.5) + tx(180, 30, T('18 個碳、2 個雙鍵', '18 carbons, 2 double bonds'), 'm', 10);
+  s += tx(90, 150, T('從這一端數：', 'counting from here:'), 'm', 9.5) + tx(270, 150, T('從這一端數：', 'counting from here:'), 'm', 9.5) + tx(180, 222, T('它的名字', 'its name'), 'm', 9.5);
+  return s;
+}
+var LIP_NM = ['la', 'ala', 'ole', 'ara'];
+function LIP_FB() { return [{ id: 'f1', x: 90, y: 176, w: 140, a: 'delta', o: ['delta', 'omega'] }, { id: 'f2', x: 270, y: 176, w: 140, a: 'omega', o: ['delta', 'omega'] }, { id: 'f3', x: 180, y: 248, w: 170, c: 'C', a: 'la', o: LIP_NM }]; }
+function LIP_EF() {
+  var s = flow(92, 40, 64, 156, [{ zh: '亞麻油酸（18:2）', en: 'Linoleic acid (18:2)' }, { zh: 'γ-次亞麻油酸', en: 'γ-Linolenic acid' }, null, null], [0, 'C', 'C', 0]);
+  s += flow(268, 40, 64, 156, [{ zh: 'α-次亞麻油酸（18:3）', en: 'α-Linolenic acid (18:3)' }, null, null], [0, 'C', 'C']);
+  s += sp('M346,104 C360,104 360,232 348,232', 'M', 2, '4 4') + hd(348, 232, 180, 'M');
+  s += kt(92, 14, 'n-6', 'C', 12) + kt(268, 14, 'n-3', 'C', 12);
+  s += tx(180, 280, T('最上面兩個人體不能合成，是必需脂肪酸', 'The top two cannot be made: essential fatty acids'), 'm', 10);
+  return s;
+}
+var LIP_E = ['aa', 'epa', 'dha', 'gla'], LIP_EI = ['eic2', 'eic3'];
+function LIP_EB() { return [{ id: 'g1', x: 92, y: 168, w: 156, c: 'C', a: 'aa', o: LIP_E }, { id: 'g2', x: 92, y: 232, w: 156, a: 'eic2', o: LIP_EI }, { id: 'g3', x: 268, y: 104, w: 156, c: 'C', a: 'epa', o: LIP_E }, { id: 'g4', x: 268, y: 168, w: 156, c: 'C', a: 'dha', o: LIP_E }, { id: 'g5', x: 268, y: 232, w: 156, a: 'eic3', o: LIP_EI }]; }
+var LIP_OIL = ['coco', 'olive', 'soy', 'flax', 'fish'];
+var LIP = { id: 'lip', zh: '脂質（一）：種類與脂肪酸', en: 'Lipids: types and fatty acids', alias: '三酸甘油酯・脂肪酸命名・反式脂肪・必需脂肪酸・建議量', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    tg: { zh: '三酸甘油酯', en: 'Triglyceride' }, fa: { zh: '脂肪酸', en: 'Fatty acid' }, pl: { zh: '磷脂質', en: 'Phospholipid' }, st: { zh: '固醇', en: 'Sterol' },
+    delta: { zh: 'Δ 系統（羧基端）', en: 'Delta system (carboxyl end)' }, omega: { zh: 'ω（n）系統（甲基端）', en: 'Omega (n) system (methyl end)' },
+    la: { zh: '亞麻油酸', en: 'Linoleic acid' }, ala: { zh: 'α-次亞麻油酸', en: 'α-Linolenic acid' }, ole: { zh: '油酸', en: 'Oleic acid' }, ara: { zh: '花生四烯酸', en: 'Arachidonic acid' }, aa: { zh: '花生四烯酸（20:4）', en: 'Arachidonic acid (20:4)' },
+    epa: { zh: 'EPA（20:5）', en: 'EPA (20:5)' }, dha: { zh: 'DHA（22:6）', en: 'DHA (22:6)' }, gla: { zh: 'γ-次亞麻油酸', en: 'γ-Linolenic acid' },
+    eic2: { zh: '2 系列前列腺素、4 系列白三烯素', en: 'Series-2 PG/TX, series-4 LT' }, eic3: { zh: '3 系列前列腺素、5 系列白三烯素', en: 'Series-3 PG/TX, series-5 LT' },
+    sfa: { zh: '飽和脂肪酸', en: 'Saturated fatty acid' }, mufa: { zh: '單元不飽和脂肪酸', en: 'Monounsaturated fatty acid' }, pufa: { zh: '多元不飽和脂肪酸', en: 'Polyunsaturated fatty acid' },
+    cis: { zh: '順式（彎的）', en: 'cis (bent)' }, trans: { zh: '反式（直的）', en: 'trans (straight)' }, hyd: { zh: '部分氫化', en: 'Partial hydrogenation' }, rum: { zh: '反芻動物（牛、羊）的乳和肉', en: 'Milk and meat of ruminants' },
+    short: { zh: '短鏈（碳數 < 6）', en: 'Short-chain' }, med: { zh: '中鏈（碳數 6～12）', en: 'Medium-chain' }, long: { zh: '長鏈（碳數 > 12）', en: 'Long-chain' },
+    solid: { zh: '室溫下是固體', en: 'Solid at room temp' }, liq: { zh: '室溫下是液體', en: 'Liquid at room temp' },
+    coco: { zh: '椰子油、棕櫚油', en: 'Coconut, palm oil' }, olive: { zh: '橄欖油、芥花油、苦茶油', en: 'Olive, canola, tea seed oil' }, soy: { zh: '大豆油、玉米油、葵花油', en: 'Soybean, corn, sunflower oil' }, flax: { zh: '亞麻仁油、紫蘇油、奇亞籽', en: 'Flaxseed, perilla oil, chia' }, fish: { zh: '鯖魚、鮭魚、秋刀魚', en: 'Mackerel, salmon, saury' },
+    lec: { zh: '卵磷脂', en: 'Lecithin' }, chol: { zh: '膽固醇', en: 'Cholesterol' }, phyto: { zh: '植物固醇', en: 'Plant sterols' }, ergo: { zh: '麥角固醇', en: 'Ergosterol' }, dhc: { zh: '7-脫氫膽固醇', en: '7-Dehydrocholesterol' },
+    egg: { zh: '蛋黃、黃豆', en: 'Egg yolk, soybeans' }, anim: { zh: '只存在動物性食物', en: 'Animal foods only' }, plant: { zh: '動植物都有', en: 'Both plant and animal foods' },
+    emul: { zh: '乳化劑', en: 'Emulsifier' }, bile: { zh: '膽酸', en: 'Bile acids' }, vd: { zh: '維生素 D', en: 'Vitamin D' }, sex: { zh: '性激素、腎上腺皮質激素', en: 'Steroid hormones' }, vk: { zh: '維生素 K', en: 'Vitamin K' },
+    skin: { zh: '鱗屑狀皮膚炎、生長遲緩', en: 'Scaly dermatitis, poor growth' }, nb: { zh: '夜盲', en: 'Night blindness' }, eye: { zh: '視網膜和腦', en: 'Retina and brain' }, liv2: { zh: '肝臟和腎臟', en: 'Liver and kidney' },
+    f2030: { zh: '總熱量的 20～30%', en: '20–30% of energy' }, f2035: { zh: '總熱量的 20～35%', en: '20–35% of energy' }, f3040: { zh: '總熱量的 30～40%', en: '30–40% of energy' },
+    s10: { zh: '總熱量的 10% 以下', en: '< 10% of energy' }, s7: { zh: '總熱量的 7% 以下', en: '< 7% of energy' }, n648: { zh: '總熱量的 4～8%', en: '4–8% of energy' }, n306: { zh: '總熱量的 0.6～1.2%', en: '0.6–1.2% of energy' }, t1: { zh: '總熱量的 1% 以下', en: '< 1% of energy' }
+  },
+  levels: [
+    { t: '先看全貌：脂質有四類', kind: 'ov', h: 352, svg: LIP_OV, blanks: LIP_B(),
+      intro: ['脂質不溶於水，室溫下是固體的叫脂肪，液體的叫油。',
+        '食物和身體裡最多的脂質，是一個甘油接上三個脂肪酸。這個接上去的反應叫酯化；反過來把脂肪酸切下來叫水解，切掉一個、兩個，就變成雙酸、單酸甘油酯。',
+        '把其中一個脂肪酸換成含磷酸的親水頭，就變成一頭親水、一頭疏水的分子，是細胞膜的主要成分。',
+        '第四類的結構完全不同，是四個相連的碳環。'],
+      done: ['[[三酸甘油酯 ＝ 甘油 ＋ 3 個脂肪酸]]，是食物和體內最主要的脂質，每公克 9 大卡。', '磷脂質（例如卵磷脂）兩性，是細胞膜的成分，也是乳化劑。',
+        '固醇以膽固醇為代表，是膽酸、類固醇激素、維生素 D 的原料。'] },
+    { t: '脂肪酸的命名', kind: 'ov', h: 272, svg: LIP_FA, blanks: LIP_FB(),
+      intro: ['脂肪酸是一條碳鏈，一端是羧基（-COOH），另一端是甲基（-CH₃）。寫法「18:2」代表 18 個碳、2 個雙鍵。',
+        '標雙鍵位置有兩種算法：一種從羧基端開始數，寫在 Δ 後面；另一種從甲基端開始數，只標第一個雙鍵，寫成 n-幾或 ω-幾。營養學最常用後者，因為它決定這個脂肪酸屬於哪一個家族。',
+        '圖上這個脂肪酸有兩個雙鍵，從羧基端數在第 9 和第 12 個碳，從甲基端數第一個雙鍵在第 6 個碳。'],
+      countsTitle: '圖上這個脂肪酸', counts: [['碳數', '18', ['16', '18', '20', '22']], ['雙鍵數', '2', ['1', '2', '3', '4']], ['屬於 n-幾', '6', ['3', '6', '9', '12']]],
+      done: ['[[n（ω）系統從甲基端數；Δ 系統從羧基端數。]]', '亞麻油酸是 18:2 n-6；α-次亞麻油酸是 18:3 n-3；油酸是 18:1 n-9；花生四烯酸是 20:4 n-6；EPA 20:5 n-3；DHA 22:6 n-3。'] },
+    { t: '飽和度、形狀與碳鏈長度', kind: 'list',
+      intro: ['碳和碳之間全部是單鍵、掛滿了氫的，叫飽和脂肪酸；有一個雙鍵的叫單元不飽和；兩個以上的叫多元不飽和。',
+        '天然的雙鍵大多是順式：兩個氫在同一側，碳鏈在雙鍵處彎曲，分子排不緊，所以熔點低、室溫下是液體。反式雙鍵的氫在兩側，碳鏈是直的，性質像飽和脂肪酸。',
+        '植物油經過部分氫化，一些雙鍵被加上氫，另一些雙鍵被轉成反式，油變成固體（例如人造奶油、酥油）。反式脂肪也天然存在於某些動物的乳和肉裡，因為它們胃裡的細菌會製造。',
+        '依碳鏈長度又分短、中、長鏈，吸收的路徑不同。'],
+      listTitle: '是哪一個',
+      list: [['碳鏈上沒有雙鍵', { a: 'sfa', o: ['sfa', 'mufa', 'pufa'] }], ['橄欖油裡最多的油酸', { a: 'mufa', o: ['sfa', 'mufa', 'pufa'] }], ['亞麻油酸、EPA、DHA', { a: 'pufa', o: ['sfa', 'mufa', 'pufa'] }],
+        ['天然不飽和脂肪酸的雙鍵大多是', { a: 'cis', o: ['cis', 'trans'] }], ['人工反式脂肪的主要來源', { a: 'hyd', o: ['hyd', 'rum'] }], ['天然反式脂肪的來源', { a: 'rum', o: ['hyd', 'rum'] }],
+        ['飽和程度越高，熔點越高，所以', { a: 'solid', o: ['solid', 'liq'] }], ['MCT 油主要是', { a: 'med', o: ['short', 'med', 'long'] }], ['奶油裡有少量、大腸細菌發酵纖維也會產生的是', { a: 'short', o: ['short', 'med', 'long'] }]],
+      done: ['[[反式脂肪：直鏈、性質像飽和脂肪，會升高 LDL、降低 HDL]]，主要來自部分氫化油。', '反芻動物（牛、羊）的乳和肉含天然反式脂肪，例如共軛亞麻油酸（CLA）。',
+        '飽和脂肪多的油（椰子油、棕櫚油、豬油、奶油）室溫下是固體；不飽和脂肪多的植物油是液體。'] },
+    { t: '必需脂肪酸與類二十碳酸', kind: 'ov', h: 296, svg: LIP_EF, blanks: LIP_EB(),
+      intro: ['人體可以合成飽和與 n-9 的脂肪酸，但沒有酵素在甲基端第 3、第 6 個碳的位置放雙鍵，所以 n-6 和 n-3 家族的第一個成員一定要從食物來，叫必需脂肪酸。',
+        '身體把它們加長、再加雙鍵：n-6 家族最後變成 20 碳、4 個雙鍵的分子；n-3 家族先變成 20 碳 5 個雙鍵，再變成 22 碳 6 個雙鍵。',
+        '20 碳的那幾個再做成一群局部作用的激素（類二十碳酸）。n-6 來的那群比較會促進發炎、血管收縮、血小板凝集；n-3 來的那群作用比較溫和，甚至相反。'],
+      done: ['[[必需脂肪酸：亞麻油酸（n-6）與 α-次亞麻油酸（n-3）。]]', 'n-6：亞麻油酸 → γ-次亞麻油酸 → 花生四烯酸 → 2 系列前列腺素、血栓素，4 系列白三烯素。',
+        'n-3：α-次亞麻油酸 → EPA → DHA；EPA 做成 3 系列前列腺素、血栓素，5 系列白三烯素。', '兩個家族搶同一組加長、去飽和的酵素，所以 n-6 吃太多會讓 n-3 轉換更少。'] },
+    { t: '食物來源', kind: 'list',
+      intro: ['每一種油都是好幾種脂肪酸的混合，只是比例不同。植物油大多以不飽和為主，但有兩種熱帶植物油例外。',
+        'n-3 的來源分兩種：植物給的是 18 碳的那一個，人體轉換成 EPA、DHA 的效率很低；直接含有 EPA、DHA 的是多脂的魚。',
+        '膽固醇只存在動物性食物；植物裡的固醇結構很像，但會和膽固醇搶吸收，反而降低膽固醇。'],
+      listTitle: '是哪一個',
+      list: [['飽和脂肪最多的植物油', { a: 'coco', o: LIP_OIL }], ['單元不飽和脂肪酸最多', { a: 'olive', o: LIP_OIL }], ['以 n-6 亞麻油酸為主', { a: 'soy', o: LIP_OIL }],
+        ['α-次亞麻油酸最多', { a: 'flax', o: LIP_OIL }], ['直接含有 EPA、DHA', { a: 'fish', o: LIP_OIL }], ['膽固醇', { a: 'anim', o: ['anim', 'plant'] }],
+        ['卵磷脂的良好來源', { a: 'egg', o: ['egg', 'coco'] }], ['加在人造奶油裡、能減少膽固醇吸收', { a: 'phyto', o: ['phyto', 'chol'] }], ['菇類、酵母裡，照紫外線變成維生素 D₂', { a: 'ergo', o: ['ergo', 'dhc', 'chol'] }]],
+      done: ['[[椰子油、棕櫚油是飽和脂肪高的植物油；亞麻仁油的 α-次亞麻油酸最高；魚油含 EPA、DHA。]]', '大豆油、玉米油、葵花油以 n-6 為主。建議每週吃兩次魚（尤其是多脂的魚）。',
+        '「看不見的油」藏在糕餅、餅乾、油炸食物、全脂乳品、加工肉品裡，要看營養標示。'] },
+    { t: '脂質的功能', kind: 'list',
+      intro: ['三酸甘油酯是最濃縮的能量來源與儲存形式。休息和輕度活動時，身體大部分的能量來自脂肪；只有紅血球和腦以葡萄糖為主。',
+        '皮下脂肪保溫，內臟周圍的脂肪保護器官。飲食的油脂也帶著脂溶性維生素一起被吸收。',
+        '必需脂肪酸是細胞膜的成分；DHA 大量集中在視網膜和腦，胎兒與嬰兒的發育特別需要。缺乏必需脂肪酸時皮膚最先出問題。',
+        '膽固醇則是好幾種重要分子的原料。'],
+      listTitle: '是哪一個',
+      list: [['磷脂質在消化道和脂蛋白裡扮演', { a: 'emul', o: ['emul', 'bile'] }], ['膽固醇在肝臟做成、幫助脂肪消化的', { a: 'bile', o: ['bile', 'vk'] }], ['膽固醇做成的激素', { a: 'sex', o: ['sex', 'vk'] }],
+        ['皮膚裡由膽固醇衍生、照 UVB 變成維生素 D₃ 的前驅物', { a: 'dhc', o: ['dhc', 'ergo'] }], ['DHA 大量集中的地方', { a: 'eye', o: ['eye', 'liv2'] }], ['必需脂肪酸缺乏的典型症狀', { a: 'skin', o: ['skin', 'nb'] }]],
+      done: ['[[三酸甘油酯：提供與儲存能量、保溫、保護器官、幫助脂溶性維生素吸收。]]', '膽固醇：細胞膜、膽酸、類固醇激素（性激素、腎上腺皮質激素）、維生素 D 的原料。身體自己會合成，不是必需營養素。',
+        '必需脂肪酸缺乏：鱗屑狀皮膚炎、生長遲緩、傷口癒合慢。長期使用無脂肪的靜脈營養時可能發生。'] },
+    { t: '建議量（國人 DRIs）', kind: 'list',
+      intro: ['國人 DRIs 第八版對脂質訂的是「佔總熱量的百分比」，課本列的美國數值範圍比較寬，國考考的是國人的。',
+        '總脂質：4 歲以上（含懷孕、哺乳）一個範圍；1～3 歲幼兒需要比較多的脂肪來長大，範圍比較高。',
+        '脂肪酸也各有建議：飽和脂肪和反式脂肪越少越好，各訂一個上限；n-6 與 n-3 各訂一個範圍。'],
+      listTitle: '國人的數值',
+      list: [['4 歲以上總脂質', { a: 'f2030', o: ['f2030', 'f2035', 'f3040'] }], ['1～3 歲總脂質', { a: 'f3040', o: ['f2030', 'f2035', 'f3040'] }], ['美國的總脂質 AMDR', { a: 'f2035', o: ['f2030', 'f2035', 'f3040'] }],
+        ['飽和脂肪酸', { a: 's10', o: ['s10', 's7'] }], ['n-6 多元不飽和脂肪酸', { a: 'n648', o: ['n648', 'n306'] }], ['n-3 多元不飽和脂肪酸（含 α-次亞麻油酸、EPA、DHA）', { a: 'n306', o: ['n648', 'n306'] }], ['反式脂肪酸', { a: 't1', o: ['t1', 's10'] }]],
+      countsTitle: '一位每天吃 2,000 大卡的成人', counts: [['總脂質上限是幾公克（每公克 9 大卡）', '67', ['44', '56', '67', '78']], ['飽和脂肪最多幾公克', '22', ['11', '16', '22', '30']], ['反式脂肪最多約幾公克', '2', ['2', '5', '10', '20']]],
+      done: ['[[國人：脂質 20～30%（1～3 歲 30～40%）；飽和 < 10%；n-6 4～8%；n-3 0.6～1.2%；反式 < 1%。]]', '總脂質超過 30% 時，多出來的部分以單元不飽和為宜（例如地中海飲食，脂肪可達 35～40%，但以橄欖油為主）。',
+        '計算時記得脂質每公克 9 大卡：2,000 × 30% ÷ 9 ≈ 67 g。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['國人 DRIs 中，成人 n-3 多元不飽和脂肪酸的 AMDR 是', { a: 'n306', o: ['n648', 'n306', 's10'] }, '。'],
+        ['國人 DRIs 中，成人總脂質的 AMDR 是', { a: 'f2030', o: ['f2030', 'f2035', 'f3040'] }, '。'],
+        ['α-次亞麻油酸含量最高的油是', { a: 'flax', o: LIP_OIL }, '。'],
+        ['n-3 家族的 EPA 會做成', { a: 'eic3', o: LIP_EI }, '。'],
+        ['亞麻油酸的第一個雙鍵在甲基端數來第 6 個碳，所以屬於', { a: 'n6', o: ['n3', 'n6', 'n9'] }, '。'],
+        ['反式脂肪的碳鏈形狀是', { a: 'trans', o: ['cis', 'trans'] }, '。'],
+        ['人體在甲基端第 3、第 6 個碳放不了雙鍵，所以必需脂肪酸是', { a: 'laala', o: ['laala', 'olepa'], lang: 'en' }, '。'],
+        ['n-6 家族的 20 碳產物是', { a: 'ara', o: LIP_NM, lang: 'en' }, '。'],
+        ['只有動物性食物含有的是', { a: 'chol', o: ['chol', 'phyto', 'lec'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 296, force: 'en', svg: LIP_EF, blanks: LIP_EB(),
+      intro: ['必需脂肪酸的兩條路，全部用英文作答；下面再加上脂質的分類。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: '名稱', list: [['Glycerol + 3 fatty acids', { a: 'tg', o: LIP_C }], ['Polar head + 2 fatty acids; cell membranes', { a: 'pl', o: LIP_C }], ['Four fused carbon rings', { a: 'st', o: LIP_C }],
+        ['18:1 n-9, rich in olive oil', { a: 'ole', o: LIP_NM }], ['18:2 n-6, essential', { a: 'la', o: LIP_NM }], ['18:3 n-3, essential', { a: 'ala', o: LIP_NM }]] }
+  ] };
+(function () { var d = LIP.dict; d.n3 = { zh: 'n-3', en: 'n-3' }; d.n6 = { zh: 'n-6', en: 'n-6' }; d.n9 = { zh: 'n-9', en: 'n-9' };
+  d.laala = { zh: '亞麻油酸與 α-次亞麻油酸', en: 'Linoleic and α-linolenic acids' }; d.olepa = { zh: '油酸與 EPA', en: 'Oleic acid and EPA' }; })();
+/* ======================================================================
+   脂質（二）：消化吸收、脂蛋白與心血管疾病（第 6 章後半）
+   ====================================================================== */
+function LPT_OV() {
+  var s = '', h = PH() / 2;
+  s += pill(70, 34, 120, { zh: '小腸', en: 'Small intestine' }, 'src') + pill(290, 34, 120, { zh: '肝臟', en: 'Liver' }, 'src');
+  s += arrow(70, 35 + h, 70, 108 - h - 2) + arrow(290, 35 + h, 290, 108 - h - 2) + tx(82, 74, T('飲食的脂肪', 'dietary fat'), 'm', 9.5, 'start') + tx(278, 74, T('肝臟做的脂肪', 'fat made by liver'), 'm', 9.5, 'end');
+  s += arrow(70, 109 + h, 70, 196 - h - 2) + arrow(290, 109 + h, 290, 196 - h - 2) + sl('84,152 106,152', 'M', 1.5, '3 3') + sl('254,152 276,152', 'M', 1.5, '3 3');
+  s += pill(70, 196, 128, { zh: '乳糜微粒殘粒', en: 'Chylomicron remnant' }) + tx(70, 230, T('回到肝臟（靠 apoE）', 'back to liver (apoE)'), 'm', 9.5);
+  s += pill(290, 196, 120, { zh: 'IDL', en: 'IDL' }) + arrow(290, 197 + h, 290, 262 - h - 2) + arrow(290, 263 + h, 290, 328 - h - 2);
+  s += pill(290, 328, 128, { zh: '周邊細胞', en: 'Body cells' }) + tx(280, 296, T('LDL 受體認 apoB-100', 'LDL receptor binds apoB-100'), 'm', 9, 'end');
+  s += arrow(224, 328, 134, 328) + tx(180, 318, T('多的膽固醇', 'excess cholesterol'), 'm', 9.5) + tx(70, 362, T('把膽固醇帶回肝臟', 'returns cholesterol to liver'), 'm', 9.5);
+  return s;
+}
+var LPT_L = ['cm', 'vldl', 'ldl', 'hdl'], LPT_EZ = ['lpl', 'pll', 'lcat'];
+function LPT_B() {
+  return [{ id: 'q1', x: 70, y: 108, w: 120, c: 'C', a: 'cm', o: LPT_L }, { id: 'q2', x: 290, y: 108, w: 120, c: 'C', a: 'vldl', o: LPT_L }, { id: 'q3', x: 290, y: 262, w: 120, c: 'C', a: 'ldl', o: LPT_L },
+    { id: 'q4', x: 70, y: 328, w: 120, c: 'C', a: 'hdl', o: LPT_L }, { id: 'ez', x: 180, y: 152, w: 140, a: 'lpl', o: LPT_EZ }];
+}
+var LPT = { id: 'lpt', zh: '脂質（二）：脂蛋白與心血管', en: 'Lipids: lipoproteins and heart disease', alias: '消化吸收・乳糜微粒・VLDL・LDL・HDL・動脈粥狀硬化', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    cm: { zh: '乳糜微粒', en: 'Chylomicron' }, vldl: { zh: '極低密度脂蛋白', en: 'VLDL' }, ldl: { zh: '低密度脂蛋白', en: 'LDL' }, hdl: { zh: '高密度脂蛋白', en: 'HDL' },
+    lpl: { zh: '脂蛋白脂解酶（LPL）', en: 'Lipoprotein lipase (LPL)' }, pll: { zh: '胰脂解酶', en: 'Pancreatic lipase' }, lcat: { zh: 'LCAT', en: 'LCAT' }, colip: { zh: '輔脂酶', en: 'Colipase' },
+    ling: { zh: '舌脂解酶、胃脂解酶', en: 'Lingual and gastric lipase' }, cck: { zh: '膽囊收縮素（CCK）', en: 'Cholecystokinin (CCK)' }, sec: { zh: '胰泌素', en: 'Secretin' },
+    mic: { zh: '微膠粒', en: 'Micelles' }, mg: { zh: '2-單酸甘油酯和脂肪酸', en: '2-Monoglyceride and fatty acids' }, glyfa: { zh: '甘油和 3 個脂肪酸', en: 'Glycerol and 3 fatty acids' },
+    lymph: { zh: '乳糜管 → 淋巴 → 左鎖骨下靜脈', en: 'Lacteal → lymph → left subclavian vein' }, portal: { zh: '微血管 → 肝門靜脈', en: 'Capillaries → portal vein' }, ileum: { zh: '迴腸回收，回到肝臟', en: 'Reabsorbed in ileum, back to liver' }, feces: { zh: '全部隨糞便排出', en: 'All lost in feces' },
+    b48: { zh: 'apoB-48', en: 'apoB-48' }, b100: { zh: 'apoB-100', en: 'apoB-100' }, a1: { zh: 'apoA-I', en: 'apoA-I' }, c2: { zh: 'apoC-II', en: 'apoC-II' }, apoe: { zh: 'apoE', en: 'apoE' },
+    endo: { zh: '微血管內皮細胞表面', en: 'Capillary endothelial surface' }, incell: { zh: '細胞膜內側', en: 'Inside the cell membrane' },
+    recp: { zh: 'LDL 受體途徑', en: 'LDL receptor pathway' }, scav: { zh: '清除者受體途徑（巨噬細胞）', en: 'Scavenger pathway (macrophages)' }, foam: { zh: '泡沫細胞', en: 'Foam cells' }, oxl: { zh: '被氧化的 LDL', en: 'Oxidized LDL' },
+    sdl: { zh: '小而緻密的 LDL', en: 'Small dense LDL' }, big: { zh: '大而鬆散的 LDL', en: 'Large buoyant LDL' }, rct: { zh: '膽固醇逆運輸', en: 'Reverse cholesterol transport' },
+    hcy: { zh: '同半胱胺酸偏高', en: 'High homocysteine' }, hcylow: { zh: '同半胱胺酸偏低', en: 'Low homocysteine' }, bleed: { zh: '出血不易止住', en: 'Prolonged bleeding' }, clot: { zh: '容易形成血栓', en: 'More clotting' },
+    ster: { zh: '植物固醇', en: 'Plant sterols' }, solf: { zh: '可溶性纖維', en: 'Soluble fiber' }, rancid: { zh: '酸敗（氧化）', en: 'Rancidity (oxidation)' }, antiox: { zh: '加抗氧化劑、密封避光', en: 'Antioxidants, airtight packaging' },
+    up: { zh: '升高', en: 'Raises' }, down: { zh: '降低', en: 'Lowers' }, med: { zh: '地中海飲食', en: 'Mediterranean diet' }, keto: { zh: '生酮飲食', en: 'Ketogenic diet' }
+  },
+  levels: [
+    { t: '先看全貌：脂蛋白怎麼運送脂質', kind: 'ov', h: 376, svg: LPT_OV, blanks: LPT_B(),
+      intro: ['脂質不溶於水，要在血液裡運送，得包成脂蛋白：中間是三酸甘油酯和膽固醇酯，外殼是磷脂質、膽固醇和蛋白質（載脂蛋白，apolipoprotein）。',
+        '飲食的脂肪在小腸細胞包成最大、最輕的一種，走淋巴進入血液；肝臟自己做的脂肪包成另一種，直接進入血液。',
+        '兩者經過肌肉、脂肪組織的微血管時，被同一個酵素把三酸甘油酯切掉、送進細胞。肝臟做的那一種越切越小，最後剩下以膽固醇為主的一種，把膽固醇送到全身細胞。',
+        '還有一種最小、最重的，方向剛好相反：把周邊多的膽固醇帶回肝臟。'],
+      done: ['[[乳糜微粒：運送飲食來的三酸甘油酯；VLDL：運送肝臟做的三酸甘油酯；LDL：把膽固醇送到周邊；HDL：把膽固醇帶回肝臟。]]', '[[脂蛋白脂解酶（LPL）在微血管內皮細胞表面，被 apoC-II 活化]]，水解乳糜微粒和 VLDL 的三酸甘油酯。',
+        'VLDL → IDL → LDL：三酸甘油酯越來越少，膽固醇的比例越來越高。', 'HDL 把膽固醇帶回肝臟，叫膽固醇逆運輸（reverse cholesterol transport）。'] },
+    { t: '消化與吸收', kind: 'list',
+      intro: ['脂肪的消化在口腔和胃就開始了，靠兩種脂解酶；這兩種在嬰兒特別重要，因為乳汁的脂肪多是短、中鏈。成人主要的消化還是在小腸。',
+        '脂肪進入十二指腸，刺激分泌一個激素，讓膽囊收縮放出膽汁乳化脂肪，也讓胰臟分泌脂解酶。胰脂解酶要和另一個小蛋白一起才能在油滴表面工作，把三酸甘油酯兩端的脂肪酸切下來。',
+        '產物和膽鹽聚成微膠粒，送到小腸細胞旁邊吸收。長鏈的在細胞裡重新接回三酸甘油酯，包成乳糜微粒走淋巴；短、中鏈的直接進入血液到肝臟。',
+        '膽鹽完成任務後，大部分在小腸最後一段被回收，送回肝臟重複使用。'],
+      listTitle: '是哪一個',
+      list: [['刺激膽囊收縮、胰臟分泌脂解酶的激素', { a: 'cck', o: ['cck', 'sec'] }], ['幫胰脂解酶在油滴表面工作的蛋白質', { a: 'colip', o: ['colip', 'lcat'] }], ['胰脂解酶水解三酸甘油酯的主要產物', { a: 'mg', o: ['mg', 'glyfa'] }],
+        ['長鏈脂肪酸吸收後的路徑', { a: 'lymph', o: ['lymph', 'portal'] }], ['短鏈、中鏈脂肪酸吸收後的路徑', { a: 'portal', o: ['lymph', 'portal'] }], ['膽鹽的去向（腸肝循環）', { a: 'ileum', o: ['ileum', 'feces'] }],
+        ['嬰兒消化脂肪比較重要的酵素', { a: 'ling', o: ['ling', 'pll'] }]],
+      done: ['[[膽汁乳化 → 胰脂解酶（加輔脂酶）水解 → 微膠粒 → 腸細胞內再酯化 → 乳糜微粒 → 乳糜管 → 淋巴 → 左鎖骨下靜脈。]]', '中鏈三酸甘油酯（MCT）不需要膽鹽和乳糜微粒，直接經肝門靜脈到肝臟，所以用在脂肪吸收不良的病人。',
+        '可溶性纖維在腸道結合膽酸，減少回收，肝臟只好用更多膽固醇做新的膽酸，血膽固醇因此下降。'] },
+    { t: '四種脂蛋白比一比', kind: 'list',
+      intro: ['脂蛋白的密度取決於蛋白質和脂質的比例：脂質比水輕，蛋白質比水重。所以三酸甘油酯最多的密度最低，蛋白質最多的密度最高。',
+        '每一種脂蛋白身上有自己的載脂蛋白，像名牌一樣，決定它和哪個受體結合、能活化哪個酵素。',
+        '看懂下面的對應，大部分的題目都可以推出來。'],
+      listTitle: '是哪一種',
+      list: [['顆粒最大、密度最低、三酸甘油酯比例最高', { a: 'cm', o: LPT_L }], ['膽固醇比例最高', { a: 'ldl', o: LPT_L }], ['蛋白質比例最高、密度最高', { a: 'hdl', o: LPT_L }], ['空腹時運送三酸甘油酯的主力', { a: 'vldl', o: LPT_L }],
+        ['乳糜微粒特有的載脂蛋白', { a: 'b48', o: ['b48', 'b100', 'a1', 'c2'] }], ['VLDL、LDL 的載脂蛋白，LDL 受體就是認它', { a: 'b100', o: ['b48', 'b100', 'a1', 'c2'] }], ['HDL 的主要載脂蛋白', { a: 'a1', o: ['b48', 'b100', 'a1', 'c2'] }],
+        ['活化脂蛋白脂解酶的載脂蛋白', { a: 'c2', o: ['b48', 'b100', 'a1', 'c2'] }], ['脂蛋白脂解酶的位置', { a: 'endo', o: ['endo', 'incell'] }]],
+      done: ['[[密度由低到高：乳糜微粒 < VLDL < LDL < HDL。]]', 'apoB-48 → 乳糜微粒；apoB-100 → VLDL、LDL；apoA-I → HDL；apoC-II 活化 LPL；apoE 讓殘粒被肝臟回收。',
+        '課本投影片寫 LPL「在細胞膜內側」，正確是在微血管內皮細胞朝向血液的那一面；也把受體寫成「B-100 受體」，B-100 是 LDL 身上的載脂蛋白，受體叫 LDL 受體。'] },
+    { t: 'LDL 與動脈粥狀硬化', kind: 'list',
+      intro: ['細胞需要膽固醇時，用 LDL 受體把 LDL 拉進來；細胞裡的膽固醇夠了，就減少受體，血中的 LDL 因此升高。',
+        '在血中停留太久的 LDL 容易被自由基氧化。被氧化的 LDL 不再走受體，而被血管壁裡的巨噬細胞用另一種受體大量吞下去，巨噬細胞塞滿膽固醇，在顯微鏡下像泡沫。',
+        '這些細胞堆在血管內壁，加上發炎、平滑肌增生，形成斑塊，血管變窄變硬。斑塊破裂引發血栓，堵住心臟或腦的血管，就是心肌梗塞或中風。',
+        'LDL 顆粒有大有小：小而密的那種更容易穿進血管壁、更容易被氧化，危險性最高。'],
+      listTitle: '是哪一個',
+      list: [['細胞正常取得 LDL 的方式', { a: 'recp', o: ['recp', 'scav'] }], ['巨噬細胞吞下被氧化的 LDL', { a: 'scav', o: ['recp', 'scav'] }], ['吞滿膽固醇的巨噬細胞', { a: 'foam', o: ['foam', 'oxl'] }],
+        ['最能預測動脈粥狀硬化風險的 LDL', { a: 'sdl', o: ['sdl', 'big'] }], ['HDL 濃度高，心血管疾病風險', { a: 'down', o: ['up', 'down'] }], ['也是動脈粥狀硬化的危險因子', { a: 'hcy', o: ['hcy', 'hcylow'] }],
+        ['反式脂肪對 HDL 的影響', { a: 'down', o: ['up', 'down'] }]],
+      done: ['[[氧化的 LDL 被巨噬細胞以清除者受體吞噬 → 泡沫細胞 → 斑塊 → 動脈粥狀硬化。]]', '小而緻密的 LDL（small dense LDL）致動脈粥狀硬化的能力最強。',
+        '可改變的危險因子：高 LDL、低 HDL、高三酸甘油酯、高血壓、抽菸、糖尿病、肥胖、少動、同半胱胺酸偏高。不可改變的：年齡、男性、家族史。'] },
+    { t: '預防心血管疾病的飲食', kind: 'list',
+      intro: ['飲食的重點不是「少吃油」，而是換油：減少飽和脂肪和反式脂肪，換成不飽和脂肪；同時多吃可溶性纖維、蔬果、全穀、豆類和魚，少吃精製糖。',
+        '有兩樣東西可以直接減少膽固醇吸收或回收：一種是植物裡長得像膽固醇的分子，另一種是會黏住膽酸的纖維。',
+        'n-3 脂肪酸可以降低三酸甘油酯，但用補充劑大量吃，會讓血小板不容易凝集。',
+        '多元不飽和脂肪的雙鍵容易被氧化，油放久了會產生過氧化物和醛類，聞起來有油耗味。'],
+      listTitle: '是哪一個',
+      list: [['每天約 2 g 可以降低 LDL 的', { a: 'ster', o: ['ster', 'solf'] }], ['燕麥、豆類裡結合膽酸的', { a: 'solf', o: ['ster', 'solf'] }], ['n-3 補充劑吃太多的風險', { a: 'bleed', o: ['bleed', 'clot'] }],
+        ['油脂放久產生油耗味', { a: 'rancid', o: ['rancid', 'antiox'] }], ['防止油脂酸敗的方法', { a: 'antiox', o: ['rancid', 'antiox'] }], ['以橄欖油、蔬果、全穀、豆類、魚為主的飲食型態', { a: 'med', o: ['med', 'keto'] }]],
+      done: ['[[降 LDL：減少飽和與反式脂肪、增加可溶性纖維、植物固醇約 2 g／天、維持體重、多運動。]]', '降三酸甘油酯：減少精製糖和酒精、減重、吃魚（n-3）。',
+        '地中海飲食的脂肪可以到總熱量 35～40%，因為以單元不飽和的橄欖油為主。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['參與膽固醇逆運輸的脂蛋白是', { a: 'hdl', o: LPT_L }, '。'],
+        ['飯後運送飲食三酸甘油酯的是', { a: 'cm', o: LPT_L }, '。'],
+        ['脂蛋白脂解酶由', { a: 'c2', o: ['b48', 'b100', 'a1', 'c2'] }, '活化。'],
+        ['長鏈脂肪酸吸收後經', { a: 'lymph', o: ['lymph', 'portal'] }, '。'],
+        ['被氧化的 LDL 由巨噬細胞以', { a: 'scav', o: ['recp', 'scav'] }, '吞噬，變成泡沫細胞。'],
+        ['小而緻密的 LDL 是預測心血管風險的良好指標，因為它比較容易', { a: 'oxl', o: ['oxl', 'b48'] }, '。'],
+        ['LDL 受體辨認的是', { a: 'b100', o: ['b48', 'b100', 'a1', 'c2'], lang: 'en' }, '。'],
+        ['把乳糜微粒和 VLDL 的三酸甘油酯水解的酵素是', { a: 'lpl', o: LPT_EZ, lang: 'en' }, '。'],
+        ['刺激膽汁釋放的激素是', { a: 'cck', o: ['cck', 'sec'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 376, force: 'en', svg: LPT_OV, blanks: LPT_B(),
+      intro: ['第一關的圖，全部用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: '載脂蛋白', list: [['Chylomicrons only', { a: 'b48', o: ['b48', 'b100', 'a1', 'c2'] }], ['VLDL and LDL; binds the LDL receptor', { a: 'b100', o: ['b48', 'b100', 'a1', 'c2'] }],
+        ['Main protein of HDL', { a: 'a1', o: ['b48', 'b100', 'a1', 'c2'] }], ['Activates lipoprotein lipase', { a: 'c2', o: ['b48', 'b100', 'a1', 'c2'] }], ['HDL carrying cholesterol back to the liver', { a: 'rct', o: ['rct', 'recp'] }]] }
+  ] };
+/* ======================================================================
+   蛋白質（一）：胺基酸、結構與蛋白質品質（第 7 章前半）
+   ====================================================================== */
+function PRO_OV() {
+  var s = '';
+  s += sl('120,90 120,46', 'E', 2.5) + sl('120,90 120,134', 'E', 2.5) + sl('120,90 82,90', 'E', 2.5) + sl('120,90 158,90', 'E', 2.5);
+  s += dot(120, 90, 16, 'E') + tx(120, 95, 'C', '', 13) + tx(120, 40, 'H', '', 13) + tx(160, 32, T('α-碳：中間這個碳', 'α-carbon (center)'), 'm', 9.5, 'start');
+  s += tx(180, 186, T('兩個胺基酸接起來，放出一分子水', 'Two amino acids join, releasing water'), 'm', 10);
+  s += box(30, 214, 110, 44, 'E', 12) + tx(85, 241, T('胺基酸 1', 'Amino acid 1'), '', 11) + box(220, 214, 110, 44, 'E', 12) + tx(275, 241, T('胺基酸 2', 'Amino acid 2'), '', 11) + sl('140,236 220,236', 'E', 3) + sl('180,236 180,262', 'M', 1.5, '3 3');
+  s += tx(180, 318, T('（一個的羧基接上另一個的胺基）', '(carboxyl of one + amino of the next)'), 'm', 9.5);
+  return s;
+}
+var PRO_G = ['amino', 'carbox', 'rside'], PRO_BD = ['pept', 'glyb', 'ester'];
+function PRO_B() {
+  return [{ id: 'g1', x: 48, y: 90, w: 84, a: 'amino', o: PRO_G }, { id: 'g2', x: 214, y: 90, w: 104, a: 'carbox', o: PRO_G }, { id: 'g3', x: 120, y: 150, w: 110, c: 'E', a: 'rside', o: PRO_G },
+    { id: 'g4', x: 180, y: 284, w: 120, a: 'pept', o: PRO_BD }];
+}
+function PRO_LM() {
+  var s = '', base = 190, sc = 1.2, aa = ['Lys', 'Met', 'Thr', 'Trp'];
+  function grp(x0, v) { var r = ''; v.forEach(function (h, i) { var x = x0 + i * 32, hh = Math.min(h, 110) * sc; r += box(x, base - hh, 22, hh, h < 75 ? null : 'E', 3) + tx(x + 11, base + 14, aa[i], 'm', 9.5); if (h < 75) r += '<rect x="' + x + '" y="' + (base - hh) + '" width="22" height="' + hh + '" fill="none" stroke="var(--k3s)" stroke-width="2" stroke-dasharray="3 2"/>'; }); return r; }
+  s += grp(24, [55, 100, 90, 85]) + grp(214, [110, 62, 95, 90]);
+  s += '<line x1="14" y1="' + (base - 100 * sc) + '" x2="346" y2="' + (base - 100 * sc) + '" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="5 4"/>' + tx(346, base - 100 * sc - 6, T('身體需要的量', 'what the body needs'), 'm', 9, 'end');
+  s += tx(76, 24, T('穀類（米、麥）', 'Grains (rice, wheat)'), '', 11) + tx(266, 24, T('豆類（紅豆、綠豆）', 'Legumes (beans)'), '', 11);
+  s += tx(76, 222, T('最不夠的是', 'limiting amino acid'), 'm', 9.5) + tx(266, 222, T('最不夠的是', 'limiting amino acid'), 'm', 9.5) + tx(180, 298, T('兩種一起吃，互相補足', 'eaten together'), 'm', 9.5);
+  return s;
+}
+var PRO_AA = ['lys', 'met', 'trp', 'thr'];
+function PRO_LB() { return [{ id: 'm1', x: 76, y: 248, w: 120, c: 'E', a: 'lys', o: PRO_AA }, { id: 'm2', x: 266, y: 248, w: 120, c: 'E', a: 'met', o: PRO_AA }, { id: 'm3', x: 180, y: 324, w: 170, a: 'comp', o: ['comp', 'lim'] }]; }
+var PRO_Q = ['bv', 'npu', 'per', 'aas', 'pdc'];
+var PRO = { id: 'pro', zh: '蛋白質（一）：胺基酸與蛋白質品質', en: 'Proteins: amino acids and protein quality', alias: '必需胺基酸・結構與變性・限制胺基酸・互補・生物價與 PDCAAS', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    amino: { zh: '胺基（-NH₂）', en: 'Amino group' }, carbox: { zh: '羧基（-COOH）', en: 'Carboxyl group' }, rside: { zh: '側鏈（R）', en: 'Side chain (R)' },
+    pept: { zh: '肽鍵', en: 'Peptide bond' }, glyb: { zh: '醣苷鍵', en: 'Glycosidic bond' }, ester: { zh: '酯鍵', en: 'Ester bond' },
+    n9: { zh: '9 種', en: '9' }, n11: { zh: '11 種', en: '11' }, n20: { zh: '20 種', en: '20' },
+    bcaa: { zh: '支鏈胺基酸', en: 'Branched-chain amino acids' }, arom: { zh: '芳香族胺基酸', en: 'Aromatic amino acids' },
+    lys: { zh: '離胺酸', en: 'Lysine' }, met: { zh: '甲硫胺酸', en: 'Methionine' }, trp: { zh: '色胺酸', en: 'Tryptophan' }, thr: { zh: '蘇胺酸', en: 'Threonine' },
+    leu: { zh: '白胺酸', en: 'Leucine' }, tyr: { zh: '酪胺酸', en: 'Tyrosine' }, phe: { zh: '苯丙胺酸', en: 'Phenylalanine' }, cys: { zh: '半胱胺酸', en: 'Cysteine' }, gln: { zh: '麩醯胺酸', en: 'Glutamine' },
+    leulys: { zh: '白胺酸、離胺酸', en: 'Leucine, lysine' }, ileval: { zh: '異白胺酸、纈胺酸', en: 'Isoleucine, valine' },
+    mus: { zh: '肌肉', en: 'Muscle' }, liv: { zh: '肝臟', en: 'Liver' }, b6: { zh: '維生素 B6', en: 'Vitamin B6' }, b12: { zh: '維生素 B12', en: 'Vitamin B12' },
+    niac: { zh: '菸鹼素和血清素', en: 'Niacin and serotonin' }, cate: { zh: '甲狀腺素和兒茶酚胺', en: 'Thyroxine and catecholamines' },
+    cond: { zh: '條件式必需胺基酸', en: 'Conditionally essential' }, nonx: { zh: '非必需胺基酸', en: 'Nonessential' },
+    pri: { zh: '一級結構', en: 'Primary structure' }, sec: { zh: '二級結構', en: 'Secondary structure' }, ter: { zh: '三級結構', en: 'Tertiary structure' }, qua: { zh: '四級結構', en: 'Quaternary structure' },
+    keep: { zh: '不會被破壞', en: 'Not broken' }, brk: { zh: '會被破壞', en: 'Broken' },
+    comp: { zh: '蛋白質互補作用', en: 'Protein complementation' }, lim: { zh: '限制胺基酸', en: 'Limiting amino acid' },
+    soy: { zh: '黃豆、藜麥', en: 'Soybeans, quinoa' }, gel: { zh: '明膠（缺色胺酸）', en: 'Gelatin (lacks tryptophan)' }, egg: { zh: '雞蛋', en: 'Egg' },
+    hq: { zh: '完全（高品質）蛋白質', en: 'Complete (high-quality) protein' }, lq: { zh: '不完全蛋白質', en: 'Incomplete protein' },
+    bv: { zh: '生物價（BV）', en: 'Biological value (BV)' }, npu: { zh: '淨蛋白質利用率（NPU）', en: 'Net protein utilization (NPU)' }, per: { zh: '蛋白質效率（PER）', en: 'Protein efficiency ratio (PER)' },
+    aas: { zh: '胺基酸分數', en: 'Amino acid score' }, pdc: { zh: 'PDCAAS', en: 'PDCAAS' },
+    pv: { zh: '紅豆、綠豆', en: 'Adzuki and mung beans' }, rs: { zh: '黃豆、黑豆、毛豆', en: 'Soybeans (yellow, black, green)' }
+  },
+  levels: [
+    { t: '先看全貌：胺基酸與肽鍵', kind: 'ov', h: 330, svg: PRO_OV, blanks: PRO_B(),
+      intro: ['蛋白質由碳、氫、氧、氮組成，有些還含硫。它和醣類、脂質最大的不同就是含氮。',
+        '蛋白質的單元是胺基酸。每個胺基酸中間有一個碳，四隻手分別接：一個氫、一個含氮的基團、一個酸性的基團，和一條每種胺基酸都不一樣的側鏈。側鏈決定了它是哪一種胺基酸。',
+        '一個胺基酸的酸性基團和下一個的含氮基團脫去一分子水接在一起，這個鍵把胺基酸串成長鏈。'],
+      done: ['[[胺基酸 ＝ 胺基 ＋ 羧基 ＋ 氫 ＋ 側鏈（R），接在同一個 α-碳上。]]', '[[肽鍵]]由一個胺基酸的羧基與另一個的胺基縮合而成。',
+        '2 個胺基酸叫雙肽、3 個叫三肽、4～9 個叫寡肽、10 個以上叫多肽。'] },
+    { t: '必需與非必需胺基酸', kind: 'list',
+      intro: ['身體用的胺基酸有 20 種。其中 9 種身體做不出碳骨架，或做得太慢，一定要從食物取得，叫必需胺基酸；其餘的可以用轉胺作用（把一個胺基酸的胺基轉到碳骨架上）自己做。',
+        '有些非必需胺基酸在特殊情況下會變成必需，例如身體做它需要的原料或酵素出了問題、早產兒、重大創傷。',
+        '必需胺基酸裡有幾組要記：三個側鏈分叉的，主要在肌肉而不是肝臟代謝；兩個含硫的（其中一個是必需的）；以及只能生酮、不能生糖的兩個。'],
+      tip: '9 種必需胺基酸：組胺酸、異白胺酸、白胺酸、離胺酸、甲硫胺酸、苯丙胺酸、蘇胺酸、色胺酸、纈胺酸。',
+      listTitle: '是哪一個',
+      list: [['必需胺基酸有幾種', { a: 'n9', o: ['n9', 'n11', 'n20'] }], ['白胺酸、異白胺酸、纈胺酸合稱', { a: 'bcaa', o: ['bcaa', 'arom'] }], ['支鏈胺基酸主要在哪裡代謝', { a: 'mus', o: ['mus', 'liv'] }],
+        ['含硫的必需胺基酸', { a: 'met', o: ['met', 'cys', 'lys'] }], ['苯酮尿症病人不能把苯丙胺酸轉成', { a: 'tyr', o: ['tyr', 'trp', 'phe'] }], ['所以對苯酮尿症病人，酪胺酸是', { a: 'cond', o: ['cond', 'nonx'] }],
+        ['碳骨架只能生成酮體、不能生成葡萄糖的兩個（純生酮性）', { a: 'leulys', o: ['leulys', 'ileval'] }], ['色胺酸可以做成', { a: 'niac', o: ['niac', 'cate'] }], ['轉胺作用需要的維生素', { a: 'b6', o: ['b6', 'b12'] }]],
+      done: ['[[必需胺基酸 9 種；支鏈胺基酸（白胺酸、異白胺酸、纈胺酸）在肌肉代謝。]]', '[[純生酮性胺基酸只有白胺酸和離胺酸]]，它們的碳骨架不能用來做葡萄糖。',
+        '條件式必需胺基酸：酪胺酸（苯酮尿症）、半胱胺酸、精胺酸、麩醯胺酸（創傷、重症）等。', '轉胺作用的輔酶是 PLP（維生素 B6 的活化型）。'] },
+    { t: '蛋白質的結構與變性', kind: 'list',
+      intro: ['胺基酸串起來的順序由基因決定，這個順序叫一級結構，它決定了蛋白質最後會摺成什麼樣子。',
+        '鏈上相鄰的部分用氫鍵捲成螺旋或摺成平板（二級）；整條鏈再摺成立體的形狀（三級）；有些蛋白質由好幾條鏈組合而成（四級），例如血紅素有四條。',
+        '加熱、酸鹼、酒精、重金屬、劇烈攪拌會破壞二到四級結構，蛋白質失去功能，叫變性。煮蛋、胃酸都會讓蛋白質變性，反而比較好消化。變性不會打斷肽鍵。',
+        '一級結構只要錯一個胺基酸，就可能出大問題：鐮刀型貧血是血紅素上一個麩胺酸被換成纈胺酸。'],
+      listTitle: '是哪一個',
+      list: [['胺基酸的排列順序', { a: 'pri', o: ['pri', 'sec', 'ter', 'qua'] }], ['α-螺旋、β-摺板', { a: 'sec', o: ['pri', 'sec', 'ter', 'qua'] }], ['一條多肽摺成的立體形狀', { a: 'ter', o: ['pri', 'sec', 'ter', 'qua'] }],
+        ['好幾條多肽組合在一起（例如血紅素）', { a: 'qua', o: ['pri', 'sec', 'ter', 'qua'] }], ['加熱變性時，肽鍵', { a: 'keep', o: ['keep', 'brk'] }], ['鐮刀型貧血改變的是', { a: 'pri', o: ['pri', 'sec', 'ter', 'qua'] }]],
+      done: ['[[變性破壞二、三、四級結構，一級結構（肽鍵）不受影響。]]', '鐮刀型貧血：β 鏈第 6 個胺基酸由麩胺酸變成纈胺酸，是基因突變造成的一級結構改變。'] },
+    { t: '限制胺基酸與互補', kind: 'ov', h: 346, svg: PRO_LM, blanks: PRO_LB(),
+      intro: ['合成一個蛋白質時，每一種需要的胺基酸都要到齊。只要有一種不夠，合成就停在那裡，其他胺基酸再多也沒用。食物裡相對於需要量最不夠的那一種，叫限制胺基酸。',
+        '動物性蛋白質大多含齊 9 種必需胺基酸，比例也合適；植物性蛋白質通常缺一兩種。',
+        '圖上的長條是兩類植物性食物每種必需胺基酸相對於需要量的多寡，虛線框的那一條最不夠。兩類剛好互補，一起吃就截長補短。'],
+      done: ['[[穀類的限制胺基酸是離胺酸；豆類的限制胺基酸是甲硫胺酸（含硫胺基酸）。]]玉米還缺色胺酸。', '蛋白質互補：穀類 ＋ 豆類（例如飯和豆類、饅頭和豆漿），不必同一餐吃，同一天吃到就可以。',
+        '黃豆和藜麥是植物性的完全蛋白質；明膠雖然是動物性，但缺色胺酸，是不完全蛋白質。'] },
+    { t: '蛋白質品質的評估', kind: 'list',
+      intro: ['蛋白質品質看兩件事：消化率（吃進去的有多少被吸收），和胺基酸組成（吸收的有多少能拿來合成身體的蛋白質）。',
+        '有幾種評估方法。用氮來算的：吸收的氮有多少被身體留下來；或吃進去的氮有多少被身體留下來（後者等於前者乘上消化率）。用動物算的：每吃一公克蛋白質，幼鼠體重增加幾公克。',
+        '用化學分析算的：把食物蛋白質每一種必需胺基酸的含量，和理想的參考值相比，最低的那個比值就是它的分數，那個胺基酸就是限制胺基酸。再乘上消化率，就是目前食品最常用的指標，最高以 1.0 計。'],
+      listTitle: '是哪一個',
+      list: [['身體保留的氮 ÷ 吸收的氮', { a: 'bv', o: PRO_Q }], ['身體保留的氮 ÷ 攝取的氮', { a: 'npu', o: PRO_Q }], ['幼鼠增加的體重 ÷ 攝取的蛋白質', { a: 'per', o: PRO_Q }],
+        ['最低的必需胺基酸比值（不考慮消化率）', { a: 'aas', o: PRO_Q }], ['胺基酸分數 × 消化率', { a: 'pdc', o: PRO_Q }], ['生物價最高、常當作參考蛋白質', { a: 'egg', o: ['egg', 'gel', 'soy'] }],
+        ['植物性但含齊 9 種必需胺基酸', { a: 'soy', o: ['egg', 'gel', 'soy'] }], ['屬於全榖雜糧類、以澱粉為主的豆類', { a: 'pv', o: ['pv', 'rs'] }], ['屬於豆魚蛋肉類、高品質蛋白質的豆類', { a: 'rs', o: ['pv', 'rs'] }]],
+      done: ['[[BV ＝ 保留氮 ÷ 吸收氮；NPU ＝ 保留氮 ÷ 攝取氮 ＝ BV × 消化率。]]', '[[PDCAAS ＝ 胺基酸分數 × 消化率]]，最高以 1.0 計；酪蛋白、蛋白、黃豆分離蛋白都是 1.0。',
+        '紅豆、綠豆屬於全榖雜糧類，以澱粉為主；黃豆、毛豆、黑豆才是豆魚蛋肉類的高品質蛋白質。'] },
+    { t: '算一算：蛋白質品質', kind: 'list',
+      intro: ['照公式代進去就好。先找出限制胺基酸（比值最低的那個），再乘上消化率。'],
+      tip: '例：某蛋白質每公克含離胺酸 40 mg，參考值是 58 mg，比值 0.69；其他必需胺基酸的比值都超過 1，所以離胺酸是限制胺基酸，胺基酸分數 0.69。消化率 0.9 時，PDCAAS ＝ 0.69 × 0.9 ≈ 0.62。',
+      countsTitle: '某蛋白質：離胺酸比值 0.8、甲硫胺酸比值 0.6、其他都超過 1；消化率 0.9',
+      counts: [['限制胺基酸的比值', '0.6', ['0.6', '0.8', '0.9', '1.0']], ['PDCAAS', '0.54', ['0.54', '0.6', '0.72', '0.9']], ['若生物價是 70，NPU 是多少', '63', ['54', '63', '70', '78']]],
+      done: ['胺基酸分數取的是「最低的」比值，不是平均。', 'PDCAAS 超過 1 時一律以 1.0 計。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['白胺酸是純生酮性胺基酸，它的碳骨架不能合成', { a: 'glcx', o: ['glcx', 'kbx'] }, '。'],
+        ['穀類的限制胺基酸是', { a: 'lys', o: PRO_AA }, '。'],
+        ['豆類的限制胺基酸是', { a: 'met', o: PRO_AA }, '。'],
+        ['蛋白質變性時不受影響的是', { a: 'pri', o: ['pri', 'sec', 'ter', 'qua'] }, '。'],
+        ['NPU 等於生物價乘上', { a: 'dig', o: ['dig', 'aas'] }, '。'],
+        ['苯酮尿症病人需要從飲食補充的胺基酸是', { a: 'tyr', o: ['tyr', 'phe', 'trp'] }, '。'],
+        ['主要在肌肉代謝的是', { a: 'bcaa', o: ['bcaa', 'arom'], lang: 'en' }, '。'],
+        ['血紅素由四條多肽組成，屬於', { a: 'qua', o: ['pri', 'sec', 'ter', 'qua'], lang: 'en' }, '。'],
+        ['可以合成菸鹼素的胺基酸是', { a: 'trp', o: PRO_AA, lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 346, force: 'en', svg: PRO_LM, blanks: PRO_LB(),
+      intro: ['限制胺基酸的圖，全部用英文作答；下面再加上胺基酸的結構與品質指標。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: '名詞', list: [['Group that contains nitrogen', { a: 'amino', o: PRO_G }], ['Part that differs among amino acids', { a: 'rside', o: PRO_G }], ['Bond linking amino acids', { a: 'pept', o: PRO_BD }],
+        ['Retained N ÷ absorbed N', { a: 'bv', o: PRO_Q }], ['Amino acid score × digestibility', { a: 'pdc', o: PRO_Q }], ['Leucine, isoleucine, valine', { a: 'bcaa', o: ['bcaa', 'arom'] }]] }
+  ] };
+(function () { var d = PRO.dict; d.glcx = { zh: '葡萄糖', en: 'Glucose' }; d.kbx = { zh: '酮體', en: 'Ketone bodies' }; d.dig = { zh: '消化率', en: 'Digestibility' }; })();
+/* ======================================================================
+   蛋白質（二）：消化、功能、氮平衡、需要量與缺乏（第 7 章後半）
+   ====================================================================== */
+function PRM_OV() {
+  var s = '', h = PH() / 2;
+  s += pill(90, 32, 156, { zh: '飲食蛋白質（消化吸收）', en: 'Dietary protein (digested)' }, 'src') + pill(270, 32, 156, { zh: '體蛋白質分解', en: 'Body protein breakdown' }, 'src');
+  s += arrow(110, 33 + h, 160, 110 - h - 2) + arrow(250, 33 + h, 200, 110 - h - 2) + pill(180, 110, 170, { zh: '胺基酸池', en: 'Amino acid pool' }, 'pill kE');
+  s += sl('180,' + (111 + h) + ' 180,150 8,150 8,346', 'M', 2);
+  [196, 242, 288, 334].forEach(function (y) { s += sl('8,' + y + ' 12,' + y, 'M', 2); });
+  s += cap(196, '拿去合成', 'Used to make', 168) + cap(242, '脫胺後，胺基在肝臟變成', 'After deamination, N becomes', 168) + cap(288, '尿素從哪裡排出', 'Urea is excreted by the', 168) + cap(334, '剩下的碳骨架可以變成', 'Carbon skeleton becomes', 168);
+  return s;
+}
+function PRM_B() {
+  return [{ id: 'w1', x: 262, y: 196, w: 168, c: 'E', a: 'syn', o: ['syn', 'urea', 'csk'] }, { id: 'w2', x: 262, y: 242, w: 168, a: 'urea', o: ['urea', 'nh3', 'uric'] },
+    { id: 'w3', x: 262, y: 288, w: 168, a: 'kid', o: ['kid', 'livx', 'lung'] }, { id: 'w4', x: 262, y: 334, w: 168, a: 'csk', o: ['csk', 'syn', 'urea'] }];
+}
+var PRM_EZ = ['peps', 'tryp', 'carb', 'enterok'], PRM_F = ['alb', 'hb', 'tf', 'ab', 'cer', 'rbp'];
+var PRM = { id: 'prm', zh: '蛋白質（二）：功能、需要量與缺乏', en: 'Proteins: functions, needs and deficiency', alias: '胺基酸池・消化吸收・功能・氮平衡・國人建議量・PEM・素食', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    syn: { zh: '體蛋白質、酵素、激素', en: 'Body proteins, enzymes, hormones' }, urea: { zh: '尿素', en: 'Urea' }, nh3: { zh: '氨', en: 'Ammonia' }, uric: { zh: '尿酸', en: 'Uric acid' },
+    kid: { zh: '腎臟', en: 'Kidneys' }, livx: { zh: '肝臟', en: 'Liver' }, lung: { zh: '肺臟', en: 'Lungs' }, csk: { zh: '能量、葡萄糖或脂肪', en: 'Energy, glucose or fat' },
+    peps: { zh: '胃蛋白酶', en: 'Pepsin' }, tryp: { zh: '胰蛋白酶', en: 'Trypsin' }, carb: { zh: '羧肽酶', en: 'Carboxypeptidase' }, enterok: { zh: '腸激酶', en: 'Enteropeptidase' },
+    hcl: { zh: '胃酸（鹽酸）', en: 'Hydrochloric acid' }, bile: { zh: '膽汁', en: 'Bile' }, aadtp: { zh: '胺基酸、雙肽、三肽', en: 'Amino acids, di- and tripeptides' }, whole: { zh: '完整的蛋白質', en: 'Intact proteins' },
+    inf: { zh: '出生幾個月內的嬰兒', en: 'Young infants' }, adlt: { zh: '成人', en: 'Adults' },
+    alb: { zh: '白蛋白', en: 'Albumin' }, hb: { zh: '血紅素', en: 'Hemoglobin' }, tf: { zh: '運鐵蛋白', en: 'Transferrin' }, ab: { zh: '抗體', en: 'Antibodies' }, cer: { zh: '銅藍蛋白', en: 'Ceruloplasmin' }, rbp: { zh: '視網醇結合蛋白', en: 'Retinol-binding protein' },
+    edema: { zh: '水腫', en: 'Edema' }, buffer: { zh: '酸鹼緩衝', en: 'Acid–base buffer' },
+    pos: { zh: '正氮平衡', en: 'Positive nitrogen balance' }, neg: { zh: '負氮平衡', en: 'Negative nitrogen balance' }, eq: { zh: '氮平衡（相等）', en: 'Nitrogen equilibrium' },
+    k11: { zh: '每公斤體重 1.1 公克', en: '1.1 g/kg body weight' }, k08: { zh: '每公斤體重 0.8 公克', en: '0.8 g/kg body weight' }, k12: { zh: '每公斤體重 1.2 公克', en: '1.2 g/kg body weight' },
+    a1020: { zh: '總熱量的 10～20%', en: '10–20% of energy' }, a1035: { zh: '總熱量的 10～35%', en: '10–35% of energy' },
+    p10: { zh: '每天多 10 公克', en: '+10 g/day' }, p15: { zh: '每天多 15 公克', en: '+15 g/day' }, p25: { zh: '每天多 25 公克', en: '+25 g/day' },
+    mar: { zh: '消瘦症', en: 'Marasmus' }, kwa: { zh: '瓜西奧科兒症', en: 'Kwashiorkor' },
+    ige: { zh: 'IgE', en: 'IgE' }, igg: { zh: 'IgA', en: 'IgA' }, ana: { zh: '過敏性休克', en: 'Anaphylaxis' },
+    nodelay: { zh: '4～6 個月開始添加副食品，不必刻意延後易過敏食物', en: 'Start solids at 4–6 mo; no need to delay allergenic foods' }, delay: { zh: '易過敏食物一律延到 1 歲以後', en: 'Delay allergenic foods until age 1' },
+    b12: { zh: '維生素 B12', en: 'Vitamin B12' }, vc: { zh: '維生素 C', en: 'Vitamin C' }, ca: { zh: '鈣', en: 'Calcium' }, phyt: { zh: '植酸', en: 'Phytate' },
+    urin: { zh: '尿鈣增加', en: 'More urinary calcium' }, dehyd: { zh: '尿素多、需要更多水', en: 'More urea, more water needed' }
+  },
+  levels: [
+    { t: '先看全貌：胺基酸池', kind: 'ov', h: 360, svg: PRM_OV, blanks: PRM_B(),
+      intro: ['身體的蛋白質一直在分解、再合成（蛋白質周轉）。分解出來的胺基酸和飲食吸收的胺基酸混在一起，形成一個「池子」，細胞需要時就從池子拿。',
+        '池子裡的胺基酸最優先的用途是合成身體需要的各種蛋白質，也用來做一些含氮的小分子。',
+        '用不完的胺基酸不會儲存。先把胺基拆掉（脫胺），胺基變成有毒的氨，在肝臟轉成比較無害的分子，送到另一個器官排出。剩下不含氮的碳骨架，看身體需要拿去產能、做葡萄糖或存成脂肪。'],
+      done: ['[[胺基酸沒有儲存形式]]；多的胺基酸脫胺後，胺基在肝臟做成尿素，由腎臟排出。', '碳骨架：產生能量（4 大卡／公克）、糖質新生做葡萄糖、或合成脂肪。',
+        '[[吃太多蛋白質不會變成肌肉]]，只會多產生尿素，碳骨架變成能量或脂肪。'] },
+    { t: '消化與吸收', kind: 'list',
+      intro: ['烹調和胃酸先讓蛋白質變性，把摺好的結構打開，酵素才切得到。胃酸也把胃裡的酵素原活化。',
+        '進入小腸後，胰臟分泌的酵素原要先被腸壁的一個酵素活化，活化後的酵素再去活化其他酵素原。這些酵素把多肽切成短肽和胺基酸。',
+        '吸收的形式除了單一胺基酸，還有兩、三個胺基酸連在一起的小肽。吸收後經肝門靜脈先到肝臟。',
+        '剛出生幾個月的嬰兒，腸道還沒成熟，可以直接吸收完整的蛋白質，例如母乳裡的抗體；這也是太早接觸某些食物蛋白質容易過敏的原因。'],
+      listTitle: '是哪一個',
+      list: [['讓蛋白質變性、活化胃蛋白酶原', { a: 'hcl', o: ['hcl', 'bile'] }], ['在胃開始消化蛋白質的酵素', { a: 'peps', o: PRM_EZ }], ['把胰蛋白酶原活化成胰蛋白酶的', { a: 'enterok', o: PRM_EZ }],
+        ['從多肽羧基端一個一個切下胺基酸', { a: 'carb', o: PRM_EZ }], ['小腸吸收的形式', { a: 'aadtp', o: ['aadtp', 'whole'] }], ['能直接吸收完整蛋白質的是', { a: 'inf', o: ['inf', 'adlt'] }]],
+      done: ['[[胃：鹽酸＋胃蛋白酶。小腸：腸激酶活化胰蛋白酶，胰蛋白酶再活化胰凝乳蛋白酶、羧肽酶。]]', '吸收的形式是胺基酸、雙肽、三肽；吸收後經肝門靜脈到肝臟。',
+        '詳細的酵素與載體在《圖解生理生化》的「消化與吸收」單元。'] },
+    { t: '蛋白質的功能', kind: 'list',
+      intro: ['蛋白質是身體的建材：肌肉、骨骼和皮膚的膠原蛋白、毛髮、指甲。也是身體的工人：酵素、很多激素、抗體、運輸蛋白都是蛋白質。',
+        '血液裡的蛋白質太大，出不了微血管，把水「拉」在血管裡。蛋白質嚴重不足時，血中這種蛋白質減少，水就跑到組織間隙。',
+        '蛋白質帶電的側鏈可以接住或放出氫離子，幫忙維持 pH。',
+        '醣類和脂肪不夠時，蛋白質也會被拿去產能或做葡萄糖，但健康的人平常很少靠它。'],
+      listTitle: '是哪一個',
+      list: [['血漿中最多、維持膠體滲透壓的蛋白質', { a: 'alb', o: PRM_F }], ['紅血球裡運送氧氣的', { a: 'hb', o: PRM_F }], ['在血液中運送鐵的', { a: 'tf', o: PRM_F }], ['在血液中運送銅的', { a: 'cer', o: PRM_F }],
+        ['運送維生素 A 的', { a: 'rbp', o: PRM_F }], ['和抗原結合、對抗感染的', { a: 'ab', o: PRM_F }], ['血中白蛋白太低時出現', { a: 'edema', o: ['edema', 'buffer'] }]],
+      done: ['[[蛋白質的功能：建構組織、酵素、激素、抗體、運輸、維持體液平衡（白蛋白）、酸鹼緩衝、必要時提供能量與葡萄糖。]]', '白蛋白低 → 膠體滲透壓下降 → 水腫。蛋白質不足時抗體做不出來，免疫力下降。'] },
+    { t: '氮平衡', kind: 'list',
+      intro: ['蛋白質平均含氮 16%，所以「氮 × 6.25 ＝ 蛋白質」。比較吃進去的氮和排出的氮，就知道身體的蛋白質是在增加還是減少。',
+        '排出的氮主要在尿液（以尿素為主），另外糞便、皮膚、汗、頭髮指甲也會掉一些，臨床上常把尿素氮加上 4 公克來估計。',
+        '長大、懷孕、受傷之後的恢復期、肌力訓練，身體在增加蛋白質；挨餓、熱量不夠、發燒、燒燙傷、臥床不動，身體在流失蛋白質。'],
+      tip: '氮平衡 ＝ 攝取的氮（蛋白質 ÷ 6.25）－ 排出的氮（尿素氮 ＋ 4）',
+      listTitle: '正還是負',
+      list: [['兒童生長期', { a: 'pos', o: ['pos', 'neg', 'eq'] }], ['懷孕', { a: 'pos', o: ['pos', 'neg', 'eq'] }], ['熱量攝取不足', { a: 'neg', o: ['pos', 'neg', 'eq'] }], ['大面積燒燙傷、發燒', { a: 'neg', o: ['pos', 'neg', 'eq'] }],
+        ['長期臥床', { a: 'neg', o: ['pos', 'neg', 'eq'] }], ['重量訓練增肌、疾病恢復期', { a: 'pos', o: ['pos', 'neg', 'eq'] }], ['體重穩定的健康成人', { a: 'eq', o: ['pos', 'neg', 'eq'] }]],
+      countsTitle: '某人一天吃 75 g 蛋白質，24 小時尿素氮 10 g',
+      counts: [['攝取的氮是幾公克', '12', ['7.5', '10', '12', '14']], ['排出的氮（尿素氮 ＋ 4）是幾公克', '14', ['10', '12', '14', '16']], ['氮平衡是', '−2', ['+2', '0', '−2', '−4']]],
+      done: ['[[蛋白質 ＝ 氮 × 6.25]]（蛋白質含氮約 16%）。', '[[正氮平衡：生長、懷孕、恢復期、增肌。負氮平衡：熱量或蛋白質不足、發燒、燒燙傷、感染、臥床。]]', '熱量不夠時，吃進去的蛋白質會先被拿去產能，所以即使蛋白質吃夠了也可能是負氮平衡。'] },
+    { t: '需要量（國人 DRIs）', kind: 'list',
+      intro: ['蛋白質的需要量用氮平衡研究訂定，以每公斤體重表示，再乘上參考體重。課本列的是美國的 RDA（每公斤 0.8 g）和範圍很寬的 AMDR，國人的數值不一樣，要記國人的。',
+        '國人 DRIs 第八版：19 歲以上（包括長者）男性每天 70 g、女性 60 g，大約是每公斤體重 1.1 g；長者的參考體重比較輕，同樣的克數換算起來約每公斤 1.2 g，用意是減少肌肉流失。',
+        '懷孕和哺乳要另外增加；蛋白質的可接受範圍佔總熱量的比例也比美國窄。',
+        '重度訓練的運動員、受傷或手術後恢復期的需要量比 RDA 高，RDA 只適用於健康的人。'],
+      listTitle: '國人的數值',
+      list: [['成人蛋白質 RDA', { a: 'k11', o: ['k08', 'k11', 'k12'] }], ['美國成人蛋白質 RDA', { a: 'k08', o: ['k08', 'k11', 'k12'] }], ['國人 71 歲以上（克數不變，換算每公斤約）', { a: 'k12', o: ['k08', 'k11', 'k12'] }],
+        ['國人蛋白質的 AMDR', { a: 'a1020', o: ['a1020', 'a1035'] }], ['懷孕期', { a: 'p10', o: ['p10', 'p15', 'p25'] }], ['哺乳期', { a: 'p15', o: ['p10', 'p15', 'p25'] }]],
+      countsTitle: '算算看', counts: [['體重 60 kg 的成人，每天幾公克蛋白質', '66', ['48', '60', '66', '72']], ['2,000 大卡的飲食，蛋白質 AMDR 上限是幾公克', '100', ['50', '80', '100', '175']], ['女性 60 g 的建議量，哺乳期變成幾公克', '75', ['65', '70', '75', '85']]],
+      done: ['[[國人 19 歲以上蛋白質：男 70 g、女 60 g（約每公斤 1.1 g，長者約 1.2 g）；懷孕 ＋10 g、哺乳 ＋15 g；AMDR 10～20%。]]', '美國 RDA 是每公斤 0.8 g、AMDR 10～35%，課本的數字要換成國人的。',
+        '算建議量要用健康（理想）體重，不是實際體重。'] },
+    { t: '蛋白質熱量營養不良', kind: 'list',
+      intro: ['蛋白質缺乏通常和熱量缺乏一起發生，合稱蛋白質熱量營養不良（PEM），兒童影響最大：長不高、容易腹瀉和感染、死亡率高。',
+        '一種是長期什麼都吃不夠，慢慢發生，身體把肌肉和脂肪都耗光，瘦得皮包骨，但沒有水腫，叫「消瘦」。',
+        '另一種常發生在斷奶後只吃澱粉類、又遇上感染的幼兒，發生得快：熱量可能還勉強，但蛋白質嚴重不足，血中白蛋白太低而水腫，肚子鼓起、肝臟脂肪堆積（運送脂肪的脂蛋白做不出來）、頭髮變色易脫落、皮膚像剝落的油漆。'],
+      listTitle: '是哪一種',
+      list: [['皮包骨、沒有水腫', { a: 'mar', o: ['mar', 'kwa'] }], ['水腫、腹部鼓脹、脂肪肝', { a: 'kwa', o: ['mar', 'kwa'] }], ['熱量和蛋白質都長期嚴重不足、慢慢發生', { a: 'mar', o: ['mar', 'kwa'] }],
+        ['蛋白質嚴重不足、常伴隨感染、發生快', { a: 'kwa', o: ['mar', 'kwa'] }], ['血清白蛋白明顯偏低', { a: 'kwa', o: ['mar', 'kwa'] }]],
+      done: ['[[消瘦症（marasmus）：熱量與蛋白質都不足、極瘦、無水腫。瓜西奧科兒症（kwashiorkor）：蛋白質嚴重不足、水腫、脂肪肝、白蛋白低。]]', '兩者同時存在的叫消瘦型瓜西奧科兒症。在已開發國家，PEM 常見於住院病人、老人、厭食症與酗酒者。'] },
+    { t: '吃太多、過敏與素食', kind: 'list',
+      intro: ['高蛋白飲食讓腎臟要排更多尿素，需要更多水；也可能增加尿鈣。若高蛋白來自大量肉類，飽和脂肪和膽固醇也跟著多，纖維與植化素反而少。',
+        '食物過敏是免疫系統把食物裡的某個蛋白質當成敵人，產生一種抗體，引起流鼻水、蕁麻疹、腹瀉，嚴重時血壓下降、呼吸困難，會致命。少數幾類食物就佔了大部分的過敏。',
+        '過去建議延後給嬰兒容易過敏的食物，現在的證據顯示延後沒有預防效果；課本投影片的寫法已經過時。',
+        '素食只要搭配得當可以很健康。全素的人要特別注意幾種營養素：一種只存在動物性食物；另外幾種植物裡雖然有，但吸收率比較低。'],
+      listTitle: '是哪一個',
+      list: [['高蛋白飲食對腎臟和水分', { a: 'dehyd', o: ['dehyd', 'urin'] }], ['食物過敏主要的抗體', { a: 'ige', o: ['ige', 'igg'] }], ['最嚴重、會致命的過敏反應', { a: 'ana', o: ['ana', 'edema'] }],
+        ['目前對嬰兒副食品的建議', { a: 'nodelay', o: ['nodelay', 'delay'] }], ['全素者一定要從強化食品或補充劑取得', { a: 'b12', o: ['b12', 'vc', 'ca'] }], ['和植物性鐵一起吃、能促進鐵吸收的', { a: 'vc', o: ['b12', 'vc', 'ca'] }],
+        ['全穀和豆類裡降低鋅、鐵吸收的成分', { a: 'phyt', o: ['phyt', 'vc'] }]],
+      done: ['[[常見的過敏食物：花生、堅果、牛奶、蛋、魚、甲殼類、黃豆、小麥。]]過敏原是食物中的蛋白質，主要由 IgE 媒介。', '嬰兒約 4～6 個月開始添加副食品，不需要刻意延後蛋、花生等易過敏食物。',
+        '[[全素者容易不足：維生素 B12、鐵、鋅、鈣、維生素 D、n-3 脂肪酸，以及（不吃奶時）核黃素。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['國人成人蛋白質的 RDA 是', { a: 'k11', o: ['k08', 'k11', 'k12'] }, '。'],
+        ['哺乳期蛋白質比一般女性', { a: 'p15', o: ['p10', 'p15', 'p25'] }, '。'],
+        ['熱量攝取不足時，氮平衡呈現', { a: 'neg', o: ['pos', 'neg', 'eq'] }, '。'],
+        ['多餘的胺基在肝臟做成', { a: 'urea', o: ['urea', 'nh3', 'uric'] }, '，由腎臟排出。'],
+        ['血漿白蛋白太低，會造成', { a: 'edema', o: ['edema', 'buffer'] }, '。'],
+        ['水腫、脂肪肝、白蛋白低是', { a: 'kwa', o: ['mar', 'kwa'] }, '的特徵。'],
+        ['在血液中運送銅的蛋白質是', { a: 'cer', o: PRM_F, lang: 'en' }, '。'],
+        ['活化胰蛋白酶原的酵素是', { a: 'enterok', o: PRM_EZ, lang: 'en' }, '。'],
+        ['兒童生長期的氮平衡是', { a: 'pos', o: ['pos', 'neg', 'eq'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 360, force: 'en', svg: PRM_OV, blanks: PRM_B(),
+      intro: ['第一關的圖，全部用英文作答；下面再加上蛋白質缺乏與運輸蛋白。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: '名詞', list: [['Severe wasting, no edema', { a: 'mar', o: ['mar', 'kwa'] }], ['Edema, fatty liver, low albumin', { a: 'kwa', o: ['mar', 'kwa'] }], ['Carries iron in blood', { a: 'tf', o: PRM_F }],
+        ['Maintains colloid osmotic pressure', { a: 'alb', o: PRM_F }], ['Burns, fever, starvation', { a: 'neg', o: ['pos', 'neg', 'eq'] }], ['Main antibody in food allergy', { a: 'ige', o: ['ige', 'igg'] }]] }
+  ] };
+/* 圖解營養學的目錄：照《透視營養學》12 版的章節順序。有 levels 的才是做好的單元，沒有的顯示「製作中」 */
+function TODO(id, zh, en) { return { id: id, zh: zh, en: en }; }
+var GROUPS = [
+  { tab: 'base', g: '先讀這裡', items: [NMAP] },
+  { tab: 'base', g: '基礎 1・設計飲食的工具', c: 4, items: [TODO('dri', '飲食指標：DRIs、每日飲食指南、營養標示', 'Tools for diet planning'), TODO('fss', '食物供應與食品安全', 'Food supply and food safety')] },
+  { tab: 'base', g: '基礎 2・消化與能量', c: 5, items: [TODO('dig', '消化與吸收（重點對照）', 'Digestion and absorption'), TODO('emt', '能量代謝（重點對照）', 'Energy metabolism'), TODO('ebw', '能量平衡與體重控制', 'Energy balance and weight control'), TODO('spt', '運動營養', 'Nutrition and fitness'), TODO('alc', '酒精', 'Alcohol')] },
+  { tab: 'macro', g: '醣類', c: 6, items: [CHO, CHM] },
+  { tab: 'macro', g: '脂質', c: 2, items: [LIP, LPT] },
+  { tab: 'macro', g: '蛋白質', c: 3, items: [PRO, PRM] },
+  { tab: 'micro', g: '維生素', c: 4, items: [TODO('fsv', '脂溶性維生素', 'Fat-soluble vitamins'), TODO('wsb', '水溶性維生素：B 群', 'B vitamins'), TODO('wsc', '水溶性維生素：C 與膽素', 'Vitamin C and choline')] },
+  { tab: 'micro', g: '水與礦物質', c: 5, items: [TODO('wmm', '水與巨量礦物質', 'Water and major minerals'), TODO('trm', '微量礦物質', 'Trace minerals')] },
+  { tab: 'life', g: '生命期營養', c: 3, items: [TODO('prg', '懷孕與哺乳', 'Pregnancy and lactation'), TODO('inf', '嬰兒、兒童與青少年', 'Infancy through adolescence'), TODO('adl', '成人與老年', 'Adulthood and aging'), TODO('glb', '全球的營養問題', 'Undernutrition throughout the world')] }
+];
+function prep(u, par) {
+  if (par) ['dict', 'enz', 'prod', 'tags', 'zh', 'en'].forEach(function (k) { if (u[k] == null) u[k] = par[k]; });
+  u.map = {}; (u.nodes || (u.nodes = [])).forEach(function (n) { u.map[n.k] = n; }); (u.extra || []).forEach(function (n) { u.map[n.k] = n; });
+  u.steps = u.steps || []; u.enz = u.enz || {}; u.prod = u.prod || {};
+  for (var k in (u.subs || {})) prep(u.subs[k], u);
+}
+var UNITS = {}; GROUPS.forEach(function (g) { g.items.forEach(function (u) { if (u.levels) { UNITS[u.id] = u; u.tab = g.tab; prep(u); } }); });
+/* 圖解營養學的設定（共用 pw/tail.html 的程式） */
+window.CFG = {
+  key: 'nutri-v1', title: '圖解營養學',
+  tabs: [['base', '基礎'], ['macro', '巨量'], ['micro', '微量'], ['life', '生命期']],
+  hint: { base: '琥珀色是醣類、紫色是脂質、玫瑰色是蛋白質、青色是維生素、藍色是礦物質和水，', macro: '琥珀色是醣類、紫色是脂質、玫瑰色是蛋白質，', micro: '青色是維生素、藍色是礦物質和水，', life: '琥珀色是醣類、紫色是脂質、玫瑰色是蛋白質、青色是維生素、藍色是礦物質，' },
+  top: '<a class="card pad" href="index.html?app=nutrition" style="display:block;text-decoration:none;color:inherit;margin-bottom:10px"><b>我的營養學筆記（可編輯）→</b><div class="small muted">原本的營養學筆記頁：可以自己改內容，也可以恢復原版。這一頁是看圖填空的練習。</div></a>',
+  howto: '<p>課本《透視營養學》用的是美國的數值。這一頁的建議量一律改用「國人膳食營養素參考攝取量（DRIs）」第八版，兩者不一樣時以國人的為準，國考也是考國人的。</p>',
+  note: function () { return '建議量依國人 DRIs 第八版。國健署已在 2026 年 3 月預告第九版草案，正式公告後部分數值可能改變，請以老師上課的說明為準。'; }
+};
+/* ======================================================================
+   程式
+   ====================================================================== */
+function $(id) { return document.getElementById(id); }
+function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+
+/* 進度與語言：只存在這支手機的瀏覽器 */
+var CFG = window.CFG || {};
+var KEY = CFG.key || 'pathway-v1', OK = true, SAVE = { done: {}, lang: 'bi' };
+try { var s0 = JSON.parse(localStorage.getItem(KEY) || '{}'); if (s0 && s0.done) SAVE = s0; localStorage.setItem(KEY + '-t', '1'); } catch (e) { OK = false; }
+function save() { try { localStorage.setItem(KEY, JSON.stringify(SAVE)); } catch (e) { OK = false; } }
+LANG = SAVE.lang === 'en' || SAVE.lang === 'zh' ? SAVE.lang : 'bi';
+function isDone(pid, i) { return !!(SAVE.done[pid] && SAVE.done[pid][i]); }
+var CUR = null, LV = 0, ST = null;   // 目前單元、關卡、作答狀態
+function seg() { var s = $('lang'); s.hidden = !!FORCE; s.querySelectorAll('button').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-l') === LANG); b.setAttribute('aria-pressed', b.getAttribute('data-l') === LANG ? 'true' : 'false'); }); }
+
+/* ---------- 目錄 ---------- */
+var TABS = CFG.tabs || [['met', '生化代謝'], ['mb', '分子生物'], ['phy', '人體生理']], TAB0 = TABS[0][0], TITLE = CFG.title || '圖解生理生化';
+var HINT = CFG.hint || { met: '圖上名稱的底色是碳數（6 碳、3 碳…），小標籤是這一步花掉或產生什麼，', mb: '藍色是 DNA、青色是新合成的 DNA、玫瑰色是 RNA、琥珀色是蛋白質（酵素、因子、核糖體），', phy: '玫瑰色是興奮、交感、去極化；藍色是抑制、副交感、再極化；琥珀色是激素或要花能量的步驟；每張圖下面都有圖例，' };
+function home() {
+  CUR = null; FORCE = null; $('title').textContent = TITLE; $('subtitle').textContent = '看圖、填空，一關一關記起來';
+  $('back').hidden = true; $('lv').hidden = true; seg();
+  var tab = TABS.some(function (x) { return x[0] === SAVE.tab; }) ? SAVE.tab : TAB0, fresh = !Object.keys(SAVE.done).length;
+  var h = (CFG.top || '') + '<div class="tabs" role="tablist">' + TABS.map(function (x) { return '<button type="button" role="tab" data-t="' + x[0] + '" class="' + (x[0] === tab ? 'on' : '') + '" aria-selected="' + (x[0] === tab) + '">' + x[1] + '</button>'; }).join('') + '</div>';
+  h += '<details class="card pad"' + (fresh ? ' open' : '') + '><summary>怎麼用</summary><p>每個單元分成幾關，從只看大方向開始，一次多記一點，最後整張圖自己填出來。</p>' +
+    '<p>虛線框的空格是下拉選單，點一下選答案，填完按「對答案」。</p>' + (CFG.howto || '') +
+    '<ul class="small muted"><li>右上角可以切換名稱：中文、中英對照、英文。預設是中英對照。</li><li>顏色都有意思：' + HINT[tab] + '<mark>黃底的字</mark>是必背。</li><li>國考的專有名詞常常只寫英文，所以每個單元最後的總複習固定用英文作答。考的是選擇題，練到看到認得就夠了，不必會拼。</li><li>第一次來，請先做最上面「先讀這裡」的單元。</li></ul></details>';
+  GROUPS.forEach(function (g) {
+    if ((g.tab || TAB0) !== tab) return;
+    h += '<div class="glab' + (g.c ? ' k' + g.c : '') + '">' + esc(g.g) + '</div>';
+    g.items.forEach(function (p) {
+      if (p.levels) { var n = p.levels.length, d = p.levels.filter(function (_, i) { return isDone(p.id, i); }).length;
+        h += '<button type="button" class="item' + (g.c ? ' k' + g.c : '') + '" data-p="' + p.id + '"><b>' + esc(p.zh) + '<span>' + esc(p.alias || p.en) + '</span></b><i>' + (d === n ? '已完成' : d + ' ／ ' + n + ' 關') + '</i></button>';
+      } else h += '<button type="button" class="item' + (g.c ? ' k' + g.c : '') + '" disabled><b>' + esc(p.zh) + '<span>' + esc(p.en) + '</span></b><i>製作中</i></button>';
+    });
+  });
+  h += OK ? '<p class="note">完成的關卡只記在這支手機的瀏覽器。清除瀏覽器資料、換手機，或 iPhone 超過一週沒打開，紀錄會消失；內容不受影響。</p>' : '<p class="note">這個瀏覽器無法儲存資料，完成紀錄不會保留。</p>';
+  h += '<p class="note">名詞以營養師國考題目的寫法為主。' + (CFG.note ? CFG.note(tab) : tab === 'met' ? '換算 ATP 時，沒有特別說明就用 NADH 2.5、FADH₂ 1.5。' : '') + '內容是教學用的重點整理，細節以課本與老師上課為準。</p>';
+  $('main').innerHTML = h;
+  document.querySelectorAll('.tabs button').forEach(function (b) { b.onclick = function () { SAVE.tab = b.getAttribute('data-t'); save(); home(); }; });
+  document.querySelectorAll('.item[data-p]').forEach(function (b) { b.onclick = function () { var u = UNITS[b.getAttribute('data-p')]; open(u, firstTodo(u)); }; });
+  window.scrollTo(0, 0);
+}
+function firstTodo(p) { for (var i = 0; i < p.levels.length; i++) if (!isDone(p.id, i)) return i; return 0; }
+function open(p, i) { CUR = p; LV = i; ST = null; if (p.tab && SAVE.tab !== p.tab) { SAVE.tab = p.tab; save(); } level(); window.scrollTo(0, 0); }
+
+/* ---------- 版面：每個節點在圖上的位置 ----------
+   鏈狀（chain）：主幹由上往下；旁支 side 接在某個主幹節點的同一列，link 決定線怎麼畫：
+     in（預設）前一個主幹 → 旁支，旁支 ⇌ 同列主幹（例：DHAP）；branch 前一個主幹 → 旁支；
+     feed 旁支 → 同列主幹；leaf 同列主幹 → 旁支；at:'seg' 的 feed 接到上一段的中間
+   環狀（cycle）：節點依 ang 角度排在橢圓上；top 是從上面進來的分子；pre 是進環之前的步驟
+   每個單元可用 geo 覆寫尺寸 */
+var CY0 = { cx: 180, cy: 312, rx: 118, ry: 196, h: 560, nw: 100 }, CH0 = { x: 152, w: 168, y0: 36, dy: 66, sx: 302, sw: 104 };
+function G(U) { var b = U.layout === 'cycle' ? CY0 : CH0, g = U.geo || {}, o = {}; for (var k in b) o[k] = g[k] != null ? g[k] : b[k]; return o; }
+function cpt(U, a, drx, dry) { var g = G(U), r = a * Math.PI / 180; return { x: g.cx + (g.rx + (drx || 0)) * Math.sin(r), y: g.cy - (g.ry + (dry || 0)) * Math.cos(r) }; }
+function mainNodes(U) { return U.nodes.filter(function (n) { return !n.side; }); }
+function pos(U, k) {
+  var g = G(U);
+  if (U.layout === 'cycle') { var p = cpt(U, U.ang[k]); return { x: p.x, y: p.y, w: g.nw }; }
+  var m = mainNodes(U), n = U.map[k];
+  if (n.side) { var q = pos(U, n.side); return { x: g.sx, y: q.y - (n.at === 'seg' ? g.dy / 2 : 0), w: g.sw }; }
+  for (var i = 0; i < m.length; i++) if (m[i].k === k) return { x: g.x, y: g.y0 + i * g.dy, w: g.w };
+}
+function mapH(U) { var g = G(U); return U.layout === 'cycle' ? g.h : g.y0 * 2 + (mainNodes(U).length - 1) * g.dy; }
+function allSteps(U) { return (U.pre || []).concat(U.steps); }
+function stepNo(U, f, t) { var A = allSteps(U); for (var i = 0; i < A.length; i++) if (A[i].f === f && A[i].t === t) return i; return -1; }
+function asked(L, st) { return !!st && (L.rows === 'enz' ? !!st.e : L.rows === 'prod' ? !!st.p : false); }
+
+function mapSvg(U, L, E) {      // E：'all' 顯示能量標籤、'co2' 只顯示 CO₂、'' 只顯示進出的分子
+  var s = '', tg = '', g = G(U), A = allSteps(U), h = PH() / 2, isBlank = function (k) { return L.blanks.indexOf(k) >= 0; };
+  var pick = function (st) { return ((U.tags && U.tags[st.p] || []).concat(st.io || [])).filter(function (t) { return t[1] === 'mol' || E === 'all' || (E === 'co2' && t[1] === 'co2'); }); };
+  var mark = function (x, y, i, ang) { var st = A[i]; return asked(L, st) ? badge(x, y, i + 1, st.irr) : '<polygon class="ar" points="-7,-6 7,0 -7,6" transform="translate(' + x + ',' + y + ') rotate(' + ang + ')"/>'; };
+  if (U.layout === 'cycle') {
+    s += '<ellipse class="ln" cx="' + g.cx + '" cy="' + g.cy + '" rx="' + g.rx + '" ry="' + g.ry + '" fill="none" stroke-width="3"/>';
+    A.forEach(function (st, i) {
+      if (U.ang[st.f] == null || U.ang[st.t] == null) return;
+      var a = U.ang[st.f], b = U.ang[st.t]; if (b <= a) b += 360; var m = ((a + b) / 2) % 360, p = cpt(U, m), r = m * Math.PI / 180;
+      s += mark(p.x, p.y, i, Math.atan2(g.ry * Math.sin(r), g.rx * Math.cos(r)) * 180 / Math.PI);
+      var tl = pick(st), cr = Math.cos(r), ac = Math.abs(cr), q = cpt(U, m, 44 + 6 * ac, 14 + 12 * ac);
+      var hit = tl.some(function (t, j) { var w = tagW(t[0]), x = Math.max(3 + w / 2, Math.min(357 - w / 2, q.x)); return Math.abs(x - p.x) < w / 2 + 13 && Math.abs(q.y + (j - (tl.length - 1) / 2) * 18 - p.y) < 20; });
+      tl.forEach(function (t, j) { tg += tagC(q.x, hit ? p.y + (cr >= 0 ? -1 : 1) * (22 + 18 * j) : q.y + (j - (tl.length - 1) / 2) * 18, t[0], t[1]); });      // 標籤太長會壓到編號時，改成往外疊
+    });
+    if (U.top) { var atTop = U.nodes.some(function (n) { return U.ang[n.k] === 0; }), y1 = 35 + h, y2 = g.cy - g.ry - (atTop ? h + 3 : 14), pre = (U.pre || [])[0];
+      s += '<line class="ln" x1="' + g.cx + '" y1="' + y1 + '" x2="' + g.cx + '" y2="' + y2 + '" stroke-width="3"/><polygon class="ar" points="-6,-7 6,-7 0,7" transform="translate(' + g.cx + ',' + (y2 + 2) + ')"/>';
+      if (pre && asked(L, pre)) s += badge(g.cx, (y1 + y2) / 2 - 3, 1, pre.irr);
+      if (pre) { var x0 = g.cx + 17, xl = g.cx - 17; pick(pre).forEach(function (t) { var w = tagW(t[0]);      // 進出的分子放右邊，能量標籤放左邊
+        if (t[1] === 'mol') { tg += tagC(x0 + w / 2, (y1 + y2) / 2 - 3, t[0], t[1]); x0 += w + 4; } else { tg += tagC(xl - w / 2, (y1 + y2) / 2 - 3, t[0], t[1]); xl -= w + 4; } }); }
+      s += pill(g.cx, 34, U.top.w || 128, { zh: U.top.zh + (L.carbon && U.top.c ? '（' + U.top.c + 'C）' : ''), en: U.top.en + (L.carbon && U.top.c ? ' (' + U.top.c + 'C)' : '') }, 'src' + (U.top.c ? ' k' + U.top.c : '')); }
+    var cz = U.czh || U.zh, ce = U.cen || U.en, iw = 2 * (g.rx - g.nw / 2) + 4;      // 圓心的字：寬度不能超過左右兩個節點之間
+    if (M() === 'bi') s += tx(g.cx, g.cy - 10, cz, 'b', fit(cz, iw, 15)) + tx(g.cx, g.cy + 7, ce, 'b', fit(ce, iw, 11.5)) + tx(g.cx, g.cy + 24, '順時針方向', 'm', 11);
+    else s += tx(g.cx, g.cy - 4, T(cz, ce), 'b', fit(T(cz, ce), iw, 15)) + tx(g.cx, g.cy + 16, T('順時針方向', 'clockwise'), 'm', 11);
+  } else {
+    var m = mainNodes(U), down = function (x, y) { return '<polygon class="ar" points="-6,-6 6,-6 0,6" transform="translate(' + x + ',' + y + ')"/>'; };
+    (U.phases || []).forEach(function (ph) { var a = pos(U, ph.a), b = pos(U, ph.b), my = (a.y + b.y) / 2;
+      s += '<line x1="46" y1="' + (a.y - h + 1) + '" x2="46" y2="' + (b.y + h - 1) + '" stroke="var(' + ph.c + ')" stroke-width="4" stroke-linecap="round"/>' +
+        '<text x="30" y="' + my + '" text-anchor="middle" font-size="11.5" font-weight="700" style="fill:var(' + ph.c + ')" transform="rotate(-90 30 ' + my + ')">' + esc(T(ph.zh, ph.en)) + '</text>'; });
+    for (var i = 0; i < m.length - 1; i++) { var a = pos(U, m[i].k), b = pos(U, m[i + 1].k), n = stepNo(U, m[i].k, m[i + 1].k), st = A[n], my = (a.y + b.y) / 2;
+      s += '<line class="ln" x1="' + a.x + '" y1="' + (a.y + h) + '" x2="' + b.x + '" y2="' + (b.y - h) + '" stroke-width="3"' + (st && st.dots ? ' stroke-dasharray="2 5" stroke-linecap="round"' : '') + '/>';
+      s += asked(L, st) ? badge(a.x, my, n + 1, st.irr) : down(a.x, my + 1);
+      var tl = st ? pick(st) : [], tx0 = a.x + 17; tl.forEach(function (t) { var w = tagW(t[0]); tg += tagC(tx0 + w / 2, my, t[0], t[1]); tx0 += w + 4; });
+      if (st && st.dots && !tl.length) s += tx(a.x + 16, my + 3.5, T(st.dots.zh, st.dots.en), 'nt', 10, 'start'); }
+    U.nodes.forEach(function (sd) { if (!sd.side) return;
+      var p = pos(U, sd.k), q = pos(U, sd.side), link = sd.link || 'in', prev = null, pk = null;
+      for (var i = 1; i < m.length; i++) if (m[i].k === sd.side) { prev = pos(U, m[i - 1].k); pk = m[i - 1].k; }
+      var x1 = q.x + q.w / 2 + 1, x2 = p.x - p.w / 2 - 1, xm = (x1 + x2) / 2, n;
+      if (link === 'in' || link === 'branch') { n = stepNo(U, pk, sd.k);
+        if (link === 'branch') s += arrow(prev.x + 50, prev.y + h, p.x, p.y - h - 3); else s += '<line class="ln" x1="' + (prev.x + 50) + '" y1="' + (prev.y + h) + '" x2="' + p.x + '" y2="' + (p.y - h - 1) + '" stroke-width="3"/>';
+        if (link === 'branch' && asked(L, A[n])) s += badge((prev.x + 50 + p.x) / 2 + 4, (prev.y + p.y) / 2 - 1, n + 1, A[n].irr); }
+      if (link === 'in') { n = stepNo(U, sd.k, sd.side); s += '<line class="ln" x1="' + x1 + '" y1="' + p.y + '" x2="' + x2 + '" y2="' + p.y + '" stroke-width="3"/>';
+        s += asked(L, A[n]) ? badge(xm + 4, p.y + h + 13, n + 1, A[n].irr) : tx(xm + 4, p.y + h + 14, '⇌', 'm', 14); }
+      if (link === 'feed' || link === 'leaf') { n = link === 'feed' ? stepNo(U, sd.k, sd.side) : stepNo(U, sd.side, sd.k); var into = sd.at === 'seg' ? q.x + 6 : x1 + 2;
+        s += link === 'feed' ? arrow(x2, p.y, into, p.y) : arrow(x1, p.y, x2 - 2, p.y);
+        if (asked(L, A[n])) s += badge(xm, p.y - 15, n + 1, A[n].irr); }
+    });
+  }
+  U.nodes.forEach(function (n) { var p = pos(U, n.k);
+    if (!isBlank(n.k)) s += pill(p.x, p.y, p.w, n, (U.layout === 'chain' && n === U.nodes[0] ? 'src' : 'pill') + (n.c ? ' k' + n.c : ''));
+    if (L.carbon && n.c) s += '<text x="' + p.x + '" y="' + (p.y + h + 13) + '" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--k' + n.c + 's)">' + n.c + 'C</text>';
+  });
+  return s + tg;
+}
+
+/* ---------- 一關的空格清單 ---------- */
+function buildBlanks(U, L) {
+  var B = [];
+  if (L.kind === 'ov') L.blanks.forEach(function (b) { B.push({ id: b.id, where: 'node', ans: b.a, src: U.dict, opts: shuffle(b.o), x: b.x, y: b.y, w: b.w, c: b.c }); });
+  if (L.kind === 'map') {
+    var keys = U.nodes.filter(function (n) { return (n !== U.nodes[0] || U.layout === 'cycle') && !n.fixed; }).concat(U.extra || []).map(function (n) { return n.k; });
+    L.blanks.forEach(function (k) { var p = pos(U, k); B.push({ id: 'n_' + k, where: 'node', ans: k, src: U.map, enFirst: true, opts: shuffle(keys), x: p.x, y: p.y, w: p.w, c: L.plain ? null : U.map[k].c }); });
+    if (L.rows) { var A = allSteps(U), fld = L.rows === 'enz' ? 'e' : 'p', d = L.rows === 'enz' ? U.enz : U.prod, ks = Object.keys(d).filter(function (k) { return A.some(function (t) { return t[fld] === k; }) || (U.rowExtra || []).indexOf(k) >= 0; });      // rowExtra：額外的干擾選項
+      A.forEach(function (s, i) { if (s[fld]) B.push({ id: 'r' + i, where: 'row', ans: s[fld], src: d, enFirst: true, opts: shuffle(ks), step: i, st: s }); }); }
+  }
+  (L.list || []).forEach(function (it, i) { var x = it[1]; B.push({ id: 'l' + i, where: 'row', li: i, desc: it[0], ans: x.a, lang: x.lang, src: x.src === 'enz' ? U.enz : U.dict, enFirst: x.src === 'enz', opts: shuffle(x.o) }); });
+  (L.counts || []).forEach(function (c, i) { B.push({ id: 'c' + i, where: 'count', ans: c[1], label: c[0], opts: c[2] }); });
+  if (L.kind === 'cloze') L.cloze.forEach(function (row, i) { row.forEach(function (x) { if (typeof x === 'object') B.push({ id: 'z' + i, where: 'cloze', ans: x.a, lang: x.lang, src: x.src === 'enz' ? U.enz : U.dict, enFirst: x.src === 'enz', opts: shuffle(x.o) }); }); });
+  return B;
+}
+function label(b, v) { return b.src ? one(b.src[v], b.lang, b.enFirst) : v; }
+/* 空格上看得到的字 */
+function face(b) {
+  var v = ST.ans[b.id] || '';
+  if (b.where === 'node') { if (!v) return '<b style="font-size:17px">？</b>'; var L = two(b.src[v], b.lang, b.w);
+    return '<b style="font-size:' + (fit(L[0], b.w - 8, L[1] ? 11.5 : 12.5) / .75).toFixed(1) + 'px">' + esc(L[0]) + '</b>' + (L[1] ? '<small style="font-size:' + (fit(L[1], b.w - 4, 10) / .75).toFixed(1) + 'px">' + esc(L[1]) + '</small>' : ''); }
+  if (!v) return '<b class="muted" style="font-weight:400">請選擇</b>';
+  if (b.where === 'row' || b.enFirst) { var R = two(b.src[v], b.lang); return '<b>' + esc(R[0]) + '</b>' + (R[1] ? '<small>' + esc(R[1]) + '</small>' : ''); }
+  return '<b>' + esc(label(b, v)) + '</b>';
+}
+/* 空格的顏色：圖上的空格＝這個位置的碳數；圖下的空格＝選到的答案是哪一類
+   （激酶與 ATP、GTP 橘色；去氫酶與 NADH 藍色；FADH₂ 紫色；NADPH 青色） */
+function kind(e) { e = e || ''; return /NADPH/.test(e) ? 'tp' : /kinase|ATP|GTP|UTP/.test(e) ? 'tk' : /dehydrogenase|NADH/.test(e) ? 'td' : /FADH/.test(e) ? 'tf' : ''; }
+function faceCls(b) {
+  var v = ST.ans[b.id] || '', c = 'face';
+  if (b.where === 'node' && b.c) c += ' k' + b.c;
+  if (b.where === 'row' && b.li == null && v) c += ' ' + kind(b.src[v].en);
+  return c;
+}
+function sel(b) {
+  var v = ST.ans[b.id] || '';
+  return '<span class="pick' + (v ? ' has' : '') + '"><span class="' + faceCls(b) + '">' + face(b) + '</span><select data-b="' + b.id + '" aria-label="空格"><option value="">' + (b.where === 'node' ? '？' : '請選擇') + '</option>' +
+    b.opts.map(function (o) { return '<option value="' + esc(o) + '"' + (o === v ? ' selected' : '') + '>' + esc(label(b, o)) + '</option>'; }).join('') + '</select></span>';
+}
+
+/* ---------- 一關的畫面 ---------- */
+var KLAB = { enz: { tk: '激酶 kinase', td: '去氫酶 dehydrogenase' }, prod: { tk: 'ATP、GTP', td: 'NADH', tf: 'FADH₂', tp: 'NADPH' } };
+function level() {
+  var P = CUR, L = P.levels[LV], U = L.sub ? P.subs[L.sub] : P, n = P.levels.length; FORCE = L.force || null;
+  if (!ST) ST = { blanks: buildBlanks(U, L), ans: {}, checked: false, shown: false };
+  $('title').textContent = P.zh; $('subtitle').textContent = '第 ' + (LV + 1) + ' 關，共 ' + n + ' 關・' + L.t;
+  $('back').hidden = false; seg();
+  $('lv').hidden = false; $('lv').innerHTML = P.levels.map(function (_, i) { var d = isDone(P.id, i); return '<button type="button" data-i="' + i + '" class="' + (i === LV ? 'on' : '') + (d ? ' done' : '') + '" aria-label="第 ' + (i + 1) + ' 關' + (d ? '（已完成）' : '') + '">' + (i + 1) + (d ? ' ✓' : '') + '</button>'; }).join('');
+  $('lv').querySelectorAll('button').forEach(function (b) { b.onclick = function () { open(P, +b.getAttribute('data-i')); }; });
+  var on = $('lv').querySelector('.on'); if (on && on.scrollIntoView) on.scrollIntoView({ block: 'nearest', inline: 'center' });
+
+  var h = '<div class="card pad"><h2>' + esc(L.t) + '</h2>' + L.intro.map(function (p) { return '<p>' + fmt(p) + '</p>'; }).join('') + (L.tip ? '<div class="tip">' + fmt(esc(L.tip)) + '</div>' : '') + '</div>';
+  var by = function (w) { return ST.blanks.filter(function (b) { return b.where === w; }); }, nodes = by('node'), rows = by('row').filter(function (b) { return b.li == null; }), lst = by('row').filter(function (b) { return b.li != null; }), cnt = by('count');
+  var passed = ST.checked && !ST.shown && ST.blanks.every(function (b) { return ST.ans[b.id] === b.ans; });
+  var E = L.energy || (L.rows === 'prod' && (ST.shown || passed)) ? 'all' : L.carbon ? 'co2' : '';      // 算帳那一關：全對或看答案後，圖上才出現能量標籤
+  var lgS = L.legend || (L.kind === 'map' && !L.plain ? U.nodes.map(function (n) { return n.c; }).concat(U.top ? [U.top.c] : []).filter(function (c, i, a) { return c && a.indexOf(c) === i; }).sort(function (a, b) { return b - a; }) : []);
+  var lg = lgS.map(function (c) { return typeof c === 'object' ? '<span><i class="' + c[0] + '"></i>' + esc(c[1]) + '</span>' : '<span><i class="k' + c + '"></i>' + c + ' 碳</span>'; });      // 圖例：數字＝碳數；[樣式, 文字]＝自訂
+  if (lg.length && (L.legendTitle || typeof lgS[0] !== 'object')) lg.unshift('<span>' + esc(L.legendTitle || '底色＝碳數') + '</span>');
+  if (L.kind === 'map' && L.rows && allSteps(U).some(function (s) { return s.irr && asked(L, s); })) lg.push('<span><i class="irr">1</i>實心編號＝不可逆步驟</span>');
+  if (L.kind === 'ov' || L.kind === 'map') { var H = L.kind === 'ov' ? L.h : mapH(U), fh = Math.round(PH() / .75);
+    h += '<div class="card pad"><div class="dia" id="dia"><svg viewBox="0 0 360 ' + H + '" role="img" aria-label="' + esc(P.zh) + '路徑圖">' + (L.kind === 'ov' ? L.svg() : mapSvg(U, L, E)) + '</svg>' +
+      nodes.map(function (b) { return '<span class="bk" data-k="' + b.id + '" style="left:' + (b.x / 360 * 100) + '%;top:' + (b.y / H * 100) + '%"><span style="display:block;width:' + Math.round(b.w / .75) + 'px;height:' + fh + 'px">' + sel(b) + '</span><i class="mk"></i></span>'; }).join('') + '</div>' +
+      (lg.length ? '<div class="lgd">' + lg.join('') + '</div>' : '') + (nodes.length ? '<div class="small muted" style="text-align:center;margin-top:6px">點虛線框選答案</div>' : '') + '</div>'; }
+  if (rows.length) { var seen = {}, kl = ''; rows[0].opts.forEach(function (o) { var k = kind(rows[0].src[o].en); if (k && !seen[k] && KLAB[L.rows][k]) { seen[k] = 1; } });
+    ['tk', 'td', 'tf', 'tp'].forEach(function (k) { if (seen[k]) kl += '<span><i class="' + k + '"></i>' + KLAB[L.rows][k] + '</span>'; });
+    h += '<div class="card pad"><h2>' + esc(L.rowsTitle || '') + '</h2>' + (kl ? '<div class="lgd" style="justify-content:flex-start;margin:0 0 4px">' + kl + '</div>' : '') + rows.map(function (b) { var s = b.st;
+      var d = s.desc ? T(s.desc.zh, s.desc.en) : short(U.map[s.f]) + ' → ' + short(U.map[s.t]) + (s.also ? ' ＋ ' + short(U.map[s.also]) : '');
+      return '<div class="st" data-k="' + b.id + '"><span class="n">' + (b.step + 1) + '</span><span class="d">' + esc(d) + '</span><span class="w">' + sel(b) + '<div class="r"></div></span></div>'; }).join('') + '</div>'; }
+  if (lst.length) h += '<div class="card pad"><h2>' + esc(L.listTitle || '') + '</h2>' + lst.map(function (b) {
+    return '<div class="st" data-k="' + b.id + '"><span class="n">' + (b.li + 1) + '</span><span class="d" style="font-size:14px;color:var(--ink)">' + fmt(esc(b.desc)) + '</span><span class="w">' + sel(b) + '<div class="r"></div></span></div>'; }).join('') + '</div>';
+  if (cnt.length) h += '<div class="card pad"><h2>' + esc(L.countsTitle || '') + '</h2>' + cnt.map(function (b) {
+    return '<div class="st c" data-k="' + b.id + '"><span class="d">' + esc(b.label) + '</span><span class="w">' + sel(b) + '<div class="r"></div></span></div>'; }).join('') + '</div>';
+  if (L.kind === 'cloze') { var zb = by('cloze'); h += '<div class="card pad"><ol class="cz">' + L.cloze.map(function (row, i) {
+    return '<li data-k="z' + i + '">' + row.map(function (x) { return typeof x === 'string' ? (x === '。' ? '' : esc(x)) : sel(zb[i]); }).join('') + '<div class="r"></div></li>'; }).join('') + '</ol></div>'; }
+  h += '<div id="res"></div><div class="foot"><div class="row" id="acts"></div></div>';
+  $('main').innerHTML = h;
+  document.querySelectorAll('.pick select').forEach(function (el) { el.onchange = function () {
+    var id = el.getAttribute('data-b'), b = ST.blanks.filter(function (x) { return x.id === id; })[0];
+    ST.ans[id] = el.value; el.parentNode.classList.toggle('has', !!el.value); var fe = el.parentNode.querySelector('.face'); fe.className = faceCls(b); fe.innerHTML = face(b);
+    if (ST.checked) { ST.checked = false; clearMarks(); acts(); }
+  }; });
+  if (ST.shown) document.querySelectorAll('.pick select').forEach(function (el) { el.disabled = true; });
+  scaleDia(); if (ST.checked) mark(); acts();
+}
+function scaleDia() { var d = $('dia'); if (d) d.style.setProperty('--s', (d.clientWidth / 360 * .75).toFixed(3)); }
+window.addEventListener('resize', scaleDia);
+function holder(b) { return document.querySelector('[data-k="' + b.id + '"]'); }
+function clearMarks() {
+  document.querySelectorAll('.pick').forEach(function (el) { el.classList.remove('ok', 'no'); });
+  document.querySelectorAll('[data-k]').forEach(function (el) { el.classList.remove('ok', 'no'); var r = el.querySelector('.r'); if (r) r.textContent = ''; var m = el.querySelector('.mk'); if (m) m.textContent = ''; });
+  $('res').innerHTML = '';
+}
+function mark() {
+  var right = 0, total = ST.blanks.length, L = CUR.levels[LV];
+  ST.blanks.forEach(function (b) {
+    var v = ST.ans[b.id] || '', ok = v === b.ans, el = holder(b), s = el.querySelector('.pick');
+    if (ok) right++;
+    s.classList.remove('ok', 'no'); el.classList.remove('ok', 'no'); s.classList.add(ok ? 'ok' : 'no'); el.classList.add(ok ? 'ok' : 'no');
+    var m = el.querySelector('.mk'); if (m) m.textContent = ok ? '✓' : '✕';
+    var o = b.src && b.src[b.ans], zh = o && (b.lang || M()) === 'en' && o.zh !== (o.en || o.zh) ? o.zh : '';      // 用英文作答的空格，答對後補上中文
+    var r = el.querySelector('.r'); if (r) r.textContent = ok ? '✓ 正確' + (zh ? '：' + zh : '') : (v ? '✕ 再想想' : '✕ 還沒填');
+  });
+  var all = right === total, last = LV === CUR.levels.length - 1;
+  if (all && !ST.shown) { if (!SAVE.done[CUR.id]) SAVE.done[CUR.id] = {}; SAVE.done[CUR.id][LV] = 1; save(); var c = $('lv').querySelectorAll('button')[LV]; c.classList.add('done'); if (c.textContent.indexOf('✓') < 0) c.textContent += ' ✓'; }
+  $('res').innerHTML = '<div class="res ' + (all ? 'ok' : 'bad') + '"><b>' + (ST.shown ? '這是正確答案' : all ? '全對！' : '答對 ' + right + ' ／ ' + total) + '</b>　' +
+    (ST.shown ? '看熟之後按「重來」，自己再填一次才算過關。' : all ? (last ? '這個單元完成了。' : '可以進下一關了。') : '紅色的空格再改一次，改完再按「對答案」。') + '</div>' +
+    (all && !ST.shown && L.done ? '<div class="card pad"><h2>記住這幾件事</h2><ul>' + L.done.map(function (t) { return '<li>' + fmt(esc(t)) + '</li>'; }).join('') + '</ul></div>' : '');
+  return all;
+}
+function acts() {
+  var last = LV === CUR.levels.length - 1, all = ST.checked && ST.blanks.every(function (b) { return ST.ans[b.id] === b.ans; }) && !ST.shown, h = '';
+  if (all) h = '<button type="button" class="btn plain" id="redo">重來</button><button type="button" class="btn" id="next">' + (last ? '回目錄' : '下一關') + '</button>';
+  else if (ST.checked) h = '<button type="button" class="btn plain" id="' + (ST.shown ? 'redo' : 'show') + '">' + (ST.shown ? '重來' : '看正確答案') + '</button><button type="button" class="btn" id="chk"' + (ST.shown ? ' disabled' : '') + '>對答案</button>';
+  else h = '<button type="button" class="btn" id="chk">對答案</button>';
+  $('acts').innerHTML = h;
+  if ($('chk')) $('chk').onclick = function () { ST.checked = true; var L = CUR.levels[LV]; if (L.rows === 'prod' && ST.blanks.every(function (b) { return ST.ans[b.id] === b.ans; })) level(); else { mark(); acts(); } var r = $('res'); if (r.scrollIntoView) r.scrollIntoView({ block: 'nearest' }); };
+  if ($('show')) $('show').onclick = function () { ST.shown = true; ST.blanks.forEach(function (b) { ST.ans[b.id] = b.ans; }); level(); };
+  if ($('redo')) $('redo').onclick = function () { ST = null; level(); window.scrollTo(0, 0); };
+  if ($('next')) $('next').onclick = function () { if (last) home(); else open(CUR, LV + 1); };
+}
+
+$('back').onclick = home;
+$('lang').querySelectorAll('button').forEach(function (b) { b.onclick = function () { LANG = b.getAttribute('data-l'); SAVE.lang = LANG; save(); if (CUR) { var y = window.pageYOffset; level(); window.scrollTo(0, y); } else home(); }; });
+(function () { var m = (location.search.match(/[?&]p=([a-z]+)/) || [])[1]; if (m && UNITS[m]) open(UNITS[m], firstTodo(UNITS[m])); else home(); })();
+</script>
+</body>
+</html>

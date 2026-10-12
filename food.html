@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>圖解食品科學</title>
+<title>圖解營養化學與食品</title>
 <style>
   :root {
     --bg: #f4f5f2; --card: #ffffff; --ink: #1f2a24; --muted: #5f6a63; --line: #e2e5df; --rail: #c9d2cb;
@@ -154,7 +154,7 @@
 <body>
 <header>
   <div class="hd">
-    <div class="tt"><h1 id="title">圖解食品科學</h1><div class="sub" id="subtitle"></div></div>
+    <div class="tt"><h1 id="title">圖解營養化學與食品</h1><div class="sub" id="subtitle"></div></div>
     <div class="seg" id="lang" role="group" aria-label="名稱顯示的語言"><button type="button" data-l="zh">中</button><button type="button" data-l="bi">中英</button><button type="button" data-l="en">EN</button></div>
     <button type="button" class="xbtn" id="back" hidden>目錄</button>
   </div>
@@ -1383,9 +1383,563 @@ var FIND = { id: 'find', zh: '指標微生物與衛生標準', en: 'Indicator or
       intro: ['衛生標準的對應，全部用英文作答；下面再加上五種指標。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
       listTitle: 'Indicators', list: FIND_F.map(function (r) { return [r[1], { a: r[2], o: FIND_O }]; }) }
   ] };
-/* 圖解食品科學的目錄。食品微生物照老師《食品微生物學》授課單元的順序；營養化學、食品衛生與安全等教材來了再做。有 levels 的才是做好的單元 */
+/* ======================================================================
+   營養化學：先讀這裡（測量與科學記號）
+   ====================================================================== */
+function CPRE_OV() {
+  var s = flow(130, 32, 66, 176, [{ zh: '原子（元素）', en: 'Atoms (elements)' }, null, null, null, null], [0, 0, 0, 0, 0]);
+  [['第 2 單元', 'Unit 2', 32], ['第 3 單元', 'Unit 3', 98], ['第 4 單元', 'Unit 4', 164], ['第 5 單元', 'Unit 5', 230], ['第 6～8 單元', 'Units 6–8', 296]].forEach(function (r) { s += tx(300, r[2] + 4, T(r[0], r[1]), 'm', 10); });
+  return s;
+}
+var CPRE_S = ['bond', 'func', 'nutr', 'soln'];
+function CPRE_B() { return [{ id: 's1', x: 130, y: 98, w: 176, c: 'I', a: 'bond', o: CPRE_S }, { id: 's2', x: 130, y: 164, w: 176, c: 'C', a: 'func', o: CPRE_S }, { id: 's3', x: 130, y: 230, w: 176, c: 'H', a: 'nutr', o: CPRE_S }, { id: 's4', x: 130, y: 296, w: 176, c: 'T', a: 'soln', o: CPRE_S }]; }
+var CPRE_P = ['pk', 'pc', 'pm', 'pu', 'pn', 'pd'];
+var CPRE = { id: 'cpre', zh: '先讀這裡：營養化學在學什麼', en: 'Chemistry for nutrition: overview', alias: '全貌・單位與字首・科學記號・密度・金屬', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    bond: { zh: '化學鍵：原子接成分子', en: 'Chemical bonds: atoms form molecules' }, func: { zh: '有機分子與官能基', en: 'Organic molecules, functional groups' },
+    nutr: { zh: '營養分子：脂肪酸、胺基酸、醣', en: 'Nutrient molecules' }, soln: { zh: '在水溶液中反應：濃度、滲透壓、酸鹼', en: 'Reactions in solution' },
+    pk: { zh: 'k（千）＝10³', en: 'kilo = 10³' }, pc: { zh: 'c（厘）＝10⁻²', en: 'centi = 10⁻²' }, pm: { zh: 'm（毫）＝10⁻³', en: 'milli = 10⁻³' }, pu: { zh: 'μ（微）＝10⁻⁶', en: 'micro = 10⁻⁶' }, pn: { zh: 'n（奈）＝10⁻⁹', en: 'nano = 10⁻⁹' }, pd: { zh: 'd（分）＝10⁻¹', en: 'deci = 10⁻¹' },
+    light: { zh: '輕金屬（密度 < 4.5）', en: 'Light metals (density < 4.5)' }, heavy: { zh: '重金屬（密度 > 4.5）', en: 'Heavy metals (density > 4.5)' },
+    toxic: { zh: '鉛、汞、鎘、砷', en: 'Lead, mercury, cadmium, arsenic' }, nak: { zh: '鈉、鉀、鎂、鋁', en: 'Sodium, potassium, magnesium, aluminum' },
+    dens: { zh: '密度＝質量 ÷ 體積', en: 'Density = mass ÷ volume' }, conc: { zh: '濃度＝溶質 ÷ 溶液', en: 'Concentration = solute ÷ solution' }
+  },
+  levels: [
+    { t: '先看全貌：從原子到營養分子', kind: 'ov', h: 330, svg: CPRE_OV, blanks: CPRE_B(),
+      legend: [['kH', '碳與有機分子'], ['kI', '金屬、陽離子'], ['kE', '非金屬、陰離子'], ['kT', '水與溶液'], ['kC', '官能基']], legendTitle: '這一頁的顏色',
+      intro: ['營養化學是生化、營養學、膳食療養、食品化學共同的化學底子。它從最小的單位講起，一路走到我們吃的營養素。',
+        '原子靠化學鍵接成分子；以碳為骨架的分子是有機分子，它的性質由幾種「官能基」決定；脂肪酸、胺基酸、醣就是帶著特定官能基的有機分子。',
+        '最後，身體裡的反應都在水溶液裡進行，所以要會算濃度、滲透壓和酸鹼。右邊是每一步對應的單元。'],
+      done: ['[[原子 → 化學鍵 → 有機分子與官能基 → 營養分子 → 溶液中的反應（莫耳、濃度、滲透壓、酸鹼）。]]', '後面每個單元的最後都有「總複習（英文作答）」：元素、化合物和官能基的英文名稱，要練到看得懂。'] },
+    { t: '單位與字首', kind: 'list',
+      intro: ['營養學裡到處都是單位：每天幾毫克的鈣、幾微克的維生素 B12、血中每公合幾毫克的血糖。單位前面的字首代表 10 的幾次方。',
+        '最常用的是千、毫、微、奈。記住每一級差 1,000 倍：1 公克 ＝ 1,000 毫克 ＝ 1,000,000 微克。另外容量常用公合（dL，100 毫升）。'],
+      listTitle: '字首',
+      list: [['mg 的 m', { a: 'pm', o: CPRE_P }], ['μg 的 μ', { a: 'pu', o: CPRE_P }], ['kcal 的 k', { a: 'pk', o: CPRE_P }], ['ng 的 n', { a: 'pn', o: CPRE_P }], ['dL 的 d', { a: 'pd', o: CPRE_P }], ['cm 的 c', { a: 'pc', o: CPRE_P }]],
+      countsTitle: '換算', counts: [['1 公克是幾毫克', '1,000', ['100', '1,000', '10,000', '1,000,000']], ['150 微克是幾毫克', '0.15', ['0.015', '0.15', '1.5', '15']], ['1 公升是幾公合', '10', ['10', '100', '1,000', '0.1']], ['血糖 100 mg/dL 等於每公升幾毫克', '1,000', ['10', '100', '1,000', '10,000']]],
+      done: ['[[k 10³、d 10⁻¹、c 10⁻²、m 10⁻³、μ 10⁻⁶、n 10⁻⁹；相鄰的 m、μ、n 每級差 1,000 倍。]]', '1 dL（公合）＝ 100 mL；臨床的 mg/dL 乘以 10 就是 mg/L。'] },
+    { t: '科學記號與密度', kind: 'list',
+      intro: ['很大或很小的數字用科學記號寫：一個 1 到 10 之間的數，乘上 10 的幾次方。小數點往左移幾位，次方就加幾；往右移幾位，就減幾。',
+        '密度是單位體積的質量。金屬依密度分輕、重兩類，和環境污染、毒性有關的大多是重金屬。'],
+      listTitle: '是哪一個',
+      list: [['密度的定義', { a: 'dens', o: ['dens', 'conc'] }], ['毒性大、和環境污染有關的重金屬', { a: 'toxic', o: ['toxic', 'nak'] }], ['鈉、鉀、鎂、鋁屬於', { a: 'light', o: ['light', 'heavy'] }]],
+      countsTitle: '寫成科學記號', counts: [['350', '3.5×10²', ['3.5×10¹', '3.5×10²', '3.5×10³', '35×10¹']], ['0.00016', '1.6×10⁻⁴', ['1.6×10⁻³', '1.6×10⁻⁴', '1.6×10⁻⁵', '16×10⁻⁴']], ['5,220,000', '5.22×10⁶', ['5.22×10⁵', '5.22×10⁶', '5.22×10⁷', '522×10⁴']], ['10 g 的物質體積 8 mL，密度是', '1.25 g/mL', ['0.8 g/mL', '1.25 g/mL', '2 g/mL', '80 g/mL']]],
+      done: ['[[科學記號：a × 10ⁿ，1 ≤ a < 10。]]', '輕金屬密度 < 4.5；重金屬密度 > 4.5。鉛、汞、鎘、砷毒性大，常見於食品污染的檢驗。'] },
+    { t: '考試重點', kind: 'cloze',
+      intro: ['這門課不是國考科目，但單位換算在營養學、生化、膳療的計算題一定會用到。最後幾題的選項只有英文。'],
+      cloze: [
+        ['1 微克等於', { a: 'pmg', o: ['pmg', 'pmg2'] }, '。'],
+        ['臨床的 mg/dL 換成 mg/L 要', { a: 'x10', o: ['x10', 'd10'] }, '。'],
+        ['毒性大的重金屬是', { a: 'toxic', o: ['toxic', 'nak'] }, '。'],
+        ['μ 代表', { a: 'pu', o: CPRE_P, lang: 'en' }, '。'],
+        ['n 代表', { a: 'pn', o: CPRE_P, lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 330, force: 'en', svg: CPRE_OV, blanks: CPRE_B(),
+      intro: ['第一關的圖，全部用英文作答；下面再加上字首。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: 'Prefixes', list: [['m', { a: 'pm', o: CPRE_P }], ['μ', { a: 'pu', o: CPRE_P }], ['k', { a: 'pk', o: CPRE_P }], ['n', { a: 'pn', o: CPRE_P }]] }
+  ] };
+(function () { var d = CPRE.dict; d.pmg = { zh: '0.001 毫克', en: '0.001 mg' }; d.pmg2 = { zh: '0.1 毫克', en: '0.1 mg' }; d.x10 = { zh: '乘以 10', en: 'Multiply by 10' }; d.d10 = { zh: '除以 10', en: 'Divide by 10' }; })();
+/* ======================================================================
+   營養化學：元素、原子與週期表
+   ====================================================================== */
+function CELM_OV() {
+  var s = '<circle cx="110" cy="130" r="92" fill="none" stroke="var(--rail)" stroke-width="1.5" stroke-dasharray="4 4"/><circle cx="110" cy="130" r="56" fill="none" stroke="var(--rail)" stroke-width="1.5" stroke-dasharray="4 4"/>';
+  [[100, 122, 'I'], [118, 122, 'M'], [100, 140, 'M'], [118, 140, 'I'], [109, 131, 'I']].forEach(function (d) { s += d[2] === 'M' ? '<circle cx="' + d[0] + '" cy="' + d[1] + '" r="9" fill="var(--card)" stroke="var(--muted)" stroke-width="1.5"/>' : dot(d[0], d[1], 9, d[2]); });
+  [[110, 74], [166, 130], [110, 222], [26, 158], [50, 62], [180, 70]].forEach(function (d) { s += dot(d[0], d[1], 6, 'E'); });
+  s += sl('124,128 236,60', 'M', 1, '3 3') + sl('128,138 236,124', 'M', 1, '3 3') + sl('172,130 236,188', 'M', 1, '3 3');
+  s += tx(110, 252, T('原子核', 'nucleus'), 'm', 9.5) + tx(110, 272, T('（外圈是電子層）', '(rings = electron shells)'), 'm', 9);
+  s += tx(180, 300, T('原子序（Z）＝', 'Atomic number (Z) ='), 'm', 10, 'end') + tx(180, 342, T('質量數（A）＝', 'Mass number (A) ='), 'm', 10, 'end');
+  return s;
+}
+var CELM_P = ['prot', 'neut', 'elec'];
+function CELM_B() { return [{ id: 'p1', x: 290, y: 60, w: 118, c: 'I', a: 'prot', o: CELM_P }, { id: 'p2', x: 290, y: 124, w: 118, a: 'neut', o: CELM_P }, { id: 'p3', x: 290, y: 188, w: 118, c: 'E', a: 'elec', o: CELM_P },
+  { id: 'z', x: 262, y: 296, w: 150, a: 'zp', o: ['zp', 'zpn'] }, { id: 'a', x: 262, y: 338, w: 150, a: 'zpn', o: ['zp', 'zpn'] }]; }
+var CELM_EL = ['na', 'k', 'fe', 'cu', 'pb', 'hg', 'sn', 'se', 'mn', 'mo'];
+var CELM = { id: 'celm', zh: '元素、原子與週期表', en: 'Elements, atoms and the periodic table', alias: '元素符號・質子中子電子・同位素・族與週期・價電子・輻射', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    prot: { zh: '質子（帶正電）', en: 'Proton (+)' }, neut: { zh: '中子（不帶電）', en: 'Neutron (0)' }, elec: { zh: '電子（帶負電）', en: 'Electron (−)' },
+    zp: { zh: '質子數', en: 'Number of protons' }, zpn: { zh: '質子數＋中子數', en: 'Protons + neutrons' },
+    na: { zh: '鈉', en: 'Sodium' }, k: { zh: '鉀', en: 'Potassium' }, fe: { zh: '鐵', en: 'Iron' }, cu: { zh: '銅', en: 'Copper' }, pb: { zh: '鉛', en: 'Lead' }, hg: { zh: '汞', en: 'Mercury' },
+    sn: { zh: '錫', en: 'Tin' }, se: { zh: '硒', en: 'Selenium' }, mn: { zh: '錳', en: 'Manganese' }, mo: { zh: '鉬', en: 'Molybdenum' }, cd: { zh: '鎘', en: 'Cadmium' }, cr: { zh: '鉻', en: 'Chromium' },
+    alk: { zh: '鹼金屬（1A）', en: 'Alkali metals (1A)' }, alke: { zh: '鹼土金屬（2A）', en: 'Alkaline earth metals (2A)' }, hal: { zh: '鹵素（7A）', en: 'Halogens (7A)' }, nob: { zh: '鈍氣（8A）', en: 'Noble gases (8A)' },
+    grp: { zh: '族（直行）', en: 'Group (column)' }, per: { zh: '週期（橫列）', en: 'Period (row)' }, val: { zh: '價電子', en: 'Valence electrons' }, core: { zh: '內層電子', en: 'Core electrons' },
+    iso: { zh: '同位素', en: 'Isotopes' }, ion: { zh: '離子', en: 'Ions' }, metl: { zh: '金屬（週期表左邊）', en: 'Metals (left side)' }, nonm: { zh: '非金屬（週期表右上）', en: 'Nonmetals (upper right)' },
+    alpha: { zh: 'α 粒子（氦原子核）', en: 'Alpha particle (helium nucleus)' }, beta: { zh: 'β 粒子（電子）', en: 'Beta particle (electron)' }, gamma: { zh: 'γ 射線（電磁波）', en: 'Gamma ray' },
+    bq: { zh: '貝克（Bq）：每秒衰變次數', en: 'Becquerel: decays per second' }, sv: { zh: '西弗（Sv）：人體吸收的劑量', en: 'Sievert: dose to the body' }
+  },
+  levels: [
+    { t: '先看全貌：原子裡有什麼', kind: 'ov', h: 360, svg: CELM_OV, blanks: CELM_B(),
+      legend: [['kI', '帶正電'], ['kE', '帶負電']],
+      intro: ['原子的中心是很小、很重的原子核，裡面有兩種粒子：一種帶正電，一種不帶電。外面一層一層繞著帶負電、非常輕的粒子。',
+        '原子核裡帶正電的粒子數目決定了它是哪一種元素，叫原子序。原子核裡兩種粒子加起來的數目，叫質量數。',
+        '中性的原子，帶正電和帶負電的粒子數目一樣。'],
+      done: ['[[原子序（Z）＝質子數；質量數（A）＝質子數＋中子數；中子數＝A − Z。]]', '中性原子的電子數＝質子數。電子很輕，原子的質量幾乎都在原子核。'] },
+    { t: '元素符號與英文名稱', kind: 'list',
+      intro: ['營養學和食品衛生常見的元素，要能看符號說出中文和英文。有些符號來自拉丁文，和英文對不起來，最容易考：鈉 Na、鉀 K、鐵 Fe、銅 Cu、鉛 Pb、汞 Hg、錫 Sn。',
+        '下面每題給符號，選出元素。'],
+      listTitle: '這是什麼元素',
+      list: [['Na', { a: 'na', o: CELM_EL }], ['K', { a: 'k', o: CELM_EL }], ['Fe', { a: 'fe', o: CELM_EL }], ['Cu', { a: 'cu', o: CELM_EL }], ['Pb', { a: 'pb', o: CELM_EL }], ['Hg', { a: 'hg', o: CELM_EL }],
+        ['Sn', { a: 'sn', o: CELM_EL }], ['Se', { a: 'se', o: CELM_EL }], ['Mn', { a: 'mn', o: CELM_EL }], ['Mo', { a: 'mo', o: CELM_EL }]],
+      done: ['[[符號來自拉丁文的：Na（natrium）鈉、K（kalium）鉀、Fe（ferrum）鐵、Cu（cuprum）銅、Pb（plumbum）鉛、Hg 汞、Sn 錫。]]', 'Mn 錳（manganese）和 Mg 鎂（magnesium）、Mo 鉬（molybdenum）和 Hg 汞，最容易混淆。',
+        '其他常考：Ca 鈣、P 磷、S 硫、Cl 氯、I 碘、F 氟、Zn 鋅、Cr 鉻、Co 鈷、Ni 鎳、Cd 鎘、As 砷、Al 鋁、B 硼、V 釩、Li 鋰。'] },
+    { t: '週期表', kind: 'list',
+      intro: ['週期表依原子序排列。直的一行叫族，同一族最外層的電子數相同，化學性質相似；橫的一列叫週期。',
+        '最外層、會參與化學反應的電子叫價電子。A 族元素的價電子數就是族號：第 1 族有 1 個，第 7 族有 7 個。',
+        '週期表左邊大多是金屬，容易失去電子；右上角是非金屬，容易得到電子；最右邊一族的最外層已經填滿，非常穩定，幾乎不反應。'],
+      listTitle: '是哪一個',
+      list: [['直的一行', { a: 'grp', o: ['grp', 'per'] }], ['橫的一列', { a: 'per', o: ['grp', 'per'] }], ['最外層、參與反應的電子', { a: 'val', o: ['val', 'core'] }],
+        ['鈉、鉀', { a: 'alk', o: ['alk', 'alke', 'hal', 'nob'] }], ['鈣、鎂', { a: 'alke', o: ['alk', 'alke', 'hal', 'nob'] }], ['氟、氯、碘', { a: 'hal', o: ['alk', 'alke', 'hal', 'nob'] }], ['氦、氖', { a: 'nob', o: ['alk', 'alke', 'hal', 'nob'] }],
+        ['容易失去電子的', { a: 'metl', o: ['metl', 'nonm'] }]],
+      done: ['[[族：直行，價電子數相同、性質相似；週期：橫列。1A 鹼金屬、2A 鹼土金屬、7A 鹵素、8A 鈍氣。]]', 'A 族元素的價電子數＝族號；鈍氣最外層填滿，最穩定。'] },
+    { t: '同位素與離子：算一算', kind: 'list',
+      intro: ['同一種元素（質子數相同），中子數可以不同，叫同位素，例如碳-12 和碳-14。',
+        '原子失去或得到電子後帶電，叫離子；質子數不變，所以還是同一種元素。'],
+      listTitle: '是哪一個', list: [['質子數相同、中子數不同', { a: 'iso', o: ['iso', 'ion'] }], ['電子數改變而帶電', { a: 'ion', o: ['iso', 'ion'] }]],
+      countsTitle: '²³Na（原子序 11）', counts: [['質子數', '11', ['11', '12', '23', '34']], ['中子數', '12', ['11', '12', '23', '34']], ['中性原子的電子數', '11', ['10', '11', '12', '23']], ['Na⁺ 的電子數', '10', ['10', '11', '12', '22']]],
+      done: ['[[中子數＝質量數 − 原子序；陽離子失去電子，陰離子得到電子，質子數不變。]]'] },
+    { t: '放射線與單位', kind: 'list',
+      intro: ['有些原子核不穩定，會自己放出粒子或能量，變成另一種原子核，這叫放射性衰變。',
+        '放出的東西有三種：一種是兩個質子加兩個中子（就是氦的原子核），穿透力最弱，一張紙就擋住；一種是高速的電子；一種是能量很高的電磁波，穿透力最強。食品照射用的就是最後這一種。',
+        '描述放射性有兩種單位：一種計算放射源每秒衰變幾次；另一種表示人體吸收後受到的劑量。'],
+      listTitle: '是哪一個',
+      list: [['氦原子核，穿透力最弱', { a: 'alpha', o: ['alpha', 'beta', 'gamma'] }], ['高速電子', { a: 'beta', o: ['alpha', 'beta', 'gamma'] }], ['電磁波，穿透力最強、用於食品照射', { a: 'gamma', o: ['alpha', 'beta', 'gamma'] }],
+        ['每秒衰變 1 次', { a: 'bq', o: ['bq', 'sv'] }], ['人體受到的輻射劑量', { a: 'sv', o: ['bq', 'sv'] }]],
+      done: ['[[α：氦原子核；β：電子；γ：電磁波（穿透力 γ > β > α）。]]', '[[貝克（Bq）：每秒衰變次數；西弗（Sv）：人體吸收的劑量，1 Sv ＝ 1 J/kg。]]'] },
+    { t: '考試重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['質量數等於', { a: 'zpn', o: ['zp', 'zpn'] }, '。'],
+        ['同一族的元素有相同數目的', { a: 'val', o: ['val', 'core'] }, '。'],
+        ['碳-12 和碳-14 互為', { a: 'iso', o: ['iso', 'ion'] }, '。'],
+        ['食品照射使用的是', { a: 'gamma', o: ['alpha', 'beta', 'gamma'] }, '。'],
+        ['Pb 是', { a: 'pb', o: ['pb', 'cd', 'hg'], lang: 'en' }, '。'],
+        ['Mn 是', { a: 'mn', o: ['mn', 'mo', 'cr'], lang: 'en' }, '。'],
+        ['氟、氯、碘屬於', { a: 'hal', o: ['alk', 'alke', 'hal', 'nob'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 360, force: 'en', svg: CELM_OV, blanks: CELM_B(),
+      intro: ['原子的構造，全部用英文作答；下面再練元素符號。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: 'Symbols', list: [['Na', { a: 'na', o: CELM_EL }], ['K', { a: 'k', o: CELM_EL }], ['Fe', { a: 'fe', o: CELM_EL }], ['Cu', { a: 'cu', o: CELM_EL }], ['Hg', { a: 'hg', o: CELM_EL }], ['Se', { a: 'se', o: CELM_EL }]] }
+  ] };
+/* ======================================================================
+   營養化學：化學鍵與化合物命名
+   ====================================================================== */
+function CBND_OV() {
+  var s = zone(8, 8, 344, 140, '') + zone(8, 160, 344, 160, '');
+  s += dot(70, 70, 22, 'I') + tx(70, 75, 'Na', '', 13) + dot(150, 70, 26, 'E') + tx(150, 75, 'Cl', '', 13) + sp('M92,58 Q110,40 128,52', 'M', 1.5) + hd(128, 52, 30, 'M') + tx(110, 36, T('1 個電子', '1 electron'), 'm', 9);
+  s += arrow(184, 70, 206, 70) + tx(40, 130, T('金屬＋非金屬', 'metal + nonmetal'), 'm', 9.5, 'start');
+  s += dot(110, 236, 26, 'E') + tx(110, 241, 'O', '', 13) + dot(64, 270, 16, 'T') + tx(64, 274, 'H', '', 11) + dot(156, 270, 16, 'T') + tx(156, 274, 'H', '', 11) + tx(110, 310, T('非金屬＋非金屬，共用電子對', 'nonmetals share electron pairs'), 'm', 9.5);
+  s += tx(270, 196, T('氧比氫更愛電子', 'O pulls electrons harder'), 'm', 9);
+  return s;
+}
+var CBND_K = ['ionb', 'covb', 'polb', 'hb'];
+function CBND_B() { return [{ id: 'k1', x: 278, y: 52, w: 132, a: 'ionb', o: CBND_K }, { id: 'k2', x: 278, y: 96, w: 132, c: 'I', a: 'cat', o: ['cat', 'ani'] }, { id: 'k3', x: 278, y: 236, w: 132, a: 'polb', o: CBND_K }, { id: 'k4', x: 278, y: 282, w: 132, c: 'T', a: 'polar', o: ['polar', 'nonp'] }]; }
+var CBND_N = ['kcl', 'mgcl', 'fes', 'cuo', 'naf', 'nai'];
+var CBND_PI = ['so4', 'no3', 'no2', 'po4', 'hco3', 'oh', 'clo', 'nh4'];
+var CBND = { id: 'cbnd', zh: '化學鍵與化合物', en: 'Chemical bonds and compounds', alias: '離子鍵・共價鍵・離子的電荷・化合物命名・多原子離子・極性與氫鍵', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    ionb: { zh: '離子鍵', en: 'Ionic bond' }, covb: { zh: '非極性共價鍵', en: 'Nonpolar covalent bond' }, polb: { zh: '極性共價鍵', en: 'Polar covalent bond' }, hb: { zh: '氫鍵', en: 'Hydrogen bond' },
+    cat: { zh: 'Na⁺ 是陽離子', en: 'Na⁺ is a cation' }, ani: { zh: 'Na⁺ 是陰離子', en: 'Na⁺ is an anion' }, polar: { zh: '水是極性分子', en: 'Water is polar' }, nonp: { zh: '水是非極性分子', en: 'Water is nonpolar' },
+    oct: { zh: '最外層湊滿 8 個電子', en: 'Octet rule' }, lose: { zh: '失去電子，變成陽離子', en: 'Lose electrons → cations' }, gain: { zh: '得到電子，變成陰離子', en: 'Gain electrons → anions' },
+    c1: { zh: '+1', en: '+1' }, c2: { zh: '+2', en: '+2' }, c3: { zh: '+3', en: '+3' }, m1: { zh: '−1', en: '−1' }, m2: { zh: '−2', en: '−2' },
+    kcl: { zh: 'KCl 氯化鉀', en: 'Potassium chloride' }, mgcl: { zh: 'MgCl₂ 氯化鎂', en: 'Magnesium chloride' }, fes: { zh: 'FeS 硫化亞鐵', en: 'Iron(II) sulfide' }, cuo: { zh: 'CuO 氧化銅', en: 'Copper(II) oxide' }, naf: { zh: 'NaF 氟化鈉', en: 'Sodium fluoride' }, nai: { zh: 'NaI 碘化鈉', en: 'Sodium iodide' },
+    so4: { zh: '硫酸根', en: 'Sulfate' }, no3: { zh: '硝酸根', en: 'Nitrate' }, no2: { zh: '亞硝酸根', en: 'Nitrite' }, po4: { zh: '磷酸根', en: 'Phosphate' }, hco3: { zh: '碳酸氫根', en: 'Bicarbonate' }, oh: { zh: '氫氧根', en: 'Hydroxide' }, clo: { zh: '次氯酸根', en: 'Hypochlorite' }, nh4: { zh: '銨根', en: 'Ammonium' },
+    fe2: { zh: '亞鐵（ferrous）', en: 'Ferrous, iron(II)' }, fe3: { zh: '鐵（ferric）', en: 'Ferric, iron(III)' }, en: { zh: '陰電性', en: 'Electronegativity' }, ie: { zh: '原子量', en: 'Atomic mass' },
+    t109: { zh: '正四面體（109.5°）', en: 'Tetrahedral (109.5°)' }, bent: { zh: '彎曲形（約 104.5°）', en: 'Bent (~104.5°)' }, vdw: { zh: '凡得瓦力', en: 'Van der Waals forces' }, dis: { zh: '溶於水會解離成離子', en: 'Dissociates into ions in water' }, nodis: { zh: '溶於水不解離', en: 'Does not dissociate' }
+  },
+  levels: [
+    { t: '先看全貌：兩種化學鍵', kind: 'ov', h: 330, svg: CBND_OV, blanks: CBND_B(),
+      intro: ['原子要讓最外層的電子湊滿（通常是 8 個），才會穩定。湊滿的方法有兩種。',
+        '金屬的價電子少，乾脆送出去；非金屬差一點就滿，乾脆收進來。一送一收，兩邊都帶電，正負相吸黏在一起。食鹽就是這樣。',
+        '兩個非金屬都想要電子，誰也不肯給，只好拿出電子一起用。共用時如果一邊拉得比較用力，電子就偏向那一邊，分子的一端帶一點負、另一端帶一點正。水就是這樣。'],
+      done: ['[[離子鍵：金屬把電子給非金屬，形成陽離子與陰離子（例如 NaCl）。共價鍵：非金屬之間共用電子對（例如 H₂O、CH₄）。]]', '共用不均等就是極性共價鍵；水分子是彎的、有極性，所以是好溶劑。',
+        '離子化合物溶於水會解離成離子，能導電；這些離子在營養學叫電解質。'] },
+    { t: '離子與電荷', kind: 'list',
+      intro: ['金屬失去電子成為陽離子，失去幾個就帶幾個正電；非金屬得到電子成為陰離子。主族元素的電荷可以從族號推出來：1A 是 +1、2A 是 +2、鋁 +3；7A 是 −1、6A 是 −2。',
+        '有些過渡金屬有不只一種電荷，例如鐵，要用羅馬數字註明，傳統命名則用「亞」表示電荷較低的那一種。'],
+      listTitle: '電荷是多少',
+      list: [['鈉、鉀', { a: 'c1', o: ['c1', 'c2', 'c3', 'm1', 'm2'] }], ['鈣、鎂', { a: 'c2', o: ['c1', 'c2', 'c3', 'm1', 'm2'] }], ['鋁', { a: 'c3', o: ['c1', 'c2', 'c3', 'm1', 'm2'] }], ['氯、氟、碘', { a: 'm1', o: ['c1', 'c2', 'c3', 'm1', 'm2'] }], ['氧、硫', { a: 'm2', o: ['c1', 'c2', 'c3', 'm1', 'm2'] }],
+        ['Fe²⁺', { a: 'fe2', o: ['fe2', 'fe3'] }], ['Fe³⁺', { a: 'fe3', o: ['fe2', 'fe3'] }], ['金屬原子', { a: 'lose', o: ['lose', 'gain'] }]],
+      done: ['[[1A +1、2A +2、Al³⁺；7A −1、6A −2。Fe²⁺ 亞鐵（ferrous）、Fe³⁺ 鐵（ferric）。]]', '腸道比較容易吸收的是 Fe²⁺；維生素 C 能把 Fe³⁺ 還原成 Fe²⁺。'] },
+    { t: '化合物的命名', kind: 'list',
+      intro: ['離子化合物的英文：陽離子照元素名，陰離子把字尾改成 -ide，例如 sodium chloride。中文則反過來讀：「氯化鈉」。',
+        '有不只一種電荷的金屬，英文用羅馬數字標出電荷，例如 iron(II) sulfide。',
+        '有些陰離子由好幾個原子組成，當作一個整體。含氧較多的叫「某酸根（-ate）」，少一個氧的叫「亞某酸根（-ite）」。'],
+      listTitle: '是哪一個',
+      list: [['Potassium chloride', { a: 'kcl', o: CBND_N }], ['Magnesium chloride', { a: 'mgcl', o: CBND_N }], ['Iron(II) sulfide', { a: 'fes', o: CBND_N }], ['Sodium iodide', { a: 'nai', o: CBND_N }],
+        ['SO₄²⁻', { a: 'so4', o: CBND_PI }], ['NO₂⁻', { a: 'no2', o: CBND_PI }], ['PO₄³⁻', { a: 'po4', o: CBND_PI }], ['HCO₃⁻', { a: 'hco3', o: CBND_PI }], ['ClO⁻（漂白水的有效成分）', { a: 'clo', o: CBND_PI }], ['NH₄⁺', { a: 'nh4', o: CBND_PI }]],
+      done: ['[[陰離子字尾 -ide（chloride、oxide、sulfide）；多原子離子 -ate 比 -ite 多一個氧（nitrate NO₃⁻、nitrite NO₂⁻）。]]', '亞硝酸鹽（nitrite）是肉品的保色劑；次氯酸根（hypochlorite）是漂白水的消毒成分。'] },
+    { t: '極性、形狀與分子間作用力', kind: 'list',
+      intro: ['原子拉電子的能力叫陰電性，氟、氧、氮最強。兩個原子的陰電性差越多，鍵的極性越大。',
+        '分子的形狀也有影響：甲烷四個鍵均勻朝四個方向，正好抵消，沒有極性；水是彎的，電荷偏向氧那一端，有極性。',
+        '分子和分子之間也有吸引力。氫接在氧、氮上時，會和另一個分子的氧、氮互相吸引，這種吸引叫氫鍵；它讓水的沸點特別高，也維持蛋白質的螺旋和 DNA 的雙股。'],
+      listTitle: '是哪一個',
+      list: [['原子拉電子的能力', { a: 'en', o: ['en', 'ie'] }], ['甲烷 CH₄ 的形狀', { a: 't109', o: ['t109', 'bent'] }], ['水分子的形狀', { a: 'bent', o: ['t109', 'bent'] }],
+        ['維持 DNA 雙股、蛋白質 α-螺旋的', { a: 'hb', o: ['hb', 'vdw'] }], ['NaCl 放進水裡', { a: 'dis', o: ['dis', 'nodis'] }]],
+      done: ['[[氫鍵：H 接在 O、N、F 上，和另一個分子的 O、N、F 互相吸引。]]', '「同類溶同類」：極性物質（糖、鹽）溶於水；非極性物質（油脂）不溶於水，要靠乳化。'] },
+    { t: '考試重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['NaCl 中的化學鍵是', { a: 'ionb', o: CBND_K }, '。'],
+        ['水分子中 O–H 之間是', { a: 'polb', o: CBND_K }, '。'],
+        ['維持 DNA 雙股的是', { a: 'hb', o: CBND_K }, '。'],
+        ['Fe²⁺ 稱為', { a: 'fe2', o: ['fe2', 'fe3'] }, '。'],
+        ['NO₂⁻ 是', { a: 'no2', o: CBND_PI, lang: 'en' }, '。'],
+        ['HCO₃⁻ 是', { a: 'hco3', o: CBND_PI, lang: 'en' }, '。'],
+        ['KCl 的英文是', { a: 'kcl', o: CBND_N, lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 330, force: 'en', svg: CBND_OV, blanks: CBND_B(),
+      intro: ['兩種化學鍵的圖，全部用英文作答；下面再練多原子離子。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: 'Polyatomic ions', list: [['SO₄²⁻', { a: 'so4', o: CBND_PI }], ['NO₃⁻', { a: 'no3', o: CBND_PI }], ['PO₄³⁻', { a: 'po4', o: CBND_PI }], ['OH⁻', { a: 'oh', o: CBND_PI }], ['ClO⁻', { a: 'clo', o: CBND_PI }]] }
+  ] };
+/* ======================================================================
+   營養化學：有機化學與官能基
+   ====================================================================== */
+var CORG_F = [['R–OH', 'alc'], ['R–CHO', 'ald'], ['R–CO–R′', 'ket'], ['R–COOH', 'acid'], ['R–COO–R′', 'est'], ['R–NH₂', 'ami'], ['R–CO–NH₂', 'amd']];
+var CORG_O = ['alc', 'ald', 'ket', 'acid', 'est', 'ami', 'amd'];
+function CORG_OV() { var s = tx(80, 18, T('官能基', 'functional group'), 'm', 9.5) + tx(250, 18, T('化合物種類（字尾）', 'class (suffix)'), 'm', 9.5); CORG_F.forEach(function (r, i) { var y = 44 + i * 46; s += pill(80, y, 132, r[0], 'pill kC') + arrow(148, y, 160, y); }); return s; }
+function CORG_B() { return CORG_F.map(function (r, i) { return { id: 'f' + i, x: 254, y: 44 + i * 46, w: 184, c: 'C', a: r[1], o: CORG_O }; }); }
+var CORG_N = ['c1', 'c2', 'c3', 'c4', 'c6', 'c10'];
+var CORG = { id: 'corg', zh: '有機化學與官能基', en: 'Organic chemistry and functional groups', alias: '烷烯炔・命名字首・醇醛酮酸酯胺・苯與酚・異構物', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    alc: { zh: '醇（-ol）', en: 'Alcohol (-ol)' }, ald: { zh: '醛（-al）', en: 'Aldehyde (-al)' }, ket: { zh: '酮（-one）', en: 'Ketone (-one)' }, acid: { zh: '羧酸（-oic acid）', en: 'Carboxylic acid (-oic acid)' },
+    est: { zh: '酯（-oate）', en: 'Ester (-oate)' }, ami: { zh: '胺（-amine）', en: 'Amine (-amine)' }, amd: { zh: '醯胺（-amide）', en: 'Amide (-amide)' },
+    c1: { zh: 'meth-（1 碳）', en: 'meth- (1 C)' }, c2: { zh: 'eth-（2 碳）', en: 'eth- (2 C)' }, c3: { zh: 'prop-（3 碳）', en: 'prop- (3 C)' }, c4: { zh: 'but-（4 碳）', en: 'but- (4 C)' }, c6: { zh: 'hex-（6 碳）', en: 'hex- (6 C)' }, c10: { zh: 'dec-（10 碳）', en: 'dec- (10 C)' },
+    ane: { zh: '烷（-ane，全是單鍵）', en: 'Alkane (-ane)' }, ene: { zh: '烯（-ene，有雙鍵）', en: 'Alkene (-ene)' }, yne: { zh: '炔（-yne，有參鍵）', en: 'Alkyne (-yne)' },
+    meoh: { zh: '甲醇', en: 'Methanol' }, etoh: { zh: '乙醇', en: 'Ethanol' }, glyc: { zh: '甘油（1,2,3-丙三醇）', en: 'Glycerol (1,2,3-propanetriol)' }, acet: { zh: '丙酮', en: 'Acetone' }, acal: { zh: '乙醛', en: 'Acetaldehyde' },
+    estf: { zh: '酯化（醇＋酸 → 酯＋水）', en: 'Esterification' }, hydr: { zh: '水解', en: 'Hydrolysis' }, pept: { zh: '醯胺鍵（肽鍵）', en: 'Amide (peptide) bond' }, ester2: { zh: '酯鍵', en: 'Ester bond' },
+    benz: { zh: '苯', en: 'Benzene' }, phen: { zh: '酚', en: 'Phenol' }, bza: { zh: '苯甲酸（防腐劑）', en: 'Benzoic acid' }, sorb: { zh: '己二烯酸（2,4-hexadienoic acid）', en: 'Sorbic acid' }, bht: { zh: 'BHA、BHT（酚類抗氧化劑）', en: 'BHA, BHT (phenolic antioxidants)' },
+    cis: { zh: '順反異構物', en: 'Cis–trans isomers' }, enan: { zh: '鏡像異構物（D 型與 L 型）', en: 'Enantiomers (D and L)' }, chir: { zh: '接了四個不同原子團的碳（掌性碳）', en: 'Carbon with four different groups (chiral)' }, dbl: { zh: '有雙鍵的碳', en: 'Carbon in a double bond' },
+    lform: { zh: 'L 型', en: 'L-form' }, dform: { zh: 'D 型', en: 'D-form' }, blind: { zh: '失明', en: 'Blindness' }, liver: { zh: '肝臟受損', en: 'Liver damage' }
+  },
+  levels: [
+    { t: '先看全貌：七種官能基', kind: 'ov', h: 368, svg: CORG_OV, blanks: CORG_B(),
+      intro: ['有機分子以碳為骨架，碳和氫組成的部分（寫成 R）性質都差不多；真正決定一個分子會怎麼反應的，是接在上面的一小群原子，叫官能基。',
+        '營養學最常見的有七種。它們的英文名稱字尾很有規律，看字尾就知道是哪一類：乙醇（ethanol）、乙醛（acetaldehyde）、丙酮（propanone，acetone）、醋酸（ethanoic acid）。',
+        '把官能基和名稱配起來。'],
+      done: ['[[醇 –OH（-ol）、醛 –CHO（-al）、酮 –CO–（-one）、羧酸 –COOH（-oic acid）、酯 –COO–（-oate）、胺 –NH₂（-amine）、醯胺 –CONH₂（-amide）。]]',
+        '醛和酮都有羰基（C＝O）：醛的羰基在碳鏈末端，酮的在中間。類固醇激素（黃體素、睪固酮、可體松）都帶有酮基。'] },
+    { t: '碳數與命名', kind: 'list',
+      intro: ['有機化合物的英文名稱前面表示碳數，後面表示鍵的種類或官能基。',
+        '碳數 1 到 10 的字首：meth-、eth-、prop-、but-、pent-、hex-、hept-、oct-、non-、dec-。脂肪酸常見的長鏈：eicosa- 是 20、docosa- 是 22（EPA、DHA 的全名就是這樣來的）。',
+        '只有單鍵的叫烷，有雙鍵的叫烯，有參鍵的叫炔；雙鍵的位置用數字標出來，例如 1,3-丁二烯。'],
+      listTitle: '是哪一個',
+      list: [['methanol 的 meth-', { a: 'c1', o: CORG_N }], ['propane 的 prop-', { a: 'c3', o: CORG_N }], ['butyric acid（丁酸）的 but-', { a: 'c4', o: CORG_N }], ['hexanoic acid 的 hex-', { a: 'c6', o: CORG_N }],
+        ['2-butyne', { a: 'yne', o: ['ane', 'ene', 'yne'] }], ['1,3-butadiene', { a: 'ene', o: ['ane', 'ene', 'yne'] }], ['propane', { a: 'ane', o: ['ane', 'ene', 'yne'] }]],
+      countsTitle: '有幾個碳', counts: [['eicosapentaenoic acid（EPA）', '20', ['18', '20', '22', '24']], ['docosahexaenoic acid（DHA）', '22', ['18', '20', '22', '24']], ['octanoic acid（MCT 油的成分）', '8', ['6', '8', '10', '12']]],
+      done: ['[[字首：meth 1、eth 2、prop 3、but 4、pent 5、hex 6、hept 7、oct 8、non 9、dec 10；eicosa 20、docosa 22。]]', '字尾：-ane 烷（單鍵）、-ene 烯（雙鍵）、-yne 炔（參鍵）。'] },
+    { t: '營養學常見的有機分子', kind: 'list',
+      intro: ['甲醇和乙醇只差一個碳，毒性卻差很多：甲醇在體內被代謝成會傷害視神經的物質。',
+        '甘油是三個碳、每個碳上各有一個羥基的醇，是三酸甘油酯的骨架。',
+        '酸和醇脫去一分子水接起來就是酯；反過來加水切開叫水解。三酸甘油酯就是甘油和三個脂肪酸形成的酯，水果的香味也多半是酯。',
+        '羧酸和胺脫水接起來形成醯胺鍵；兩個胺基酸之間的肽鍵就是醯胺鍵。'],
+      listTitle: '是哪一個',
+      list: [['誤食後可能造成失明', { a: 'meoh', o: ['meoh', 'etoh'] }], ['三酸甘油酯的骨架', { a: 'glyc', o: ['glyc', 'acet'] }], ['碳鏈最短的酮', { a: 'acet', o: ['glyc', 'acet', 'acal'] }], ['乙醇在體內氧化的第一個產物', { a: 'acal', o: ['acet', 'acal'] }],
+        ['酸＋醇 → 酯＋水', { a: 'estf', o: ['estf', 'hydr'] }], ['三酸甘油酯中甘油和脂肪酸之間的鍵', { a: 'ester2', o: ['ester2', 'pept'] }], ['胺基酸之間的鍵', { a: 'pept', o: ['ester2', 'pept'] }]],
+      done: ['[[三酸甘油酯是甘油與脂肪酸形成的酯（酯鍵）；蛋白質是胺基酸以醯胺鍵（肽鍵）連接。兩者分解都是水解。]]', '乙醇 → 乙醛（醇去氫酶）→ 乙酸（醛去氫酶）；丙酮是最簡單的酮，也是酮體之一。'] },
+    { t: '芳香族與異構物', kind: 'list',
+      intro: ['六個碳排成環、單雙鍵交替的叫苯環。苯環上接一個羥基就是酚；很多抗氧化劑和植化素都是酚類。苯環接羧基就是苯甲酸，是常用的防腐劑。',
+        '分子式相同、結構不同的叫異構物。雙鍵兩側的原子團在同一邊或對邊，形成順式和反式；一個碳接了四個不同的原子團時，會有左右手那樣互為鏡像、不能重疊的兩種形式。',
+        '生物對鏡像很挑剔：人體的胺基酸幾乎都是其中一型，醣則是另一型。'],
+      listTitle: '是哪一個',
+      list: [['苯環上接 –OH', { a: 'phen', o: ['benz', 'phen'] }], ['苯環上接 –COOH，用於醬油、飲料的防腐劑', { a: 'bza', o: ['bza', 'sorb'] }], ['IUPAC 名稱為 2,4-hexadienoic acid 的防腐劑', { a: 'sorb', o: ['bza', 'sorb'] }],
+        ['常見的酚類抗氧化劑', { a: 'bht', o: ['bht', 'sorb'] }], ['油酸和反油酸', { a: 'cis', o: ['cis', 'enan'] }], ['會產生鏡像異構物的碳', { a: 'chir', o: ['chir', 'dbl'] }],
+        ['人體蛋白質中的胺基酸', { a: 'lform', o: ['lform', 'dform'] }], ['天然的葡萄糖', { a: 'dform', o: ['lform', 'dform'] }]],
+      done: ['[[苯甲酸、己二烯酸是防腐劑；BHA、BHT 是酚類抗氧化劑。]]', '[[順反異構：雙鍵兩側；鏡像異構（D、L 型）：掌性碳。人體胺基酸是 L 型，醣類是 D 型。]]'] },
+    { t: '考試重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['醛和酮都含有', { a: 'co', o: ['co', 'oh2'] }, '。'],
+        ['三酸甘油酯是甘油和脂肪酸形成的', { a: 'est', o: CORG_O }, '。'],
+        ['肽鍵屬於', { a: 'pept', o: ['ester2', 'pept'] }, '。'],
+        ['乙醇氧化的第一個產物是', { a: 'acal', o: ['acet', 'acal'] }, '。'],
+        ['–COOH 是', { a: 'acid', o: CORG_O, lang: 'en' }, '。'],
+        ['–NH₂ 是', { a: 'ami', o: CORG_O, lang: 'en' }, '。'],
+        ['hex- 代表', { a: 'c6', o: CORG_N, lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 368, force: 'en', svg: CORG_OV, blanks: CORG_B(),
+      intro: ['七種官能基，全部用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: 'Names', list: [['Glycerol', { a: 'glyc', o: ['glyc', 'acet', 'meoh'] }], ['Smallest ketone', { a: 'acet', o: ['glyc', 'acet', 'meoh'] }], ['Benzene ring with –OH', { a: 'phen', o: ['benz', 'phen'] }]] }
+  ] };
+(function () { var d = CORG.dict; d.co = { zh: '羰基（C＝O）', en: 'Carbonyl group (C=O)' }; d.oh2 = { zh: '羥基（–OH）', en: 'Hydroxyl group (–OH)' }; })();
+/* ======================================================================
+   營養化學：營養分子的化學（脂肪酸、胺基酸、醣）
+   ====================================================================== */
+function CNUT_OV() {
+  var s = '', xs = [64, 180, 296];
+  [['脂肪酸', 'Fatty acid', 'C'], ['胺基酸', 'Amino acid', 'E'], ['單醣', 'Monosaccharide', 'H']].forEach(function (c, i) { s += pill(xs[i], 30, 108, { zh: c[0], en: c[1] }, 'pill k' + c[2]); });
+  s += tx(180, 66, T('帶有的官能基', 'functional groups'), 'm', 9.5) + tx(180, 136, T('連接起來的鍵', 'bond formed'), 'm', 9.5) + tx(180, 206, T('連接成', 'forms'), 'm', 9.5);
+  return s;
+}
+var CNUT_G = ['gfa', 'gaa', 'gsu'], CNUT_K = ['kest', 'kpep', 'kgly'], CNUT_M = ['mtg', 'mpro', 'mpol'];
+function CNUT_B() { var xs = [64, 180, 296], b = []; xs.forEach(function (x, i) { b.push({ id: 'g' + i, x: x, y: 96, w: 108, c: 'C', a: CNUT_G[i], o: CNUT_G }); b.push({ id: 'k' + i, x: x, y: 166, w: 108, a: CNUT_K[i], o: CNUT_K }); b.push({ id: 'm' + i, x: x, y: 236, w: 108, a: CNUT_M[i], o: CNUT_M }); }); return b; }
+var CNUT_FA = ['pal', 'ste', 'ole', 'lin', 'aln'];
+var CNUT = { id: 'cnut', zh: '營養分子的化學', en: 'Chemistry of nutrient molecules', alias: '脂肪酸的寫法・順反式・三酸甘油酯・胺基酸與兩性離子・醛糖酮糖・環化與 α β', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    gfa: { zh: '羧基', en: 'Carboxyl' }, gaa: { zh: '胺基＋羧基', en: 'Amino + carboxyl' }, gsu: { zh: '多個羥基＋羰基', en: 'Hydroxyls + carbonyl' },
+    kest: { zh: '酯鍵', en: 'Ester bond' }, kpep: { zh: '肽鍵（醯胺鍵）', en: 'Peptide (amide) bond' }, kgly: { zh: '醣苷鍵', en: 'Glycosidic bond' },
+    mtg: { zh: '三酸甘油酯', en: 'Triglyceride' }, mpro: { zh: '蛋白質', en: 'Protein' }, mpol: { zh: '雙醣、多醣', en: 'Di- and polysaccharides' },
+    pal: { zh: '棕櫚酸 16:0', en: 'Palmitic acid 16:0' }, ste: { zh: '硬脂酸 18:0', en: 'Stearic acid 18:0' }, ole: { zh: '油酸 18:1 ω-9', en: 'Oleic acid 18:1 ω-9' }, lin: { zh: '亞麻油酸 18:2 ω-6', en: 'Linoleic acid 18:2 ω-6' }, aln: { zh: 'α-次亞麻油酸 18:3 ω-3', en: 'α-Linolenic acid 18:3 ω-3' },
+    sct: { zh: '短鏈（SCT）', en: 'Short-chain (SCT)' }, mct: { zh: '中鏈（MCT）', en: 'Medium-chain (MCT)' }, lct: { zh: '長鏈（LCT）', en: 'Long-chain (LCT)' },
+    cis: { zh: '順式（彎）', en: 'cis (bent)' }, trans: { zh: '反式（直）', en: 'trans (straight)' }, conj: { zh: '共軛雙鍵', en: 'Conjugated double bonds' }, isol: { zh: '雙鍵被 CH₂ 隔開', en: 'Methylene-interrupted' },
+    rum: { zh: '反芻動物的肉和乳', en: 'Ruminant meat and milk' }, mg: { zh: '單酸甘油酯', en: 'Monoglyceride' }, dg: { zh: '雙酸甘油酯', en: 'Diglyceride' },
+    zw: { zh: '兩性離子（–NH₃⁺ 與 –COO⁻）', en: 'Zwitterion (–NH₃⁺, –COO⁻)' }, neu: { zh: '完全不帶電', en: 'Uncharged' }, pi: { zh: '等電點', en: 'Isoelectric point' }, pk: { zh: '解離常數', en: 'pKa' },
+    rgr: { zh: '側鏈（R 基）', en: 'Side chain (R group)' }, wat: { zh: '放出一分子水', en: 'Releases one water' }, co2: { zh: '放出 CO₂', en: 'Releases CO₂' },
+    aldo: { zh: '醛糖', en: 'Aldose' }, keto: { zh: '酮糖', en: 'Ketose' }, pyr: { zh: '六角環（吡喃糖）', en: 'Six-membered ring (pyranose)' }, fur: { zh: '五角環（呋喃糖）', en: 'Five-membered ring (furanose)' },
+    alph: { zh: 'α 型（C1 的 –OH 朝下）', en: 'α (C1 –OH down)' }, bet: { zh: 'β 型（C1 的 –OH 朝上）', en: 'β (C1 –OH up)' }, red: { zh: '還原糖', en: 'Reducing sugar' }, nred: { zh: '非還原糖', en: 'Nonreducing sugar' }
+  },
+  levels: [
+    { t: '先看全貌：三種營養分子怎麼接起來', kind: 'ov', h: 264, svg: CNUT_OV, blanks: CNUT_B(),
+      intro: ['上一單元學的官能基，在營養分子身上全部出現了。',
+        '脂肪酸是一條碳鏈加上一個酸性官能基；胺基酸同時帶著一個鹼性和一個酸性官能基；單醣身上有好幾個羥基和一個羰基。',
+        '它們用不同的鍵連起來（每連一次都脫去一分子水），形成脂質、蛋白質和醣類這三大類。'],
+      done: ['[[脂肪酸（–COOH）＋甘油 → 酯鍵 → 三酸甘油酯；胺基酸（–NH₂、–COOH）→ 肽鍵 → 蛋白質；單醣（–OH、C＝O）→ 醣苷鍵 → 雙醣、多醣。]]', '三種鍵都是縮合（脫水）形成，消化時都是水解（加水）切開。'] },
+    { t: '脂肪酸的寫法', kind: 'list',
+      intro: ['脂肪酸寫成「碳數:雙鍵數」，例如 18:2。雙鍵的位置有兩種標法：Δ 從羧基端數；ω（或 n）從甲基端數，只標第一個雙鍵。',
+        '碳數相同時，ω 和 Δ 的換算：ω ＝ 總碳數 − 最後一個雙鍵的 Δ 位置。',
+        '依碳鏈長度分短鏈、中鏈、長鏈；三酸甘油酯拿掉一個或兩個脂肪酸，就是雙酸或單酸甘油酯。'],
+      listTitle: '是哪一個', list: [['18:1，第一個雙鍵在 ω-9', { a: 'ole', o: CNUT_FA }], ['16:0', { a: 'pal', o: CNUT_FA }], ['18:2，ω-6', { a: 'lin', o: CNUT_FA }], ['18:3，ω-3', { a: 'aln', o: CNUT_FA }],
+        ['椰子油裡含量多的辛酸、癸酸', { a: 'mct', o: ['sct', 'mct', 'lct'] }], ['甘油只接一個脂肪酸', { a: 'mg', o: ['mg', 'dg'] }]],
+      countsTitle: '換算 ω', counts: [['18:2 Δ9,12 是 ω-幾', '6', ['3', '6', '9', '12']], ['16:1 Δ9 是 ω-幾', '7', ['6', '7', '9', '16']], ['20:5 Δ5,8,11,14,17 是 ω-幾', '3', ['3', '5', '6', '17']]],
+      done: ['[[ω ＝ 碳數 − 最後一個雙鍵的 Δ 位置。]]', '棕櫚酸 16:0、硬脂酸 18:0、油酸 18:1 ω-9、亞麻油酸 18:2 ω-6、α-次亞麻油酸 18:3 ω-3。'] },
+    { t: '順式、反式與共軛', kind: 'list',
+      intro: ['雙鍵兩側的氫在同一邊叫順式，碳鏈在雙鍵處彎曲；在對邊叫反式，碳鏈是直的。',
+        '一般的多元不飽和脂肪酸，兩個雙鍵之間隔著一個 CH₂。如果雙鍵和單鍵交替出現，電子可以在整段之間移動，叫共軛，分子比較穩定。',
+        '共軛亞麻油酸（CLA）是亞麻油酸的一群異構物，含有共軛雙鍵，而且其中有反式的雙鍵；它天然存在於某些動物的肉和乳中。'],
+      listTitle: '是哪一個', list: [['天然植物油的雙鍵', { a: 'cis', o: ['cis', 'trans'] }], ['部分氫化油產生、碳鏈直的', { a: 'trans', o: ['cis', 'trans'] }], ['雙鍵與單鍵交替出現', { a: 'conj', o: ['conj', 'isol'] }], ['CLA 的天然來源', { a: 'rum', o: ['rum', 'cis'] }]],
+      done: ['[[順式：同側、彎曲；反式：對側、直鏈。共軛：雙鍵與單鍵交替。]]', 'CLA 是含共軛雙鍵的亞麻油酸異構物，存在反芻動物的肉和乳，屬於天然的反式脂肪。'] },
+    { t: '胺基酸', kind: 'list',
+      intro: ['胺基酸的中心碳上接著胺基、羧基、氫和側鏈。20 種胺基酸的差別只在側鏈；除了甘胺酸，中心碳都接了四個不同的原子團，所以有 D、L 兩型。',
+        '在水裡，羧基放出氫離子、胺基接上氫離子，一個分子同時帶正電和負電，淨電荷為零，叫兩性離子。淨電荷為零時的 pH 叫等電點；這時溶解度最低，蛋白質最容易沉澱。',
+        '兩個胺基酸的羧基和胺基脫去一分子水，接成肽鍵。'],
+      listTitle: '是哪一個', list: [['決定胺基酸種類的部分', { a: 'rgr', o: ['rgr', 'gaa'] }], ['在水中的主要形式', { a: 'zw', o: ['zw', 'neu'] }], ['淨電荷為零時的 pH', { a: 'pi', o: ['pi', 'pk'] }], ['形成肽鍵時', { a: 'wat', o: ['wat', 'co2'] }]],
+      done: ['[[胺基酸在水中以兩性離子存在；等電點時淨電荷為零、溶解度最低（做豆腐、乳酪時讓蛋白質凝固就是利用這點）。]]', '人體的胺基酸是 L 型；甘胺酸沒有掌性。'] },
+    { t: '單醣：醛糖、酮糖與環化', kind: 'list',
+      intro: ['醣類的通式是 (CH₂O)ₙ，字尾多半是 -ose。羰基在第 1 個碳（醛基）的叫醛糖，在第 2 個碳（酮基）的叫酮糖。葡萄糖和半乳糖是醛糖，果糖是酮糖。',
+        '在水裡，單醣的羥基會和自己的羰基反應，接成環：葡萄糖形成六角環，果糖形成五角環。',
+        '成環時原本的羰基碳變成新的掌性中心，它上面的 –OH 可能朝下或朝上，形成兩種形式。澱粉和纖維素的差別就在這裡。',
+        '羰基碳還能自由開環的醣，可以把某些試劑還原，叫還原糖。'],
+      listTitle: '是哪一個', list: [['葡萄糖、半乳糖', { a: 'aldo', o: ['aldo', 'keto'] }], ['果糖', { a: 'keto', o: ['aldo', 'keto'] }], ['葡萄糖成環的形狀', { a: 'pyr', o: ['pyr', 'fur'] }], ['果糖成環的形狀', { a: 'fur', o: ['pyr', 'fur'] }],
+        ['澱粉的葡萄糖', { a: 'alph', o: ['alph', 'bet'] }], ['纖維素的葡萄糖', { a: 'bet', o: ['alph', 'bet'] }], ['葡萄糖、麥芽糖、乳糖', { a: 'red', o: ['red', 'nred'] }], ['蔗糖（兩個羰基碳都用來接鍵了）', { a: 'nred', o: ['red', 'nred'] }]],
+      done: ['[[醛糖：葡萄糖、半乳糖；酮糖：果糖。葡萄糖成六角環（吡喃糖），果糖成五角環（呋喃糖）。]]', '[[α 型：澱粉、肝醣；β 型：纖維素、乳糖的鍵。蔗糖是非還原糖，其他常見雙醣是還原糖。]]'] },
+    { t: '考試重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['18:2 Δ9,12 屬於', { a: 'w6', o: ['w3', 'w6', 'w9'] }, '。'],
+        ['果糖是', { a: 'keto', o: ['aldo', 'keto'] }, '。'],
+        ['胺基酸在等電點時溶解度', { a: 'low', o: ['low', 'high'] }, '。'],
+        ['蔗糖是', { a: 'nred', o: ['red', 'nred'] }, '。'],
+        ['胺基酸以', { a: 'kpep', o: CNUT_K, lang: 'en' }, '連接。'],
+        ['纖維素的葡萄糖是', { a: 'bet', o: ['alph', 'bet'], lang: 'en' }, '。'],
+        ['油酸是', { a: 'ole', o: CNUT_FA, lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 264, force: 'en', svg: CNUT_OV, blanks: CNUT_B(),
+      intro: ['第一關的圖，全部用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: 'Names', list: [['Glucose', { a: 'aldo', o: ['aldo', 'keto'] }], ['Net charge zero', { a: 'pi', o: ['pi', 'pk'] }], ['Double and single bonds alternate', { a: 'conj', o: ['conj', 'isol'] }]] }
+  ] };
+(function () { var d = CNUT.dict; d.w3 = { zh: 'ω-3', en: 'ω-3' }; d.w6 = { zh: 'ω-6', en: 'ω-6' }; d.w9 = { zh: 'ω-9', en: 'ω-9' }; d.low = { zh: '最低', en: 'Lowest' }; d.high = { zh: '最高', en: 'Highest' }; })();
+/* ======================================================================
+   營養化學：化學反應與莫耳
+   ====================================================================== */
+var CSTQ_F = [['2Mg ＋ O₂ → 2MgO', 'comb'], ['2H₂O₂ → 2H₂O ＋ O₂', 'deco'], ['Zn ＋ 2HCl → ZnCl₂ ＋ H₂', 'srep'], ['AgNO₃ ＋ NaCl → AgCl ＋ NaNO₃', 'drep'], ['CH₄ ＋ 2O₂ → CO₂ ＋ 2H₂O', 'burn']];
+var CSTQ_O = ['comb', 'deco', 'srep', 'drep', 'burn'];
+function CSTQ_OV() { var s = tx(108, 18, T('反應', 'reaction'), 'm', 9.5) + tx(282, 18, T('反應類型', 'type'), 'm', 9.5); CSTQ_F.forEach(function (r, i) { var y = 46 + i * 52; s += pill(108, y, 200, r[0], 'pill kT') + arrow(208, y, 214, y); }); return s; }
+function CSTQ_B() { return CSTQ_F.map(function (r, i) { return { id: 'f' + i, x: 286, y: 46 + i * 52, w: 132, a: r[1], o: CSTQ_O }; }); }
+var CSTQ = { id: 'cstq', zh: '化學反應與莫耳', en: 'Chemical reactions and the mole', alias: '反應類型・平衡方程式・氧化還原與 NAD・莫耳與分子量・化學計量', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    comb: { zh: '結合反應', en: 'Combination' }, deco: { zh: '分解反應', en: 'Decomposition' }, srep: { zh: '單置換反應', en: 'Single replacement' }, drep: { zh: '雙置換反應', en: 'Double replacement' }, burn: { zh: '燃燒反應', en: 'Combustion' },
+    ox: { zh: '氧化', en: 'Oxidation' }, red: { zh: '還原', en: 'Reduction' }, nad: { zh: 'NAD⁺（來自菸鹼素）', en: 'NAD⁺ (from niacin)' }, fad: { zh: 'FAD（來自核黃素）', en: 'FAD (from riboflavin)' },
+    adh: { zh: '醇去氫酶', en: 'Alcohol dehydrogenase' }, aldh: { zh: '乙醛去氫酶', en: 'Acetaldehyde dehydrogenase' }, acal: { zh: '乙醛', en: 'Acetaldehyde' }, aceta: { zh: '乙酸', en: 'Acetate' },
+    avo: { zh: '6.02 × 10²³ 個', en: '6.02 × 10²³' }, mm: { zh: '1 莫耳的質量（g/mol）', en: 'Mass of 1 mol (g/mol)' }, mass: { zh: '質量守恆，兩邊原子數相同', en: 'Atoms conserved on both sides' }, mol2: { zh: '兩邊分子數相同', en: 'Same number of molecules' }
+  },
+  levels: [
+    { t: '先看全貌：五種反應類型', kind: 'ov', h: 300, svg: CSTQ_OV, blanks: CSTQ_B(),
+      intro: ['化學反應是原子重新組合：反應物的鍵斷掉，形成產物的新鍵。原子不會憑空消失或出現。',
+        '常見的反應依「怎麼重組」分五類：兩個合成一個；一個拆成兩個；一個元素把化合物裡的另一個元素換掉；兩個化合物交換夥伴；含碳的燃料和氧作用產生 CO₂、水和能量。',
+        '身體「燃燒」葡萄糖產能，本質上就是最後一種，只是分成很多步、慢慢放出能量。'],
+      done: ['[[結合 A＋B → AB；分解 AB → A＋B；單置換 A＋BC → AC＋B；雙置換 AB＋CD → AD＋CB；燃燒：含碳物質＋O₂ → CO₂＋H₂O＋能量。]]', '葡萄糖的完全氧化：C₆H₁₂O₆ ＋ 6O₂ → 6CO₂ ＋ 6H₂O ＋ 能量。'] },
+    { t: '平衡化學方程式', kind: 'list',
+      intro: ['方程式兩邊每一種原子的數目必須相等，在化學式前面加係數來調整，不能改化學式本身。',
+        '技巧：先平衡只出現在一個化合物裡的元素，氫和氧留到最後；係數要化成最簡整數比。'],
+      listTitle: '原則', list: [['平衡方程式的根據', { a: 'mass', o: ['mass', 'mol2'] }]],
+      countsTitle: '填係數', counts: [['N₂ ＋ □H₂ → 2NH₃', '3', ['1', '2', '3', '6']], ['□H₂ ＋ O₂ → 2H₂O', '2', ['1', '2', '3', '4']], ['C₆H₁₂O₆ ＋ □O₂ → 6CO₂ ＋ 6H₂O', '6', ['3', '6', '9', '12']], ['C₃H₈ ＋ 5O₂ → □CO₂ ＋ 4H₂O', '3', ['2', '3', '4', '5']], ['4Fe ＋ □O₂ → 2Fe₂O₃', '3', ['2', '3', '4', '6']]],
+      done: ['[[方程式兩邊各種原子數目相同（質量守恆）；只能改係數，不能改化學式。]]'] },
+    { t: '氧化還原：身體裡的電子搬運', kind: 'list',
+      intro: ['失去電子叫氧化，得到電子叫還原，兩者一定同時發生。在有機分子上常常表現為：得到氧或失去氫是氧化；失去氧或得到氫是還原。',
+        '身體裡很多酵素叫「去氫酶」，把氫（電子）從營養素身上拿下來，交給兩種輔酶帶走，最後送到電子傳遞鏈產生 ATP。這兩種輔酶分別由兩種 B 群維生素做成。',
+        '喝酒就是一個例子：乙醇先被去氫變成一個醛，再被去氫變成一個酸。'],
+      listTitle: '是哪一個', list: [['失去電子、失去氫', { a: 'ox', o: ['ox', 'red'] }], ['得到電子、得到氫', { a: 'red', o: ['ox', 'red'] }], ['菸鹼素做成的輔酶', { a: 'nad', o: ['nad', 'fad'] }], ['核黃素做成的輔酶', { a: 'fad', o: ['nad', 'fad'] }],
+        ['乙醇 → 乙醛的酵素', { a: 'adh', o: ['adh', 'aldh'] }], ['乙醛 → 乙酸的酵素', { a: 'aldh', o: ['adh', 'aldh'] }], ['乙醇氧化的第二個產物', { a: 'aceta', o: ['acal', 'aceta'] }]],
+      done: ['[[氧化：失電子（失 H、得 O）；還原：得電子（得 H、失 O）。]]', '[[NAD⁺ 來自菸鹼素（B3），FAD 來自核黃素（B2）；它們接收氫變成 NADH、FADH₂，送到電子傳遞鏈產生 ATP。]]', '乙醇 →（醇去氫酶）乙醛 →（乙醛去氫酶）乙酸 → 乙醯輔酶 A → 檸檬酸循環。'] },
+    { t: '莫耳與分子量', kind: 'list',
+      intro: ['原子和分子太小，化學家用「一打」的概念來數：1 莫耳就是固定數量的粒子。',
+        '一種物質 1 莫耳的質量（以公克計），數值就等於它的原子量或分子量。所以「公克 ÷ 分子量 ＝ 莫耳數」。',
+        '常用原子量：H 1、C 12、N 14、O 16、Na 23、Cl 35.5、K 39、Ca 40。'],
+      listTitle: '定義', list: [['1 莫耳的粒子數', { a: 'avo', o: ['avo', 'mm'] }], ['莫耳質量', { a: 'mm', o: ['avo', 'mm'] }]],
+      countsTitle: '算算看', counts: [['H₂O 的分子量', '18', ['10', '17', '18', '20']], ['NaCl 的分子量', '58.5', ['35.5', '58.5', '74.5', '117']], ['葡萄糖 C₆H₁₂O₆ 的分子量', '180', ['90', '162', '180', '342']], ['90 g 葡萄糖是幾莫耳', '0.5', ['0.25', '0.5', '1', '2']],
+        ['1 莫耳葡萄糖完全氧化，產生幾公克 CO₂', '264', ['44', '132', '180', '264']]],
+      done: ['[[1 莫耳 ＝ 6.02 × 10²³ 個；莫耳數 ＝ 質量 ÷ 分子量。]]', '用平衡方程式的係數換算：1 mol 葡萄糖 → 6 mol CO₂ ＝ 6 × 44 ＝ 264 g。'] },
+    { t: '考試重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['失去氫的反應是', { a: 'ox', o: ['ox', 'red'] }, '。'],
+        ['菸鹼素的輔酶形式是', { a: 'nad', o: ['nad', 'fad'] }, '。'],
+        ['2H₂O₂ → 2H₂O ＋ O₂ 是', { a: 'deco', o: CSTQ_O }, '。'],
+        ['乙醇在體內先變成', { a: 'acal', o: ['acal', 'aceta'] }, '。'],
+        ['CH₄ ＋ 2O₂ → CO₂ ＋ 2H₂O 是', { a: 'burn', o: CSTQ_O, lang: 'en' }, '。'],
+        ['乙醛變成乙酸的酵素是', { a: 'aldh', o: ['adh', 'aldh'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 300, force: 'en', svg: CSTQ_OV, blanks: CSTQ_B(),
+      intro: ['五種反應類型，全部用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: 'Terms', list: [['Loss of electrons', { a: 'ox', o: ['ox', 'red'] }], ['Gain of electrons', { a: 'red', o: ['ox', 'red'] }], ['Coenzyme from riboflavin', { a: 'fad', o: ['nad', 'fad'] }]] }
+  ] };
+/* ======================================================================
+   營養化學：溶液、濃度與滲透壓
+   ====================================================================== */
+var CSOL_F = [['每 100 g 溶液中幾 g 溶質', 'g solute per 100 g solution', 'ww'], ['每 100 mL 溶液中幾 g 溶質', 'g solute per 100 mL solution', 'wv'], ['每 100 mL 溶液中幾 mL 溶質', 'mL solute per 100 mL solution', 'vv'], ['每 1 L 溶液中幾 mg（10⁻⁶）', 'mg per L (parts per million)', 'ppm'], ['每 1 L 溶液中幾莫耳溶質', 'mol solute per L', 'mol'], ['每 1 L 溶液中幾毫當量（莫耳 × 電荷）', 'mEq per L (mol × charge)', 'meq'], ['每 1 L 溶液中幾毫莫耳的「粒子」', 'mOsm of particles per L', 'osm']];
+var CSOL_O = ['ww', 'wv', 'vv', 'ppm', 'mol', 'meq', 'osm'];
+function CSOL_OV() { var s = tx(104, 18, T('意思', 'meaning'), 'm', 9.5) + tx(288, 18, T('濃度單位', 'unit'), 'm', 9.5); CSOL_F.forEach(function (r, i) { var y = 44 + i * 46; s += pill(104, y, 196, { zh: r[0], en: r[1] }, 'pill kT') + arrow(202, y, 214, y); }); return s; }
+function CSOL_B() { return CSOL_F.map(function (r, i) { return { id: 'f' + i, x: 290, y: 44 + i * 46, w: 128, a: r[2], o: CSOL_O }; }); }
+var CSOL = { id: 'csol', zh: '溶液、濃度與滲透壓', en: 'Solutions, concentration and osmosis', alias: '百分率・ppm・莫耳濃度・毫當量・稀釋・滲透壓與等張', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    ww: { zh: '% (w/w)', en: '% (w/w)' }, wv: { zh: '% (w/v)', en: '% (w/v)' }, vv: { zh: '% (v/v)', en: '% (v/v)' }, ppm: { zh: 'ppm', en: 'ppm' }, mol: { zh: '莫耳濃度 M', en: 'Molarity (M)' }, meq: { zh: 'mEq/L', en: 'mEq/L' }, osm: { zh: 'mOsm/L', en: 'mOsm/L' },
+    solv: { zh: '溶劑', en: 'Solvent' }, solu: { zh: '溶質', en: 'Solute' },
+    iso: { zh: '等張溶液', en: 'Isotonic' }, hyper: { zh: '高張溶液', en: 'Hypertonic' }, hypo: { zh: '低張溶液', en: 'Hypotonic' },
+    shrink: { zh: '細胞萎縮', en: 'Cell shrinks' }, swell: { zh: '細胞膨脹、破裂', en: 'Cell swells, may burst' }, same: { zh: '體積不變', en: 'No change' },
+    tolow: { zh: '往溶質濃度高的那一邊', en: 'Toward higher solute concentration' }, tohigh: { zh: '往溶質濃度低的那一邊', en: 'Toward lower solute concentration' },
+    n09: { zh: '0.9% NaCl', en: '0.9% NaCl' }, n27: { zh: '2.7% NaCl', en: '2.7% NaCl' }, g5: { zh: '5% 葡萄糖', en: '5% glucose' }, w: { zh: '純水', en: 'Pure water' },
+    urea: { zh: '尿素可以穿過細胞膜，不算有效滲透', en: 'Urea crosses membranes; not effective' }, urea2: { zh: '尿素和氯化鈉效果一樣', en: 'Urea acts like NaCl' }
+  },
+  levels: [
+    { t: '先看全貌：七種濃度單位', kind: 'ov', h: 368, svg: CSOL_OV, blanks: CSOL_B(),
+      intro: ['溶液由溶劑（通常是水）和溶在裡面的溶質組成。濃度就是「一定量的溶液裡有多少溶質」，但「多少」可以用不同的方式量。',
+        '用重量或體積的百分比最直覺；很稀的污染物用百萬分之幾；化學反應要看粒子數，所以用莫耳；電解質要看電荷，所以用當量；水會不會流動，看的是溶液裡有多少「粒子」，所以用滲透莫耳。',
+        '臨床最常見的是 % (w/v)：點滴的 0.9% 生理食鹽水就是每 100 mL 含 0.9 g 氯化鈉。'],
+      done: ['[[% (w/v)：g/100 mL；ppm：mg/L；M：mol/L；mEq/L：mmol/L × 電荷數；mOsm/L：解離後粒子的 mmol/L。]]', 'ppm ＝ 10⁻⁶、ppb ＝ 10⁻⁹、ppt ＝ 10⁻¹²。'] },
+    { t: '百分率與 ppm', kind: 'list',
+      intro: ['ppm 是百萬分之一：一公斤裡有一毫克，或一公升水溶液裡有一毫克。所以 1 ppm ＝ 1 mg/L ＝ 1 mg/kg。',
+        '稀釋時溶質的量不變：濃度 × 體積（稀釋前）＝ 濃度 × 體積（稀釋後），也就是 C₁V₁ ＝ C₂V₂。團膳配消毒用的漂白水就是這樣算。'],
+      listTitle: '是哪一個', list: [['水', { a: 'solv', o: ['solv', 'solu'] }], ['溶在水裡的糖', { a: 'solu', o: ['solv', 'solu'] }]],
+      countsTitle: '算算看', counts: [['30 g NaOH 溶在 120 g 水，% (w/w) 是', '20', ['20', '25', '30', '33']], ['製備 2 L 的 5% (w/v) 葡萄糖，要秤幾 g', '100', ['10', '50', '100', '200']], ['1 mg/dL 是幾 ppm', '10', ['0.1', '1', '10', '100']], ['5 ng/L 是幾 ppt', '5', ['0.005', '5', '5,000', '5×10⁶']],
+        ['用含氯 5% 的漂白水配 5 L 的 200 ppm 消毒液，要加幾 mL', '20', ['2', '10', '20', '50']]],
+      done: ['[[1 ppm ＝ 1 mg/L ＝ 1 mg/kg；稀釋公式 C₁V₁ ＝ C₂V₂。]]', '200 ppm × 5,000 mL ＝ 50,000 ppm × V，V ＝ 20 mL（5% ＝ 50,000 ppm）。'] },
+    { t: '莫耳濃度與毫當量', kind: 'list',
+      intro: ['莫耳濃度（M）＝ 溶質的莫耳數 ÷ 溶液的公升數。把 58.5 g 氯化鈉溶成 1 公升，就是 1 M。',
+        '電解質常用毫當量（mEq）表示，因為身體在乎的是電荷：一個 Ca²⁺ 帶的電荷是 Na⁺ 的兩倍。當量數 ＝ 莫耳數 × 電荷數。',
+        '換算公式：mEq ＝ mg × 電荷數 ÷ 原子量（或分子量）。'],
+      listTitle: '是哪一個', list: [['兩種溶液的 mEq/L 相同，代表', { a: 'chg', o: ['chg', 'mass'] }]],
+      countsTitle: '算算看', counts: [['117 g NaCl 溶成 1 L，濃度幾 M', '2', ['0.5', '1', '2', '4']], ['1 莫耳 Ca²⁺ 是幾當量', '2', ['0.5', '1', '2', '40']], ['2,300 mg 的鈉約是幾 mEq（Na 原子量 23）', '100', ['23', '50', '100', '230']],
+        ['生理食鹽水含 Na⁺ 154 mEq/L，1 L 裡 Na⁺ 有幾莫耳', '0.154', ['0.077', '0.154', '0.308', '1.54']], ['溶液中 Cl⁻ 40 mEq/L、HPO₄²⁻ 15 mEq/L，Na⁺ 是唯一陽離子，Na⁺ 幾 mEq/L', '55', ['25', '40', '55', '70']]],
+      done: ['[[M ＝ mol/L；當量數 ＝ 莫耳數 × 電荷數；mEq ＝ mg × 電荷 ÷ 原子量。]]', '溶液電中性：陽離子的 mEq 總和 ＝ 陰離子的 mEq 總和。'] },
+    { t: '滲透與滲透壓', kind: 'list',
+      intro: ['半透膜只讓水通過，溶質過不去。兩邊溶質濃度不同時，水會跨過膜，往溶質多的那一邊移動，想把濃度拉平。細胞膜就是半透膜。',
+        '滲透壓取決於溶液裡「粒子」的總數，不管粒子是什麼：1 莫耳葡萄糖給 1 莫耳粒子；1 莫耳 NaCl 解離成 Na⁺ 和 Cl⁻，給 2 莫耳粒子。',
+        '人體體液約 300 mOsm/L。和它相同的叫等張，例如 0.9% 食鹽水、5% 葡萄糖。細胞放進比體液濃的溶液會失水萎縮，放進比較稀的溶液會吸水膨脹甚至破裂。',
+        '有些溶質（例如尿素）自己就能穿過細胞膜，最後兩邊一樣多，所以不會讓水持續移動。'],
+      listTitle: '是哪一個', list: [['水穿過半透膜的方向', { a: 'tolow', o: ['tolow', 'tohigh'] }], ['和體液相同的 300 mOsm/L', { a: 'iso', o: ['iso', 'hyper', 'hypo'] }], ['紅血球放進 2.7% NaCl', { a: 'shrink', o: ['shrink', 'swell', 'same'] }],
+        ['紅血球放進純水', { a: 'swell', o: ['shrink', 'swell', 'same'] }], ['紅血球放進 5% 葡萄糖', { a: 'same', o: ['shrink', 'swell', 'same'] }], ['細胞放進含尿素 105 mOsm 與 NaCl 300 mOsm 的溶液', { a: 'urea', o: ['urea', 'urea2'] }]],
+      countsTitle: '算算看', counts: [['0.9% NaCl 約幾 mOsm/L（NaCl 58.5）', '308', ['154', '300', '308', '616']], ['2.7% NaCl 約幾 mOsm/L', '923', ['300', '462', '923', '1,846']]],
+      done: ['[[水往溶質濃度高（滲透壓高）的一邊移動；體液約 300 mOsm/L；0.9% NaCl、5% 葡萄糖等張。]]', '0.9% NaCl：9 g/L ÷ 58.5 ＝ 0.154 M，解離成 2 個粒子 → 約 308 mOsm/L。',
+        '投影片寫「水由高濃度擴散至低濃度」指的是「水的濃度」；換成溶質來講，就是水往溶質濃度高的一邊走。', '能自由通過細胞膜的溶質（尿素）不影響細胞體積；決定細胞會不會萎縮的是「有效滲透壓」（張力）。'] },
+    { t: '考試重點', kind: 'cloze',
+      intro: ['這些計算會在團膳（漂白水配製）、膳療（電解質、點滴）、生理（滲透壓）出現。最後幾題的選項只有英文。'],
+      cloze: [
+        ['1 ppm 等於', { a: 'mgl', o: ['mgl', 'gl'] }, '。'],
+        ['0.9% 生理食鹽水對紅血球是', { a: 'iso', o: ['iso', 'hyper', 'hypo'] }, '。'],
+        ['紅血球放進高張溶液會', { a: 'shrink', o: ['shrink', 'swell', 'same'] }, '。'],
+        ['電解質以 mEq 表示，考慮的是', { a: 'chg', o: ['chg', 'mass'] }, '。'],
+        ['每 100 mL 含幾 g 是', { a: 'wv', o: CSOL_O, lang: 'en' }, '。'],
+        ['解離後粒子的濃度是', { a: 'osm', o: CSOL_O, lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 368, force: 'en', svg: CSOL_OV, blanks: CSOL_B(),
+      intro: ['七種濃度單位，全部用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: 'Tonicity', list: [['Same as body fluids', { a: 'iso', o: ['iso', 'hyper', 'hypo'] }], ['Red cell in pure water', { a: 'swell', o: ['shrink', 'swell', 'same'] }], ['Red cell in 2.7% NaCl', { a: 'shrink', o: ['shrink', 'swell', 'same'] }]] }
+  ] };
+(function () { var d = CSOL.dict; d.chg = { zh: '電荷的量相同', en: 'Same amount of charge' }; d.mass = { zh: '質量相同', en: 'Same mass' }; d.mgl = { zh: '1 mg/L', en: '1 mg/L' }; d.gl = { zh: '1 g/L', en: '1 g/L' }; })();
+/* ======================================================================
+   營養化學：酸與鹼
+   ====================================================================== */
+var CACD_F = [['胃液', 'Gastric juice', 'pg'], ['唾液', 'Saliva', 'ps'], ['純水（25 °C）', 'Pure water (25 °C)', 'pw'], ['動脈血', 'Arterial blood', 'pb'], ['胰液', 'Pancreatic juice', 'pp']];
+var CACD_O = ['pg', 'ps', 'pw', 'pb', 'pp'];
+function CACD_OV() {
+  var s = tx(120, 18, T('體液', 'fluid'), 'm', 9.5) + tx(282, 18, T('大約的 pH', 'approx. pH'), 'm', 9.5);
+  s += box(8, 34, 14, 108, 'E', 4) + box(8, 146, 14, 20, 'T', 4) + box(8, 170, 14, 108, 'I', 4);
+  s += tx(30, 42, '0', '', 9, 'start') + tx(30, 160, '7', '', 9, 'start') + tx(30, 280, '14', '', 9, 'start');
+  s += tx(26, 96, T('酸', 'acid'), '', 9, 'start') + tx(26, 228, T('鹼', 'base'), '', 9, 'start');
+  CACD_F.forEach(function (r, i) { var y = 46 + i * 52; s += pill(120, y, 150, { zh: r[0], en: r[1] }, 'pill kT') + arrow(196, y, 214, y); });
+  return s;
+}
+function CACD_B() { return CACD_F.map(function (r, i) { return { id: 'f' + i, x: 288, y: 46 + i * 52, w: 128, a: r[2], o: CACD_O }; }); }
+var CACD = { id: 'cacd', zh: '酸與鹼', en: 'Acids and bases', alias: 'pH・強酸弱酸・共軛酸鹼・中和・緩衝溶液・血液酸鹼平衡', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    pg: { zh: '1～2', en: '1–2' }, ps: { zh: '6.5～7', en: '6.5–7' }, pw: { zh: '7', en: '7' }, pb: { zh: '7.35～7.45', en: '7.35–7.45' }, pp: { zh: '約 8', en: 'About 8' },
+    ahp: { zh: '在水中放出 H⁺', en: 'Releases H⁺ in water' }, aoh: { zh: '在水中放出 OH⁻', en: 'Releases OH⁻ in water' },
+    don: { zh: '質子（H⁺）提供者', en: 'Proton donor' }, acc: { zh: '質子（H⁺）接受者', en: 'Proton acceptor' },
+    sa: { zh: '強酸', en: 'Strong acid' }, wa: { zh: '弱酸', en: 'Weak acid' }, sb: { zh: '強鹼', en: 'Strong base' }, wb: { zh: '弱鹼', en: 'Weak base' },
+    salt: { zh: '鹽和水', en: 'Salt and water' }, gas: { zh: '氫氣和氧氣', en: 'Hydrogen and oxygen' },
+    bic: { zh: '碳酸氫鹽系統（HCO₃⁻／H₂CO₃）', en: 'Bicarbonate system' }, pho: { zh: '磷酸鹽系統（HPO₄²⁻／H₂PO₄⁻）', en: 'Phosphate system' }, prot: { zh: '蛋白質（如血紅素）', en: 'Proteins (e.g. hemoglobin)' },
+    lung: { zh: '肺（排出 CO₂）', en: 'Lungs (exhale CO₂)' }, kid: { zh: '腎（排 H⁺、留 HCO₃⁻）', en: 'Kidneys (excrete H⁺, keep HCO₃⁻)' },
+    acid: { zh: '酸中毒', en: 'Acidosis' }, alk: { zh: '鹼中毒', en: 'Alkalosis' },
+    buf: { zh: '弱酸＋它的共軛鹼', en: 'Weak acid + its conjugate base' }, buf2: { zh: '強酸＋強鹼', en: 'Strong acid + strong base' }
+  },
+  levels: [
+    { t: '先看全貌：身體裡的 pH', kind: 'ov', h: 310, svg: CACD_OV, blanks: CACD_B(),
+      intro: ['pH 表示溶液裡氫離子（H⁺）有多少。數字越小越酸，7 是中性，越大越鹼。左邊的色條：玫瑰色是酸性、青色是中性、藍色是鹼性。',
+        'pH 每差 1，H⁺ 濃度差 10 倍，所以 pH 2 和 pH 7 看起來只差 5，酸度其實差了十萬倍。',
+        '身體不同地方的 pH 差很多：胃很酸，可以殺菌、讓胃蛋白酶作用；胰液偏鹼，把胃酸中和，小腸裡的酵素才能工作；血液則被嚴格控制在很窄的範圍。'],
+      done: ['[[pH ＝ −log[H⁺]；pH < 7 酸性、＝ 7 中性、> 7 鹼性（25 °C）。]]', '[[動脈血 pH 7.35～7.45；低於 7.35 是酸中毒，高於 7.45 是鹼中毒。]]', '胃液約 pH 1～2；胰液含碳酸氫鹽，約 pH 8，用來中和進入十二指腸的胃酸。'] },
+    { t: '酸和鹼的定義、強和弱', kind: 'list',
+      intro: ['最早的定義看「在水裡放出什麼離子」：放出 H⁺ 的是酸，放出 OH⁻ 的是鹼。',
+        '比較廣的定義看「質子（H⁺）怎麼移動」：把 H⁺ 給出去的是酸，把 H⁺ 接過來的是鹼。酸給出 H⁺ 後剩下的部分叫它的共軛鹼，例如 H₂CO₃ 給出 H⁺ 後剩 HCO₃⁻。',
+        '「強、弱」說的是在水中解離得完不完全，不是濃度高低。強酸幾乎全部解離；弱酸只解離一小部分，大多數還保持分子狀態。'],
+      listTitle: '是哪一個', list: [
+        ['阿瑞尼斯的酸', { a: 'ahp', o: ['ahp', 'aoh'] }], ['阿瑞尼斯的鹼', { a: 'aoh', o: ['ahp', 'aoh'] }],
+        ['布忍斯特的酸', { a: 'don', o: ['don', 'acc'] }], ['布忍斯特的鹼', { a: 'acc', o: ['don', 'acc'] }],
+        ['鹽酸 HCl（胃酸的成分）', { a: 'sa', o: ['sa', 'wa', 'sb', 'wb'] }], ['醋酸 CH₃COOH', { a: 'wa', o: ['sa', 'wa', 'sb', 'wb'] }],
+        ['碳酸 H₂CO₃', { a: 'wa', o: ['sa', 'wa', 'sb', 'wb'] }], ['氫氧化鈉 NaOH', { a: 'sb', o: ['sa', 'wa', 'sb', 'wb'] }], ['氨 NH₃', { a: 'wb', o: ['sa', 'wa', 'sb', 'wb'] }]],
+      done: ['[[酸：放出 H⁺ / 質子提供者；鹼：放出 OH⁻ / 質子接受者。]]', '[[常見強酸 HCl、H₂SO₄、HNO₃；強鹼 NaOH、KOH。醋酸、碳酸、檸檬酸、乳酸是弱酸；氨是弱鹼。]]', '強弱看解離程度，濃稀看溶質多少，兩件事不要混在一起。'] },
+    { t: 'pH 的計算', kind: 'list',
+      intro: ['pH ＝ −log[H⁺]。[H⁺] 是 10 的幾次方，pH 就是那個次方去掉負號，例如 [H⁺] ＝ 10⁻⁵ M，pH ＝ 5。',
+        '水裡 [H⁺] × [OH⁻] 永遠等於 10⁻¹⁴（25 °C），所以 pH ＋ pOH ＝ 14。算鹼的時候先求 pOH，再用 14 減。',
+        '強酸、強鹼完全解離，所以 0.01 M HCl 的 [H⁺] 就是 0.01 M。'],
+      countsTitle: '算算看', counts: [
+        ['[H⁺] ＝ 10⁻³ M，pH ＝', '3', ['-3', '3', '11', '13']],
+        ['25 °C 水的離子積 Kw ＝ 10 的幾次方', '-14', ['-7', '-14', '7', '14']],
+        ['pH 2 的 H⁺ 濃度是 pH 4 的幾倍', '100', ['2', '20', '100', '1000']],
+        ['0.01 M HCl 的 pH', '2', ['1', '2', '10', '12']],
+        ['0.001 M NaOH 的 pH', '11', ['3', '7', '11', '13']],
+        ['pOH ＝ 5，pH ＝', '9', ['5', '7', '9', '19']]],
+      done: ['[[pH ＝ −log[H⁺]；pH ＋ pOH ＝ 14；Kw ＝ [H⁺][OH⁻] ＝ 10⁻¹⁴（25 °C）。]]', 'pH 差 1 → 濃度差 10 倍；差 2 → 100 倍。'] },
+    { t: '中和與緩衝：血液怎麼守住 pH', kind: 'list',
+      intro: ['酸和鹼混合會互相抵消，叫中和，例如 HCl ＋ NaOH → NaCl ＋ H₂O。',
+        '緩衝溶液可以「吸收」少量加進來的酸或鹼，讓 pH 幾乎不動。它由一個弱酸和它的共軛鹼組成：加酸時共軛鹼把 H⁺ 接走，加鹼時弱酸把 H⁺ 補上。',
+        '血液最重要的緩衝是碳酸／碳酸氫鹽：CO₂ ＋ H₂O ⇌ H₂CO₃ ⇌ H⁺ ＋ HCO₃⁻。肺用呼吸調整 CO₂（幾分鐘內），腎調整 H⁺ 的排出與 HCO₃⁻ 的回收（幾小時到幾天）。細胞內則以磷酸鹽和蛋白質為主。',
+        '呼吸太快（過度換氣）會把 CO₂ 吐掉太多，H⁺ 跟著減少；嚴重腹瀉會流失 HCO₃⁻；長時間嘔吐會流失胃酸。'],
+      listTitle: '是哪一個', list: [
+        ['酸鹼中和的產物', { a: 'salt', o: ['salt', 'gas'] }], ['緩衝溶液的組成', { a: 'buf', o: ['buf', 'buf2'] }],
+        ['血液（細胞外液）最主要的緩衝', { a: 'bic', o: ['bic', 'pho', 'prot'] }], ['細胞內和尿液中重要的緩衝', { a: 'pho', o: ['bic', 'pho', 'prot'] }], ['紅血球裡帶最多緩衝能力的', { a: 'prot', o: ['bic', 'pho', 'prot'] }],
+        ['幾分鐘內就能調整 pH 的器官', { a: 'lung', o: ['lung', 'kid'] }], ['調整較慢但最徹底的器官', { a: 'kid', o: ['lung', 'kid'] }],
+        ['過度換氣', { a: 'alk', o: ['acid', 'alk'] }], ['嚴重腹瀉流失 HCO₃⁻', { a: 'acid', o: ['acid', 'alk'] }], ['長時間嘔吐流失胃酸', { a: 'alk', o: ['acid', 'alk'] }]],
+      done: ['[[緩衝 ＝ 弱酸 ＋ 共軛鹼；血液主要靠 HCO₃⁻／H₂CO₃，細胞內靠磷酸鹽與蛋白質。]]', '[[肺調 CO₂（快），腎調 H⁺ 與 HCO₃⁻（慢、徹底）。]]', 'CO₂ 太多 → 呼吸性酸中毒；CO₂ 太少 → 呼吸性鹼中毒；HCO₃⁻ 流失 → 代謝性酸中毒；胃酸流失 → 代謝性鹼中毒。'] },
+    { t: '考試重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['動脈血的 pH 是', { a: 'pb', o: CACD_O }, '。'],
+        ['把 H⁺ 給出去的是', { a: 'don', o: ['don', 'acc'] }, '（布忍斯特的酸）。'],
+        ['碳酸 H₂CO₃ 是', { a: 'wa', o: ['sa', 'wa', 'sb', 'wb'] }, '。'],
+        ['血液最主要的緩衝是', { a: 'bic', o: ['bic', 'pho', 'prot'] }, '。'],
+        ['過度換氣造成', { a: 'alk', o: ['acid', 'alk'], lang: 'en' }, '。'],
+        ['緩衝溶液由', { a: 'buf', o: ['buf', 'buf2'], lang: 'en' }, '組成。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 310, force: 'en', svg: CACD_OV, blanks: CACD_B(),
+      intro: ['身體各處的 pH，全部用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: 'Terms', list: [['Proton donor (Brønsted)', { a: 'don', o: ['don', 'acc'] }], ['NaOH', { a: 'sb', o: ['sa', 'wa', 'sb', 'wb'] }], ['Main blood buffer', { a: 'bic', o: ['bic', 'pho', 'prot'] }]] }
+  ] };
+/* 圖解營養化學與食品的目錄。營養化學照課程大綱的順序；食品微生物照老師《食品微生物學》授課單元的順序；營養化學、食品衛生與安全等教材來了再做。有 levels 的才是做好的單元 */
 function TODO(id, zh, en) { return { id: id, zh: zh, en: en }; }
 var GROUPS = [
+  { tab: 'chem', g: '先讀這裡', items: [CPRE] },
+  { tab: 'chem', g: '原子與化學鍵', c: 5, items: [CELM, CBND] },
+  { tab: 'chem', g: '有機化學與營養分子', c: 6, items: [CORG, CNUT] },
+  { tab: 'chem', g: '反應、溶液與酸鹼', c: 4, items: [CSTQ, CSOL, CACD] },
   { tab: 'micro', g: '先讀這裡', items: [FPRE] },
   { tab: 'micro', g: '單元 2・影響微生物生長的因子', c: 6, items: [FGRW] },
   { tab: 'micro', g: '單元 2～3・食品的腐敗', c: 5, items: [FDEG, FSPL] },
@@ -1395,7 +1949,6 @@ var GROUPS = [
   { tab: 'micro', g: '單元 6・食品的保存', c: 6, items: [FPRS] },
   { tab: 'micro', g: '單元 7・食品微生物的檢測', c: 4, items: [FDET] },
   { tab: 'micro', g: '單元 8・指標微生物與衛生標準', c: 5, items: [FIND] },
-  { tab: 'chem', g: '營養化學', items: [TODO('chem0', '製作中：等老師的投影片', 'Nutritional chemistry')] },
   { tab: 'safe', g: '食品衛生與安全', items: [TODO('safe0', '製作中：等老師的投影片', 'Food sanitation and safety')] }
 ];
 function prep(u, par) {
@@ -1405,12 +1958,12 @@ function prep(u, par) {
   for (var k in (u.subs || {})) prep(u.subs[k], u);
 }
 var UNITS = {}; GROUPS.forEach(function (g) { g.items.forEach(function (u) { if (u.levels) { UNITS[u.id] = u; u.tab = g.tab; prep(u); } }); });
-/* 圖解食品科學的設定（共用 pw/tail.html 的程式）。LINE 選單 D 格：食品微生物、營養化學、食品衛生與安全三科 */
+/* 圖解營養化學與食品的設定（共用 pw/tail.html 的程式）。LINE 選單 D 格：食品微生物、營養化學、食品衛生與安全三科 */
 window.CFG = {
-  key: 'food-v1', title: '圖解食品科學',
-  tabs: [['micro', '食品微生物'], ['chem', '營養化學'], ['safe', '食品衛生安全']],
-  hint: { micro: '藍色是細菌、青色是黴菌和酵母、紫色是病毒與寄生蟲、玫瑰色是毒素、琥珀色是食品本身的條件，', chem: '每個單元的圖例會說明顏色，', safe: '藍色是細菌、青色是黴菌、紫色是病毒與寄生蟲、玫瑰色是毒素，' },
-  howto: '<p>上面三個分頁是三個科目：食品微生物學、營養化學、食品衛生與安全。國考「食品衛生與安全」會考到食品微生物的內容，兩科可以對照著讀。菌名一律附上學名，國考常常只寫學名，要練到看得懂。</p>',
+  key: 'food-v1', title: '圖解營養化學與食品',
+  tabs: [['chem', '營養化學'], ['micro', '食品微生物'], ['safe', '食品衛生安全']],
+  hint: { micro: '藍色是細菌、青色是黴菌和酵母、紫色是病毒與寄生蟲、玫瑰色是毒素、琥珀色是食品本身的條件，', chem: '琥珀色是碳和有機分子、藍色是金屬與陽離子、玫瑰色是非金屬與陰離子、青色是水和溶液、紫色是官能基，', safe: '藍色是細菌、青色是黴菌、紫色是病毒與寄生蟲、玫瑰色是毒素，' },
+  howto: '<p>上面三個分頁是三個科目：營養化學概論（化學基礎）、食品微生物學、食品衛生與安全。國考「食品衛生與安全」會考到食品微生物的內容，兩科可以對照著讀。菌名一律附上學名，國考常常只寫學名，要練到看得懂。</p>',
   note: function () { return '衛生標準與添加物限量依衛生福利部公告，法規會修正，請以最新公告與老師上課的說明為準。'; }
 };
 /* ======================================================================

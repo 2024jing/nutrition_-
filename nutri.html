@@ -2023,6 +2023,227 @@ var TRM = { id: 'trm', zh: '微量礦物質', en: 'Trace minerals', alias: '鐵�
       intro: ['第一關的圖，全部用英文作答；下面再加幾個名詞。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
       listTitle: '名詞', list: [['Iron storage protein (first to fall)', { a: 'ferr', o: TRM_FS }], ['Copper buildup in liver and brain', { a: 'wil', o: ['wil', 'menk'] }], ['Iodine lack before birth', { a: 'cret', o: ['gtr', 'cret'] }], ['Center of vitamin B12', { a: 'co', o: ['cr', 'mn', 'mo', 'co'] }]] }
   ] };
+/* ======================================================================
+   懷孕與哺乳（照國考補）
+   ====================================================================== */
+var PRG_R = [['孕前過輕', 'Underweight before pregnancy', 'g1'], ['孕前正常', 'Normal weight', 'g2'], ['孕前過重', 'Overweight', 'g3'], ['孕前肥胖', 'Obese', 'g4']];
+var PRG_O = ['g1', 'g2', 'g3', 'g4'];
+function PRG_OV() {
+  var s = tx(80, 22, T('懷孕前的體位', 'pre-pregnancy BMI'), 'm', 9.5) + tx(262, 22, T('整個孕期建議增加', 'recommended total gain'), 'm', 9.5);
+  PRG_R.forEach(function (r, i) { var y = 54 + i * 62; s += pill(80, y, 140, { zh: r[0], en: r[1] }, 'pill') + arrow(152, y, 176, y); });
+  s += tx(180, 304, T('第一期增加約 1～2 公斤，之後每週約 0.5 公斤', 'Trimester 1: ~1–2 kg; then ~0.5 kg per week'), 'm', 9);
+  return s;
+}
+function PRG_B() { return PRG_R.map(function (r, i) { return { id: 'w' + i, x: 262, y: 54 + i * 62, w: 150, a: r[2], o: PRG_O }; }); }
+var PRG = { id: 'prg', zh: '懷孕與哺乳', en: 'Pregnancy and lactation', alias: '孕期體重增加・孕期營養素增加量・妊娠糖尿病與子癇前症・孕期飲食安全・泌乳荷爾蒙・初乳與母乳', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    g1: { zh: '12.5～18 公斤', en: '12.5–18 kg' }, g2: { zh: '11.5～16 公斤', en: '11.5–16 kg' }, g3: { zh: '7～11.5 公斤', en: '7–11.5 kg' }, g4: { zh: '5～9 公斤', en: '5–9 kg' },
+    fol: { zh: '葉酸', en: 'Folate' }, fe: { zh: '鐵', en: 'Iron' }, io: { zh: '碘', en: 'Iodine' }, ca: { zh: '鈣', en: 'Calcium' },
+    gdm: { zh: '妊娠糖尿病', en: 'Gestational diabetes' }, pre: { zh: '子癇前症', en: 'Preeclampsia' }, pica: { zh: '異食癖', en: 'Pica' }, nvp: { zh: '孕吐', en: 'Morning sickness' },
+    lis: { zh: '李斯特菌（生乳、冷燻海鮮、未加熱熟食）', en: 'Listeria (raw milk, smoked seafood, deli meats)' }, hg: { zh: '大型魚類的甲基汞', en: 'Methylmercury in large fish' },
+    prl: { zh: '泌乳激素', en: 'Prolactin' }, oxy: { zh: '催產素', en: 'Oxytocin' },
+    col: { zh: '初乳', en: 'Colostrum' }, mat: { zh: '成熟乳', en: 'Mature milk' },
+    hm: { zh: '母乳', en: 'Human milk' }, cm: { zh: '牛乳', en: "Cow's milk" }, vd: { zh: '維生素 D', en: 'Vitamin D' }, vk: { zh: '維生素 K', en: 'Vitamin K' }
+  },
+  levels: [
+    { t: '先看全貌：孕期體重增加多少', kind: 'ov', h: 320, svg: PRG_OV, blanks: PRG_B(),
+      intro: ['孕期增加的體重包括胎兒、胎盤、羊水、子宮與乳房、增加的血量和體液，以及為哺乳準備的脂肪。增加太少，寶寶容易出生體重過低；增加太多，妊娠糖尿病、高血壓、難產和產後肥胖的風險都會上升。',
+        '建議的增加量依懷孕前的體位而不同：孕前越瘦，建議增加越多。右邊填上建議範圍（國健署孕婦健康手冊採用的數值）。'],
+      done: ['[[孕前過輕 12.5～18 kg；正常 11.5～16 kg；過重 7～11.5 kg；肥胖 5～9 kg。]]', '懷孕第一期體重增加很少，第二、三期每週約 0.5 公斤。'] },
+    { t: '孕期的熱量與營養素', kind: 'list',
+      intro: ['懷孕第一期胎兒還很小，熱量不必增加；第二、三期每天多 300 大卡；哺乳期每天多 500 大卡。蛋白質懷孕各期增加 10 公克，哺乳期增加 15 公克。',
+        '幾個國考常考的營養素：預防神經管缺陷的那一種，最好懷孕前就開始補充；血量大增、胎兒要儲存，最後一期增加最多的那一種；甲狀腺素原料，懷孕就要增加的那一種。',
+        '鈣在懷孕時吸收率會自動提高，所以國人 DRIs 不另外增加；維生素 D 也不增加。'],
+      listTitle: '是哪一個', list: [['準備懷孕就要補充，預防神經管缺陷', { a: 'fol', o: ['fol', 'fe', 'io', 'ca'] }], ['懷孕第三期與哺乳期每天增加 30 mg', { a: 'fe', o: ['fol', 'fe', 'io', 'ca'] }], ['懷孕增加到 225 μg', { a: 'io', o: ['fol', 'fe', 'io', 'ca'] }], ['吸收率提高，DRIs 不另外增加', { a: 'ca', o: ['fol', 'fe', 'io', 'ca'] }]],
+      countsTitle: '算算看', counts: [['懷孕第二、三期每天增加幾大卡', '300', ['0', '200', '300', '500']], ['哺乳期每天增加幾大卡', '500', ['200', '300', '500', '700']], ['懷孕期蛋白質每天增加幾公克', '10', ['5', '10', '15', '20']], ['懷孕期葉酸增加幾 μg DFE', '200', ['100', '200', '400', '600']]],
+      done: ['[[熱量：第一期 ＋0、第二三期 ＋300、哺乳 ＋500 大卡；蛋白質：懷孕 ＋10、哺乳 ＋15 g。]]', '[[葉酸 ＋200 μg；鐵：第三期與哺乳 ＋30 mg；碘 225 μg；鈣、維生素 D 不增加。]]'] },
+    { t: '孕期常見問題與飲食安全', kind: 'list',
+      intro: ['孕期荷爾蒙使腸胃蠕動變慢、括約肌放鬆，常見孕吐、便祕、胃灼熱。少量多餐、起床先吃乾的澱粉、多吃纖維和喝水可以改善。',
+        '懷孕中期做口服葡萄糖耐受試驗篩檢血糖升高；懷孕 20 週後出現高血壓、蛋白尿，嚴重時會抽搐。有些孕婦會想吃泥土、冰塊等非食物，常和缺鐵有關。',
+        '孕婦免疫力較低，要避免一種能穿過胎盤的細菌（常見於生乳、冷燻海鮮、未再加熱的熟食冷盤）；大型掠食魚含汞多，要少吃；酒精完全不碰；咖啡因每天不超過 300 mg。'],
+      listTitle: '是哪一個', list: [['懷孕中期口服葡萄糖耐受試驗篩檢的', { a: 'gdm', o: ['gdm', 'pre', 'pica', 'nvp'] }], ['懷孕 20 週後高血壓、蛋白尿', { a: 'pre', o: ['gdm', 'pre', 'pica', 'nvp'] }], ['想吃冰塊、泥土', { a: 'pica', o: ['gdm', 'pre', 'pica', 'nvp'] }], ['懷孕初期噁心、嘔吐', { a: 'nvp', o: ['gdm', 'pre', 'pica', 'nvp'] }],
+        ['生乳、冷燻鮭魚的風險', { a: 'lis', o: ['lis', 'hg'] }], ['鯊魚、旗魚、鮪魚的風險', { a: 'hg', o: ['lis', 'hg'] }]],
+      done: ['[[妊娠糖尿病：懷孕 24～28 週 75 g OGTT 篩檢；子癇前症：20 週後高血壓 ＋ 蛋白尿。]]', '[[孕期避免：酒精、李斯特菌高風險食物、大型魚（汞）；咖啡因 < 300 mg／天。]]'] },
+    { t: '哺乳與母乳', kind: 'list',
+      intro: ['寶寶吸吮刺激腦下垂體：前葉分泌的荷爾蒙負責「製造」乳汁；後葉分泌的荷爾蒙讓乳腺周圍收縮，把乳汁「送出來」，同時也幫助子宮收縮。',
+        '產後頭幾天的乳汁量少、偏黃，含大量抗體（IgA）、蛋白質和免疫細胞，是寶寶的第一劑保護；之後逐漸變成成熟乳。',
+        '和牛乳相比，母乳的乳糖較多、蛋白質和礦物質較少（腎臟負擔小），蛋白質以容易消化的乳清蛋白為主，鐵雖少但吸收率高。',
+        '建議純母乳哺育到 6 個月。母乳的維生素 D 含量低，純母乳寶寶每天要補充 400 IU；另一種與凝血有關的維生素則在出生時注射。'],
+      listTitle: '是哪一個', list: [['製造乳汁的荷爾蒙', { a: 'prl', o: ['prl', 'oxy'] }], ['讓乳汁排出、子宮收縮', { a: 'oxy', o: ['prl', 'oxy'] }], ['產後頭幾天、富含 IgA', { a: 'col', o: ['col', 'mat'] }],
+        ['乳糖較多、蛋白質較少', { a: 'hm', o: ['hm', 'cm'] }], ['酪蛋白多、礦物質多', { a: 'cm', o: ['hm', 'cm'] }], ['純母乳寶寶每天要補充 400 IU 的', { a: 'vd', o: ['vd', 'vk'] }], ['出生時注射的', { a: 'vk', o: ['vd', 'vk'] }]],
+      done: ['[[泌乳激素：製造乳汁；催產素：射乳反射、子宮收縮。]]', '[[初乳：IgA、蛋白質多；母乳比牛乳乳糖多、蛋白質與礦物質少、乳清蛋白為主。]]', '[[純母乳哺育到 6 個月；純母乳寶寶補充維生素 D 400 IU；出生注射維生素 K。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['孕前體位正常，整個孕期建議增加', { a: 'g2', o: PRG_O }, '。'],
+        ['懷孕第三期每天增加 30 mg 的是', { a: 'fe', o: ['fol', 'fe', 'io', 'ca'] }, '。'],
+        ['懷孕 20 週後高血壓合併蛋白尿是', { a: 'pre', o: ['gdm', 'pre', 'pica', 'nvp'] }, '。'],
+        ['負責射乳反射的荷爾蒙是', { a: 'oxy', o: ['prl', 'oxy'] }, '。'],
+        ['產後頭幾天富含 IgA 的是', { a: 'col', o: ['col', 'mat'], lang: 'en' }, '。'],
+        ['純母乳哺育的嬰兒要補充', { a: 'vd', o: ['vd', 'vk'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 320, force: 'en', svg: PRG_OV, blanks: PRG_B(),
+      intro: ['第一關的圖，全部用英文作答；下面再加幾個名詞。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: '名詞', list: [['Hormone that makes milk', { a: 'prl', o: ['prl', 'oxy'] }], ['Screened by a glucose tolerance test', { a: 'gdm', o: ['gdm', 'pre', 'pica', 'nvp'] }], ['Supplement before conception', { a: 'fol', o: ['fol', 'fe', 'io', 'ca'] }]] }
+  ] };
+/* ======================================================================
+   嬰兒、兒童與青少年（照國考補）
+   ====================================================================== */
+var INF_R = [['出生～6 個月', 'Birth to 6 months', 'excl'], ['4～6 個月起', 'From 4–6 months', 'cf'], ['1 歲以前', 'Before age 1', 'honey'], ['1 歲以後', 'After age 1', 'cow']];
+var INF_O = ['excl', 'cf', 'honey', 'cow'];
+function INF_OV() {
+  var s = tx(76, 22, T('年齡', 'age'), 'm', 9.5) + tx(256, 22, T('餵食重點', 'feeding point'), 'm', 9.5);
+  INF_R.forEach(function (r, i) { var y = 54 + i * 62; s += pill(76, y, 130, { zh: r[0], en: r[1] }, 'pill') + arrow(143, y, 164, y); });
+  return s;
+}
+function INF_B() { return INF_R.map(function (r, i) { return { id: 'r' + i, x: 256, y: 54 + i * 62, w: 180, a: r[2], o: INF_O }; }); }
+var INF = { id: 'inf', zh: '嬰兒、兒童與青少年', en: 'Infancy through adolescence', alias: '副食品・蜂蜜與鮮奶・生長速度・嬰兒的鐵與維生素 D・兒童挑食與責任分工・青春期的鈣與鐵', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    excl: { zh: '只喝母乳（或嬰兒配方奶）', en: 'Breast milk (or formula) only' }, cf: { zh: '開始添加副食品', en: 'Start complementary foods' }, honey: { zh: '不可吃蜂蜜', en: 'No honey' }, cow: { zh: '可以喝鮮奶', en: "Cow's milk is OK" },
+    bot: { zh: '肉毒桿菌', en: 'Clostridium botulinum' }, sal: { zh: '沙門氏菌', en: 'Salmonella' },
+    fest: { zh: '體內儲存的鐵用完', en: 'Iron stores run out' }, lact2: { zh: '乳糖酶消失', en: 'Lactase disappears' },
+    rsl: { zh: '腎溶質負荷高、鐵少、可能腸道出血', en: 'High renal solute load, low iron, gut bleeding' }, vit: { zh: '維生素 C 太多', en: 'Too much vitamin C' },
+    one: { zh: '一次一種新食物，觀察 3～5 天', en: 'One new food at a time, watch 3–5 days' }, mix: { zh: '一次混合多種新食物', en: 'Several new foods at once' },
+    late: { zh: '不必刻意延後', en: 'No need to delay' }, delay: { zh: '延到 3 歲以後', en: 'Delay until age 3' },
+    par: { zh: '大人決定', en: 'Parents decide' }, kid: { zh: '孩子決定', en: 'Child decides' },
+    ca: { zh: '鈣', en: 'Calcium' }, fe: { zh: '鐵', en: 'Iron' },
+    who: { zh: 'WHO 兒童生長標準曲線', en: 'WHO child growth standards' }, adul: { zh: '成人 BMI 切點', en: 'Adult BMI cut-offs' }
+  },
+  levels: [
+    { t: '先看全貌：第一年怎麼吃', kind: 'ov', h: 270, svg: INF_OV, blanks: INF_B(),
+      intro: ['嬰兒第一年長得比一生中任何時候都快，餵食的安排有幾個關鍵時間點。右邊填上每個年齡的餵食重點。',
+        '提示：前半年母乳就足夠；大約半歲時寶寶的需要開始超過母乳能提供的；有一種甜的食物可能藏著細菌孢子，小嬰兒的腸道還無法抵抗；另一種常見飲料要等腎臟成熟一點、也不會排擠其他食物時才給。'],
+      done: ['[[0～6 個月純母乳；4～6 個月開始副食品；1 歲前不吃蜂蜜；1 歲後才喝鮮奶。]]'] },
+    { t: '嬰兒的生長與營養', kind: 'list',
+      intro: ['出生體重約在 4～6 個月時加倍，1 歲時變成三倍；身長 1 歲時約為出生的 1.5 倍。用生長曲線追蹤，比單看一次的數字更重要。',
+        '足月寶寶出生時帶著從媽媽那裡儲存的鐵，大約用到 4～6 個月，這也是要開始吃含鐵副食品（如強化鐵的米精、肉泥）的原因之一。',
+        '蜂蜜可能含肉毒桿菌孢子，1 歲以下的腸道菌叢還不能抑制它。1 歲以前喝鮮奶，蛋白質和礦物質太多造成腎臟負擔，鐵又少，還可能造成腸道少量出血。',
+        '副食品一次只加一種新食物，觀察幾天有沒有過敏；蛋、花生等易過敏食物不需要刻意延後。'],
+      listTitle: '是哪一個', list: [['1 歲前不能吃蜂蜜，是因為', { a: 'bot', o: ['bot', 'sal'] }], ['4～6 個月要開始含鐵副食品，是因為', { a: 'fest', o: ['fest', 'lact2'] }], ['1 歲前不建議喝鮮奶，是因為', { a: 'rsl', o: ['rsl', 'vit'] }],
+        ['添加新食物的方法', { a: 'one', o: ['one', 'mix'] }], ['蛋、花生等易過敏食物', { a: 'late', o: ['late', 'delay'] }], ['評估 0～5 歲生長用', { a: 'who', o: ['who', 'adul'] }]],
+      countsTitle: '算算看', counts: [['出生 3 公斤，1 歲時約幾公斤', '9', ['6', '7.5', '9', '12']], ['出生身長 50 公分，1 歲時約幾公分', '75', ['60', '65', '75', '100']], ['出生 3.2 公斤，約幾個月體重加倍', '5', ['2', '5', '9', '12']]],
+      done: ['[[體重：4～6 個月加倍、1 歲三倍；身長：1 歲約 1.5 倍。]]', '[[蜂蜜：1 歲前不吃（肉毒桿菌）；鮮奶：1 歲後（腎溶質負荷、缺鐵）；副食品一次一種。]]'] },
+    { t: '兒童與青少年', kind: 'list',
+      intro: ['學齡前兒童生長變慢、食量變小，挑食、只吃某幾樣東西很常見。建議大人和孩子分工：吃什麼、什麼時候吃、在哪裡吃由大人決定；吃多少由孩子自己決定，不強迫也不用食物當獎賞。',
+        '兒童常見的營養問題是缺鐵、齲齒和肥胖。兒童的過重、肥胖要用同年齡同性別的 BMI 標準判斷，不能直接套成人的切點。',
+        '青春期是第二個快速生長期，骨量在這段時間大量累積，國人 13～18 歲的鈣建議量是一生中最高的；女生月經開始後，另一種礦物質的需要量也增加。'],
+      listTitle: '是哪一個', list: [['餐桌上吃什麼、什麼時候吃', { a: 'par', o: ['par', 'kid'] }], ['每一餐吃多少', { a: 'kid', o: ['par', 'kid'] }], ['13～18 歲建議量是一生最高（1,200 mg）', { a: 'ca', o: ['ca', 'fe'] }], ['青春期女生月經開始後需要增加', { a: 'fe', o: ['ca', 'fe'] }], ['判斷兒童肥胖用', { a: 'who', o: ['who', 'adul'] }]],
+      done: ['[[餵食責任分工：大人決定吃什麼、何時、何地；孩子決定吃多少。]]', '[[青少年：鈣 AI 1,200 mg（13～18 歲）；女生月經後鐵需要量增加。]]', '兒童肥胖依衛福部「兒童及青少年 BMI 建議值」判斷，不用成人的 24、27。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['嬰兒體重 1 歲時約為出生的三倍；副食品在', { a: 'cf', o: INF_O }, '。'],
+        ['1 歲前不可吃蜂蜜，是因為', { a: 'bot', o: ['bot', 'sal'] }, '。'],
+        ['嬰兒 4～6 個月時', { a: 'fest', o: ['fest', 'lact2'] }, '，需要含鐵副食品。'],
+        ['國人 13～18 歲建議量最高的礦物質是', { a: 'ca', o: ['ca', 'fe'] }, '。'],
+        ['添加副食品的原則是', { a: 'one', o: ['one', 'mix'], lang: 'en' }, '。'],
+        ['每一餐吃多少由', { a: 'kid', o: ['par', 'kid'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 270, force: 'en', svg: INF_OV, blanks: INF_B(),
+      intro: ['第一關的圖，全部用英文作答；下面再加幾個名詞。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: '名詞', list: [['Why no cow’s milk before age 1', { a: 'rsl', o: ['rsl', 'vit'] }], ['Common allergens such as egg and peanut', { a: 'late', o: ['late', 'delay'] }], ['Growth charts for children under 5', { a: 'who', o: ['who', 'adul'] }]] }
+  ] };
+/* ======================================================================
+   成人與老年（照國考補）
+   ====================================================================== */
+var ADL_R = [['胃酸分泌減少', 'Less stomach acid', 'b12'], ['皮膚合成維生素 D 減少', 'Skin makes less vitamin D', 'vd'], ['口渴感變遲鈍', 'Weaker thirst', 'dehy'], ['肌肉量與肌力下降', 'Loss of muscle mass and strength', 'sarc'], ['味覺、嗅覺減退', 'Taste and smell decline', 'salt']];
+var ADL_O = ADL_R.map(function (r) { return r[2]; });
+function ADL_OV() {
+  var s = tx(80, 22, T('老化的變化', 'age-related change'), 'm', 9.5) + tx(262, 22, T('營養上的後果', 'nutritional consequence'), 'm', 9.5);
+  ADL_R.forEach(function (r, i) { var y = 54 + i * 60; s += pill(80, y, 150, { zh: r[0], en: r[1] }, 'pill') + arrow(157, y, 176, y); });
+  return s;
+}
+function ADL_B() { return ADL_R.map(function (r, i) { return { id: 'r' + i, x: 266, y: 54 + i * 60, w: 168, a: r[2], o: ADL_O }; }); }
+var ADL = { id: 'adl', zh: '成人與老年', en: 'Adulthood and aging', alias: '老化的生理變化・長者的營養需要・肌少症與衰弱・營養篩檢・吞嚥困難', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    b12: { zh: '維生素 B12 吸收不良', en: 'Poor vitamin B12 absorption' }, vd: { zh: '維生素 D 需要量增加', en: 'Higher vitamin D needs' }, dehy: { zh: '容易脫水', en: 'Risk of dehydration' }, sarc: { zh: '肌少症、跌倒', en: 'Sarcopenia, falls' }, salt: { zh: '食慾差、加更多鹽和糖', en: 'Poor appetite, more salt and sugar' },
+    down: { zh: '減少', en: 'Lower' }, up: { zh: '增加', en: 'Higher' },
+    fort: { zh: '強化食品或補充劑的合成 B12', en: 'Synthetic B12 (fortified foods, supplements)' }, meat: { zh: '只靠多吃肉', en: 'Eating more meat alone' },
+    grip: { zh: '握力', en: 'Grip strength' }, bmi: { zh: '體重', en: 'Body weight' },
+    mna: { zh: '迷你營養評估（MNA）', en: 'Mini Nutritional Assessment (MNA)' }, dexa: { zh: '骨密度檢查', en: 'Bone density scan' },
+    thick: { zh: '把液體增稠、調整質地', en: 'Thickened liquids, modified textures' }, thin: { zh: '多喝清水', en: 'Drink more plain water' },
+    medi: { zh: '地中海飲食、DASH', en: 'Mediterranean, DASH' }, low: { zh: '極低熱量飲食', en: 'Very-low-calorie diet' }
+  },
+  levels: [
+    { t: '先看全貌：老化帶來的營養問題', kind: 'ov', h: 340, svg: ADL_OV, blanks: ADL_B(),
+      intro: ['年紀增加，身體的很多變化會直接影響營養狀況。左邊是常見的老化變化，右邊填上它最直接造成的營養問題。'],
+      done: ['[[胃酸少 → B12 吸收差；皮膚合成 D 少 → D 需要量增加；口渴感遲鈍 → 易脫水；肌肉流失 → 肌少症、跌倒；味嗅覺減退 → 食慾差、口味變重。]]', '牙齒不好、獨居、經濟、用藥多、憂鬱，也都會讓長者吃得不夠。'] },
+    { t: '長者的營養需要', kind: 'list',
+      intro: ['肌肉量減少、活動量下降，基礎代謝和熱量需要都降低；但很多營養素的需要並沒有減少，所以長者更要選營養素密度高的食物。',
+        '為了保住肌肉，長者每公斤體重的蛋白質需要量比年輕人高，國人 DRIs 約 1.2 公克，最好平均分在三餐。',
+        '胃酸少的長者，食物中和蛋白質結合的 B12 釋放不出來，但補充劑或強化食品裡的游離 B12 仍然可以吸收。51 歲以上維生素 D 的足夠攝取量提高到 15 μg。',
+        '長者口渴感遲鈍，又可能擔心頻尿而少喝水，要定時喝水。'],
+      listTitle: '是哪一個', list: [['長者的熱量需要', { a: 'down', o: ['down', 'up'] }], ['長者每公斤體重的蛋白質需要', { a: 'up', o: ['down', 'up'] }], ['胃酸少的長者補 B12 的好方法', { a: 'fort', o: ['fort', 'meat'] }]],
+      countsTitle: '算算看', counts: [['70 歲、55 公斤長者，蛋白質以 1.2 g/kg 計，每天幾公克', '66', ['44', '55', '66', '80']], ['國人 51 歲以上維生素 D 的 AI（μg）', '15', ['5', '10', '15', '20']]],
+      done: ['[[長者：熱量 ↓、蛋白質每公斤 ↑（約 1.2 g/kg）、維生素 D 15 μg、B12 以合成形式補充、定時喝水。]]'] },
+    { t: '肌少症、營養篩檢與吞嚥', kind: 'list',
+      intro: ['肌少症是肌肉量減少，加上肌力或身體功能下降。亞洲的診斷標準看三件事：肌肉量、握力、走路速度。握力男性低於 28 公斤、女性低於 18 公斤就算偏低。足夠的蛋白質加上阻力運動是預防的關鍵。',
+        '長者營養不良常被忽略，可以用專為長者設計的問卷式工具快速篩檢，內容包括食量、體重變化、活動力、心理壓力、BMI 或小腿圍。',
+        '中風、失智、帕金森氏症的長者常有吞嚥困難，喝水最容易嗆到，反而要把液體增稠、調整食物質地，避免吸入性肺炎。'],
+      listTitle: '是哪一個', list: [['診斷肌少症要測的肌力指標', { a: 'grip', o: ['grip', 'bmi'] }], ['長者常用的營養篩檢工具', { a: 'mna', o: ['mna', 'dexa'] }], ['吞嚥困難的飲食調整', { a: 'thick', o: ['thick', 'thin'] }], ['有助延緩認知退化與慢性病的飲食型態', { a: 'medi', o: ['medi', 'low'] }]],
+      countsTitle: '算算看', counts: [['亞洲標準，男性握力低於幾公斤算偏低', '28', ['18', '22', '28', '35']], ['亞洲標準，女性握力低於幾公斤算偏低', '18', ['14', '18', '22', '28']]],
+      done: ['[[肌少症（AWGS）：肌肉量 ＋ 握力（男 < 28、女 < 18 kg）或步速；預防靠蛋白質 ＋ 阻力運動。]]', '[[MNA：長者營養篩檢；吞嚥困難：液體增稠、調整質地，避免吸入性肺炎。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['萎縮性胃炎、胃酸少的長者容易', { a: 'b12', o: ADL_O }, '。'],
+        ['長者口渴感遲鈍，容易', { a: 'dehy', o: ADL_O }, '。'],
+        ['長者每公斤體重的蛋白質需要量比年輕人', { a: 'up', o: ['down', 'up'] }, '。'],
+        ['診斷肌少症需要測量', { a: 'grip', o: ['grip', 'bmi'] }, '。'],
+        ['常用的長者營養篩檢工具是', { a: 'mna', o: ['mna', 'dexa'], lang: 'en' }, '。'],
+        ['吞嚥困難時的飲食調整是', { a: 'thick', o: ['thick', 'thin'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 340, force: 'en', svg: ADL_OV, blanks: ADL_B(),
+      intro: ['第一關的圖，全部用英文作答；下面再加幾個名詞。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: '名詞', list: [['Energy needs in older adults', { a: 'down', o: ['down', 'up'] }], ['Best B12 source with low stomach acid', { a: 'fort', o: ['fort', 'meat'] }], ['Diet pattern linked to healthy aging', { a: 'medi', o: ['medi', 'low'] }]] }
+  ] };
+/* ======================================================================
+   全球的營養問題（照國考補）
+   ====================================================================== */
+var GLB_R = [['鐵', 'Iron', 'ida', 'kI'], ['碘', 'Iodine', 'gtr', 'kI'], ['維生素 A', 'Vitamin A', 'xer', 'kT'], ['鋅', 'Zinc', 'stz', 'kI'], ['蛋白質與熱量', 'Protein and energy', 'pem', 'kE']];
+var GLB_O = GLB_R.map(function (r) { return r[2]; });
+function GLB_OV() {
+  var s = tx(80, 22, T('缺乏的營養素', 'nutrient lacking'), 'm', 9.5) + tx(262, 22, T('造成的問題', 'consequence'), 'm', 9.5);
+  GLB_R.forEach(function (r, i) { var y = 54 + i * 60; s += pill(80, y, 130, { zh: r[0], en: r[1] }, 'pill ' + r[3]) + arrow(147, y, 168, y); });
+  return s;
+}
+function GLB_B() { return GLB_R.map(function (r, i) { return { id: 'r' + i, x: 264, y: 54 + i * 60, w: 176, a: r[2], o: GLB_O }; }); }
+var GLB_AN = ['stunt', 'wast', 'uwt'];
+var GLB = { id: 'glb', zh: '全球的營養問題', en: 'Undernutrition throughout the world', alias: '全球微量營養素缺乏・發育遲緩與消瘦・糧食安全・營養雙重負擔・口服補液・營養強化', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    ida: { zh: '貧血、疲倦、學習力差', en: 'Anemia, fatigue, poor learning' }, gtr: { zh: '甲狀腺腫、呆小症', en: 'Goiter, cretinism' }, xer: { zh: '夜盲、失明、感染死亡', en: 'Night blindness, blindness, deaths' }, stz: { zh: '生長遲緩、腹瀉', en: 'Stunted growth, diarrhea' }, pem: { zh: '消瘦症、紅孩兒症', en: 'Marasmus, kwashiorkor' },
+    stunt: { zh: '發育遲緩（年齡別身高低）', en: 'Stunting (low height-for-age)' }, wast: { zh: '消瘦（身高別體重低）', en: 'Wasting (low weight-for-height)' }, uwt: { zh: '體重不足（年齡別體重低）', en: 'Underweight (low weight-for-age)' },
+    fs: { zh: '糧食安全', en: 'Food security' }, fi: { zh: '糧食不安全', en: 'Food insecurity' }, dbl: { zh: '營養不良的雙重負擔', en: 'Double burden of malnutrition' },
+    ors: { zh: '口服補液鹽（葡萄糖 ＋ 鈉）', en: 'Oral rehydration solution (glucose + sodium)' }, iod: { zh: '加碘鹽', en: 'Iodized salt' }, vac: { zh: '高劑量維生素 A 膠囊', en: 'High-dose vitamin A capsules' }, bio: { zh: '生物強化（如黃金米）', en: 'Biofortification (e.g. golden rice)' }, bf: { zh: '純母乳哺育', en: 'Exclusive breastfeeding' }
+  },
+  levels: [
+    { t: '先看全貌：全世界最常缺的營養素', kind: 'ov', h: 340, svg: GLB_OV, blanks: GLB_B(),
+      intro: ['全世界仍有數億人吃不飽，更多人「吃得飽但吃不好」，缺乏維生素和礦物質，又叫「隱性飢餓」。孕婦和 5 歲以下兒童受害最深。',
+        '左邊是全球最重要的五種營養缺乏（藍色礦物質、青色維生素、玫瑰色蛋白質），右邊填上造成的問題。'],
+      done: ['[[缺鐵：貧血；缺碘：甲狀腺腫、呆小症；缺維生素 A：夜盲、失明、兒童死亡；缺鋅：生長遲緩、腹瀉；蛋白質熱量缺乏：消瘦症、紅孩兒症。]]', '缺鐵性貧血是全世界最普遍的營養缺乏；缺碘是可預防的智能障礙最常見的原因；缺維生素 A 是兒童可預防性失明的主因。'] },
+    { t: '用什麼指標看兒童營養不良', kind: 'list',
+      intro: ['評估兒童營養不良常用三個指標：長期營養不良讓孩子長不高；最近急性的營養不良讓孩子以身高來說太瘦；第三個指標混合了兩者，只看年齡別的體重。',
+        '「糧食安全」指所有人隨時都能取得足夠、安全、營養的食物。現在很多國家同時存在營養不足和肥胖，甚至在同一個家庭裡，這叫營養不良的雙重負擔。'],
+      listTitle: '是哪一個', list: [['長期營養不良，年齡別身高過低', { a: 'stunt', o: GLB_AN }], ['急性營養不良，身高別體重過低', { a: 'wast', o: GLB_AN }], ['年齡別體重過低', { a: 'uwt', o: GLB_AN }],
+        ['所有人隨時都能取得足夠營養的食物', { a: 'fs', o: ['fs', 'fi', 'dbl'] }], ['同一個國家裡營養不足和肥胖並存', { a: 'dbl', o: ['fs', 'fi', 'dbl'] }]],
+      done: ['[[發育遲緩 ＝ 年齡別身高低（長期）；消瘦 ＝ 身高別體重低（急性）；體重不足 ＝ 年齡別體重低。]]'] },
+    { t: '有效的介入方法', kind: 'list',
+      intro: ['幾個便宜又有效的方法：腹瀉脫水是兒童死亡的主因之一，用糖和鹽調成的溶液就能救命，因為小腸的葡萄糖和鈉是一起被吸收的，水分也跟著進來；在鹽裡加碘；給兒童定期服用高劑量的維生素 A；在主食作物裡用育種增加營養素；以及推廣前 6 個月只喝母乳。'],
+      listTitle: '是哪一個', list: [['兒童腹瀉脫水', { a: 'ors', o: ['ors', 'iod', 'vac', 'bio'] }], ['預防甲狀腺腫', { a: 'iod', o: ['ors', 'iod', 'vac', 'bio'] }], ['降低兒童失明與死亡', { a: 'vac', o: ['ors', 'iod', 'vac', 'bio'] }], ['讓稻米含 β-胡蘿蔔素', { a: 'bio', o: ['ors', 'iod', 'vac', 'bio'] }], ['減少嬰兒腹瀉與感染', { a: 'bf', o: ['bf', 'ors'] }]],
+      done: ['[[口服補液鹽：利用小腸葡萄糖–鈉共同運輸帶水吸收；加碘鹽、維生素 A 膠囊、生物強化、純母乳哺育。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元最常考的觀念走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['全世界最普遍的營養缺乏造成', { a: 'ida', o: GLB_O }, '。'],
+        ['長期營養不良的指標是', { a: 'stunt', o: GLB_AN }, '。'],
+        ['腹瀉脫水的兒童最該給', { a: 'ors', o: ['ors', 'iod', 'vac', 'bio'] }, '。'],
+        ['身高別體重過低是', { a: 'wast', o: GLB_AN, lang: 'en' }, '。'],
+        ['營養不足和肥胖並存叫', { a: 'dbl', o: ['fs', 'fi', 'dbl'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 340, force: 'en', svg: GLB_OV, blanks: GLB_B(),
+      intro: ['第一關的圖，全部用英文作答；下面再加幾個名詞。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: '名詞', list: [['Low height-for-age', { a: 'stunt', o: GLB_AN }], ['Prevents goiter', { a: 'iod', o: ['ors', 'iod', 'vac', 'bio'] }], ['Rice bred to contain β-carotene', { a: 'bio', o: ['ors', 'iod', 'vac', 'bio'] }]] }
+  ] };
 /* 圖解營養學的目錄：照《透視營養學》12 版的章節順序。有 levels 的才是做好的單元，沒有的顯示「製作中」 */
 function TODO(id, zh, en) { return { id: id, zh: zh, en: en }; }
 var GROUPS = [
@@ -2034,7 +2255,7 @@ var GROUPS = [
   { tab: 'macro', g: '蛋白質', c: 3, items: [PRO, PRM] },
   { tab: 'micro', g: '維生素', c: 4, items: [FSV, WSB, WSC] },
   { tab: 'micro', g: '水與礦物質', c: 5, items: [WMM, TRM] },
-  { tab: 'life', g: '生命期營養', c: 3, items: [TODO('prg', '懷孕與哺乳', 'Pregnancy and lactation'), TODO('inf', '嬰兒、兒童與青少年', 'Infancy through adolescence'), TODO('adl', '成人與老年', 'Adulthood and aging'), TODO('glb', '全球的營養問題', 'Undernutrition throughout the world')] }
+  { tab: 'life', g: '生命期營養', c: 3, items: [PRG, INF, ADL, GLB] }
 ];
 function prep(u, par) {
   if (par) ['dict', 'enz', 'prod', 'tags', 'zh', 'en'].forEach(function (k) { if (u[k] == null) u[k] = par[k]; });

@@ -1933,7 +1933,956 @@ var CACD = { id: 'cacd', zh: '酸與鹼', en: 'Acids and bases', alias: 'pH・�
       intro: ['身體各處的 pH，全部用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
       listTitle: 'Terms', list: [['Proton donor (Brønsted)', { a: 'don', o: ['don', 'acc'] }], ['NaOH', { a: 'sb', o: ['sa', 'wa', 'sb', 'wb'] }], ['Main blood buffer', { a: 'bic', o: ['bic', 'pho', 'prot'] }]] }
   ] };
-/* 圖解營養化學與食品的目錄。營養化學照課程大綱的順序；食品微生物照老師《食品微生物學》授課單元的順序；營養化學、食品衛生與安全等教材來了再做。有 levels 的才是做好的單元 */
+/* ======================================================================
+   食品衛生安全分頁共用：左右對照的全貌圖（左邊名稱、右邊空格）
+   rows：[[中文, 英文, 答案代號, 左框顏色(可省略)], …]
+   o：{ l:[左標題中, 英], r:[右標題中, 英], k:左框預設顏色, y0, dy, lx, lw, rx, rw, p:空格 id 字首, o:選項 }
+   ====================================================================== */
+function SUQ(a) { var r = []; a.forEach(function (x) { if (r.indexOf(x) < 0) r.push(x); }); return r; }
+function SM(rows, o) {
+  o = o || {};
+  var y0 = o.y0 || 46, dy = o.dy || 52, lx = o.lx || 86, lw = o.lw || 144, rx = o.rx || 264, rw = o.rw || 176, p = o.p || 'f';
+  var opts = o.o || SUQ(rows.map(function (r) { return r[2]; }));
+  return {
+    o: opts,
+    h: y0 + (rows.length - 1) * dy + 34,
+    svg: function () {
+      var s = tx(lx, 18, T(o.l[0], o.l[1]), 'm', 9.5) + tx(rx - 2, 18, T(o.r[0], o.r[1]), 'm', 9.5);
+      rows.forEach(function (r, i) { var y = y0 + i * dy, k = r[3] || o.k; s += pill(lx, y, lw, { zh: r[0], en: r[1] }, k ? 'pill k' + k : 'pill') + arrow(lx + lw / 2 + 2, y, rx - rw / 2 - 4, y); });
+      return s;
+    },
+    b: function () { return rows.map(function (r, i) { return { id: p + i, x: rx, y: y0 + i * dy, w: rw, a: r[2], o: opts }; }); }
+  };
+}
+/* ======================================================================
+   食品衛生與安全：先讀這裡（授課第 1 單元：概論、食物中毒、國際組織）
+   ====================================================================== */
+var SPRE_M = SM([['腸炎弧菌', 'Vibrio parahaemolyticus', 'bio'], ['諾羅病毒', 'Norovirus', 'bio'], ['殘留農藥', 'Pesticide residues', 'chem'], ['河豚毒素', 'Tetrodotoxin', 'chem'],
+  ['碎玻璃、金屬屑', 'Glass, metal fragments', 'phys'], ['頭髮、飾品、OK 繃', 'Hair, jewelry, bandages', 'phys'], ['違法添加的硼砂', 'Illegal borax', 'chem']],
+  { l: ['危害的例子', 'example'], r: ['屬於哪一類危害', 'type of hazard'], dy: 46 });
+var SPRE = { id: 'spre', zh: '先讀這裡：食品衛生與安全的全貌', en: 'Overview of food sanitation and safety', alias: '三大危害・食物中毒定義與分類・通報・統計・主管機關・Codex', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    bio: { zh: '生物性危害', en: 'Biological hazard' }, chem: { zh: '化學性危害', en: 'Chemical hazard' }, phys: { zh: '物理性危害', en: 'Physical hazard' },
+    two: { zh: '二人以上吃同樣食物、症狀相似', en: 'Two or more people, same food, similar symptoms' }, one: { zh: '一人即算一件', en: 'One case is enough' },
+    inf: { zh: '細菌性：感染型', en: 'Bacterial: infection' }, tox: { zh: '細菌性：毒素型', en: 'Bacterial: intoxication' }, mid: { zh: '細菌性：中間型', en: 'Bacterial: toxin-mediated infection' },
+    chm: { zh: '化學性', en: 'Chemical' }, nat: { zh: '天然毒素', en: 'Natural toxin' }, alg: { zh: '類過敏', en: 'Allergy-like' },
+    bact: { zh: '細菌性', en: 'Bacterial' }, vp: { zh: '腸炎弧菌', en: 'Vibrio parahaemolyticus' }, sa: { zh: '金黃色葡萄球菌', en: 'Staphylococcus aureus' },
+    mix: { zh: '複合調理食品（含盒餐）', en: 'Mixed prepared foods (incl. boxed meals)' }, sea: { zh: '水產品', en: 'Seafood' },
+    rest: { zh: '供膳之營業場所', en: 'Food-service establishments' }, sch: { zh: '學校', en: 'Schools' },
+    summer: { zh: '5～9 月', en: 'May to September' }, noro: { zh: '諾羅病毒', en: 'Norovirus' },
+    cold: { zh: '冷藏保存，不可冷凍', en: 'Refrigerate, do not freeze' }, frz: { zh: '冷凍保存', en: 'Freeze' },
+    prim: { zh: '一次污染', en: 'Primary contamination' }, sec: { zh: '二次污染（交叉污染）', en: 'Secondary (cross) contamination' },
+    tfda: { zh: '衛生福利部食品藥物管理署', en: 'Taiwan FDA (Ministry of Health and Welfare)' }, cnl: { zh: '行政院食品安全會報', en: 'Executive Yuan Food Safety Council' },
+    codex: { zh: '國際食品法典委員會（FAO／WHO）', en: 'Codex Alimentarius Commission (FAO/WHO)' }, sps: { zh: 'WTO 的 SPS 協定', en: 'WTO SPS Agreement' }, iso: { zh: 'ISO 22000', en: 'ISO 22000' },
+    clean: { zh: '清潔', en: 'Clean' }, fast: { zh: '迅速', en: 'Quick' }, temp: { zh: '加熱與冷藏', en: 'Heat and chill' }
+  },
+  levels: [
+    { t: '先看全貌：三大類危害', kind: 'ov', h: SPRE_M.h, svg: SPRE_M.svg, blanks: SPRE_M.b(),
+      intro: ['食品衛生與安全，是從原料採收、捕獲開始，經過加工、調理，一直到送到消費者手上，為了確保安全衛生所做的所有措施。',
+        '會讓食品不安全的東西叫「危害」，分三大類：活的病原（細菌、病毒、寄生蟲、黴菌）；化學物質（農藥、重金屬、違法添加物，也包括動植物本身的天然毒素）；不該出現的硬物或異物。',
+        '這個分頁的顏色：藍色是生物性危害、玫瑰色是化學性危害、琥珀色是物理性危害與溫度、食品本身的條件，青色是清潔消毒與合格的做法，紫色是法規、制度與標示。'],
+      done: ['[[食品危害分三類：生物性（細菌、病毒、寄生蟲、黴菌）、化學性（農藥、動物用藥、重金屬、違法添加物、天然毒素）、物理性（玻璃、金屬、石頭、頭髮等異物）。]]', '天然毒素（河豚毒、貝毒、毒菇）雖然來自生物，歸在化學性危害；黴菌本身是生物性，它產生的黴菌毒素是化學性。'] },
+    { t: '食物中毒的定義與分類', kind: 'list',
+      intro: ['食物中毒在統計上的定義：兩個人以上吃了相同的食物，出現相似的症狀，而且從剩下的食物、病人的嘔吐物或糞便、或環境檢體驗出相同的病因。',
+        '例外：肉毒桿菌毒素或化學物質造成的中毒，就算只有一個人，也算一件食物中毒。',
+        '依病因分四類：細菌性（再分感染型、毒素型、中間型）、化學性、天然毒素、類過敏（例如魚肉腐敗產生組織胺）。病毒和寄生蟲另外統計。'],
+      listTitle: '是哪一個',
+      list: [['一般食物中毒事件成立的條件', { a: 'two', o: ['two', 'one'] }], ['肉毒桿菌毒素或化學物質中毒', { a: 'one', o: ['two', 'one'] }],
+        ['腸炎弧菌、沙門氏菌', { a: 'inf', o: ['inf', 'tox', 'mid'] }], ['金黃色葡萄球菌、肉毒桿菌', { a: 'tox', o: ['inf', 'tox', 'mid'] }], ['產氣莢膜梭菌、病原性大腸桿菌', { a: 'mid', o: ['inf', 'tox', 'mid'] }],
+        ['重金屬、殘留農藥、違法添加物', { a: 'chm', o: ['chm', 'nat', 'alg'] }], ['河豚、貝類、毒菇、發芽馬鈴薯', { a: 'nat', o: ['chm', 'nat', 'alg'] }], ['鯖魚不新鮮產生的組織胺', { a: 'alg', o: ['chm', 'nat', 'alg'] }]],
+      countsTitle: '數字', counts: [['醫療院所發現疑似食物中毒，應在幾小時內通報衛生局', '24', ['6', '12', '24', '48']]],
+      done: ['[[食物中毒：二人以上攝取相同食物、症狀相似、檢出相同病因；肉毒桿菌毒素或化學物質中毒一人即成立。]]', '[[醫療院所應於 24 小時內通報當地衛生局。]]', '發生時保留剩餘食物與嘔吐物、排泄物，冷藏保存（不可冷凍），送衛生局檢驗。'] },
+    { t: '台灣食物中毒的樣貌', kind: 'list',
+      intro: ['食藥署每年統計食物中毒案件。整體來說：病因以細菌最多，其次是天然毒素；細菌裡長年以一種嗜鹽的海鮮細菌排第一，其次是會產生耐熱毒素的球菌、米飯類常見的產孢桿菌和沙門氏菌。',
+        '季節上集中在溫度高的夏秋；冬天又有一個小高峰，是一種低溫也流行的病毒。',
+        '原因食品以「複合調理食品」（便當、盒餐、多樣菜餚）最多。案件數最多的場所是餐廳等營業場所，但一次中毒人數多，所以「患者人數」最多的是學校。',
+        '常見的錯誤：加熱不足、生熟食交叉污染、煮好放室溫太久、被感染的人污染食物、冷藏不足。'],
+      tip: '名次每年會有些變動，以食藥署最新統計為準；這裡是近年常見的樣貌。',
+      listTitle: '是哪一個',
+      list: [['病因物質案件最多的類別', { a: 'bact', o: ['bact', 'chm'] }], ['細菌性案件長年排第一', { a: 'vp', o: ['vp', 'sa'] }], ['原因食品最多', { a: 'mix', o: ['mix', 'sea'] }],
+        ['案件數最多的攝食場所', { a: 'rest', o: ['rest', 'sch'] }], ['患者人數最多的攝食場所', { a: 'sch', o: ['rest', 'sch'] }], ['好發月份', { a: 'summer', o: ['summer', 'noro'] }], ['冬季案件上升的主因', { a: 'noro', o: ['summer', 'noro'] }],
+        ['剩餘食物與檢體的保存', { a: 'cold', o: ['cold', 'frz'] }]],
+      done: ['[[細菌性食物中毒最多，腸炎弧菌長年第一；好發於 5～9 月；原因食品以複合調理食品最多。]]', '冬季的諾羅病毒群聚（自助餐、學校）近年常見。'] },
+    { t: '防止污染的原則與常用名詞', kind: 'list',
+      intro: ['防止食物中毒有三個基本原則：保持食物、器具、人員、環境乾淨；生鮮和煮好的食物都盡快處理、盡快吃；該熱的要夠熱、該冷的要夠冷，不要讓食物停在微生物最愛的溫度帶。',
+        '後來再加兩個「不」：不喝沒煮沸的山泉水；不認識的動植物不採不吃。',
+        '污染的時間點有兩種：原料在生長環境中就帶有的；以及加工、調理、保存、販賣過程中才沾上的。'],
+      listTitle: '是哪一個',
+      list: [['保持食物、餐具、人員及環境乾淨', { a: 'clean', o: ['clean', 'fast', 'temp'] }], ['生鮮食品與調理後食物盡快處理', { a: 'fast', o: ['clean', 'fast', 'temp'] }], ['避免食物停在 7～60℃', { a: 'temp', o: ['clean', 'fast', 'temp'] }],
+        ['牡蠣在海水中就帶有腸炎弧菌', { a: 'prim', o: ['prim', 'sec'] }], ['用切生肉的砧板切滷味', { a: 'sec', o: ['prim', 'sec'] }]],
+      done: ['[[防止食品污染的原則：清潔、迅速、加熱與冷藏；另加不生飲山泉水、不採不食不明動植物。]]', '[[一次污染：原料在生長環境中受的污染；二次污染（交叉污染）：製造、加工、調理、保存、販賣過程中的污染。]]'] },
+    { t: '誰在管：國內機關與國際組織', kind: 'list',
+      intro: ['我國食品衛生的中央主管機關是衛生福利部，實際業務由它底下的食品藥物管理署負責。跨部會的協調由行政院的一個會報負責，行政院長擔任召集人。',
+        '國際上，聯合國的糧農組織和衛生組織共同設立一個委員會，制定國際通用的食品標準（添加物、農藥殘留、標示、檢驗方法）。',
+        '加入世界貿易組織後，各國的食品安全檢驗與動植物檢疫措施，要符合 WTO 的一個協定，不能變成不合理的貿易障礙。另有一套國際標準組織的食品安全管理系統，可以用於食品鏈中任何組織。'],
+      listTitle: '是哪一個',
+      list: [['我國食品衛生業務的主管機關', { a: 'tfda', o: ['tfda', 'cnl'] }], ['行政院長召集、跨部會協調食品安全', { a: 'cnl', o: ['tfda', 'cnl'] }],
+        ['制定國際食品標準（食品法典）', { a: 'codex', o: ['codex', 'sps', 'iso'] }], ['食品安全檢驗與動植物防疫檢疫措施協定', { a: 'sps', o: ['codex', 'sps', 'iso'] }], ['適用食品鏈任何組織的食品安全管理系統', { a: 'iso', o: ['codex', 'sps', 'iso'] }]],
+      done: ['[[衛生福利部食品藥物管理署是我國食品衛生主管機關；行政院食品安全會報由院長召集，至少每三個月開會一次。]]', '[[Codex（國際食品法典委員會）由 FAO 與 WHO 共同設立。]]', '我國於 2002 年加入 WTO。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['河豚毒素屬於', { a: 'chem', o: ['bio', 'chem', 'phys'] }, '。'],
+        ['肉毒桿菌毒素中毒，', { a: 'one', o: ['two', 'one'] }, '。'],
+        ['台灣細菌性食物中毒長年第一名是', { a: 'vp', o: ['vp', 'sa'] }, '。'],
+        ['中毒患者的嘔吐物應', { a: 'cold', o: ['cold', 'frz'] }, '後送驗。'],
+        ['生熟食共用砧板造成的是', { a: 'sec', o: ['prim', 'sec'], lang: 'en' }, '。'],
+        ['國際食品法典由', { a: 'codex', o: ['codex', 'sps', 'iso'], lang: 'en' }, '制定。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: SPRE_M.h, force: 'en', svg: SPRE_M.svg, blanks: SPRE_M.b(),
+      intro: ['三大類危害，全部用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: 'Terms', list: [['Bacterial intoxication', { a: 'tox', o: ['inf', 'tox', 'mid'] }], ['Most common food vehicle', { a: 'mix', o: ['mix', 'sea'] }], ['Contamination during processing', { a: 'sec', o: ['prim', 'sec'] }]] }
+  ] };
+/* ======================================================================
+   食品衛生與安全：時間與溫度管控（授課第 2 單元：微生物性的危害－細菌）
+   ====================================================================== */
+var STMP_M = SM([['冷凍貯存', 'Frozen storage', 'tf'], ['冷藏貯存', 'Refrigerated storage', 'tr'], ['熱藏（保溫供應）', 'Hot holding', 'th'], ['危險溫度帶', 'Temperature danger zone', 'tdz'],
+  ['剩菜復熱', 'Reheating leftovers', 't74'], ['禽肉、香腸等填充肉製品的中心溫度', 'Poultry and stuffed meats (core)', 't74'], ['絞碎的豬、牛、羊肉的中心溫度', 'Ground pork, beef, lamb (core)', 't68']],
+  { l: ['情況', 'situation'], r: ['溫度', 'temperature'], k: 'H', dy: 46, o: ['tf', 'tr', 'th', 'tdz', 't74', 't68'] });
+var STMP = { id: 'stmp', zh: '時間與溫度：把細菌擋在門外', en: 'Time and temperature control', alias: '危險溫度帶・中心溫度・2 小時／4 小時・FAT TOM・PHF 與 TCS・高危險群・阪崎腸桿菌・邦克列酸', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    tf: { zh: '−18℃ 以下', en: '−18 °C or below' }, tr: { zh: '7℃ 以下、凍結點以上', en: '7 °C or below, above freezing' }, th: { zh: '60℃ 以上', en: '60 °C or above' }, tdz: { zh: '7～60℃', en: '7–60 °C' },
+    t74: { zh: '74℃ 以上', en: '74 °C or above' }, t68: { zh: '68℃ 以上', en: '68 °C or above' },
+    use: { zh: '可以冷藏或繼續使用', en: 'Refrigerate or use' }, soon: { zh: '盡快用完，不可再放回冰箱', en: 'Use now; do not re-chill' }, toss: { zh: '丟棄', en: 'Discard' },
+    food: { zh: '食物（營養）', en: 'Food' }, acid: { zh: '酸度', en: 'Acidity' }, time: { zh: '時間', en: 'Time' }, oxy: { zh: '氧氣', en: 'Oxygen' }, moist: { zh: '水分', en: 'Moisture' },
+    cbot: { zh: '肉毒桿菌', en: 'Clostridium botulinum' }, saur: { zh: '金黃色葡萄球菌', en: 'Staphylococcus aureus' },
+    tcs: { zh: '需要控制時間與溫度的食品', en: 'TCS food' }, ntcs: { zh: '不需要特別控制', en: 'Not TCS' },
+    hurd: { zh: '柵欄效應', en: 'Hurdle effect' }, fat: { zh: 'FAT TOM', en: 'FAT TOM' },
+    cron: { zh: '阪崎腸桿菌', en: 'Cronobacter sakazakii' }, bong: { zh: '邦克列酸（唐菖蒲伯克氏菌）', en: 'Bongkrekic acid (Burkholderia gladioli)' }, lmon: { zh: '單核球增多性李斯特菌', en: 'Listeria monocytogenes' }, sous: { zh: '肉毒桿菌', en: 'Clostridium botulinum' },
+    hi: { zh: '高危險群', en: 'High-risk group' }, lo: { zh: '一般成人', en: 'Healthy adult' }
+  },
+  levels: [
+    { t: '先看全貌：記住幾個溫度', kind: 'ov', h: STMP_M.h, svg: STMP_M.svg, blanks: STMP_M.b(),
+      intro: ['時間和溫度是控制微生物最有效的兩個因子。大多數病原菌在室溫到體溫之間長得最快，條件好時每 10～30 分鐘就倍增一次。',
+        '所以要讓食物「夠冷」或「夠熱」，盡量不要停在中間那一段。這段溫度在國內法規是 7℃ 到 60℃。',
+        '加熱要看「中心溫度」，用探針溫度計量最厚的地方。不同食材要求不同：絞碎的肉表面的細菌被混進裡面，禽肉常帶沙門氏菌，要求最高；剩菜重新加熱也要達到同樣的高溫。'],
+      done: ['[[冷凍 −18℃ 以下；冷藏 7℃ 以下、凍結點以上；熱藏 60℃ 以上；危險溫度帶 7～60℃。]]', '[[復熱與禽肉、填充肉製品的中心溫度 74℃ 以上；絞碎畜肉 68℃ 以上。]]', '不同教材的溫度可能差 1～2 度（例如國外常寫 5℃、57℃），作答以國內法規的 7℃、60℃ 為準。'] },
+    { t: '室溫放多久：2 小時／4 小時', kind: 'list',
+      intro: ['依食品良好衛生規範準則，餐飲業製備好的菜餚在室溫下不得存放 2 小時以上，熟食和容易腐敗的菜要及時冷藏，熱藏要保持 60℃ 以上。',
+        '餐飲業常用的「2 小時／4 小時原則」，是把食物停在危險溫度帶的時間加總：在 2 小時以內，可以放回冰箱或繼續用；超過 2 小時但不到 4 小時，要盡快用掉，不能再冰回去；超過 4 小時就丟掉。',
+        '冷卻也要快：大鍋湯、大塊肉要分裝成小份、淺盤，或用冰水浴，讓它快速通過危險溫度帶。'],
+      listTitle: '怎麼處理',
+      list: [['在危險溫度帶累計 1 小時', { a: 'use', o: ['use', 'soon', 'toss'] }], ['在危險溫度帶累計 3 小時', { a: 'soon', o: ['use', 'soon', 'toss'] }], ['在危險溫度帶累計 5 小時', { a: 'toss', o: ['use', 'soon', 'toss'] }]],
+      countsTitle: '數字', counts: [['良好衛生規範：煮好的菜在室溫不得存放幾小時以上', '2', ['1', '2', '4', '6']], ['危險溫度帶內的累計時間上限（小時）', '4', ['2', '4', '6', '8']]],
+      done: ['[[食品良好衛生規範準則：菜餚室溫下不得存放 2 小時以上；熱藏 60℃ 以上。]]', '[[2 小時／4 小時原則：2 小時內可冷藏，2～4 小時盡快用完，超過 4 小時丟棄。]]'] },
+    { t: 'FAT TOM、潛在危害性食品與柵欄效應', kind: 'list',
+      intro: ['細菌要繁殖需要六個條件，英文字首拼起來是 FAT TOM：營養、酸度、溫度、時間、氧氣、水分。控制其中幾個，就能抑制細菌。',
+        '富含蛋白質、水分多、接近中性的食物（乳、蛋、肉、魚貝、煮熟的米飯、芽菜）叫「潛在危害性食品」；從食品安全的角度，也叫「需要控制時間與溫度的食品」。',
+        '界線有兩個數字：pH 大於 4.6（低於這個值，一種產孢的厭氧菌不能長出毒素）；水活性大於 0.85（一種耐鹽、耐乾的球菌最低能在約 0.86 生長）。',
+        '同時用好幾種方法（加熱、降低水活性、酸化、包裝），每一種都不必很強，合起來就能讓食品穩定，這叫柵欄效應。'],
+      listTitle: '是哪一個',
+      list: [['FAT TOM 的 A', { a: 'acid', o: ['food', 'acid', 'time', 'oxy', 'moist'] }], ['FAT TOM 的 M', { a: 'moist', o: ['food', 'acid', 'time', 'oxy', 'moist'] }],
+        ['pH 4.6 這條界線是根據', { a: 'cbot', o: ['cbot', 'saur'] }], ['水活性 0.85 這條界線是根據', { a: 'saur', o: ['cbot', 'saur'] }],
+        ['煮熟的白飯', { a: 'tcs', o: ['tcs', 'ntcs'] }], ['蘇打餅乾', { a: 'ntcs', o: ['tcs', 'ntcs'] }], ['苜蓿芽', { a: 'tcs', o: ['tcs', 'ntcs'] }],
+        ['加熱殺菌、降低水活性、再密封包裝', { a: 'hurd', o: ['hurd', 'fat'] }]],
+      done: ['[[潛在危害性食品（PHF）／TCS 食品：pH > 4.6 且水活性 > 0.85，富含蛋白質與水分的食品（乳、蛋、肉、魚貝、熟米飯、芽菜）。]]', '[[pH 4.6 以肉毒桿菌為界；水活性 0.85 以金黃色葡萄球菌為界。]]', '[[柵欄效應：同時使用多種抑菌方法，使食品安定。]]'] },
+    { t: '高危險群與幾種要特別注意的病原', kind: 'list',
+      intro: ['同樣的菌量，有些人特別容易生病：孕婦、嬰幼兒、病人、老人，因為免疫力不足，稱為四大高危險群。',
+        '幾種近年常被提到的：一種污染嬰兒配方奶粉、會讓新生兒腦膜炎的腸桿菌，沖泡奶粉要用 70℃ 以上的水；一種植物病原菌在發酵米製品、玉米澱粉製品、椰子、木耳中產生耐熱的呼吸毒素，2024 年台北粿條中毒造成多人死亡，煮了也去不掉；一種在冷藏溫度也能繁殖、會造成孕婦流產的菌，常見於未殺菌乳製品與即食肉品。',
+        '低溫真空烹調（舒肥）溫度不高、袋內無氧，若處理不當，可能讓產孢的厭氧菌存活。'],
+      listTitle: '是哪一個',
+      list: [['孕婦、嬰幼兒、病人、老人', { a: 'hi', o: ['hi', 'lo'] }], ['嬰兒配方奶粉，沖泡水溫要 70℃ 以上', { a: 'cron', o: ['cron', 'bong', 'lmon'] }], ['發酵米製品、木耳，耐熱，加熱無法去除', { a: 'bong', o: ['cron', 'bong', 'lmon'] }],
+        ['冷藏溫度也能繁殖，孕婦要小心', { a: 'lmon', o: ['cron', 'bong', 'lmon'] }], ['舒肥（低溫真空烹調）主要的風險', { a: 'sous', o: ['sous', 'saur'] }]],
+      done: ['[[四大高危險群：孕婦、嬰幼兒、病人、老人。]]', '[[阪崎腸桿菌：嬰兒配方奶粉，用 70℃ 以上的水沖泡。邦克列酸：唐菖蒲伯克氏菌產生，耐熱，見於發酵米製品、玉米澱粉製品、椰子、木耳。]]', '李斯特菌是低溫菌，冷藏不能保證安全。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['國內法規的危險溫度帶是', { a: 'tdz', o: ['tdz', 'tr', 'th'] }, '。'],
+        ['剩菜復熱的中心溫度要達到', { a: 't74', o: ['t74', 't68', 'th'] }, '。'],
+        ['潛在危害性食品的水活性界線，是根據', { a: 'saur', o: ['cbot', 'saur'] }, '的最低生長水活性。'],
+        ['在危險溫度帶累計超過 4 小時的食物應', { a: 'toss', o: ['use', 'soon', 'toss'] }, '。'],
+        ['冷藏的溫度是', { a: 'tr', o: ['tf', 'tr', 'th'], lang: 'en' }, '。'],
+        ['嬰兒配方奶粉要防的是', { a: 'cron', o: ['cron', 'bong', 'lmon'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: STMP_M.h, force: 'en', svg: STMP_M.svg, blanks: STMP_M.b(),
+      intro: ['幾個要背的溫度，全部用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: 'Terms', list: [['A in FAT TOM', { a: 'acid', o: ['food', 'acid', 'time', 'oxy', 'moist'] }], ['Basis of the pH 4.6 limit', { a: 'cbot', o: ['cbot', 'saur'] }], ['Several mild barriers combined', { a: 'hurd', o: ['hurd', 'fat'] }]] }
+  ] };
+/* ======================================================================
+   食品衛生與安全：加工與調理產生的有害物（授課第 5 單元前半）
+   ====================================================================== */
+var SPRC_M = SM([['多環芳香烴（苯駢芘）', 'PAHs (benzo[a]pyrene)', 'smk'], ['異環胺', 'Heterocyclic amines', 'grl'], ['丙烯醯胺', 'Acrylamide', 'fry'], ['亞硝胺', 'Nitrosamines', 'cur'],
+  ['3-單氯丙二醇', '3-MCPD', 'hyd'], ['縮水甘油脂肪酸酯', 'Glycidyl esters', 'ref'], ['4-甲基咪唑', '4-Methylimidazole', 'car']],
+  { l: ['有害物', 'contaminant'], r: ['主要從哪裡來', 'main source'], k: 'E', dy: 46 });
+var SPRC = { id: 'sprc', zh: '加工與調理產生的有害物', en: 'Contaminants formed during processing', alias: '多環芳香烴・異環胺・丙烯醯胺・亞硝胺・3-MCPD・縮水甘油酯・反式脂肪・三鹵甲烷', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    smk: { zh: '煙燻、炭烤、不完全燃燒', en: 'Smoking, charcoal grilling' }, grl: { zh: '高溫燒烤、煎炸的肉', en: 'High-temperature cooked meat' }, fry: { zh: '高溫油炸、烘焙的澱粉食品', en: 'Fried or baked starchy foods' },
+    cur: { zh: '亞硝酸鹽遇到胺類（醃肉）', en: 'Nitrite plus amines (cured meat)' }, hyd: { zh: '鹽酸水解的化學醬油', en: 'Acid-hydrolyzed soy sauce' }, ref: { zh: '植物油高溫精煉', en: 'High-temperature oil refining' }, car: { zh: '焦糖色素', en: 'Caramel colour' },
+    asn: { zh: '天門冬醯胺＋還原糖', en: 'Asparagine + reducing sugar' }, cre: { zh: '肌酸（肌酐）＋胺基酸＋糖', en: 'Creatine + amino acids + sugar' },
+    hi: { zh: '溫度越高越多', en: 'More at higher temperature' }, boil: { zh: '水煮、蒸', en: 'Boiling, steaming' }, aspz: { zh: '添加天門冬醯胺酶', en: 'Add asparaginase' },
+    ring: { zh: '苯環越多，致癌性越強', en: 'More rings, more carcinogenic' }, acut: { zh: '苯環越多，急性毒性越強', en: 'More rings, more acutely toxic' },
+    acidp: { zh: '酸性（像胃裡）', en: 'Acidic (as in the stomach)' }, alkp: { zh: '鹼性', en: 'Alkaline' }, vce: { zh: '維生素 C、E', en: 'Vitamins C and E' }, salt: { zh: '鹽', en: 'Salt' },
+    nit: { zh: '亞硝酸鹽濃度', en: 'Nitrite concentration' }, amn: { zh: '胺的濃度', en: 'Amine concentration' },
+    part: { zh: '不得用於食品', en: 'Banned in food' }, full: { zh: '可以使用', en: 'Permitted' }, clas: { zh: '對健康沒有負面影響', en: 'Not harmful' },
+    thm: { zh: '三鹵甲烷（氯仿）', en: 'Trihalomethanes (chloroform)' }, pah: { zh: '多環芳香烴', en: 'PAHs' }
+  },
+  levels: [
+    { t: '先看全貌：七種「做出來」的有害物', kind: 'ov', h: SPRC_M.h, svg: SPRC_M.svg, blanks: SPRC_M.b(),
+      intro: ['有些有害物質原料裡沒有，是加熱、加工時才產生的。它們大多和高溫、燃燒或特定的化學處理有關。',
+        '想一想每一種是怎麼來的：有機物燒不完全會產生多個苯環的化合物；肉類高溫燒烤，肌肉裡的成分會變成環狀的胺；澱粉類高溫炸烤，一種胺基酸和糖反應；醃肉用的鹽遇到胺；用強酸快速分解黃豆做醬油；植物油在 200℃ 以上精煉；某些焦糖色素的製程。',
+        '這些物質不少被國際癌症研究機構列為致癌物或可能致癌物，所以「少吃燒焦、少高溫油炸」是共通的建議。'],
+      done: ['[[PAH（苯駢芘）：煙燻、燒烤、不完全燃燒；異環胺：高溫燒烤肉類；丙烯醯胺：高溫油炸烘焙的澱粉食品；亞硝胺：亞硝酸鹽＋胺；3-MCPD：酸水解醬油；縮水甘油酯：油脂高溫精煉；4-甲基咪唑：焦糖色素。]]'] },
+    { t: '丙烯醯胺、異環胺、多環芳香烴', kind: 'list',
+      intro: ['丙烯醯胺是梅納反應的產物：一種胺基酸和葡萄糖、果糖在高溫（約 120℃ 以上）反應生成，常見於薯條、洋芋片、餅乾、烘焙咖啡。生鮮與水煮的食物幾乎沒有。加入分解那種胺基酸的酵素可以減少它。',
+        '異環胺來自肉類高溫加熱：肌肉裡的肌酸、胺基酸和糖一起反應；焦黑的地方最多。食物的水分可以減少它的生成。',
+        '多環芳香烴是兩個以上苯環的化合物，有機物在缺氧下不完全燃燒產生，煙燻、炭烤、油煙裡都有。苯環越多，致癌性越強，急性毒性反而較低；以五個環的苯駢芘當指標。'],
+      listTitle: '是哪一個',
+      list: [['丙烯醯胺的前驅物', { a: 'asn', o: ['asn', 'cre'] }], ['異環胺的前驅物', { a: 'cre', o: ['asn', 'cre'] }], ['丙烯醯胺和溫度的關係', { a: 'hi', o: ['hi', 'boil'] }],
+        ['幾乎不產生丙烯醯胺的烹調法', { a: 'boil', o: ['hi', 'boil'] }], ['工業上減少丙烯醯胺的方法', { a: 'aspz', o: ['aspz', 'salt'] }], ['多環芳香烴的特性', { a: 'ring', o: ['ring', 'acut'] }]],
+      done: ['[[丙烯醯胺：天門冬醯胺＋還原糖，在高溫油炸、烘焙的澱粉類食品中生成；水煮不產生；可用天門冬醯胺酶減少。]]', '[[異環胺：肉中肌酸（肌酐）與胺基酸、糖在高溫下生成。]]', '[[多環芳香烴：苯環越多致癌性越強，以苯駢芘為指標。]]'] },
+    { t: '亞硝胺與其他加工產物', kind: 'list',
+      intro: ['亞硝酸鹽是肉製品的保色劑，能抑制肉毒桿菌；但它和二級胺在酸性條件下會生成亞硝胺，是強致癌物。最適合生成的 pH 約 2.5～3.5，就像胃裡。生成速率和胺濃度成正比、和亞硝酸鹽濃度的平方成正比，所以亞硝酸鹽是關鍵。維生素 C、E 能抑制這個反應。',
+        '蔬菜（芥菜、菠菜、芹菜）本身含很多硝酸鹽，會被細菌還原成亞硝酸鹽。海產乾貨（魷魚、干貝）含很多胺，所以不建議和醃肉、高硝酸鹽蔬菜一起大量吃。',
+        '其他：用強酸水解的醬油會產生 3-MCPD；油脂經高溫精煉（脫臭）產生縮水甘油酯；部分氫化的油含反式脂肪，自 2018 年起不得用於食品，完全氫化的油則可以；反芻動物天然的共軛亞麻油酸不算有害。自來水加氯時，氯和水中的腐植質反應生成三鹵甲烷。'],
+      listTitle: '是哪一個',
+      list: [['亞硝胺容易生成的環境', { a: 'acidp', o: ['acidp', 'alkp'] }], ['能抑制亞硝胺生成', { a: 'vce', o: ['vce', 'salt'] }], ['對亞硝胺生成速率影響最大', { a: 'nit', o: ['nit', 'amn'] }],
+        ['部分氫化油', { a: 'part', o: ['part', 'full'] }], ['完全氫化油', { a: 'full', o: ['part', 'full'] }], ['反芻動物的共軛亞麻油酸', { a: 'clas', o: ['clas', 'part'] }],
+        ['自來水加氯可能產生', { a: 'thm', o: ['thm', 'pah'] }]],
+      countsTitle: '算算看', counts: [['每天 2000 大卡，反式脂肪要低於總熱量 1%，大約幾公克以下', '2', ['1', '2', '9', '20']]],
+      done: ['[[亞硝胺：亞硝酸鹽＋二級胺，酸性（pH 2.5～3.5）最易生成；速率與亞硝酸鹽濃度平方成正比；維生素 C、E 可抑制。]]', '[[部分氫化油自 2018 年起不得使用於食品；WHO 建議反式脂肪 < 1% 總熱量。]]', '2000 × 1% ÷ 9 ≈ 2.2 公克。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['洋芋片、薯條中要注意的是', { a: 'fry', o: ['fry', 'grl', 'smk'] }, '產生的丙烯醯胺。'],
+        ['丙烯醯胺來自', { a: 'asn', o: ['asn', 'cre'] }, '的反應。'],
+        ['亞硝胺在', { a: 'acidp', o: ['acidp', 'alkp'] }, '最容易生成。'],
+        ['3-MCPD 主要來自', { a: 'hyd', o: ['hyd', 'ref', 'car'] }, '。'],
+        ['多環芳香烴', { a: 'ring', o: ['ring', 'acut'], lang: 'en' }, '。'],
+        ['縮水甘油酯來自', { a: 'ref', o: ['hyd', 'ref', 'car'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: SPRC_M.h, force: 'en', svg: SPRC_M.svg, blanks: SPRC_M.b(),
+      intro: ['七種加工產生的有害物，全部用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: 'Terms', list: [['Precursors of heterocyclic amines', { a: 'cre', o: ['asn', 'cre'] }], ['Inhibits nitrosamine formation', { a: 'vce', o: ['vce', 'salt'] }], ['Partially hydrogenated oils', { a: 'part', o: ['part', 'full'] }]] }
+  ] };
+/* ======================================================================
+   食品衛生與安全：油脂劣變與鮮度判定（授課第 5 單元後半）
+   ====================================================================== */
+var SOIL_M = SM([['酸價', 'Acid value', 'ffa'], ['過氧化價', 'Peroxide value', 'per'], ['TBA 值', 'TBA value', 'mda'], ['總極性化合物', 'Total polar compounds', 'pol'],
+  ['揮發性鹽基態氮', 'Volatile basic nitrogen', 'vbn'], ['K 值', 'K value', 'kv'], ['組織胺', 'Histamine', 'his']],
+  { l: ['指標', 'index'], r: ['它在測什麼', 'what it measures'], dy: 46 });
+var SOIL = { id: 'soil', zh: '油脂劣變與鮮度判定', en: 'Lipid oxidation and freshness tests', alias: '自氧化・酸價・過氧化價・TBA・總極性化合物・VBN・K 值・組織胺・腐敗產物', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    ffa: { zh: '游離脂肪酸（中和所需的 KOH）', en: 'Free fatty acids (KOH to neutralize)' }, per: { zh: '初級氧化產物：過氧化物', en: 'Primary products: peroxides' }, mda: { zh: '次級氧化產物：丙二醛', en: 'Secondary products: malondialdehyde' },
+    pol: { zh: '油中所有非三酸甘油酯的物質', en: 'All non-triglyceride material' }, vbn: { zh: '蛋白質分解產生的氨與胺', en: 'Ammonia and amines from protein breakdown' },
+    kv: { zh: '魚肉中 ATP 分解的程度', en: 'Extent of ATP breakdown in fish' }, his: { zh: '高組胺酸魚類的腐敗', en: 'Spoilage of histidine-rich fish' },
+    ini: { zh: '開始期：產生自由基，慢', en: 'Initiation: radicals form, slow' }, pro: { zh: '連鎖期：自由基搶氧，很快', en: 'Propagation: fast chain reaction' }, ter: { zh: '終止期：自由基互相結合', en: 'Termination: radicals combine' },
+    up: { zh: '加速氧化', en: 'Speeds oxidation' }, down: { zh: '減緩氧化', en: 'Slows oxidation' },
+    cad: { zh: '屍胺', en: 'Cadaverine' }, put: { zh: '腐胺', en: 'Putrescine' }, hist: { zh: '組織胺', en: 'Histamine' }, ind: { zh: '吲哚、糞臭素', en: 'Indole, skatole' }, h2s: { zh: '硫化氫、硫醇', en: 'Hydrogen sulfide, thiols' },
+    fresh: { zh: '越新鮮', en: 'Fresher' }, stale: { zh: '越不新鮮', en: 'Less fresh' }
+  },
+  levels: [
+    { t: '先看全貌：七個常考的劣變指標', kind: 'ov', h: SOIL_M.h, svg: SOIL_M.svg, blanks: SOIL_M.b(),
+      intro: ['油脂劣變分兩條路：被水解，放出游離脂肪酸；被氧化，先生成過氧化物（初級產物），再裂解成醛、酮等有臭味的小分子（次級產物）。不同指標測的是不同階段。',
+        '油炸油用久了，各種氧化、聚合、裂解的產物都不再是三酸甘油酯，所以把「非三酸甘油酯」全部量起來，是最實用的換油依據。',
+        '蛋白質食品的鮮度看分解產物：蛋白質被細菌分解產生揮發性的氨和胺；魚死後肌肉的 ATP 一路分解；含很多組胺酸的紅肉魚，組胺酸被細菌脫去羧基變成會引起類過敏的物質。'],
+      done: ['[[酸價：游離脂肪酸；過氧化價：初級產物；TBA：次級產物丙二醛；總極性化合物：所有非三酸甘油酯的物質。]]', '[[VBN：蛋白質分解產生的氨與胺；K 值：魚肉 ATP 分解程度（鮮度恆數）；組織胺：高組胺酸魚類。]]'] },
+    { t: '油脂自氧化的三個階段', kind: 'list',
+      intro: ['不飽和脂肪酸雙鍵旁邊的氫最容易被拔走，形成自由基。這一步慢，但光、熱、銅鐵離子會加快它。',
+        '自由基很快和氧結合，變成過氧自由基，再去搶別的脂肪酸的氫，產生過氧化物和新的自由基，像骨牌一樣連鎖下去。',
+        '最後自由基互相結合，產生醛、酮、醇、酸等各種小分子，油耗味就是這時出現的。',
+        '能延緩氧化的：真空或充氮包裝、低溫、避光、加入金屬螯合劑、抗氧化劑（維生素 E、BHA、BHT）。單重態氧比一般的三重態氧反應快得多。'],
+      listTitle: '是哪一個',
+      list: [['形成自由基，速度慢', { a: 'ini', o: ['ini', 'pro', 'ter'] }], ['自由基與氧結合、連鎖反應', { a: 'pro', o: ['ini', 'pro', 'ter'] }], ['自由基互相結合，產生醛酮', { a: 'ter', o: ['ini', 'pro', 'ter'] }],
+        ['紫外光、加熱', { a: 'up', o: ['up', 'down'] }], ['銅、鐵離子', { a: 'up', o: ['up', 'down'] }], ['維生素 E、BHA、BHT', { a: 'down', o: ['up', 'down'] }], ['充氮包裝、加螯合劑', { a: 'down', o: ['up', 'down'] }], ['雙鍵數目越多', { a: 'up', o: ['up', 'down'] }]],
+      done: ['[[油脂自氧化：開始期（產生自由基）→ 連鎖期（形成過氧化物，最快）→ 終止期（自由基結合，生成醛、酮等）。]]', '光、熱、金屬離子、不飽和度、單重態氧加速氧化；抗氧化劑、螯合劑、低溫、避光、除氧減緩氧化。'] },
+    { t: '油炸油什麼時候要換', kind: 'list',
+      intro: ['依食品良好衛生規範準則，油炸用油的總極性化合物達 25% 時，就要全部換新油，不得再用。',
+        '其他判斷：酸價升高（油炸油一般以 2.0 mg KOH/g 為上限）；發煙點下降（游離脂肪酸越多，越早冒煙）；顏色變深、變黏、起泡面積超過油鍋一半、有油耗味。',
+        '新鮮的油約 96～98% 是三酸甘油酯，極性物質只有 2～4%。'],
+      countsTitle: '數字', counts: [['總極性化合物達多少 %，應全部換新油', '25', ['10', '20', '25', '40']], ['油炸油酸價上限（mg KOH/g）', '2', ['0.5', '2', '5', '10']], ['新鮮油脂中極性物質約占多少 %', '2～4', ['0.1', '2～4', '15', '25']]],
+      done: ['[[油炸油總極性化合物達 25% 應全部更換。]]', '游離脂肪酸增加 → 發煙點、閃火點、著火點都下降。'] },
+    { t: '蛋白質腐敗的產物與魚的鮮度', kind: 'list',
+      intro: ['蛋白質先被分解成胺基酸，胺基酸再被細菌拿掉羧基（變成胺）或拿掉胺基（變成有機酸和氨）。',
+        '常考的胺：離胺酸變成一種「屍體味」的胺；鳥胺酸變成「腐爛味」的胺；組胺酸變成組織胺；色胺酸變成有糞臭味的吲哚類；含硫胺基酸產生硫化氫與硫醇。',
+        '魚死後 ATP 會依序分解成 ADP、AMP、IMP（肌苷酸）、肌苷、次黃嘌呤。後兩者占的比例就是 K 值；K 值越高，代表 ATP 分解得越多，越不新鮮。'],
+      listTitle: '是哪一個',
+      list: [['離胺酸脫羧', { a: 'cad', o: ['cad', 'put', 'hist'] }], ['鳥胺酸脫羧', { a: 'put', o: ['cad', 'put', 'hist'] }], ['組胺酸脫羧', { a: 'hist', o: ['cad', 'put', 'hist'] }],
+        ['色胺酸分解', { a: 'ind', o: ['ind', 'h2s'] }], ['含硫胺基酸分解', { a: 'h2s', o: ['ind', 'h2s'] }], ['K 值越高', { a: 'stale', o: ['fresh', 'stale'] }]],
+      done: ['[[離胺酸 → 屍胺；鳥胺酸 → 腐胺；組胺酸 → 組織胺；色胺酸 → 吲哚、糞臭素。]]', '[[K 值 ＝（肌苷＋次黃嘌呤）÷ ATP 相關化合物總量；越高越不新鮮。]]', '肉品生菌數超過 10⁶ CFU/g，通常已經有明顯腐敗。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['過氧化價測的是', { a: 'per', o: ['per', 'mda', 'ffa'] }, '。'],
+        ['TBA 值測的是', { a: 'mda', o: ['per', 'mda', 'ffa'] }, '。'],
+        ['油脂氧化最快的階段是', { a: 'pro', o: ['ini', 'pro', 'ter'] }, '。'],
+        ['離胺酸脫羧產生', { a: 'cad', o: ['cad', 'put', 'hist'] }, '。'],
+        ['酸價測的是', { a: 'ffa', o: ['per', 'mda', 'ffa'], lang: 'en' }, '。'],
+        ['K 值越高代表', { a: 'stale', o: ['fresh', 'stale'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: SOIL_M.h, force: 'en', svg: SOIL_M.svg, blanks: SOIL_M.b(),
+      intro: ['七個劣變指標，全部用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: 'Terms', list: [['Copper and iron ions', { a: 'up', o: ['up', 'down'] }], ['Ornithine decarboxylation', { a: 'put', o: ['cad', 'put', 'hist'] }], ['Radicals combine', { a: 'ter', o: ['ini', 'pro', 'ter'] }]] }
+  ] };
+/* ======================================================================
+   食品衛生與安全：化學性危害與天然毒素（教材缺第 4、7 單元，照國考範圍補）
+   ====================================================================== */
+var SCHM_M = SM([['甲基汞', 'Methylmercury', 'mina'], ['鎘', 'Cadmium', 'itai'], ['砷（地下水）', 'Arsenic (groundwater)', 'blk'], ['多氯聯苯', 'PCBs', 'yus'],
+  ['戴奧辛', 'Dioxins', 'egg'], ['三聚氰胺', 'Melamine', 'kid'], ['鉛', 'Lead', 'pb']],
+  { l: ['污染物', 'contaminant'], r: ['代表的事件或傷害', 'classic case or harm'], k: 'E', dy: 46 });
+var SCHM_N = SM([['河豚毒素', 'Tetrodotoxin', 'puf'], ['麻痺性貝毒', 'Paralytic shellfish toxin', 'din'], ['茄鹼', 'Solanine', 'pot'], ['氰苷', 'Cyanogenic glycosides', 'cas'],
+  ['黃麴毒素 B₁', 'Aflatoxin B₁', 'pea'], ['組織胺', 'Histamine', 'mac']],
+  { l: ['天然毒素', 'natural toxin'], r: ['常見來源', 'typical source'], k: 'E', p: 'g' });
+var SCHM = { id: 'schm', zh: '化學性危害：重金屬、農藥與天然毒素', en: 'Chemical hazards and natural toxins', alias: '水俁病・痛痛病・烏腳病・米糠油・有機磷・瘦肉精・河豚毒・貝毒・茄鹼・氰苷・黃麴毒素', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    mina: { zh: '水俁病（神經損傷）', en: 'Minamata disease' }, itai: { zh: '痛痛病（骨骼、腎臟）', en: 'Itai-itai disease' }, blk: { zh: '烏腳病', en: 'Blackfoot disease' },
+    yus: { zh: '米糠油事件（油症）', en: 'Rice-bran oil poisoning (Yusho/Yucheng)' }, egg: { zh: '焚化污染，鴨蛋、雞蛋超標', en: 'Combustion pollution in eggs' }, kid: { zh: '毒奶粉，嬰兒腎結石', en: 'Tainted milk; infant kidney stones' }, pb: { zh: '兒童智力與神經發育、貧血', en: 'Child neurodevelopment, anemia' },
+    ache: { zh: '抑制乙醯膽鹼酯酶', en: 'Inhibit acetylcholinesterase' }, accu: { zh: '脂溶性，在體內與食物鏈蓄積', en: 'Fat-soluble; bioaccumulate' },
+    bago: { zh: '乙型受體素（瘦肉精）', en: 'Beta-agonists (ractopamine etc.)' }, abx: { zh: '抗生素殘留', en: 'Antibiotic residues' },
+    puf: { zh: '河豚的卵巢、肝臟', en: 'Puffer fish ovary and liver' }, din: { zh: '吃了有毒藻類的雙殼貝', en: 'Bivalves that ate toxic algae' }, pot: { zh: '發芽或變綠的馬鈴薯', en: 'Sprouted or green potatoes' },
+    cas: { zh: '生樹薯、苦杏仁', en: 'Raw cassava, bitter almond' }, pea: { zh: '發霉的花生、玉米', en: 'Moldy peanuts and corn' }, mac: { zh: '不新鮮的鯖魚、鮪魚', en: 'Spoiled mackerel, tuna' },
+    na: { zh: '阻斷鈉離子通道，神經麻痺', en: 'Blocks sodium channels; paralysis' }, liv: { zh: '肝癌', en: 'Liver cancer' }, hcn: { zh: '釋出氰化氫', en: 'Releases hydrogen cyanide' },
+    stab: { zh: '耐熱，煮不掉', en: 'Heat-stable' }, lab: { zh: '加熱就能破壞', en: 'Destroyed by cooking' }
+  },
+  levels: [
+    { t: '先看全貌：重金屬與工業污染物', kind: 'ov', h: SCHM_M.h, svg: SCHM_M.svg, blanks: SCHM_M.b(),
+      intro: ['這個單元是老師教材沒有的部分（第 4、7 單元），照國考「食品衛生與安全」的範圍補上。',
+        '重金屬和一些工業化學物質不容易排出，會在體內和食物鏈中累積，大魚、內臟含量常較高。幾個歷史事件都是國考常客：日本海灣的工廠排放有機汞，居民吃魚後神經受損；日本河流上游礦場排出的金屬污染稻米，居民骨頭疼痛易斷；台灣西南沿海飲用含高砷的深井水，造成末梢血管阻塞；民國 68 年彰化一種用於熱交換的化合物漏進米糠油。',
+        '還有：焚化與燃燒產生的含氯化合物，曾使彰化的鴨蛋、雞蛋超標；民國 97 年中國奶粉被加入含氮化合物冒充蛋白質，嬰兒腎結石；鉛會影響兒童的神經發育。'],
+      done: ['[[甲基汞：水俁病；鎘：痛痛病；砷：烏腳病；多氯聯苯：米糠油事件；三聚氰胺：毒奶粉。]]', '重金屬與脂溶性污染物會生物濃縮：食物鏈越上層、越大型的魚，含量越高。'] },
+    { t: '農藥與動物用藥', kind: 'list',
+      intro: ['有機磷和胺基甲酸鹽類殺蟲劑抑制神經的一種酵素，使乙醯膽鹼堆積，中毒時流口水、瞳孔縮小、肌肉抽搐。蔬果的快速篩檢（綠盾）就是用這種酵素被抑制的程度來判斷。',
+        '有機氯殺蟲劑（如 DDT）很穩定、脂溶性，在環境和脂肪組織中累積，很多國家早已禁用。',
+        '動物用藥：促進瘦肉生長的藥物（乙型受體素）國內除依風險評估訂有容許量者外，不得檢出；抗生素殘留會造成過敏與抗藥性。殘留超過安全容許量的食品不得販售。'],
+      listTitle: '是哪一個',
+      list: [['有機磷、胺基甲酸鹽的作用', { a: 'ache', o: ['ache', 'accu'] }], ['DDT 等有機氯的特性', { a: 'accu', o: ['ache', 'accu'] }], ['俗稱瘦肉精', { a: 'bago', o: ['bago', 'abx'] }], ['可能造成抗藥性細菌', { a: 'abx', o: ['bago', 'abx'] }]],
+      done: ['[[有機磷、胺基甲酸鹽：抑制乙醯膽鹼酯酶；有機氯：脂溶、難分解、生物蓄積。]]', '[[乙型受體素（瘦肉精）：除依風險評估訂定容許量者外，不得檢出。]]'] },
+    { t: '天然毒素', kind: 'ov', h: SCHM_N.h, svg: SCHM_N.svg, blanks: SCHM_N.b(),
+      intro: ['有些毒素是動植物本身就有的，歸在化學性危害。',
+        '河豚的毒集中在卵巢和肝臟，阻斷神經的鈉離子通道，加熱破壞不了。貝類本身不產毒，是吃了有毒的渦鞭毛藻（赤潮）才累積毒素。',
+        '馬鈴薯發芽或表皮變綠時，芽眼和綠皮的生物鹼增加。生樹薯、苦杏仁裡的配糖體分解後釋出劇毒的氰化物。花生、玉米發霉時，一種麴黴產生的毒素是很強的肝臟致癌物。不新鮮的紅肉魚，細菌把組胺酸變成組織胺，造成類過敏症狀。'],
+      done: ['[[河豚毒素：卵巢、肝臟最多，耐熱，阻斷鈉通道；麻痺性貝毒來自渦鞭毛藻；茄鹼：發芽、變綠的馬鈴薯；氰苷：生樹薯、苦杏仁。]]', '[[黃麴毒素 B₁：黃麴黴產生，見於發霉花生、玉米，強力肝癌致癌物，耐熱。]]'] },
+    { t: '天然毒素的性質', kind: 'list',
+      intro: ['一個重要觀念：很多毒素「煮不掉」。河豚毒素、貝毒、黃麴毒素、組織胺都很耐熱，所以預防靠選擇原料、正確貯存，不能只靠加熱。',
+        '氰苷例外：樹薯經過削皮、浸泡、充分煮熟，可以讓氰化物揮發掉。'],
+      listTitle: '是哪一個',
+      list: [['河豚毒素的作用', { a: 'na', o: ['na', 'liv', 'hcn'] }], ['黃麴毒素 B₁ 的主要危害', { a: 'liv', o: ['na', 'liv', 'hcn'] }], ['氰苷分解後', { a: 'hcn', o: ['na', 'liv', 'hcn'] }],
+        ['河豚毒素遇熱', { a: 'stab', o: ['stab', 'lab'] }], ['組織胺遇熱', { a: 'stab', o: ['stab', 'lab'] }], ['黃麴毒素遇熱', { a: 'stab', o: ['stab', 'lab'] }]],
+      done: ['[[河豚毒素、麻痺性貝毒、黃麴毒素、組織胺都耐熱，加熱無法去除。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['鎘污染稻米造成', { a: 'itai', o: ['mina', 'itai', 'blk'] }, '。'],
+        ['多氯聯苯污染食用油，造成', { a: 'yus', o: ['yus', 'kid', 'egg'] }, '。'],
+        ['有機磷農藥會', { a: 'ache', o: ['ache', 'accu'] }, '。'],
+        ['發芽馬鈴薯要注意', { a: 'pot', o: ['pot', 'cas', 'pea'] }, '的茄鹼。'],
+        ['甲基汞造成', { a: 'mina', o: ['mina', 'itai', 'blk'], lang: 'en' }, '。'],
+        ['黃麴毒素', { a: 'stab', o: ['stab', 'lab'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: SCHM_N.h, force: 'en', svg: SCHM_N.svg, blanks: SCHM_N.b(),
+      intro: ['天然毒素的來源，全部用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: 'Terms', list: [['Cadmium', { a: 'itai', o: ['mina', 'itai', 'blk'] }], ['Melamine', { a: 'kid', o: ['yus', 'kid', 'egg'] }], ['DDT', { a: 'accu', o: ['ache', 'accu'] }]] }
+  ] };
+/* ======================================================================
+   食品衛生與安全：食品添加物（授課第 6 單元前半）
+   ====================================================================== */
+var SADD_M = SM([['己二烯酸（山梨酸）', 'Sorbic acid', 'pres'], ['BHA、BHT', 'BHA, BHT', 'antiox'], ['亞硝酸鈉', 'Sodium nitrite', 'colfix'], ['亞硫酸氫鈉', 'Sodium bisulfite', 'bleach'],
+  ['碳酸氫鈉、明礬', 'Sodium bicarbonate, alum', 'leav'], ['多磷酸鈉', 'Sodium polyphosphate', 'bind'], ['羧甲基纖維素（CMC）', 'Carboxymethyl cellulose', 'thick'], ['過氧化氫', 'Hydrogen peroxide', 'steri']],
+  { l: ['添加物', 'additive'], r: ['屬於哪一類', 'category'], dy: 44 });
+var SADD = { id: 'sadd', zh: '食品添加物', en: 'Food additives', alias: '定義・十七類・正面表列・功能性名稱標示・防腐劑・保色劑・甜味劑・加工助劑', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    pres: { zh: '防腐劑', en: 'Preservative' }, antiox: { zh: '抗氧化劑', en: 'Antioxidant' }, colfix: { zh: '保色劑', en: 'Color fixative' }, bleach: { zh: '漂白劑', en: 'Bleaching agent' },
+    leav: { zh: '膨脹劑', en: 'Leavening agent' }, bind: { zh: '結著劑', en: 'Binding agent' }, thick: { zh: '黏稠劑（糊料）', en: 'Thickener' }, steri: { zh: '殺菌劑', en: 'Sanitizing agent' },
+    pos: { zh: '只能用在表列的食品與限量內', en: 'Only listed foods, within limits' }, neg: { zh: '沒禁止的都可以用', en: 'Anything not banned is allowed' },
+    min: { zh: '能達到效果的最小量', en: 'Minimum effective amount' }, max: { zh: '越多越有效', en: 'More is better' },
+    func: { zh: '要同時標示功能性名稱', en: 'Must also state the function' }, nofn: { zh: '只標品名即可', en: 'Name only' },
+    aid: { zh: '加工助劑（不必標示）', en: 'Processing aid (not labeled)' }, add: { zh: '食品添加物（要標示）', en: 'Additive (labeled)' },
+    mold: { zh: '主要抑制黴菌，靜菌', en: 'Mainly inhibits molds; static' }, kill: { zh: '殺死所有微生物', en: 'Kills all microbes' },
+    acd: { zh: '酸性時效果好', en: 'Works better in acid' }, alk: { zh: '鹼性時效果好', en: 'Works better in alkali' },
+    can: { zh: '原則上不得使用防腐劑', en: 'Preservatives generally not allowed' }, noresid: { zh: '最終產品不得殘留', en: 'No residue in final product' },
+    raw: { zh: '生鮮肉、生鮮魚不得使用', en: 'Not allowed in fresh meat or fish' }, yeast: { zh: '不是食品添加物', en: 'Not an additive' },
+    hide: { zh: '不可以：用來掩飾劣質原料', en: 'Not allowed: hide poor quality' }, keep: { zh: '可以：防止腐敗變質', en: 'Allowed: prevent spoilage' },
+    pku: { zh: '苯酮尿症患者要注意', en: 'Warning for phenylketonuria' }
+  },
+  levels: [
+    { t: '先看全貌：認識常見添加物的類別', kind: 'ov', h: SADD_M.h, svg: SADD_M.svg, blanks: SADD_M.b(),
+      intro: ['食品添加物是為了著色、調味、防腐、漂白、乳化、增加香味、安定品質、促進發酵、增加稠度、強化營養、防止氧化等目的，加入或接觸食品的單方或複方物質。',
+        '衛福部的「食品添加物使用範圍及限量暨規格標準」把它們分成十七類（另有第十一之一類甜味劑），每一種都規定能用在哪些食品、最多多少。',
+        '從名字猜功能：抑制黴菌的有機酸；防止油脂酸敗的酚類；讓肉保持粉紅色的含氮鹽；讓蔬果乾變白的含硫鹽；加熱產生氣體的鹽和明礬；讓肉丸保水有彈性的磷酸鹽；讓液體變稠的纖維素衍生物；用在器具、包裝消毒的氧化劑。'],
+      done: ['[[防腐劑：己二烯酸、苯甲酸、丙酸鹽；抗氧化劑：BHA、BHT、維生素 E、C；保色劑：亞硝酸鹽、硝酸鹽；漂白劑：亞硫酸鹽類；膨脹劑：碳酸氫鈉、明礬；結著劑：磷酸鹽類；黏稠劑：CMC、海藻酸、鹿角菜膠、三仙膠；殺菌劑：過氧化氫。]]'] },
+    { t: '管理原則', kind: 'list',
+      intro: ['我國採「正面表列」：只有標準裡列出的添加物，才可以在列出的食品、限量內使用；沒列出的食品就不能用。訂定限量的原則是「能達到預期效果的最小量」，並依國人飲食習慣做風險評估。',
+        '使用添加物的正當理由：製造上必須、維持營養價值、防止腐敗變質、使食品美觀。不可以：用來掩飾劣質原料或惡劣的製造方法、欺騙消費者、降低營養價值、以治療疾病為目的。',
+        '標示時，甜味劑、防腐劑、抗氧化劑三類要同時寫出功能性名稱（例如「防腐劑（己二烯酸鉀）」）。',
+        '加工助劑是在製程中為了特定目的使用、最後要除去、在成品中不產生功能的物質，例如油炸油的助濾劑；它不是食品添加物，成分不必標示。'],
+      listTitle: '是哪一個',
+      list: [['我國的管理方式', { a: 'pos', o: ['pos', 'neg'] }], ['訂定限量的原則', { a: 'min', o: ['min', 'max'] }], ['防腐劑、抗氧化劑、甜味劑的標示', { a: 'func', o: ['func', 'nofn'] }],
+        ['製程中使用、成品前除去、不產生功能', { a: 'aid', o: ['aid', 'add'] }], ['用漂白劑讓不新鮮的蝦看起來新鮮', { a: 'hide', o: ['hide', 'keep'] }]],
+      countsTitle: '數字', counts: [['添加物共分為幾類（不含第十一之一類）', '17', ['8', '12', '17', '20']]],
+      done: ['[[食品添加物採正面表列，限量以達到效果之最小量為原則。]]', '[[甜味劑、防腐劑、抗氧化劑須同時標示功能性名稱。]]', '[[加工助劑不是食品添加物，不必標示。]]'] },
+    { t: '幾類常考的重點', kind: 'list',
+      intro: ['防腐劑是「靜菌」不是殺菌，主要對象是黴菌，其次是細菌。有機酸類在未解離狀態才容易穿過細胞膜，所以在酸性環境效果好。罐頭靠殺菌與密封保存，原則上不得使用防腐劑。',
+        '殺菌劑（過氧化氫）可以用來處理，但最終產品中不得殘留。',
+        '保色劑（亞硝酸鹽、硝酸鹽）用在肉製品、魚肉製品，以亞硝酸根殘留量計 0.07 g/kg 以下；生鮮肉類、生鮮魚肉不得使用。',
+        '著色劑不得用在生鮮肉、魚貝、豆類、蔬果，以及味噌、醬油、海帶、海苔、茶。發麵用的酵母是食品原料，不是膨脹劑。營養添加劑是種類最多的一類。'],
+      listTitle: '是哪一個',
+      list: [['防腐劑的作用', { a: 'mold', o: ['mold', 'kill'] }], ['有機酸類防腐劑', { a: 'acd', o: ['acd', 'alk'] }], ['罐頭食品', { a: 'can', o: ['can', 'noresid'] }], ['過氧化氫', { a: 'noresid', o: ['can', 'noresid'] }],
+        ['亞硝酸鹽', { a: 'raw', o: ['raw', 'yeast'] }], ['酵母', { a: 'yeast', o: ['raw', 'yeast'] }]],
+      countsTitle: '數字', counts: [['肉製品亞硝酸根殘留上限（ppm）', '70', ['5', '70', '200', '1000']]],
+      done: ['[[防腐劑是靜菌劑，以抑制黴菌為主，酸性時效果較好；罐頭原則上不得使用防腐劑。]]', '[[過氧化氫：最終產品不得殘留。亞硝酸鹽：肉製品殘留 0.07 g/kg（70 ppm）以下，生鮮肉類、魚肉不得使用。]]'] },
+    { t: '甜味劑有多甜', kind: 'list',
+      intro: ['人工甜味劑的甜度用「蔗糖的幾倍」表示。糖精約 300 倍，阿斯巴甜約 200 倍，醋磺內酯鉀約 200 倍，蔗糖素約 600 倍，紐甜更甜得多；塞克拉美（甜精）只有約 30～50 倍，常和糖精一起用。',
+        '阿斯巴甜由苯丙胺酸和天門冬胺酸組成，含它的產品要提醒苯酮尿症患者。'],
+      countsTitle: '甜度約是蔗糖的幾倍', counts: [['糖精', '300', ['40', '200', '300', '600']], ['阿斯巴甜', '200', ['40', '200', '300', '600']], ['蔗糖素', '600', ['40', '200', '300', '600']], ['塞克拉美（甜精）', '40', ['40', '200', '300', '600']]],
+      listTitle: '注意', list: [['阿斯巴甜', { a: 'pku', o: ['pku', 'yeast'] }]],
+      done: ['[[甜度（蔗糖＝1）：糖精約 300、阿斯巴甜約 200、蔗糖素約 600、塞克拉美約 30～50。]]', '阿斯巴甜含苯丙胺酸，苯酮尿症患者不宜。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['亞硝酸鈉屬於', { a: 'colfix', o: SADD_M.o }, '。'],
+        ['我國的添加物管理是', { a: 'pos', o: ['pos', 'neg'] }, '。'],
+        ['防腐劑', { a: 'mold', o: ['mold', 'kill'] }, '。'],
+        ['油炸油的助濾劑屬於', { a: 'aid', o: ['aid', 'add'] }, '。'],
+        ['多磷酸鈉屬於', { a: 'bind', o: SADD_M.o, lang: 'en' }, '。'],
+        ['過氧化氫在最終產品中', { a: 'noresid', o: ['can', 'noresid'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: SADD_M.h, force: 'en', svg: SADD_M.svg, blanks: SADD_M.b(),
+      intro: ['八種添加物的類別，全部用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: 'Terms', list: [['Labeling of preservatives', { a: 'func', o: ['func', 'nofn'] }], ['Principle for setting limits', { a: 'min', o: ['min', 'max'] }], ['Yeast', { a: 'yeast', o: ['raw', 'yeast'] }]] }
+  ] };
+/* ======================================================================
+   食品衛生與安全：違法添加物與照射食品（授課第 6 單元後半）
+   ====================================================================== */
+var SILL_M = SM([['硼砂', 'Borax', 'qq'], ['吊白塊', 'Rongalite', 'rice'], ['保險粉（連二亞硫酸鈉）', 'Sodium hydrosulfite', 'sprt'], ['過氧化氫殘留', 'Hydrogen peroxide residue', 'tofu'],
+  ['鹽基性介黃', 'Auramine', 'pick'], ['蘇丹紅', 'Sudan red', 'chil'], ['孔雀綠', 'Malachite green', 'aqua'], ['順丁烯二酸', 'Maleic acid', 'mstr']],
+  { l: ['違法物質', 'illegal substance'], r: ['曾被濫用在', 'misused in'], k: 'E', dy: 44 });
+var SILL = { id: 'sill', zh: '違法添加物與照射食品', en: 'Illegal additives and irradiated foods', alias: '硼砂・吊白塊・保險粉・鹽基性色素・皂黃・蘇丹紅・孔雀綠・甘精・食品照射・Radura・輻射污染', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    qq: { zh: '鹼粽、油麵、年糕（增加 Q 彈）', en: 'Alkaline rice dumplings, noodles (chewiness)' }, rice: { zh: '米粉、潤餅皮（漂白防腐，含甲醛）', en: 'Rice noodles, spring roll wrappers' }, sprt: { zh: '豆芽菜漂白', en: 'Bleaching bean sprouts' },
+    tofu: { zh: '麵腸、豆干、豆皮', en: 'Wheat gluten, dried tofu' }, pick: { zh: '黃蘿蔔、糖果（黃色）', en: 'Yellow pickled radish, candy' }, chil: { zh: '辣椒粉、鹹蛋黃（紅色）', en: 'Chili powder, salted egg yolk' },
+    aqua: { zh: '魚蝦養殖（殺菌防黴）', en: 'Fish and shrimp farming' }, mstr: { zh: '粉圓、粄條等化製澱粉', en: 'Modified starch in tapioca balls' },
+    tur: { zh: '薑黃試紙變紅棕色', en: 'Turmeric paper turns red-brown' }, tit: { zh: '硫酸鈦呈黃色', en: 'Titanium sulfate turns yellow' }, uv: { zh: '紫外燈下發螢光', en: 'Fluoresces under UV' },
+    acc: { zh: '在體內累積成硼酸', en: 'Accumulates as boric acid' }, form: { zh: '釋出甲醛', en: 'Releases formaldehyde' }, metHb: { zh: '形成變性血紅素', en: 'Forms methemoglobin' },
+    gy: { zh: '戈雷（Gy）＝每公斤吸收 1 焦耳', en: 'Gray: 1 J absorbed per kg' }, bq: { zh: '貝克（Bq）＝每秒衰變一次', en: 'Becquerel: one decay per second' },
+    rad: { zh: '要標示照射處理標章', en: 'Must bear the irradiation mark' }, norad: { zh: '食品不會因此帶有放射性', en: 'Food does not become radioactive' },
+    sprout: { zh: '抑制發芽', en: 'Inhibit sprouting' }, brown: { zh: '防止褐變', en: 'Prevent browning' }, i131: { zh: '碘-131', en: 'Iodine-131' }, cs137: { zh: '銫-137', en: 'Cesium-137' }
+  },
+  levels: [
+    { t: '先看全貌：違法物質與它們被濫用的食品', kind: 'ov', h: SILL_M.h, svg: SILL_M.svg, blanks: SILL_M.b(),
+      intro: ['違法添加物是「不是准用的食品添加物」或「工業用的化學品」被加進食品。它們多半便宜、效果明顯，所以屢被查獲。',
+        '想想每一種想要的效果：讓粽子、麵條更有咬勁；讓米粉、潤餅皮更白又不壞；讓豆芽菜白胖；讓麵腸、豆干漂白殺菌；讓醃蘿蔔、糖果更黃；讓辣椒粉、蛋黃更紅；養殖魚蝦防黴殺菌；讓粉圓更 Q。',
+        '常見的合法替代：增加彈性用磷酸鹽；漂白用合法的亞硫酸鹽（有限量）；色素用表列的食用色素。'],
+      done: ['[[硼砂：鹼粽、油麵、年糕；吊白塊：米粉、潤餅皮；保險粉：豆芽菜；過氧化氫：麵腸、豆干；鹽基性介黃：黃蘿蔔；蘇丹紅：辣椒粉、蛋黃；孔雀綠：水產養殖；順丁烯二酸：化製澱粉（粉圓、粄條）。]]'] },
+    { t: '怎麼檢出、有什麼毒性', kind: 'list',
+      intro: ['簡易檢驗：硼砂讓薑黃試紙從黃色變紅棕色；過氧化氫和硫酸鈦反應呈黃色；鹽基性色素和螢光增白劑在紫外燈下會發出螢光；皂黃加試劑會變紫紅色。',
+        '毒性：硼砂在胃裡變成硼酸，會在體內累積，妨礙消化酵素；吊白塊是甲醛和亞硫酸氫鈉的化合物，分解後放出甲醛；甘精（蜜餞裡違法的甜味劑）分解後會使血紅素失去攜氧能力。',
+        '孔雀綠和它的還原型，在水產品中都是「不得檢出」。'],
+      listTitle: '是哪一個',
+      list: [['硼砂的簡易檢驗', { a: 'tur', o: ['tur', 'tit', 'uv'] }], ['過氧化氫的檢驗', { a: 'tit', o: ['tur', 'tit', 'uv'] }], ['鹽基性介黃、螢光增白劑', { a: 'uv', o: ['tur', 'tit', 'uv'] }],
+        ['硼砂的毒性', { a: 'acc', o: ['acc', 'form', 'metHb'] }], ['吊白塊的毒性', { a: 'form', o: ['acc', 'form', 'metHb'] }], ['甘精的毒性', { a: 'metHb', o: ['acc', 'form', 'metHb'] }]],
+      done: ['[[硼砂：薑黃試紙呈紅棕色；過氧化氫：硫酸鈦呈黃色；鹽基性色素、螢光增白劑：紫外燈下發螢光。]]', '[[硼砂在體內累積成硼酸；吊白塊含甲醛；甘精造成變性血紅素。]]'] },
+    { t: '照射食品', kind: 'list',
+      intro: ['食品照射是用游離輻射（鈷-60 的伽瑪射線、X 射線、電子束）處理食品，用來殺菌、殺蟲、抑制發芽、延長保存期限。食品並不會因此帶有放射性，但不能用來防止褐變。',
+        '吸收劑量的單位是戈雷：每公斤物質吸收 1 焦耳。抑制馬鈴薯、洋蔥、大蒜發芽只需要很低的劑量；殺菌需要的劑量高得多；乾燥香辛料允許的劑量最高。國際上認為平均 10 kGy 以內是安全的。',
+        '經照射的食品，包裝上要有照射處理標章（一個圓圈中有植物的圖樣）。',
+        '另一件事是「放射性污染」：核災後的食品可能含碘-131（半衰期約 8 天）和銫-137（半衰期約 30 年），國內訂有容許量。'],
+      listTitle: '是哪一個',
+      list: [['吸收劑量的單位', { a: 'gy', o: ['gy', 'bq'] }], ['放射性活度的單位', { a: 'bq', o: ['gy', 'bq'] }], ['照射過的食品', { a: 'norad', o: ['rad', 'norad'] }], ['照射食品的包裝', { a: 'rad', o: ['rad', 'norad'] }],
+        ['最低劑量（0.15 kGy）的用途', { a: 'sprout', o: ['sprout', 'brown'] }], ['半衰期約 8 天', { a: 'i131', o: ['i131', 'cs137'] }], ['半衰期約 30 年', { a: 'cs137', o: ['i131', 'cs137'] }]],
+      countsTitle: '數字', counts: [['國際公認安全的平均照射劑量上限（kGy）', '10', ['1', '5', '10', '50']]],
+      done: ['[[照射劑量單位戈雷（Gy＝J/kg）；抑制發芽約 0.15 kGy；國際公認 10 kGy 以內安全；包裝須有照射標章（Radura）。]]', '照射可以殺菌、殺蟲、抑制發芽、延長保存，但不能防止褐變。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['硼砂常被違法加在', { a: 'qq', o: ['qq', 'rice', 'sprt'] }, '。'],
+        ['驗硼砂用', { a: 'tur', o: ['tur', 'tit', 'uv'] }, '。'],
+        ['吊白塊會', { a: 'form', o: ['acc', 'form', 'metHb'] }, '。'],
+        ['照射可以用來', { a: 'sprout', o: ['sprout', 'brown'] }, '。'],
+        ['孔雀綠被濫用在', { a: 'aqua', o: ['aqua', 'chil', 'pick'], lang: 'en' }, '。'],
+        ['照射食品的吸收劑量單位是', { a: 'gy', o: ['gy', 'bq'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: SILL_M.h, force: 'en', svg: SILL_M.svg, blanks: SILL_M.b(),
+      intro: ['八種違法物質，全部用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: 'Terms', list: [['Test for hydrogen peroxide', { a: 'tit', o: ['tur', 'tit', 'uv'] }], ['Dulcin toxicity', { a: 'metHb', o: ['acc', 'form', 'metHb'] }], ['Half-life about 8 days', { a: 'i131', o: ['i131', 'cs137'] }]] }
+  ] };
+/* ======================================================================
+   食品衛生與安全：基因改造食品（授課第 8 單元）
+   ====================================================================== */
+var SGMO_M = SM([['抗除草劑的大豆', 'Herbicide-tolerant soybean', 'add'], ['黃金米（含 β-胡蘿蔔素）', 'Golden rice', 'add'], ['延緩軟化的番茄', 'Delayed-softening tomato', 'sub'], ['低飽和脂肪的油菜籽', 'Low-saturate canola', 'reg'],
+  ['無籽西瓜', 'Seedless watermelon', 'chr'], ['水果玉米', 'Super-sweet corn', 'hyb'], ['輻射誘變選出的品種', 'Mutation-bred variety', 'mut']],
+  { l: ['產品', 'product'], r: ['怎麼做出來的', 'how it was made'], dy: 46 });
+var SGMO = { id: 'sgmo', zh: '基因改造食品', en: 'Genetically modified foods', alias: '基因改造定義・增加法減少法調節法・實質等同・3% 標示・PCR 與 ELISA', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    add: { zh: '基改：轉入外來基因（增加法）', en: 'GM: insert a foreign gene' }, sub: { zh: '基改：讓自身基因不表現（減少法）', en: 'GM: silence an own gene' }, reg: { zh: '基改：調節基因的控制因子（調節法）', en: 'GM: alter gene regulation' },
+    chr: { zh: '非基改：染色體倍增（三倍體）', en: 'Not GM: chromosome doubling' }, hyb: { zh: '非基改：傳統雜交育種', en: 'Not GM: conventional hybrid' }, mut: { zh: '非基改：誘變育種', en: 'Not GM: mutation breeding' },
+    subst: { zh: '實質等同', en: 'Substantial equivalence' }, zero: { zh: '零風險', en: 'Zero risk' },
+    nstc: { zh: '國家科學及技術委員會', en: 'National Science and Technology Council' }, moa: { zh: '農業部', en: 'Ministry of Agriculture' }, mohw: { zh: '衛生福利部', en: 'Ministry of Health and Welfare' },
+    must: { zh: '仍要標示基因改造原料', en: 'Must still declare GM origin' }, free: { zh: '可以不標示', en: 'May omit' },
+    dna: { zh: '偵測 DNA（PCR、南方墨點）', en: 'Detects DNA (PCR, Southern blot)' }, prot: { zh: '偵測蛋白質（ELISA、西方墨點）', en: 'Detects protein (ELISA, Western blot)' },
+    qual: { zh: '定性檢驗', en: 'Qualitative test' }, quan: { zh: '定量檢驗', en: 'Quantitative test' },
+    allg: { zh: '產生新的過敏原', en: 'New allergens' }, abr: { zh: '抗生素抗性標識基因轉移', en: 'Transfer of antibiotic-resistance markers' }
+  },
+  levels: [
+    { t: '先看全貌：哪些是基因改造', kind: 'ov', h: SGMO_M.h, svg: SGMO_M.svg, blanks: SGMO_M.b(),
+      intro: ['依食品安全衛生管理法，基因改造是用基因工程或分子生物技術，把遺傳物質轉入活細胞或生物體，使它表現外來基因的特性，或讓自己特定的基因不表現。',
+        '但不包括：傳統育種、同科物種的細胞融合、雜交、誘變、體外受精、體細胞變異、染色體倍增。所以「看起來很神奇」的品種不一定是基改。',
+        '基改的三種做法：把別的物種的基因放進來；讓某個原有基因缺失或不表現；改變控制基因表現的因子，調整表現的程度。'],
+      done: ['[[基因改造：基因工程轉入外源基因或使自身基因不表現；不包括傳統育種、雜交、誘變、細胞融合、染色體倍增等。]]', '無籽西瓜用秋水仙素使染色體倍增，再和二倍體雜交產生三倍體，不是基改；第一個上市的基改作物是延熟番茄（1994）。'] },
+    { t: '安全評估與管理', kind: 'list',
+      intro: ['安全評估的核心原則是「實質等同」：把基改產品和原來的傳統產品比較遺傳表現與成分，特別是毒素、過敏原、營養素；若沒有新的安全疑慮，就認定和原來的一樣安全。',
+        '大家擔心的風險：產生新的過敏原、抗生素抗性標識基因可能轉移、插入的基因產生非預期的毒性產物。目前沒有證據顯示上市的基改食品比傳統食品不安全。',
+        '我國分三段把關：實驗室研究、田間試驗、食品衛生，各由不同部會負責。我國沒有核准種植任何基改作物，只准進口基改的大豆、玉米、油菜、棉花、甜菜等原料；基改原料要經衛福部查驗登記才能當食品原料。'],
+      listTitle: '是哪一個',
+      list: [['安全評估的主要原則', { a: 'subst', o: ['subst', 'zero'] }], ['基因重組實驗守則', { a: 'nstc', o: ['nstc', 'moa', 'mohw'] }], ['田間試驗管理', { a: 'moa', o: ['nstc', 'moa', 'mohw'] }], ['基改食品查驗登記與標示', { a: 'mohw', o: ['nstc', 'moa', 'mohw'] }],
+        ['擔心的風險之一（和蛋白質有關）', { a: 'allg', o: ['allg', 'abr'] }]],
+      countsTitle: '數字', counts: [['我國准許進口的基改作物有幾種', '5', ['2', '3', '5', '8']]],
+      done: ['[[基改食品安全評估：實質等同原則，重點為毒性、過敏性、營養成分、抗生素標識基因。]]', '[[國科會（實驗室）、農業部（田間試驗）、衛福部（食品）分工把關；我國未核准種植基改作物。]]'] },
+    { t: '標示與檢驗', kind: 'list',
+      intro: ['我國規定：包裝食品、食品添加物、散裝食品，只要含基因改造原料都要標示。非故意攙雜在 3% 以下，可以視為非基改。',
+        '醬油、沙拉油、玉米糖漿這類高層次加工品，就算已經驗不到轉殖基因，也要標示「基因改造」或「本產品為基因改造○○加工製成，但已不含基因改造成分」等字樣。「基因改造」字樣不得小於 0.2 公分。',
+        '其他國家的門檻：歐盟 0.9%，日本 5%，韓國 3%。',
+        '檢驗：偵測 DNA 用聚合酶連鎖反應；偵測蛋白質用酵素連結免疫吸附分析。未核准的品項做定性檢驗；已核准的品項做定量檢驗，看有沒有超過 3%。'],
+      listTitle: '是哪一個',
+      list: [['基改黃豆做的醬油', { a: 'must', o: ['must', 'free'] }], ['PCR', { a: 'dna', o: ['dna', 'prot'] }], ['ELISA', { a: 'prot', o: ['dna', 'prot'] }], ['未經核准的基改品項', { a: 'qual', o: ['qual', 'quan'] }], ['已核准的基改品項', { a: 'quan', o: ['qual', 'quan'] }]],
+      countsTitle: '非故意攙雜的門檻（%）', counts: [['台灣', '3', ['0.9', '3', '5', '10']], ['歐盟', '0.9', ['0.9', '3', '5', '10']], ['日本', '5', ['0.9', '3', '5', '10']]],
+      done: ['[[我國基改原料非故意攙雜率 3%；高層次加工品（醬油、沙拉油）仍須標示。]]', '[[PCR 偵測 DNA；ELISA、西方墨點偵測蛋白質。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['無籽西瓜是', { a: 'chr', o: ['add', 'chr', 'hyb'] }, '。'],
+        ['基改食品安全評估依據', { a: 'subst', o: ['subst', 'zero'] }, '原則。'],
+        ['基改黃豆做的沙拉油', { a: 'must', o: ['must', 'free'] }, '。'],
+        ['PCR 是', { a: 'dna', o: ['dna', 'prot'] }, '。'],
+        ['黃金米是', { a: 'add', o: ['add', 'chr', 'hyb'], lang: 'en' }, '。'],
+        ['ELISA 是', { a: 'prot', o: ['dna', 'prot'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: SGMO_M.h, force: 'en', svg: SGMO_M.svg, blanks: SGMO_M.b(),
+      intro: ['哪些是基改，全部用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: 'Terms', list: [['Main safety-assessment principle', { a: 'subst', o: ['subst', 'zero'] }], ['Field trials are regulated by', { a: 'moa', o: ['nstc', 'moa', 'mohw'] }], ['Approved GM items are tested by', { a: 'quan', o: ['qual', 'quan'] }]] }
+  ] };
+/* ======================================================================
+   食品衛生與安全：食物過敏（授課第 9 單元）
+   ====================================================================== */
+var SALG_Y = [40, 90, 140, 190, 240, 290, 340];
+function SALG_OV() {
+  return flow(180, 40, 50, 240, [{ zh: '過敏原第一次進入', en: 'Allergen enters (first time)' }, null, null, null, { zh: '同一種過敏原再次進入', en: 'Same allergen again' }, null, { zh: '蕁麻疹、氣喘、腹瀉', en: 'Hives, asthma, diarrhea' }]);
+}
+var SALG_O = ['apc', 'bcell', 'sens', 'degr', 'immc', 'tcel'];
+function SALG_B() { return [[1, 'apc'], [2, 'bcell'], [3, 'sens'], [5, 'degr']].map(function (r, i) { return { id: 'f' + i, x: 180, y: SALG_Y[r[0]], w: 240, a: r[1], o: SALG_O }; }); }
+var SALG = { id: 'salg', zh: '食物過敏', en: 'Food allergy and intolerance', alias: 'IgE・肥大細胞・組織胺・四型過敏・似過敏症・乳糖不耐・蠶豆症・味精・亞硫酸鹽・過敏原標示', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    apc: { zh: '抗原呈現細胞處理過敏原', en: 'Antigen-presenting cell processes it' }, bcell: { zh: 'B 細胞產生 IgE', en: 'B cells make IgE' }, sens: { zh: 'IgE 黏在肥大細胞上（致敏）', en: 'IgE binds mast cells (sensitization)' },
+    degr: { zh: '肥大細胞釋放組織胺等介質', en: 'Mast cells release histamine' }, immc: { zh: 'IgG 與補體形成免疫複合物', en: 'IgG–complement immune complexes' }, tcel: { zh: 'T 細胞釋放淋巴激素', en: 'T cells release lymphokines' },
+    t1: { zh: '第一型（IgE，立即）', en: 'Type I (IgE, immediate)' }, t2: { zh: '第二型（細胞毒殺）', en: 'Type II (cytotoxic)' }, t3: { zh: '第三型（免疫複合物）', en: 'Type III (immune complex)' }, t4: { zh: '第四型（T 細胞，遲發）', en: 'Type IV (T cell, delayed)' },
+    scom: { zh: '似過敏症食物中毒', en: 'Allergy-like intoxication' }, anap: { zh: '類過敏反應', en: 'Anaphylactoid reaction' }, meta: { zh: '代謝性反應', en: 'Metabolic reaction' }, idio: { zh: '食物特異反應', en: 'Food idiosyncrasy' }, auto: { zh: '自體免疫疾病', en: 'Autoimmune disease' },
+    lab: { zh: '要標示', en: 'Must be declared' }, exem: { zh: '不在此限', en: 'Exempt' }, sugg: { zh: '建議標示（非強制）', en: 'Recommended only' },
+    chal: { zh: '挑戰試驗', en: 'Challenge test' }, spt: { zh: '皮膚穿刺試驗', en: 'Skin prick test' }
+  },
+  levels: [
+    { t: '先看全貌：IgE 引起的過敏', kind: 'ov', h: 372, svg: SALG_OV, blanks: SALG_B(),
+      intro: ['食物過敏是免疫系統把食物裡的某些成分（多半是蛋白質）當成敵人。最常見、最快的一種由 IgE 抗體引起。',
+        '第一次接觸不會發作：過敏原先被細胞處理、呈現，刺激 B 細胞做出 IgE，IgE 黏在肥大細胞表面，這個過程叫致敏。',
+        '再次吃到同一種過敏原，它和肥大細胞上的 IgE 結合，肥大細胞破裂放出組織胺、白三烯素等介質，幾分鐘到幾小時內出現蕁麻疹、氣喘、腹痛腹瀉，嚴重時休克。'],
+      done: ['[[IgE 過敏：過敏原 → 抗原呈現細胞 → B 細胞產生 IgE → IgE 結合肥大細胞（致敏）→ 再次接觸 → 肥大細胞釋放組織胺等介質 → 症狀。]]', '常見過敏食物：牛奶、蛋、花生與堅果、甲殼類與魚、小麥、大豆。'] },
+    { t: '四型過敏反應', kind: 'list',
+      intro: ['免疫性的過敏反應分四型。第一型由 IgE 和肥大細胞造成，發作最快。第二型是 IgG 或 IgM 抗體攻擊被抗原附著的細胞，例如某些藥物引起的溶血。第三型是抗原、抗體和補體形成免疫複合物沉積在組織。第四型由 T 細胞造成，吃下後 6～24 小時才出現，屬遲發型。'],
+      listTitle: '是哪一型',
+      list: [['IgE、肥大細胞、數分鐘內發作', { a: 't1', o: ['t1', 't2', 't3', 't4'] }], ['抗體攻擊被藥物附著的紅血球', { a: 't2', o: ['t1', 't2', 't3', 't4'] }], ['抗原－抗體－補體複合物', { a: 't3', o: ['t1', 't2', 't3', 't4'] }], ['T 細胞，6～24 小時後才出現', { a: 't4', o: ['t1', 't2', 't3', 't4'] }]],
+      done: ['[[第一型：IgE、立即型；第二型：細胞毒殺；第三型：免疫複合物；第四型：T 細胞、遲發型。]]'] },
+    { t: '不是免疫反應的「似過敏」', kind: 'list',
+      intro: ['有些吃了不舒服的反應和過敏很像，但沒有免疫系統參與。',
+        '不新鮮的鯖魚、秋刀魚、鮪魚，細菌把組胺酸變成組織胺，任何人吃了都會臉紅、蕁麻疹、心悸，加熱也去不掉；這叫似過敏症食物中毒（組織胺中毒）。',
+        '某些食物（例如草莓）本身會讓肥大細胞釋放組織胺，但沒有 IgE 參與，叫類過敏反應。',
+        '天生缺少某種酵素：缺乳糖酶的人喝牛奶腹瀉脹氣；缺 G6PD 的人吃蠶豆會溶血。這叫代謝性反應。',
+        '原因不明的：大量味精引起的頭痛、潮紅（中國餐館症候群）；亞硫酸鹽引起的氣喘，叫食物特異反應。',
+        '麩質引起小腸絨毛受損的乳糜瀉，是自體免疫疾病。'],
+      listTitle: '是哪一種',
+      list: [['不新鮮的鯖魚產生組織胺', { a: 'scom', o: ['scom', 'anap', 'meta', 'idio'] }], ['草莓使肥大細胞釋放組織胺，沒有 IgE', { a: 'anap', o: ['scom', 'anap', 'meta', 'idio'] }], ['乳糖不耐', { a: 'meta', o: ['scom', 'anap', 'meta', 'idio'] }],
+        ['蠶豆症（G6PD 缺乏）', { a: 'meta', o: ['scom', 'anap', 'meta', 'idio'] }], ['中國餐館症候群（味精）', { a: 'idio', o: ['scom', 'anap', 'meta', 'idio'] }], ['亞硫酸鹽引起的氣喘', { a: 'idio', o: ['scom', 'anap', 'meta', 'idio'] }], ['麩質引起的乳糜瀉', { a: 'auto', o: ['auto', 'meta'] }]],
+      countsTitle: '數字', counts: [['高組胺酸魚類的組織胺限量（ppm）', '200', ['10', '50', '200', '1000']]],
+      done: ['[[似過敏症食物中毒：組織胺，任何人都可能發生；代謝性反應：乳糖不耐、蠶豆症；食物特異反應：味精、亞硫酸鹽。]]', '乳糜瀉：麩質引起的自體免疫疾病，要終身避免麩質。'] },
+    { t: '過敏原標示與診斷', kind: 'list',
+      intro: ['我國自 2020 年 7 月起，包裝食品含有下列 11 類要標示：甲殼類、芒果、花生、牛奶羊奶、蛋、堅果、芝麻、含麩質穀物、大豆、魚類，以及二氧化硫殘留 10 ppm 以上的亞硫酸鹽。標示方式為「本產品含有○○」等字樣。',
+        '高度精煉的原料不含過敏蛋白，就不在此限：例如高度精製的大豆油、由牛奶製成的乳糖醇、穀類製成的葡萄糖漿、作為載體的魚明膠。',
+        '頭足類、螺貝類、種子類、奇異果是「建議」標示，不是強制。',
+        '診斷：先記錄症狀，排除可疑食物看是否改善，再用控制下的挑戰試驗確認；也可以把食物萃取液刺入皮膚看紅腫。'],
+      listTitle: '是哪一個',
+      list: [['芒果製品', { a: 'lab', o: ['lab', 'exem', 'sugg'] }], ['高度精製的大豆油', { a: 'exem', o: ['lab', 'exem', 'sugg'] }], ['小卷、章魚', { a: 'sugg', o: ['lab', 'exem', 'sugg'] }], ['奇異果', { a: 'sugg', o: ['lab', 'exem', 'sugg'] }],
+        ['控制下吃可疑食物、觀察症狀', { a: 'chal', o: ['chal', 'spt'] }], ['把食物萃取液刺入皮膚', { a: 'spt', o: ['chal', 'spt'] }]],
+      countsTitle: '數字', counts: [['強制標示的過敏原有幾類', '11', ['6', '8', '11', '14']], ['亞硫酸鹽以二氧化硫計幾 ppm 以上要標示', '10', ['1', '10', '30', '100']]],
+      done: ['[[過敏原強制標示 11 類（含二氧化硫殘留 10 ppm 以上的亞硫酸鹽），自 2020 年 7 月 1 日起。]]', '規定會修正，以食藥署最新公告為準。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['第一次接觸過敏原後 IgE 黏在肥大細胞上，叫', { a: 'sens', o: SALG_O }, '。'],
+        ['乳糖不耐屬於', { a: 'meta', o: ['scom', 'anap', 'meta', 'idio'] }, '。'],
+        ['鯖魚組織胺中毒屬於', { a: 'scom', o: ['scom', 'anap', 'meta', 'idio'] }, '。'],
+        ['高度精製的大豆油', { a: 'exem', o: ['lab', 'exem', 'sugg'] }, '。'],
+        ['T 細胞引起的遲發反應是', { a: 't4', o: ['t1', 't2', 't3', 't4'], lang: 'en' }, '。'],
+        ['味精引起的不適屬於', { a: 'idio', o: ['scom', 'anap', 'meta', 'idio'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: 372, force: 'en', svg: SALG_OV, blanks: SALG_B(),
+      intro: ['IgE 過敏的過程，全部用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: 'Terms', list: [['Favism (G6PD deficiency)', { a: 'meta', o: ['scom', 'anap', 'meta', 'idio'] }], ['Celiac disease', { a: 'auto', o: ['auto', 'meta'] }], ['Skin test with food extract', { a: 'spt', o: ['chal', 'spt'] }]] }
+  ] };
+/* ======================================================================
+   食品衛生與安全：異物防治與餐飲衛生管理（授課第 3、10 單元）
+   ====================================================================== */
+var SKIT_M = SM([['澱粉殘留', 'Starch residue', 'iod'], ['油脂殘留', 'Fat residue', 'cap'], ['蛋白質殘留', 'Protein residue', 'nin'], ['洗潔劑殘留（ABS）', 'Detergent (ABS) residue', 'azu'],
+  ['自來水餘氯', 'Residual chlorine', 'dpd'], ['螢光物質', 'Fluorescent substances', 'uvl'], ['表面清潔度（快速）', 'Surface cleanliness (rapid)', 'atp']],
+  { l: ['要檢查什麼', 'what to check'], r: ['用什麼、看到什麼', 'reagent and result'], k: 'T', dy: 46 });
+var SKIT = { id: 'skit', zh: '異物防治與餐飲衛生管理', en: 'Physical hazards and food-service hygiene', alias: '物理性危害・餐具簡易檢驗・作業區清潔度・人流物流・照度・人員衛生・冷藏庫擺放', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    iod: { zh: '碘液 → 藍紫色', en: 'Iodine → blue-purple' }, cap: { zh: '油性辣椒紅 → 橘紅斑點', en: 'Oil capsanthin → orange-red spots' }, nin: { zh: '寧海準 → 藍紫色', en: 'Ninhydrin → blue-purple' },
+    azu: { zh: '花紺試液 → 氯仿層藍色', en: 'Azure A → blue chloroform layer' }, dpd: { zh: 'DPD 試劑 → 紅色', en: 'DPD reagent → red' }, uvl: { zh: '紫外燈 → 發螢光', en: 'UV lamp → fluorescence' }, atp: { zh: 'ATP 生物冷光', en: 'ATP bioluminescence' },
+    xray: { zh: '金屬檢測機、X 光機', en: 'Metal detector, X-ray' }, sieve: { zh: '過篩', en: 'Sieving' }, nojew: { zh: '不戴飾品、戴帽子髮網', en: 'No jewelry; hairnet' },
+    dirty: { zh: '污染區', en: 'Contaminated zone' }, semi: { zh: '準清潔區', en: 'Semi-clean zone' }, clean: { zh: '清潔區', en: 'Clean zone' }, gen: { zh: '非食品處理區', en: 'Non-food area' },
+    c2d: { zh: '清潔區 → 污染區', en: 'Clean → contaminated' }, d2c: { zh: '污染區 → 清潔區', en: 'Contaminated → clean' },
+    a1: { zh: 'A 型肝炎、傷寒、出疹、膿瘡、外傷、手部皮膚病', en: 'Hepatitis A, typhoid, rash, abscess, wounds, hand skin disease' }, a2: { zh: '高血壓、近視', en: 'Hypertension, myopia' },
+    top: { zh: '上層', en: 'Top shelf' }, bot: { zh: '最下層', en: 'Bottom shelf' }
+  },
+  levels: [
+    { t: '先看全貌：餐具與環境的簡易檢驗', kind: 'ov', h: SKIT_M.h, svg: SKIT_M.svg, blanks: SKIT_M.b(),
+      intro: ['餐具洗乾淨了沒，可以用幾種簡單的呈色反應檢查。提供餐具清洗服務的業者，每天都要驗澱粉、脂肪、蛋白質和洗潔劑殘留，紀錄保存一年。',
+        '原理：澱粉遇碘變藍紫；脂溶性的紅色色素會留在油上；寧海準和胺基酸加熱呈藍紫；陽離子染料和陰離子洗潔劑結合，溶進氯仿；DPD 被水中的游離氯氧化變紅（舊法用的 OTD 有致癌疑慮，已少用）；紫外燈照出含螢光增白劑或鹽基性色素的地方；所有活細胞都有 ATP，和螢光素酶反應發光，光越強越髒。'],
+      done: ['[[澱粉：碘液呈藍紫；脂肪：油性辣椒紅呈橘紅斑點；蛋白質：寧海準呈藍紫；ABS 洗潔劑：花紺使氯仿層呈藍色；餘氯：DPD 呈紅色。]]', '[[自來水餘氯 0.2～1.0 ppm。]]', 'ATP 冷光法以相對光單位（RLU）表示，數值越高，表面殘留越多。'] },
+    { t: '物理性危害（異物）', kind: 'list',
+      intro: ['物理性危害是原料以外混入或附著的異物：玻璃陶瓷碎片、金屬屑、螺絲、釘書針、塑膠片、牙籤、頭髮、飾品、OK 繃、石頭、木片、昆蟲屍體、骨頭、魚刺。多半來自意外的人為污染和不當操作。',
+        '依食安法，食品有異物不得販賣；情節重大可處刑責。',
+        '預防從每個環節下手：選有產銷履歷的原料、前處理仔細檢查；粉狀、液狀原料過篩；成品用金屬檢測機或 X 光機；容器洗淨倒置乾燥；工作人員不戴飾品手錶、戴帽子髮網口罩手套。'],
+      listTitle: '用哪一種方法',
+      list: [['包裝好的成品裡的金屬碎片', { a: 'xray', o: ['xray', 'sieve', 'nojew'] }], ['麵粉裡的雜質', { a: 'sieve', o: ['xray', 'sieve', 'nojew'] }], ['戒指、頭髮掉進食物', { a: 'nojew', o: ['xray', 'sieve', 'nojew'] }]],
+      done: ['[[物理性危害：玻璃、金屬、塑膠、頭髮、飾品、石頭、骨頭等異物；以檢查、過篩、金屬檢測機、X 光機與人員衛生管理預防。]]'] },
+    { t: '作業區與動線', kind: 'list',
+      intro: ['作業場所依清潔度分區：驗收、前處理、洗滌、冷藏冷凍庫是污染區；切配、烹調、加工是準清潔區；配膳、包裝、即食食品處理是清潔區；辦公室、更衣室、廁所是非食品處理區。準清潔區和清潔區合稱管制作業區。',
+        '動線原則：食材從髒往乾淨走；人、空氣、水從乾淨往髒走，才不會把污染帶進清潔區。',
+        '用落菌數判斷清潔度：培養皿打開 5 分鐘再培養，清潔區要求最嚴，一般作業區最寬。'],
+      listTitle: '是哪一個',
+      list: [['驗收、洗滌、前處理', { a: 'dirty', o: ['dirty', 'semi', 'clean', 'gen'] }], ['烹調、加工', { a: 'semi', o: ['dirty', 'semi', 'clean', 'gen'] }], ['配膳、包裝、即食食品', { a: 'clean', o: ['dirty', 'semi', 'clean', 'gen'] }], ['更衣室、辦公室', { a: 'gen', o: ['dirty', 'semi', 'clean', 'gen'] }],
+        ['物流（食材）', { a: 'd2c', o: ['c2d', 'd2c'] }], ['人流、氣流、水流', { a: 'c2d', o: ['c2d', 'd2c'] }]],
+      countsTitle: '落菌數上限（CFU／5 分鐘）', counts: [['清潔作業區', '30', ['10', '30', '50', '100']], ['準清潔作業區', '50', ['10', '30', '50', '100']], ['一般作業區', '100', ['10', '30', '50', '100']]],
+      done: ['[[污染區：驗收、前處理、洗滌；準清潔區：調理烹調；清潔區：配膳包裝。物流：污染 → 清潔；人流、氣流、水流：清潔 → 污染。]]', '落菌數為即食餐食驗證基準的要求。'] },
+    { t: '硬體與人員的數字', kind: 'list',
+      intro: ['照度：一般作業場所 100 勒克斯以上，工作或調理檯面 200 勒克斯以上，光源不得改變食品顏色。',
+        '洗手台數量不少於最高工作人數的十分之一；排水斜度 1/100 以上；防鼠的排水孔網孔小於 0.6 公分；牆面離地 1 公尺內用不透水、易清洗的材料；乾料庫溫度 28℃ 以下、濕度 60% 以下，物品離地離牆至少 5 公分。',
+        '人員：新進人員要先檢查 A 型肝炎、傷寒、出疹、膿瘡、外傷、手部皮膚病，之後每年至少一次；新進至少 3 小時衛生訓練，在職每年至少 3 小時。不得留指甲、塗指甲油、戴飾品；處理即食食品手要洗淨消毒，不能同時碰錢。',
+        '冷藏庫：熟食放上層、生食放下層。生鮮動物性食品之間，需要越高溫才能殺死病原的放越下面，所以禽肉放最下層，避免汁液滴到別的食物。'],
+      tip: '有些教材的冷藏層架順序寫成雞肉在最上層，這和國際通用的原則相反；依「所需加熱溫度越高放越下面」，禽肉應在最下層。',
+      listTitle: '是哪一個',
+      list: [['食品從業人員健康檢查的項目', { a: 'a1', o: ['a1', 'a2'] }], ['冷藏庫中的熟食', { a: 'top', o: ['top', 'bot'] }], ['冷藏庫中的生禽肉', { a: 'bot', o: ['top', 'bot'] }]],
+      countsTitle: '數字', counts: [['工作、調理檯面照度（勒克斯）', '200', ['50', '100', '200', '500']], ['洗手台數不少於最高工作人數的幾分之一', '10', ['5', '10', '20', '50']], ['新進人員至少幾小時衛生訓練', '3', ['1', '3', '8', '30']], ['物品離地離牆至少幾公分', '5', ['1', '5', '15', '30']]],
+      done: ['[[作業場所 100 lux、調理檯面 200 lux；洗手台 ≥ 最高工作人數 1/10；新進與在職每年至少 3 小時訓練；健檢含 A 型肝炎、傷寒、手部皮膚病等。]]', '[[冷藏：熟食在上、生食在下；禽肉放最下層。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['檢查餐具澱粉殘留用', { a: 'iod', o: SKIT_M.o }, '。'],
+        ['檢查洗潔劑殘留用', { a: 'azu', o: SKIT_M.o }, '。'],
+        ['烹調區屬於', { a: 'semi', o: ['dirty', 'semi', 'clean', 'gen'] }, '。'],
+        ['人流的方向是', { a: 'c2d', o: ['c2d', 'd2c'] }, '。'],
+        ['配膳包裝區屬於', { a: 'clean', o: ['dirty', 'semi', 'clean', 'gen'], lang: 'en' }, '。'],
+        ['生禽肉放在冷藏庫的', { a: 'bot', o: ['top', 'bot'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: SKIT_M.h, force: 'en', svg: SKIT_M.svg, blanks: SKIT_M.b(),
+      intro: ['七種簡易檢驗，全部用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: 'Terms', list: [['Receiving and washing area', { a: 'dirty', o: ['dirty', 'semi', 'clean', 'gen'] }], ['Direction of food flow', { a: 'd2c', o: ['c2d', 'd2c'] }], ['Metal in packed products', { a: 'xray', o: ['xray', 'sieve', 'nojew'] }]] }
+  ] };
+/* ======================================================================
+   食品衛生與安全：清潔、消毒與病媒防治（授課第 12 單元）
+   ====================================================================== */
+var SCLN_M = SM([['預洗', 'Pre-rinse', 'pre'], ['第一槽：清洗', 'Sink 1: wash', 'wash'], ['第二槽：沖洗', 'Sink 2: rinse', 'rins'], ['第三槽：熱水消毒', 'Sink 3: hot water', 'hot'],
+  ['第三槽：氯液消毒', 'Sink 3: chlorine', 'cl'], ['最後', 'Finally', 'dry']],
+  { l: ['三槽式洗滌', 'three-sink method'], r: ['怎麼做', 'how'], k: 'T' });
+var SCLN = { id: 'scln', zh: '清潔、消毒與病媒防治', en: 'Cleaning, sanitizing and pest control', alias: '三槽式洗滌・有效殺菌條件・清潔劑分類・界面活性劑・氯・碘・四級銨・臭氧・紫外線・病媒', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    pre: { zh: '刮除殘渣，溫水噴沖', en: 'Scrape, spray with warm water' }, wash: { zh: '43～49℃ 水加清潔劑刷洗', en: '43–49 °C water with detergent' }, rins: { zh: '流動自來水沖掉清潔劑', en: 'Running water rinse' },
+    hot: { zh: '80℃ 以上熱水浸 2 分鐘', en: '≥80 °C water, 2 min' }, cl: { zh: '有效氯 200 ppm 浸 2 分鐘', en: '200 ppm chlorine, 2 min' }, dry: { zh: '滴乾、風乾，不用毛巾擦', en: 'Air-dry; no towels' },
+    acd: { zh: '酸性清潔劑', en: 'Acid detergent' }, alk: { zh: '鹼性清潔劑', en: 'Alkaline detergent' }, neu: { zh: '中性清潔劑', en: 'Neutral detergent' },
+    cat: { zh: '陽離子型（四級銨）', en: 'Cationic (quats)' }, ani: { zh: '陰離子型（LAS）', en: 'Anionic (LAS)' }, non: { zh: '非離子型', en: 'Nonionic' },
+    grade: { zh: '不得標示「食品級」「無毒」', en: 'May not claim food-grade or non-toxic' }, ok: { zh: '可以標示', en: 'May claim' },
+    cl2: { zh: '氯', en: 'Chlorine' }, iod: { zh: '碘', en: 'Iodine' }, qac: { zh: '四級銨', en: 'Quaternary ammonium' }, o3: { zh: '臭氧', en: 'Ozone' }, uvc: { zh: '紫外線 UV-C', en: 'UV-C' },
+    fly: { zh: '蒼蠅', en: 'Flies' }, roach: { zh: '蟑螂', en: 'Cockroaches' }, rat: { zh: '老鼠', en: 'Rats' }, moth: { zh: '蛾類、甲蟲', en: 'Moths, beetles' }
+  },
+  levels: [
+    { t: '先看全貌：三槽式洗滌', kind: 'ov', h: SCLN_M.h, svg: SCLN_M.svg, blanks: SCLN_M.b(),
+      intro: ['清潔是除去污物；消毒是用不影響食品品質安全的方法殺滅有害微生物。先清潔、再消毒，順序不能倒過來。',
+        '三槽式洗滌：先刮掉殘渣、用溫水噴沖；第一槽用溫熱水加清潔劑刷洗（太燙會讓蛋白質凝固黏住）；第二槽用流動的自來水把清潔劑沖掉，不可以用盆裝的水；第三槽用熱水或氯液消毒；最後讓它自然滴乾，不用毛巾擦，以免再污染。',
+        '洗好的餐具要在 30 分鐘內送到清潔區；72 小時內沒送到用餐場所的要重洗。'],
+      done: ['[[三槽式：清洗 43～49℃ ＋ 清潔劑 → 流動水沖洗 → 80℃ 熱水 2 分鐘或 200 ppm 氯液 2 分鐘消毒 → 風乾不擦拭。]]'] },
+    { t: '有效殺菌的條件', kind: 'list',
+      intro: ['食品良好衛生規範準則列出幾種消毒方法：砧板、刀、鍋鏟、餐具可用乾熱、蒸氣、熱水、氯液；毛巾、抹布可用蒸氣、沸水、氯液。',
+        '傳統上常考的條件：煮沸 100℃，毛巾抹布 5 分鐘、餐具 1 分鐘；蒸氣 100℃，毛巾抹布 10 分鐘、餐具 2 分鐘；熱水 80℃，餐具 2 分鐘；氯液 200 ppm，浸泡 2 分鐘；乾熱 85℃，30 分鐘。'],
+      tip: '新版準則只列出方法，溫度時間是舊版規範的數字，國考仍常用。',
+      countsTitle: '幾分鐘', counts: [['煮沸，毛巾抹布', '5', ['1', '2', '5', '10']], ['蒸氣 100℃，毛巾抹布', '10', ['2', '5', '10', '30']], ['熱水 80℃，餐具', '2', ['1', '2', '5', '10']], ['乾熱 85℃，餐具', '30', ['2', '10', '30', '60']]],
+      done: ['[[煮沸：毛巾抹布 5 分、餐具 1 分；蒸氣：毛巾抹布 10 分、餐具 2 分；熱水 80℃ 2 分；氯液 200 ppm 2 分；乾熱 85℃ 30 分。]]'] },
+    { t: '清潔劑', kind: 'list',
+      intro: ['依酸鹼分：酸性清潔劑溶解水垢、鍋爐的鈣鎂沉積和金屬鏽；鹼性清潔劑能把油脂皂化、使蛋白質溶解，是最常用的，但會腐蝕鋁、錫、鍍鋅器具；中性清潔劑用在一般餐具、食材，不傷皮膚。',
+        '界面活性劑依親水端的電荷分：陽離子型洗淨力差但殺菌力強（四級銨）；陰離子型洗淨力強，是主要的洗潔劑（直鏈烷基苯磺酸鹽），但會受硬水影響；非離子型不受硬水影響、泡沫少，常用來去油。',
+        '支鏈型的烷基苯磺酸鹽很難被微生物分解，會污染河川，已改用直鏈型；含磷清潔劑會讓水中藻類大量繁殖。',
+        '食品用洗潔劑不得標示「食品級」、「無毒」。'],
+      listTitle: '是哪一個',
+      list: [['除水垢、鈣鎂沉積', { a: 'acd', o: ['acd', 'alk', 'neu'] }], ['皂化油脂、溶解蛋白質', { a: 'alk', o: ['acd', 'alk', 'neu'] }], ['洗淨力差、殺菌力強', { a: 'cat', o: ['cat', 'ani', 'non'] }], ['洗淨力強，主要的洗潔劑', { a: 'ani', o: ['cat', 'ani', 'non'] }],
+        ['不受硬水影響，泡沫少', { a: 'non', o: ['cat', 'ani', 'non'] }], ['食品用洗潔劑的標示', { a: 'grade', o: ['grade', 'ok'] }]],
+      done: ['[[酸性：水垢、礦物質沉積；鹼性：油脂、蛋白質；陽離子（四級銨）：殺菌；陰離子（LAS）：洗淨；非離子：不受硬水影響。]]', '[[食品用洗潔劑不得標示「食品級」「無毒」。]]'] },
+    { t: '化學消毒劑', kind: 'list',
+      intro: ['氯便宜、廣效、無色，最常用。有效氯是指能把碘化鉀變成碘的次氯酸根。水中有機物多時，加氯可能產生三鹵甲烷。生食蔬果用的氯液稀釋到 100 ppm 以下，最後殘留要在 1 ppm 以下。',
+        '碘在酸性下效果好、殺菌力比氯強，但貴又會染色，多用在設備。四級銨無臭、不腐蝕，但對革蘭氏陰性菌效果差，也不適合硬水。臭氧氧化力強，會自己分解，不留殘留。紫外線以 UV-C 殺菌力最強，破壞 DNA，但只能照到表面，也會讓塑膠老化。',
+        '配氯液：需要的純氯量 ＝ 目標濃度 × 體積；再除以漂白水的濃度，就是要加的漂白水量。'],
+      listTitle: '是哪一個',
+      list: [['最常用、便宜，可能產生三鹵甲烷', { a: 'cl2', o: ['cl2', 'iod', 'qac', 'o3', 'uvc'] }], ['酸性下效果好，會染色', { a: 'iod', o: ['cl2', 'iod', 'qac', 'o3', 'uvc'] }], ['對革蘭氏陰性菌效果差', { a: 'qac', o: ['cl2', 'iod', 'qac', 'o3', 'uvc'] }],
+        ['自行分解，不留殘留', { a: 'o3', o: ['cl2', 'iod', 'qac', 'o3', 'uvc'] }], ['只能照到表面，使塑膠老化', { a: 'uvc', o: ['cl2', 'iod', 'qac', 'o3', 'uvc'] }]],
+      countsTitle: '算算看', counts: [['用 6% 漂白水配 150 ppm 的氯液 4 公升，要幾毫升', '10', ['1', '6', '10', '40']], ['生食蔬果清洗用氯液，最高約幾 ppm', '100', ['10', '50', '100', '200']]],
+      done: ['[[氯：廣效便宜；碘：酸性佳、會染色；四級銨：對 G(−) 差、不適硬水；臭氧：無殘留；UV-C：只作用於表面。]]', '150 × 10⁻⁶ × 4000 mL ＝ 0.6 mL 純氯；0.6 ÷ 0.06 ＝ 10 mL 漂白水。'] },
+    { t: '病媒防治', kind: 'list',
+      intro: ['病媒是把病原從一處帶到另一處的動物。',
+        '一種會飛的昆蟲停在糞便垃圾上，活動半徑 100～150 公尺，喜歡亮處；用紗窗、空氣簾、黃色塑膠條簾阻擋，用紫外線誘捕燈捕捉。',
+        '一種夜行的昆蟲喜歡溫暖潮濕的縫隙，身體喜歡貼著東西（趨觸性）；要斷絕食物和水、填補縫隙、用餌劑。',
+        '危害食品工廠最嚴重的是齧齒類，會咬壞包裝、傳播多種疾病；排水孔網孔要小於 0.6 公分，用捕鼠器和黏鼠板。',
+        '倉庫的乾貨（穀類、麵粉）容易長一些飛蛾和小甲蟲；要先進先出、低溫乾燥貯存、入庫檢查。',
+        '藥劑要由合格的病媒防治業者使用。'],
+      listTitle: '是哪一種',
+      list: [['趨光，用紫外線捕捉燈', { a: 'fly', o: ['fly', 'roach', 'rat', 'moth'] }], ['夜行、趨觸性、躲在縫隙', { a: 'roach', o: ['fly', 'roach', 'rat', 'moth'] }], ['網孔要小於 0.6 公分', { a: 'rat', o: ['fly', 'roach', 'rat', 'moth'] }], ['麵粉、穀類庫存', { a: 'moth', o: ['fly', 'roach', 'rat', 'moth'] }]],
+      done: ['[[蒼蠅：趨光，用紗窗、空氣簾、捕蠅燈；蟑螂：夜行、趨觸性；老鼠：危害最大，網孔 < 0.6 公分；蛾與甲蟲：穀物，先進先出、低溫乾燥。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['三槽式的第二槽是', { a: 'rins', o: SCLN_M.o }, '。'],
+        ['洗好的餐具應', { a: 'dry', o: SCLN_M.o }, '。'],
+        ['油脂、蛋白質污垢用', { a: 'alk', o: ['acd', 'alk', 'neu'] }, '。'],
+        ['四級銨屬於', { a: 'cat', o: ['cat', 'ani', 'non'] }, '界面活性劑。'],
+        ['不會留下殘留的消毒劑是', { a: 'o3', o: ['cl2', 'iod', 'qac', 'o3', 'uvc'], lang: 'en' }, '。'],
+        ['危害食品工廠最嚴重的病媒是', { a: 'rat', o: ['fly', 'roach', 'rat', 'moth'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: SCLN_M.h, force: 'en', svg: SCLN_M.svg, blanks: SCLN_M.b(),
+      intro: ['三槽式洗滌，全部用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: 'Terms', list: [['Removes mineral scale', { a: 'acd', o: ['acd', 'alk', 'neu'] }], ['Strong cleaning, main detergent', { a: 'ani', o: ['cat', 'ani', 'non'] }], ['Poor against Gram-negative bacteria', { a: 'qac', o: ['cl2', 'iod', 'qac', 'o3', 'uvc'] }]] }
+  ] };
+/* ======================================================================
+   食品衛生與安全：食品器具、容器與包裝（授課第 11 單元前半）
+   ====================================================================== */
+var SPKG_M = SM([['回收編號 1', 'Resin code 1', 'pet'], ['回收編號 2', 'Resin code 2', 'hdpe'], ['回收編號 3', 'Resin code 3', 'pvc'], ['回收編號 4', 'Resin code 4', 'ldpe'],
+  ['回收編號 5', 'Resin code 5', 'pp'], ['回收編號 6', 'Resin code 6', 'ps'], ['回收編號 7', 'Resin code 7', 'oth']],
+  { l: ['塑膠容器底部', 'bottom of container'], r: ['材質', 'material'], dy: 46 });
+var SPKG = { id: 'spkg', zh: '食品器具、容器與包裝', en: 'Food contact materials and packaging', alias: '塑膠回收編號・PP・PS・PVC 塑化劑・PC 雙酚 A・美耐皿・溶出試驗・無菌包裝・氫膨脹', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    pet: { zh: 'PET（聚對苯二甲酸乙二酯）', en: 'PET' }, hdpe: { zh: 'HDPE（高密度聚乙烯）', en: 'HDPE' }, pvc: { zh: 'PVC（聚氯乙烯）', en: 'PVC' }, ldpe: { zh: 'LDPE（低密度聚乙烯）', en: 'LDPE' },
+    pp: { zh: 'PP（聚丙烯）', en: 'PP (polypropylene)' }, ps: { zh: 'PS（聚苯乙烯）', en: 'PS (polystyrene)' }, oth: { zh: '其他：PC、PLA、美耐皿', en: 'Others: PC, PLA, melamine' },
+    pc: { zh: 'PC（聚碳酸酯）', en: 'PC (polycarbonate)' }, mel: { zh: '美耐皿', en: 'Melamine resin' }, pla: { zh: 'PLA（聚乳酸）', en: 'PLA (polylactic acid)' },
+    water: { zh: '水', en: 'Water' }, hac: { zh: '4% 醋酸', en: '4% acetic acid' }, hep: { zh: '正庚烷', en: 'n-Heptane' }, eth: { zh: '20% 乙醇', en: '20% ethanol' },
+    kmn: { zh: '溶出的易氧化有機物', en: 'Oxidizable organic migrants' }, res: { zh: '溶出物的總量', en: 'Total migrants' },
+    pbcd: { zh: '鉛、鎘溶出', en: 'Lead and cadmium leaching' }, fwa: { zh: '螢光增白劑', en: 'Fluorescent whitening agents' }, h2: { zh: '氫膨脹', en: 'Hydrogen swell' },
+    asep: { zh: '無菌包裝', en: 'Aseptic packaging' }, map: { zh: '調氣包裝', en: 'Modified-atmosphere packaging' }, vac: { zh: '真空包裝', en: 'Vacuum packaging' }
+  },
+  levels: [
+    { t: '先看全貌：塑膠的回收編號', kind: 'ov', h: SPKG_M.h, svg: SPKG_M.svg, blanks: SPKG_M.b(),
+      intro: ['塑膠容器底部的三角形回收標誌裡有一個數字，代表材質。',
+        '1 號是寶特瓶的材質，不耐熱；2 號是不透明的牛奶瓶、厚塑膠袋；3 號可塑性高，常加塑化劑，加熱容易釋出有害物；4 號是質地軟的薄塑膠袋；5 號耐熱、耐油，最適合微波和冷凍；6 號是質輕易碎、發泡後就是保麗龍；7 號是「其他」，包括耐摔的硬水壺材質、玉米做的生質塑膠、仿瓷餐具的樹脂。'],
+      done: ['[[1 PET、2 HDPE、3 PVC、4 LDPE、5 PP、6 PS、7 其他（PC、PLA、美耐皿）。]]', '[[PP 耐熱約 100～140℃，最適合微波容器。]]'] },
+    { t: '每種塑膠要注意什麼', kind: 'list',
+      intro: ['PS 容器不能裝柑橘類果汁：果皮的萜烯類和苯乙烯單體結構相近，會互溶。',
+        'PVC 為了變軟會加鄰苯二甲酸酯類塑化劑，它們是環境荷爾蒙；專供 3 歲以下嬰幼兒的器具容器不得添加其中 4 種。',
+        'PC 含雙酚 A，嬰幼兒奶瓶不得使用含雙酚 A 的塑膠。',
+        '美耐皿（三聚氰胺－甲醛樹脂）在高溫或酸性下可能溶出三聚氰胺和甲醛，不可以微波、不宜盛裝高溫酸性食物。',
+        'PLA 由玉米等澱粉發酵的乳酸聚合而成，可分解，但不耐熱、遇水易破。'],
+      listTitle: '是哪一種',
+      list: [['最適合微波加熱', { a: 'pp', o: ['pp', 'ps', 'pvc', 'pc', 'mel'] }], ['不能裝柑橘類果汁', { a: 'ps', o: ['pp', 'ps', 'pvc', 'pc', 'mel'] }], ['常含塑化劑', { a: 'pvc', o: ['pp', 'ps', 'pvc', 'pc', 'mel'] }],
+        ['嬰幼兒奶瓶不得含雙酚 A', { a: 'pc', o: ['pp', 'ps', 'pvc', 'pc', 'mel'] }], ['不可微波，可能溶出甲醛', { a: 'mel', o: ['pp', 'ps', 'pvc', 'pc', 'mel'] }], ['生質塑膠、可分解', { a: 'pla', o: ['pla', 'pet'] }]],
+      done: ['[[PS 不裝柑橘汁；PVC 含塑化劑；PC 含雙酚 A（嬰幼兒奶瓶不得使用）；美耐皿不可微波；PP 最適合微波。]]'] },
+    { t: '溶出試驗', kind: 'list',
+      intro: ['塑膠容器的衛生標準用不同的液體模擬不同的食物，在規定條件下浸泡，看溶出多少東西。',
+        '模擬方式：pH 5 以上的食品用水；pH 5 以下的酸性食品用 4% 醋酸；油脂性食品用正庚烷；酒類用 20% 乙醇。一般條件是 60℃ 30 分鐘；如果使用溫度達 100℃ 以上，改為 95℃ 30 分鐘。',
+        '「蒸發殘渣」是把浸泡液蒸乾後剩下的總量；「高錳酸鉀消耗量」反映溶出的易氧化有機物。'],
+      listTitle: '是哪一個',
+      list: [['模擬一般（pH 5 以上）食品', { a: 'water', o: ['water', 'hac', 'hep', 'eth'] }], ['模擬酸性食品', { a: 'hac', o: ['water', 'hac', 'hep', 'eth'] }], ['模擬油脂性食品', { a: 'hep', o: ['water', 'hac', 'hep', 'eth'] }], ['模擬酒類', { a: 'eth', o: ['water', 'hac', 'hep', 'eth'] }],
+        ['高錳酸鉀消耗量反映', { a: 'kmn', o: ['kmn', 'res'] }], ['蒸發殘渣反映', { a: 'res', o: ['kmn', 'res'] }]],
+      countsTitle: '數字', counts: [['使用溫度達 100℃ 以上的溶出條件（℃，30 分鐘）', '95', ['60', '80', '95', '121']], ['3 歲以下嬰幼兒器具不得添加的塑化劑有幾種', '4', ['2', '4', '6', '8']]],
+      done: ['[[水：pH > 5 食品；4% 醋酸：pH ≤ 5；正庚烷：油脂；20% 乙醇：酒類。使用溫度 ≥ 100℃ 時以 95℃ 30 分鐘溶出。]]'] },
+    { t: '其他材質與包裝方式', kind: 'list',
+      intro: ['陶瓷、玻璃、琺瑯的彩繪顏料燒製溫度不足時，會溶出鉛、鎘。紙餐盒、餐巾紙要注意螢光增白劑。',
+        '金屬罐裝高酸性食品時，酸和金屬反應產生氫氣，罐頭鼓起來，叫氫膨脹。食品常用的 304 不鏽鋼含 18% 鉻、8% 鎳。不沾鍋的鐵氟龍在 260℃ 以上開始分解。',
+        '包裝方式：把殺菌好的食品在無菌環境下裝入預先用過氧化氫殺菌的容器（鋁箔包）；抽掉空氣再密封；把空氣換成氮氣、二氧化碳。後兩者能抑制好氧菌和油脂氧化，但要小心厭氧菌。'],
+      listTitle: '是哪一個',
+      list: [['彩繪陶瓷碗', { a: 'pbcd', o: ['pbcd', 'fwa', 'h2'] }], ['紙餐盒、餐巾紙', { a: 'fwa', o: ['pbcd', 'fwa', 'h2'] }], ['金屬罐裝高酸食品鼓起', { a: 'h2', o: ['pbcd', 'fwa', 'h2'] }],
+        ['鋁箔包飲料，常溫保存', { a: 'asep', o: ['asep', 'map', 'vac'] }], ['充填氮氣、二氧化碳', { a: 'map', o: ['asep', 'map', 'vac'] }]],
+      countsTitle: '18/8 不鏽鋼', counts: [['鉻的百分比', '18', ['8', '10', '18', '30']], ['鎳的百分比', '8', ['8', '10', '18', '30']]],
+      done: ['[[陶瓷、琺瑯：鉛鎘溶出；紙製品：螢光增白劑；高酸食品裝金屬罐：氫膨脹；304（18/8）不鏽鋼：18% 鉻、8% 鎳。]]', '[[無菌包裝：食品與容器分別殺菌，在無菌環境下充填密封（容器多用過氧化氫殺菌）。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['回收編號 5 的材質是', { a: 'pp', o: SPKG_M.o }, '。'],
+        ['不能裝柑橘類果汁的是', { a: 'ps', o: ['pp', 'ps', 'pvc', 'pc', 'mel'] }, '。'],
+        ['模擬油脂性食品的溶媒是', { a: 'hep', o: ['water', 'hac', 'hep', 'eth'] }, '。'],
+        ['高酸性食品裝在金屬罐可能發生', { a: 'h2', o: ['pbcd', 'fwa', 'h2'] }, '。'],
+        ['回收編號 3 的材質是', { a: 'pvc', o: SPKG_M.o, lang: 'en' }, '。'],
+        ['模擬酸性食品的溶媒是', { a: 'hac', o: ['water', 'hac', 'hep', 'eth'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: SPKG_M.h, force: 'en', svg: SPKG_M.svg, blanks: SPKG_M.b(),
+      intro: ['七個回收編號，全部用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: 'Terms', list: [['Contains bisphenol A', { a: 'pc', o: ['pp', 'ps', 'pvc', 'pc', 'mel'] }], ['Simulant for alcoholic drinks', { a: 'eth', o: ['water', 'hac', 'hep', 'eth'] }], ['Painted ceramics', { a: 'pbcd', o: ['pbcd', 'fwa', 'h2'] }]] }
+  ] };
+/* ======================================================================
+   食品衛生與安全：食品標示與標章（授課第 11 單元後半）
+   ====================================================================== */
+var SLBL_M = SM([['CAS 台灣優良農產品', 'CAS mark', 'cas'], ['TQF 台灣優良食品', 'TQF mark', 'tqf'], ['產銷履歷', 'Traceability (TAP)', 'tap'], ['有機農產品', 'Organic mark', 'org'],
+  ['健康食品（小綠人）', 'Health food mark', 'hf'], ['鮮乳標章', 'Fresh milk mark', 'milk'], ['餐飲業 HACCP 衛生評鑑', 'Food-service HACCP mark', 'hac']],
+  { l: ['標章', 'mark'], r: ['保證的是什麼', 'what it certifies'], k: 'C', dy: 46 });
+var SLBL = { id: 'slbl', zh: '食品標示與標章', en: 'Food labeling and certification marks', alias: '食安法第 22 條・營養標示・每日參考值・熱量計算・過敏原・現場調製飲料・健康食品・CAS・TQF・產銷履歷', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    cas: { zh: '國產農產品與其加工品的品質安全', en: 'Quality of domestic agricultural products' }, tqf: { zh: '食品工廠的良好製造（原 GMP）', en: 'Good manufacturing (formerly GMP)' },
+    tap: { zh: '從生產到銷售可追溯', en: 'Traceable from farm to sale' }, org: { zh: '依有機規範生產並驗證', en: 'Certified organic production' },
+    hf: { zh: '經衛福部審查的保健功效', en: 'Health claim approved by MOHW' }, milk: { zh: '用國產生乳製造', en: 'Made from domestic raw milk' }, hac: { zh: '餐飲業食品安全管制系統評鑑合格', en: 'Passed food-service HACCP audit' },
+    m22: { zh: '包裝食品必須標示', en: 'Mandatory on packaged food' }, vol: { zh: '自願標示', en: 'Voluntary' },
+    hiLo: { zh: '依含量多寡由高至低', en: 'In descending order of amount' }, abc: { zh: '依筆畫順序', en: 'Alphabetical' },
+    red: { zh: '紅色', en: 'Red' }, yel: { zh: '黃色', en: 'Yellow' }, grn: { zh: '綠色', en: 'Green' },
+    juice: { zh: '可以稱「○○汁」', en: 'May be called juice' }, drink: { zh: '要稱「○○飲料」', en: 'Must be called drink' }, flav: { zh: '要稱「○○風味」', en: 'Must say flavored' },
+    trk1: { zh: '第一軌：個案審查', en: 'Track 1: case review' }, trk2: { zh: '第二軌：規格標準', en: 'Track 2: specification standard' },
+    slau: { zh: '屠宰地', en: 'Country of slaughter' }, birth: { zh: '出生地', en: 'Country of birth' }
+  },
+  levels: [
+    { t: '先看全貌：常見的標章', kind: 'ov', h: SLBL_M.h, svg: SLBL_M.svg, blanks: SLBL_M.b(),
+      intro: ['標章是由政府或受委託的機構驗證後，讓消費者一眼就能辨識產品的某種特性。',
+        '想一想每一個的重點：國產農產品與加工品的「優良」標章（只有 CAS 產品，沒有 CAS 工廠）；經濟部把原本的 GMP 移轉給民間協會後的新標章；記錄每一步、可以上網查詢來源的；不用化學肥料農藥、照有機規範生產的；衛福部審查保健功效後核准的；保證用國產生乳製造的；餐飲業導入危害分析重要管制點系統並通過評鑑的。',
+        '學校午餐食材採用「三章一 Q」：CAS、有機、產銷履歷三種標章，加上溯源 QR code。'],
+      done: ['[[CAS：國產農產品及加工品；TQF：台灣優良食品（原 GMP）；產銷履歷：可追溯；健康食品：衛福部審查的保健功效；鮮乳標章：國產生乳。]]', '[[三章一 Q：CAS、有機、產銷履歷標章＋臺灣農產生產追溯 QR code。]]'] },
+    { t: '包裝食品要標示什麼', kind: 'list',
+      intro: ['依食安法第 22 條，有容器或包裝的食品要以中文及通用符號標示：品名；內容物名稱（兩種以上依含量由高至低）；淨重、容量或數量；食品添加物名稱；製造廠商或國內負責廠商的名稱、電話、地址；原產地；有效日期；營養標示；含基因改造原料；以及其他公告事項（例如過敏原）。',
+        '營養標示必須標：熱量、蛋白質、脂肪、飽和脂肪、反式脂肪、碳水化合物、糖、鈉。每日參考值以 2000 大卡、蛋白質 60 g、脂肪 60 g、飽和脂肪 18 g、碳水化合物 300 g、鈉 2000 mg 計算。'],
+      listTitle: '是哪一個',
+      list: [['有效日期、原產地、營養標示', { a: 'm22', o: ['m22', 'vol'] }], ['內容物的排列順序', { a: 'hiLo', o: ['hiLo', 'abc'] }]],
+      countsTitle: '數字', counts: [['營養標示必標的項目數（熱量＋營養素）', '8', ['5', '7', '8', '10']], ['每日參考值的熱量（大卡）', '2000', ['1800', '2000', '2200', '2500']], ['每日參考值的鈉（毫克）', '2000', ['1200', '2000', '2400', '3000']], ['每日參考值的蛋白質（公克）', '60', ['50', '60', '65', '75']]],
+      done: ['[[營養標示必標：熱量、蛋白質、脂肪、飽和脂肪、反式脂肪、碳水化合物、糖、鈉。]]', '[[每日參考值：熱量 2000 大卡、蛋白質 60 g、脂肪 60 g、飽和脂肪 18 g、碳水化合物 300 g、鈉 2000 mg。]]'] },
+    { t: '營養標示的熱量計算', kind: 'list',
+      intro: ['蛋白質、碳水化合物每公克 4 大卡，脂肪 9 大卡。另外：有標示膳食纖維的，膳食纖維以每公克 2 大卡計；赤藻糖醇以 0 大卡計，其他糖醇 2.4 大卡；有機酸 3 大卡；酒精 7 大卡。'],
+      countsTitle: '算算看', counts: [['膳食纖維每公克幾大卡', '2', ['0', '2', '2.4', '4']], ['赤藻糖醇每公克幾大卡', '0', ['0', '2', '2.4', '4']], ['其他糖醇每公克幾大卡', '2.4', ['0', '2', '2.4', '4']],
+        ['每份含蛋白質 5 g、脂肪 10 g、碳水化合物 20 g（不含纖維），熱量幾大卡', '190', ['140', '170', '190', '315']]],
+      done: ['[[熱量係數：蛋白質、碳水化合物 4；脂肪 9；膳食纖維 2；赤藻糖醇 0；其他糖醇 2.4；有機酸 3；酒精 7 大卡／公克。]]', '5 × 4 ＋ 10 × 9 ＋ 20 × 4 ＝ 190 大卡。'] },
+    { t: '其他常考的標示規定', kind: 'list',
+      intro: ['連鎖飲料店、便利商店、速食店的現場調製飲料要標示總糖量和總熱量（可換算成方糖，每顆 5 g）。咖啡要標示咖啡因，用顏色區分：每杯 201 mg 以上、101～200 mg、100 mg 以下各一種顏色。',
+        '果蔬汁含量 10% 以上才能叫「○○汁」；未達 10% 叫「○○飲料」；完全沒有果汁要標「○○風味」或「○○口味」。',
+        '含豬肉、牛肉的食品要標原產地，以屠宰地為準。',
+        '健康食品要有實質科學證據的保健功效，不是醫療效能。查驗登記分兩軌：一軌是逐案審查功效試驗；另一軌是成分符合公告的規格標準（目前有魚油、紅麴）。許可證有效期 5 年。'],
+      listTitle: '是哪一個',
+      list: [['咖啡因每杯 201 mg 以上', { a: 'red', o: ['red', 'yel', 'grn'] }], ['咖啡因每杯 100 mg 以下', { a: 'grn', o: ['red', 'yel', 'grn'] }], ['果汁含量 15%', { a: 'juice', o: ['juice', 'drink', 'flav'] }], ['果汁含量 5%', { a: 'drink', o: ['juice', 'drink', 'flav'] }], ['完全不含果汁', { a: 'flav', o: ['juice', 'drink', 'flav'] }],
+        ['魚油、紅麴類健康食品', { a: 'trk2', o: ['trk1', 'trk2'] }], ['豬肉原產地的認定', { a: 'slau', o: ['slau', 'birth'] }]],
+      done: ['[[現場調製咖啡：紅色 ≥ 201 mg、黃色 101～200 mg、綠色 ≤ 100 mg 咖啡因。果蔬汁含量 ≥ 10% 才能稱「汁」。]]', '[[健康食品雙軌：第一軌個案審查、第二軌規格標準（魚油、紅麴）；許可證有效 5 年。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['TQF 標章保證', { a: 'tqf', o: SLBL_M.o }, '。'],
+        ['產銷履歷保證', { a: 'tap', o: SLBL_M.o }, '。'],
+        ['果汁含量未達 10% 的飲料要稱', { a: 'drink', o: ['juice', 'drink', 'flav'] }, '。'],
+        ['魚油健康食品走', { a: 'trk2', o: ['trk1', 'trk2'] }, '。'],
+        ['鮮乳標章保證', { a: 'milk', o: SLBL_M.o, lang: 'en' }, '。'],
+        ['咖啡因 150 mg 的咖啡標示', { a: 'yel', o: ['red', 'yel', 'grn'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: SLBL_M.h, force: 'en', svg: SLBL_M.svg, blanks: SLBL_M.b(),
+      intro: ['七種標章，全部用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: 'Terms', list: [['Order of ingredients', { a: 'hiLo', o: ['hiLo', 'abc'] }], ['Juice content 15%', { a: 'juice', o: ['juice', 'drink', 'flav'] }], ['Origin of pork', { a: 'slau', o: ['slau', 'birth'] }]] }
+  ] };
+/* ======================================================================
+   食品衛生與安全：食品安全衛生管理法與良好衛生規範（授課第 13 單元前半）
+   ====================================================================== */
+var SLAW_M = SM([['冷凍食品運輸車廂', 'Frozen-food truck box', 'm12'], ['熱藏食品', 'Hot-held food', 'p60'], ['煮好的菜在室溫', 'Cooked dishes at room temp', 'h2'], ['外燴 200 人以上', 'Catering for 200+', 'd3'],
+  ['依準則作成的紀錄', 'Required records', 'y5'], ['油炸油總極性化合物', 'Frying oil polar compounds', 'p25'], ['蓄水池（塔）', 'Water storage tank', 'y1'], ['地下水源與化糞池', 'Well and septic tank', 'm15']],
+  { l: ['良好衛生規範準則', 'GHP rule'], r: ['規定', 'requirement'], k: 'C', dy: 44 });
+var SLAW = { id: 'slaw', zh: '食安法與食品良好衛生規範', en: 'Food safety law and good hygiene practice', alias: '食品安全衛生管理法・第 15 條・第 22 條・罰則・GHP 準則・真空包裝即食食品・低酸性罐頭', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    m12: { zh: '不得高於 −12℃', en: 'No warmer than −12 °C' }, p60: { zh: '60℃ 以上', en: '60 °C or above' }, h2: { zh: '不得存放 2 小時以上', en: 'Not over 2 hours' }, d3: { zh: '3 日前向衛生局報備', en: 'Notify health bureau 3 days ahead' },
+    y5: { zh: '至少保存 5 年', en: 'Keep at least 5 years' }, p25: { zh: '達 25% 全部換新', en: 'Replace all at 25%' }, y1: { zh: '每年至少清理一次', en: 'Clean at least yearly' }, m15: { zh: '至少相距 15 公尺', en: 'At least 15 m apart' },
+    ban: { zh: '不得製造、販賣', en: 'Prohibited' }, okk: { zh: '可以販賣', en: 'Allowed' },
+    ghp: { zh: '所有食品業者都要符合', en: 'All food businesses' }, hac: { zh: '公告類別及規模的業者要符合', en: 'Designated businesses only' },
+    rt: { zh: '可以常溫貯存販售', en: 'May be sold at room temperature' }, ch: { zh: '要冷藏', en: 'Must be refrigerated' },
+    low: { zh: '低酸性食品', en: 'Low-acid food' }, acf: { zh: '酸化食品', en: 'Acidified food' }
+  },
+  levels: [
+    { t: '先看全貌：良好衛生規範準則裡的數字', kind: 'ov', h: SLAW_M.h, svg: SLAW_M.svg, blanks: SLAW_M.b(),
+      intro: ['食品安全衛生管理法第 8 條規定，所有食品業者的從業人員、作業場所、設施衛生與品保制度，都要符合「食品良好衛生規範準則」（GHP）。這份準則 2025 年 6 月修正，分為總則、食品製造業、物流業、販賣業、餐飲業、添加物業、低酸性及酸化食品製造業、器具容器包裝製造業、洗潔劑製造業等章。',
+        '準則裡有很多會考的數字：冷凍車廂的溫度上限比冷凍庫寬一些；熱藏的溫度；熟食在室溫的時間；大型外燴要事先報備；紀錄的保存年限；油炸油要換的時機；蓄水設施的清理頻率；地下水井和污染源的距離。'],
+      done: ['[[GHP：冷凍運輸 ≤ −12℃、冷藏運輸 ≤ 7℃；熱藏 ≥ 60℃；室溫不得超過 2 小時；外燴 200 人以上 3 日前報備；紀錄保存 5 年；油炸油極性化合物 25% 換油；蓄水池每年清理；地下水源距污染源 15 公尺。]]', '販賣場所光線 200 勒克斯以上；廁所不得正面開向作業場所。'] },
+    { t: '食品安全衛生管理法的架構', kind: 'list',
+      intro: ['食安法原名食品衛生管理法（民國 64 年），102 年改為現名，共十章 60 條。',
+        '重點條文：行政院設食品安全會報，院長召集，至少每三個月開會一次；醫療機構發現疑似食物中毒，24 小時內通報；業者實施自主管理，上市上櫃與公告類別的業者要設實驗室；所有業者符合 GHP，公告類別與規模的業者另要符合食品安全管制系統（HACCP）；公告的業者要登錄才能營業，並設置衛生管理人員。',
+        '第 15 條列出不得製造販賣的情形：變質腐敗；未成熟而有害；有毒或含有害物質、異物；染有病原；農藥或動物用藥超過容許量；受放射性污染超過容許量；攙偽或假冒；逾有效日期；從未供國內飲食且未證明無害；添加未經許可的添加物。',
+        '食品不得標示或廣告醫療效能。對檢驗結果有異議，可在收到通知 15 日內申請複驗。'],
+      listTitle: '是哪一個',
+      list: [['逾有效日期的食品', { a: 'ban', o: ['ban', 'okk'] }], ['含異物的食品', { a: 'ban', o: ['ban', 'okk'] }], ['良好衛生規範準則', { a: 'ghp', o: ['ghp', 'hac'] }], ['食品安全管制系統準則', { a: 'hac', o: ['ghp', 'hac'] }]],
+      countsTitle: '數字', counts: [['食安法共有幾章', '10', ['7', '9', '10', '12']], ['食品安全會報至少每幾個月開會一次', '3', ['1', '3', '6', '12']], ['對檢驗結果有異議，幾日內申請複驗', '15', ['3', '7', '15', '30']]],
+      done: ['[[食安法：十章 60 條；食品安全會報由行政院長召集，至少每 3 個月開會；疑似食物中毒 24 小時內通報；複驗 15 日內申請。]]', '[[第 8 條：所有業者符合 GHP；公告類別及規模的業者符合食品安全管制系統準則。]]'] },
+    { t: '真空包裝即食食品與低酸性食品', kind: 'list',
+      intro: ['真空包裝的即食食品（例如豆干、滷味）如果殺菌不足，又放在常溫，肉毒桿菌就有機會長出毒素。所以準則規定：要有下列條件之一才能常溫貯存販售——水活性 0.85 以下；pH 9.0 以上；經熱殺菌或商業滅菌；天然酸性食品；pH 小於 4.6 或鹽濃度大於 10% 的發酵食品；碳酸飲料；其他能抑制肉毒桿菌的條件。',
+        '冷藏的真空包裝即食食品，保存期間不得超過 10 天，除非：添加亞硝酸鹽或硝酸鹽、水活性 0.94 以下、pH 小於 4.6、鹽濃度大於 3.5% 的煙燻或發酵產品。',
+        '熱殺菌密閉容器包裝的低酸性食品：pH 大於 4.6、水活性大於 0.85，要商業滅菌，可以常溫保存。酸化食品：加酸使 pH 小於或等於 4.6、水活性大於 0.85。罐頭要做 37℃ 10 天的保溫試驗。'],
+      listTitle: '是哪一個',
+      list: [['水活性 0.80 的真空包裝肉乾', { a: 'rt', o: ['rt', 'ch'] }], ['未經商業滅菌、水活性 0.97 的真空包裝豆干', { a: 'ch', o: ['rt', 'ch'] }], ['pH 6.5、水活性 0.98 的罐頭玉米', { a: 'low', o: ['low', 'acf'] }], ['加醋使 pH 4.2 的罐裝醃菜', { a: 'acf', o: ['low', 'acf'] }]],
+      countsTitle: '數字', counts: [['冷藏真空包裝即食食品一般的保存上限（天）', '10', ['3', '7', '10', '14']], ['罐頭保溫試驗（37℃，幾天）', '10', ['3', '7', '10', '14']]],
+      done: ['[[真空包裝即食食品常溫販售條件：Aw ≤ 0.85、pH ≥ 9.0、熱殺菌或商業滅菌、天然酸性、pH < 4.6 或鹽 > 10% 的發酵食品、碳酸飲料；冷藏者保存期限一般不超過 10 天。]]', '[[低酸性食品：pH > 4.6 且 Aw > 0.85；酸化食品：pH ≤ 4.6 且 Aw > 0.85。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['熱藏食品要保持', { a: 'p60', o: SLAW_M.o }, '。'],
+        ['冷凍運輸車廂', { a: 'm12', o: SLAW_M.o }, '。'],
+        ['依 GHP 作成的紀錄', { a: 'y5', o: SLAW_M.o }, '。'],
+        ['所有食品業者都要符合的是', { a: 'ghp', o: ['ghp', 'hac'] }, '。'],
+        ['外燴 200 人以上要', { a: 'd3', o: SLAW_M.o, lang: 'en' }, '。'],
+        ['pH 6.5 的罐頭屬於', { a: 'low', o: ['low', 'acf'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: SLAW_M.h, force: 'en', svg: SLAW_M.svg, blanks: SLAW_M.b(),
+      intro: ['GHP 裡的數字，全部用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: 'Terms', list: [['Expired food', { a: 'ban', o: ['ban', 'okk'] }], ['HACCP regulation applies to', { a: 'hac', o: ['ghp', 'hac'] }], ['Pickles acidified to pH 4.2', { a: 'acf', o: ['low', 'acf'] }]] }
+  ] };
+/* ======================================================================
+   食品衛生與安全：危害分析重要管制點（HACCP）（授課第 13 單元後半）
+   ====================================================================== */
+var SHAC_M = SM([['原則一', 'Principle 1', 'ha'], ['原則二', 'Principle 2', 'ccp'], ['原則三', 'Principle 3', 'cl'], ['原則四', 'Principle 4', 'mon'],
+  ['原則五', 'Principle 5', 'ca'], ['原則六', 'Principle 6', 'ver'], ['原則七', 'Principle 7', 'rec']],
+  { l: ['HACCP 七大原則', 'seven principles'], r: ['內容', 'what to do'], k: 'C', dy: 46 });
+var SHAC = { id: 'shac', zh: 'HACCP：危害分析重要管制點', en: 'HACCP', alias: '七大原則・五個前置步驟・管制小組・決定樹・管制界限・監測・矯正・確認・SSOP・5S・風險矩陣', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    ha: { zh: '危害分析', en: 'Conduct a hazard analysis' }, ccp: { zh: '決定重要管制點', en: 'Determine critical control points' }, cl: { zh: '建立管制界限', en: 'Establish critical limits' }, mon: { zh: '建立監測方法', en: 'Establish monitoring' },
+    ca: { zh: '建立矯正措施', en: 'Establish corrective actions' }, ver: { zh: '建立確認程序', en: 'Establish verification' }, rec: { zh: '建立紀錄與文件', en: 'Establish record keeping' },
+    team: { zh: '成立管制小組', en: 'Assemble the team' }, desc: { zh: '描述產品與儲運方式', en: 'Describe the product' }, use: { zh: '確認用途與消費對象', en: 'Identify intended use' }, flow: { zh: '建立流程圖', en: 'Construct a flow diagram' }, conf: { zh: '現場確認流程圖', en: 'Confirm it on site' },
+    owner: { zh: '負責人或其指定人員', en: 'Owner or designee' }, intern: { zh: '工讀生', en: 'Part-time worker' },
+    yes: { zh: '是重要管制點', en: 'Is a CCP' }, no: { zh: '不是重要管制點', en: 'Not a CCP' },
+    sig: { zh: '顯著危害', en: 'Significant hazard' }, ns: { zh: '非顯著危害', en: 'Not significant' },
+    prev: { zh: '事前預防、全程管制', en: 'Prevention, process control' }, end: { zh: '最終產品檢驗', en: 'End-product testing' },
+    ghp: { zh: 'GHP 與 SSOP', en: 'GHP and SSOP' }, iso: { zh: 'ISO 9001', en: 'ISO 9001' },
+    nasa: { zh: '美國太空計畫的太空食物', en: 'US space program food' }, army: { zh: '歐洲軍糧', en: 'European rations' },
+    bio: { zh: '黃色', en: 'Yellow' }, chm: { zh: '綠色', en: 'Green' }, phy: { zh: '藍色', en: 'Blue' }
+  },
+  levels: [
+    { t: '先看全貌：七大原則', kind: 'ov', h: SHAC_M.h, svg: SHAC_M.svg, blanks: SHAC_M.b(),
+      intro: ['HACCP 是一套事前預防的自主管理系統：先找出製程中可能出現的生物性、化學性、物理性危害，再在能控制它的步驟嚴格把關，而不是等成品做好才檢驗。',
+        '七大原則照順序：先把所有可能的危害列出來並評估；找出能預防、去除或降低危害的關鍵步驟；替每個關鍵步驟訂一個可以量的標準；決定怎麼、多久量一次、誰來量；超出標準時要怎麼處理；定期檢查整個系統是否真的有效；把所有過程留下紀錄。'],
+      done: ['[[HACCP 七大原則：危害分析 → 決定 CCP → 建立管制界限 → 監測 → 矯正措施 → 確認 → 紀錄。]]', '[[加上五個前置步驟（成立小組、描述產品、確認用途與對象、建立流程圖、現場確認流程圖），共十二步驟。]]'] },
+    { t: '五個前置步驟與管制小組', kind: 'list',
+      intro: ['做危害分析之前，先做五件事：組成小組；寫清楚產品是什麼、怎麼包裝儲運；誰要吃、怎麼吃；畫出從驗收到出貨的流程圖；拿著流程圖到現場核對。',
+        '依食品安全管制系統準則：管制小組至少 3 人，負責人或其指定人員是必要成員；成員要上過認可機構的課程至少 30 小時，之後每 3 年累計至少 12 小時。至少一人要是專門職業人員，例如餐盒食品工廠可以是食品技師或營養師。',
+        '每年至少做一次內部稽核、一次內部教育訓練；紀錄至少保存 5 年。'],
+      listTitle: '是哪一個',
+      list: [['前置步驟一', { a: 'team', o: ['team', 'desc', 'use', 'flow', 'conf'] }], ['前置步驟三', { a: 'use', o: ['team', 'desc', 'use', 'flow', 'conf'] }], ['前置步驟五', { a: 'conf', o: ['team', 'desc', 'use', 'flow', 'conf'] }], ['管制小組必要的成員', { a: 'owner', o: ['owner', 'intern'] }]],
+      countsTitle: '數字', counts: [['管制小組至少幾人', '3', ['2', '3', '5', '7']], ['小組成員的訓練至少幾小時', '30', ['12', '24', '30', '60']], ['之後每 3 年累計至少幾小時', '12', ['6', '12', '24', '30']], ['紀錄至少保存幾年', '5', ['1', '2', '3', '5']]],
+      done: ['[[管制小組 ≥ 3 人，負責人或其指定人員為必要成員；訓練 30 小時、每 3 年 12 小時；每年至少一次內部稽核；紀錄保存 5 年。]]'] },
+    { t: '怎麼判定重要管制點', kind: 'list',
+      intro: ['危害分析可以用風險矩陣：把危害發生的可能性和嚴重性各評 1～5 分，相乘 15 分以上視為顯著危害。',
+        '重要管制點（CCP）是「在這一步施加控制，就能預防、去除或降低危害到可接受程度」的點。用決定樹的四個問題判斷：這一步有控制措施嗎？這一步能把危害消除或降低嗎？污染可能增加到不可接受嗎？後面的步驟能消除它嗎？',
+        '例子：便當的煎雞腿，原料驗收時可能帶沙門氏菌，但後面的加熱能殺死它，所以驗收不是 CCP；油煎時中心溫度不夠，後面沒有別的步驟能補救，所以油煎是 CCP，管制界限可以訂成中心溫度幾度以上。',
+        '管制界限要能即時量測：溫度、時間、pH、水活性、鹽濃度。監測發現偏離時，執行矯正措施，必要時停止生產。'],
+      listTitle: '是哪一個',
+      list: [['驗收的雞腿（後面還會加熱）', { a: 'no', o: ['yes', 'no'] }], ['油煎雞腿（後面沒有加熱）', { a: 'yes', o: ['yes', 'no'] }], ['可能性 4、嚴重性 4', { a: 'sig', o: ['sig', 'ns'] }], ['可能性 2、嚴重性 5', { a: 'ns', o: ['sig', 'ns'] }]],
+      countsTitle: '數字', counts: [['決定樹有幾個問題', '4', ['3', '4', '5', '7']], ['風險矩陣幾分以上為顯著危害', '15', ['10', '12', '15', '20']]],
+      done: ['[[CCP：施予控制可預防、去除或降低危害至可接受程度的點；以決定樹四個問題判定。]]', '[[管制界限要可量測（溫度、時間、pH、Aw）；偏離時採取矯正措施。]]'] },
+    { t: 'HACCP 的基礎與由來', kind: 'list',
+      intro: ['HACCP 不是單獨存在的，它建立在良好衛生規範（GHP）與衛生標準作業程序（SSOP）之上。SSOP 包括水質、食品接觸面清潔、防止交叉污染、洗手與廁所、防止異物、化學物質管理、員工健康、病媒防治。日常的 5S（整理、整頓、清掃、清潔、教養）是它的前置活動。',
+        '它起源於 1960 年代美國太空計畫，為太空人準備安全的食物；後來美國 FDA 先用在低酸性罐頭。',
+        '我國目前採部分強制：水產、肉品、餐盒、乳品加工、國際觀光旅館與五星級旅館的餐廳、罐頭、蛋製品、食用油脂、鐵路餐盒等業別要實施。',
+        '餐飲業 HACCP 衛生評鑑標章的三種顏色分別代表三類危害的管控。'],
+      listTitle: '是哪一個',
+      list: [['HACCP 和傳統檢驗最大的不同', { a: 'prev', o: ['prev', 'end'] }], ['HACCP 建立在什麼之上', { a: 'ghp', o: ['ghp', 'iso'] }], ['HACCP 的起源', { a: 'nasa', o: ['nasa', 'army'] }],
+        ['標章上代表生物性危害的顏色', { a: 'bio', o: ['bio', 'chm', 'phy'] }], ['標章上代表物理性危害的顏色', { a: 'phy', o: ['bio', 'chm', 'phy'] }]],
+      done: ['[[HACCP：事前預防、全程管制，建立在 GHP 與 SSOP 之上；起源於美國太空計畫。]]', '[[餐飲 HACCP 標章：黃色＝生物性、綠色＝化學性、藍色＝物理性。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['HACCP 原則一是', { a: 'ha', o: SHAC_M.o }, '。'],
+        ['監測發現超出管制界限時要', { a: 'ca', o: SHAC_M.o }, '。'],
+        ['油煎雞腿這一步', { a: 'yes', o: ['yes', 'no'] }, '。'],
+        ['HACCP 的特點是', { a: 'prev', o: ['prev', 'end'] }, '。'],
+        ['原則三是', { a: 'cl', o: SHAC_M.o, lang: 'en' }, '。'],
+        ['前置步驟五是', { a: 'conf', o: ['team', 'desc', 'use', 'flow', 'conf'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: SHAC_M.h, force: 'en', svg: SHAC_M.svg, blanks: SHAC_M.b(),
+      intro: ['HACCP 七大原則，全部用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。',
+      listTitle: 'Terms', list: [['First preliminary step', { a: 'team', o: ['team', 'desc', 'use', 'flow', 'conf'] }], ['Foundation of HACCP', { a: 'ghp', o: ['ghp', 'iso'] }], ['Origin of HACCP', { a: 'nasa', o: ['nasa', 'army'] }]] }
+  ] };
+/* 圖解營養化學與食品的目錄。營養化學照課程大綱的順序；食品微生物照老師《食品微生物學》授課單元的順序；食品衛生與安全照老師授課單元的順序。有 levels 的才是做好的單元 */
 function TODO(id, zh, en) { return { id: id, zh: zh, en: en }; }
 var GROUPS = [
   { tab: 'chem', g: '先讀這裡', items: [CPRE] },
@@ -1949,7 +2898,15 @@ var GROUPS = [
   { tab: 'micro', g: '單元 6・食品的保存', c: 6, items: [FPRS] },
   { tab: 'micro', g: '單元 7・食品微生物的檢測', c: 4, items: [FDET] },
   { tab: 'micro', g: '單元 8・指標微生物與衛生標準', c: 5, items: [FIND] },
-  { tab: 'safe', g: '食品衛生與安全', items: [TODO('safe0', '製作中：等老師的投影片', 'Food sanitation and safety')] }
+  { tab: 'safe', g: '先讀這裡', items: [SPRE] },
+  { tab: 'safe', g: '單元 2・時間與溫度管控', c: 6, items: [STMP] },
+  { tab: 'safe', g: '單元 5・加工與貯存產生的危害', c: 3, items: [SPRC, SOIL] },
+  { tab: 'safe', g: '補充・化學性危害與天然毒素', c: 3, items: [SCHM] },
+  { tab: 'safe', g: '單元 6・食品添加物', c: 2, items: [SADD, SILL] },
+  { tab: 'safe', g: '單元 8～9・基因改造食品與食物過敏', c: 5, items: [SGMO, SALG] },
+  { tab: 'safe', g: '單元 3、10、12・衛生管理', c: 4, items: [SKIT, SCLN] },
+  { tab: 'safe', g: '單元 11・包裝與標示', c: 2, items: [SPKG, SLBL] },
+  { tab: 'safe', g: '單元 13・法規與食品安全管制系統', c: 2, items: [SLAW, SHAC] }
 ];
 function prep(u, par) {
   if (par) ['dict', 'enz', 'prod', 'tags', 'zh', 'en'].forEach(function (k) { if (u[k] == null) u[k] = par[k]; });
@@ -1962,7 +2919,7 @@ var UNITS = {}; GROUPS.forEach(function (g) { g.items.forEach(function (u) { if 
 window.CFG = {
   key: 'food-v1', title: '圖解營養化學與食品',
   tabs: [['chem', '營養化學'], ['micro', '食品微生物'], ['safe', '食品衛生安全']],
-  hint: { micro: '藍色是細菌、青色是黴菌和酵母、紫色是病毒與寄生蟲、玫瑰色是毒素、琥珀色是食品本身的條件，', chem: '琥珀色是碳和有機分子、藍色是金屬與陽離子、玫瑰色是非金屬與陰離子、青色是水和溶液、紫色是官能基，', safe: '藍色是細菌、青色是黴菌、紫色是病毒與寄生蟲、玫瑰色是毒素，' },
+  hint: { micro: '藍色是細菌、青色是黴菌和酵母、紫色是病毒與寄生蟲、玫瑰色是毒素、琥珀色是食品本身的條件，', chem: '琥珀色是碳和有機分子、藍色是金屬與陽離子、玫瑰色是非金屬與陰離子、青色是水和溶液、紫色是官能基，', safe: '藍色是生物性危害、玫瑰色是化學性危害、琥珀色是物理性危害與溫度、食品條件，青色是清潔消毒與合格做法，紫色是法規、制度與標示，' },
   howto: '<p>上面三個分頁是三個科目：營養化學概論（化學基礎）、食品微生物學、食品衛生與安全。國考「食品衛生與安全」會考到食品微生物的內容，兩科可以對照著讀。菌名一律附上學名，國考常常只寫學名，要練到看得懂。</p>',
   note: function () { return '衛生標準與添加物限量依衛生福利部公告，法規會修正，請以最新公告與老師上課的說明為準。'; }
 };

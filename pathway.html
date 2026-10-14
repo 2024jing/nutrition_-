@@ -1146,6 +1146,94 @@ var FAS = { id: 'fas', zh: '脂肪酸合成', en: 'Fatty acid synthesis', alias:
       intro: ['圖上三個中間產物、圖下四個酵素，全部空白。'], tip: '這一關固定用英文作答。答對後，酵素下方會顯示中文。' }
   ] };
 /* ======================================================================
+   脂肪酸的延長與去飽和（必需脂肪酸、n-3 與 n-6）
+   ====================================================================== */
+var ELO_X = function (i) { return 30 + (i - 1) * 300 / 17; };
+function ELO_OV() {
+  var s = sl(ELO_X(1) + ',62 ' + ELO_X(18) + ',62', 'M', 3), i;
+  for (i = 1; i <= 18; i++) s += '<circle cx="' + ELO_X(i) + '" cy="62" r="4.5" fill="var(--muted)"/>';
+  s += tx(ELO_X(1), 40, T('羧基端 C1', 'COOH end, C1'), 'm', 9.5, 'start') + tx(ELO_X(18), 40, T('甲基端（ω）', 'methyl (ω) end'), 'm', 9.5, 'end');
+  [[9.5, 'Δ9', 148], [12.5, 'Δ12', 233], [15.5, 'Δ15', 300]].forEach(function (d, k) { var x = ELO_X(d[0]), y = [104, 146, 188][k]; s += kt(x, 84, d[1], 'E', 11) + '<line class="ln" x1="' + x + '" y1="90" x2="' + d[2] + '" y2="' + (y - 16) + '" stroke-width="1.5" stroke-dasharray="3 3"/>'; });
+  s += caps(250, 52, [['延長在細胞的', 'Elongation occurs in'], ['每次加上的 2 碳來自', 'Each 2-C unit comes from'], ['去飽和需要', 'Desaturation needs']]);
+  return s;
+}
+var ELO = { id: 'elo', zh: '脂肪酸的延長與去飽和', en: 'Fatty acid elongation and desaturation', alias: '延長酶・去飽和酶・必需脂肪酸・n-3 與 n-6・EPA・DHA・花生四烯酸', layout: 'chain',
+  geo: { x: 180, w: 250 },
+  nodes: [
+    { k: 'la', zh: '亞麻油酸（18:2 n-6）', en: 'Linoleic acid (18:2 n-6)' }, { k: 'gla', zh: 'γ-次亞麻油酸（18:3 n-6）', en: 'γ-Linolenic acid (18:3 n-6)' },
+    { k: 'dgla', zh: '二高-γ-次亞麻油酸（20:3 n-6）', en: 'Dihomo-γ-linolenic acid (20:3 n-6)' }, { k: 'ara', zh: '花生四烯酸（20:4 n-6）', en: 'Arachidonic acid (20:4 n-6)' }
+  ],
+  extra: [{ k: 'ole', zh: '油酸（18:1 n-9）', en: 'Oleic acid (18:1 n-9)' }, { k: 'epa', zh: 'EPA（20:5 n-3）', en: 'EPA (20:5 n-3)' }],
+  steps: [{ f: 'la', t: 'gla', e: 'd6' }, { f: 'gla', t: 'dgla', e: 'elo', io: [[{ zh: '＋2 碳（丙二醯輔酶A）', en: '+ 2 C (malonyl-CoA)' }, 'mol']] }, { f: 'dgla', t: 'ara', e: 'd5' }],
+  rowExtra: ['d12', 'd15'],
+  subs: {
+    n3: { layout: 'chain', geo: { x: 180, w: 250 },
+      nodes: [{ k: 'ala', zh: 'α-次亞麻油酸（18:3 n-3）', en: 'α-Linolenic acid (18:3 n-3)' }, { k: 'sda', zh: '十八碳四烯酸（18:4 n-3）', en: 'Stearidonic acid (18:4 n-3)' }, { k: 'eta', zh: '二十碳四烯酸（20:4 n-3）', en: 'Eicosatetraenoic acid (20:4 n-3)' },
+        { k: 'epa', zh: 'EPA（20:5 n-3）', en: 'EPA (20:5 n-3)' }, { k: 'dpa', zh: 'DPA（22:5 n-3）', en: 'DPA (22:5 n-3)' }, { k: 'dha', zh: 'DHA（22:6 n-3）', en: 'DHA (22:6 n-3)' }],
+      extra: [{ k: 'ara', zh: '花生四烯酸（20:4 n-6）', en: 'Arachidonic acid (20:4 n-6)' }],
+      steps: [{ f: 'ala', t: 'sda', e: 'd6' }, { f: 'sda', t: 'eta', e: 'elo' }, { f: 'eta', t: 'epa', e: 'd5' }, { f: 'epa', t: 'dpa', e: 'elo' }, { f: 'dpa', t: 'dha', e: 'spr' }], rowExtra: ['d12', 'd15'] },
+    sat: { layout: 'chain', geo: { x: 100, w: 150, sx: 272, sw: 150 },
+      nodes: [{ k: 'pal', zh: '棕櫚醯輔酶A（16:0）', en: 'Palmitoyl-CoA (16:0)' }, { k: 'ste', zh: '硬脂醯輔酶A（18:0）', en: 'Stearoyl-CoA (18:0)' }, { k: 'ole', zh: '油醯輔酶A（18:1 n-9）', en: 'Oleoyl-CoA (18:1 n-9)' },
+        { k: 'palo', zh: '棕櫚油醯輔酶A（16:1 n-7）', en: 'Palmitoleoyl-CoA (16:1 n-7)', side: 'pal', link: 'leaf' }],
+      extra: [{ k: 'la', zh: '亞麻油酸（18:2 n-6）', en: 'Linoleic acid (18:2 n-6)' }],
+      steps: [{ f: 'pal', t: 'ste', e: 'elo' }, { f: 'ste', t: 'ole', e: 'd9' }, { f: 'pal', t: 'palo', e: 'd9' }], rowExtra: ['d12', 'd6'] }
+  },
+  enz: {
+    d6: { zh: 'Δ6 去飽和酶', en: 'Δ6 desaturase' }, d5: { zh: 'Δ5 去飽和酶', en: 'Δ5 desaturase' }, d9: { zh: 'Δ9 去飽和酶（硬脂醯輔酶A 去飽和酶）', en: 'Δ9 desaturase (SCD)' },
+    elo: { zh: '延長酶（內質網）', en: 'Elongase (ER)' }, spr: { zh: '延長、Δ6 去飽和，再在過氧化體 β-氧化切掉 2 碳', en: 'Elongate, Δ6-desaturate, then peroxisomal β-oxidation' },
+    d12: { zh: 'Δ12 去飽和酶（植物才有）', en: 'Δ12 desaturase (plants only)' }, d15: { zh: 'Δ15 去飽和酶（植物才有）', en: 'Δ15 desaturase (plants only)' }
+  },
+  dict: {
+    can: { zh: '人體可以加', en: 'Humans can' }, cannot: { zh: '人體不能加', en: 'Humans cannot' },
+    er: { zh: '內質網（短於 16 碳的在粒線體也可）', en: 'Endoplasmic reticulum' }, cyt: { zh: '細胞質', en: 'Cytosol' }, mat: { zh: '粒線體基質', en: 'Mitochondrial matrix' },
+    malc: { zh: '丙二醯輔酶A', en: 'Malonyl-CoA' }, aco: { zh: '乙醯輔酶A', en: 'Acetyl-CoA' },
+    o2: { zh: 'O₂、NADH、細胞色素 b₅', en: 'O₂, NADH, cytochrome b5' }, atp: { zh: 'ATP、生物素', en: 'ATP, biotin' },
+    comp: { zh: '互相競爭同一個酵素', en: 'Compete for the same enzymes' }, conv: { zh: '可以互相轉換', en: 'Interconvert' },
+    low: { zh: '很低（多在 10% 以下）', en: 'Low (mostly under 10%)' }, high: { zh: '很高（超過一半）', en: 'High (over half)' },
+    ara: { zh: '花生四烯酸（20:4 n-6）', en: 'Arachidonic acid' }, mead: { zh: '米德酸（20:3 n-9）', en: 'Mead acid (20:3 n-9)' }, derm: { zh: '皮膚炎、脫屑、傷口癒合差', en: 'Scaly dermatitis, poor wound healing' }, night: { zh: '夜盲', en: 'Night blindness' },
+    s1: { zh: '1 系列前列腺素', en: 'Series-1 prostaglandins' }, s2: { zh: '2 系列前列腺素、4 系列白三烯素', en: 'Series-2 PGs, series-4 LTs' }, s3: { zh: '3 系列前列腺素、5 系列白三烯素', en: 'Series-3 PGs, series-5 LTs' },
+    brain: { zh: '腦和視網膜', en: 'Brain and retina' }, liver: { zh: '肝臟儲存', en: 'Liver storage' }
+  },
+  levels: [
+    { t: '先看全貌：人體能在哪裡加雙鍵', kind: 'ov', h: 400, svg: ELO_OV,
+      intro: ['脂肪酸合成酶做到 16 碳的棕櫚酸就停了。要更長、要有雙鍵，得靠內質網上的另外兩群酵素：<b>延長酶</b>每次接上 2 個碳；<b>去飽和酶</b>在特定位置拔掉氫、做出雙鍵。',
+        '雙鍵位置有兩種算法：從羧基端算（Δ），或從甲基端算（n 或 ω）。人體的去飽和酶只能在 Δ9 和羧基之間加雙鍵（Δ9、Δ6、Δ5）；Δ9 以外、靠近甲基端的 Δ12、Δ15 只有植物做得到。',
+        '所以 n-6 的亞麻油酸和 n-3 的 α-次亞麻油酸，人體自己做不出來，叫<b>必需脂肪酸</b>。只要吃到這兩種，就能再延長、再去飽和，做出更長的 n-6 和 n-3 脂肪酸。',
+        '每條路徑問三件事：原料與產物（短的或必需脂肪酸 → 長鏈多元不飽和脂肪酸）、位置（內質網）、什麼時候開關（延長和 Δ9 跟著脂肪合成，吃飽、胰島素時增加）。'],
+      blanks: [{ id: 'q9', x: 148, y: 104, w: 112, a: 'can', o: ['can', 'cannot'] }, { id: 'q12', x: 233, y: 146, w: 112, a: 'cannot', o: ['can', 'cannot'] }, { id: 'q15', x: 300, y: 188, w: 112, a: 'cannot', o: ['can', 'cannot'] },
+        { id: 'qer', x: 262, y: 250, w: 170, a: 'er', o: ['er', 'cyt', 'mat'] }, { id: 'qmal', x: 262, y: 302, w: 170, a: 'malc', o: ['malc', 'aco'] }, { id: 'qo2', x: 262, y: 354, w: 170, a: 'o2', o: ['o2', 'atp'] }],
+      done: ['[[人體的去飽和酶只有 Δ9、Δ6、Δ5（加在 Δ9 與羧基之間）；沒有 Δ12、Δ15，所以亞麻油酸（n-6）和 α-次亞麻油酸（n-3）是必需脂肪酸。]]', '[[延長在內質網，每次用丙二醯輔酶A 接上 2 碳，用 NADPH 還原；去飽和需要 O₂、NADH 和細胞色素 b₅。]]'] },
+    { t: 'n-6 這一族：亞麻油酸到花生四烯酸', kind: 'map', blanks: ['gla', 'dgla', 'ara'],
+      intro: ['亞麻油酸（18:2）先在 Δ6 加一個雙鍵（18:3），再延長 2 碳（20:3），最後在 Δ5 加雙鍵，變成 20 碳、4 個雙鍵的花生四烯酸。',
+        '口訣：[[去飽和、延長、去飽和]]，酵素依序是 Δ6、延長酶、Δ5。',
+        '延長時雙鍵和甲基端的距離不變（因為碳是加在羧基端），所以一路都還是 n-6。'],
+      tip: '花生四烯酸是 2 系列前列腺素、血栓素和 4 系列白三烯素的原料；飲食中缺乏亞麻油酸時，它就變成必需的。' },
+    { t: 'n-3 這一族：α-次亞麻油酸到 EPA、DHA', kind: 'map', sub: 'n3', blanks: ['sda', 'eta', 'epa', 'dpa', 'dha'],
+      intro: ['n-3 族用的是同一套酵素：Δ6 去飽和 → 延長 → Δ5 去飽和，得到 EPA（20:5）；再延長得到 DPA（22:5）。',
+        '最後一步比較繞：DPA 再延長到 24 碳、用 Δ6 加一個雙鍵，然後送到過氧化體，用 β-氧化切掉 2 個碳，才得到 DHA（22:6）。'],
+      tip: '人體由 α-次亞麻油酸轉換成 EPA、DHA 的效率很低，所以魚類、藻類直接提供的 EPA、DHA 很重要。' },
+    { t: 'n-3 這一族的酵素', kind: 'map', sub: 'n3', blanks: [], rows: 'enz', rowsTitle: '每一步的酵素',
+      intro: ['和 n-6 族對照：前三步完全一樣。n-3 和 n-6 會<b>搶同一個 Δ6 去飽和酶</b>，所以飲食中兩者的比例會影響最後做出多少 EPA 或花生四烯酸。',
+        '選項裡有兩個人體沒有的酵素，不要選。'] },
+    { t: '飽和脂肪酸的延長與 Δ9', kind: 'map', sub: 'sat', blanks: ['ste', 'ole', 'palo'], rows: 'enz', rowsTitle: '每一步的酵素',
+      intro: ['棕櫚酸可以在內質網延長成硬脂酸（18:0）。Δ9 去飽和酶（硬脂醯輔酶A 去飽和酶）在第 9、10 碳之間加雙鍵：硬脂酸變油酸（18:1 n-9），棕櫚酸變棕櫚油酸（16:1 n-7）。',
+        '油酸不是必需脂肪酸，因為人體自己能做。'],
+      tip: '缺乏必需脂肪酸時，身體只好把油酸再去飽和、延長，做出 20:3 n-9 的米德酸。三烯（米德酸）和四烯（花生四烯酸）的比值大於 0.4，是必需脂肪酸缺乏的指標。' },
+    { t: '必需脂肪酸與國考重點', kind: 'list',
+      intro: ['必需脂肪酸缺乏的典型症狀是皮膚乾燥脫屑、皮膚炎、傷口癒合差，嬰兒生長遲緩。',
+        '三族脂肪酸各自做成不同系列的類二十碳酸：二高-γ-次亞麻油酸 → 1 系列；花生四烯酸 → 2 系列前列腺素、4 系列白三烯素；EPA → 3 系列前列腺素、5 系列白三烯素。',
+        'DHA 大量存在腦和視網膜的磷脂質中，對嬰兒的神經和視力發育很重要。',
+        'n-3 和 n-6 在人體內不能互相轉換，而且互相競爭同一組酵素。'],
+      listTitle: '是哪一個',
+      list: [['n-3 和 n-6 在人體內的關係', { a: 'comp', o: ['comp', 'conv'] }], ['α-次亞麻油酸轉成 DHA 的效率', { a: 'low', o: ['low', 'high'] }], ['必需脂肪酸缺乏時堆積的脂肪酸', { a: 'mead', o: ['mead', 'ara'] }],
+        ['必需脂肪酸缺乏的症狀', { a: 'derm', o: ['derm', 'night'] }], ['花生四烯酸做成', { a: 's2', o: ['s1', 's2', 's3'] }], ['EPA 做成', { a: 's3', o: ['s1', 's2', 's3'] }], ['二高-γ-次亞麻油酸做成', { a: 's1', o: ['s1', 's2', 's3'] }],
+        ['DHA 含量特別高的地方', { a: 'brain', o: ['brain', 'liver'] }]],
+      countsTitle: '數字', counts: [['缺乏必需脂肪酸時，三烯／四烯比值大於多少', '0.4', ['0.1', '0.4', '1', '4']], ['亞麻油酸有幾個雙鍵', '2', ['1', '2', '3', '4']], ['DHA 有幾個雙鍵', '6', ['4', '5', '6', '7']]],
+      done: ['[[必需脂肪酸：亞麻油酸（18:2 n-6）、α-次亞麻油酸（18:3 n-3）；缺乏時皮膚炎、三烯／四烯 > 0.4。]]', '[[花生四烯酸 → 2 系列 PG、4 系列 LT；EPA → 3 系列 PG、5 系列 LT。n-3 與 n-6 不能互換，且競爭 Δ6 去飽和酶。]]'] },
+    { t: '總複習：n-6 路線（英文作答）', kind: 'map', force: 'en', plain: true, blanks: ['gla', 'dgla', 'ara'], rows: 'enz', rowsTitle: '每一步的酵素',
+      intro: ['圖上三個產物、圖下三個酵素，全部空白。'], tip: '這一關固定用英文作答。答對後，酵素下方會顯示中文。' }
+  ] };
+/* ======================================================================
    酮體生成
    ====================================================================== */
 var KET = { id: 'ket', zh: '酮體生成', en: 'Ketogenesis', alias: 'Ketogenesis・乙醯輔酶A → 酮體', layout: 'chain',
@@ -1224,6 +1312,86 @@ var KET = { id: 'ket', zh: '酮體生成', en: 'Ketogenesis', alias: 'Ketogenesi
       ] },
     { t: '總複習：全部空白（英文作答）', kind: 'map', force: 'en', plain: true, blanks: ['aac', 'hmg', 'acac', 'bhb', 'acet'], rows: 'enz', rowsTitle: '每一步的酵素',
       intro: ['圖上五個產物、圖下五個酵素，全部空白。'], tip: '這一關固定用英文作答。答對後，酵素下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   三酸甘油酯的合成
+   ====================================================================== */
+function TAG_OV() {
+  var s = zone(4, 6, 352, 128, T('肝臟', 'Liver')) + zone(4, 142, 352, 128, T('脂肪組織', 'Adipose tissue')) + zone(4, 278, 352, 76, T('小腸黏膜細胞', 'Intestinal cells'));
+  s += caps(50, 50, [['甘油-3-磷酸來自', 'Glycerol 3-P comes from'], ['做好的 TG 裝進', 'TG is exported in']]) + caps(186, 50, [['缺少的酵素', 'Missing enzyme'], ['甘油-3-磷酸只能來自', 'Glycerol 3-P only from']]) + caps(322, 0, [['主要的合成路線', 'Main pathway']]);
+  return s;
+}
+var TAG = { id: 'tag', zh: '三酸甘油酯的合成', en: 'Triacylglycerol synthesis', alias: '甘油-3-磷酸・磷脂酸・雙酸甘油酯・甘油激酶・單酸甘油酯途徑', layout: 'chain',
+  geo: { x: 116, w: 160, sx: 296, sw: 116 },
+  nodes: [
+    { k: 'dhap', zh: '磷酸二羥丙酮（DHAP）', en: 'Dihydroxyacetone phosphate', c: 3 }, { k: 'g3p', zh: '甘油-3-磷酸', en: 'Glycerol 3-phosphate', c: 3 },
+    { k: 'glyc', zh: '甘油', en: 'Glycerol', c: 3, side: 'g3p', link: 'feed' },
+    { k: 'lpa', zh: '溶血磷脂酸', en: 'Lysophosphatidic acid' }, { k: 'pa', zh: '磷脂酸', en: 'Phosphatidic acid' }, { k: 'dag', zh: '雙酸甘油酯', en: 'Diacylglycerol' },
+    { k: 'mag', zh: '單酸甘油酯', en: 'Monoacylglycerol', side: 'dag', link: 'feed' }, { k: 'tg', zh: '三酸甘油酯', en: 'Triacylglycerol' }
+  ],
+  extra: [{ k: 'cdpd', zh: 'CDP-雙酸甘油酯', en: 'CDP-diacylglycerol' }],
+  steps: [
+    { f: 'dhap', t: 'g3p', e: 'gpdh', io: [[{ zh: '用掉 NADH', en: 'uses NADH' }, 'mol']] }, { f: 'glyc', t: 'g3p', e: 'gk', io: [[{ zh: '用掉 ATP', en: 'uses ATP' }, 'mol']] },
+    { f: 'g3p', t: 'lpa', e: 'gpat', irr: 1, io: [[{ zh: '＋脂醯輔酶A', en: '+ acyl-CoA' }, 'mol']] }, { f: 'lpa', t: 'pa', e: 'agpat', io: [[{ zh: '＋脂醯輔酶A', en: '+ acyl-CoA' }, 'mol']] },
+    { f: 'pa', t: 'dag', e: 'pap', io: [[{ zh: '拿掉磷酸', en: '− phosphate' }, 'mol']] }, { f: 'mag', t: 'dag', e: 'mgat' },
+    { f: 'dag', t: 'tg', e: 'dgat', io: [[{ zh: '＋脂醯輔酶A', en: '+ acyl-CoA' }, 'mol']] }
+  ],
+  rowExtra: ['acs', 'hsl'],
+  enz: {
+    gpdh: { zh: '甘油-3-磷酸去氫酶', en: 'Glycerol-3-phosphate dehydrogenase' }, gk: { zh: '甘油激酶（肝臟有、脂肪組織沒有）', en: 'Glycerol kinase' }, gpat: { zh: '甘油-3-磷酸醯基轉移酶', en: 'Glycerol-3-phosphate acyltransferase', ab: 'GPAT' },
+    agpat: { zh: '溶血磷脂酸醯基轉移酶', en: 'Lysophosphatidate acyltransferase' }, pap: { zh: '磷脂酸磷酸酶（lipin）', en: 'Phosphatidate phosphatase (lipin)' },
+    dgat: { zh: '雙酸甘油酯醯基轉移酶', en: 'Diacylglycerol acyltransferase', ab: 'DGAT' }, mgat: { zh: '單酸甘油酯醯基轉移酶', en: 'Monoacylglycerol acyltransferase' },
+    acs: { zh: '脂醯輔酶A 合成酶', en: 'Acyl-CoA synthetase' }, hsl: { zh: '荷爾蒙敏感性脂解酶', en: 'Hormone-sensitive lipase' }
+  },
+  dict: {
+    both: { zh: '甘油或 DHAP 都可以', en: 'Glycerol or DHAP' }, onlyd: { zh: '葡萄糖經糖解產生的 DHAP', en: 'DHAP from glycolysis of glucose' },
+    vldl: { zh: '極低密度脂蛋白（VLDL）', en: 'VLDL' }, chy: { zh: '乳糜微粒', en: 'Chylomicrons' }, gkx: { zh: '甘油激酶', en: 'Glycerol kinase' }, lpl: { zh: '脂蛋白脂解酶', en: 'Lipoprotein lipase' },
+    magp: { zh: '單酸甘油酯途徑', en: 'Monoacylglycerol pathway' }, g3pp: { zh: '甘油-3-磷酸途徑', en: 'Glycerol-3-phosphate pathway' },
+    ins: { zh: '胰島素', en: 'Insulin' }, glu: { zh: '升糖素', en: 'Glucagon' }, liv: { zh: '回到肝臟', en: 'Back to the liver' }, stay: { zh: '留在脂肪組織再利用', en: 'Reused in adipose' },
+    pa: { zh: '磷脂酸', en: 'Phosphatidic acid' }, cdpd: { zh: 'CDP-雙酸甘油酯', en: 'CDP-diacylglycerol' }, mag: { zh: '單酸甘油酯', en: 'Monoacylglycerol' },
+    pl: { zh: '磷脂質', en: 'Phospholipids' }, chol: { zh: '膽固醇', en: 'Cholesterol' }, amp: { zh: 'AMP＋PPi', en: 'AMP + PPi' }, adp: { zh: 'ADP＋Pi', en: 'ADP + Pi' }
+  },
+  levels: [
+    { t: '先看全貌：三個器官、兩條路', kind: 'ov', h: 362, svg: TAG_OV,
+      intro: ['三酸甘油酯（TG）是一個甘油骨架接上三個脂肪酸，是身體最大的能量倉庫。合成的地方主要有三個：肝臟、脂肪組織、小腸。',
+        '原料有兩樣：甘油骨架（以甘油-3-磷酸的形式），和活化成脂醯輔酶A 的脂肪酸。脂肪酸要先活化，用掉 1 個 ATP（變成 AMP，等於 2 個高能鍵）。',
+        '甘油-3-磷酸有兩個來源：糖解的中間產物 DHAP 被還原；或游離的甘油被磷酸化。肝臟兩個都有；<b>脂肪組織缺少把甘油磷酸化的酵素</b>，所以只能靠葡萄糖。這就是為什麼脂肪細胞存脂肪需要胰島素幫它把葡萄糖送進來。',
+        '小腸吸收的是單酸甘油酯和脂肪酸，直接把它們接回去，不必從甘油-3-磷酸開始。',
+        '每條路徑問三件事：原料與產物（甘油-3-磷酸＋3 脂醯輔酶A → TG）、位置（內質網）、什麼時候開關（吃飽、胰島素）。'],
+      blanks: [{ id: 'qlg', x: 262, y: 50, w: 170, a: 'both', o: ['both', 'onlyd'] }, { id: 'qlv', x: 262, y: 100, w: 170, a: 'vldl', o: ['vldl', 'chy'] },
+        { id: 'qak', x: 262, y: 186, w: 170, a: 'gkx', o: ['gkx', 'lpl'] }, { id: 'qag', x: 262, y: 236, w: 170, a: 'onlyd', o: ['both', 'onlyd'] }, { id: 'qin', x: 262, y: 322, w: 170, a: 'magp', o: ['magp', 'g3pp'] }],
+      done: ['[[肝臟：甘油-3-磷酸可來自甘油（甘油激酶）或 DHAP，TG 以 VLDL 送出。脂肪組織：缺甘油激酶，只能用葡萄糖來的 DHAP。小腸：單酸甘油酯途徑，TG 以乳糜微粒送出。]]', '位置：內質網。開關：吃飽時胰島素促進。'] },
+    { t: '甘油-3-磷酸途徑的中間產物', kind: 'map', blanks: ['g3p', 'lpa', 'pa', 'dag', 'tg'],
+      intro: ['甘油-3-磷酸先接上第 1 個脂肪酸（溶血磷脂酸），再接第 2 個（磷脂酸）；拿掉磷酸變成雙酸甘油酯，最後接上第 3 個脂肪酸。',
+        '右邊兩個旁支：肝臟可以把甘油直接磷酸化；小腸把吸收進來的單酸甘油酯直接接成雙酸甘油酯。',
+        '磷脂酸和雙酸甘油酯是<b>岔路口</b>：從這裡也可以做成磷脂質（下一個單元）。'],
+      tip: '「溶血」（lyso-）表示少了一個脂肪酸。' },
+    { t: '每一步的酵素', kind: 'map', blanks: [], rows: 'enz', rowsTitle: '每一步的酵素',
+      intro: ['接脂肪酸的酵素都叫「醯基轉移酶」（acyltransferase），名字前面是「接到誰身上」。第一個醯基轉移酶是主要的調節點（實心編號）。',
+        '拿掉磷酸的酵素叫磷脂酸磷酸酶，也叫 lipin。',
+        '選項裡有兩個不在這條路上的酵素：一個是把脂肪酸活化的（發生在進入這條路之前），一個是分解 TG 的。'] },
+    { t: '算帳與調節', kind: 'list',
+      intro: ['做一個 TG 要接 3 個脂肪酸。每個脂肪酸先用脂醯輔酶A 合成酶活化：ATP → AMP＋PPi，消耗 2 個高能磷酸鍵。',
+        '吃飽時胰島素促進 TG 合成：增加脂肪細胞的葡萄糖運送（提供 DHAP）、提高脂肪組織的脂蛋白脂解酶（把血中 TG 的脂肪酸放進來），並抑制脂解。',
+        '脂肪組織分解 TG 釋出的甘油不能自己再用，要經血液回到肝臟，由甘油激酶磷酸化後去做糖質新生。'],
+      listTitle: '是哪一個',
+      list: [['脂肪酸活化時 ATP 變成', { a: 'amp', o: ['amp', 'adp'] }], ['促進 TG 合成的激素', { a: 'ins', o: ['ins', 'glu'] }], ['脂肪組織分解出的甘油去哪裡', { a: 'liv', o: ['liv', 'stay'] }], ['磷脂酸除了做 TG，還可以做', { a: 'pl', o: ['pl', 'chol'] }]],
+      countsTitle: '算算看', counts: [['做 1 個 TG 要接幾個脂肪酸', '3', ['1', '2', '3', '4']], ['活化 1 個脂肪酸消耗幾個高能磷酸鍵', '2', ['1', '2', '3']], ['做 1 個 TG，活化脂肪酸共消耗幾個高能磷酸鍵', '6', ['3', '4', '6', '7']]],
+      done: ['[[脂肪酸活化：ATP → AMP＋PPi（2 個高能鍵）；一個 TG 共消耗 6 個（不含甘油-3-磷酸的來源）。]]', '[[脂肪組織分解出的甘油回到肝臟，經甘油激酶進入糖質新生。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把三酸甘油酯合成的重點走一次。最後三題的選項只有英文。'],
+      cloze: [
+        ['脂肪組織因為缺少', { a: 'gkx', o: ['gkx', 'lpl'] }, '，不能利用游離的甘油。'],
+        ['所以脂肪細胞合成 TG 用的甘油-3-磷酸，來自', { a: 'onlyd', o: ['both', 'onlyd'] }, '。'],
+        ['小腸黏膜細胞重新合成 TG 主要走', { a: 'magp', o: ['magp', 'g3pp'] }, '。'],
+        ['肝臟做好的 TG 以', { a: 'vldl', o: ['vldl', 'chy'] }, '送到血液。'],
+        ['TG 和磷脂質合成的共同中間產物是', { a: 'pa', o: ['pa', 'cdpd', 'mag'] }, '。'],
+        ['由 DHAP 產生甘油-3-磷酸的酵素是', { a: 'gpdh', src: 'enz', lang: 'en', o: ['gpdh', 'gk', 'gpat', 'acs'] }, '。'],
+        ['肝臟把甘油磷酸化的酵素是', { a: 'gk', src: 'enz', lang: 'en', o: ['gpdh', 'gk', 'gpat', 'acs'] }, '。'],
+        ['接上第三個脂肪酸的酵素是', { a: 'dgat', src: 'enz', lang: 'en', o: ['dgat', 'gpat', 'mgat', 'hsl'] }, '。']
+      ] },
+    { t: '總複習：全部空白（英文作答）', kind: 'map', force: 'en', plain: true, blanks: ['g3p', 'lpa', 'pa', 'dag', 'tg'], rows: 'enz', rowsTitle: '每一步的酵素',
+      intro: ['圖上五個產物、圖下的酵素，全部空白。'], tip: '這一關固定用英文作答。答對後，酵素下方會顯示中文。' }
   ] };
 /* ======================================================================
    膽固醇合成與脂蛋白
@@ -1325,6 +1493,269 @@ var CHO = { id: 'cho', zh: '膽固醇合成與脂蛋白', en: 'Cholesterol & lip
       ] },
     { t: '總複習：合成路線（英文作答）', kind: 'map', force: 'en', plain: true, blanks: ['hmg', 'mev', 'ipp', 'sq'], rows: 'enz', rowsTitle: '前兩步的酵素',
       intro: ['圖上四個中間產物、圖下兩個酵素，全部空白。'], tip: '這一關固定用英文作答。答對後，酵素下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   磷脂質的合成（卵磷脂、CDP-雙酸甘油酯、鞘脂質）
+   ====================================================================== */
+function PLS_OV() {
+  return zone(4, 6, 352, 128, T('卵磷脂（PC）、腦磷脂（PE）', 'PC and PE')) + zone(4, 142, 352, 128, T('磷脂醯肌醇（PI）、心磷脂', 'PI and cardiolipin')) + zone(4, 278, 352, 128, T('肝臟的另一條路：PE → PC', 'Liver route: PE → PC')) +
+    caps(50, 50, [['先被 CTP 活化的是', 'Activated by CTP first'], ['活化後接到', 'Then attached to']]) + caps(186, 50, [['先被 CTP 活化的是', 'Activated by CTP first'], ['活化後接上', 'Then joined with']]) +
+    caps(322, 50, [['加上幾個甲基', 'Methyl groups added'], ['甲基的來源', 'Methyl donor']]);
+}
+var PLS = { id: 'pls', zh: '磷脂質的合成', en: 'Phospholipid synthesis', alias: '卵磷脂・CDP-膽鹼・PEMT・CDP-雙酸甘油酯・磷脂醯肌醇・神經鞘磷脂・神經醯胺', layout: 'chain',
+  geo: { x: 116, w: 160, sx: 296, sw: 116 },
+  nodes: [
+    { k: 'cho', zh: '膽鹼', en: 'Choline' }, { k: 'pcho', zh: '磷酸膽鹼', en: 'Phosphocholine' }, { k: 'cdpc', zh: 'CDP-膽鹼', en: 'CDP-choline' },
+    { k: 'pc', zh: '卵磷脂（磷脂醯膽鹼）', en: 'Phosphatidylcholine (lecithin)' }, { k: 'pe', zh: '磷脂醯乙醇胺', en: 'Phosphatidylethanolamine', side: 'pc', link: 'feed' }
+  ],
+  extra: [{ k: 'ps', zh: '磷脂醯絲胺酸', en: 'Phosphatidylserine' }, { k: 'cdpd', zh: 'CDP-雙酸甘油酯', en: 'CDP-diacylglycerol' }],
+  steps: [
+    { f: 'cho', t: 'pcho', e: 'ck', io: [[{ zh: '用掉 ATP', en: 'uses ATP' }, 'mol']] }, { f: 'pcho', t: 'cdpc', e: 'cct', irr: 1, io: [[{ zh: '＋CTP，放出 PPi', en: '+ CTP, − PPi' }, 'mol']] },
+    { f: 'cdpc', t: 'pc', e: 'cpt', io: [[{ zh: '＋雙酸甘油酯，放出 CMP', en: '+ DAG, − CMP' }, 'mol']] }, { f: 'pe', t: 'pc', e: 'pemt', io: [[{ zh: '3 個 SAM', en: '3 SAM' }, 'mol']] }
+  ],
+  rowExtra: ['pla2', 'cds'],
+  subs: {
+    cdp: { layout: 'chain', geo: { x: 116, w: 160, sx: 296, sw: 116 },
+      nodes: [{ k: 'pa', zh: '磷脂酸', en: 'Phosphatidic acid' }, { k: 'cdpd', zh: 'CDP-雙酸甘油酯', en: 'CDP-diacylglycerol' }, { k: 'pgl', zh: '磷脂醯甘油', en: 'Phosphatidylglycerol', side: 'cdpd', link: 'leaf' },
+        { k: 'pi', zh: '磷脂醯肌醇', en: 'Phosphatidylinositol' }, { k: 'pip2', zh: 'PIP₂（磷脂醯肌醇雙磷酸）', en: 'PIP₂' }],
+      extra: [{ k: 'pc', zh: '卵磷脂', en: 'Phosphatidylcholine' }],
+      steps: [{ f: 'pa', t: 'cdpd', e: 'cds', io: [[{ zh: '＋CTP，放出 PPi', en: '+ CTP, − PPi' }, 'mol']] }, { f: 'cdpd', t: 'pgl', e: 'pgs' }, { f: 'cdpd', t: 'pi', e: 'pis', io: [[{ zh: '＋肌醇，放出 CMP', en: '+ inositol, − CMP' }, 'mol']] },
+        { f: 'pi', t: 'pip2', e: 'pik', io: [[{ zh: '2 個 ATP', en: '2 ATP' }, 'mol']] }], rowExtra: ['cct', 'ck'] },
+    sph: { layout: 'chain', geo: { x: 116, w: 160, sx: 296, sw: 116 },
+      nodes: [{ k: 'sp0', zh: '絲胺酸＋棕櫚醯輔酶A', en: 'Serine + palmitoyl-CoA' }, { k: 'kds', zh: '3-酮二氫神經鞘胺醇', en: '3-Ketodihydrosphingosine' }, { k: 'cer', zh: '神經醯胺', en: 'Ceramide' },
+        { k: 'gcer', zh: '葡萄糖腦苷脂', en: 'Glucocerebroside', side: 'cer', link: 'leaf' }, { k: 'sm', zh: '神經鞘磷脂', en: 'Sphingomyelin' }],
+      extra: [{ k: 'pc', zh: '卵磷脂', en: 'Phosphatidylcholine' }],
+      steps: [{ f: 'sp0', t: 'kds', e: 'spt', irr: 1, io: [[{ zh: '需要 PLP，放出 CO₂', en: 'needs PLP, − CO₂' }, 'mol']] }, { f: 'kds', t: 'cer', e: 'cers', io: [[{ zh: '還原、接上脂肪酸、去飽和', en: 'reduce, add fatty acid, desaturate' }, 'mol']] },
+        { f: 'cer', t: 'gcer', e: 'gcs', io: [[{ zh: '＋UDP-葡萄糖', en: '+ UDP-glucose' }, 'mol']] }, { f: 'cer', t: 'sm', e: 'sms', io: [[{ zh: '從卵磷脂拿磷酸膽鹼', en: 'phosphocholine from PC' }, 'mol']] }], rowExtra: ['cpt', 'pemt'] }
+  },
+  enz: {
+    ck: { zh: '膽鹼激酶', en: 'Choline kinase' }, cct: { zh: 'CTP：磷酸膽鹼胞苷轉移酶', en: 'CTP:phosphocholine cytidylyltransferase', ab: 'CCT' }, cpt: { zh: '膽鹼磷酸轉移酶', en: 'Cholinephosphotransferase' },
+    pemt: { zh: 'PE 甲基轉移酶（肝臟）', en: 'PE N-methyltransferase', ab: 'PEMT' }, pla2: { zh: '磷脂酶 A₂', en: 'Phospholipase A₂' },
+    cds: { zh: 'CDP-雙酸甘油酯合成酶', en: 'CDP-diacylglycerol synthase' }, pgs: { zh: '磷脂醯甘油磷酸合成酶（＋甘油-3-磷酸）', en: 'Phosphatidylglycerol phosphate synthase' }, pis: { zh: '磷脂醯肌醇合成酶', en: 'Phosphatidylinositol synthase' }, pik: { zh: 'PI 激酶', en: 'PI kinases' },
+    spt: { zh: '絲胺酸棕櫚醯轉移酶', en: 'Serine palmitoyltransferase' }, cers: { zh: '幾個酵素（神經醯胺合成酶等）', en: 'Several enzymes (ceramide synthase etc.)' }, gcs: { zh: '葡萄糖腦苷脂合成酶', en: 'Glucosylceramide synthase' }, sms: { zh: '神經鞘磷脂合成酶', en: 'Sphingomyelin synthase' }
+  },
+  dict: {
+    head: { zh: '頭基（膽鹼、乙醇胺）', en: 'Head group (choline, ethanolamine)' }, dagx: { zh: '雙酸甘油酯（變成 CDP-DAG）', en: 'Diacylglycerol (to CDP-DAG)' },
+    dag: { zh: '雙酸甘油酯', en: 'Diacylglycerol' }, headx: { zh: '頭基（肌醇、甘油）', en: 'Head group (inositol, glycerol)' },
+    n1: { zh: '1', en: '1' }, n2: { zh: '2', en: '2' }, n3: { zh: '3', en: '3' }, sam: { zh: 'S-腺苷甲硫胺酸（SAM）', en: 'S-adenosylmethionine' }, thf: { zh: '四氫葉酸', en: 'Tetrahydrofolate' },
+    dppc: { zh: '雙棕櫚醯卵磷脂', en: 'Dipalmitoylphosphatidylcholine' }, pi2: { zh: 'PIP₂', en: 'PIP₂' }, psx: { zh: '磷脂醯絲胺酸', en: 'Phosphatidylserine' }, smx: { zh: '神經鞘磷脂', en: 'Sphingomyelin' }, card: { zh: '心磷脂', en: 'Cardiolipin' },
+    fatl: { zh: '脂肪肝', en: 'Fatty liver' }, rick: { zh: '佝僂病', en: 'Rickets' }, plp: { zh: '維生素 B6（PLP）', en: 'Vitamin B6 (PLP)' }, bio: { zh: '生物素', en: 'Biotin' },
+    ctp: { zh: 'CTP', en: 'CTP' }, utp: { zh: 'UTP', en: 'UTP' }, gtp: { zh: 'GTP', en: 'GTP' }
+  },
+  levels: [
+    { t: '先看全貌：兩種「活化」的策略', kind: 'ov', h: 414, svg: PLS_OV,
+      intro: ['甘油磷脂質由雙酸甘油酯接上「磷酸＋頭基」組成。頭基是膽鹼的叫卵磷脂（PC），是乙醇胺的叫腦磷脂（PE），還有絲胺酸（PS）、肌醇（PI）、甘油（PG、心磷脂）。',
+        '把頭基接上去需要能量，用的是 <b>CTP</b>（胞苷三磷酸）。有兩種做法：先活化頭基（CDP-膽鹼），再接到雙酸甘油酯上；或先活化雙酸甘油酯（CDP-雙酸甘油酯），再接上頭基。',
+        '肝臟還能把 PE 的乙醇胺連續甲基化三次，直接變成 PC。',
+        '每條路徑問三件事：原料與產物（雙酸甘油酯或磷脂酸＋頭基 → 磷脂質）、位置（內質網）、什麼時候開關（細胞膜需要時；CCT 是調節點）。'],
+      blanks: [{ id: 'qh1', x: 262, y: 50, w: 170, a: 'head', o: ['head', 'dagx'] }, { id: 'qd1', x: 262, y: 100, w: 170, a: 'dag', o: ['dag', 'headx'] },
+        { id: 'qh2', x: 262, y: 186, w: 170, a: 'dagx', o: ['head', 'dagx'] }, { id: 'qd2', x: 262, y: 236, w: 170, a: 'headx', o: ['dag', 'headx'] },
+        { id: 'qm', x: 262, y: 322, w: 170, a: 'n3', o: ['n1', 'n2', 'n3'] }, { id: 'qs', x: 262, y: 372, w: 170, a: 'sam', o: ['sam', 'thf'] }],
+      done: ['[[PC、PE：先用 CTP 活化頭基（CDP-膽鹼、CDP-乙醇胺），再接到雙酸甘油酯。PI、PG、心磷脂：先做 CDP-雙酸甘油酯，再接上頭基。]]', '[[肝臟的 PEMT 用 3 個 SAM 把 PE 甲基化成 PC。]]'] },
+    { t: '卵磷脂的合成：CDP-膽鹼路線', kind: 'map', blanks: ['pcho', 'cdpc', 'pc'],
+      intro: ['膽鹼先被磷酸化，再和 CTP 反應變成活化的 CDP-膽鹼，最後把磷酸膽鹼交給雙酸甘油酯，放出 CMP。',
+        '右邊是肝臟特有的旁路：PE 接上 3 個甲基變成 PC。'],
+      tip: 'PE 用同樣的方法做（乙醇胺 → 磷酸乙醇胺 → CDP-乙醇胺 → PE）。' },
+    { t: '每一步的酵素', kind: 'map', blanks: [], rows: 'enz', rowsTitle: '每一步的酵素',
+      intro: ['速率限制的是第二步：把 CTP 接上去的胞苷轉移酶（實心編號），它在需要做膜的時候才從細胞質移到內質網膜上活化。'] },
+    { t: 'CDP-雙酸甘油酯路線：PI 與 PG', kind: 'map', sub: 'cdp', blanks: ['cdpd', 'pgl', 'pi', 'pip2'], rows: 'enz', rowsTitle: '每一步的酵素',
+      intro: ['磷脂酸先和 CTP 反應，變成活化的 CDP-雙酸甘油酯，再接上肌醇變成 PI，或接上甘油-3-磷酸往 PG、心磷脂走。',
+        'PI 再磷酸化兩次就是 PIP₂；激素活化磷脂酶 C 時，PIP₂ 被切成 IP₃ 和雙酸甘油酯兩個第二傳訊者。'],
+      tip: '心磷脂是兩個 PG 相連，幾乎只存在粒線體內膜。' },
+    { t: '鞘脂質：從絲胺酸開始', kind: 'map', sub: 'sph', blanks: ['kds', 'cer', 'gcer', 'sm'], rows: 'enz', rowsTitle: '每一步的酵素',
+      intro: ['鞘脂質的骨架不是甘油，而是神經鞘胺醇（sphingosine）：絲胺酸和棕櫚醯輔酶A 縮合，這一步需要維生素 B6（PLP）。',
+        '骨架接上一個脂肪酸就是神經醯胺，它是所有鞘脂質的共同前驅物：接上磷酸膽鹼變成神經鞘磷脂（髓鞘的重要成分）；接上糖變成腦苷脂、神經節苷脂。'],
+      tip: '神經鞘磷脂的磷酸膽鹼是從卵磷脂「拿過來」的，剩下雙酸甘油酯。' },
+    { t: '磷脂質的功能', kind: 'list',
+      intro: ['肺泡的表面張力素主要成分是兩個脂肪酸都是棕櫚酸的卵磷脂；早產兒不足時會呼吸窘迫。羊水中卵磷脂／神經鞘磷脂比值大於 2，表示胎兒肺部成熟。',
+        '正常細胞的磷脂醯絲胺酸在膜的內層；細胞凋亡時翻到外層，成為被吞噬的訊號。',
+        '膽鹼缺乏時，肝臟做不出足夠的 PC 包裝 VLDL，TG 堆在肝臟造成脂肪肝。膽汁中的卵磷脂幫助乳化脂肪、讓膽固醇溶解。'],
+      listTitle: '是哪一個',
+      list: [['肺泡表面張力素的主成分', { a: 'dppc', o: ['dppc', 'smx', 'card'] }], ['切開後產生 IP₃ 和 DAG', { a: 'pi2', o: ['pi2', 'psx', 'smx'] }], ['細胞凋亡時翻到外層', { a: 'psx', o: ['pi2', 'psx', 'smx'] }],
+        ['髓鞘含量多', { a: 'smx', o: ['dppc', 'smx', 'card'] }], ['粒線體內膜特有', { a: 'card', o: ['dppc', 'smx', 'card'] }], ['膽鹼缺乏會造成', { a: 'fatl', o: ['fatl', 'rick'] }], ['合成神經鞘胺醇需要', { a: 'plp', o: ['plp', 'bio'] }]],
+      countsTitle: '數字', counts: [['羊水 L／S 比值大於多少，表示胎兒肺部成熟', '2', ['0.5', '1', '2', '5']]],
+      done: ['[[肺表面張力素：雙棕櫚醯卵磷脂（DPPC）；L／S 比 > 2 表示胎肺成熟。]]', '[[膽鹼缺乏 → PC 不足 → VLDL 做不出來 → 脂肪肝。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把磷脂質合成的重點走一次。最後三題的選項只有英文。'],
+      cloze: [
+        ['合成磷脂質時用來活化的核苷酸是', { a: 'ctp', o: ['ctp', 'utp', 'gtp'] }, '。'],
+        ['PE 甲基化成 PC 需要', { a: 'n3', o: ['n1', 'n2', 'n3'] }, '個 SAM。'],
+        ['PI 的合成是先把', { a: 'dagx', o: ['head', 'dagx'] }, '活化。'],
+        ['鞘脂質的共同前驅物是神經醯胺；合成鞘胺醇骨架需要', { a: 'plp', o: ['plp', 'bio'] }, '。'],
+        ['卵磷脂合成的速率限制酵素是', { a: 'cct', src: 'enz', lang: 'en', o: ['cct', 'ck', 'cpt', 'pemt'] }, '。'],
+        ['肝臟把 PE 轉成 PC 的酵素是', { a: 'pemt', src: 'enz', lang: 'en', o: ['cct', 'ck', 'cpt', 'pemt'] }, '。'],
+        ['神經鞘胺醇合成的第一步酵素是', { a: 'spt', src: 'enz', lang: 'en', o: ['spt', 'sms', 'gcs', 'cds'] }, '。']
+      ] },
+    { t: '總複習：卵磷脂（英文作答）', kind: 'map', force: 'en', plain: true, blanks: ['pcho', 'cdpc', 'pc'], rows: 'enz', rowsTitle: '每一步的酵素',
+      intro: ['圖上三個產物、圖下四個酵素，全部空白。'], tip: '這一關固定用英文作答。答對後，酵素下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   磷脂質的分解與類二十碳酸
+   ====================================================================== */
+function PLD_OV() {
+  var s = '<line class="ln" x1="60" y1="40" x2="60" y2="196" stroke-width="3"/>' + tx(44, 54, 'C1', 'm', 10) + tx(44, 124, 'C2', 'm', 10) + tx(44, 194, 'C3', 'm', 10) + tx(60, 24, T('甘油骨架', 'glycerol'), 'm', 9.5);
+  s += '<line class="ln" x1="60" y1="50" x2="170" y2="50" stroke-width="3"/>' + pill(250, 50, 150, { zh: '脂肪酸（sn-1）', en: 'Fatty acid (sn-1)' });
+  s += '<line class="ln" x1="60" y1="120" x2="170" y2="120" stroke-width="3"/>' + pill(250, 120, 150, { zh: '脂肪酸（sn-2）', en: 'Fatty acid (sn-2)' });
+  s += '<line class="ln" x1="60" y1="190" x2="232" y2="190" stroke-width="3"/>' + '<circle cx="168" cy="190" r="15" fill="none" stroke="var(--muted)" stroke-width="1.5"/>' + tx(168, 195, 'P', '', 12) + pill(290, 190, 112, { zh: '頭基', en: 'Head group' });
+  s += badge(116, 50, 1) + badge(116, 120, 2) + badge(112, 190, 3) + badge(206, 190, 4);
+  s += caps(256, 50, [['① 切下 sn-1 的脂肪酸', '① Cleaves sn-1 ester'], ['② 切下 sn-2 的脂肪酸', '② Cleaves sn-2 ester'], ['③ 甘油和磷酸之間', '③ Glycerol–phosphate bond'], ['④ 磷酸和頭基之間', '④ Phosphate–head bond']]);
+  return s;
+}
+var PLD = { id: 'pld', zh: '磷脂質的分解與類二十碳酸', en: 'Phospholipid breakdown and eicosanoids', alias: '磷脂酶 A1 A2 C D・花生四烯酸・環氧化酶・脂氧合酶・前列腺素・血栓素・白三烯素・鞘脂質儲積症', layout: 'chain',
+  geo: { x: 116, w: 160, sx: 290, sw: 128 },
+  nodes: [
+    { k: 'mpl', zh: '膜上的磷脂質', en: 'Membrane phospholipid' }, { k: 'ara', zh: '花生四烯酸', en: 'Arachidonic acid' }, { k: 'lt', zh: '白三烯素', en: 'Leukotrienes', side: 'ara', link: 'leaf' },
+    { k: 'pgh', zh: 'PGH₂', en: 'PGH₂' }, { k: 'txa', zh: '血栓素 A₂', en: 'Thromboxane A₂', side: 'pgh', link: 'leaf' }, { k: 'pgi', zh: '前列環素（PGI₂）', en: 'Prostacyclin (PGI₂)' }
+  ],
+  extra: [{ k: 'epa', zh: 'EPA', en: 'EPA' }, { k: 'dag', zh: '雙酸甘油酯', en: 'Diacylglycerol' }],
+  steps: [
+    { f: 'mpl', t: 'ara', e: 'pla2', irr: 1 }, { f: 'ara', t: 'lt', e: 'lox' }, { f: 'ara', t: 'pgh', e: 'cox', io: [[{ zh: '＋2 O₂', en: '+ 2 O₂' }, 'mol']] },
+    { f: 'pgh', t: 'txa', e: 'txs' }, { f: 'pgh', t: 'pgi', e: 'pgis' }
+  ],
+  rowExtra: ['plc', 'd6'],
+  enz: {
+    pla1: { zh: '磷脂酶 A₁', en: 'Phospholipase A₁' }, pla2: { zh: '磷脂酶 A₂', en: 'Phospholipase A₂' }, plc: { zh: '磷脂酶 C', en: 'Phospholipase C' }, pld: { zh: '磷脂酶 D', en: 'Phospholipase D' },
+    cox: { zh: '環氧化酶（COX）', en: 'Cyclooxygenase (COX)' }, lox: { zh: '5-脂氧合酶', en: '5-Lipoxygenase' }, txs: { zh: '血栓素合成酶（血小板）', en: 'Thromboxane synthase (platelets)' }, pgis: { zh: '前列環素合成酶（血管內皮）', en: 'Prostacyclin synthase (endothelium)' },
+    d6: { zh: 'Δ6 去飽和酶', en: 'Δ6 desaturase' }
+  },
+  dict: {
+    pla1: { zh: '磷脂酶 A₁', en: 'Phospholipase A₁' }, pla2: { zh: '磷脂酶 A₂', en: 'Phospholipase A₂' }, plc: { zh: '磷脂酶 C', en: 'Phospholipase C' }, pld: { zh: '磷脂酶 D', en: 'Phospholipase D' },
+    lyso: { zh: '溶血磷脂質＋脂肪酸', en: 'Lysophospholipid + fatty acid' }, ip3: { zh: 'IP₃＋雙酸甘油酯', en: 'IP₃ + DAG' }, pah: { zh: '磷脂酸＋頭基', en: 'Phosphatidic acid + head group' },
+    agg: { zh: '促進血小板凝集、血管收縮', en: 'Platelet aggregation, vasoconstriction' }, anti: { zh: '抑制血小板凝集、血管擴張', en: 'Inhibits aggregation, vasodilation' }, bron: { zh: '支氣管收縮、發炎（氣喘）', en: 'Bronchoconstriction, inflammation' },
+    asp: { zh: '阿斯匹靈（不可逆地乙醯化 COX）', en: 'Aspirin (acetylates COX)' }, ster: { zh: '類固醇（抑制磷脂酶 A₂）', en: 'Corticosteroids (inhibit PLA₂)' },
+    txa3: { zh: '活性弱的血栓素 A₃', en: 'Weak thromboxane A₃' }, txa2: { zh: '活性強的血栓素 A₂', en: 'Strong thromboxane A₂' },
+    gau: { zh: '高雪氏症', en: 'Gaucher disease' }, nie: { zh: '尼曼匹克症', en: 'Niemann–Pick disease' }, tay: { zh: '戴薩克斯症', en: 'Tay–Sachs disease' },
+    gcb: { zh: '葡萄糖腦苷脂酶缺乏', en: 'Glucocerebrosidase deficiency' }, smase: { zh: '神經鞘磷脂酶缺乏', en: 'Sphingomyelinase deficiency' }, hexa: { zh: '己醣胺酶 A 缺乏', en: 'Hexosaminidase A deficiency' },
+    lys: { zh: '溶小體', en: 'Lysosome' }, mit: { zh: '粒線體', en: 'Mitochondria' },
+    tryp: { zh: '胰蛋白酶', en: 'Trypsin' }, pep: { zh: '胃蛋白酶', en: 'Pepsin' }, bile: { zh: '需要膽鹽', en: 'Needs bile salts' }, nob: { zh: '不需要膽鹽', en: 'No bile salts needed' }
+  },
+  levels: [
+    { t: '先看全貌：四種磷脂酶切哪裡', kind: 'ov', h: 456, svg: PLD_OV,
+      intro: ['磷脂質是甘油骨架接上兩個脂肪酸（sn-1、sn-2）和一個「磷酸＋頭基」（sn-3）。分解它的酵素叫磷脂酶，依照切的位置命名。',
+        'A 類切的是脂肪酸和甘油之間的酯鍵：A₁ 切第一個、A₂ 切第二個。C 切在甘油和磷酸之間，D 切在磷酸和頭基之間。',
+        '最重要的是 A₂：sn-2 的位置常常是花生四烯酸，A₂ 把它放出來，就是製造前列腺素等訊息分子的第一步。C 則把 PIP₂ 切成兩個第二傳訊者。'],
+      blanks: [{ id: 'qa1', x: 262, y: 256, w: 170, a: 'pla1', o: ['pla1', 'pla2', 'plc', 'pld'] }, { id: 'qa2', x: 262, y: 306, w: 170, a: 'pla2', o: ['pla1', 'pla2', 'plc', 'pld'] },
+        { id: 'qc', x: 262, y: 356, w: 170, a: 'plc', o: ['pla1', 'pla2', 'plc', 'pld'] }, { id: 'qd', x: 262, y: 406, w: 170, a: 'pld', o: ['pla1', 'pla2', 'plc', 'pld'] }],
+      done: ['[[磷脂酶 A₁：sn-1 酯鍵；A₂：sn-2 酯鍵；C：甘油與磷酸之間；D：磷酸與頭基之間。]]', '分解在溶小體與細胞膜進行；腸道裡的是胰臟分泌的磷脂酶 A₂。'] },
+    { t: '分解產物', kind: 'list',
+      intro: ['A₂ 切下 sn-2 的脂肪酸，剩下少一個脂肪酸的溶血磷脂質。溶血卵磷脂像清潔劑，會破壞細胞膜，蛇毒和蜂毒含有大量 A₂，所以會溶血。',
+        'C 把 PIP₂ 切成 IP₃（讓內質網放出鈣）和雙酸甘油酯（活化蛋白激酶 C）。D 切下頭基，留下磷脂酸。',
+        '胰臟分泌的磷脂酶 A₂ 以酶原形式分泌，在小腸被一種蛋白酶活化；作用時需要膽鹽和鈣。'],
+      listTitle: '是哪一個',
+      list: [['磷脂酶 A₂ 的產物', { a: 'lyso', o: ['lyso', 'ip3', 'pah'] }], ['磷脂酶 C 切 PIP₂ 的產物', { a: 'ip3', o: ['lyso', 'ip3', 'pah'] }], ['磷脂酶 D 的產物', { a: 'pah', o: ['lyso', 'ip3', 'pah'] }],
+        ['蛇毒、蜂毒造成溶血的酵素', { a: 'pla2', o: ['pla1', 'pla2', 'plc', 'pld'] }], ['活化胰臟磷脂酶 A₂ 的酵素', { a: 'tryp', o: ['tryp', 'pep'] }], ['胰臟磷脂酶 A₂ 作用時', { a: 'bile', o: ['bile', 'nob'] }]],
+      done: ['[[A₂ → 溶血磷脂質＋脂肪酸（常是花生四烯酸）；C（作用於 PIP₂）→ IP₃＋DAG；D → 磷脂酸＋頭基。]]', '胰臟磷脂酶 A₂ 由胰蛋白酶活化，需要膽鹽與 Ca²⁺。'] },
+    { t: '花生四烯酸變成類二十碳酸', kind: 'map', blanks: ['ara', 'lt', 'pgh', 'txa', 'pgi'],
+      intro: ['類二十碳酸（eicosanoids）是 20 碳脂肪酸做成的局部激素，作用快、壽命短。',
+        '花生四烯酸從膜上被切下來後有兩條路：環狀路線先做成 PGH₂，再依細胞不同做成不同產物——血小板做血栓素，血管內皮做前列環素；線狀路線做成白三烯素（主要在白血球）。'],
+      tip: '前列腺素、血栓素有環狀構造；白三烯素沒有，是線狀的。' },
+    { t: '每一步的酵素', kind: 'map', blanks: [], rows: 'enz', rowsTitle: '每一步的酵素',
+      intro: ['第一步把花生四烯酸放出來的磷脂酶 A₂ 是速率限制步驟（實心編號）。',
+        '環氧化酶（COX）有兩型：COX-1 平常就有，保護胃黏膜；COX-2 在發炎時被誘導。'] },
+    { t: '作用與藥物、EPA 的不同', kind: 'list',
+      intro: ['血小板的血栓素讓血小板凝集、血管收縮；血管內皮的前列環素剛好相反。兩者的平衡決定血栓容易不容易形成。白三烯素讓支氣管收縮、引起發炎，和氣喘有關。',
+        '阿斯匹靈把 COX 乙醯化、永久失去活性；血小板沒有細胞核，不能做新的酵素，所以低劑量阿斯匹靈能抗血栓。類固醇抑制磷脂酶 A₂，連上游一起擋住。',
+        '吃很多魚油時，膜上的 EPA 取代部分花生四烯酸：血小板做出的血栓素 A₃ 活性很弱，內皮做的前列環素 I₃ 仍然有效，所以整體偏向不容易凝血。'],
+      listTitle: '是哪一個',
+      list: [['血栓素 A₂', { a: 'agg', o: ['agg', 'anti', 'bron'] }], ['前列環素', { a: 'anti', o: ['agg', 'anti', 'bron'] }], ['白三烯素', { a: 'bron', o: ['agg', 'anti', 'bron'] }],
+        ['抑制 COX 的藥物', { a: 'asp', o: ['asp', 'ster'] }], ['抑制磷脂酶 A₂ 的藥物', { a: 'ster', o: ['asp', 'ster'] }], ['EPA 在血小板做成', { a: 'txa3', o: ['txa3', 'txa2'] }]],
+      done: ['[[TXA₂（血小板）：凝集、血管收縮；PGI₂（內皮）：抗凝集、血管擴張；LT：支氣管收縮、發炎。]]', '[[阿斯匹靈不可逆抑制 COX；類固醇抑制磷脂酶 A₂。EPA → TXA₃ 活性弱、PGI₃ 仍有效。]]'] },
+    { t: '鞘脂質的分解與溶小體儲積症', kind: 'list',
+      intro: ['鞘脂質在溶小體裡被一步一步拆開，每一步一個酵素。先天缺少其中一個，那一個受質就堆在溶小體裡，叫鞘脂質儲積症，多半造成神經退化、肝脾腫大。',
+        '常考的三種：缺少拆葡萄糖腦苷脂的酵素（最常見，肝脾腫大）；缺少拆神經鞘磷脂的酵素；缺少拆神經節苷脂 GM2 的酵素（視網膜櫻桃紅斑、神經退化）。'],
+      listTitle: '是哪一個',
+      list: [['高雪氏症', { a: 'gcb', o: ['gcb', 'smase', 'hexa'] }], ['尼曼匹克症', { a: 'smase', o: ['gcb', 'smase', 'hexa'] }], ['戴薩克斯症', { a: 'hexa', o: ['gcb', 'smase', 'hexa'] }], ['鞘脂質分解的場所', { a: 'lys', o: ['lys', 'mit'] }]],
+      done: ['[[高雪氏症：葡萄糖腦苷脂酶缺乏；尼曼匹克症：神經鞘磷脂酶缺乏；戴薩克斯症：己醣胺酶 A 缺乏（GM2 堆積）。都在溶小體。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把磷脂分解與類二十碳酸的重點走一次。最後三題的選項只有英文。'],
+      cloze: [
+        ['把花生四烯酸從膜磷脂放出來的是', { a: 'pla2', o: ['pla1', 'pla2', 'plc', 'pld'] }, '。'],
+        ['低劑量阿斯匹靈抗血栓，是因為血小板做不出', { a: 'txa2', o: ['txa2', 'txa3'] }, '。'],
+        ['類固醇抗發炎的作用點是', { a: 'ster', o: ['asp', 'ster'] }, '。'],
+        ['神經鞘磷脂酶缺乏造成', { a: 'nie', o: ['gau', 'nie', 'tay'] }, '。'],
+        ['做出前列腺素和血栓素的酵素是', { a: 'cox', src: 'enz', lang: 'en', o: ['cox', 'lox', 'pla2', 'plc'] }, '。'],
+        ['做出白三烯素的酵素是', { a: 'lox', src: 'enz', lang: 'en', o: ['cox', 'lox', 'pla2', 'plc'] }, '。'],
+        ['把 PIP₂ 切成 IP₃ 和 DAG 的酵素是', { a: 'plc', src: 'enz', lang: 'en', o: ['cox', 'lox', 'pla2', 'plc'] }, '。']
+      ] },
+    { t: '總複習：類二十碳酸（英文作答）', kind: 'map', force: 'en', plain: true, blanks: ['ara', 'lt', 'pgh', 'txa', 'pgi'], rows: 'enz', rowsTitle: '每一步的酵素',
+      intro: ['圖上五個產物、圖下五個酵素，全部空白。'], tip: '這一關固定用英文作答。答對後，酵素下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   脂質代謝的調節
+   ====================================================================== */
+var LRG_R = [['乙醯輔酶A 羧化酶（脂肪酸合成）', 'Acetyl-CoA carboxylase', 'up', 'dn'], ['荷爾蒙敏感性脂解酶（脂解）', 'Hormone-sensitive lipase', 'dn', 'up'], ['脂肪組織的脂蛋白脂解酶', 'Adipose lipoprotein lipase', 'up', 'dn'],
+  ['肉鹼棕櫚醯轉移酶 I（β-氧化）', 'Carnitine palmitoyltransferase I', 'dn', 'up'], ['HMG-CoA 還原酶（膽固醇合成）', 'HMG-CoA reductase', 'up', 'dn']];
+function LRG_OV() {
+  var s = tx(95, 22, T('吃飽：胰島素', 'Fed: insulin'), '', 11) + tx(268, 22, T('飢餓：升糖素、腎上腺素', 'Fasting: glucagon, epinephrine'), '', 11);
+  LRG_R.forEach(function (r, i) { var y = 50 + i * 84; s += lab(180, y, { zh: r[0], en: r[1] }, 340); });
+  return s;
+}
+function LRG_B() { var b = []; LRG_R.forEach(function (r, i) { var y = 50 + i * 84 + 42; b.push({ id: 'q' + i + 'f', x: 95, y: y, w: 150, a: r[2], o: ['up', 'dn'] }, { id: 'q' + i + 's', x: 268, y: y, w: 150, a: r[3], o: ['up', 'dn'] }); }); return b; }
+var LRG = { id: 'lrg', zh: '脂質代謝的調節', en: 'Regulation of lipid metabolism', alias: '乙醯輔酶A 羧化酶・AMPK・脂解（ATGL、HSL、perilipin）・脂蛋白脂解酶・丙二醯輔酶A・PPAR・SREBP', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    up: { zh: '活化（↑）', en: 'Activated (↑)' }, dn: { zh: '抑制（↓）', en: 'Inhibited (↓)' },
+    act: { zh: '活化', en: 'Activates' }, inh: { zh: '抑制', en: 'Inhibits' },
+    pho: { zh: '被磷酸化（失去活性）', en: 'Phosphorylated (inactive)' }, depho: { zh: '被去磷酸化（有活性）', en: 'Dephosphorylated (active)' },
+    poly: { zh: '聚合成長絲（活性型）', en: 'Polymerizes (active form)' }, mono: { zh: '分散成單體（不活化）', en: 'Monomers (inactive)' },
+    atgl: { zh: '脂肪三酸甘油酯脂解酶（ATGL）', en: 'Adipose triglyceride lipase' }, hsl: { zh: '荷爾蒙敏感性脂解酶（HSL）', en: 'Hormone-sensitive lipase' }, mgl: { zh: '單酸甘油酯脂解酶', en: 'Monoacylglycerol lipase' },
+    peri: { zh: '脂滴外的 perilipin 被磷酸化', en: 'Perilipin phosphorylated' }, pde: { zh: '磷酸二酯酶被活化，cAMP 下降', en: 'Phosphodiesterase activated, cAMP falls' },
+    alb: { zh: '白蛋白', en: 'Albumin' }, ldlx: { zh: 'LDL', en: 'LDL' },
+    c2: { zh: 'ApoC-II', en: 'ApoC-II' }, b48: { zh: 'ApoB-48', en: 'ApoB-48' }, adip: { zh: '脂肪組織', en: 'Adipose tissue' }, musc: { zh: '肌肉、心臟', en: 'Muscle and heart' },
+    hep: { zh: '注射肝素', en: 'Heparin injection' }, chym: { zh: '乳糜微粒', en: 'Chylomicrons' }, hdlx: { zh: 'HDL', en: 'HDL' },
+    ppa: { zh: 'PPARα', en: 'PPARα' }, ppg: { zh: 'PPARγ', en: 'PPARγ' }, sr1: { zh: 'SREBP-1c', en: 'SREBP-1c' }, sr2: { zh: 'SREBP-2', en: 'SREBP-2' },
+    fut: { zh: '避免合成與分解同時進行', en: 'Avoids a futile cycle' }, more: { zh: '讓兩邊一起加快', en: 'Speeds both up' }
+  },
+  levels: [
+    { t: '先看全貌：吃飽和飢餓時誰開誰關', kind: 'ov', h: 470, svg: LRG_OV, blanks: LRG_B(),
+      intro: ['脂質代謝的調節，可以濃縮成一句話：[[吃飽時合成、存起來；飢餓時分解、拿出來用]]，而且兩邊不會同時打開。',
+        '吃飽時胰島素讓脂肪酸、膽固醇的合成酵素活化，讓脂肪組織從血中收下 TG，並關掉脂解。飢餓或運動時，升糖素和腎上腺素反過來：打開脂解、讓脂肪酸進粒線體燃燒，關掉合成。',
+        '大部分的快速開關是磷酸化：升糖素、腎上腺素 → cAMP 上升 → 蛋白激酶 A 磷酸化目標酵素；胰島素則促進去磷酸化。'],
+      done: ['[[吃飽（胰島素）：ACC↑、脂肪組織 LPL↑、HMG-CoA 還原酶↑；HSL↓、CPT-I↓（丙二醯輔酶A 多）。飢餓（升糖素、腎上腺素）：相反。]]'] },
+    { t: '脂肪酸合成的開關：乙醯輔酶A 羧化酶', kind: 'list',
+      intro: ['乙醯輔酶A 羧化酶（ACC）是脂肪酸合成的速率限制酵素，用三種方式調節。',
+        '別構調節：細胞質的檸檬酸多（代表原料和能量充足）時活化；長鏈脂醯輔酶A（產物）多時抑制。活化時它會聚合成長絲狀。',
+        '共價修飾：能量不足（AMP 多）時，AMP 活化的蛋白激酶（AMPK）把它磷酸化而失活；升糖素、腎上腺素經蛋白激酶 A 也使它磷酸化。胰島素促進去磷酸化而活化。',
+        '長期調節：高醣飲食增加它和脂肪酸合成酶的量（轉錄因子 SREBP-1c、ChREBP）；多元不飽和脂肪酸會抑制 SREBP-1c，減少脂肪合成。'],
+      listTitle: '是哪一個',
+      list: [['檸檬酸對 ACC', { a: 'act', o: ['act', 'inh'] }], ['棕櫚醯輔酶A 對 ACC', { a: 'inh', o: ['act', 'inh'] }], ['AMPK 作用後的 ACC', { a: 'pho', o: ['pho', 'depho'] }], ['胰島素作用後的 ACC', { a: 'depho', o: ['pho', 'depho'] }],
+        ['檸檬酸活化時，ACC 會', { a: 'poly', o: ['poly', 'mono'] }], ['多元不飽和脂肪酸對 SREBP-1c', { a: 'inh', o: ['act', 'inh'] }]],
+      done: ['[[ACC：檸檬酸活化、長鏈脂醯輔酶A 抑制；AMPK、升糖素（PKA）磷酸化而抑制；胰島素去磷酸化而活化。]]'] },
+    { t: '脂解：把脂肪拿出來', kind: 'list',
+      intro: ['脂肪細胞裡的 TG 分三步拆開：第一個酵素把 TG 切成雙酸甘油酯，第二個（荷爾蒙敏感性脂解酶）切成單酸甘油酯，第三個切出最後一個脂肪酸和甘油。',
+        '腎上腺素、升糖素 → cAMP ↑ → 蛋白激酶 A 磷酸化兩樣東西：荷爾蒙敏感性脂解酶本身，以及包在脂滴外面的蛋白質 perilipin；perilipin 磷酸化後讓開，脂解酶才碰得到 TG。',
+        '胰島素活化磷酸二酯酶，把 cAMP 分解掉，脂解就停了。所以胰島素不足（第 1 型糖尿病）時脂解失控、酮體大增。',
+        '釋出的脂肪酸在血中由白蛋白攜帶；甘油回到肝臟做糖質新生。'],
+      listTitle: '是哪一個',
+      list: [['第一步：TG → 雙酸甘油酯', { a: 'atgl', o: ['atgl', 'hsl', 'mgl'] }], ['第二步：雙酸甘油酯 → 單酸甘油酯', { a: 'hsl', o: ['atgl', 'hsl', 'mgl'] }], ['第三步：單酸甘油酯 → 甘油', { a: 'mgl', o: ['atgl', 'hsl', 'mgl'] }],
+        ['蛋白激酶 A 讓脂解酶碰得到 TG 的方法', { a: 'peri', o: ['peri', 'pde'] }], ['胰島素抑制脂解的方法', { a: 'pde', o: ['peri', 'pde'] }], ['血中攜帶游離脂肪酸的是', { a: 'alb', o: ['alb', 'ldlx'] }]],
+      done: ['[[脂解：ATGL（TG → DAG）→ HSL（DAG → MAG）→ MGL（MAG → 甘油）。腎上腺素、升糖素 → cAMP → PKA 磷酸化 HSL 與 perilipin；胰島素活化磷酸二酯酶降低 cAMP。]]', '游離脂肪酸由白蛋白運送。'] },
+    { t: '脂蛋白脂解酶：誰收下血中的 TG', kind: 'list',
+      intro: ['乳糜微粒和 VLDL 的 TG，要由微血管內皮表面的脂蛋白脂解酶切開，脂肪酸才能進入組織。它需要脂蛋白上的 ApoC-II 活化。',
+        '它的量在不同組織反向調節：吃飽時胰島素增加脂肪組織的這個酵素（把脂肪存起來）；飢餓時肌肉和心臟的增加（把脂肪拿去燒）。',
+        '注射肝素可以把它從內皮表面釋放到血液中，所以臨床上用來測量它的活性。先天缺乏時，乳糜微粒清不掉，血漿呈乳白色（第 I 型高脂蛋白血症）。'],
+      listTitle: '是哪一個',
+      list: [['活化脂蛋白脂解酶的載脂蛋白', { a: 'c2', o: ['c2', 'b48'] }], ['吃飽時這個酵素增加的組織', { a: 'adip', o: ['adip', 'musc'] }], ['飢餓時這個酵素增加的組織', { a: 'musc', o: ['adip', 'musc'] }],
+        ['把它釋放到血液中的方法', { a: 'hep', o: ['hep', 'chym'] }], ['先天缺乏時堆積的脂蛋白', { a: 'chym', o: ['chym', 'hdlx'] }]],
+      done: ['[[脂蛋白脂解酶需 ApoC-II 活化；吃飽時脂肪組織的增加，飢餓時肌肉、心臟的增加；肝素可使其釋出。]]'] },
+    { t: '交叉調節與轉錄因子', kind: 'list',
+      intro: ['丙二醯輔酶A 是合成的第一個產物，同時抑制肉鹼棕櫚醯轉移酶 I：只要在合成，剛做好的脂肪酸就不會被送進粒線體燒掉，避免白做工。',
+        '長期的調節靠轉錄因子：飢餓時肝臟的 PPARα 增加 β-氧化與酮體生成的酵素（降血脂藥 fibrate 作用在這裡）；PPARγ 促進脂肪細胞分化（胰島素增敏劑 TZD 作用在這裡）；SREBP-1c 增加脂肪酸合成；細胞內膽固醇少時 SREBP-2 增加 HMG-CoA 還原酶和 LDL 受體。'],
+      listTitle: '是哪一個',
+      list: [['丙二醯輔酶A 抑制 CPT-I 的意義', { a: 'fut', o: ['fut', 'more'] }], ['飢餓時增加 β-氧化的轉錄因子', { a: 'ppa', o: ['ppa', 'ppg', 'sr1', 'sr2'] }], ['促進脂肪細胞分化', { a: 'ppg', o: ['ppa', 'ppg', 'sr1', 'sr2'] }],
+        ['增加脂肪酸合成酵素', { a: 'sr1', o: ['ppa', 'ppg', 'sr1', 'sr2'] }], ['膽固醇少時增加 LDL 受體', { a: 'sr2', o: ['ppa', 'ppg', 'sr1', 'sr2'] }]],
+      done: ['[[丙二醯輔酶A 抑制 CPT-I，避免合成與氧化同時進行。]]', '[[PPARα：β-氧化（fibrate）；PPARγ：脂肪細胞分化（TZD）；SREBP-1c：脂肪酸合成；SREBP-2：膽固醇合成與 LDL 受體。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把脂質代謝調節的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['腎上腺素經蛋白激酶 A', { a: 'act', o: ['act', 'inh'] }, '荷爾蒙敏感性脂解酶。'],
+        ['胰島素', { a: 'inh', o: ['act', 'inh'] }, '脂肪組織的脂解。'],
+        ['丙二醯輔酶A', { a: 'inh', o: ['act', 'inh'] }, '肉鹼棕櫚醯轉移酶 I。'],
+        ['脂蛋白脂解酶的活化需要', { a: 'c2', o: ['c2', 'b48'] }, '。'],
+        ['降血脂藥 fibrate 作用在', { a: 'ppa', o: ['ppa', 'ppg', 'sr1', 'sr2'], lang: 'en' }, '。'],
+        ['AMPK 使乙醯輔酶A 羧化酶', { a: 'pho', o: ['pho', 'depho'], lang: 'en' }, '。']
+      ] },
+    { t: '總複習：誰開誰關（英文作答）', kind: 'ov', h: 470, force: 'en', svg: LRG_OV, blanks: LRG_B(),
+      intro: ['五個酵素在吃飽和飢餓時的狀態，全部用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。' }
   ] };
 /* ======================================================================
    轉胺作用與尿素循環
@@ -7230,7 +7661,8 @@ var GROUPS = [
   { g: '生化 1・醣類代謝', c: 6, items: [GLY, GNG, GCG, PPP] },
   { g: '生化 1・能量代謝', c: 5, items: [PDH, TCA, ETC] },
   { g: '生化 1・脂質分解', c: 2, items: [BOX] },
-  { g: '生化 2・脂質合成', c: 2, items: [FAS, KET, CHO] },
+  { g: '生化 2・脂質合成', c: 2, items: [FAS, ELO, TAG, PLS, KET, CHO] },
+  { g: '生化 2・磷脂分解與脂質代謝的調節', c: 2, items: [PLD, LRG] },
   { g: '生化 2・蛋白質與胺基酸', c: 3, items: [UREA, AAC] },
   { g: '全部學完之後', c: 4, items: [INT] },
   /* 分子生物（tab: 'mb'）：照老師簡報的順序。沒有 levels 的會顯示「製作中」 */
@@ -7264,7 +7696,8 @@ function $(id) { return document.getElementById(id); }
 function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
 
 /* 進度與語言：只存在這支手機的瀏覽器 */
-var KEY = 'pathway-v1', OK = true, SAVE = { done: {}, lang: 'bi' };
+var CFG = window.CFG || {};
+var KEY = CFG.key || 'pathway-v1', OK = true, SAVE = { done: {}, lang: 'bi' };
 try { var s0 = JSON.parse(localStorage.getItem(KEY) || '{}'); if (s0 && s0.done) SAVE = s0; localStorage.setItem(KEY + '-t', '1'); } catch (e) { OK = false; }
 function save() { try { localStorage.setItem(KEY, JSON.stringify(SAVE)); } catch (e) { OK = false; } }
 LANG = SAVE.lang === 'en' || SAVE.lang === 'zh' ? SAVE.lang : 'bi';
@@ -7273,18 +7706,18 @@ var CUR = null, LV = 0, ST = null;   // 目前單元、關卡、作答狀態
 function seg() { var s = $('lang'); s.hidden = !!FORCE; s.querySelectorAll('button').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-l') === LANG); b.setAttribute('aria-pressed', b.getAttribute('data-l') === LANG ? 'true' : 'false'); }); }
 
 /* ---------- 目錄 ---------- */
-var TABS = [['met', '生化代謝'], ['mb', '分子生物'], ['phy', '人體生理']];
-var HINT = { met: '圖上名稱的底色是碳數（6 碳、3 碳…），小標籤是這一步花掉或產生什麼，', mb: '藍色是 DNA、青色是新合成的 DNA、玫瑰色是 RNA、琥珀色是蛋白質（酵素、因子、核糖體），', phy: '玫瑰色是興奮、交感、去極化；藍色是抑制、副交感、再極化；琥珀色是激素或要花能量的步驟；每張圖下面都有圖例，' };
+var TABS = CFG.tabs || [['met', '生化代謝'], ['mb', '分子生物'], ['phy', '人體生理']], TAB0 = TABS[0][0], TITLE = CFG.title || '圖解生理生化';
+var HINT = CFG.hint || { met: '圖上名稱的底色是碳數（6 碳、3 碳…），小標籤是這一步花掉或產生什麼，', mb: '藍色是 DNA、青色是新合成的 DNA、玫瑰色是 RNA、琥珀色是蛋白質（酵素、因子、核糖體），', phy: '玫瑰色是興奮、交感、去極化；藍色是抑制、副交感、再極化；琥珀色是激素或要花能量的步驟；每張圖下面都有圖例，' };
 function home() {
-  CUR = null; FORCE = null; $('title').textContent = '圖解生理生化'; $('subtitle').textContent = '看圖、填空，一關一關記起來';
+  CUR = null; FORCE = null; $('title').textContent = TITLE; $('subtitle').textContent = '看圖、填空，一關一關記起來';
   $('back').hidden = true; $('lv').hidden = true; seg();
-  var tab = TABS.some(function (x) { return x[0] === SAVE.tab; }) ? SAVE.tab : 'met', fresh = !Object.keys(SAVE.done).length;
-  var h = '<div class="tabs" role="tablist">' + TABS.map(function (x) { return '<button type="button" role="tab" data-t="' + x[0] + '" class="' + (x[0] === tab ? 'on' : '') + '" aria-selected="' + (x[0] === tab) + '">' + x[1] + '</button>'; }).join('') + '</div>';
+  var tab = TABS.some(function (x) { return x[0] === SAVE.tab; }) ? SAVE.tab : TAB0, fresh = !Object.keys(SAVE.done).length;
+  var h = (CFG.top || '') + '<div class="tabs" role="tablist">' + TABS.map(function (x) { return '<button type="button" role="tab" data-t="' + x[0] + '" class="' + (x[0] === tab ? 'on' : '') + '" aria-selected="' + (x[0] === tab) + '">' + x[1] + '</button>'; }).join('') + '</div>';
   h += '<details class="card pad"' + (fresh ? ' open' : '') + '><summary>怎麼用</summary><p>每個單元分成幾關，從只看大方向開始，一次多記一點，最後整張圖自己填出來。</p>' +
-    '<p>虛線框的空格是下拉選單，點一下選答案，填完按「對答案」。</p>' +
+    '<p>虛線框的空格是下拉選單，點一下選答案，填完按「對答案」。</p>' + (CFG.howto || '') +
     '<ul class="small muted"><li>右上角可以切換名稱：中文、中英對照、英文。預設是中英對照。</li><li>顏色都有意思：' + HINT[tab] + '<mark>黃底的字</mark>是必背。</li><li>國考的專有名詞常常只寫英文，所以每個單元最後的總複習固定用英文作答。考的是選擇題，練到看到認得就夠了，不必會拼。</li><li>第一次來，請先做最上面「先讀這裡」的單元。</li></ul></details>';
   GROUPS.forEach(function (g) {
-    if ((g.tab || 'met') !== tab) return;
+    if ((g.tab || TAB0) !== tab) return;
     h += '<div class="glab' + (g.c ? ' k' + g.c : '') + '">' + esc(g.g) + '</div>';
     g.items.forEach(function (p) {
       if (p.levels) { var n = p.levels.length, d = p.levels.filter(function (_, i) { return isDone(p.id, i); }).length;
@@ -7293,7 +7726,7 @@ function home() {
     });
   });
   h += OK ? '<p class="note">完成的關卡只記在這支手機的瀏覽器。清除瀏覽器資料、換手機，或 iPhone 超過一週沒打開，紀錄會消失；內容不受影響。</p>' : '<p class="note">這個瀏覽器無法儲存資料，完成紀錄不會保留。</p>';
-  h += '<p class="note">名詞以營養師國考題目的寫法為主。' + (tab === 'met' ? '換算 ATP 時，沒有特別說明就用 NADH 2.5、FADH₂ 1.5。' : '') + '內容是教學用的重點整理，細節以課本與老師上課為準。</p>';
+  h += '<p class="note">名詞以營養師國考題目的寫法為主。' + (CFG.note ? CFG.note(tab) : tab === 'met' ? '換算 ATP 時，沒有特別說明就用 NADH 2.5、FADH₂ 1.5。' : '') + '內容是教學用的重點整理，細節以課本與老師上課為準。</p>';
   $('main').innerHTML = h;
   document.querySelectorAll('.tabs button').forEach(function (b) { b.onclick = function () { SAVE.tab = b.getAttribute('data-t'); save(); home(); }; });
   document.querySelectorAll('.item[data-p]').forEach(function (b) { b.onclick = function () { var u = UNITS[b.getAttribute('data-p')]; open(u, firstTodo(u)); }; });

@@ -6,69 +6,2074 @@
 <title>團膳與膳療</title>
 <style>
   :root {
-    --bg: #f4f5f2; --card: #ffffff; --ink: #1f2a24; --muted: #5f6a63; --line: #e2e5df;
-    --brand: #2f6b4f; --brand-soft: #e3efe8; --warm: #fff3d6; --warm-ink: #7a5a12; --chip: #eef0eb;
-    --shadow: 0 1px 2px rgba(0,0,0,.06), 0 2px 8px rgba(0,0,0,.04);
+    --bg: #f4f5f2; --card: #ffffff; --ink: #1f2a24; --muted: #5f6a63; --line: #e2e5df; --rail: #c9d2cb;
+    --brand: #2f6b4f; --brand-soft: #e3efe8; --on-brand: #ffffff; --ok: #2e7d4f; --ok-soft: #e1f2e7;
+    --bad: #b3261e; --bad-soft: #fbe5e3; --warm: #fff3d6; --chip: #eef0eb; --shadow: 0 1px 2px rgba(0,0,0,.06), 0 2px 8px rgba(0,0,0,.04);
+    --k6: #fbe9c6; --k6s: #b8791c; --k5: #dce9f7; --k5s: #3f73a8; --k4: #d4eeee; --k4s: #2c8088; --k3: #f9e0e6; --k3s: #b8506c; --k2: #e9e2f6; --k2s: #6f57ab;
+    --e-atp: #c96f14; --e-nadh: #4558b8; --e-fad: #7a4fb0; --e-co2: #77817a; --on-tag: #ffffff; --hl: #fff1a8; --w-k: #a8560a; --w-d: #3c4fb0;
   }
   @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-    --bg: #121614; --card: #1b201d; --ink: #e8ece9; --muted: #9aa49e; --line: #2c332f; --brand: #7cc4a0; --brand-soft: #1f3329;
-    --warm: #3a3220; --warm-ink: #f0d58a; --chip: #252b27; --shadow: none; color-scheme: dark; } }
+    --bg: #121614; --card: #1b201d; --ink: #e8ece9; --muted: #9aa49e; --line: #2c332f; --rail: #3a443e; --brand: #7cc4a0; --brand-soft: #1f3329; --on-brand: #10251a;
+    --ok: #7cc4a0; --ok-soft: #1d3127; --bad: #ff8a80; --bad-soft: #3a1f1d; --warm: #3a3220; --chip: #252b27; --shadow: none; color-scheme: dark;
+    --k6: #3b2e12; --k6s: #e0b878; --k5: #1b2b3c; --k5s: #9cb7d6; --k4: #16302f; --k4s: #7fc4c4; --k3: #3a1e27; --k3s: #e0a1b0; --k2: #2a2340; --k2s: #b9a8e6;
+    --e-atp: #f0a44c; --e-nadh: #9aa8f0; --e-fad: #c3a2ee; --e-co2: #9aa49e; --on-tag: #14181a; --hl: #5a4d12; --w-k: #f0a44c; --w-d: #9aa8f0; } }
   :root[data-theme="dark"] {
-    --bg: #121614; --card: #1b201d; --ink: #e8ece9; --muted: #9aa49e; --line: #2c332f; --brand: #7cc4a0; --brand-soft: #1f3329;
-    --warm: #3a3220; --warm-ink: #f0d58a; --chip: #252b27; --shadow: none; color-scheme: dark; }
+    --bg: #121614; --card: #1b201d; --ink: #e8ece9; --muted: #9aa49e; --line: #2c332f; --rail: #3a443e; --brand: #7cc4a0; --brand-soft: #1f3329; --on-brand: #10251a;
+    --ok: #7cc4a0; --ok-soft: #1d3127; --bad: #ff8a80; --bad-soft: #3a1f1d; --warm: #3a3220; --chip: #252b27; --shadow: none; color-scheme: dark;
+    --k6: #3b2e12; --k6s: #e0b878; --k5: #1b2b3c; --k5s: #9cb7d6; --k4: #16302f; --k4s: #7fc4c4; --k3: #3a1e27; --k3s: #e0a1b0; --k2: #2a2340; --k2s: #b9a8e6;
+    --e-atp: #f0a44c; --e-nadh: #9aa8f0; --e-fad: #c3a2ee; --e-co2: #9aa49e; --on-tag: #14181a; --hl: #5a4d12; --w-k: #f0a44c; --w-d: #9aa8f0; }
   * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
   html, body { margin: 0; background: var(--bg); color: var(--ink);
     font: 15px/1.6 -apple-system, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif; -webkit-text-size-adjust: 100%; }
-  main { max-width: 640px; margin: 0 auto; padding: 18px 16px 32px; }
-  h1 { font-size: 21px; margin: 4px 0 2px; letter-spacing: .02em; }
-  .sub { color: var(--muted); font-size: 13px; margin: 0 0 14px; }
-  .big { display: block; position: relative; text-decoration: none; color: inherit; background: var(--card); border: 1px solid var(--line);
-    border-radius: 18px; box-shadow: var(--shadow); padding: 18px 44px 18px 18px; margin: 12px 0; }
-  .big:active { background: var(--brand-soft); }
-  .big .ic { font-size: 30px; line-height: 1; }
-  .big h2 { font-size: 19px; margin: 8px 0 4px; color: var(--brand); }
-  .big p { margin: 0; color: var(--muted); font-size: 14px; }
-  .big .go { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-size: 26px; color: var(--brand); }
-  .tag { display: inline-block; font-size: 12px; font-weight: 700; padding: 2px 9px; border-radius: 999px; margin-left: 6px; vertical-align: 2px; }
-  .tag.wip { background: var(--warm); color: var(--warm-ink); }
-  .row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
-  .row a { flex: 1 1 140px; text-align: center; text-decoration: none; color: var(--brand); font-weight: 600; font-size: 14px;
-    border: 1px solid var(--line); background: var(--card); border-radius: 12px; padding: 10px 8px; }
-  .row a:active { background: var(--brand-soft); }
-  .lab { font-size: 13px; color: var(--muted); margin: 20px 2px 0; }
-  .note { color: var(--muted); font-size: 12px; margin: 18px 2px 0; }
+  header { position: sticky; top: 0; z-index: 5; background: var(--bg); padding: 12px 16px 8px; }
+  .hd { display: flex; align-items: center; gap: 8px; max-width: 720px; margin: 0 auto; }
+  .hd .tt { flex: 1; min-width: 0; }
+  h1 { font-size: 19px; margin: 0; letter-spacing: .02em; }
+  .sub { color: var(--muted); font-size: 13px; margin-top: 2px; }
+  main { padding: 4px 16px 40px; max-width: 720px; margin: 0 auto; }
+  button, select { font: inherit; color: inherit; }
+  button:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+  .card { background: var(--card); border-radius: 16px; box-shadow: var(--shadow); border: 1px solid var(--line); margin: 12px 0; overflow: hidden; }
+  .pad { padding: 14px; }
+  .card h2 { font-size: 17px; margin: 0 0 6px; }
+  .card p { margin: 6px 0; }
+  .card ul { margin: 6px 0; padding-left: 20px; } .card li { margin: 4px 0; }
+  .muted { color: var(--muted); } .small { font-size: 12px; }
+  .xbtn { border: 1px solid var(--line); background: var(--card); border-radius: 9px; padding: 6px 10px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+  .seg { display: flex; border: 1px solid var(--line); border-radius: 9px; overflow: hidden; background: var(--card); flex: 0 0 auto; }
+  .seg button { border: 0; background: transparent; padding: 6px 8px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+  .seg button.on { background: var(--brand); color: var(--on-brand); }
+  .btn { display: block; width: 100%; border: 1px solid var(--brand); background: var(--brand); color: var(--on-brand); border-radius: 12px; padding: 13px 12px; font-weight: 700; font-size: 16px; cursor: pointer; }
+  .btn.plain { background: transparent; color: var(--ink); border-color: var(--line); font-weight: 600; }
+  .btn[disabled] { opacity: .4; cursor: default; }
+  .row { display: flex; gap: 8px; } .row > * { flex: 1; min-width: 0; }
+  .glab { font-size: 12px; font-weight: 700; color: var(--brand); margin: 18px 2px 6px; }
+  .item { display: flex; width: 100%; text-align: left; gap: 10px; align-items: center; border: 1px solid var(--line); background: var(--card); border-radius: 12px; padding: 12px; margin-top: 8px; cursor: pointer; }
+  .item b { flex: 1; min-width: 0; font-size: 15px; } .item b span { display: block; font-weight: 400; font-size: 12px; color: var(--muted); }
+  .item i { font-style: normal; font-size: 12px; color: var(--muted); white-space: nowrap; }
+  .item[disabled] { opacity: .5; cursor: default; }
+  .lv { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; margin-top: 8px; max-width: 720px; margin-left: auto; margin-right: auto; }
+  .lv::-webkit-scrollbar { display: none; }
+  .lv button { flex: 0 0 auto; min-width: 38px; border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 5px 11px; font-size: 13px; cursor: pointer; font-variant-numeric: tabular-nums; }
+  .lv button.on { background: var(--brand); border-color: var(--brand); color: var(--on-brand); }
+  .lv button.done:not(.on) { border-color: var(--ok); color: var(--ok); }
+  /* 路徑圖：SVG 在下，空格疊在圖上 */
+  .dia { position: relative; width: 100%; max-width: 420px; margin: 0 auto; }
+  .dia svg { display: block; width: 100%; height: auto; }
+  .dia .ln { stroke: var(--rail); } .dia .ar { fill: var(--muted); }
+  .dia .pill { fill: var(--chip); stroke: var(--line); } .dia .src { fill: var(--brand-soft); stroke: var(--brand); }
+  .dia text { fill: var(--ink); font-family: inherit; }
+  .dia text.m { fill: var(--muted); } .dia text.b { fill: var(--brand); font-weight: 700; }
+  .dia .num circle { fill: var(--card); stroke: var(--brand); } .dia .num text { fill: var(--brand); font-weight: 700; }
+  .bk { position: absolute; transform: translate(-50%, -50%) scale(var(--s, .75)); transform-origin: center; }
+  /* 空格：看得到的是 .face，真正的下拉選單透明地蓋在上面（字級 16px，iPhone 點選時畫面才不會自動放大） */
+  .pick { position: relative; display: inline-flex; max-width: 100%; vertical-align: middle; }
+  .pick select { position: absolute; top: 0; left: 0; width: 100%; height: 100%; margin: 0; border: 0; opacity: 0; font-size: 16px; cursor: pointer; -webkit-appearance: none; appearance: none; }
+  .pick select:disabled { cursor: default; }
+  .face { position: relative; display: flex; flex-direction: column; justify-content: center; min-width: 0; min-height: 40px; line-height: 1.25; padding: 4px 30px 4px 10px;
+    border: 2px dashed var(--brand); border-radius: 10px; background: var(--card); color: var(--ink); }
+  .face::after { content: ""; position: absolute; right: 11px; top: 50%; width: 7px; height: 7px; margin-top: -6px; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(45deg); }
+  .face b { font-weight: 600; font-size: 15px; overflow-wrap: anywhere; } .face small { font-size: 12px; color: var(--muted); overflow-wrap: anywhere; }
+  .pick.has .face { border-style: solid; background: var(--brand-soft); }
+  .pick.ok .face { border: 2px solid var(--ok); background: var(--ok-soft); }
+  .pick:focus-within .face { outline: 2px solid var(--brand); outline-offset: 2px; }
+  .bk .pick { display: flex; width: 100%; height: 100%; }
+  .bk .face { width: 100%; height: 100%; min-height: 0; padding: 0 6px; border-radius: 999px; align-items: center; text-align: center; white-space: nowrap; overflow: hidden; line-height: 1.2; }
+  .bk .face::after { display: none; }
+  .bk .face b, .bk .face small { max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+  .mk { position: absolute; right: -8px; top: -10px; width: 22px; height: 22px; border-radius: 50%; display: none; place-items: center; font-size: 13px; font-weight: 700; font-style: normal; color: #fff; }
+  .bk.ok .mk { display: grid; background: var(--ok); } .bk.no .mk { display: grid; background: var(--bad); }
+  .st { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 6px 10px; padding: 12px 0; border-top: 1px solid var(--line); align-items: center; }
+  .st:first-of-type { border-top: 0; }
+  .st .n { width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--brand); color: var(--brand); display: grid; place-items: center; font-weight: 700; font-size: 13px; }
+  .st .d { font-size: 13px; color: var(--muted); overflow-wrap: anywhere; }
+  .st .w { grid-column: 2; min-width: 0; }
+  .st.c { grid-template-columns: minmax(0, 1fr) auto; } .st.c .d { font-size: 15px; color: var(--ink); } .st.c .w { grid-column: auto; text-align: right; }
+  .st:not(.c) .pick { display: flex; } .st:not(.c) .face { width: 100%; }
+  .st .r, .cz .r { display: none; font-size: 12px; font-weight: 700; margin-top: 3px; }
+  .st.ok .r, .cz li.ok .r { display: block; color: var(--ok); } .st.no .r, .cz li.no .r { display: block; color: var(--bad); }
+  .cz { margin: 0; padding: 0; list-style: none; } .cz li { padding: 12px 0; border-top: 1px solid var(--line); line-height: 2; margin: 0; } .cz li:first-child { border-top: 0; }
+  .cz .pick { margin: 3px 2px; } .cz .face { min-height: 36px; }
+  .res { border-radius: 12px; padding: 10px 12px; margin: 12px 0 0; font-size: 14px; }
+  .res.ok { background: var(--ok-soft); } .res.bad { background: var(--bad-soft); } .res b { font-size: 15px; }
+  .res.ok b { color: var(--ok); } .res.bad b { color: var(--bad); }
+  .tip { background: var(--warm); border-radius: 12px; padding: 10px 12px; font-size: 13px; margin-top: 10px; }
+  .note { color: var(--muted); font-size: 12px; margin: 16px 2px; }
+  .foot { position: sticky; bottom: 0; background: var(--bg); padding: 10px 0 calc(10px + env(safe-area-inset-bottom, 0px)); margin-top: 4px; }
+  /* 顏色的意思：名稱框的底色＝碳數；小標籤＝這一步花掉或產生什麼；實心編號＝不可逆步驟 */
+  .dia rect.k6 { fill: var(--k6); stroke: var(--k6s); } .dia rect.k5 { fill: var(--k5); stroke: var(--k5s); } .dia rect.k4 { fill: var(--k4); stroke: var(--k4s); }
+  .dia rect.k3 { fill: var(--k3); stroke: var(--k3s); } .dia rect.k2 { fill: var(--k2); stroke: var(--k2s); }
+  .dia .num.irr circle { fill: var(--brand); } .dia .num.irr text { fill: var(--on-brand); }
+  .dia .tag rect { stroke-width: 1.2; } .dia .tag text { fill: var(--on-tag); font-weight: 700; }
+  .dia .tag.atp rect { fill: var(--e-atp); stroke: var(--e-atp); } .dia .tag.nadh rect { fill: var(--e-nadh); stroke: var(--e-nadh); } .dia .tag.fad rect { fill: var(--e-fad); stroke: var(--e-fad); }
+  .dia .tag.co2 rect { fill: var(--e-co2); stroke: var(--e-co2); } .dia .tag.sp rect { fill: var(--card); stroke: var(--e-atp); } .dia .tag.sp text { fill: var(--w-k); }
+  .dia .tag.spn rect { fill: var(--card); stroke: var(--e-nadh); } .dia .tag.spn text { fill: var(--w-d); }
+  .dia .tag.nadph rect { fill: var(--k4s); stroke: var(--k4s); } .dia .tag.spp rect { fill: var(--card); stroke: var(--k4s); } .dia .tag.spp text { fill: var(--k4s); } .dia .tag.mol rect, .dia .tag.out rect { fill: var(--card); stroke: var(--muted); } .dia .tag.mol text, .dia .tag.out text { fill: var(--ink); }
+  .dia text.nt { fill: var(--muted); }
+  .pick .face.k6 { background: var(--k6); } .pick .face.k5 { background: var(--k5); } .pick .face.k4 { background: var(--k4); } .pick .face.k3 { background: var(--k3); } .pick .face.k2 { background: var(--k2); }
+  .pick:not(.ok):not(.no) .face.k6 { border-color: var(--k6s); } .pick:not(.ok):not(.no) .face.k5 { border-color: var(--k5s); } .pick:not(.ok):not(.no) .face.k4 { border-color: var(--k4s); }
+  .pick:not(.ok):not(.no) .face.k3 { border-color: var(--k3s); } .pick:not(.ok):not(.no) .face.k2 { border-color: var(--k2s); }
+  .pick.no .face { border: 2px solid var(--bad); background: var(--bad-soft); }
+  .face.tk { box-shadow: inset 6px 0 0 var(--e-atp); padding-left: 16px; } .face.td { box-shadow: inset 6px 0 0 var(--e-nadh); padding-left: 16px; } .face.tf { box-shadow: inset 6px 0 0 var(--e-fad); padding-left: 16px; } .face.tp { box-shadow: inset 6px 0 0 var(--k4s); padding-left: 16px; }
+  .lgd { display: flex; flex-wrap: wrap; gap: 4px 12px; justify-content: center; margin-top: 8px; font-size: 12px; color: var(--muted); }
+  .lgd span { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+  .lgd i { display: inline-grid; place-items: center; width: 14px; height: 14px; border-radius: 4px; border: 1.5px solid; font-style: normal; font-size: 9px; font-weight: 700; }
+  .lgd i.k6 { background: var(--k6); border-color: var(--k6s); } .lgd i.k5 { background: var(--k5); border-color: var(--k5s); } .lgd i.k4 { background: var(--k4); border-color: var(--k4s); }
+  .lgd i.k3 { background: var(--k3); border-color: var(--k3s); } .lgd i.k2 { background: var(--k2); border-color: var(--k2s); }
+  .lgd i.irr { border-radius: 50%; background: var(--brand); border-color: var(--brand); color: var(--on-brand); }
+  .lgd i.tk { background: var(--e-atp); border-color: var(--e-atp); } .lgd i.td { background: var(--e-nadh); border-color: var(--e-nadh); } .lgd i.tf { background: var(--e-fad); border-color: var(--e-fad); } .lgd i.tp { background: var(--k4s); border-color: var(--k4s); }
+  mark { background: var(--hl); color: inherit; padding: 0 2px; border-radius: 3px; }
+  .wk { color: var(--w-k); font-weight: 700; } .wd { color: var(--w-d); font-weight: 700; }
+  .glab.k6 { color: var(--k6s); } .glab.k5 { color: var(--k5s); } .glab.k4 { color: var(--k4s); } .glab.k3 { color: var(--k3s); } .glab.k2 { color: var(--k2s); }
+  .item.k6 { border-left: 5px solid var(--k6s); } .item.k5 { border-left: 5px solid var(--k5s); } .item.k4 { border-left: 5px solid var(--k4s); } .item.k3 { border-left: 5px solid var(--k3s); } .item.k2 { border-left: 5px solid var(--k2s); }
+  /* 分生：底色與線的顏色＝分子種類（DNA 藍、新合成的 DNA 青、RNA 玫瑰、蛋白質琥珀） */
+  .dia rect.kD, .dia .kD { fill: var(--k5); stroke: var(--k5s); } .dia rect.kN, .dia .kN { fill: var(--k4); stroke: var(--k4s); } .dia rect.kR, .dia .kR { fill: var(--k3); stroke: var(--k3s); } .dia rect.kP, .dia .kP { fill: var(--k6); stroke: var(--k6s); }
+  .pick .face.kD { background: var(--k5); } .pick .face.kN { background: var(--k4); } .pick .face.kR { background: var(--k3); } .pick .face.kP { background: var(--k6); }
+  .pick:not(.ok):not(.no) .face.kD { border-color: var(--k5s); } .pick:not(.ok):not(.no) .face.kN { border-color: var(--k4s); } .pick:not(.ok):not(.no) .face.kR { border-color: var(--k3s); } .pick:not(.ok):not(.no) .face.kP { border-color: var(--k6s); }
+  .lgd i.kD { background: var(--k5); border-color: var(--k5s); } .lgd i.kN { background: var(--k4); border-color: var(--k4s); } .lgd i.kR { background: var(--k3); border-color: var(--k3s); } .lgd i.kP { background: var(--k6); border-color: var(--k6s); }
+  .lgd i.sD { background: var(--k5s); border-color: var(--k5s); } .lgd i.sN { background: var(--k4s); border-color: var(--k4s); } .lgd i.sR { background: var(--k3s); border-color: var(--k3s); } .lgd i.sP { background: var(--k6s); border-color: var(--k6s); }
+  .glab.kD { color: var(--k5s); } .glab.kR { color: var(--k3s); } .glab.kP { color: var(--k6s); } .glab.kN { color: var(--k4s); }
+  .item.kD { border-left: 5px solid var(--k5s); } .item.kR { border-left: 5px solid var(--k3s); } .item.kP { border-left: 5px solid var(--k6s); } .item.kN { border-left: 5px solid var(--k4s); }
+  .wD { color: var(--k5s); font-weight: 700; } .wN { color: var(--k4s); font-weight: 700; } .wR { color: var(--k3s); font-weight: 700; } .wP { color: var(--w-k); font-weight: 700; }
+  /* 生理：E＝興奮、交感、去極化（玫瑰）；I＝抑制、副交感、再極化（藍）；H＝激素、耗能（琥珀）；C＝鈣與第二傳訊者（紫）；T＝被動、水（青） */
+  .dia rect.kE, .dia .kE { fill: var(--k3); stroke: var(--k3s); } .pick .face.kE { background: var(--k3); } .pick:not(.ok):not(.no) .face.kE { border-color: var(--k3s); } .lgd i.kE { background: var(--k3); border-color: var(--k3s); } .lgd i.sE { background: var(--k3s); border-color: var(--k3s); } .glab.kE { color: var(--k3s); } .item.kE { border-left: 5px solid var(--k3s); } .wE { color: var(--k3s); font-weight: 700; }
+  .dia rect.kI, .dia .kI { fill: var(--k5); stroke: var(--k5s); } .pick .face.kI { background: var(--k5); } .pick:not(.ok):not(.no) .face.kI { border-color: var(--k5s); } .lgd i.kI { background: var(--k5); border-color: var(--k5s); } .lgd i.sI { background: var(--k5s); border-color: var(--k5s); } .glab.kI { color: var(--k5s); } .item.kI { border-left: 5px solid var(--k5s); } .wI { color: var(--k5s); font-weight: 700; }
+  .dia rect.kH, .dia .kH { fill: var(--k6); stroke: var(--k6s); } .pick .face.kH { background: var(--k6); } .pick:not(.ok):not(.no) .face.kH { border-color: var(--k6s); } .lgd i.kH { background: var(--k6); border-color: var(--k6s); } .lgd i.sH { background: var(--k6s); border-color: var(--k6s); } .glab.kH { color: var(--k6s); } .item.kH { border-left: 5px solid var(--k6s); } .wH { color: var(--w-k); font-weight: 700; }
+  .dia rect.kC, .dia .kC { fill: var(--k2); stroke: var(--k2s); } .pick .face.kC { background: var(--k2); } .pick:not(.ok):not(.no) .face.kC { border-color: var(--k2s); } .lgd i.kC { background: var(--k2); border-color: var(--k2s); } .lgd i.sC { background: var(--k2s); border-color: var(--k2s); } .glab.kC { color: var(--k2s); } .item.kC { border-left: 5px solid var(--k2s); } .wC { color: var(--k2s); font-weight: 700; }
+  .dia rect.kT, .dia .kT { fill: var(--k4); stroke: var(--k4s); } .pick .face.kT { background: var(--k4); } .pick:not(.ok):not(.no) .face.kT { border-color: var(--k4s); } .lgd i.kT { background: var(--k4); border-color: var(--k4s); } .lgd i.sT { background: var(--k4s); border-color: var(--k4s); } .glab.kT { color: var(--k4s); } .item.kT { border-left: 5px solid var(--k4s); } .wT { color: var(--k4s); font-weight: 700; }
+  /* 首頁的分頁 */
+  .tabs { display: flex; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--card); margin: 4px 0 0; }
+  .tabs button { flex: 1; min-width: 0; border: 0; background: transparent; padding: 10px 4px; font-size: 15px; font-weight: 700; cursor: pointer; color: var(--muted); }
+  .tabs button.on { background: var(--brand); color: var(--on-brand); }
+  details.card > summary { cursor: pointer; font-weight: 700; font-size: 15px; list-style: none; display: flex; align-items: center; justify-content: space-between; }
+  details.card > summary::-webkit-details-marker { display: none; }
+  details.card > summary::after { content: "展開"; font-size: 12px; font-weight: 400; color: var(--muted); } details.card[open] > summary::after { content: "收起"; }
 </style>
 </head>
 <body>
-<main>
-  <h1>團膳與膳療</h1>
-  <p class="sub">選一個科目進入</p>
-
-  <a class="big" href="menu.html">
-    <div class="ic" aria-hidden="true">🍱</div>
-    <h2>團體膳食</h2>
-    <p>國小營養午餐 4 週循環菜單：換菜、調份數，營養素與檢核即時重算。修改只存在自己的手機，可以恢復原版。</p>
-    <span class="go" aria-hidden="true">›</span>
-  </a>
-
-  <a class="big" href="index.html?app=therapy">
-    <div class="ic" aria-hidden="true">🩺</div>
-    <h2>膳食療養<span class="tag wip">製作中</span></h2>
-    <p>目前是常見疾病的飲食設計原則摘要。依課本 14 章整理的內容還在製作中，完成後會放在這裡。</p>
-    <span class="go" aria-hidden="true">›</span>
-  </a>
-
-  <div class="lab">相關工具與練習</div>
-  <div class="row">
-    <a href="index.html?app=weight">體重與熱量計算</a>
-    <a href="fx.html">食物代換表</a>
+<header>
+  <div class="hd">
+    <div class="tt"><h1 id="title">團膳與膳療</h1><div class="sub" id="subtitle"></div></div>
+    <div class="seg" id="lang" role="group" aria-label="名稱顯示的語言"><button type="button" data-l="zh">中</button><button type="button" data-l="bi">中英</button><button type="button" data-l="en">EN</button></div>
+    <button type="button" class="xbtn" id="back" hidden>目錄</button>
   </div>
-  <div class="row">
-    <a href="exam.html?g=food">團膳考題練習</a>
-    <a href="exam.html?course=%E8%86%B3%E9%A3%9F%E7%99%82%E9%A4%8A">膳療考題練習</a>
-  </div>
+  <div class="lv" id="lv" hidden></div>
+</header>
+<main id="main"></main>
 
-  <p class="note">膳食療養的內容是教學摘要，實際飲食以醫囑與營養師評估為準。</p>
-</main>
+<script>
+/* ======================================================================
+   名稱的顯示：三種模式  zh 中文／bi 中英對照／en 英文
+   每個名詞是 { zh, en, ab(縮寫，可省略), bi(中英對照時的特別寫法，可省略) }
+   ====================================================================== */
+var LANG = 'bi', FORCE = null;                       // FORCE：某一關固定用某種語言（總複習固定英文）
+function M() { return FORCE || LANG; }
+function T(zh, en) { return M() === 'en' ? en : zh; }
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+function fit(t, w, cap) { var n = 0; for (var i = 0; i < t.length; i++) n += t.charCodeAt(i) > 255 ? 1 : .56; return Math.max(6, Math.min(cap || 12.5, Math.floor((w - 12) / n * 10) / 10)); }
+/* 一行的寫法（下拉選單的選項、句子裡的空格） */
+function one(o, m, enFirst) {
+  m = m || M(); var e = o.en || o.zh; if (m === 'zh' || e === o.zh) return o.zh;
+  var E = o.ab ? e + ' (' + o.ab + ')' : e; if (m === 'en') return E;
+  if (o.bi) return o.bi; return enFirst ? E + '　' + o.zh : o.zh + '（' + e + '）';
+}
+/* 兩行的寫法（圖上的名稱、酵素的空格）：英文在上、中文在下。w 是圖上的寬度，英文太長就改用縮寫 */
+function two(o, m, w) {
+  m = m || M(); var e = o.en || o.zh; if (m === 'zh' || e === o.zh) return [o.zh, ''];
+  var ab = o.ab && w && fit(e, w, 12) < 8.5;
+  if (m === 'en') return ab ? [o.ab, ''] : [e, o.ab || ''];
+  return ab ? [o.ab, o.zh] : [e, (o.sub != null ? o.sub : o.zh) + (o.ab ? '・' + o.ab : '')];      // sub：中英對照時第二行的寫法（例：mRNA 下面寫「傳訊 RNA」）
+}
+function short(o) { return M() === 'zh' ? o.zh : (o.ab || o.en || o.zh); }
+
+/* ---------- 畫圖用的小工具 ---------- */
+function PH() { return M() === 'zh' ? 30 : 38; }    // 圖上名稱框的高度：有兩行時高一點
+function tx(x, y, t, cls, size, anchor) { return '<text class="' + (cls || '') + '" x="' + x + '" y="' + y + '" text-anchor="' + (anchor || 'middle') + '" font-size="' + (size || 12) + '">' + esc(t) + '</text>'; }
+function pill(x, y, w, o, cls) {
+  var L = typeof o === 'string' ? [o, ''] : two(o, null, w), h = PH();
+  var r = '<rect class="' + (cls || 'pill') + '" x="' + (x - w / 2) + '" y="' + (y - h / 2) + '" width="' + w + '" height="' + h + '" rx="' + (h / 2) + '"/>';
+  if (!L[1]) return r + tx(x, y + 4.5, L[0], '', fit(L[0], w, 12.5));
+  return r + tx(x, y - 2, L[0], '', fit(L[0], w, 11.5)) + tx(x, y + 12, L[1], 'm', fit(L[1], w, 10));
+}
+function arrow(x1, y1, x2, y2, dash) { var a = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI; return '<line class="ln" x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '" stroke-width="3"' + (dash ? ' stroke-dasharray="3 3"' : '') + '/><polygon class="ar" points="-8,-6 5,0 -8,6" transform="translate(' + x2 + ',' + y2 + ') rotate(' + a + ')"/>'; }
+function badge(x, y, n, irr) { return '<g class="num' + (irr ? ' irr' : '') + '"><circle cx="' + x + '" cy="' + y + '" r="11" stroke-width="1.5"/><text x="' + x + '" y="' + (y + 4.5) + '" text-anchor="middle" font-size="12">' + n + '</text></g>'; }
+
+function tagT(t) { return typeof t === 'string' ? t : (M() === 'zh' ? t.zh : t.en); }      // 標籤的字：可以是字串，或 { zh, en }
+function tagW(t) { t = tagT(t); var n = 0; for (var i = 0; i < t.length; i++) n += t.charCodeAt(i) > 255 && !/[₀-₉⁺⁻−→]/.test(t.charAt(i)) ? 1 : .6; return Math.round(n * 9.5 + 12); }
+function tagC(x, y, t, k) { var w = tagW(t); x = Math.max(3 + w / 2, Math.min(357 - w / 2, x)); return '<g class="tag ' + k + '"><rect x="' + (x - w / 2) + '" y="' + (y - 7.5) + '" width="' + w + '" height="15" rx="4"/><text x="' + x + '" y="' + (y + 3.5) + '" text-anchor="middle" font-size="9.5">' + esc(tagT(t)) + '</text></g>'; }
+/* 分生用的畫圖工具：有顏色的線、箭頭、蛋白質的橢圓、有顏色的字、「說明＋空格」的一列
+   顏色代號 D＝DNA（舊股）、N＝新合成的 DNA、R＝RNA、P＝蛋白質、M＝灰 */
+var KS = { D: '--k5s', N: '--k4s', R: '--k3s', P: '--k6s', M: '--muted', E: '--k3s', I: '--k5s', H: '--k6s', C: '--k2s', T: '--k4s', K: '--ink' };
+function sl(pts, k, w, dash) { return '<polyline points="' + pts + '" fill="none" stroke="var(' + KS[k] + ')" stroke-width="' + (w || 4) + '" stroke-linecap="round" stroke-linejoin="round"' + (dash ? ' stroke-dasharray="' + dash + '"' : '') + '/>'; }
+function sp(d, k, w, dash) { return '<path d="' + d + '" fill="none" stroke="var(' + KS[k] + ')" stroke-width="' + (w || 4) + '" stroke-linecap="round" stroke-linejoin="round"' + (dash ? ' stroke-dasharray="' + dash + '"' : '') + '/>'; }
+function hd(x, y, a, k) { return '<polygon points="-10,-6.5 4,0 -10,6.5" fill="var(' + KS[k] + ')" transform="translate(' + x + ',' + y + ') rotate(' + a + ')"/>'; }
+function blob(cx, cy, rx, ry, k) { return '<ellipse class="k' + (k || 'P') + '" cx="' + cx + '" cy="' + cy + '" rx="' + rx + '" ry="' + ry + '" stroke-width="1.5"/>'; }
+function kt(x, y, t, k, size, anchor, bold) { return '<text x="' + x + '" y="' + y + '" text-anchor="' + (anchor || 'middle') + '" font-size="' + (size || 12) + '"' + (bold === false ? '' : ' font-weight="700"') + ' style="fill:var(' + KS[k] + ')">' + esc(t) + '</text>'; }
+function rungs(x1, y1, x2, y2, n, dx, dy) { var s = ''; for (var i = 0; i < n; i++) s += '<line x1="' + (x1 + dx * i) + '" y1="' + (y1 + dy * i) + '" x2="' + (x2 + dx * i) + '" y2="' + (y2 + dy * i) + '" stroke="var(--rail)" stroke-width="1.5"/>'; return s; }
+function box(x, y, w, h, k, r) { return '<rect class="' + (k ? 'k' + k : 'pill') + '" x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="' + (r == null ? 10 : r) + '" stroke-width="1.5"/>'; }
+function dot(x, y, r, k) { return '<circle class="k' + k + '" cx="' + x + '" cy="' + y + '" r="' + r + '" stroke-width="1.5"/>'; }
+/* 直排的流程：items 是名稱（{zh,en} 或字串）或 null（留給空格）；ks 是每一格的顏色代號（可省略）。第一格用 src 樣式 */
+function flow(x, y0, dy, w, items, ks) { var s = '', h = PH() / 2; items.forEach(function (it, i) { var y = y0 + i * dy; if (i) s += arrow(x, y - dy + h + 1, x, y - h - 2); if (it) s += pill(x, y, w, it, (i ? 'pill' : 'src') + (ks && ks[i] ? ' k' + ks[i] : '')); }); return s; }
+function lab(x, y, o, w, cls) { var L = typeof o === 'string' ? [o, ''] : two(o, null, w); if (!L[1]) return tx(x, y + 4.5, L[0], cls || '', fit(L[0], w, 12)); return tx(x, y - 2, L[0], cls || '', fit(L[0], w, 11.5)) + tx(x, y + 12, L[1], 'm', fit(L[1], w, 10)); }      // 沒有框的名稱（中英對照時兩行）
+function caps(y0, dy, list, w) { return list.map(function (c, i) { return cap(y0 + i * dy, c[0], c[1], w); }).join(''); }      // 好幾列「說明＋空格」
+function vtx(x, y, t, cls, size) { return '<text class="' + (cls || 'm') + '" x="' + x + '" y="' + y + '" text-anchor="middle" font-size="' + (size || 10.5) + '" transform="rotate(-90 ' + x + ' ' + y + ')">' + esc(t) + '</text>'; }      // 直寫的字
+function cap(y, zh, en, w) { var t = T(zh, en); return tx(14, y + 4.5, t, '', fit(t, w || 168, 12), 'start'); }      // 圖上的一列：左邊說明，右邊放空格
+
+/* 全貌圖用：虛線框（例如細胞、粒線體）和框上的小字 */
+function zone(x, y, w, h, t) { return '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="16" fill="none" stroke="var(--rail)" stroke-width="1.5" stroke-dasharray="5 4"/>' + (t ? tx(x + 12, y + 16, t, 'm', 10.5, 'start') : ''); }
+/* 說明文字裡的記號：[[必背]]、{k:激酶這一類}、{d:去氫酶這一類}；分生用 {D:DNA}、{N:新合成的 DNA}、{R:RNA}、{P:蛋白質} */
+function fmt(s) { return s.replace(/\[\[(.+?)\]\]/g, '<mark>$1</mark>').replace(/\{k:(.+?)\}/g, '<span class="wk">$1</span>').replace(/\{d:(.+?)\}/g, '<span class="wd">$1</span>').replace(/\{([DNRPEIHCT]):(.+?)\}/g, '<span class="w$1">$2</span>'); }
+/* ======================================================================
+   團膳與膳療共用：左右對照的全貌圖（左邊名稱、右邊空格）
+   o：{ l:[左標題中, 英], r:[右標題中, 英], k:左框預設顏色, y0, dy, lx, lw, rx, rw, p:空格 id 字首, o:選項 }
+   ====================================================================== */
+function SUQ(a) { var r = []; a.forEach(function (x) { if (r.indexOf(x) < 0) r.push(x); }); return r; }
+function SM(rows, o) {
+  o = o || {};
+  var y0 = o.y0 || 46, dy = o.dy || 52, lx = o.lx || 86, lw = o.lw || 144, rx = o.rx || 264, rw = o.rw || 176, p = o.p || 'f';
+  var opts = o.o || SUQ(rows.map(function (r) { return r[2]; }));
+  return {
+    o: opts,
+    h: y0 + (rows.length - 1) * dy + 34,
+    svg: function () {
+      var s = tx(lx, 18, T(o.l[0], o.l[1]), 'm', 9.5) + tx(rx - 2, 18, T(o.r[0], o.r[1]), 'm', 9.5);
+      rows.forEach(function (r, i) { var y = y0 + i * dy, k = r[3] || o.k; s += pill(lx, y, lw, { zh: r[0], en: r[1] }, k ? 'pill k' + k : 'pill') + arrow(lx + lw / 2 + 2, y, rx - rw / 2 - 4, y); });
+      return s;
+    },
+    b: function () { return rows.map(function (r, i) { return { id: p + i, x: rx, y: y0 + i * dy, w: rw, a: r[2], o: opts }; }); }
+  };
+}
+/* ======================================================================
+   膳食療養第 1 章：營養照護（營養照護流程、篩檢與評估、PES、ADIME、生化指標）
+   ====================================================================== */
+var DPRE_M = SM([['身高、體重、BMI', 'Height, weight, BMI', 'a1', 'E'], ['給予低鈉飲食、衛教', 'Low-sodium diet, education', 'a3', 'E'], ['「攝取過多鈉，與常吃加工食品有關…」', 'Excess sodium intake related to…', 'a2', 'E'],
+  ['追蹤體重、檢驗值與攝取量', 'Follow weight, labs, intake', 'a4', 'E'], ['24 小時回憶的鈉攝取量（初次）', 'Initial 24-h recall of sodium', 'a1', 'E']],
+  { l: ['紀錄的內容', 'record'], r: ['寫在 ADIME 的哪一段', 'ADIME section'], dy: 54, rw: 184 });
+var DPRE = { id: 'dpre', zh: '第 1 章 營養照護', en: 'Nutrition care process', alias: '營養篩檢・營養評估・PES 營養診斷・ADIME 紀錄・篩檢工具・急性期蛋白・間接熱量測定', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    a1: { zh: 'A：營養評估', en: 'A: Assessment' }, a2: { zh: 'D：營養診斷', en: 'D: Diagnosis' }, a3: { zh: 'I：營養介入', en: 'I: Intervention' }, a4: { zh: 'M／E：監測與評值', en: 'M/E: Monitoring & evaluation' },
+    scr: { zh: '營養篩檢', en: 'Nutrition screening' }, asm: { zh: '營養評估', en: 'Nutrition assessment' },
+    p: { zh: 'P：營養問題', en: 'P: Problem' }, e: { zh: 'E：病因', en: 'E: Etiology' }, s: { zh: 'S：徵候與症狀', en: 'S: Signs and symptoms' },
+    intk: { zh: '攝取面向', en: 'Intake domain' }, clin: { zh: '臨床面向', en: 'Clinical domain' }, beh: { zh: '行為環境面向', en: 'Behavioral-environmental domain' },
+    up: { zh: '升高', en: 'Rises' }, dn: { zh: '下降', en: 'Falls' },
+    pre: { zh: '前白蛋白', en: 'Prealbumin (transthyretin)' }, alb: { zh: '白蛋白', en: 'Albumin' },
+    calf: { zh: '小腿圍', en: 'Calf circumference' }, tsf: { zh: '三頭肌皮脂厚度', en: 'Triceps skinfold' },
+    ic: { zh: '間接熱量測定', en: 'Indirect calorimetry' }, sga: { zh: '主觀整體評估（SGA）', en: 'Subjective global assessment' }, mna: { zh: '迷你營養評估（MNA）', en: 'Mini Nutritional Assessment' }
+  },
+  levels: [
+    { t: '先看全貌：ADIME 紀錄', kind: 'ov', h: DPRE_M.h, svg: DPRE_M.svg, blanks: DPRE_M.b(),
+      intro: ['營養照護流程（NCP）：先用營養篩檢找出有風險的人（最具成本效益的第一步），再對他們做營養評估 → 營養診斷 → 營養介入 → 監測與評值，評值結果再回到評估，形成循環。',
+        '病歷上常用 ADIME 記錄：A 評估（體位、生化、臨床、飲食與病史資料）、D 診斷（用 PES 寫出營養問題）、I 介入（飲食處方、衛教、諮詢、協調照護）、M／E 監測與評值（追蹤指標，比較與目標的差距）。',
+        '同一種資料放哪一段要看「目的」：初次評估用 24 小時回憶了解鈉攝取，是 A；介入之後再用同樣的方法追蹤鈉攝取有沒有下降，就是 M／E。'],
+      done: ['[[營養照護流程：篩檢 → 評估 → 診斷 → 介入 → 監測與評值。篩檢是最具成本效益的第一步。]]', '[[ADIME：Assessment、Diagnosis（PES）、Intervention、Monitoring & Evaluation。]]'] },
+    { t: '營養診斷：PES', kind: 'list',
+      intro: ['營養診斷寫的是營養師可以處理的「營養問題」，不是醫療診斷（例如寫「蛋白質攝取不足」，而不是「肝硬化」）。',
+        '用 PES 敘述：問題（P）與病因（E）有關，證據是徵候與症狀（S）。例：「熱量攝取不足（P），與化療造成噁心食慾差有關（E），證據為一個月體重減輕 6%、攝取量約需要量的 50%（S）」。',
+        '營養診斷分三個面向：攝取（吃太多、太少）、臨床（功能、生化、體重）、行為環境（知識、信念、取得食物）。介入的方向針對病因；病因無法處理時，就針對徵候與症狀來減輕。'],
+      listTitle: '是哪一個',
+      list: [['熱量攝取不足', { a: 'p', o: ['p', 'e', 's'] }], ['與化療引起噁心有關', { a: 'e', o: ['p', 'e', 's'] }], ['一個月體重減輕 6%', { a: 's', o: ['p', 'e', 's'] }],
+        ['蛋白質攝取過多屬於', { a: 'intk', o: ['intk', 'clin', 'beh'] }], ['吞嚥困難、體重過輕屬於', { a: 'clin', o: ['intk', 'clin', 'beh'] }], ['缺乏飲食相關知識屬於', { a: 'beh', o: ['intk', 'clin', 'beh'] }]],
+      done: ['[[PES：Problem（營養問題）related to Etiology（病因）as evidenced by Signs/Symptoms（徵候症狀）。介入針對病因；病因無法處理時針對症狀。]]', '[[營養診斷三面向：攝取、臨床、行為環境。]]'] },
+    { t: '篩檢與評估工具', kind: 'list',
+      intro: ['篩檢工具簡單快速：MUST（BMI、體重減輕、急性疾病無法進食）、NRS 2002（住院病人，含疾病嚴重度）、MST（體重減輕與食慾兩題）、MNA-SF（老人；沒有 BMI 時可以用小腿圍代替）。肌少症篩檢常用 SARC-F 或小腿圍。',
+        'SGA 由受過訓練的人依病史（體重變化、攝食、腸胃症狀、功能、疾病）與身體檢查（脂肪、肌肉、水腫）主觀分成 A、B、C 三級；PG-SGA 是癌症病人用的版本，病人自填部分包括活動與功能。',
+        '熱量需求最準的測法是間接熱量測定：量氧氣消耗與二氧化碳產生，臥床病人也能在床邊測。'],
+      listTitle: '是哪一個',
+      list: [['MNA-SF 沒有 BMI 時可用', { a: 'calf', o: ['calf', 'tsf'] }], ['量 O₂ 消耗與 CO₂ 產生以估算熱量', { a: 'ic', o: ['ic', 'sga'] }], ['依病史與身體檢查主觀分 A、B、C 三級', { a: 'sga', o: ['ic', 'sga', 'mna'] }],
+        ['專為老人設計的工具', { a: 'mna', o: ['sga', 'mna'] }], ['先快速找出高風險的人', { a: 'scr', o: ['scr', 'asm'] }]],
+      done: ['[[篩檢工具：MUST、NRS 2002、MST、MNA-SF；評估：SGA、PG-SGA（癌症）。MNA-SF 無 BMI 時用小腿圍。]]', '[[間接熱量測定是估算熱量需求最準確的方法。]]'] },
+    { t: '生化指標與發炎', kind: 'list',
+      intro: ['發炎、感染、手術時，肝臟改合成急性期蛋白：C 反應蛋白、纖維蛋白原、鐵蛋白升高（正向急性期蛋白）；白蛋白、前白蛋白、運鐵蛋白下降（負向急性期蛋白）。所以重症時白蛋白低，不一定代表營養不良。',
+        '各種蛋白的半衰期：白蛋白約 20 天（反映長期）；運鐵蛋白約 8～10 天；前白蛋白約 2～3 天；視網醇結合蛋白約 12 小時。半衰期越短，越能反映最近的變化。'],
+      listTitle: '發炎時會',
+      list: [['C 反應蛋白', { a: 'up', o: ['up', 'dn'] }], ['纖維蛋白原', { a: 'up', o: ['up', 'dn'] }], ['白蛋白', { a: 'dn', o: ['up', 'dn'] }], ['前白蛋白', { a: 'dn', o: ['up', 'dn'] }],
+        ['半衰期約 2～3 天，反映近期變化', { a: 'pre', o: ['pre', 'alb'] }]],
+      countsTitle: '數字', counts: [['白蛋白的半衰期約（天）', '20', ['2', '8', '20', '60']]],
+      done: ['[[正向急性期蛋白：CRP、纖維蛋白原、鐵蛋白（升高）；負向：白蛋白、前白蛋白、運鐵蛋白（下降）。]]', '[[半衰期：白蛋白約 20 天、運鐵蛋白 8～10 天、前白蛋白 2～3 天、RBP 約 12 小時。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['營養照護流程最具成本效益的第一步是', { a: 'scr', o: ['scr', 'asm'] }, '。'],
+        ['身高、體重應記錄在', { a: 'a1', o: ['a1', 'a2', 'a4'] }, '。'],
+        ['「與化療引起噁心有關」是 PES 的', { a: 'e', o: ['p', 'e', 's'] }, '。'],
+        ['發炎時 C 反應蛋白會', { a: 'up', o: ['up', 'dn'] }, '。'],
+        ['Following intake after counseling belongs to', { a: 'a4', o: ['a1', 'a4'], lang: 'en' }, '.'],
+        ['The most accurate way to measure energy needs is', { a: 'ic', o: ['ic', 'sga'], lang: 'en' }, '.']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: DPRE_M.h, force: 'en', svg: DPRE_M.svg, blanks: DPRE_M.b(),
+      intro: ['ADIME 的各段，用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   膳食療養第 2 章：營養支持（腸道營養、靜脈營養、再餵食症候群、質地調整）
+   ====================================================================== */
+var DSUP_M = SM([['可以吃但吃不夠', 'Can eat, not enough', 'r1', 'H'], ['不能吃、腸道可用、短期', 'Gut works, short term', 'r2', 'H'], ['同上，但持續嘔吐或吸入風險高', 'High aspiration risk, vomiting', 'r3', 'H'],
+  ['腸道可用、長期（超過 4～6 週）', 'Gut works, long term', 'r4', 'H'], ['腸道不能用（阻塞、嚴重腸缺血）', 'Gut cannot be used', 'r5', 'H']],
+  { l: ['病人狀況', 'situation'], r: ['給什麼', 'route'], dy: 54, rw: 184 });
+var DSUP = { id: 'dsup', zh: '第 2 章 營養支持', en: 'Nutrition support', alias: '腸道優先・鼻胃與鼻空腸・胃造口・灌食方式・周邊與中心靜脈營養・熱量係數・葡萄糖上限・再餵食症候群・IDDSI', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    r1: { zh: '口服營養補充品', en: 'Oral supplements' }, r2: { zh: '鼻胃管', en: 'Nasogastric tube' }, r3: { zh: '鼻空腸管（幽門後）', en: 'Nasojejunal (post-pyloric)' }, r4: { zh: '胃造口或空腸造口', en: 'Gastrostomy or jejunostomy' }, r5: { zh: '靜脈營養', en: 'Parenteral nutrition' },
+    bol: { zh: '批式（推注）灌食', en: 'Bolus feeding' }, cont: { zh: '連續滴注', en: 'Continuous infusion' },
+    k34: { zh: '3.4 大卡／公克', en: '3.4 kcal/g' }, k4: { zh: '4 大卡／公克', en: '4 kcal/g' }, k10: { zh: '約 10 大卡／公克（20% 乳劑 2 大卡／mL）', en: '~10 kcal/g (20% emulsion 2 kcal/mL)' },
+    lowp: { zh: '低血磷', en: 'Hypophosphatemia' }, hip: { zh: '高血磷', en: 'Hyperphosphatemia' }, b1: { zh: '維生素 B1', en: 'Thiamin' },
+    pn: { zh: '靜脈營養', en: 'Parenteral nutrition' }, ent: { zh: '腸道營養', en: 'Enteral nutrition' },
+    l4: { zh: '第 4 級：泥狀', en: 'Level 4: pureed' }, l5: { zh: '第 5 級：細碎濕軟', en: 'Level 5: minced and moist' }, l7: { zh: '第 7 級：一般', en: 'Level 7: regular' }
+  },
+  levels: [
+    { t: '先看全貌：選擇營養支持的途徑', kind: 'ov', h: DSUP_M.h, svg: DSUP_M.svg, blanks: DSUP_M.b(),
+      intro: ['原則是「腸道能用就用腸道」：先調整飲食，再加口服營養補充品，吃不夠或不能吃再管灌，腸道不能用或不夠才用靜脈營養。',
+        '管灌短期（約 4～6 週以內）用經鼻的管子；長期用胃造口或空腸造口。持續嘔吐、胃排空差、吸入風險高時，把管子放到幽門之後（鼻十二指腸或鼻空腸）。',
+        '腸道營養維持腸黏膜與腸道屏障、較少感染、便宜；靜脈營養讓腸道休息，腸黏膜萎縮、細菌移位，感染與全身性發炎、膽汁鬱積較常見。'],
+      done: ['[[腸道能用就用腸道：口服 → 口服補充品 → 管灌（短期經鼻、長期造口；吸入風險高放幽門後）→ 靜脈營養。]]', '[[靜脈營養較易有感染、全身性發炎反應、膽汁鬱積、腸黏膜萎縮；兩者在嚴重營養不良時都可能發生再餵食症候群。]]'] },
+    { t: '管灌的方式', kind: 'list',
+      intro: ['批式灌食：每次 200～400 mL 用針筒或重力在短時間內灌完，一天數次，方便、接近正常進食，適合胃造口與鼻胃管；攪打飲食（天然食物打碎）因為黏稠，多用批式灌。',
+        '連續滴注：用幫浦一天 16～24 小時慢慢滴，適合重症、對灌食不耐受、或管子在小腸（空腸沒有胃的儲存功能，不能用批式）。',
+        '灌食時床頭抬高 30～45 度，減少吸入。監測腹脹、腹瀉、胃殘餘量、血糖、電解質與體重。'],
+      listTitle: '是哪一種',
+      list: [['空腸造口灌食', { a: 'cont', o: ['bol', 'cont'] }], ['胃造口灌攪打飲食', { a: 'bol', o: ['bol', 'cont'] }]],
+      countsTitle: '數字', counts: [['灌食時床頭至少抬高幾度', '30', ['10', '30', '60', '90']]],
+      done: ['[[空腸管、重症、不耐受用連續滴注；胃管、穩定病人可批式灌食。床頭抬高 30～45 度。]]'] },
+    { t: '靜脈營養', kind: 'list',
+      intro: ['周邊靜脈營養滲透壓不能太高（約 900 mOsm/L 以下），只適合短期、需要量不高的病人；中心靜脈營養可以給高濃度、長期使用。',
+        '熱量計算：靜脈用的葡萄糖是含水葡萄糖，每公克 3.4 大卡；胺基酸每公克 4 大卡；脂肪乳劑每公克約 10 大卡（20% 乳劑每 mL 約 2 大卡，含甘油與磷脂）。',
+        '葡萄糖輸注速率一般不超過每分鐘每公斤 4～5 毫克（約每天每公斤 7 公克）。給太多會高血糖、脂肪肝、二氧化碳產生增加（呼吸商上升，脫離呼吸器困難）。葡萄糖把磷帶進細胞，常見的是低血磷。',
+        '當病人經口或腸道營養可以達到需要量的 60% 以上，就可以逐步停止靜脈營養。'],
+      listTitle: '是哪一個',
+      list: [['靜脈用葡萄糖', { a: 'k34', o: ['k34', 'k4', 'k10'] }], ['胺基酸', { a: 'k4', o: ['k34', 'k4', 'k10'] }], ['脂肪乳劑', { a: 'k10', o: ['k34', 'k4', 'k10'] }], ['葡萄糖過量時常見的電解質異常', { a: 'lowp', o: ['lowp', 'hip'] }]],
+      countsTitle: '數字', counts: [['葡萄糖輸注上限約每分鐘每公斤幾毫克', '5', ['2', '5', '10', '15']], ['經口或腸道達需要量的幾 % 以上可逐步停止靜脈營養', '60', ['30', '60', '100']]],
+      done: ['[[靜脈營養熱量：葡萄糖 3.4 kcal/g、胺基酸 4 kcal/g、脂肪 10 kcal/g（20% 乳劑 2 kcal/mL）。葡萄糖 ≤ 4～5 mg/kg/min。]]', '[[葡萄糖過量：高血糖、脂肪肝、高碳酸血症、低血磷。]]'] },
+    { t: '再餵食症候群與質地調整', kind: 'list',
+      intro: ['長期飢餓或嚴重營養不良的人突然給足營養，胰島素上升把磷、鉀、鎂帶進細胞，血中濃度驟降，可能心律不整、呼吸衰竭甚至死亡；維生素 B1 也會被大量消耗。預防：從低熱量開始逐步增加，先補 B1，監測磷、鉀、鎂。',
+        '吞嚥困難的質地分級依 IDDSI：飲品 0～4 級（稀到極稠），食物 3～7 級：3 流質、4 泥狀（不需咀嚼，例如飯泥、紅蘿蔔泥、豆花）、5 細碎濕軟、6 軟質一口大小、7 一般。'],
+      listTitle: '是哪一個',
+      list: [['再餵食症候群最典型的電解質變化', { a: 'lowp', o: ['lowp', 'hip'] }], ['再餵食前要先補充', { a: 'b1', o: ['b1', 'k10'] }], ['糙米飯泥、紅蘿蔔泥、豆花', { a: 'l4', o: ['l4', 'l5', 'l7'] }]],
+      done: ['[[再餵食症候群：低血磷（最典型）、低血鉀、低血鎂、B1 缺乏；從低熱量慢慢加。]]', '[[IDDSI 食物 3～7 級：3 流質、4 泥狀、5 細碎濕軟、6 軟質一口大小、7 一般。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['持續嘔吐但腸音正常的病人，適合', { a: 'r3', o: ['r2', 'r3', 'r5'] }, '。'],
+        ['需要長期管灌的病人，宜選', { a: 'r4', o: ['r2', 'r4'] }, '。'],
+        ['較容易發生全身性發炎與膽汁鬱積的是', { a: 'pn', o: ['pn', 'ent'] }, '。'],
+        ['靜脈用葡萄糖每公克', { a: 'k34', o: ['k34', 'k4'] }, '。'],
+        ['A jejunostomy is fed by', { a: 'cont', o: ['bol', 'cont'], lang: 'en' }, '.'],
+        ['Refeeding syndrome typically causes', { a: 'lowp', o: ['lowp', 'hip'], lang: 'en' }, '.']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: DSUP_M.h, force: 'en', svg: DSUP_M.svg, blanks: DSUP_M.b(),
+      intro: ['營養支持途徑的選擇，用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   膳食療養第 3 章：體重控制與管理（體位判定、代謝症候群、減重飲食、飲食疾患）
+   ====================================================================== */
+var DWT_M = SM([['BMI 18.5～24', 'BMI 18.5–24', 'w1', 'H'], ['BMI 24～27', 'BMI 24–27', 'w2', 'H'], ['BMI 27 以上', 'BMI ≥ 27', 'w3', 'H'], ['BMI 低於 18.5', 'BMI < 18.5', 'w4', 'H'], ['腰圍男 ≥ 90、女 ≥ 80 公分', 'Waist ≥ 90 / ≥ 80 cm', 'w5', 'H']],
+  { l: ['國人成人', 'Taiwan adults'], r: ['判定', 'category'], dy: 54 });
+var DWT = { id: 'dwt', zh: '第 3 章 體重控制與管理', en: 'Weight management', alias: 'BMI 切點・腰圍・代謝症候群 5 項・7,700 大卡・每天少 500 大卡・極低熱量飲食・男性型與女性型肥胖・厭食症與暴食症', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    w1: { zh: '正常範圍', en: 'Normal' }, w2: { zh: '過重', en: 'Overweight' }, w3: { zh: '肥胖', en: 'Obese' }, w4: { zh: '過輕', en: 'Underweight' }, w5: { zh: '腹部肥胖', en: 'Abdominal obesity' },
+    and: { zh: '男性型（蘋果型）', en: 'Android (apple)' }, gyn: { zh: '女性型（西洋梨型）', en: 'Gynoid (pear)' },
+    gall: { zh: '膽結石', en: 'Gallstones' }, kid: { zh: '腎結石', en: 'Kidney stones' },
+    an: { zh: '神經性厭食症', en: 'Anorexia nervosa' }, bn: { zh: '暴食症（心因性暴食）', en: 'Bulimia nervosa' }, bed: { zh: '嗜食症（暴食疾患）', en: 'Binge-eating disorder' },
+    slow: { zh: '每週減 0.5～1 公斤', en: '0.5–1 kg per week' }, fast: { zh: '每週減 3 公斤', en: '3 kg per week' }
+  },
+  levels: [
+    { t: '先看全貌：國人的體位判定', kind: 'ov', h: DWT_M.h, svg: DWT_M.svg, blanks: DWT_M.b(),
+      intro: ['國健署的成人體位標準：BMI 低於 18.5 過輕、18.5～24 正常、24～27 過重、27 以上肥胖。腹部肥胖：腰圍男性 ≥ 90 公分、女性 ≥ 80 公分。',
+        '脂肪堆在腹部的男性型（蘋果型）肥胖，與胰島素阻抗、心血管疾病關係較密切，多見於男性與停經後女性；堆在臀部大腿的女性型（西洋梨型）風險較低，多見於停經前女性。'],
+      done: ['[[國人 BMI：< 18.5 過輕、18.5～24 正常、24～27 過重、≥ 27 肥胖；腰圍男 ≥ 90、女 ≥ 80 公分為腹部肥胖。]]', '[[男性型肥胖（腹部）與胰島素阻抗、心血管疾病較相關。]]'] },
+    { t: '代謝症候群', kind: 'list',
+      intro: ['國人代謝症候群的判定：以下五項中符合三項以上。腹部肥胖（腰圍男 ≥ 90、女 ≥ 80 公分）；血壓 ≥ 130/85 mmHg；空腹血糖 ≥ 100 mg/dL；三酸甘油酯 ≥ 150 mg/dL；HDL 膽固醇男 < 40、女 < 50 mg/dL。已經在服用相關藥物的，該項也算符合。'],
+      countsTitle: '數字', counts: [['五項中要符合幾項', '3', ['1', '2', '3', '5']], ['血壓的切點（收縮壓 mmHg）', '130', ['120', '130', '140']], ['空腹血糖的切點（mg/dL）', '100', ['100', '110', '126']], ['三酸甘油酯的切點（mg/dL）', '150', ['100', '150', '200']], ['女性 HDL 低於多少（mg/dL）', '50', ['40', '50', '60']]],
+      done: ['[[代謝症候群：腰圍（男 90、女 80）、血壓 ≥ 130/85、空腹血糖 ≥ 100、TG ≥ 150、HDL 男 < 40 女 < 50，五項中三項以上。]]'] },
+    { t: '減重的原則', kind: 'list',
+      intro: ['1 公斤體脂肪約 7,700 大卡。每天少吃 500 大卡，一週約減 0.5 公斤；建議每週減 0.5～1 公斤，先以 6 個月內減 5～10% 為目標。',
+        '飲食要均衡：減少熱量但保持足夠蛋白質、多蔬菜與全穀；搭配運動（每週至少 150 分鐘中等強度）與行為改變（自我監測、刺激控制）。',
+        '極低熱量飲食（每天約 800 大卡以下）要在醫療監督下進行，減得快但容易疲倦暈眩、電解質不平衡、便秘或腹瀉，也容易形成膽結石（膽汁中膽固醇過飽和、膽囊少收縮）。'],
+      listTitle: '是哪一個',
+      list: [['建議的減重速度', { a: 'slow', o: ['slow', 'fast'] }], ['極低熱量飲食容易造成', { a: 'gall', o: ['gall', 'kid'] }]],
+      countsTitle: '數字', counts: [['1 公斤體脂肪約多少大卡', '7,700', ['3,500', '7,700', '9,000']], ['每天少 500 大卡，一週約減幾公斤', '0.5', ['0.25', '0.5', '1', '2']]],
+      done: ['[[1 公斤脂肪約 7,700 大卡；每天減少 500 大卡約每週減 0.5 公斤；建議每週 0.5～1 公斤。]]', '[[極低熱量飲食（< 800 大卡）：易膽結石、電解質不平衡，需醫療監督。]]'] },
+    { t: '飲食疾患', kind: 'list',
+      intro: ['神經性厭食症：極度害怕變胖、嚴格限制進食，體重明顯過輕；常見無月經、心跳慢、低血壓、怕冷、胎毛、骨質流失。營養復健從低熱量逐步增加，小心再餵食症候群；三大營養素比例大致均衡（例如蛋白質 20%、醣類 50%、脂肪 30%）。',
+        '暴食症（心因性暴食）：反覆暴食後用催吐、瀉劑、利尿劑或過度運動補償，體重多在正常範圍；催吐造成低血鉀、牙齒酸蝕、手背的磨損（Russell 徵象）、唾液腺腫大。治療重點是規律三餐、打破暴食與補償的循環。',
+        '嗜食症（暴食疾患）：反覆暴食但沒有補償行為，常合併肥胖。'],
+      listTitle: '是哪一個',
+      list: [['體重明顯過輕、無月經、心跳慢', { a: 'an', o: ['an', 'bn', 'bed'] }], ['暴食後催吐，體重正常、低血鉀', { a: 'bn', o: ['an', 'bn', 'bed'] }], ['暴食但不催吐，常合併肥胖', { a: 'bed', o: ['an', 'bn', 'bed'] }]],
+      done: ['[[厭食症：體重過輕、無月經、心搏過慢、低血壓、胎毛；營養復健慢慢增加熱量。暴食症：暴食加補償（催吐、瀉劑），體重常正常，低血鉀、牙齒酸蝕。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['BMI 25 的成人屬於', { a: 'w2', o: ['w1', 'w2', 'w3'] }, '。'],
+        ['與胰島素阻抗較相關的是', { a: 'and', o: ['and', 'gyn'] }, '肥胖。'],
+        ['極低熱量飲食容易造成', { a: 'gall', o: ['gall', 'kid'] }, '。'],
+        ['反覆暴食後催吐、體重多在正常範圍的是', { a: 'bn', o: ['an', 'bn'] }, '。'],
+        ['A BMI of 28 in Taiwan is', { a: 'w3', o: ['w2', 'w3'], lang: 'en' }, '.'],
+        ['Fat stored on hips and thighs is', { a: 'gyn', o: ['and', 'gyn'], lang: 'en' }, ' obesity.']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: DWT_M.h, force: 'en', svg: DWT_M.svg, blanks: DWT_M.b(),
+      intro: ['國人的體位判定，用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   膳食療養第 4 章：高血壓、高脂血症及心臟疾病
+   ====================================================================== */
+var DCV_M = SM([['收縮壓 < 120 且舒張壓 < 80', '< 120 and < 80', 'b1', 'E'], ['收縮壓 120～129、舒張壓 < 80', '120–129 and < 80', 'b2', 'E'], ['收縮壓 130～139 或舒張壓 80～89', '130–139 or 80–89', 'b3', 'E'], ['收縮壓 ≥ 140 或舒張壓 ≥ 90', '≥ 140 or ≥ 90', 'b4', 'E']],
+  { l: ['血壓（mmHg）', 'blood pressure'], r: ['分類（2017 ACC/AHA）', 'category'], dy: 56, lw: 170, lx: 94 });
+var DCV = { id: 'dcv', zh: '第 4 章 高血壓、高脂血症及心臟疾病', en: 'Hypertension, dyslipidemia and heart disease', alias: '血壓分類・DASH 飲食・鈉與鉀・降 LDL 的飲食・降三酸甘油酯・心臟衰竭限鈉限水與 B1・中風・發炎指標', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    b1: { zh: '正常', en: 'Normal' }, b2: { zh: '偏高', en: 'Elevated' }, b3: { zh: '第 1 期高血壓', en: 'Stage 1 hypertension' }, b4: { zh: '第 2 期高血壓', en: 'Stage 2 hypertension' },
+    k: { zh: '鉀', en: 'Potassium' }, na: { zh: '鈉', en: 'Sodium' },
+    sat: { zh: '減少飽和與反式脂肪', en: 'Cut saturated and trans fat' }, sug: { zh: '減少精製糖與酒精', en: 'Cut sugar and alcohol' },
+    sol: { zh: '水溶性纖維（燕麥、豆類）', en: 'Soluble fiber (oats, legumes)' }, ins: { zh: '非水溶性纖維（麥麩）', en: 'Insoluble fiber (bran)' },
+    coco: { zh: '椰子油', en: 'Coconut oil' }, ster: { zh: '植物固醇', en: 'Plant sterols' },
+    b1v: { zh: '維生素 B1', en: 'Thiamin' }, b12: { zh: '維生素 B12', en: 'Vitamin B12' },
+    isch: { zh: '缺血性（梗塞）', en: 'Ischemic' }, hem: { zh: '出血性', en: 'Hemorrhagic' },
+    up: { zh: '升高', en: 'Raises' }, dn: { zh: '降低', en: 'Lowers' }
+  },
+  levels: [
+    { t: '先看全貌：血壓分類', kind: 'ov', h: DCV_M.h, svg: DCV_M.svg, blanks: DCV_M.b(),
+      intro: ['依 2017 年美國 ACC/AHA 指引（國考常用）：收縮壓 < 120 且舒張壓 < 80 為正常；收縮壓 120～129 且舒張壓 < 80 為偏高；收縮壓 130～139 或舒張壓 80～89 為第 1 期；收縮壓 ≥ 140 或舒張壓 ≥ 90 為第 2 期。收縮壓與舒張壓分屬不同等級時，取較高的那一級。',
+        '台灣 2022 年高血壓指引也把診斷與治療目標定在 130/80 mmHg。',
+        '高血壓的危險因子：年齡、家族史、肥胖、高鈉低鉀飲食、飲酒、缺乏運動、吸菸、壓力。'],
+      done: ['[[血壓分類：正常 < 120/80；偏高 120～129/< 80；第 1 期 130～139 或 80～89；第 2 期 ≥ 140 或 ≥ 90。兩者不同級取較高級。]]'] },
+    { t: '高血壓的飲食：DASH 與減鈉', kind: 'list',
+      intro: ['得舒飲食（DASH）：多蔬菜水果、低脂乳品、全穀、堅果、豆類、魚與禽肉，少紅肉、甜食與含糖飲料；富含鉀、鎂、鈣與纖維，飽和脂肪低。腎功能不佳、需要限鉀的人不適用。',
+        '減鈉：國人建議每天鈉 2,400 毫克以下，高血壓者常建議再降到約 1,500～2,300 毫克；加工品、醃漬物、湯頭、醬料是主要來源。鉀可以增加鈉排出、舒張血管並抑制腎素—血管張力素系統。',
+        '其他：減重（每減 1 公斤血壓約降 1 mmHg）、限酒、每週 150 分鐘中等強度的有氧運動。衛教時先處理最容易改變、效果最大的項目。'],
+      listTitle: '是哪一個',
+      list: [['得舒飲食富含、可降血壓的礦物質', { a: 'k', o: ['k', 'na'] }], ['高血壓要限制的礦物質', { a: 'na', o: ['k', 'na'] }]],
+      countsTitle: '數字', counts: [['國人每日鈉建議上限（mg）', '2,400', ['1,500', '2,000', '2,400', '3,000']], ['每週中等強度有氧運動至少（分鐘）', '150', ['60', '90', '150', '300']]],
+      done: ['[[DASH：多蔬果、低脂乳品、全穀、堅果，富含鉀鎂鈣纖維，低飽和脂肪；腎病限鉀者不適用。]]', '[[減鈉（每日 < 2,400 mg）、減重、限酒、每週 150 分鐘運動。]]'] },
+    { t: '血脂異常', kind: 'list',
+      intro: ['降 LDL 膽固醇：飽和脂肪減到總熱量 7～10% 以下、避免反式脂肪（人造奶油、酥油、部分氫化油）；增加水溶性纖維（燕麥、豆類、蔬果，每天 10～25 公克）；每天約 2 公克植物固醇或固烷醇。椰子油富含飽和脂肪酸，會升高 LDL。',
+        '降三酸甘油酯：減少精製糖、含糖飲料（尤其果糖）與酒精，減重，增加 n-3 脂肪酸（魚油）。',
+        '動脈粥狀硬化的危險因子：高 LDL、低 HDL、高血壓、糖尿病、吸菸、肥胖、年齡、家族史。發炎指標如 C 反應蛋白、纖維蛋白原，以及腸道菌代謝膽鹼產生的氧化三甲胺（TMAO），都與心血管風險相關。'],
+      listTitle: '是哪一個',
+      list: [['高 LDL 的主要飲食對策', { a: 'sat', o: ['sat', 'sug'] }], ['高三酸甘油酯的主要飲食對策', { a: 'sug', o: ['sat', 'sug'] }], ['能降血膽固醇的纖維', { a: 'sol', o: ['sol', 'ins'] }],
+        ['每天 2 公克可降 LDL', { a: 'ster', o: ['ster', 'coco'] }], ['椰子油對 LDL', { a: 'up', o: ['up', 'dn'] }]],
+      done: ['[[降 LDL：減飽和（< 7～10%）與反式脂肪、增加水溶性纖維、植物固醇 2 g/天。降 TG：減糖、果糖與酒精，減重，n-3 脂肪酸。]]'] },
+    { t: '心臟衰竭與中風', kind: 'list',
+      intro: ['心臟衰竭：限鈉（常見每天 2～3 公克）以減少水分滯留，嚴重者限水（約每天 1.5～2 公升）；少量多餐減少心臟負擔；每天量體重，短期增加 1～2 公斤表示水分滯留。',
+        '長期用環利尿劑會增加 B1 從尿中流失，B1 缺乏使心臟衰竭惡化；也要注意鉀與鎂的流失。鈣補充劑要謹慎，以免心律不整。嚴重者會出現心臟惡病質。',
+        '中風分缺血性（腦梗塞，最常見）與出血性（腦出血、蜘蛛網膜下腔出血）。危險因子以高血壓最重要，其他有心房顫動、糖尿病、血脂異常、吸菸。'],
+      listTitle: '是哪一個',
+      list: [['環利尿劑容易造成缺乏、使心衰惡化的維生素', { a: 'b1v', o: ['b1v', 'b12'] }], ['最常見的中風類型', { a: 'isch', o: ['isch', 'hem'] }]],
+      done: ['[[心臟衰竭：限鈉、必要時限水、少量多餐；注意利尿劑造成 B1、鉀、鎂流失。]]', '[[中風以缺血性最常見；最重要的危險因子是高血壓。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['血壓 142/86 mmHg 屬於', { a: 'b4', o: ['b3', 'b4'] }, '。'],
+        ['得舒飲食富含', { a: 'k', o: ['k', 'na'] }, '，腎功能差需限鉀者不適用。'],
+        ['可以降低血膽固醇的是', { a: 'sol', o: ['sol', 'ins'] }, '。'],
+        ['心臟衰竭病人使用環利尿劑，要注意', { a: 'b1v', o: ['b1v', 'b12'] }, '缺乏。'],
+        ['BP 125/78 mmHg is', { a: 'b2', o: ['b1', 'b2'], lang: 'en' }, '.'],
+        ['High triglycerides: first', { a: 'sug', o: ['sat', 'sug'], lang: 'en' }, '.']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: DCV_M.h, force: 'en', svg: DCV_M.svg, blanks: DCV_M.b(),
+      intro: ['血壓分類，用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   膳食療養第 5 章（一）：消化道疾病
+   ====================================================================== */
+var DGI_M = SM([['胃食道逆流', 'GERD', 'g1', 'H'], ['胃切除後的傾食症候群', 'Dumping syndrome', 'g2', 'H'], ['乳糜瀉', 'Celiac disease', 'g3', 'H'], ['憩室炎急性期', 'Acute diverticulitis', 'g4', 'H'],
+  ['憩室症（沒有發炎）', 'Diverticulosis', 'g5', 'H'], ['大腸激躁症', 'Irritable bowel syndrome', 'g6', 'H']],
+  { l: ['疾病', 'disease'], r: ['飲食重點', 'diet'], dy: 50, rw: 184 });
+var DGI = { id: 'dgi', zh: '第 5 章（一）消化道疾病', en: 'Gastrointestinal disease', alias: '胃食道逆流・消化性潰瘍・傾食症候群・乳糜瀉・憩室・低 FODMAP・發炎性腸道疾病・短腸症・腹瀉與便秘', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    g1: { zh: '少量多餐、餐後 2～3 小時不躺', en: 'Small meals, stay upright after eating' }, g2: { zh: '少量多餐、乾濕分開、少單醣', en: 'Small dry meals, fluids between, less sugar' },
+    g3: { zh: '終生無麩質', en: 'Lifelong gluten-free' }, g4: { zh: '清流質或低渣，讓腸道休息', en: 'Clear liquid or low residue' }, g5: { zh: '高纖維', en: 'High fiber' }, g6: { zh: '低 FODMAP 飲食', en: 'Low-FODMAP diet' },
+    gu: { zh: '胃潰瘍：進食後疼痛', en: 'Gastric ulcer: pain after eating' }, du: { zh: '十二指腸潰瘍：空腹痛、進食緩解', en: 'Duodenal ulcer: pain eased by food' },
+    early: { zh: '早發性：飯後 10～30 分鐘', en: 'Early: 10–30 min after meals' }, late: { zh: '晚發性：飯後 1～3 小時低血糖', en: 'Late: hypoglycemia 1–3 h after' },
+    wheat: { zh: '小麥、大麥、黑麥', en: 'Wheat, barley, rye' }, rice: { zh: '米、玉米、蕎麥', en: 'Rice, corn, buckwheat' },
+    fod: { zh: '在 FODMAP 限制內', en: 'Restricted in low FODMAP' }, nfod: { zh: '不在限制內', en: 'Not restricted' },
+    b12: { zh: '維生素 B12 與膽鹽吸收不良', en: 'B12 and bile salt malabsorption' }, oxa: { zh: '草酸鈣腎結石', en: 'Calcium oxalate stones' }
+  },
+  levels: [
+    { t: '先看全貌：各種消化道疾病的飲食', kind: 'ov', h: DGI_M.h, svg: DGI_M.svg, blanks: DGI_M.b(),
+      intro: ['消化道疾病的飲食調整，主要在三件事：餐次與份量、纖維（渣）的多寡、避開會引起症狀的成分。',
+        '胃食道逆流：下食道括約肌鬆弛，少量多餐、避免過飽、餐後 2～3 小時不要躺、少高脂、巧克力、咖啡因、酒精、薄荷；過重者減重。',
+        '憩室：沒發炎的憩室症要高纖維，預防憩室形成；憩室炎急性期要讓腸道休息，清流質或低渣，好轉後再逐步增加纖維。大腸激躁症可以試低 FODMAP 飲食。'],
+      done: ['[[胃食道逆流：少量多餐、餐後不躺、少高脂與刺激物。憩室症高纖；憩室炎急性期低渣。乳糜瀉終生無麩質。大腸激躁症低 FODMAP。]]'] },
+    { t: '消化性潰瘍與胃切除後', kind: 'list',
+      intro: ['消化性潰瘍主因是幽門螺旋桿菌與非類固醇抗發炎藥（NSAIDs）。胃潰瘍常在進食後疼痛；十二指腸潰瘍常在空腹時痛，進食後緩解。飲食上規律進食，避開會引起不適的食物（濃茶、咖啡、酒、辛辣）；「喝牛奶護胃」已不建議，牛奶反而刺激胃酸。',
+        '胃切除後的傾食症候群：食物太快進入小腸。早發性在飯後 10～30 分鐘，高張的食糜把水分拉進腸腔，腹脹、腹瀉、心悸、冒汗；晚發性在飯後 1～3 小時，醣類快速吸收引起胰島素大量分泌，造成低血糖。',
+        '飲食：少量多餐、乾濕分開（湯與飲料在兩餐之間、餐後 30～60 分鐘再喝）、避免單醣與甜食，增加蛋白質、脂肪與水溶性纖維，飯後躺一下延緩排空。'],
+      listTitle: '是哪一個',
+      list: [['進食後疼痛', { a: 'gu', o: ['gu', 'du'] }], ['空腹痛，吃東西後緩解', { a: 'du', o: ['gu', 'du'] }], ['高張食糜把水拉進腸腔，腹瀉心悸', { a: 'early', o: ['early', 'late'] }], ['胰島素分泌過多造成低血糖', { a: 'late', o: ['early', 'late'] }]],
+      done: ['[[胃潰瘍進食後痛；十二指腸潰瘍空腹痛、進食緩解。不再建議以牛奶護胃。]]', '[[傾食症候群：早發性（10～30 分鐘，滲透壓）、晚發性（1～3 小時，低血糖）。少量多餐、乾濕分開、避免單醣、增加蛋白質與脂肪。]]'] },
+    { t: '乳糜瀉、FODMAP 與發炎性腸道疾病', kind: 'list',
+      intro: ['乳糜瀉是對麩質（麥膠蛋白）的自體免疫反應，破壞小腸絨毛，要終生無麩質：排除小麥、大麥、黑麥及其製品；燕麥本身不含麩質但常受污染，要選認證的。米、玉米、蕎麥、小米、馬鈴薯可以吃。',
+        'FODMAP 是可發酵的寡醣（果聚醣、半乳寡糖）、雙醣（乳糖）、單醣（過量的果糖）與多元醇（糖醇），在腸道被發酵產氣、吸水，誘發大腸激躁症症狀。纖維素不被大量發酵，不在限制之內。',
+        '發炎性腸道疾病：克隆氏症可侵犯整個消化道（常見迴腸末端），潰瘍性結腸炎侷限在大腸。急性期低渣、少量多餐，注意貧血與營養素缺乏；有狹窄時要低纖維避免阻塞。'],
+      listTitle: '是哪一個',
+      list: [['乳糜瀉要排除的穀類', { a: 'wheat', o: ['wheat', 'rice'] }], ['乳糜瀉可以吃的', { a: 'rice', o: ['wheat', 'rice'] }], ['果糖、糖醇、半乳寡糖', { a: 'fod', o: ['fod', 'nfod'] }], ['纖維素', { a: 'nfod', o: ['fod', 'nfod'] }]],
+      done: ['[[乳糜瀉：排除小麥、大麥、黑麥（燕麥要選無污染認證）。低 FODMAP 限制寡醣、雙醣（乳糖）、單醣（過量果糖）、多元醇。]]'] },
+    { t: '短腸症與腹瀉便秘', kind: 'list',
+      intro: ['小腸切除超過 50%（或剩不到約 200 公分）才會出現短腸症。迴腸末端負責 B12 與膽鹽吸收，切除後 B12 缺乏、膽鹽流失、脂肪吸收不良；腸道中的鈣與脂肪酸結合，草酸就被大量吸收，容易形成草酸鈣腎結石，所以要低草酸。保留結腸的人，結腸還能吸收水分與短鏈脂肪酸。',
+        '小腸細菌過度增生：細菌在小腸發酵造成脹氣腹瀉，並消耗 B12（葉酸反而可能升高）。',
+        '腹瀉先補水分與電解質，急性期低渣低脂，暫時減少乳糖；便秘增加纖維（每天 25～35 公克）、水分與運動。滲透性瀉劑（乳果糖、氧化鎂）把水留在腸道；刺激性瀉劑刺激腸蠕動；膨脹性瀉劑增加糞便體積。'],
+      listTitle: '是哪一個',
+      list: [['迴腸末端切除後', { a: 'b12', o: ['b12', 'oxa'] }], ['脂肪吸收不良時，腸道鈣被脂肪酸結合，增加', { a: 'oxa', o: ['b12', 'oxa'] }]],
+      countsTitle: '數字', counts: [['小腸切除超過約百分之幾才會有短腸症', '50', ['10', '30', '50', '90']]],
+      done: ['[[短腸症：切除 > 50%；迴腸末端切除 → B12、膽鹽吸收不良，脂肪痢，草酸吸收增加而易形成腎結石（要低草酸）。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['憩室炎急性期的飲食是', { a: 'g4', o: ['g4', 'g5'] }, '。'],
+        ['胃切除後飯後 1～3 小時頭暈冒冷汗，是', { a: 'late', o: ['early', 'late'] }, '。'],
+        ['乳糜瀉病人要避免', { a: 'wheat', o: ['wheat', 'rice'] }, '。'],
+        ['纖維素', { a: 'nfod', o: ['fod', 'nfod'] }, '。'],
+        ['Duodenal ulcer pain is typically', { a: 'du', o: ['gu', 'du'], lang: 'en' }, '.'],
+        ['Diverticulosis without inflammation needs a', { a: 'g5', o: ['g4', 'g5'], lang: 'en' }, ' diet.']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: DGI_M.h, force: 'en', svg: DGI_M.svg, blanks: DGI_M.b(),
+      intro: ['各種消化道疾病的飲食，用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   膳食療養第 5 章（二）：肝、膽、胰臟疾病
+   ====================================================================== */
+var DLV_M = SM([['脂肪肝', 'Fatty liver', 'l1', 'H'], ['肝硬化（無腦病變）', 'Cirrhosis', 'l2', 'E'], ['腹水', 'Ascites', 'l3', 'I'], ['食道靜脈曲張', 'Esophageal varices', 'l4', 'H'], ['肝性腦病變', 'Hepatic encephalopathy', 'l5', 'E']],
+  { l: ['狀況', 'condition'], r: ['飲食重點', 'diet'], dy: 54, rw: 184 });
+var DLV = { id: 'dlv', zh: '第 5 章（二）肝、膽、胰臟疾病', en: 'Liver, gallbladder and pancreas', alias: '脂肪肝減重・肝硬化熱量與蛋白質・睡前點心・腹水限鈉・肝性腦病變・膽結石危險因子・膽囊切除後・胰臟炎', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    l1: { zh: '減重 7～10%、少果糖與酒', en: 'Lose 7–10%, less fructose and alcohol' }, l2: { zh: '蛋白質 1.2～1.5 g/kg、睡前點心', en: 'Protein 1.2–1.5 g/kg, bedtime snack' }, l3: { zh: '限鈉（每天約 2 公克）', en: 'Sodium ~2 g/day' },
+    l4: { zh: '避免尖硬粗糙食物', en: 'Avoid hard, sharp foods' }, l5: { zh: '不長期限制蛋白質', en: 'No long-term protein restriction' },
+    sup: { zh: '被抑制', en: 'Suppressed' }, act: { zh: '被活化', en: 'Activated' },
+    f: { zh: '女性', en: 'Female' }, m: { zh: '男性', en: 'Male' },
+    nolow: { zh: '逐漸恢復一般飲食', en: 'Gradually return to normal diet' }, lifelow: { zh: '終生低脂', en: 'Lifelong low fat' },
+    early: { zh: '可以就盡早由口進食', en: 'Feed orally early when tolerated' }, starve: { zh: '長期禁食', en: 'Prolonged fasting' },
+    enzy: { zh: '隨餐服用胰酵素', en: 'Pancreatic enzymes with meals' }
+  },
+  levels: [
+    { t: '先看全貌：肝臟疾病的飲食', kind: 'ov', h: DLV_M.h, svg: DLV_M.svg, blanks: DLV_M.b(),
+      intro: ['脂肪肝：逐步減重 7～10% 可明顯改善，減少精製糖、含糖飲料（果糖）、油炸與酒精。',
+        '肝硬化常合併營養不良與肌少症：熱量約每公斤 30～35 大卡，蛋白質 1.2～1.5 公克；少量多餐，加一份以醣類為主的睡前點心，減少夜間肌肉分解。完全禁酒。',
+        '有腹水限鈉（約每天 2 公克）；有食道靜脈曲張避免魚刺、骨頭、堅果碎片等尖硬食物。肝性腦病變（血氨高）不建議長期限制蛋白質，用乳果糖等藥物降血氨，可多用植物性與乳品蛋白、補充支鏈胺基酸。'],
+      done: ['[[肝硬化：熱量 30～35 kcal/kg、蛋白質 1.2～1.5 g/kg、少量多餐加睡前點心；腹水限鈉；靜脈曲張避免尖硬食物；肝性腦病變不長期限蛋白質。]]'] },
+    { t: '肝硬化腹水的成因', kind: 'list',
+      intro: ['門靜脈高壓使液體從血管漏到腹腔；肝臟合成白蛋白減少，血漿膠體滲透壓下降。',
+        '有效循環血量下降，反而活化腎素—血管張力素—醛固酮系統，抗利尿激素也增加，腎臟留住鈉和水，腹水越積越多。所以要限鈉，並常合併利尿劑。'],
+      listTitle: '是哪一個',
+      list: [['肝硬化時腎素與醛固酮', { a: 'act', o: ['sup', 'act'] }]],
+      done: ['[[腹水成因：門靜脈高壓、低白蛋白、RAAS 活化與抗利尿激素增加使鈉水滯留。]]'] },
+    { t: '膽囊疾病', kind: 'list',
+      intro: ['膽結石的危險因子：女性、肥胖、懷孕、年齡增加、快速減重、高脂飲食、長期禁食（膽囊不收縮、膽汁淤積）、克隆氏症（迴腸病變使膽鹽流失）。',
+        '急性膽囊炎依醫囑暫停進食，恢復期從清流質逐步進展；慢性膽囊炎採較低脂飲食。膽囊切除後膽汁直接流入腸道，短期內少量多餐、低脂，之後可逐漸恢復一般飲食，不需終生低脂。'],
+      listTitle: '是哪一個',
+      list: [['膽結石較多見於', { a: 'f', o: ['f', 'm'] }], ['膽囊切除術後', { a: 'nolow', o: ['nolow', 'lifelow'] }], ['會造成膽汁淤積的', { a: 'starve', o: ['starve', 'early'] }]],
+      done: ['[[膽結石危險因子：女性、肥胖、懷孕、快速減重、高脂、長期禁食、克隆氏症。膽囊切除後不需終生低脂。]]'] },
+    { t: '胰臟炎', kind: 'list',
+      intro: ['急性胰臟炎：輕度者在疼痛緩解、可以耐受時就盡早由口進食低脂飲食，不必長期禁食；重症依醫囑用腸道營養（可放到空腸），比靜脈營養好。',
+        '慢性胰臟炎：外分泌不足造成脂肪痢與脂溶性維生素缺乏，要隨餐服用胰酵素、少量多餐、完全禁酒；內分泌也受損時會合併糖尿病。'],
+      listTitle: '怎麼處理',
+      list: [['輕度急性胰臟炎疼痛緩解後', { a: 'early', o: ['early', 'starve'] }], ['慢性胰臟炎脂肪痢', { a: 'enzy', o: ['enzy', 'starve'] }]],
+      done: ['[[急性胰臟炎：可耐受就盡早由口進食，重症優先腸道營養。慢性胰臟炎：胰酵素隨餐、禁酒、注意脂溶性維生素與糖尿病。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['肝硬化病人的蛋白質約', { a: 'l2', o: ['l2', 'l5'] }, '。'],
+        ['肝硬化時腎素與醛固酮', { a: 'act', o: ['sup', 'act'] }, '，是腹水的原因之一。'],
+        ['膽囊切除後', { a: 'nolow', o: ['nolow', 'lifelow'] }, '。'],
+        ['有食道靜脈曲張的病人', { a: 'l4', o: ['l3', 'l4'] }, '。'],
+        ['Hepatic encephalopathy:', { a: 'l5', o: ['l5', 'l1'], lang: 'en' }, '.'],
+        ['Chronic pancreatitis with steatorrhea needs', { a: 'enzy', o: ['enzy', 'starve'], lang: 'en' }, '.']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: DLV_M.h, force: 'en', svg: DLV_M.svg, blanks: DLV_M.b(),
+      intro: ['肝臟疾病的飲食，用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   膳食療養第 6 章：糖尿病
+   ====================================================================== */
+var DDM_M = SM([['空腹血糖', 'Fasting glucose', 'x1', 'H'], ['口服葡萄糖耐量 2 小時', '2-h OGTT', 'x2', 'H'], ['糖化血色素', 'HbA1c', 'x3', 'H'], ['隨機血糖（加上典型症狀）', 'Random glucose + symptoms', 'x4', 'H']],
+  { l: ['檢查', 'test'], r: ['達到就診斷為糖尿病', 'diabetes if'], dy: 56 });
+var DDM = { id: 'ddm', zh: '第 6 章 糖尿病', en: 'Diabetes mellitus', alias: '診斷標準・糖尿病前期・醣類計數與胰島素醣類比・胰島素種類・口服藥・低血糖 15 法則・DKA 與 HHS・黎明與 Somogyi・妊娠糖尿病', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    x1: { zh: '≥ 126 mg/dL', en: '≥ 126 mg/dL' }, x2: { zh: '≥ 200 mg/dL', en: '≥ 200 mg/dL' }, x3: { zh: '≥ 6.5%', en: '≥ 6.5%' }, x4: { zh: '≥ 200 mg/dL（加上症狀）', en: '≥ 200 mg/dL with symptoms' },
+    pre: { zh: '糖尿病前期', en: 'Prediabetes' }, dm: { zh: '糖尿病', en: 'Diabetes' }, nor: { zh: '正常', en: 'Normal' },
+    rapid: { zh: '速效（餐前 0～15 分鐘打）', en: 'Rapid-acting (0–15 min before meal)' }, reg: { zh: '短效（餐前 30 分鐘打）', en: 'Regular (30 min before meal)' }, nph: { zh: '中效（NPH）', en: 'Intermediate (NPH)' }, long: { zh: '長效，無明顯高峰', en: 'Long-acting, peakless' },
+    su: { zh: '刺激胰島素分泌', en: 'Stimulates insulin secretion' }, met: { zh: '減少肝臟葡萄糖生成', en: 'Reduces hepatic glucose output' }, aca: { zh: '抑制 α-葡萄糖苷酶、延緩醣類吸收', en: 'Inhibits α-glucosidase' }, tzd: { zh: '增加胰島素敏感度', en: 'Increases insulin sensitivity' },
+    dka: { zh: '糖尿病酮酸中毒（DKA）', en: 'Diabetic ketoacidosis' }, hhs: { zh: '高血糖高滲透壓狀態（HHS）', en: 'Hyperosmolar hyperglycemic state' },
+    dawn: { zh: '黎明現象', en: 'Dawn phenomenon' }, som: { zh: 'Somogyi 現象', en: 'Somogyi effect' },
+    g15: { zh: '吃 15 公克快速吸收的醣，15 分鐘後再測', en: '15 g fast carbs, recheck in 15 min' }, meal: { zh: '馬上吃一頓正餐', en: 'Eat a full meal at once' }
+  },
+  levels: [
+    { t: '先看全貌：糖尿病的診斷', kind: 'ov', h: DDM_M.h, svg: DDM_M.svg, blanks: DDM_M.b(),
+      intro: ['糖尿病的診斷：空腹血糖 ≥ 126 mg/dL；75 公克口服葡萄糖耐量試驗 2 小時 ≥ 200 mg/dL；糖化血色素 ≥ 6.5%；或有典型症狀（多吃、多喝、多尿、體重減輕）加上隨機血糖 ≥ 200 mg/dL。沒有症狀時要再驗一次確認。',
+        '糖尿病前期：空腹血糖 100～125 mg/dL（空腹血糖偏高）、OGTT 2 小時 140～199 mg/dL（葡萄糖耐受不良）、糖化血色素 5.7～6.4%。前期的人減重 5～7%、每週 150 分鐘運動，可以延緩進展成糖尿病。',
+        '多數成人的控制目標：糖化血色素 < 7%。'],
+      done: ['[[診斷：空腹 ≥ 126、OGTT 2 小時 ≥ 200、A1C ≥ 6.5%、症狀加隨機 ≥ 200。前期：空腹 100～125、2 小時 140～199、A1C 5.7～6.4%。]]'] },
+    { t: '是不是糖尿病', kind: 'list',
+      intro: ['照上一關的標準判斷下面的檢驗值。'],
+      listTitle: '判定',
+      list: [['空腹血糖 112 mg/dL', { a: 'pre', o: ['nor', 'pre', 'dm'] }], ['空腹血糖 130 mg/dL', { a: 'dm', o: ['nor', 'pre', 'dm'] }], ['糖化血色素 6.0%', { a: 'pre', o: ['nor', 'pre', 'dm'] }], ['糖化血色素 6.8%', { a: 'dm', o: ['nor', 'pre', 'dm'] }],
+        ['OGTT 2 小時 126 mg/dL', { a: 'nor', o: ['nor', 'pre', 'dm'] }], ['OGTT 2 小時 165 mg/dL', { a: 'pre', o: ['nor', 'pre', 'dm'] }]],
+      done: ['OGTT 2 小時的 126 mg/dL 低於 140，屬正常；不要和空腹的 126 搞混。'] },
+    { t: '飲食、胰島素與藥物', kind: 'list',
+      intro: ['飲食：定時定量，醣類平均分配在各餐；1 份醣類約 15 公克（全榖雜糧 1 份、水果 1 份；乳品 1 份 12 公克）。使用胰島素的人可用胰島素醣類比計算餐前劑量，例如 1 單位對 10 公克醣，一餐吃 60 公克醣就打 6 單位。',
+        '胰島素：速效（lispro、aspart）餐前 0～15 分鐘打；短效（regular）餐前約 30 分鐘；中效（NPH）約 12～16 小時；長效（glargine、detemir）作用約 24 小時、沒有明顯高峰，當基礎胰島素。',
+        '口服藥：磺醯脲類刺激胰島素分泌（易低血糖）；雙胍類（metformin）減少肝臟葡萄糖生成（長期使用注意 B12）；阿卡波糖抑制 α-葡萄糖苷酶，延緩醣類吸收；噻唑烷二酮類增加胰島素敏感度。'],
+      listTitle: '是哪一個',
+      list: [['速效胰島素', { a: 'rapid', o: ['rapid', 'reg', 'nph', 'long'] }], ['glargine', { a: 'long', o: ['rapid', 'reg', 'nph', 'long'] }],
+        ['磺醯脲類', { a: 'su', o: ['su', 'met', 'aca', 'tzd'] }], ['metformin', { a: 'met', o: ['su', 'met', 'aca', 'tzd'] }], ['acarbose', { a: 'aca', o: ['su', 'met', 'aca', 'tzd'] }], ['噻唑烷二酮類', { a: 'tzd', o: ['su', 'met', 'aca', 'tzd'] }]],
+      countsTitle: '算算看', counts: [['胰島素醣類比 1：10，一餐 60 公克醣，打幾單位', '6', ['4', '6', '10', '60']]],
+      done: ['[[速效胰島素餐前 0～15 分鐘、短效約 30 分鐘、長效無高峰。磺醯脲類促分泌；metformin 減少肝糖新生；acarbose 延緩醣類吸收；TZD 增加敏感度。]]'] },
+    { t: '急性併發症與血糖監測', kind: 'list',
+      intro: ['低血糖（< 70 mg/dL，冒冷汗、發抖、心悸）：用 15 法則，吃 15 公克快速吸收的醣（含糖飲料約 120～150 mL、方糖 3～4 顆），15 分鐘後再測，仍低就再吃一次，回穩後吃點心或正餐。',
+        '糖尿病酮酸中毒（DKA）多見於第 1 型：胰島素嚴重不足，脂肪大量分解產生酮體，代謝性酸中毒、呼吸有水果味。高血糖高滲透壓狀態（HHS）多見於年長的第 2 型：血糖常 > 600 mg/dL、滲透壓很高、嚴重脫水，但酮體很少。',
+        '清晨高血糖有兩種：黎明現象是清晨生長激素、皮質醇上升使血糖升高；Somogyi 現象是半夜先低血糖，反彈造成清晨高血糖。分辨的方法是測凌晨 2～3 點的血糖。使用胰島素的人通常在三餐與點心前監測血糖。'],
+      listTitle: '是哪一個',
+      list: [['低血糖的處理', { a: 'g15', o: ['g15', 'meal'] }], ['第 1 型、酮體多、代謝性酸中毒', { a: 'dka', o: ['dka', 'hhs'] }], ['第 2 型年長者、血糖 > 600、酮體很少', { a: 'hhs', o: ['dka', 'hhs'] }],
+        ['半夜低血糖後清晨反彈高血糖', { a: 'som', o: ['dawn', 'som'] }], ['清晨激素上升造成高血糖，半夜不低', { a: 'dawn', o: ['dawn', 'som'] }]],
+      done: ['[[低血糖 15 法則。DKA：第 1 型、酮酸中毒；HHS：第 2 型、極高血糖與高滲透壓、少酮體。]]', '[[黎明現象：清晨激素；Somogyi 現象：夜間低血糖後反彈。測凌晨 2～3 點血糖分辨。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['空腹血糖 112 mg/dL 屬於', { a: 'pre', o: ['nor', 'pre', 'dm'] }, '。'],
+        ['acarbose 的作用是', { a: 'aca', o: ['su', 'aca'] }, '。'],
+        ['半夜低血糖、清晨反彈高血糖是', { a: 'som', o: ['dawn', 'som'] }, '。'],
+        ['血糖 55 mg/dL 時應', { a: 'g15', o: ['g15', 'meal'] }, '。'],
+        ['HbA1c diagnostic cut-off for diabetes:', { a: 'x3', o: ['x1', 'x3'], lang: 'en' }, '.'],
+        ['Ketones and acidosis in type 1 diabetes:', { a: 'dka', o: ['dka', 'hhs'], lang: 'en' }, '.']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: DDM_M.h, force: 'en', svg: DDM_M.svg, blanks: DDM_M.b(),
+      intro: ['糖尿病的診斷標準，用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   膳食療養第 7 章：腎臟疾病
+   ====================================================================== */
+var DRN_M = SM([['GFR ≥ 90', 'GFR ≥ 90', 'c1', 'I'], ['GFR 60～89', 'GFR 60–89', 'c2', 'I'], ['GFR 45～59', 'GFR 45–59', 'c3', 'I'], ['GFR 30～44', 'GFR 30–44', 'c4', 'I'], ['GFR 15～29', 'GFR 15–29', 'c5', 'I'], ['GFR < 15', 'GFR < 15', 'c6', 'I']],
+  { l: ['腎絲球過濾率（mL/min/1.73m²）', 'GFR'], r: ['分期（KDIGO）', 'stage'], dy: 48 });
+var DRN = { id: 'drn', zh: '第 7 章 腎臟疾病', en: 'Kidney disease', alias: 'CKD 分期・未透析低蛋白・血液透析與腹膜透析・透析間體重・URR 與 Kt/V・鈉鉀磷・腎病症候群・腎結石・腎移植', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    c1: { zh: 'G1', en: 'G1' }, c2: { zh: 'G2', en: 'G2' }, c3: { zh: 'G3a', en: 'G3a' }, c4: { zh: 'G3b', en: 'G3b' }, c5: { zh: 'G4', en: 'G4' }, c6: { zh: 'G5（腎衰竭）', en: 'G5 (kidney failure)' },
+    p06: { zh: '0.6～0.8 g/kg', en: '0.6–0.8 g/kg' }, p12: { zh: '1.0～1.2 g/kg 以上', en: '≥ 1.0–1.2 g/kg' }, p08: { zh: '約 0.8 g/kg', en: '~0.8 g/kg' },
+    pd: { zh: '腹膜透析', en: 'Peritoneal dialysis' }, hd: { zh: '血液透析', en: 'Hemodialysis' },
+    keep: { zh: '維持正常鈣攝取', en: 'Keep normal calcium intake' }, lowca: { zh: '限制鈣', en: 'Restrict calcium' },
+    star: { zh: '楊桃', en: 'Star fruit' }, salt: { zh: '低鈉鹽', en: 'Salt substitute (KCl)' },
+    lowna: { zh: '低鈉', en: 'Low sodium' }, hina: { zh: '高鈉', en: 'High sodium' },
+    wsv: { zh: '水溶性維生素（B 群、C）', en: 'Water-soluble vitamins' }, fsv: { zh: '脂溶性維生素 A', en: 'Vitamin A' }
+  },
+  levels: [
+    { t: '先看全貌：慢性腎臟病分期', kind: 'ov', h: DRN_M.h, svg: DRN_M.svg, blanks: DRN_M.b(),
+      intro: ['慢性腎臟病是腎臟結構或功能異常持續 3 個月以上，依腎絲球過濾率（eGFR）分期：G1 ≥ 90、G2 60～89、G3a 45～59、G3b 30～44、G4 15～29、G5 < 15。同時也看蛋白尿（白蛋白尿）的程度。',
+        'G1、G2 要有腎損傷證據（例如蛋白尿）才算；GFR 要持續三個月在同一範圍。例：GFR 42、三個月後 40，就是 G3b。'],
+      done: ['[[CKD 分期：G1 ≥ 90、G2 60～89、G3a 45～59、G3b 30～44、G4 15～29、G5 < 15（mL/min/1.73m²）。]]'] },
+    { t: '蛋白質與熱量', kind: 'list',
+      intro: ['未透析的 CKD 第 3～5 期：蛋白質每公斤 0.6～0.8 公克，其中一半以上選高生理價值蛋白質；熱量要足夠，約每公斤 30～35 大卡，否則肌肉分解反而增加含氮廢物。可用低氮澱粉（冬粉、米苔目、西谷米、藕粉）補熱量。',
+        '透析後蛋白質需要量反而增加，因為透析會流失胺基酸：血液透析約每公斤 1.0～1.2 公克；腹膜透析流失更多，約 1.2～1.3 公克。腹膜透析液含葡萄糖，病人會從透析液吸收熱量，計算熱量時要扣除。',
+        '腎病症候群：大量蛋白尿、低白蛋白、高膽固醇、水腫。高蛋白會加重蛋白尿，蛋白質約每公斤 0.8 公克，限鈉控制水腫，低飽和脂肪與膽固醇。'],
+      listTitle: '蛋白質約多少',
+      list: [['CKD 第 3b 期、未透析', { a: 'p06', o: ['p06', 'p12', 'p08'] }], ['血液透析', { a: 'p12', o: ['p06', 'p12', 'p08'] }], ['腎病症候群', { a: 'p08', o: ['p06', 'p12', 'p08'] }], ['熱量要扣除透析液葡萄糖的是', { a: 'pd', o: ['pd', 'hd'] }], ['腎病症候群的鈉', { a: 'lowna', o: ['lowna', 'hina'] }]],
+      done: ['[[未透析 CKD 3～5 期蛋白質 0.6～0.8 g/kg；血液透析 1.0～1.2 g/kg；腹膜透析更高，並扣除透析液葡萄糖的熱量。熱量 30～35 kcal/kg。]]', '[[腎病症候群：蛋白質約 0.8 g/kg、低鈉、低膽固醇。]]'] },
+    { t: '水分、鈉鉀磷與透析指標', kind: 'list',
+      intro: ['水分常以「前一天尿量 ＋ 500～1,000 mL」估算；兩次血液透析之間的體重增加最好不超過乾體重的 3～5%（約 2～2.5 公斤）。乾體重是透析後沒有多餘水分時的體重。',
+        '鈉：少加鹽、少醃漬加工品；「低鈉鹽」是用鉀取代鈉，腎臟病人不可隨意使用。鉀高時蔬菜先切後汆燙、不喝湯汁。楊桃含神經毒素，腎臟病人禁吃。磷：少加工食品（磷酸鹽添加物）、內臟、堅果、乳品，磷結合劑隨餐吃。',
+        '透析會流失水溶性維生素（B 群、C）；維生素 A 反而容易累積，不要額外補。透析效率指標：尿素減少率 URR ≥ 65%、Kt/V ≥ 1.2。'],
+      listTitle: '是哪一個',
+      list: [['腎臟病人禁吃的水果', { a: 'star', o: ['star', 'salt'] }], ['以鉀取代鈉，腎病不可隨意使用', { a: 'salt', o: ['star', 'salt'] }], ['透析會流失', { a: 'wsv', o: ['wsv', 'fsv'] }]],
+      countsTitle: '數字', counts: [['血液透析的 URR 至少（%）', '65', ['50', '65', '80']], ['Kt/V 至少', '1.2', ['0.8', '1.2', '2.0']]],
+      done: ['[[水分 ＝ 尿量 ＋ 500～1,000 mL；透析間體重增加 < 乾體重 3～5%。URR ≥ 65%、Kt/V ≥ 1.2。]]', '[[楊桃禁吃；低鈉鹽含鉀不可隨意用；透析流失水溶性維生素。]]'] },
+    { t: '腎結石與腎移植', kind: 'list',
+      intro: ['草酸鈣結石最常見。預防：多喝水，使每天尿量 2～2.5 公升以上；維持正常鈣攝取（鈣在腸道與草酸結合，減少草酸吸收；限鈣反而增加結石）；減少高草酸食物（菠菜、茶、堅果、可可）、鈉與動物性蛋白質；避免大量補充維生素 C。尿酸結石則要減少普林並鹼化尿液。',
+        '腎臟移植後使用類固醇與免疫抑制劑，常見高血糖、血脂異常、高血壓、體重增加與骨質流失；要注意食品衛生，避免葡萄柚（影響免疫抑制劑代謝）。'],
+      listTitle: '是哪一個',
+      list: [['預防草酸鈣結石復發，鈣應', { a: 'keep', o: ['keep', 'lowca'] }]],
+      done: ['[[草酸鈣結石：多喝水、維持正常鈣、減少草酸、鈉與動物蛋白。限鈣反而使草酸吸收增加。]]', '腎移植後：類固醇引起高血糖、高血脂、骨質流失；避免葡萄柚。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['GFR 42、三個月後 40，屬於', { a: 'c4', o: ['c3', 'c4', 'c5'] }, '。'],
+        ['未透析 CKD 第 4 期，蛋白質約', { a: 'p06', o: ['p06', 'p12'] }, '。'],
+        ['預防鈣結石，最不適當的是', { a: 'lowca', o: ['keep', 'lowca'] }, '。'],
+        ['腹膜透析病人計算熱量時要扣除透析液的葡萄糖，這是', { a: 'pd', o: ['pd', 'hd'] }, '的特點。'],
+        ['On hemodialysis, protein needs are', { a: 'p12', o: ['p06', 'p12'], lang: 'en' }, '.'],
+        ['GFR below 15 is', { a: 'c6', o: ['c5', 'c6'], lang: 'en' }, '.']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: DRN_M.h, force: 'en', svg: DRN_M.svg, blanks: DRN_M.b(),
+      intro: ['慢性腎臟病分期，用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   膳食療養第 8 章：腫瘤與癌症
+   ====================================================================== */
+var DCA_M = SM([['噁心、嘔吐', 'Nausea, vomiting', 'k1', 'H'], ['口腔黏膜炎', 'Mucositis', 'k2', 'H'], ['味覺改變、吃肉有金屬味', 'Taste change, metallic taste', 'k3', 'E'], ['早飽', 'Early satiety', 'k4', 'H'], ['白血球低下', 'Neutropenia', 'k5', 'T']],
+  { l: ['治療副作用', 'side effect'], r: ['飲食對策', 'strategy'], dy: 54, rw: 184 });
+var DCA = { id: 'dca', zh: '第 8 章 腫瘤與癌症', en: 'Cancer', alias: '癌症惡病質・代謝改變・Cori 循環・化放療副作用的飲食・PG-SGA・脫水徵兆・酒精與癌症', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    k1: { zh: '少量多餐、乾的食物、餐後頭抬高', en: 'Small dry meals, head up after eating' }, k2: { zh: '軟質、溫涼、不酸不辣', en: 'Soft, cool, not acidic or spicy' },
+    k3: { zh: '改用蛋、豆、魚，塑膠餐具', en: 'Use eggs, tofu, fish; plastic utensils' }, k4: { zh: '先吃高熱量高蛋白的，餐中少喝水', en: 'Energy-dense first, little fluid with meals' }, k5: { zh: '食物煮熟、注意衛生', en: 'Cook foods thoroughly, food safety' },
+    cach: { zh: '惡病質', en: 'Cachexia' }, starv: { zh: '單純飢餓', en: 'Simple starvation' },
+    cori: { zh: 'Cori 循環增加', en: 'Increased Cori cycle' }, keto: { zh: '酮體利用增加、節省蛋白質', en: 'Ketone use, protein sparing' },
+    pg: { zh: 'PG-SGA', en: 'PG-SGA' }, must: { zh: 'MUST', en: 'MUST' },
+    dry: { zh: '口乾、尿少色深、皮膚彈性差', en: 'Dry mouth, dark scanty urine, poor skin turgor' }, edem: { zh: '下肢水腫', en: 'Leg edema' },
+    g1: { zh: '第一級致癌物', en: 'Group 1 carcinogen' }, g3: { zh: '無法歸類', en: 'Not classifiable' }
+  },
+  levels: [
+    { t: '先看全貌：治療副作用的飲食對策', kind: 'ov', h: DCA_M.h, svg: DCA_M.svg, blanks: DCA_M.b(),
+      intro: ['化學治療與放射治療常帶來吃不下的問題。噁心嘔吐：少量多餐、選乾而清淡的食物，避免太甜太油，湯與飲料在兩餐之間喝，進食後頭部抬高約 30 分鐘。',
+        '口腔黏膜炎：軟質、溫涼的食物，避免酸、辣、粗糙；味覺改變、吃紅肉有金屬味：改用蛋、豆腐、魚、乳品，用塑膠餐具，加檸檬、香草提味；早飽：先吃高熱量高蛋白的部分，餐中少喝水。',
+        '白血球低下時感染風險高，食物要煮熟、注意食品衛生，避免生食。'],
+      done: ['[[噁心嘔吐：少量多餐、乾的清淡食物、湯水在兩餐之間、餐後頭抬高。黏膜炎：軟、涼、不酸辣。味覺改變：蛋豆魚、塑膠餐具。白血球低：煮熟、衛生。]]'] },
+    { t: '癌症惡病質', kind: 'list',
+      intro: ['惡病質是發炎細胞激素（如 TNF-α、IL-6）與腫瘤因子造成的代謝異常：骨骼肌與脂肪持續流失、食慾差、體重下降，單靠多吃無法完全逆轉。',
+        '和單純飢餓不同：飢餓時身體會降低代謝、用酮體節省蛋白質；惡病質則基礎代謝可能增加、蛋白質持續分解，肝臟急性期蛋白增加。腫瘤大量進行無氧糖解產生乳酸，肝臟再把乳酸合成葡萄糖（Cori 循環）消耗能量；胰島素阻抗與脂肪分解增加。',
+        '營養照護：早期篩檢與評估（癌症病人常用 PG-SGA）、足夠的熱量（約每公斤 25～30 大卡）與蛋白質（1.0～1.5 公克）、必要時口服營養品或管灌、適度運動。'],
+      listTitle: '是哪一個',
+      list: [['肌肉持續流失、單靠多吃無法逆轉', { a: 'cach', o: ['cach', 'starv'] }], ['身體降低代謝、用酮體節省蛋白質', { a: 'starv', o: ['cach', 'starv'] }], ['腫瘤造成的能量浪費', { a: 'cori', o: ['cori', 'keto'] }], ['癌症病人常用的評估工具，含活動功能', { a: 'pg', o: ['pg', 'must'] }]],
+      done: ['[[惡病質：發炎細胞激素造成肌肉與脂肪流失、Cori 循環增加、胰島素阻抗；與單純飢餓不同。PG-SGA 是癌症常用的評估工具。]]'] },
+    { t: '脫水與酒精', kind: 'list',
+      intro: ['嘔吐、腹瀉、吃喝太少的癌症病人容易脫水：口乾、尿量少且顏色深、皮膚彈性差、心跳快、頭暈、體重快速下降。',
+        '國際癌症研究機構（IARC）把含酒精飲料列為第一級致癌物，與口腔、咽喉、食道、肝、大腸直腸、乳癌有關；沒有安全的飲酒量。'],
+      listTitle: '是哪一個',
+      list: [['脫水的徵兆', { a: 'dry', o: ['dry', 'edem'] }], ['含酒精飲料的 IARC 分級', { a: 'g1', o: ['g1', 'g3'] }]],
+      done: ['[[脫水：口乾、尿少色深、皮膚彈性差、心跳快、體重快速下降。酒精是第一級致癌物。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['化療噁心嘔吐時，進食後', { a: 'k1', o: ['k1', 'k4'] }, '。'],
+        ['評估項目包括「活動狀態」的癌症營養評估工具是', { a: 'pg', o: ['pg', 'must'] }, '。'],
+        ['癌症惡病質時', { a: 'cori', o: ['cori', 'keto'] }, '，浪費能量。'],
+        ['吃紅肉有金屬味時，可', { a: 'k3', o: ['k3', 'k2'] }, '。'],
+        ['Muscle wasting not reversed by feeding alone:', { a: 'cach', o: ['cach', 'starv'], lang: 'en' }, '.'],
+        ['Alcoholic beverages are a', { a: 'g1', o: ['g1', 'g3'], lang: 'en' }, '.']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: DCA_M.h, force: 'en', svg: DCA_M.svg, blanks: DCA_M.b(),
+      intro: ['治療副作用的飲食對策，用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   膳食療養第 9 章：生理壓力（手術、創傷、燒傷、敗血症）
+   ====================================================================== */
+var DST_M = SM([['代謝率', 'Metabolic rate', 'm1', 'H'], ['主要燃料', 'Main fuel', 'm2', 'C'], ['酮體', 'Ketones', 'm3', 'C'], ['蛋白質分解與氮平衡', 'Protein breakdown', 'm4', 'E'], ['呼吸商', 'Respiratory quotient', 'm5', 'H']],
+  { l: ['重症壓力（相對於單純飢餓）', 'stress vs. starvation'], r: ['變化', 'change'], dy: 54, rw: 184 });
+var DST = { id: 'dst', zh: '第 9 章 生理壓力：手術、創傷、燒傷與敗血症', en: 'Metabolic stress', alias: '退潮期與漲潮期・壓力與飢餓的比較・重症熱量與蛋白質・燒傷輸液與營養・ERAS・腸瘻管・壓力性損傷', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    m1: { zh: '增加（高代謝）', en: 'Increased (hypermetabolic)' }, m2: { zh: '醣、脂、蛋白質混合', en: 'Mixed fuels' }, m3: { zh: '很少', en: 'Little' }, m4: { zh: '大量分解、負氮平衡', en: 'High breakdown, negative N balance' }, m5: { zh: '約 0.85（比飢餓高）', en: '~0.85 (higher than starvation)' },
+    ebb: { zh: '退潮期', en: 'Ebb phase' }, flow: { zh: '漲潮期', en: 'Flow phase' },
+    early: { zh: '24～48 小時內開始腸道營養', en: 'Start enteral feeding within 24–48 h' }, wait: { zh: '等完全穩定一週後再給', en: 'Wait a week' },
+    wt: { zh: '增加體重', en: 'Gaining weight' }, att: { zh: '減緩壓力代謝反應', en: 'Attenuating the stress response' },
+    pn: { zh: '靜脈營養，讓腸道休息', en: 'PN, rest the gut' }, ent: { zh: '腸道營養', en: 'Enteral nutrition' },
+    carb: { zh: '術前喝含醣飲料、術後早期進食', en: 'Carb loading, early feeding' }, npo: { zh: '術前前一晚起禁食', en: 'Nothing by mouth from midnight' }
+  },
+  levels: [
+    { t: '先看全貌：壓力代謝與單純飢餓', kind: 'ov', h: DST_M.h, svg: DST_M.svg, blanks: DST_M.b(),
+      intro: ['單純飢餓時，身體降低代謝率，逐漸改用脂肪與酮體當燃料，節省蛋白質，呼吸商約 0.7。',
+        '手術、創傷、燒傷、敗血症等重大壓力時，壓力激素（兒茶酚胺、皮質醇、升糖素）與發炎細胞激素讓代謝率上升；糖質新生增加、胰島素阻抗造成高血糖；骨骼肌大量分解提供胺基酸，負氮平衡；醣、脂、蛋白質混合使用，酮體很少，呼吸商約 0.85。',
+        '壓力反應分兩期：受傷後 24～48 小時的退潮期，代謝與循環低下；之後是漲潮期，高代謝、高分解。'],
+      done: ['[[壓力代謝：代謝率上升、糖質新生與胰島素阻抗、肌肉大量分解、負氮平衡、少酮體、呼吸商較飢餓高。單純飢餓：代謝下降、酮體增加、節省蛋白質。]]', '[[退潮期（24～48 小時，低代謝）→ 漲潮期（高代謝、高分解）。]]'] },
+    { t: '重症的營養目標', kind: 'list',
+      intro: ['重症營養的目標是減緩壓力代謝反應、調節免疫、預防氧化傷害、保存瘦體組織，不是增加體重；急性期過度餵食反而有害（高血糖、高碳酸血症、脂肪肝）。',
+        '熱量最好用間接熱量測定；沒有時常用每公斤 25～30 大卡。蛋白質每公斤 1.2～2.0 公克，燒傷可到 1.5～2.0 公克以上。',
+        '腸道可用時，血行動力穩定後 24～48 小時內開始腸道營養，維持腸道屏障。腸瘻管流出量每天超過 500 mL 屬高流量，通常改用靜脈營養讓腸道休息。'],
+      listTitle: '是哪一個',
+      list: [['重症營養治療不需考慮的目標', { a: 'wt', o: ['wt', 'att'] }], ['腸道可用的重症病人', { a: 'early', o: ['early', 'wait'] }], ['腸瘻管每天流出超過 500 mL', { a: 'pn', o: ['pn', 'ent'] }]],
+      countsTitle: '數字', counts: [['重症熱量（無間接熱量測定時）約每公斤幾大卡', '25～30', ['15～20', '25～30', '40～45']], ['重症蛋白質約每公斤幾公克', '1.2～2.0', ['0.6～0.8', '1.2～2.0', '3.0～4.0']]],
+      done: ['[[重症：熱量 25～30 kcal/kg（最好用間接熱量測定）、蛋白質 1.2～2.0 g/kg；24～48 小時內開始腸道營養；目標不是增加體重。]]'] },
+    { t: '燒傷、手術與傷口', kind: 'list',
+      intro: ['燒傷輸液復甦常用 Parkland 公式：每公斤體重每 %TBSA 給 4 mL（指引為 2～4 mL），一半在燒傷後 8 小時內給完，其餘在之後 16 小時。燒傷是代謝率增加最多的壓力之一，蛋白質與熱量需求都很高，要盡早腸道營養，並補充維生素 C、鋅等幫助傷口癒合。',
+        '加速術後康復（ERAS）：術前不長時間禁食，術前 2～3 小時可以喝含醣的清流質；術後早期進食、早期下床，減少胰島素阻抗與住院天數。',
+        '壓力性損傷（褥瘡）：熱量約每公斤 30～35 大卡、蛋白質 1.25～1.5 公克，足夠水分，視需要補充精胺酸、鋅、維生素 C。'],
+      listTitle: '是哪一個',
+      list: [['加速術後康復的做法', { a: 'carb', o: ['carb', 'npo'] }]],
+      countsTitle: '數字', counts: [['Parkland 公式：每公斤每 %TBSA 給幾 mL', '4', ['1', '2', '4', '8']], ['一半的輸液在燒傷後幾小時內給完', '8', ['4', '8', '12', '24']]],
+      done: ['[[Parkland：4 mL × 體重 × %TBSA，一半在 8 小時內。ERAS：術前含醣飲料、術後早期進食。壓力性損傷：30～35 kcal/kg、蛋白質 1.25～1.5 g/kg。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['與單純飢餓比，壓力下的呼吸商', { a: 'm5', o: ['m5', 'm3'] }, '。'],
+        ['重症營養治療最不需要考慮的是', { a: 'wt', o: ['wt', 'att'] }, '。'],
+        ['腸瘻管高流量時，通常改用', { a: 'pn', o: ['pn', 'ent'] }, '。'],
+        ['受傷後 24～48 小時、代謝低下的是', { a: 'ebb', o: ['ebb', 'flow'] }, '。'],
+        ['Under severe stress, protein breakdown is', { a: 'm4', o: ['m4', 'm3'], lang: 'en' }, '.'],
+        ['ERAS recommends', { a: 'carb', o: ['carb', 'npo'], lang: 'en' }, '.']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: DST_M.h, force: 'en', svg: DST_M.svg, blanks: DST_M.b(),
+      intro: ['壓力代謝的變化，用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   膳食療養第 10 章：肺部疾病
+   ====================================================================== */
+var DLU_M = SM([['醣類', 'Carbohydrate', 'r1', 'H'], ['脂肪', 'Fat', 'r2', 'C'], ['蛋白質', 'Protein', 'r3', 'E'], ['混合飲食', 'Mixed diet', 'r4', 'H']],
+  { l: ['氧化的燃料', 'fuel'], r: ['呼吸商 RQ', 'RQ'], dy: 56 });
+var DLU = { id: 'dlu', zh: '第 10 章 肺部疾病', en: 'Pulmonary disease', alias: '呼吸商・慢性阻塞性肺病・肺部惡病質・二氧化碳滯留・囊狀纖維化・結核病・營養不良對肺部的影響', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    r1: { zh: '1.0', en: '1.0' }, r2: { zh: '0.7', en: '0.7' }, r3: { zh: '0.8', en: '0.8' }, r4: { zh: '約 0.85', en: '~0.85' },
+    over: { zh: '避免過度餵食、醣類不要太高', en: 'Avoid overfeeding and excess carbohydrate' }, hcho: { zh: '盡量提高醣類比例', en: 'Maximize carbohydrate' },
+    smoke: { zh: '抽菸、類固醇、活動少、維生素 D 缺乏', en: 'Smoking, steroids, inactivity, low vitamin D' }, auto: { zh: '自體免疫疾病', en: 'Autoimmune disease' },
+    panc: { zh: '胰臟功能不足、汗中鹽分高', en: 'Pancreatic insufficiency, salty sweat' }, b6: { zh: '服用 isoniazid 要補維生素 B6', en: 'Give B6 with isoniazid' },
+    col: { zh: '多吃膠原蛋白強化肺部組織', en: 'Eat collagen to strengthen lungs' }, alb: { zh: '低白蛋白可能引發肺水腫', en: 'Low albumin may cause pulmonary edema' }
+  },
+  levels: [
+    { t: '先看全貌：呼吸商', kind: 'ov', h: DLU_M.h, svg: DLU_M.svg, blanks: DLU_M.b(),
+      intro: ['呼吸商（RQ）＝ 產生的二氧化碳 ÷ 消耗的氧氣。氧化醣類 RQ ＝ 1.0、脂肪 0.7、蛋白質約 0.8，一般混合飲食約 0.85。RQ 大於 1 表示過度餵食、正在合成脂肪。',
+        '肺部疾病病人排出二氧化碳的能力差。醣類給太多、或總熱量過多，二氧化碳產生增加，會加重呼吸負擔、脫離呼吸器困難。所以重點是「不要過度餵食」，醣類不必刻意壓得很低，可以適度提高脂肪比例。'],
+      done: ['[[RQ：醣 1.0、脂肪 0.7、蛋白質 0.8、混合約 0.85；> 1 表示過度餵食（脂肪合成）。肺病避免過度餵食與過多醣類。]]'] },
+    { t: '慢性阻塞性肺病', kind: 'list',
+      intro: ['COPD 病人呼吸費力，能量消耗增加，又因喘、早飽吃不下，常有體重減輕與肌肉流失（肺部惡病質），體重過輕的預後較差。',
+        '飲食：少量多餐、高熱量高蛋白（蛋白質約每公斤 1.2～1.5 公克），進食前先休息、用支氣管擴張劑，餐中少喝水避免脹，鈣與維生素 D 要足夠。',
+        'COPD 容易骨質疏鬆：抽菸、長期使用類固醇、活動量少、維生素 D 缺乏、慢性發炎。'],
+      listTitle: '是哪一個',
+      list: [['COPD 飲食的重點', { a: 'over', o: ['over', 'hcho'] }], ['COPD 骨質疏鬆的原因', { a: 'smoke', o: ['smoke', 'auto'] }]],
+      done: ['[[COPD：少量多餐、高熱量高蛋白、避免過度餵食；骨質疏鬆與抽菸、類固醇、少活動、維生素 D 缺乏有關。]]'] },
+    { t: '營養不良與其他肺病', kind: 'list',
+      intro: ['營養不良對肺部的影響：蛋白質與鐵不足使血紅素下降、攜氧能力差；鈣、鎂、磷、鉀過低使呼吸肌無力；低白蛋白使膠體滲透壓下降，可能肺水腫；免疫力下降，容易肺炎。肺部的膠原蛋白由身體自己合成，不必靠吃膠原蛋白。',
+        '囊狀纖維化：遺傳疾病，黏液濃稠，阻塞肺部與胰管，胰臟外分泌不足造成脂肪痢，汗中鹽分高。需要高熱量、胰酵素、脂溶性維生素與鹽分補充。',
+        '結核病：高熱量高蛋白（約每公斤 1.2～1.5 公克）；抗結核藥 isoniazid 會拮抗維生素 B6，要補充 B6 預防周邊神經病變。'],
+      listTitle: '是哪一個',
+      list: [['營養不良對肺部的影響（正確）', { a: 'alb', o: ['alb', 'col'] }], ['囊狀纖維化的特徵', { a: 'panc', o: ['panc', 'b6'] }], ['結核病用藥要注意', { a: 'b6', o: ['panc', 'b6'] }]],
+      done: ['[[營養不良：攜氧差、呼吸肌無力、低白蛋白致肺水腫、免疫下降。囊狀纖維化：胰臟功能不足、汗鹹、需胰酵素與脂溶性維生素。isoniazid 要補 B6。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['氧化醣類的呼吸商是', { a: 'r1', o: ['r1', 'r2', 'r3'] }, '。'],
+        ['COPD 病人應', { a: 'over', o: ['over', 'hcho'] }, '。'],
+        ['與 COPD 骨質疏鬆較無關的是', { a: 'auto', o: ['smoke', 'auto'] }, '。'],
+        ['結核病人服用 isoniazid 要', { a: 'b6', o: ['b6', 'panc'] }, '。'],
+        ['RQ for fat oxidation is', { a: 'r2', o: ['r1', 'r2'], lang: 'en' }, '.'],
+        ['Cystic fibrosis features', { a: 'panc', o: ['panc', 'b6'], lang: 'en' }, '.']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: DLU_M.h, force: 'en', svg: DLU_M.svg, blanks: DLU_M.b(),
+      intro: ['各種燃料的呼吸商，用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   膳食療養第 11 章：貧血
+   ====================================================================== */
+var DAN_M = SM([['缺鐵', 'Iron deficiency', 'v1', 'I'], ['地中海型貧血', 'Thalassemia', 'v1', 'I'], ['缺乏維生素 B12', 'B12 deficiency', 'v2', 'T'], ['缺乏葉酸', 'Folate deficiency', 'v2', 'T'], ['慢性病（發炎）', 'Anemia of chronic disease', 'v3', 'E']],
+  { l: ['原因', 'cause'], r: ['紅血球型態', 'red cell type'], dy: 54, rw: 184 });
+var DAN = { id: 'dan', zh: '第 11 章 貧血', en: 'Anemia', alias: '小球性與巨球性・缺鐵性貧血的檢驗值・慢性病貧血・B12 與葉酸・惡性貧血・甲基丙二酸・鐵吸收的促進與抑制', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    v1: { zh: '小球性低色素', en: 'Microcytic, hypochromic' }, v2: { zh: '巨球性', en: 'Macrocytic' }, v3: { zh: '多為正球性', en: 'Usually normocytic' },
+    lo: { zh: '下降', en: 'Low' }, hi: { zh: '上升', en: 'High' },
+    ifc: { zh: '缺乏內在因子', en: 'Lack of intrinsic factor' }, diet: { zh: '飲食缺乏', en: 'Dietary lack' },
+    mma: { zh: '甲基丙二酸升高', en: 'Methylmalonic acid rises' }, hcy: { zh: '同半胱胺酸升高', en: 'Homocysteine rises' },
+    vc: { zh: '維生素 C、肉類（血基質鐵）', en: 'Vitamin C, meat (heme iron)' }, tea: { zh: '茶、咖啡、植酸、鈣', en: 'Tea, coffee, phytate, calcium' }
+  },
+  levels: [
+    { t: '先看全貌：依紅血球大小分類', kind: 'ov', h: DAN_M.h, svg: DAN_M.svg, blanks: DAN_M.b(),
+      intro: ['貧血常依平均紅血球體積（MCV）分類。小球性低色素：血紅素合成不足，例如缺鐵、地中海型貧血。巨球性：DNA 合成受阻，細胞無法正常分裂，例如缺 B12、缺葉酸。正球性：例如慢性病（發炎）貧血、急性失血。',
+        '鐵吸收的促進因子：維生素 C、肉類中的血基質鐵；抑制因子：茶與咖啡的多酚（單寧）、植酸、草酸、大量鈣。'],
+      done: ['[[小球性：缺鐵、地中海型；巨球性：缺 B12、缺葉酸；正球性：慢性病、急性失血。]]', '[[促進鐵吸收：維生素 C、血基質鐵；抑制：單寧、植酸、草酸、鈣。]]'] },
+    { t: '缺鐵與慢性病貧血', kind: 'list',
+      intro: ['缺鐵是逐步發生的：先是儲存鐵（血清鐵蛋白）下降；接著運輸鐵不足，運鐵蛋白飽和度下降、總鐵結合能力（TIBC）上升；最後血紅素下降，出現小球性貧血。',
+        '慢性病（發炎）貧血：發炎使鐵調素增加，鐵被留在巨噬細胞裡用不到。血清鐵低，但鐵蛋白正常或偏高（儲存還在，而且鐵蛋白也是急性期蛋白），TIBC 偏低。補鐵效果有限，要治療根本的疾病。'],
+      listTitle: '缺鐵性貧血時',
+      list: [['血清鐵蛋白', { a: 'lo', o: ['lo', 'hi'] }], ['總鐵結合能力（TIBC）', { a: 'hi', o: ['lo', 'hi'] }], ['運鐵蛋白飽和度', { a: 'lo', o: ['lo', 'hi'] }]],
+      done: ['[[缺鐵性貧血：鐵蛋白↓、運鐵蛋白飽和度↓、TIBC↑、MCV↓。慢性病貧血：血清鐵↓、鐵蛋白正常或↑、TIBC↓。]]', '鐵蛋白最早下降，是評估鐵儲存最好的指標。'] },
+    { t: 'B12 與葉酸', kind: 'list',
+      intro: ['B12 與葉酸都參與 DNA 合成，缺乏都造成巨球性貧血，同半胱胺酸都會升高。差別是：B12 缺乏時甲基丙二酸也升高，而且會有神經症狀（周邊神經病變、記憶力下降），補葉酸雖能改善貧血卻會掩蓋 B12 缺乏、讓神經損傷繼續。',
+        '惡性貧血是自體免疫破壞胃壁細胞，缺乏內在因子，B12 無法在迴腸吸收，要注射或高劑量補充。其他 B12 缺乏原因：胃切除、迴腸切除、長期全素、長期服用 metformin 或制酸劑、老年人胃酸不足。'],
+      listTitle: '是哪一個',
+      list: [['只有 B12 缺乏才會', { a: 'mma', o: ['mma', 'hcy'] }], ['B12 和葉酸缺乏都會', { a: 'hcy', o: ['mma', 'hcy'] }], ['惡性貧血的原因', { a: 'ifc', o: ['ifc', 'diet'] }], ['促進鐵吸收', { a: 'vc', o: ['vc', 'tea'] }], ['抑制鐵吸收', { a: 'tea', o: ['vc', 'tea'] }]],
+      done: ['[[B12 缺乏：巨球性貧血、神經症狀、甲基丙二酸↑；葉酸缺乏：巨球性貧血、無神經症狀。兩者同半胱胺酸都↑。惡性貧血：缺內在因子。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['缺鐵性貧血屬於', { a: 'v1', o: ['v1', 'v2'] }, '。'],
+        ['缺鐵時總鐵結合能力會', { a: 'hi', o: ['lo', 'hi'] }, '。'],
+        ['可以區分 B12 與葉酸缺乏的是', { a: 'mma', o: ['mma', 'hcy'] }, '。'],
+        ['惡性貧血是因為', { a: 'ifc', o: ['ifc', 'diet'] }, '。'],
+        ['Folate deficiency anemia is', { a: 'v2', o: ['v1', 'v2'], lang: 'en' }, '.'],
+        ['Iron absorption is enhanced by', { a: 'vc', o: ['vc', 'tea'], lang: 'en' }, '.']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: DAN_M.h, force: 'en', svg: DAN_M.svg, blanks: DAN_M.b(),
+      intro: ['貧血的紅血球型態，用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   膳食療養第 12 章：內分泌與新陳代謝疾病（甲狀腺、痛風、骨質、關節炎）
+   ====================================================================== */
+var DEN_M = SM([['甲狀腺功能亢進（原發性）', 'Primary hyperthyroidism', 'h1', 'I'], ['甲狀腺功能低下（原發性）', 'Primary hypothyroidism', 'h2', 'I'], ['血鈣下降時', 'When blood calcium falls', 'h3', 'I'], ['血鈣上升時', 'When blood calcium rises', 'h4', 'I']],
+  { l: ['狀況', 'condition'], r: ['檢驗或激素的變化', 'change'], dy: 56, rw: 184 });
+var DEN = { id: 'den', zh: '第 12 章 內分泌與新陳代謝疾病', en: 'Endocrine and metabolic disease', alias: '甲狀腺亢進與低下・鈣的恆定・骨質疏鬆・痛風與普林・allopurinol・類風濕性關節炎', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    h1: { zh: 'TSH 低、甲狀腺素高', en: 'Low TSH, high thyroxine' }, h2: { zh: 'TSH 高、甲狀腺素低', en: 'High TSH, low thyroxine' }, h3: { zh: '副甲狀腺素分泌增加', en: 'PTH secretion rises' }, h4: { zh: '降鈣素分泌增加', en: 'Calcitonin secretion rises' },
+    xo: { zh: '抑制黃嘌呤氧化酶、減少尿酸生成', en: 'Inhibits xanthine oxidase' }, uri: { zh: '增加尿酸排出', en: 'Increases uric acid excretion' },
+    trig: { zh: '會誘發痛風', en: 'Triggers gout' }, safe: { zh: '較不會誘發', en: 'Unlikely to trigger' },
+    n3: { zh: 'n-3 脂肪酸（魚油）', en: 'n-3 fatty acids (fish oil)' }, n6: { zh: 'n-6 脂肪酸', en: 'n-6 fatty acids' },
+    thin: { zh: '皮膚變薄、合成能力下降', en: 'Thinner skin, less synthesis' }, thick: { zh: '皮下脂肪變厚', en: 'Thicker subcutaneous fat' }
+  },
+  levels: [
+    { t: '先看全貌：甲狀腺與鈣的調節', kind: 'ov', h: DEN_M.h, svg: DEN_M.svg, blanks: DEN_M.b(),
+      intro: ['甲狀腺素由腦下垂體的 TSH 調控，有負回饋。原發性亢進（例如葛瑞夫茲病）甲狀腺素過多，回饋抑制 TSH，所以 TSH 低；原發性低下則 TSH 升高。亢進時代謝率上升、體重下降，熱量與蛋白質需求增加；低下時代謝下降、容易變胖。',
+        '血鈣下降時，副甲狀腺素增加：促進骨質釋鈣、增加腎臟鈣再吸收、活化維生素 D 增加腸道吸收；血鈣上升時，甲狀腺 C 細胞分泌降鈣素，抑制骨吸收。'],
+      done: ['[[原發性甲狀腺亢進：TSH↓、T4↑；低下：TSH↑、T4↓。血鈣低 → PTH↑（骨釋鈣、腎再吸收、活化維生素 D）；血鈣高 → 降鈣素↑。]]'] },
+    { t: '痛風', kind: 'list',
+      intro: ['痛風是血中尿酸過高，尿酸鹽結晶沉積在關節引起急性發炎。誘發因素：高普林食物（內臟、小魚乾、濃肉湯、火鍋湯、部分海鮮）、酒精（尤其啤酒）、含果糖的含糖飲料、快速減重或斷食（酮體與尿酸競爭排出）、脫水。',
+        '飲食：多喝水（每天 2,000 mL 以上）、限酒與含糖飲料、過重者逐步減重；豆類與豆製品對尿酸的影響比過去認為的小。急性發作期更要避免高普林食物。',
+        '用藥：allopurinol 抑制黃嘌呤氧化酶，減少尿酸生成；benzbromarone 等促進尿酸排出；秋水仙素用於急性發作止痛消炎。'],
+      listTitle: '是哪一個',
+      list: [['allopurinol 的作用', { a: 'xo', o: ['xo', 'uri'] }], ['大量喝啤酒', { a: 'trig', o: ['trig', 'safe'] }], ['斷食快速減重', { a: 'trig', o: ['trig', 'safe'] }], ['每天喝足 2,000 mL 以上的水', { a: 'safe', o: ['trig', 'safe'] }]],
+      done: ['[[痛風誘發因素：高普林、酒精（啤酒）、果糖飲料、快速減重或斷食、脫水。allopurinol 抑制黃嘌呤氧化酶。]]'] },
+    { t: '骨質與關節', kind: 'list',
+      intro: ['骨質疏鬆：足夠的鈣與維生素 D、負重運動、避免抽菸與過量飲酒。老年人皮膚變薄、皮膚中 7-去氫膽固醇減少，合成維生素 D 的能力下降，加上日曬少、腎臟活化能力下降、體脂肪多（維生素 D 被留在脂肪中），都容易缺乏。',
+        '類風濕性關節炎是自體免疫疾病，女性較多；常用非類固醇抗發炎藥、類固醇與疾病調節藥物。飲食可增加 n-3 脂肪酸（魚油）減少發炎；n-6 脂肪酸會產生促發炎的類二十碳酸。退化性關節炎則以減重減輕關節負擔為主。'],
+      listTitle: '是哪一個',
+      list: [['老年人維生素 D 不足的原因', { a: 'thin', o: ['thin', 'thick'] }], ['類風濕性關節炎可增加', { a: 'n3', o: ['n3', 'n6'] }]],
+      done: ['[[老年人維生素 D 缺乏：皮膚合成能力下降、日曬少、腎臟活化下降、體脂肪多。類風濕性關節炎：自體免疫、女性多，增加 n-3 脂肪酸。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['甲狀腺功能亢進時，血液檢查是', { a: 'h1', o: ['h1', 'h2'] }, '。'],
+        ['allopurinol 的作用是', { a: 'xo', o: ['xo', 'uri'] }, '。'],
+        ['斷食快速減重', { a: 'trig', o: ['trig', 'safe'] }, '。'],
+        ['血鈣下降時', { a: 'h3', o: ['h3', 'h4'] }, '。'],
+        ['Rheumatoid arthritis diet may add', { a: 'n3', o: ['n3', 'n6'], lang: 'en' }, '.'],
+        ['Primary hypothyroidism shows', { a: 'h2', o: ['h1', 'h2'], lang: 'en' }, '.']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: DEN_M.h, force: 'en', svg: DEN_M.svg, blanks: DEN_M.b(),
+      intro: ['甲狀腺與鈣的調節，用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   膳食療養第 13 章：小兒科之營養照護（先天代謝異常、早產兒）
+   ====================================================================== */
+var DPD_M = SM([['苯酮尿症（PKU）', 'Phenylketonuria', 'i1', 'E'], ['楓糖尿症', 'Maple syrup urine disease', 'i2', 'E'], ['半乳糖血症', 'Galactosemia', 'i3', 'H'], ['肝醣儲積症第 I 型', 'Glycogen storage disease type I', 'i4', 'H'], ['中鏈醯基輔酶 A 去氫酶缺乏（MCAD）', 'MCAD deficiency', 'i5', 'C']],
+  { l: ['疾病', 'disorder'], r: ['飲食處理', 'diet'], dy: 54, lw: 168, lx: 92, rx: 272, rw: 166 });
+var DPD = { id: 'dpd', zh: '第 13 章 小兒科之營養照護', en: 'Pediatric nutrition care', alias: '先天代謝異常・PKU・楓糖尿症・半乳糖血症・肝醣儲積症・脂肪酸氧化異常・早產兒營養', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    i1: { zh: '限苯丙胺酸，酪胺酸變成必需', en: 'Restrict Phe; Tyr becomes essential' }, i2: { zh: '限制支鏈胺基酸', en: 'Restrict branched-chain amino acids' }, i3: { zh: '去除乳糖與半乳糖', en: 'Remove lactose and galactose' },
+    i4: { zh: '少量多餐、生玉米澱粉', en: 'Frequent meals, uncooked cornstarch' }, i5: { zh: '避免空腹太久', en: 'Avoid prolonged fasting' },
+    mct: { zh: '不可用 MCT 油', en: 'MCT oil is contraindicated' }, lcmct: { zh: '可用 MCT 油', en: 'MCT oil can be used' },
+    asp: { zh: '阿斯巴甜', en: 'Aspartame' }, stv: { zh: '甜菊', en: 'Stevia' },
+    hmf: { zh: '母乳加母乳強化劑', en: 'Human milk with fortifier' }, cow: { zh: '一般鮮乳', en: 'Cow’s milk' }
+  },
+  levels: [
+    { t: '先看全貌：先天代謝異常的飲食', kind: 'ov', h: DPD_M.h, svg: DPD_M.svg, blanks: DPD_M.b(),
+      intro: ['先天代謝異常是某個酵素缺乏，受質堆積或產物不足。新生兒篩檢能及早發現，飲食治療是主要方法：限制無法代謝的成分，補充缺乏的產物。',
+        '苯酮尿症：苯丙胺酸羥化酶缺乏，苯丙胺酸堆積傷害腦部；限制苯丙胺酸（不可用阿斯巴甜），酪胺酸變成必需胺基酸。楓糖尿症：支鏈 α-酮酸去氫酶缺乏，限制白胺酸、異白胺酸、纈胺酸。',
+        '半乳糖血症：去除乳糖與半乳糖，嬰兒改用黃豆配方。肝醣儲積症第 I 型（葡萄糖-6-磷酸酶缺乏）：容易低血糖，少量多餐、夜間給生玉米澱粉緩慢釋放葡萄糖。',
+        '脂肪酸氧化異常：避免空腹太久，高醣低脂。MCAD 缺乏不能代謝中鏈脂肪酸，所以不可用 MCT 油；長鏈脂肪酸氧化異常（例如 LCHAD）則可以用 MCT 油供能。'],
+      done: ['[[PKU 限苯丙胺酸（酪胺酸變必需、禁阿斯巴甜）；楓糖尿症限支鏈胺基酸；半乳糖血症去乳糖；肝醣儲積症 I 型少量多餐加生玉米澱粉；脂肪酸氧化異常避免空腹。]]'] },
+    { t: '細節', kind: 'list',
+      intro: ['MCT 油：長鏈脂肪酸氧化異常的孩子可以用來供能，因為中鏈脂肪酸不需要長鏈的代謝路徑；但 MCAD 缺乏的孩子正是中鏈無法代謝，不可使用。',
+        '早產兒的營養：首選母乳，加上母乳強化劑補足蛋白質、鈣、磷與熱量；不能直接餵一般鮮乳。'],
+      listTitle: '是哪一個',
+      list: [['MCAD 缺乏', { a: 'mct', o: ['mct', 'lcmct'] }], ['長鏈脂肪酸氧化異常', { a: 'lcmct', o: ['mct', 'lcmct'] }], ['苯酮尿症不可使用的甜味劑', { a: 'asp', o: ['asp', 'stv'] }], ['早產兒的首選', { a: 'hmf', o: ['hmf', 'cow'] }]],
+      done: ['[[MCAD 缺乏禁用 MCT 油；長鏈脂肪酸氧化異常可用 MCT 油。早產兒：母乳加母乳強化劑。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['苯酮尿症病童要', { a: 'i1', o: ['i1', 'i2'] }, '。'],
+        ['半乳糖血症的嬰兒要', { a: 'i3', o: ['i3', 'i4'] }, '。'],
+        ['脂肪酸氧化代謝異常的孩子要', { a: 'i5', o: ['i5', 'i3'] }, '。'],
+        ['MCAD 缺乏的孩子', { a: 'mct', o: ['mct', 'lcmct'] }, '。'],
+        ['Maple syrup urine disease:', { a: 'i2', o: ['i1', 'i2'], lang: 'en' }, '.'],
+        ['Glycogen storage disease type I uses', { a: 'i4', o: ['i4', 'i5'], lang: 'en' }, '.']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: DPD_M.h, force: 'en', svg: DPD_M.svg, blanks: DPD_M.b(),
+      intro: ['先天代謝異常的飲食，用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   膳食療養第 14 章：飲食、營養與藥物的交互作用
+   ====================================================================== */
+var DDR_M = SM([['warfarin（抗凝血）', 'Warfarin', 'u1', 'T'], ['MAO 抑制劑（抗憂鬱）', 'MAO inhibitors', 'u2', 'E'], ['isoniazid（抗結核）', 'Isoniazid', 'u3', 'T'], ['methotrexate', 'Methotrexate', 'u4', 'T'],
+  ['tetracycline（抗生素）', 'Tetracycline', 'u5', 'I'], ['metformin', 'Metformin', 'u6', 'T']],
+  { l: ['藥物', 'drug'], r: ['要注意的營養素或食物', 'nutrient or food'], dy: 50, rw: 184 });
+var DDR = { id: 'ddr', zh: '第 14 章 飲食、營養與藥物的交互作用', en: 'Food–drug interactions', alias: 'warfarin 與維生素 K・MAOI 與酪胺・葡萄柚・isoniazid 與 B6・methotrexate 與葉酸・類固醇・利尿劑・metformin 與 B12', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    u1: { zh: '維生素 K 攝取量保持穩定', en: 'Keep vitamin K intake steady' }, u2: { zh: '避免高酪胺食物（起司、醃燻品）', en: 'Avoid tyramine (aged cheese, cured foods)' }, u3: { zh: '補充維生素 B6', en: 'Supplement vitamin B6' },
+    u4: { zh: '葉酸拮抗', en: 'Folate antagonist' }, u5: { zh: '避免與鈣、鐵、制酸劑同時吃', en: 'Separate from calcium, iron, antacids' }, u6: { zh: '長期使用注意維生素 B12', en: 'Watch B12 with long-term use' },
+    ca: { zh: '補充鈣與維生素 D', en: 'Give calcium and vitamin D' }, na: { zh: '補充鈉', en: 'Give sodium' },
+    klos: { zh: '鉀流失', en: 'Potassium loss' }, kret: { zh: '鉀滯留', en: 'Potassium retention' },
+    gf: { zh: '葡萄柚', en: 'Grapefruit' }, or: { zh: '柳橙', en: 'Orange' }
+  },
+  levels: [
+    { t: '先看全貌：常見的藥物與營養交互作用', kind: 'ov', h: DDR_M.h, svg: DDR_M.svg, blanks: DDR_M.b(),
+      intro: ['warfarin 拮抗維生素 K，不必完全不吃深綠色蔬菜，而是每天的維生素 K 攝取量要穩定，避免突然大量增減。',
+        'MAO 抑制劑會讓食物中的酪胺無法分解，吃了陳年起司、醃燻肉、發酵食品、某些酒類可能高血壓危象。isoniazid 拮抗 B6，要補充以防周邊神經病變；methotrexate 是葉酸拮抗劑；tetracycline 會和鈣、鐵、鎂結合降低吸收，要錯開；metformin 長期使用會降低 B12 吸收。',
+        '葡萄柚會抑制腸道的 CYP3A4 酵素，使部分藥物（某些降血脂藥、降血壓藥、免疫抑制劑）血中濃度升高。'],
+      done: ['[[warfarin：維生素 K 穩定；MAOI：避免酪胺；isoniazid：補 B6；methotrexate：葉酸拮抗；tetracycline：與鈣鐵錯開；metformin：注意 B12；葡萄柚抑制 CYP3A4。]]'] },
+    { t: '類固醇、利尿劑與激素', kind: 'list',
+      intro: ['長期使用類固醇（prednisone）：減少腸道鈣吸收、增加尿鈣與骨質流失，要補充鈣與維生素 D；造成鈉與水滯留、鉀流失、血糖上升、蛋白質分解、食慾增加。',
+        '利尿劑：噻嗪類與環利尿劑增加鉀、鎂流失（環利尿劑也增加 B1 流失）；spironolactone 是保鉀利尿劑，可能高血鉀，不要再用低鈉鹽（含鉀）。',
+        '雌激素療法可以減少停經後的骨質流失，仍需搭配足夠的鈣與維生素 D。'],
+      listTitle: '是哪一個',
+      list: [['長期使用類固醇的調整', { a: 'ca', o: ['ca', 'na'] }], ['環利尿劑', { a: 'klos', o: ['klos', 'kret'] }], ['spironolactone', { a: 'kret', o: ['klos', 'kret'] }], ['會抑制 CYP3A4、影響藥物濃度的水果', { a: 'gf', o: ['gf', 'or'] }]],
+      done: ['[[類固醇：鈣流失（補鈣與維生素 D）、鈉滯留、鉀流失、高血糖。環利尿劑與噻嗪類：鉀鎂流失；spironolactone：保鉀。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['服用 warfarin 的病人應', { a: 'u1', o: ['u1', 'u2'] }, '。'],
+        ['長期服用 prednisone，應', { a: 'ca', o: ['ca', 'na'] }, '。'],
+        ['服用 isoniazid 要', { a: 'u3', o: ['u3', 'u6'] }, '。'],
+        ['使用 spironolactone 要注意', { a: 'kret', o: ['klos', 'kret'] }, '。'],
+        ['MAO inhibitors require you to', { a: 'u2', o: ['u1', 'u2'], lang: 'en' }, '.'],
+        ['Long-term metformin:', { a: 'u6', o: ['u3', 'u6'], lang: 'en' }, '.']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: DDR_M.h, force: 'en', svg: DDR_M.svg, blanks: DDR_M.b(),
+      intro: ['常見的藥物與營養交互作用，用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   團體膳食：先讀這裡（供餐流程、供膳型態、成本結構）
+   ====================================================================== */
+var GPRE_M = SM([['膳食設計', 'Menu planning', 'p1'], ['採購與驗收', 'Purchasing and receiving', 'p2'], ['庫房貯存', 'Storage', 'p3'], ['前處理', 'Pre-preparation', 'p4'],
+  ['烹調製備', 'Cooking', 'p5'], ['配膳、配送與供餐', 'Portioning and service', 'p6'], ['善後清洗與檢討', 'Cleaning and review', 'p7']],
+  { l: ['供餐流程', 'workflow'], r: ['這一步的重點', 'key point'], k: 'H', dy: 46, rw: 184 });
+var GPRE = { id: 'gpre', zh: '先讀這裡：團體膳食的全貌', en: 'Overview of quantity food service', alias: '供餐流程・營利與非營利・選擇性與非選擇性菜單・成本結構', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    p1: { zh: '依對象的營養需求擬菜單', en: 'Plan menus for the clients’ needs' }, p2: { zh: '依規格買，到貨核對品質數量', en: 'Buy to spec; check quality and quantity' },
+    p3: { zh: '分冷凍、冷藏、乾料入庫', en: 'Store frozen, chilled or dry' }, p4: { zh: '清洗、切割、解凍', en: 'Wash, cut, thaw' },
+    p5: { zh: '依標準食譜大量烹調', en: 'Cook in bulk by standard recipe' }, p6: { zh: '熱食保溫 60℃ 以上', en: 'Hot hold at 60 °C or above' },
+    p7: { zh: '清洗消毒、統計廚餘', en: 'Clean, sanitize, count plate waste' },
+    prof: { zh: '營利性', en: 'Commercial (for profit)' }, nonp: { zh: '非營利性（機構膳食）', en: 'Non-commercial (institutional)' },
+    sel: { zh: '選擇性菜單', en: 'Selective menu' }, nsel: { zh: '非選擇性菜單', en: 'Non-selective menu' },
+    food: { zh: '食物成本', en: 'Food cost' }, labor: { zh: '人事成本', en: 'Labor cost' }, over: { zh: '其他生產成本', en: 'Overhead' }, prft: { zh: '利潤', en: 'Profit' },
+    cyc: { zh: '循環菜單', en: 'Cycle menu' }, chg: { zh: '依喜好常改菜單', en: 'Changed often to suit customers' }
+  },
+  levels: [
+    { t: '先看全貌：團膳的供餐流程', kind: 'ov', h: GPRE_M.h, svg: GPRE_M.svg, blanks: GPRE_M.b(),
+      intro: ['團體膳食是在同一時間、為很多人供應餐食：學校午餐、醫院病人與員工餐、企業員工餐廳、軍隊、空廚、餐盒工廠都是。',
+        '一份餐從規劃到送到人手上，大致是七個步驟：先設計菜單，再依菜單採購、到貨驗收，入庫貯存，領出來前處理，大量烹調，配膳供餐，最後清洗消毒並檢討。',
+        '後面每個單元就是其中一段。這個分頁的顏色：琥珀色是食材與製備、藍色是溫度與貯存、玫瑰色是數量與成本的計算、青色是衛生與品質、紫色是制度、表單與法規。'],
+      done: ['[[供餐流程：膳食設計 → 採購驗收 → 庫房貯存 → 前處理 → 烹調製備 → 配膳配送供餐 → 善後清洗與檢討。]]', '菜單是整個流程的起點：買什麼、存多少、排多少人力，都由菜單決定。'] },
+    { t: '營利與非營利、選擇性與非選擇性', kind: 'list',
+      intro: ['依經營目的分兩類。營利性團膳以賺錢為目的，例如空廚、餐盒工廠、外燴、商業員工餐廳，要吸引顧客，菜單常配合喜好調整。',
+        '非營利性團膳以照顧成員為主，例如學校、醫院、軍隊、安養機構。對象固定，常用循環菜單，經費多半用在食材上，食材成本比例較高。',
+        '依顧客能不能選菜分兩種：餐盒、桶餐每人吃一樣的，是非選擇性菜單；自助餐可以挑菜，是選擇性菜單，每道菜要做幾份要另外估算。'],
+      listTitle: '是哪一個',
+      list: [['航空空廚、餐盒工廠、外燴', { a: 'prof', o: ['prof', 'nonp'] }], ['公立學校午餐、醫院病人膳食、軍隊', { a: 'nonp', o: ['prof', 'nonp'] }],
+        ['營利性團膳的菜單常', { a: 'chg', o: ['chg', 'cyc'] }], ['學校、醫院這類對象固定的機構常用', { a: 'cyc', o: ['chg', 'cyc'] }],
+        ['學生桶餐、員工餐盒', { a: 'nsel', o: ['sel', 'nsel'] }], ['自助餐從多道菜中任選', { a: 'sel', o: ['sel', 'nsel'] }]],
+      done: ['[[營利性：空廚、餐盒、外燴、商業餐廳；非營利性：學校、醫院、軍隊、機構。非營利性較常用循環菜單，食材成本比例較高。]]', '[[非選擇性菜單（餐盒、桶餐）的製作份數就是用餐人數；選擇性菜單（自助餐）要估算每道菜的份數。]]'] },
+    { t: '錢花在哪裡：餐飲成本的結構', kind: 'list',
+      intro: ['餐飲成本大致分四塊。食材（生鮮、乾料、調味料、包材）約占 30～40%；員工薪資與勞健保約 30%；房租、設備、水電燃料、運費等其他生產成本約 20%；利潤約 10%。',
+        '這幾個比例只是大概，不同型態差很多：學校午餐沒有利潤、食材比例高；高級餐廳的人事與裝潢比例高。'],
+      listTitle: '是哪一塊',
+      list: [['生鮮食材、調味料、餐盒包材', { a: 'food', o: ['food', 'labor', 'over', 'prft'] }], ['員工薪資、勞健保、員工福利', { a: 'labor', o: ['food', 'labor', 'over', 'prft'] }],
+        ['房租、設備維修、燃料、運費、檢驗費', { a: 'over', o: ['food', 'labor', 'over', 'prft'] }]],
+      countsTitle: '大約占幾成', counts: [['食物成本約占總成本的百分比', '30～40', ['10～20', '30～40', '50～60']], ['人事成本約占', '30', ['10', '30', '50']], ['利潤約占', '10', ['10', '30', '50']]],
+      done: ['[[餐飲成本：食物成本約 30～40%、人事成本約 30%、其他生產成本約 20%、利潤約 10%。]]', '成本怎麼算、損益平衡點，在「成本控制」單元。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['航空空廚屬於', { a: 'prof', o: ['prof', 'nonp'] }, '團膳。'],
+        ['公立學校午餐屬於', { a: 'nonp', o: ['prof', 'nonp'] }, '團膳。'],
+        ['餐盒每人供應相同菜色，屬於', { a: 'nsel', o: ['sel', 'nsel'] }, '。'],
+        ['熱食在配膳時應保溫在', { a: 'p6', o: ['p6', 'p3'] }, '。'],
+        ['A self-service cafeteria offering several dishes uses a', { a: 'sel', o: ['sel', 'nsel'], lang: 'en' }, '.'],
+        ['The largest share of costs is usually', { a: 'food', o: ['food', 'prft'], lang: 'en' }, '.']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: GPRE_M.h, force: 'en', svg: GPRE_M.svg, blanks: GPRE_M.b(),
+      intro: ['供餐流程的每一步，用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   團體膳食第 2 章：菜單設計（設計原則、製作份數、標準食譜、循環菜單、菜單評估）
+   ====================================================================== */
+var GMEN_M = SM([['供應對象的營養需求', 'Clients’ nutrient needs', 'n1', 'H'], ['飲食習慣、食物多樣性', 'Food habits and variety', 'n2', 'H'], ['設備種類、數量與動線', 'Equipment and workflow', 'n3', 'T'],
+  ['員工技巧與烹調時間', 'Staff skills and cooking time', 'n4', 'T'], ['食材成本', 'Food cost', 'n5', 'E'], ['季節與氣候', 'Season and weather', 'n6', 'H'], ['顏色與形狀的搭配', 'Color and shape', 'n7', 'H'], ['製作份數', 'Number of servings', 'n8', 'E']],
+  { l: ['設計時要考量', 'consider'], r: ['例子或做法', 'example'], dy: 44, rw: 186 });
+var GMEN = { id: 'gmen', zh: '菜單設計：份數、標準食譜與循環菜單', en: 'Menu planning', alias: '九大設計原則・自助餐製作份數・標準食譜 100 人份・循環菜單週期・菜單評估與廚餘', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    n1: { zh: '學校午餐依教育部營養基準', en: 'School lunch follows national standards' }, n2: { zh: '避免同類菜色重複', en: 'Avoid repeating similar dishes' },
+    n3: { zh: '不要四道菜都用炒爐', en: 'Don’t put every dish on the wok' }, n4: { zh: '員工做得出來、來得及供餐', en: 'Feasible for staff, on time' },
+    n5: { zh: '當季在地、控制在預算內', en: 'Seasonal, local, within budget' }, n6: { zh: '颱風前後葉菜貴，改用根莖瓜類', en: 'Use roots and gourds after typhoons' },
+    n7: { zh: '綠豆芽配紅蘿蔔絲、斜刀四季豆', en: 'Bean sprouts with carrot strips' }, n8: { zh: '自助餐要估每道菜做幾份', en: 'Estimate servings per dish' },
+    std: { zh: '標準食譜', en: 'Standard recipe' }, cyc: { zh: '循環菜單', en: 'Cycle menu' },
+    d30: { zh: '30 天以上', en: '30 days or more' }, d7: { zh: '7、10 或 14 天', en: '7, 10 or 14 days' },
+    hund: { zh: '100 人份', en: '100 servings' }, six: { zh: '5～6 人份', en: '5–6 servings' },
+    ep: { zh: '去除不可食部位、洗淨後的生重', en: 'Raw edible weight after trimming' }, ap: { zh: '購買時的重量', en: 'As-purchased weight' },
+    waste: { zh: '統計廚餘量', en: 'Measuring plate waste' }, ques: { zh: '問卷調查', en: 'Questionnaire' },
+    bal: { zh: '改成紅燒、清蒸、烤', en: 'Switch some dishes to braise, steam or bake' }, cost: { zh: '立刻修改菜單', en: 'Revise the menu at once' },
+    same: { zh: '容易吃膩', en: 'Customers get bored' }, eff: { zh: '採購與備料容易預估', en: 'Easier to forecast purchasing' },
+    notsame: { zh: '不宜與每週供餐天數相同', en: 'Should not equal days served per week' }
+  },
+  levels: [
+    { t: '先看全貌：設計菜單要考慮什麼', kind: 'ov', h: GMEN_M.h, svg: GMEN_M.svg, blanks: GMEN_M.b(),
+      intro: ['團膳菜單不是只把好吃的菜排在一起。第一要滿足供應對象的營養需求，學校午餐要符合教育部的營養基準；再考慮對象的飲食習慣、食物多樣性與市場供應。',
+        '接著要問廚房做不做得出來：設備的種類和數量夠不夠、工作動線順不順、員工的技術與烹調時間來不來得及。',
+        '最後是錢與季節：控制食材成本、配合季節與氣候；外觀上注意顏色與形狀的搭配；自助餐還要估算每道菜的製作份數。'],
+      done: ['[[菜單設計原則：營養需求、飲食習慣、食物多樣性與市場供需、設備與動線、員工技巧與烹調時間、食材成本、季節與氣候、顏色形狀搭配、製作份數估算。]]', '設計是給「群體」，依群體的營養需求設計，不是逐一照顧每個人；個別需求是治療飲食的做法。'] },
+    { t: '自助餐每道菜要做幾份', kind: 'list',
+      intro: ['餐盒、桶餐每人一樣，主食與每道菜的份數就是用餐人數。自助餐讓人挑菜，要用公式估算：',
+        '每道菜製作份數 ＝ 每人平均選的道數 × 用餐總人數 ÷ 該類菜的道數。',
+        '例：500 位員工，每人從 15 道菜中選 3 道：500 × 3 ÷ 15 ＝ 每道 100 份。實際上受歡迎的菜要多備一些，冷門菜少做，要靠過去的銷售紀錄調整。'],
+      countsTitle: '算算看', counts: [['500 人，每人從 15 道菜選 3 道，每道約做幾份', '100', ['45', '75', '100', '225']], ['800 人，每人從 8 道菜選 2 道，每道約做幾份', '200', ['100', '160', '200', '400']], ['600 人，每人從 12 道菜選 4 道，每道約做幾份', '200', ['50', '150', '200', '300']]],
+      done: ['[[每道菜製作份數 ＝ 每人可能選擇的道數 × 用餐總人數 ÷ 該類菜單道數。]]'] },
+    { t: '標準食譜', kind: 'list',
+      intro: ['標準食譜是經過反覆烹調、品評、修改後定下來的做法：照著做，一般技術的員工也能做出同樣品質與份量的成品，不受廚師離職或設備更換影響，也方便估算採購量。',
+        '建立時先以 5～6 人份小量試做，請品評員評風味、香氣、顏色、口感與份量，修改到多數人認可；正式的標準食譜以 100 人份為基本單位。',
+        '寫法：材料重量以去除不可食部位、洗淨後的生重（可食重）為準；廢棄率、膨脹收縮率寫在備註；烹調時間與溫度寫清楚；不可寫「適量」「視個人口味」。'],
+      listTitle: '是哪一個',
+      list: [['照著做就能得到一致的品質與份量', { a: 'std', o: ['std', 'cyc'] }], ['標準食譜正式的基本份量', { a: 'hund', o: ['hund', 'six'] }], ['建立初期小量試做的份量', { a: 'six', o: ['hund', 'six'] }],
+        ['標準食譜材料重量的基準', { a: 'ep', o: ['ep', 'ap'] }]],
+      done: ['[[標準食譜：經反覆試做、品評修改而定；以 100 人份為基本單位；材料以去除不可食部位、洗淨後的可食生重記載；不寫「適量」。]]', '好處：品質份量一致、控制成本、食品安全、員工訓練容易、可因應不固定的用餐人數。'] },
+    { t: '循環菜單', kind: 'list',
+      intro: ['循環菜單是依對象的營養需求、在預算內擬好幾套菜單，照順序重複使用。擬定前要先建立標準食譜，菜單上寫菜名、材料與烹調方法。',
+        '週期依對象吃多久而定：學校午餐、機關員工餐至少 30 天一循環，才不會吃膩；住院病人多半住不久，7、10 或 14 天一循環就夠。',
+        '週期天數不要和每週供餐天數相同，否則同一道菜每次都落在同一天（例如每個星期一都是咖哩）。遇到颱風、節慶或食材缺貨，要彈性修正。',
+        '優點是採購與備料好預估、員工越做越熟練、成本好控制；缺點是容易重複吃膩、不易立刻反映顧客需求的變化。'],
+      listTitle: '是哪一個',
+      list: [['學校午餐、員工餐的循環週期', { a: 'd30', o: ['d30', 'd7'] }], ['住院病人膳食的循環週期', { a: 'd7', o: ['d30', 'd7'] }], ['循環天數的原則', { a: 'notsame', o: ['notsame', 'd7'] }],
+        ['循環菜單的優點', { a: 'eff', o: ['eff', 'same'] }], ['循環菜單的缺點', { a: 'same', o: ['eff', 'same'] }]],
+      done: ['[[循環菜單：學校、員工餐至少 30 天一循環；住院病人 7、10 或 14 天。循環天數不宜與每週（或每月）供應天數相同。遇颱風節慶要修正。]]'] },
+    { t: '菜單評估', kind: 'list',
+      intro: ['菜單上線後要評估、修正。看營養是否均衡、食物種類是否多樣、需要鈣的族群（孕婦、學童、長者）含鈣食物夠不夠。',
+        '看顧客接受度：銷售量、廚餘量、問卷。其中統計廚餘（剩下哪些菜、剩多少）是最快、最方便的方法。',
+        '看員工與設備：是否因做菜困難而來不及供餐；是否某個設備忙不過來、另一個閒置。四道菜都用炒爐會塞車，把一兩道改成紅燒、清蒸、烤，工作量就平均了。',
+        '看成本：會計反映食物成本大增，若是天候或災害造成，要立刻修改菜單。'],
+      listTitle: '怎麼做',
+      list: [['了解菜單接受度最快、最方便的方法', { a: 'waste', o: ['waste', 'ques'] }], ['四道菜都用炒爐，設備塞車', { a: 'bal', o: ['bal', 'cost'] }], ['颱風後食材成本暴增', { a: 'cost', o: ['bal', 'cost'] }]],
+      done: ['[[菜單評估：營養均衡與多樣性、員工工作情況、顧客接受度（廚餘統計最快最方便）、設備使用率、成本效益。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['自助餐 500 人、每人從 15 道選 3 道，每道約做', { a: 'n8', o: ['n8', 'n5'] }, '：500 × 3 ÷ 15 ＝ 100 份。'],
+        ['標準食譜的基本單位是', { a: 'hund', o: ['hund', 'six'] }, '。'],
+        ['學校午餐的循環菜單週期至少', { a: 'd30', o: ['d30', 'd7'] }, '。'],
+        ['循環天數', { a: 'notsame', o: ['notsame', 'eff'] }, '，以免同一道菜總在同一天出現。'],
+        ['The quickest way to judge menu acceptance is', { a: 'waste', o: ['waste', 'ques'], lang: 'en' }, '.'],
+        ['A menu rotated in a fixed sequence is a', { a: 'cyc', o: ['cyc', 'std'], lang: 'en' }, '.']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: GMEN_M.h, force: 'en', svg: GMEN_M.svg, blanks: GMEN_M.b(),
+      intro: ['菜單設計的考量，用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   團體膳食第 2 章：學校午餐食物內容及營養基準（教育部 109 年修訂）
+   ====================================================================== */
+var GLUN_M = SM([['熱量', 'Energy', 'e1', 'H'], ['蛋白質', 'Protein', 'e2', 'E'], ['脂肪', 'Fat', 'e3', 'C'], ['鈣', 'Calcium', 'e4', 'I'], ['鈉（國中、高中）', 'Sodium (secondary)', 'e5', 'I'], ['鈉（國小）', 'Sodium (primary)', 'e6', 'I']],
+  { l: ['營養建議量', 'nutrient'], r: ['怎麼訂出來的', 'basis'], dy: 50, rw: 184 });
+var GLUN = { id: 'glun', zh: '學校午餐食物內容及營養基準', en: 'School lunch nutrition standards', alias: '熱量 2/5・蛋白質 16%・脂肪 30%・鈣 1/3・鈉・目標值與階段值・±8%・油炸與甜品次數', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    e1: { zh: '扣除 10% 點心後一天的 2/5', en: '2/5 of daily energy after 10% for snacks' }, e2: { zh: '午餐熱量平均值的 16%', en: '16% of lunch energy' }, e3: { zh: '午餐熱量平均值的 30% 以下', en: '≤ 30% of lunch energy' },
+    e4: { zh: 'DRIs 的 1/3', en: '1/3 of the DRI' }, e5: { zh: '成人上限 2,400 mg 的 2/5（960 mg）', en: '2/5 of 2,400 mg (960 mg)' }, e6: { zh: '每日 2,000 mg 的 2/5（800 mg）', en: '2/5 of 2,000 mg (800 mg)' },
+    tgt: { zh: '目標值', en: 'Target values' }, stg: { zh: '階段值', en: 'Interim values' },
+    w3: { zh: '每週 3 份', en: '3 servings a week' }, w1: { zh: '每週 1 份', en: '1 serving a week' }, d1: { zh: '每天 1 份', en: '1 serving a day' }, w2: { zh: '每週 2 份', en: '2 servings a week' },
+    ok: { zh: '符合基準', en: 'Meets the standard' }, no: { zh: '不符合基準', en: 'Does not meet' },
+    law: { zh: '學校衛生法', en: 'School Health Act' }, fx: { zh: '食物代換表', en: 'Food exchange list' },
+    six: { zh: '六大類食物份量與食材內容', en: 'Six food groups and ingredients' }, kcal: { zh: '只寫熱量與三大營養素克數', en: 'Only calories and macronutrient grams' }
+  },
+  levels: [
+    { t: '先看全貌：午餐營養建議量怎麼來的', kind: 'ov', h: GLUN_M.h, svg: GLUN_M.svg, blanks: GLUN_M.b(),
+      intro: ['學校午餐的營養建議量是依國人 DRIs、每日飲食指南與國民飲食指標推算的，法源是學校衛生法第 23 條。',
+        '熱量：取男女 DRIs 活動強度「稍低」與「適度」的熱量，先扣掉一天 10% 的點心熱量，再取 2/5，因為三餐比例大約是早餐 1：午餐 2：晚餐 2。所以熱量是一個範圍，例如國小 1～3 年級 620～720 大卡。',
+        '蛋白質是午餐熱量平均值的 16%；脂肪不超過 30%。以國小低年級為例：平均 670 大卡 × 16% ÷ 4 ≈ 27 公克蛋白質；670 × 30% ÷ 9 ≈ 22 公克脂肪。',
+        '鈣用 DRIs 的 1/3（鈣不太受熱量多寡影響，早餐喝奶就能補不少）。鈉：國、高中生熱量需求接近成人，以成人上限 2,400 mg 的 2/5 計；國小參考國外資料以每日 2,000 mg 計。'],
+      done: ['[[熱量 ＝（稍低～適度活動熱量 − 10% 點心）× 2/5；蛋白質占 16%；脂肪 ≤ 30%；鈣 ＝ DRIs 的 1/3；鈉 ＝ 每日上限的 2/5（國小 800 mg、國高中 960 mg）。]]', '午餐占一天 2/5，是因為早午晚餐約 1：2：2；點心粗估為早餐熱量的一半，占一天的 1/10。'] },
+    { t: '各年級的數字', kind: 'list',
+      intro: ['熱量範圍：國小 1～3 年級 620～720 大卡，4～6 年級 720～830 大卡；國中 800～930 大卡；高中男生 900～1,050 大卡，女生 680～810 大卡。',
+        '蛋白質：國小低、中高年級 27、31 公克；國中 34 公克；高中男、女 39、30 公克。鈣：國小低年級 270 mg，其他 330～400 mg。'],
+      countsTitle: '數字', counts: [['國小 1～3 年級午餐熱量的下限（大卡）', '620', ['520', '620', '720', '800']], ['國中生午餐熱量的上限（大卡）', '930', ['830', '930', '1050']],
+        ['國小 1～3 年級，平均 670 大卡的 16% 換算成蛋白質約幾公克', '27', ['17', '22', '27', '34']], ['同上，30% 換算成脂肪約幾公克', '22', ['15', '22', '30']], ['國中生午餐的鈉上限（mg）', '960', ['800', '960', '1200', '2400']]],
+      done: ['[[國小 1～3 年級 620～720 大卡、4～6 年級 720～830 大卡；國中 800～930 大卡；高中男 900～1,050、女 680～810 大卡。]]'] },
+    { t: '每日食物內容：目標值與階段值', kind: 'list',
+      intro: ['食物內容用六大類的份數表示，份量以食物代換表為準。全榖雜糧類以範圍表示，未精製的要占 1/3 以上；替代品（甜不辣、米血糕）每週不超過 2 份。',
+        '目標值是最理想的供應份數：乳品每週 3 份、水果每天 1 份。很多學校經費有限，做不到時用階段值：乳品每週 1 份、水果每週 2 份，熱量與營養素比例不變，所以其他類的份量要提高。',
+        '豆魚蛋肉類：豆製品每週 2 份以上；魚與海鮮目標值每週至少 1 份（階段值每月至少 2 份）；魚、肉半成品（丸子、香腸、熱狗、重組雞塊）每週不超過 1 份。',
+        '蔬菜每天至少 2 種，深色蔬菜要占一定比例（國小低年級超過 0.5 份，其他超過 2/3 份）。每類食物可以在一週內調整，平均每日供應量在建議值 ±8% 以內即可。'],
+      listTitle: '是多少',
+      list: [['乳品的目標值', { a: 'w3', o: ['w3', 'w1', 'd1', 'w2'] }], ['乳品的階段值', { a: 'w1', o: ['w3', 'w1', 'd1', 'w2'] }], ['水果的目標值', { a: 'd1', o: ['w3', 'w1', 'd1', 'w2'] }], ['水果的階段值', { a: 'w2', o: ['w3', 'w1', 'd1', 'w2'] }],
+        ['豆製品', { a: 'w2', o: ['w2', 'w1'] }], ['魚、肉類半成品的上限', { a: 'w1', o: ['w2', 'w1'] }], ['各類份數的單位依據', { a: 'fx', o: ['fx', 'law'] }]],
+      countsTitle: '數字', counts: [['每類食物平均每日供應量可在建議值的 ± 幾 % 以內', '8', ['5', '8', '10', '15']], ['未精製全榖雜糧至少占全榖雜糧類的幾分之幾', '1/3', ['1/4', '1/3', '1/2']]],
+      done: ['[[目標值：乳品每週 3 份、水果每天 1 份；階段值：乳品每週 1 份、水果每週 2 份（其他類份量提高以維持熱量）。]]', '[[豆製品每週 2 份以上；魚與海鮮每週至少 1 份（階段值每月 2 份）；魚肉半成品每週不超過 1 份；全榖雜糧替代品每週不超過 2 份；平均每日供應量在 ±8% 以內。]]'] },
+    { t: '午餐設計的注意事項', kind: 'list',
+      intro: ['豬肉、牛肉一律用國內在地生鮮；主菜要有變化，不要總是雞腿、雞排、豬排，少裹粉油炸；油炸每週不超過 2 次；魚不建議油炸。',
+        '甜品、冷飲盡量避免，要供應就選低糖的全榖雜糧甜湯（綠豆薏仁湯、地瓜湯、紅豆湯），每週不超過 1 次。不得供應發酵乳飲品、愛玉、布丁、茶飲、非 100% 果汁。',
+        '多供應高鈣食物（豆干、傳統豆腐、深色蔬菜、小魚乾、蝦皮、黑芝麻）；用加碘鹽，並供應海帶、紫菜等含碘食物；避免高飽和與反式脂肪的加工食品。',
+        '公告菜單要以六大類份量呈現，並列出菜餚的食材（例如炒三丁：玉米、紅蘿蔔、毛豆），有教育意義，也避免對菜名的誤會。'],
+      listTitle: '符合基準嗎',
+      list: [['油炸每週 3 次', { a: 'no', o: ['ok', 'no'] }], ['綠豆薏仁湯每週 1 次', { a: 'ok', o: ['ok', 'no'] }], ['飯後供應布丁', { a: 'no', o: ['ok', 'no'] }], ['每天 2 種以上蔬菜', { a: 'ok', o: ['ok', 'no'] }],
+        ['使用加碘鹽', { a: 'ok', o: ['ok', 'no'] }], ['公告菜單要呈現', { a: 'six', o: ['six', 'kcal'] }], ['基準的法源', { a: 'law', o: ['law', 'fx'] }]],
+      done: ['[[油炸每週不超過 2 次；甜品每週不超過 1 次（以低糖全榖雜糧類為宜）；每天 2 種以上蔬菜；用加碘鹽；不得供應發酵乳飲品、愛玉、布丁、茶飲、非 100% 果汁。]]', '[[公告菜單以六大類份量呈現並列出食材內容。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['學校午餐的熱量是一天（扣除點心後）的', { a: 'e1', o: ['e1', 'e4'] }, '。'],
+        ['學校午餐的鈣以', { a: 'e4', o: ['e1', 'e4'] }, '計。'],
+        ['水果做不到每天 1 份時，可用階段值', { a: 'w2', o: ['w2', 'w3'] }, '。'],
+        ['每週油炸 3 次', { a: 'no', o: ['ok', 'no'] }, '。'],
+        ['Lunch protein is set at', { a: 'e2', o: ['e2', 'e3'], lang: 'en' }, '.'],
+        ['Milk target in school lunch:', { a: 'w3', o: ['w3', 'd1'], lang: 'en' }, '.']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: GLUN_M.h, force: 'en', svg: GLUN_M.svg, blanks: GLUN_M.b(),
+      intro: ['營養建議量的訂法，用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   團體膳食第 2 章：成本控制（成本種類、食物成本、損益平衡點）
+   ====================================================================== */
+var GCST_M = SM([['店面租金、固定月薪、折舊', 'Rent, salaries, depreciation', 'fix'], ['食材、包材、運費', 'Food, packaging, delivery', 'var'], ['計時人員工資、加班費', 'Hourly wages, overtime', 'var'],
+  ['水電瓦斯費', 'Utilities', 'semi'], ['保險費、貸款利息', 'Insurance, loan interest', 'fix'], ['廣告、設備維修保養', 'Advertising, maintenance', 'fix']],
+  { l: ['費用', 'expense'], r: ['屬於哪一種成本', 'type of cost'], k: 'E', dy: 50 });
+var GCST = { id: 'gcst', zh: '成本控制與損益平衡', en: 'Cost control and break-even analysis', alias: '固定・變動・半變動成本・食物成本公式・食物成本百分比・損益平衡點・加權平均單價', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    fix: { zh: '固定成本', en: 'Fixed cost' }, var: { zh: '變動成本', en: 'Variable cost' }, semi: { zh: '半變動成本', en: 'Semi-variable cost' },
+    fc: { zh: '期初存貨 ＋ 本期進貨 − 期末存貨', en: 'Opening + purchases − closing inventory' }, fcw: { zh: '本期進貨金額', en: 'Purchases only' },
+    pct: { zh: '食物成本 ÷ 營業額 × 100%', en: 'Food cost ÷ sales × 100%' }, pcw: { zh: '營業額 ÷ 食物成本 × 100%', en: 'Sales ÷ food cost × 100%' },
+    bep: { zh: '固定成本 ÷（1 − 變動成本率）', en: 'Fixed cost ÷ (1 − variable cost ratio)' }, bew: { zh: '固定成本 ÷ 變動成本率', en: 'Fixed cost ÷ variable cost ratio' },
+    wavg: { zh: '加權平均法', en: 'Weighted average method' }, fifo: { zh: '先進先出法', en: 'FIFO method' }
+  },
+  levels: [
+    { t: '先看全貌：三種成本', kind: 'ov', h: GCST_M.h, svg: GCST_M.svg, blanks: GCST_M.b(),
+      intro: ['依費用會不會跟著銷售量變動，成本分三種。固定成本：就算這個月沒有出餐也要付，例如租金、固定月薪、貸款利息、稅金、折舊、廣告、保險、設備保養。',
+        '變動成本：跟著銷售量等比例增加，例如食材、包材、運費、加班費、計時人員工資。員工若領時薪，人事成本就是變動成本。',
+        '半變動成本：有一部分固定、一部分隨用量增加，最典型的是水電瓦斯費（基本費加上超過基本度數的用量費）。三種加起來就是總成本。'],
+      done: ['[[固定成本：租金、固定薪資、利息、稅金、折舊、保險、廣告、設備保養。變動成本：食材、包材、運費、加班費、計時工資。半變動成本：水電瓦斯。]]'] },
+    { t: '食物成本與百分比', kind: 'list',
+      intro: ['食物成本不是「這個月買了多少」，而是「這個月用掉多少」：食物成本 ＝ 期初存貨 ＋ 本期進貨 − 期末存貨。',
+        '食物成本百分比 ＝ 食物成本 ÷ 營業額 × 100%。反過來，想讓食物成本占某個百分比，售價 ＝ 食材成本 ÷ 食物成本百分比。',
+        '例：期初存貨 20,000 元、本月進貨 15,000 元、月底存貨 12,000 元，食物成本是 23,000 元；當月營收 72,000 元，食物成本百分比約 32%。',
+        '利潤 ＝ 營業額 − 總成本 ＝ 營業額 −（固定成本 ＋ 變動成本）。'],
+      listTitle: '公式',
+      list: [['食物成本', { a: 'fc', o: ['fc', 'fcw'] }], ['食物成本百分比', { a: 'pct', o: ['pct', 'pcw'] }]],
+      countsTitle: '算算看', counts: [['期初 20,000、進貨 15,000、期末 12,000，營收 72,000，食物成本百分比約（%）', '32', ['24', '29', '32', '35']],
+        ['一份餐食材 30 元，希望食物成本占 40%，售價應訂（元）', '75', ['42', '70', '75', '120']], ['營收 500,000 元，變動成本占 60%，固定成本 140,000 元，利潤（元）', '60,000', ['6,000', '60,000', '96,000', '160,000']]],
+      done: ['[[食物成本 ＝ 期初存貨 ＋ 本期進貨 − 期末存貨；食物成本百分比 ＝ 食物成本 ÷ 營業額 × 100%；售價 ＝ 食材成本 ÷ 食物成本百分比。]]', '[[利潤 ＝ 營業額 −（固定成本 ＋ 變動成本）。]]'] },
+    { t: '損益平衡點', kind: 'list',
+      intro: ['損益平衡點是營收剛好等於總成本、不賺也不賠的營業額。超過它才開始賺錢。',
+        '變動成本率 ＝ 變動成本 ÷ 營業額。每賣 1 元，扣掉變動成本後剩下（1 − 變動成本率）可以拿來分攤固定成本，所以：損益平衡點 ＝ 固定成本 ÷（1 − 變動成本率）。',
+        '例：年營業額 500 萬，固定費用占 35%（175 萬），利潤 125 萬，變動成本就是 500 − 175 − 125 ＝ 200 萬，變動成本率 40%。損益平衡點 ＝ 175 ÷ 0.6 ≈ 292 萬元。'],
+      listTitle: '公式',
+      list: [['損益平衡點', { a: 'bep', o: ['bep', 'bew'] }]],
+      countsTitle: '算算看', counts: [['固定成本 175 萬、變動成本率 40%，損益平衡點約（萬元）', '292', ['250', '292', '350', '438']], ['固定成本 190 萬、變動成本率 40%，損益平衡點約（萬元）', '317', ['267', '317', '475']]],
+      done: ['[[損益平衡點 ＝ 固定成本 ÷（1 − 變動成本率）；變動成本率 ＝ 變動成本 ÷ 營業額。]]', '題目常只給「營業額、固定費用比例、利潤」：先用 營業額 − 固定 − 利潤 求出變動成本。'] },
+    { t: '存貨單價：加權平均法', kind: 'list',
+      intro: ['同一種食材分好幾批、價格不同時，計算成本要決定用哪個單價。加權平均法把期初存貨與每批進貨的總金額加起來，除以總數量。',
+        '例：期初 15 箱 × 650 元、進貨 30 箱 × 600 元、再進 15 箱 × 750 元：（9,750 ＋ 18,000 ＋ 11,250）÷ 60 ＝ 650 元。',
+        '先進先出法則假設先買的先用掉，期末存貨以最近買的價格計算。'],
+      listTitle: '是哪一個',
+      list: [['所有批次總金額 ÷ 總數量', { a: 'wavg', o: ['wavg', 'fifo'] }], ['期末存貨以最近進貨的價格計', { a: 'fifo', o: ['wavg', 'fifo'] }]],
+      countsTitle: '算算看', counts: [['15 箱 650 元、30 箱 600 元、15 箱 750 元，加權平均單價（元）', '650', ['600', '650', '667', '700']]],
+      done: ['[[加權平均單價 ＝（期初存貨金額 ＋ 各批進貨金額）÷ 總數量。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['食物中毒保險費屬於', { a: 'fix', o: ['fix', 'var', 'semi'] }, '。'],
+        ['水電瓦斯費屬於', { a: 'semi', o: ['fix', 'var', 'semi'] }, '。'],
+        ['食物成本 ＝', { a: 'fc', o: ['fc', 'fcw'] }, '。'],
+        ['損益平衡點 ＝', { a: 'bep', o: ['bep', 'bew'] }, '。'],
+        ['Food and packaging costs are a', { a: 'var', o: ['fix', 'var'], lang: 'en' }, '.'],
+        ['Food cost percentage =', { a: 'pct', o: ['pct', 'pcw'], lang: 'en' }, '.']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: GCST_M.h, force: 'en', svg: GCST_M.svg, blanks: GCST_M.b(),
+      intro: ['各種費用屬於哪種成本，用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   團體膳食第 3 章：採購（定義、三章一 Q、採購目標與方法、供應商、訂購點）
+   ====================================================================== */
+var GBUY_M = SM([['CAS 台灣優良農產品', 'CAS mark', 'cas', 'C'], ['產銷履歷', 'Traceability (TAP)', 'tap', 'C'], ['有機農產品', 'Organic', 'org', 'C'], ['QR Code', 'QR code', 'qr', 'C']],
+  { l: ['三章一 Q', '3 marks + 1 QR'], r: ['特色', 'feature'], dy: 56, rw: 184 });
+var GBUY = { id: 'gbuy', zh: '採購：標章、方法與訂購點', en: 'Purchasing', alias: '三章一 Q・採購目標・採購規格・供應商條件・公開與不公開採購・EOQ・採購點與安全庫存', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    cas: { zh: '品質規格驗證，加工品也有', en: 'Quality standard, incl. processed food' }, tap: { zh: '唯一可追溯、第三方驗證', en: 'Fully traceable, third-party verified' },
+    org: { zh: '不用化肥與化學農藥、非基改', en: 'No synthetic fertilizer or pesticide, non-GM' }, qr: { zh: '農產品生產追溯（掃碼看生產者）', en: 'Producer traceability by QR code' },
+    pub: { zh: '公開採購', en: 'Open (public) purchasing' }, npub: { zh: '不公開採購', en: 'Informal purchasing' }, mix: { zh: '折衷式（集中＋分散）', en: 'Combined (central + local)' },
+    spec: { zh: '採購規格', en: 'Purchase specification' }, cont: { zh: '契約', en: 'Contract' },
+    rop: { zh: '前置期用量 ＋ 安全庫存量', en: 'Lead-time usage + safety stock' }, eoq: { zh: '經濟訂購量（EOQ）', en: 'Economic order quantity' },
+    half: { zh: '訂貨運送期間需要量的 50%', en: '50% of lead-time usage' }, max: { zh: 'EOQ ＋ 安全庫存量', en: 'EOQ + safety stock' },
+    bond: { zh: '押標金', en: 'Bid bond' }, perf: { zh: '履約保證金', en: 'Performance bond' },
+    inv: { zh: '能開發票的合法廠商', en: 'Licensed supplier that issues invoices' }, any: { zh: '價格最低的攤商', en: 'Cheapest stall' }
+  },
+  levels: [
+    { t: '先看全貌：三章一 Q', kind: 'ov', h: GBUY_M.h, svg: GBUY_M.svg, blanks: GBUY_M.b(),
+      intro: ['採購是一連串的決策：向誰買、買多少、買哪個品牌與規格（鮮貨、半成品或成品）、怎麼送（乳品要冷藏車）、怎麼付款與退貨。目標是買到正確的商品、最好的價格與品質、最佳的供應商，並在最適當的時間進貨。',
+        '學校午餐推動使用「三章一 Q」的國產食材：CAS 台灣優良農產品標章、產銷履歷標章、有機農產品標章，加上臺灣農產品生產追溯 QR Code。',
+        'CAS 驗證的是品質規格，也有加工品（例如 CAS 肉品驗屠宰加工端）；產銷履歷每個環節都要紀錄並由第三方驗證，是目前唯一可以完整追溯的標章；有機重在生產過程不用化肥與化學農藥、品種非基改。'],
+      done: ['[[三章一 Q：CAS 台灣優良農產品、產銷履歷、有機農產品三種標章，加上農產品生產追溯 QR Code。吉園圃已退場，不在其中。]]', '[[產銷履歷：每個環節記錄、第三方驗證，可完整追溯。]]'] },
+    { t: '採購的方法', kind: 'list',
+      intro: ['不公開的方法：訂購、詢價現購、議價採購、報價採購，彈性大、速度快，適合緊急與小量採購。',
+        '公開的方法：招標採購、期貨、拍賣、比價採購、牌價收購，透明、競爭，適合大量與公家機關。招標時廠商要繳押標金，防止不實投標；得標簽約時再繳履約保證金，確保依約履行。',
+        '折衷式：共用的原物料由總部集中採購（以量制價），小量或特殊的由各單位自行採購。幾個單位合併採購稱聯合採購，可降低價格，但要協調規格與數量，並不會節省採購驗收的時間。'],
+      listTitle: '是哪一個',
+      list: [['招標、比價、拍賣、期貨', { a: 'pub', o: ['pub', 'npub', 'mix'] }], ['詢價現購、議價、訂購（緊急時常用）', { a: 'npub', o: ['pub', 'npub', 'mix'] }],
+        ['共用原料集中買，特殊原料各單位自己買', { a: 'mix', o: ['pub', 'npub', 'mix'] }], ['投標時繳交，防止不實投標', { a: 'bond', o: ['bond', 'perf'] }], ['得標簽約時繳交，確保依約履行', { a: 'perf', o: ['bond', 'perf'] }]],
+      done: ['[[公開採購：招標、期貨、拍賣、比價、牌價收購；不公開採購：訂購、詢價現購、議價、報價（適合緊急採購）；折衷式：集中＋分散。]]', '[[押標金防止不實投標；履約保證金確保得標廠商依約履行。]]'] },
+    { t: '規格與供應商', kind: 'list',
+      intro: ['先訂採購規格：產地、等級、大小、重量、色澤、包裝、貯存狀態。例如調理肉排：CAS 認證、每片 90～100 公克、冷凍運輸交貨、無異味與解凍跡象。',
+        '選供應商看地點、設備、專業知識、財務與誠信；條件是品質符合、交期準確、價格公道、付款條件合適、售後服務好，原則上要能開立發票。決定前後可以去查廠：工廠登記、CAS 與 GHP 證明、廠房衛生、品管檢驗、人員體檢與訓練、製程、包裝、運輸車輛衛生。',
+        '大量採購時，合法、有規模的廠商比較重要：一旦發生食物中毒，合格廠商也較有能力負責賠償。'],
+      listTitle: '是哪一個',
+      list: [['寫明產地、等級、重量、包裝的文件', { a: 'spec', o: ['spec', 'cont'] }], ['採購對象原則上選', { a: 'inv', o: ['inv', 'any'] }]],
+      done: ['[[採購規格：產地、等級、大小、重量、色澤、包裝、貯存狀態。供應商原則上要能開發票；可查廠稽核（工廠登記、CAS／GHP、衛生、品管、人員、製程、包裝、運輸）。]]'] },
+    { t: '買多少、什麼時候叫貨', kind: 'list',
+      intro: ['安全庫存量是預防送貨延遲或需求突增的緩衝，一般是訂貨運送期間需要量的 50%。',
+        '訂購點（剩多少就要下單）＝ 前置期（從下單到送達）的用量 ＋ 安全庫存量。例：每天用 2 箱，前置期 4 天（8 箱），安全庫存 2 天（4 箱）：剩 12 箱就要叫貨。',
+        '經濟訂購量（EOQ）是讓「訂購成本」加「持有成本」最低的每次訂購量：EOQ ＝ √（2 × 年需求量 × 每次訂購成本 ÷ 每單位年持有成本）。最大庫存量 ＝ EOQ ＋ 安全庫存量。'],
+      listTitle: '是哪一個',
+      list: [['訂購點', { a: 'rop', o: ['rop', 'max'] }], ['最大庫存量', { a: 'max', o: ['rop', 'max'] }], ['安全庫存量一般為', { a: 'half', o: ['half', 'rop'] }], ['讓訂購成本加持有成本最低的批量', { a: 'eoq', o: ['eoq', 'spec'] }]],
+      countsTitle: '算算看', counts: [['每天用 2 箱，前置期 4 天，安全庫存 2 天份，訂購點是幾箱', '12', ['8', '10', '12', '16']], ['每天用 5 包，前置期 2 天，安全庫存取前置期用量的 50%，訂購點是幾包', '15', ['10', '12', '15', '20']]],
+      done: ['[[訂購點 ＝ 前置期用量 ＋ 安全庫存量；安全庫存量一般為運送期間需要量的 50%；最大庫存量 ＝ EOQ ＋ 安全庫存量。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['緊急採購適合用', { a: 'npub', o: ['pub', 'npub'] }, '，例如詢價現購。'],
+        ['投標時繳交、違反規定不予發還的是', { a: 'bond', o: ['bond', 'perf'] }, '。'],
+        ['目前唯一可以完整追溯生產過程的是', { a: 'tap', o: ['cas', 'tap', 'org'] }, '標章。'],
+        ['訂購點 ＝', { a: 'rop', o: ['rop', 'max'] }, '。'],
+        ['Tendering and auctions are', { a: 'pub', o: ['pub', 'npub'], lang: 'en' }, '.'],
+        ['The order size minimizing total inventory cost is the', { a: 'eoq', o: ['eoq', 'spec'], lang: 'en' }, '.']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: GBUY_M.h, force: 'en', svg: GBUY_M.svg, blanks: GBUY_M.b(),
+      intro: ['三章一 Q 的特色，用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   團體膳食第 3 章：採購量的計算（廢棄率、可食率、收縮率、膨脹率）
+   ====================================================================== */
+var GQTY_M = SM([['生廢棄率 a%', 'Raw waste a%', 'q1'], ['可食率 b%', 'Edible portion b%', 'q2'], ['收縮率 c%（加熱後少了 c%）', 'Shrinkage c%', 'q1'], ['膨脹率 d%（泡發後是原來的 d%）', 'Rehydration d%', 'q2'], ['熟廢棄率 e%（骨頭等）', 'Cooked waste e%', 'q1']],
+  { l: ['題目給的', 'given'], r: ['倒推時要', 'to work back'], k: 'E', dy: 56, lw: 156, lx: 90, rx: 270, rw: 170 });
+var GQTY = { id: 'gqty', zh: '採購量的計算', en: 'Calculating purchase quantities', alias: 'AP 與 EP・生廢棄率・可食率・收縮率・膨脹率・熟廢棄率・台斤換算', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    q1: { zh: '除以（1 − 這個比例）', en: 'Divide by (1 − rate)' }, q2: { zh: '除以這個比例', en: 'Divide by the rate' },
+    ap: { zh: '購買量（AP）', en: 'As purchased (AP)' }, ep: { zh: '可食生重（EP）', en: 'Edible portion (EP)' }, ck: { zh: '熟重', en: 'Cooked weight' }
+  },
+  levels: [
+    { t: '先看全貌：從熟重倒推購買量', kind: 'ov', h: GQTY_M.h, svg: GQTY_M.svg, blanks: GQTY_M.b(),
+      intro: ['菜單寫的是每人吃到多少「熟」的量，採購要買的是帶皮帶根的「生」料，所以要從熟重一路倒推回去：購買量（AP）→ 去掉不可食部位得到可食生重（EP）→ 加熱收縮或泡發膨脹得到熟重。',
+        '倒推的規則只有兩種。題目給的是「少掉多少」（廢棄率、收縮率、熟廢棄率），就除以（1 − 比例）；給的是「剩下多少」或「變成多少」（可食率、膨脹率），就直接除以那個比例。',
+        '最後乘以份數，必要時換算單位：1 台斤 ＝ 600 公克。'],
+      done: ['[[AP（購買量）→ 生廢棄 → EP（可食生重）→ 收縮或膨脹 → 熟重 →（熟廢棄）→ 熟可食重。]]', '[[給「少掉的比例」就除以（1 − 比例）；給「剩下或變成的比例」就除以比例。1 台斤 ＝ 600 公克。]]'] },
+    { t: '練習（一）：蔬菜與肉', kind: 'list',
+      intro: ['例 1：青江菜每人熟重 80 公克，收縮率 20%，生廢棄率 5%，供應 1,000 人。80 ÷ 0.8 ＝ 100 公克可食生重；100 ÷ 0.95 ≈ 105.3 公克；× 1,000 ＝ 105.3 公斤。',
+        '例 2：帶骨炸豬排每人可食熟重 150 公克，熟廢棄率 12%（骨頭），收縮率 10%，生廢棄率 2%，1,000 份：150 ÷ 0.88 ÷ 0.9 ÷ 0.98 ≈ 193.3 公克，× 1,000 ≈ 193 公斤。'],
+      countsTitle: '算算看', counts: [['青江菜熟重 80 g、收縮率 20%、生廢棄率 5%，1,000 人約買幾公斤', '105', ['84', '95', '105', '120']],
+        ['帶骨豬排可食熟重 150 g、熟廢棄 12%、收縮 10%、生廢棄 2%，1,000 份約買幾公斤', '193', ['150', '170', '193', '210']],
+        ['櫛瓜熟重 80 g、收縮率 15%、生廢棄率 5%，500 人約買幾台斤', '83', ['43', '50', '72', '83']]],
+      done: ['[[一定要從熟重開始，按「熟廢棄 → 收縮 → 生廢棄」的反方向一步步除回去。]]'] },
+    { t: '練習（二）：乾貨泡發與可食率', kind: 'list',
+      intro: ['乾香菇、木耳、海帶、冬粉要泡發，題目會給膨脹率（例如 280% 表示泡發後重量是原來的 2.8 倍），倒推時除以 2.8。',
+        '例：12,500 人、5 道蔬菜選 1 道，每道約 2,500 人份；兩道用香菇共 5,000 份 × 5 公克 ＝ 25 公斤泡發後的香菇；25 ÷ 2.8 ≈ 8.9 公斤；可用率 90%：8.9 ÷ 0.9 ≈ 9.9 公斤，約 10 公斤乾香菇。',
+        '例：熟品 450 份 × 100 公克 ＝ 45 公斤，收縮率 85%（題目寫「收縮率 85%」時要看清楚是剩 85% 還是少 85%；此題指熟重是生重的 85%），可食率 90%：45 ÷ 0.85 ÷ 0.9 ≈ 59 公斤。'],
+      countsTitle: '算算看', counts: [['泡發香菇 25 kg，膨脹率 280%，可用率 90%，約需乾香菇幾公斤', '10', ['7', '8', '10', '12']],
+        ['熟品 45 kg，熟重為生重的 85%，可食率 90%，約買幾公斤', '59', ['38', '50', '59', '65']]],
+      done: ['[[膨脹率是「變成原來的幾倍」，倒推時除以它；可食率是「剩下可以吃的比例」，倒推時除以它。]]', '題目的「收縮率」有兩種寫法：「收縮 15%」是少了 15%；「收縮率 85%」常指剩下 85%。先想清楚熟的會比生的少，再決定除以哪個數。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['已知生廢棄率，倒推時', { a: 'q1', o: ['q1', 'q2'] }, '。'],
+        ['已知可食率，倒推時', { a: 'q2', o: ['q1', 'q2'] }, '。'],
+        ['乾香菇已知膨脹率，倒推時', { a: 'q2', o: ['q1', 'q2'] }, '。'],
+        ['去除不可食部位、洗淨後的重量是', { a: 'ep', o: ['ap', 'ep', 'ck'] }, '。'],
+        ['The weight you buy is the', { a: 'ap', o: ['ap', 'ep'], lang: 'en' }, '.'],
+        ['Given a shrinkage rate, you', { a: 'q1', o: ['q1', 'q2'], lang: 'en' }, '.']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: GQTY_M.h, force: 'en', svg: GQTY_M.svg, blanks: GQTY_M.b(),
+      intro: ['倒推購買量的規則，用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   團體膳食第 3 章：驗收（目的、人員與工具、驗收方法、三級品管）
+   ====================================================================== */
+var GRCV_M = SM([['看 CAS、檢驗報告、進口證明', 'Check certificates and reports', 'doc', 'C'], ['看標示：品名、內容物、日期、廠商', 'Read the label', 'see', 'C'], ['把蘿蔔、西瓜、茄子切開看中心', 'Cut open roots and melons', 'cut', 'H'],
+  ['冷凍肉、蝦仁解凍看血水與包冰', 'Thaw frozen meat and shrimp', 'thaw', 'I'], ['豆干、麵條用雙氧水試劑', 'Test reagent on tofu and noodles', 'reag', 'T']],
+  { l: ['怎麼驗', 'how'], r: ['驗收方法', 'method'], dy: 54, lw: 168, lx: 92, rx: 272, rw: 160 });
+var GRCV = { id: 'grcv', zh: '驗收', en: 'Receiving', alias: '驗收目的・人員與工具・全數與抽樣・文件審視切割解凍試劑・包冰・退貨・三級品管', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    doc: { zh: '文件驗收', en: 'Document check' }, see: { zh: '審視法', en: 'Visual and label inspection' }, cut: { zh: '切割驗收', en: 'Cutting test' }, thaw: { zh: '解凍驗收', en: 'Thawing test' }, reag: { zh: '試劑驗收', en: 'Reagent test' },
+    all: { zh: '全數檢查', en: '100% inspection' }, samp: { zh: '抽樣檢查', en: 'Sampling' },
+    scale: { zh: '磅秤', en: 'Scale' }, thermo: { zh: '溫度計', en: 'Thermometer' }, chl: { zh: '餘氯試劑', en: 'Chlorine test kit' },
+    l1: { zh: '第一級：業者自主管理', en: 'Level 1: self-control' }, l2: { zh: '第二級：第三方驗證', en: 'Level 2: third-party certification' }, l3: { zh: '第三級：政府稽查抽驗', en: 'Level 3: government inspection' },
+    ice: { zh: '依解凍後重量計價', en: 'Pay by thawed weight' }, ret: { zh: '詳細說明原因後退貨', en: 'Return with reasons' }
+  },
+  levels: [
+    { t: '先看全貌：五種驗收方法', kind: 'ov', h: GRCV_M.h, svg: GRCV_M.svg, blanks: GRCV_M.b(),
+      intro: ['驗收是確認廠商送來的貨，品質、數量、規格、價格都和訂購的一致，而且準時、有效；驗收完正確入庫，把單據歸檔，才算完成。',
+        '進貨時可用五種方法：看證明文件；看標示與外觀；把容易外好內壞的蔬果切開；把冷凍品解凍看品質；用試劑檢測。冷凍調理食品進貨時只能看外觀與標示，烹煮時若發現異味異物，要立刻停止並請廠商退換。'],
+      done: ['[[驗收方法：文件驗收（CAS、GHP、檢驗證明、進口證明）、審視法（標示、外觀）、切割驗收（根莖類、瓜果）、解凍驗收（冷凍肉品、水產、蔬菜）、試劑驗收（雙氧水等）。]]'] },
+    { t: '人員、工具與準備', kind: 'list',
+      intro: ['驗收要派誠實又識貨的人，給足夠的空間，安排適當的進貨時間，手上要有採購規格與訂貨單影本。可以用暗驗制度、不讓驗收人員經手現款來防止舞弊。',
+        '工具：磅秤、溫度計、尺，必要時用簡易試劑（例如雙氧水試劑）。餘氯試劑是檢查水或消毒液濃度的，不是驗收食材用。',
+        '用推車、不同顏色的籃子、廠商專用貨梯與錯開的送貨時段，避免驗收時交叉污染。'],
+      listTitle: '是不是驗收用的工具',
+      list: [['秤重量', { a: 'scale', o: ['scale', 'thermo', 'chl'] }], ['量冷藏、冷凍品溫度', { a: 'thermo', o: ['scale', 'thermo', 'chl'] }], ['檢查消毒液濃度，不是驗收食材用', { a: 'chl', o: ['scale', 'thermo', 'chl'] }]],
+      done: ['[[驗收工具：磅秤、溫度計、尺、簡易試劑（雙氧水等）；餘氯試劑不屬於驗收食材的工具。]]', '驗收人員要有採購規格與訂貨單影本；防弊：暗驗、不經手現款。'] },
+    { t: '全數或抽樣、包冰與退貨', kind: 'list',
+      intro: ['高價、易破損、容易混入不良品、季節性的原料要全數檢查；量大、不易有不良品、價格低的可以抽樣。大批貨要翻看下層，防止以劣品或空箱充數；真空包裝要看有沒有破損。',
+        '冷凍水產常包冰，冰厚薄不一會讓成本變高。契約可以寫明以解凍後減少的重量比例計算實際進貨量。冷凍肉品解凍後血水應少而清澈，黏稠表示不新鮮或可能灌水。',
+        '品質不好要部分或全部退貨，詳細說明原因，也藉此要求廠商改善；處理得宜才能維持長期合作。'],
+      listTitle: '怎麼處理',
+      list: [['高價的牛肉、易破的蛋', { a: 'all', o: ['all', 'samp'] }], ['量大、價低、少有不良品的乾貨', { a: 'samp', o: ['all', 'samp'] }], ['冷凍蝦仁包冰厚薄不一', { a: 'ice', o: ['ice', 'ret'] }], ['品質不符規格', { a: 'ret', o: ['ice', 'ret'] }]],
+      done: ['[[高價、易破損、易混入不良品、季節性原料全數檢查；量大、低價、不易有不良品者抽樣。]]', '[[冷凍水產以解凍後重量計，避免買到冰。]]'] },
+    { t: '三級品管', kind: 'list',
+      intro: ['食品安全的三級品管：第一級是業者自己做，例如自主檢驗、自設檢驗室；第二級是請第三方驗證機構驗證或送驗；第三級是政府主管機關的稽查與抽驗。',
+        '團膳業者要求供應商落實源頭管理並留紀錄；業者自己去稽查抽驗仍屬第一級，不是第三級。'],
+      listTitle: '是第幾級',
+      list: [['業者自設檢驗室逐批檢驗', { a: 'l1', o: ['l1', 'l2', 'l3'] }], ['送交第三方驗證機構檢驗', { a: 'l2', o: ['l1', 'l2', 'l3'] }], ['衛生局到廠稽查抽驗', { a: 'l3', o: ['l1', 'l2', 'l3'] }]],
+      done: ['[[三級品管：一級業者自主管理、二級第三方驗證、三級政府稽查抽驗。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['蘿蔔、西瓜外觀正常但中間可能空心，用', { a: 'cut', o: ['cut', 'thaw', 'doc'] }, '。'],
+        ['不屬於驗收工具的是', { a: 'chl', o: ['scale', 'thermo', 'chl'] }, '。'],
+        ['高價食材宜', { a: 'all', o: ['all', 'samp'] }, '。'],
+        ['政府稽查抽驗屬於', { a: 'l3', o: ['l1', 'l3'] }, '。'],
+        ['Frozen shrimp with uneven glaze: check by', { a: 'thaw', o: ['thaw', 'cut'], lang: 'en' }, '.'],
+        ['A third-party certification is', { a: 'l2', o: ['l1', 'l2'], lang: 'en' }, '.']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: GRCV_M.h, force: 'en', svg: GRCV_M.svg, blanks: GRCV_M.b(),
+      intro: ['五種驗收方法，用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   團體膳食第 4 章：庫房的設施與各類食材貯存
+   ====================================================================== */
+var GSTO_M = SM([['一般冷藏庫', 'Refrigerator', 's1', 'I'], ['冰溫冷藏（魚貝）', 'Chilled, near 0 °C', 's2', 'I'], ['冷凍庫', 'Freezer', 's3', 'I'], ['超低溫冷凍庫', 'Ultra-low freezer', 's4', 'I'], ['乾料庫房', 'Dry storeroom', 's5', 'H']],
+  { l: ['庫房', 'store'], r: ['溫度', 'temperature'], dy: 54 });
+var GSTO = { id: 'gsto', zh: '庫房的設施與各類食材貯存', en: 'Storage facilities and food storage', alias: '冷藏 0～7℃・冷凍 −18℃・乾料 15～25℃・庫房種類與型式・容積・置物架離地離牆・零庫存與預託・蔬果肉蛋奶豆貯存', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    s1: { zh: '0～7℃', en: '0–7 °C' }, s2: { zh: '−1～−5℃ 或 0～3℃', en: '−1 to −5 °C or 0–3 °C' }, s3: { zh: '−18℃ 以下', en: '−18 °C or below' }, s4: { zh: '−45℃ 以下', en: '−45 °C or below' }, s5: { zh: '15～25℃，濕度 40～60%', en: '15–25 °C, RH 40–60%' },
+    walk: { zh: '步入型', en: 'Walk-in' }, reach: { zh: '手取型', en: 'Reach-in' }, roll: { zh: '車入型', en: 'Roll-in' }, under: { zh: '工作檯型', en: 'Undercounter' }, chest: { zh: '箱型', en: 'Chest' },
+    jit: { zh: '零庫存（及時供應）', en: 'Just-in-time' }, cons: { zh: '預託方式', en: 'Consignment' }, pre: { zh: '預採購方式', en: 'Forward buying' }, cen: { zh: '集中庫房', en: 'Single central store' }, sep: { zh: '分庫儲存', en: 'Separate stores' },
+    room: { zh: '室溫陰涼處', en: 'Cool room temperature' }, fridge: { zh: '冷藏', en: 'Refrigerate' }, mid: { zh: '10～15℃', en: '10–15 °C' },
+    cap: { zh: '調氣貯藏（降 O₂、升 CO₂）', en: 'Controlled atmosphere' }, nocap: { zh: '不必調氣', en: 'Not needed' },
+    down: { zh: '尖端朝下冷藏', en: 'Refrigerate pointed end down' }, wash: { zh: '用水洗淨再放', en: 'Wash before storing' }, nofz: { zh: '不宜冷凍', en: 'Do not freeze' }
+  },
+  levels: [
+    { t: '先看全貌：各種庫房的溫度', kind: 'ov', h: GSTO_M.h, svg: GSTO_M.svg, blanks: GSTO_M.b(),
+      intro: ['食材驗收後要依特性分別入庫：容易腐敗的生鮮進冷藏或冷凍庫，乾貨進乾料庫，清潔劑與器皿進非食品庫。',
+        '冷藏庫 0～7℃、相對濕度 75～85%，放生鮮與隔天要用的食材；冷凍庫 −18℃ 以下；超低溫冷凍庫 −45℃ 以下可長期保存（例如生魚片級鮪魚）；魚貝類可放接近 0℃ 不結凍的冰溫。',
+        '乾料庫房溫度 15～25℃、相對濕度 40～60%（教材也有寫 50～60%），通風、避光、防病媒。'],
+      done: ['[[冷藏 0～7℃（濕度 75～85%）、冷凍 −18℃ 以下、超低溫 −45℃ 以下、乾料庫 15～25℃（濕度 40～60%）。]]', '解凍庫用低溫、高濕、高速氣流解凍，減少汁液流失。'] },
+    { t: '庫房的種類、型式與容積', kind: 'list',
+      intro: ['依物品分庫：乾料庫（米麵、罐頭、油、調味料、南北貨）、生鮮庫（冷藏冷凍）、非食品庫（清潔劑、器皿）。空間不夠時非食品可與乾料同庫，但要分區、不同架；最下策同架時「上層食品、下層清潔劑」。全部放一起的集中庫房容易髒亂、交叉污染、拿錯，不建議。',
+        '冷藏冷凍庫的型式：箱型（上掀或拉門）、工作檯型（上面是檯面、下面是冰箱）、手取型（最常見，深度寬度在手可及範圍）、步入型（人走進去，要有防反鎖裝置，門外裝作業燈）、車入型（推車或堆高機直接推進去）。',
+        '容積估算：每立方公尺約可放 150～175 公斤，但為了冷氣循環，只放 50～60%，約 75～88 公斤。'],
+      listTitle: '是哪一種',
+      list: [['人可以走進去理貨盤點，要有防反鎖裝置', { a: 'walk', o: ['walk', 'reach', 'roll', 'under', 'chest'] }], ['最常見，深度寬度在手可及範圍', { a: 'reach', o: ['walk', 'reach', 'roll', 'under', 'chest'] }],
+        ['推車整車推入', { a: 'roll', o: ['walk', 'reach', 'roll', 'under', 'chest'] }], ['上層是料理檯、下層是冰箱', { a: 'under', o: ['walk', 'reach', 'roll', 'under', 'chest'] }],
+        ['所有物料放在一處，不建議', { a: 'cen', o: ['cen', 'sep'] }]],
+      countsTitle: '數字', counts: [['冷藏冷凍庫的食品量宜占空間的百分比', '50～60', ['30～40', '50～60', '80～90']]],
+      done: ['[[庫房種類：乾料庫、生鮮（冷藏冷凍）庫、非食品庫；集中庫房不建議。冷庫型式：箱型、工作檯型、手取型、步入型、車入型。]]', '[[冷庫存放量只占空間 50～60%，保持冷氣循環。]]'] },
+    { t: '冷庫與乾料庫的管理', kind: 'list',
+      intro: ['冷庫：專用電源、遠離熱源與日照；熱的東西放涼再進去；每日查看並記錄溫度，角落也放溫度計；少開門；物品密封、放置物架上、不放地上、彼此留間隔；先進先出（或先到期先出）；生鮮入庫前去掉紙箱（冷凍庫除外）；存量最少時清洗。',
+        '乾料庫：避免日光直射，位於驗收區與前處理區之間；置物架深 45～60 公分、高 200 公分，底層離地 15～20 公分、離牆 5 公分；粉類用加蓋的桶並標示；門口貼貨品平面圖；舊貨在前、新貨在後；取用後擦淨罐身。'],
+      countsTitle: '數字', counts: [['乾料置物架底層離地（公分）', '15～20', ['5', '15～20', '30～40']], ['乾料置物架離牆（公分）', '5', ['5', '15', '30']], ['乾料置物架高度上限約（公分）', '200', ['150', '200', '250']]],
+      done: ['[[置物架離地 15～20 公分、離牆 5 公分、深 45～60 公分、高 200 公分。冷庫：每日記錄溫度、少開門、熱食放涼才入庫、物品不落地、先進先出。]]'] },
+    { t: '庫房管理的方式', kind: 'list',
+      intro: ['依供應商的供應方式：零庫存（及時庫房）是供應商依需求即時送貨，品質依合約，可免驗貨；預託是供應商把貨寄放在客戶庫房、依用量定期收款，供應商負擔部分庫房費用；預採購是客戶預估一季或一年的用量一次大量採購，由供應商分批送貨，品質較一致、成本較低，但要承擔高估的風險。'],
+      listTitle: '是哪一種',
+      list: [['供應商依需求及時送貨，可免除驗貨程序', { a: 'jit', o: ['jit', 'cons', 'pre'] }], ['貨先寄放在客戶庫房，依使用量收款', { a: 'cons', o: ['jit', 'cons', 'pre'] }], ['先估一年用量大量採購、分批送貨', { a: 'pre', o: ['jit', 'cons', 'pre'] }]],
+      done: ['[[零庫存（just in time）、預託方式、預採購方式；依物品則分為分庫儲存與集中庫房。]]'] },
+    { t: '各類食材怎麼存', kind: 'list',
+      intro: ['油脂：陰涼乾燥避光，不用銅鐵容器；用過的油不要混入新油，炸過肉的油不可久存。',
+        '蔬果：香蕉、馬鈴薯、地瓜放 10～15℃，冷藏會寒害、太熱會發芽；南瓜、冬瓜等皮厚瓜果室溫即可；小黃瓜、番茄等皮薄的要冷藏。要延長貯存可以調氣（降 O₂ 2～3%、升 CO₂ 2～5%），用在蘋果等呼吸旺盛的水果；西瓜這類不需要。烹調前才洗切。',
+        '肉類密封防汁液外流；絞肉、內臟冷藏 2 天內用完；解凍後不可再回凍；魚要先去內臟再冷凍。鮮奶 3～7℃、不可冷凍；帶殼蛋不可冷凍、尖端朝下冷藏，髒污用濕布擦，不可水洗（會洗掉保護膜）。豆腐泡水冷藏、每天換水，一天內用完。'],
+      listTitle: '怎麼存',
+      list: [['南瓜、冬瓜', { a: 'room', o: ['room', 'fridge', 'mid'] }], ['小黃瓜、番茄', { a: 'fridge', o: ['room', 'fridge', 'mid'] }], ['香蕉、馬鈴薯、地瓜', { a: 'mid', o: ['room', 'fridge', 'mid'] }],
+        ['蘋果要延長貯存', { a: 'cap', o: ['cap', 'nocap'] }], ['大西瓜', { a: 'nocap', o: ['cap', 'nocap'] }], ['帶殼蛋', { a: 'down', o: ['down', 'wash'] }], ['鮮奶', { a: 'nofz', o: ['nofz', 'down'] }]],
+      done: ['[[香蕉、馬鈴薯、番薯 10～15℃；皮厚瓜果室溫；皮薄瓜果冷藏；調氣貯藏 CO₂ 2～5%、O₂ 2～3%。]]', '[[蛋尖端朝下冷藏、不可水洗、帶殼不可冷凍；鮮奶 3～7℃ 不可冷凍；絞肉內臟 2 天內用完；解凍後不再回凍。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['冷藏庫的溫度是', { a: 's1', o: ['s1', 's3', 's5'] }, '。'],
+        ['鮮奶應', { a: 'nofz', o: ['nofz', 'down'] }, '，存放在 3～7℃。'],
+        ['人可以走進去作業、要有防反鎖裝置的是', { a: 'walk', o: ['walk', 'reach'] }, '冷庫。'],
+        ['供應商依需求及時送貨、可免驗貨的是', { a: 'jit', o: ['jit', 'pre'] }, '。'],
+        ['A freezer should be kept at', { a: 's3', o: ['s1', 's3'], lang: 'en' }, '.'],
+        ['Apples stored longer use', { a: 'cap', o: ['cap', 'nocap'], lang: 'en' }, '.']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: GSTO_M.h, force: 'en', svg: GSTO_M.svg, blanks: GSTO_M.b(),
+      intro: ['各種庫房的溫度，用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   團體膳食第 4 章：物料控制、盤點與撥發
+   ====================================================================== */
+var GINV_M = SM([['庫存降到最低存量時填寫', 'Filled when stock hits minimum', 'f1', 'C'], ['合格食材入庫時登錄', 'Logged when goods are received', 'f2', 'C'], ['廚房領料時填、主管簽核', 'Filled by the kitchen, signed by a manager', 'f3', 'C'], ['放在貨架前，隨時記錄進出與結餘', 'Kept at the shelf, records in/out/balance', 'f4', 'C']],
+  { l: ['用途', 'use'], r: ['表單', 'form'], dy: 56, lw: 176, lx: 96, rx: 276, rw: 152 });
+var GINV = { id: 'ginv', zh: '物料控制、盤點與撥發', en: 'Inventory control, counting and issuing', alias: '四種表單・庫房管制卡・定額與最低最高庫存・鑰匙管制・四種盤點法・見單撥發・先進先出・ABC 分類', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    f1: { zh: '庫房申購單', en: 'Purchase requisition' }, f2: { zh: '收貨記錄卡', en: 'Receiving record' }, f3: { zh: '請領單（撥發單）', en: 'Issue requisition' }, f4: { zh: '庫房管制卡（存物架卡）', en: 'Bin card' },
+    fixd: { zh: '定額庫存量', en: 'Fixed stock level' }, mm: { zh: '最低—最高庫存量', en: 'Min–max system' },
+    all: { zh: '全部盤點', en: 'Complete count' }, per: { zh: '定期盤點', en: 'Periodic count' }, low: { zh: '下限盤點', en: 'Lower-limit count' }, irr: { zh: '不定期盤點', en: 'Irregular count' },
+    fifo: { zh: '先進先出（FIFO）', en: 'First in, first out' }, fefo: { zh: '先到期先出（FEFO）', en: 'First expired, first out' },
+    a: { zh: 'A 類：品項少、金額高，嚴格管控', en: 'A: few items, high value, tight control' }, c: { zh: 'C 類：品項多、金額低，簡化管理', en: 'C: many items, low value, simple control' },
+    keep: { zh: '持有鑰匙的庫管人員負全責', en: 'Key-holding storekeeper is responsible' }, any: { zh: '由廚房主管與庫管共同負責', en: 'Shared with the chef' }
+  },
+  levels: [
+    { t: '先看全貌：四種表單', kind: 'ov', h: GINV_M.h, svg: GINV_M.svg, blanks: GINV_M.b(),
+      intro: ['庫房要做到每一筆進出都有紀錄。庫存降到最低存量時，庫管填申購單請採購補貨；貨到驗收合格入庫，登錄收貨記錄卡；廚房要用料時填請領單，經主管簽核，「見單才撥發」。',
+        '庫房管制卡（存物架卡）放在該物品的貨架前，另一份由庫管保存，每次進貨、撥發都當場登錄，隨時看得到結餘量。',
+        '查帳時：期初存量 ＋ 收貨量 − 撥發量 ＝ 管制卡結餘 ＝ 貨架實際數量。對不上就表示漏單、算錯或失竊。'],
+      done: ['[[庫房表單：申購單（補貨）、收貨記錄卡（入庫）、請領單／撥發單（出庫，主管簽核）、庫房管制卡（存物架卡，記錄進貨量、撥發量、結餘量與單價）。]]', '[[期初存量 ＋ 收貨量 − 撥發量 ＝ 結餘量 ＝ 實盤數。]]'] },
+    { t: '安全庫存與鑰匙管制', kind: 'list',
+      intro: ['定時進貨的大宗食材用定額庫存量：例如米每週用 8 袋，就定 8 袋，下次進貨前剩 2 袋就只叫 6 袋。剩下的舊米放前面先用。',
+        '不定時進貨的乾貨用最低—最高庫存量：例如麵粉最低 3 袋、最高 12 袋，剩 3 袋時叫 9 袋補到 12 袋。最低庫存量就是安全庫存量。',
+        '鑰匙只備兩套：一套由庫管隨身保管，一套密封放在財務保險櫃，不交給其他主管。東西短少由持有鑰匙的庫管負責；庫管休假時，代理人與庫管共同盤點、簽名交接；鑰匙遺失或庫管離職要立即換鎖。'],
+      listTitle: '是哪一種',
+      list: [['每週定時進貨的米', { a: 'fixd', o: ['fixd', 'mm'] }], ['不定時進貨的麵粉', { a: 'mm', o: ['fixd', 'mm'] }], ['庫房物品短少的責任', { a: 'keep', o: ['keep', 'any'] }]],
+      countsTitle: '算算看', counts: [['米定額 8 袋，進貨前剩 2 袋，要叫幾袋', '6', ['2', '6', '8', '10']], ['麵粉最低 3 袋、最高 12 袋，剩 3 袋時叫幾袋', '9', ['3', '9', '12', '15']]],
+      done: ['[[定額庫存量：定時進貨；最低—最高庫存量：不定時進貨，降到最低就補到最高。]]', '鑰匙兩套：庫管一套、財務保險櫃一套；責任歸持鑰匙的庫管。'] },
+    { t: '盤點', kind: 'list',
+      intro: ['盤點是確認食材真實的流向與存量，及早發現過期、破損、失竊，並算出期末存貨金額與食物成本。大型團膳宜定期盤點，小型餐飲可以不定期盤點。',
+        '全部盤點：清點所有品項，最準確但費時，建議用在高單價食材。定期盤點：依類別或區域排好每週、每月的盤點日。下限盤點：在存量最少的時候盤，省時省力。不定期盤點：特殊狀況時做，例如颱風前後、市場限貨。',
+        '盤點記錄卡常用一式三聯：庫管、會計、採購各一聯。發現快到期的食材要立即通知營養師，排進近一兩天的菜單用掉。'],
+      listTitle: '是哪一種',
+      list: [['所有品項都清點，適合高單價食材', { a: 'all', o: ['all', 'per', 'low', 'irr'] }], ['依類別或區域排好固定的盤點日', { a: 'per', o: ['all', 'per', 'low', 'irr'] }],
+        ['存量最少時盤點，省人力時間', { a: 'low', o: ['all', 'per', 'low', 'irr'] }], ['颱風季前後臨時盤點', { a: 'irr', o: ['all', 'per', 'low', 'irr'] }]],
+      done: ['[[盤點方式：全部盤點（高單價品）、定期盤點、下限盤點（存量最少時）、不定期盤點（颱風、限貨）。大型團膳宜定期盤點。]]'] },
+    { t: '撥發與 ABC 分類', kind: 'list',
+      intro: ['撥發有兩條路：當天要用的葉菜、豆腐、溫體肉，驗收後直接送前處理區，不進庫房；在庫的食材由廚房填請領單、主管簽核後才撥發，不接受口頭領料。',
+        '撥發要先進先出；若後到的那批製造日期或有效期限較早，就先發那一批（先到期先出）。請領單要寫品名、數量、單位、規格、單價、總價，庫管每天加總，就是當天的食材成本。',
+        'ABC 分類：A 類品項少但占大部分金額（進口牛肉、鮭魚），每天盤、嚴格管；B 類中間；C 類品項多但金額低（鹽、糖、香料、耗材），每月盤一次、可以一次多叫。'],
+      listTitle: '是哪一個',
+      list: [['後到的批次有效期限較短，先發它', { a: 'fefo', o: ['fifo', 'fefo'] }], ['舊貨在前、新貨在後', { a: 'fifo', o: ['fifo', 'fefo'] }], ['進口牛肉、鮭魚', { a: 'a', o: ['a', 'c'] }], ['鹽、糖、免洗耗材', { a: 'c', o: ['a', 'c'] }]],
+      done: ['[[見單撥發；先進先出，期限較早者優先（先到期先出）。當日生鮮驗收後直送廚房。]]', 'ABC 分類：依金額占比分級管理，A 類嚴格、C 類簡化。'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['放在貨架前、記錄進貨量與結餘量的是', { a: 'f4', o: ['f3', 'f4'] }, '。'],
+        ['在庫存最少時進行、可節省人力的是', { a: 'low', o: ['all', 'low'] }, '。'],
+        ['高單價食材建議用', { a: 'all', o: ['all', 'per'] }, '。'],
+        ['廚房領料要憑', { a: 'f3', o: ['f1', 'f3'] }, '，見單才撥發。'],
+        ['A bin card is the', { a: 'f4', o: ['f2', 'f4'], lang: 'en' }, '.'],
+        ['Issue the batch that expires first:', { a: 'fefo', o: ['fifo', 'fefo'], lang: 'en' }, '.']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: GINV_M.h, force: 'en', svg: GINV_M.svg, blanks: GINV_M.b(),
+      intro: ['庫房的四種表單，用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   團體膳食第 5 章 A：穀類、澱粉與蔬果的前處理與烹調原理
+   ====================================================================== */
+var GCER_M = SM([['蘋果、馬鈴薯切開變褐', 'Cut apple turns brown', 'enz', 'H'], ['烤肉的金黃色、醬油的深褐色', 'Browning of roast meat, soy sauce', 'mai', 'H'], ['糖加熱到 154℃ 以上變成焦糖色', 'Sugar heated past 154 °C', 'car', 'H'],
+  ['果汁放久變褐色', 'Juice browns on standing', 'vc', 'H'], ['冷飯、乾麵包變硬', 'Cold rice hardens', 'ret', 'H'], ['烤吐司、炒麵茶（乾熱）', 'Toast, dry-roasted flour', 'dex', 'H']],
+  { l: ['現象', 'what you see'], r: ['原理', 'reaction'], dy: 50 });
+var GCER = { id: 'gcer', zh: '穀類、澱粉與蔬果', en: 'Cereals, starch, fruits and vegetables', alias: '麵粉種類・麵糰・勾芡・回凝・改良澱粉・酵素性與非酵素性褐變・葉綠素・花青素・殺菁・低農藥蔬果', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    enz: { zh: '酵素性褐變（多酚氧化酶）', en: 'Enzymatic browning (polyphenol oxidase)' }, mai: { zh: '梅納反應', en: 'Maillard reaction' }, car: { zh: '焦糖化', en: 'Caramelization' },
+    vc: { zh: '維生素 C 褐變', en: 'Ascorbic acid browning' }, ret: { zh: '回凝（老化）', en: 'Retrogradation' }, dex: { zh: '糊精化', en: 'Dextrinization' },
+    hi: { zh: '高筋麵粉', en: 'Bread flour' }, mid: { zh: '中筋麵粉', en: 'All-purpose flour' }, lo: { zh: '低筋麵粉', en: 'Cake flour' }, dur: { zh: '杜蘭小麥粉', en: 'Semolina' },
+    cold: { zh: '先用冷水調勻，等湯滾再加', en: 'Mix with cold water, add to boiling liquid' }, after: { zh: '勾芡之後再加酸', en: 'Add acid after thickening' },
+    cross: { zh: '交鏈澱粉', en: 'Cross-linked starch' }, preg: { zh: '預糊化澱粉', en: 'Pregelatinized starch' },
+    fast: { zh: '大火快炒、不加蓋', en: 'Stir-fry hot, uncovered' }, soda: { zh: '加小蘇打', en: 'Add baking soda' },
+    fry: { zh: '油炸、加酸', en: 'Fry or add acid' }, boil: { zh: '水煮', en: 'Boil' },
+    leaf: { zh: '葉菜類', en: 'Leafy vegetables' }, root: { zh: '根菜類', en: 'Root vegetables' }
+  },
+  levels: [
+    { t: '先看全貌：褐變與澱粉的變化', kind: 'ov', h: GCER_M.h, svg: GCER_M.svg, blanks: GCER_M.b(),
+      intro: ['食物在製備中變成褐色叫褐變。酵素性褐變：切開的蘋果、梨、香蕉、馬鈴薯，細胞裡的多酚類碰到多酚氧化酶與氧氣，氧化成醌類再聚合成深色物質。',
+        '非酵素性褐變有三種：梅納反應（胺基與羰基反應，例如烤肉、醬油、麵包外皮）；焦糖化（糖加熱到 154℃ 以上脫水）；維生素 C 褐變（果汁中抗壞血酸氧化）。',
+        '澱粉加水加熱變黏稠是糊化；放涼後慢慢變硬、出水是回凝（老化），例如冷飯、乾麵包，重新加熱可以恢復；乾熱（不加水）使澱粉分解成較小的糊精，叫糊精化，例如烤吐司、炒麵茶。'],
+      done: ['[[酵素性褐變需要：多酚類（基質）＋ 多酚氧化酶 ＋ 氧氣。非酵素性褐變：梅納反應、焦糖化、維生素 C 褐變。]]', '[[回凝（老化）：糊化澱粉冷卻後變硬、離水，可逆。糊精化：澱粉乾熱分解成糊精。]]'] },
+    { t: '防止褐變與回凝', kind: 'list',
+      intro: ['防止酵素性褐變：加熱或殺菁破壞酵素；泡酸性溶液（pH 3 以下）；泡清水、糖水、鹽水隔絕空氣；加維生素 C 等還原劑；加亞硫酸氫鈉。',
+        '防止梅納反應：保持酸性、降低溫度、降低或提高水分（水分 13～17% 最容易褐變，3% 以下可防止）、加亞硫酸鹽。',
+        '防止回凝：水分降到 15% 以下（乾燥飯、急速冷凍）；選支鏈澱粉多的（糯米製品不易老化）；加大量蔗糖；加乳化劑（單酸甘油酯）。'],
+      countsTitle: '數字', counts: [['焦糖化反應約在幾 ℃ 進行', '154', ['100', '121', '154', '200']], ['食品水分約多少 % 時梅納褐變最快', '13～17', ['3', '13～17', '50']]],
+      done: ['[[防止酵素性褐變：殺菁、酸、隔絕空氣（泡水、糖水、鹽水）、維生素 C、亞硫酸鹽。防止回凝：水分 15% 以下、支鏈澱粉多、加糖、加乳化劑。]]'] },
+    { t: '麵粉、麵糰與勾芡', kind: 'list',
+      intro: ['麵粉依蛋白質（麵筋）多寡：高筋做麵包；中筋做麵條、水餃、包子等中式麵食；低筋最白、做蛋糕餅乾；杜蘭小麥粉最黃、蛋白質高，做義大利麵。',
+        '麵糰：水分次少量加；加鹽增加黏彈性（麵條約 2%）；加糖降低黏彈性但增加延展性；加油更光滑；加 3% 鹼水（燒賣皮、油麵）增加延展與咬感；要揉到三光（手光、盆光、麵光）；麵筋約 80℃ 變性凝固。穀類水分超過 14% 容易發霉，CAS 白米要低於 14%。',
+        '勾芡：澱粉先用冷水調勻，等湯汁煮滾再邊加邊攪，否則結塊；薄芡粉水比約 1：1.5、厚芡 1：1.2；酸會使澱粉水解變稀，醋、番茄要在勾芡後加；糖太多會妨礙糊化。',
+        '改良澱粉：交鏈澱粉耐熱、耐冷凍、不易回凝（粉圓、麻糬、披薩醬）；預糊化澱粉不用加熱、冷水就能分散（即食粥、速食濃湯）。'],
+      listTitle: '是哪一個',
+      list: [['麵包', { a: 'hi', o: ['hi', 'mid', 'lo', 'dur'] }], ['水餃、包子、麵條', { a: 'mid', o: ['hi', 'mid', 'lo', 'dur'] }], ['蛋糕、餅乾', { a: 'lo', o: ['hi', 'mid', 'lo', 'dur'] }], ['義大利麵', { a: 'dur', o: ['hi', 'mid', 'lo', 'dur'] }],
+        ['勾芡的正確做法', { a: 'cold', o: ['cold', 'after'] }], ['糖醋或番茄類菜餚', { a: 'after', o: ['cold', 'after'] }], ['即食粥、速食濃湯', { a: 'preg', o: ['cross', 'preg'] }], ['粉圓、麻糬，耐熱耐冷凍', { a: 'cross', o: ['cross', 'preg'] }]],
+      done: ['[[高筋：麵包；中筋：中式麵食；低筋：蛋糕餅乾；杜蘭：義大利麵。勾芡先冷水調勻、湯滾再加；酸在勾芡後加。]]', '[[交鏈澱粉：耐熱、抗回凝、抗冷凍；預糊化澱粉：冷水即可分散。]]'] },
+    { t: '蔬果的色素與殺菁', kind: 'list',
+      intro: ['葉綠素含鎂，脂溶性，在鹼性下穩定、在酸與熱下不穩定：加熱久了會脫鎂變綠褐色。保持翠綠：大火快炒縮短時間、不加蓋讓有機酸揮發、煮好快速降溫。加小蘇打雖然更綠，但破壞營養、組織變爛，不建議。',
+        '花青素是紅、紫、藍色的水溶性色素（茄子、紫高麗），酸性偏紅、中性無色、鹼性偏藍；水煮會流失，碰到金屬會變暗，二氧化硫會漂白。油炸可保色，所以炸茄子特別鮮豔。',
+        '殺菁：蔬果放進 82～93℃ 的熱水 30 秒到 5 分鐘，再泡冷水；破壞酵素（特別是過氧化酶），排出組織中的氣體，有利保色，缺點是水溶性維生素（尤其維生素 C）流失。',
+        '選低農藥蔬果：殘留由高到低大致是葉菜＞花菜＞種子＞瓜果＞根莖；選當季、非連續採收、有特殊氣味（洋蔥、辣椒）、有三章一 Q 的；常換攤位分散風險。'],
+      listTitle: '怎麼做',
+      list: [['讓青菜保持翠綠', { a: 'fast', o: ['fast', 'soda'] }], ['讓茄子保持紫色', { a: 'fry', o: ['fry', 'boil'] }], ['農藥殘留通常最高的', { a: 'leaf', o: ['leaf', 'root'] }]],
+      countsTitle: '數字', counts: [['殺菁的水溫約（℃）', '82～93', ['60～70', '82～93', '100～121']]],
+      done: ['[[葉綠素含鎂，酸熱下脫鎂變黃褐：大火快炒、不加蓋、快速降溫。花青素水溶性，酸紅鹼藍，油炸加酸可保色。]]', '[[殺菁：82～93℃、30 秒～5 分鐘，破壞過氧化酶，缺點是維生素 C 流失。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['爆米香、烤吐司表面的變化是', { a: 'dex', o: ['dex', 'ret'] }, '。'],
+        ['切開的蘋果變褐色是', { a: 'enz', o: ['enz', 'mai'] }, '。'],
+        ['大量製作水餃皮用', { a: 'mid', o: ['hi', 'mid', 'lo'] }, '。'],
+        ['要讓青菜保持翠綠，應', { a: 'fast', o: ['fast', 'soda'] }, '，減少葉綠素的脫鎂反應。'],
+        ['Day-old rice hardens because of', { a: 'ret', o: ['ret', 'dex'], lang: 'en' }, '.'],
+        ['Golden crust on roast meat is the', { a: 'mai', o: ['mai', 'car'], lang: 'en' }, '.']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: GCER_M.h, force: 'en', svg: GCER_M.svg, blanks: GCER_M.b(),
+      intro: ['褐變與澱粉的變化，用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   團體膳食第 5 章 A～B：肉類、魚貝與蛋的前處理與烹調原理
+   ====================================================================== */
+var GMEAT_M = SM([['拍打、絞碎', 'Pounding, grinding', 'mech', 'H'], ['木瓜、鳳梨酵素（嫩精）', 'Papain, bromelain', 'enzy', 'H'], ['0～5℃ 放 1～5 天', '0–5 °C for 1–5 days', 'age', 'I'],
+  ['蹄膀、頸肉用濕熱法長時間燉', 'Braise tough cuts', 'coll', 'H'], ['低溫長時間烹煮', 'Low temperature, long time', 'lowt', 'I']],
+  { l: ['做法', 'method'], r: ['為什麼會變嫩', 'why it tenderizes'], dy: 54, rw: 184 });
+var GMEAT = { id: 'gmeat', zh: '肉類、魚貝與蛋', en: 'Meat, seafood and eggs', alias: '豬肉部位・軟化肉類・乾熱與濕熱・亞硝酸鹽・魚的脂肪分級・僵直與自體消化・蛋的凝固溫度・起泡與乳化・硫化鐵', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    mech: { zh: '肌纖維斷裂、結締組織被破壞', en: 'Fibers and connective tissue broken' }, enzy: { zh: '酵素把蛋白質分解成胜肽', en: 'Enzymes break down proteins' },
+    age: { zh: '熟成', en: 'Aging' }, coll: { zh: '膠原蛋白變成動物膠', en: 'Collagen turns to gelatin' }, lowt: { zh: '肉較少收縮變老', en: 'Less shrinkage and toughening' },
+    stew: { zh: '紅燒、燉滷', en: 'Braising' }, steam: { zh: '蒸（粉蒸肉、梅干扣肉）', en: 'Steaming' }, stir: { zh: '快炒', en: 'Stir-frying' },
+    against: { zh: '逆紋切', en: 'Cut across the grain' }, along: { zh: '順紋切', en: 'Cut along the grain' },
+    nit: { zh: '抑制肉毒桿菌', en: 'Inhibits Clostridium botulinum' }, nca: { zh: '和胺類生成亞硝胺', en: 'Forms nitrosamines with amines' },
+    lean: { zh: '低脂（< 2%）', en: 'Lean (< 2%)' }, fat: { zh: '高脂（> 8%）', en: 'Fatty (> 8%)' },
+    rig: { zh: '死後僵直', en: 'Rigor mortis' }, auto: { zh: '自體消化', en: 'Autolysis' }, tma: { zh: '三甲胺', en: 'Trimethylamine' },
+    up: { zh: '凝固溫度升高', en: 'Raises setting temperature' }, dn: { zh: '凝固溫度降低', en: 'Lowers setting temperature' },
+    fes: { zh: '硫化鐵', en: 'Iron sulfide' }, lec: { zh: '卵磷脂（乳化）', en: 'Lecithin (emulsifier)' }, iep: { zh: '等電點 pH 4.8 附近', en: 'Near isoelectric point, pH 4.8' }, t21: { zh: '21℃', en: '21 °C' }
+  },
+  levels: [
+    { t: '先看全貌：讓肉變嫩的方法', kind: 'ov', h: GMEAT_M.h, svg: GMEAT_M.svg, blanks: GMEAT_M.b(),
+      intro: ['肉的老嫩取決於結締組織與肌纖維。牛肉結締組織多、肌纖維長，較韌；豬肉結締組織較少、脂肪較多，較軟嫩。腰內肉、里肌比腿肉、頸肉嫩；年輕的動物比較嫩；油花呈大理石狀的較多汁。',
+        '讓肉變嫩的方法：機械法（拍打、絞碎）；酵素（木瓜、鳳梨、無花果酵素，溫度太高酵素失活）；熟成（0～5℃ 放 1～5 天）；降低 pH 增加保水性；結締組織多的部位用濕熱法長時間烹煮，使膠原蛋白變成動物膠；低溫長時間烹煮比高溫收縮少。'],
+      done: ['[[軟化肉類：機械法、溫度（低溫長時間）、選擇烹調法（濕熱使膠原蛋白變動物膠）、酵素、pH、熟成、挑選部位。]]'] },
+    { t: '烹調方法與醃漬', kind: 'list',
+      intro: ['乾熱法：烤、煎、炸、炒。炸的油溫約 149～163℃，可兩段式（先小火炸熟，起鍋前大火逼油）；炒要選嫩的部位，組織緊密的牛肉逆紋切，鬆散的雞肉順紋切。',
+        '濕熱法：蒸選脂肪多的五花肉（粉蒸肉、梅干扣肉）；紅燒選結締組織多的蹄膀、胛心肉，醬汁不要一開始太濃，以免脫水變硬。',
+        '醃漬：加鹽抑菌、增加保水；香腸火腿加亞硝酸鹽，可以發色（與肌紅蛋白結合成紅色）、產生醃肉風味，最重要的是抑制肉毒桿菌；但它會與胺類生成致癌的亞硝胺，是最大的顧慮。'],
+      listTitle: '是哪一個',
+      list: [['蹄膀、胛心肉', { a: 'stew', o: ['stew', 'steam', 'stir'] }], ['五花肉（三層肉）', { a: 'steam', o: ['stew', 'steam', 'stir'] }], ['里肌、腰內肉', { a: 'stir', o: ['stew', 'steam', 'stir'] }],
+        ['牛肉炒之前', { a: 'against', o: ['against', 'along'] }], ['亞硝酸鹽最重要的功用', { a: 'nit', o: ['nit', 'nca'] }], ['亞硝酸鹽最大的顧慮', { a: 'nca', o: ['nit', 'nca'] }]],
+      done: ['[[結締組織多（蹄膀、胛心）紅燒；脂肪多（五花）蒸；嫩的部位快炒；牛肉逆紋切、雞肉順紋切。]]', '[[亞硝酸鹽：發色、風味，最重要是抑制肉毒桿菌；與胺類生成亞硝胺（致癌）。]]'] },
+    { t: '魚貝類', kind: 'list',
+      intro: ['魚依脂肪量分：低於 2% 是低脂瘦魚、2～8% 中脂、高於 8% 高脂。冬季、年長、雌性、產卵前的魚較肥；紅色肉含脂與鐵較多，白色肉適合控制熱量。紅肉魚（鮪魚、鰹魚）的鐵比白肉魚多。',
+        '死後 10 分鐘到 5 小時開始僵直：缺氧使肝醣分解成乳酸、pH 下降，ATP 減少使肌肉收縮變硬；24～48 小時僵直到頂點後，自身酵素分解蛋白質，肉又變軟，叫自體消化；接著細菌分解產生組織胺、氨、三甲胺、硫化氫，就是腥臭味。',
+        '魚比禽畜肉容易壞：水多、皮薄、鱗易掉、自身酵素強。漁獲要遵守保鮮三 C：清潔、冷卻、包裝。去鱗從尾往頭刮，不要弄破膽囊；花枝去膜後切菱形花紋防止過度收縮。'],
+      listTitle: '是哪一個',
+      list: [['脂肪 1% 的鱈魚', { a: 'lean', o: ['lean', 'fat'] }], ['脂肪 15% 的秋刀魚', { a: 'fat', o: ['lean', 'fat'] }], ['乳酸堆積、ATP 減少，肌肉變硬', { a: 'rig', o: ['rig', 'auto'] }], ['自身酵素分解，肉又變軟', { a: 'auto', o: ['rig', 'auto'] }], ['魚腥臭味的主要成分之一', { a: 'tma', o: ['tma', 'fes'] }]],
+      done: ['[[魚的脂肪：< 2% 低脂、2～8% 中脂、> 8% 高脂。死後僵直 → 自體消化 → 細菌腐敗（組織胺、氨、三甲胺、硫化氫）。保鮮三 C：清潔、冷卻、包裝。]]'] },
+    { t: '蛋', kind: 'list',
+      intro: ['蛋白約 62℃ 變性、65℃ 開始凝固、70℃ 凝固完成；蛋黃 65℃ 變性、70℃ 開始凝固；全蛋約 68.9℃。利用這個差異可以做溫泉蛋、糖心蛋。',
+        '加糖使凝固溫度升高；加鹽、適量的酸使凝固溫度降低（蒸蛋加一點鹽，質地細密）；鹼使蛋白質變性凝固（皮蛋）。',
+        '起泡：新鮮的蛋泡沫較穩定；蛋白在 21℃ 左右打最好；等電點（pH 約 4.8）附近起泡性最大；加少許酸（塔塔粉）穩定泡沫；鹽、油脂（蛋黃）阻礙起泡；糖增加穩定但延緩起泡，要在濕性發泡後再加。',
+        '乳化：蛋黃的卵磷脂是雙極性分子，可做沙拉醬、冰淇淋；做沙拉醬油要少量多次加、同方向攪拌，不用鋁或銀器。水煮蛋煮太久，蛋白的硫和蛋黃的鐵形成暗綠色硫化鐵：用新鮮蛋、降低溫度、縮短時間、煮好立刻降溫。'],
+      listTitle: '是哪一個',
+      list: [['在蛋液中加糖', { a: 'up', o: ['up', 'dn'] }], ['在蛋液中加鹽', { a: 'dn', o: ['up', 'dn'] }], ['水煮蛋蛋黃表面變暗綠', { a: 'fes', o: ['fes', 'tma'] }], ['蛋黃讓油水混合的成分', { a: 'lec', o: ['lec', 'fes'] }],
+        ['蛋白起泡性最大的 pH', { a: 'iep', o: ['iep', 't21'] }], ['蛋白打發最適當的溫度', { a: 't21', o: ['iep', 't21'] }]],
+      countsTitle: '數字', counts: [['蛋白開始凝固的溫度（℃）', '65', ['55', '65', '75', '85']]],
+      done: ['[[蛋白 62℃ 變性、65℃ 凝固；蛋黃 65℃ 變性、70℃ 凝固。糖使凝固溫度升高；鹽、酸使其降低；鹼使蛋白變性（皮蛋）。]]', '[[蛋白 21℃、等電點 pH 4.8 附近起泡最好；酸穩定泡沫；鹽、油脂阻礙起泡；糖在濕性發泡後加。蛋黃卵磷脂可乳化；煮太久生成硫化鐵。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['蹄膀用濕熱法長時間燉煮會變軟，是因為', { a: 'coll', o: ['coll', 'enzy'] }, '。'],
+        ['香腸添加亞硝酸鹽最重要的目的是', { a: 'nit', o: ['nit', 'nca'] }, '。'],
+        ['魚死後先出現', { a: 'rig', o: ['rig', 'auto'] }, '，之後才自體消化。'],
+        ['蒸蛋加少許鹽，會使', { a: 'dn', o: ['up', 'dn'] }, '，質地更細密。'],
+        ['A greenish ring on hard-boiled yolk is', { a: 'fes', o: ['fes', 'lec'], lang: 'en' }, '.'],
+        ['Holding meat at 0–5 °C for days is', { a: 'age', o: ['age', 'mech'], lang: 'en' }, '.']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: GMEAT_M.h, force: 'en', svg: GMEAT_M.svg, blanks: GMEAT_M.b(),
+      intro: ['讓肉變嫩的方法，用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   團體膳食第 5 章 B：豆製品、油炸油與冷凍食品
+   ====================================================================== */
+var GSOY_M = SM([['發煙點', 'Smoke point', 'o1', 'H'], ['酸價', 'Acid value', 'o2', 'E'], ['總極性物質', 'Total polar compounds', 'o3', 'E'], ['泡沫', 'Foam', 'o4', 'H']],
+  { l: ['油炸油的指標', 'frying-oil index'], r: ['達到就要換油', 'replace when'], dy: 58, rw: 184 });
+var GSOY = { id: 'gsoy', zh: '豆製品、油脂與冷凍食品', en: 'Soy foods, frying fats and frozen foods', alias: '黃豆營養與抗營養因子・豆花豆腐製作・豆製品保存・發煙點・酸價・換油標準・冷凍食品解凍', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    o1: { zh: '低於 170℃', en: 'Below 170 °C' }, o2: { zh: '2.0 以上（mg KOH/g）', en: '2.0 mg KOH/g or more' }, o3: { zh: '25% 以上', en: '25% or more' }, o4: { zh: '油耗味、泡沫超過鍋面一半', en: 'Off odor, foam over half the surface' },
+    lys: { zh: '離胺酸', en: 'Lysine' }, met: { zh: '甲硫胺酸', en: 'Methionine' },
+    sap: { zh: '皂素', en: 'Saponin' }, iso: { zh: '異黃酮', en: 'Isoflavone' }, phy: { zh: '植酸', en: 'Phytic acid' },
+    caso: { zh: '硫酸鈣', en: 'Calcium sulfate' }, salt: { zh: '先加鹽再放豆腐', en: 'Add salt before the tofu' }, thick: { zh: '先勾芡再放豆腐', en: 'Thicken before the tofu' },
+    soak: { zh: '泡冷開水冷藏、每天換水', en: 'Refrigerate in water, change daily' }, box: { zh: '直接冷藏', en: 'Refrigerate as is' }, blan: { zh: '先汆燙', en: 'Blanch first' },
+    low: { zh: '冷藏庫低溫解凍', en: 'Thaw in the refrigerator' }, run: { zh: '密封後流水解凍', en: 'Sealed, under running water' }, none: { zh: '不需解凍，直接加熱', en: 'Cook from frozen' },
+    hi: { zh: '發煙點較低', en: 'Lower smoke point' }, hio: { zh: '發煙點較高', en: 'Higher smoke point' }
+  },
+  levels: [
+    { t: '先看全貌：油炸油什麼時候要換', kind: 'ov', h: GSOY_M.h, svg: GSOY_M.svg, blanks: GSOY_M.b(),
+      intro: ['油炸油反覆加熱會氧化、水解、聚合，產生游離脂肪酸與極性物質，發煙點下降、顏色變深變黏、泡沫變多。',
+        '依衛生福利部的油炸油管理規定，出現下列任一種就要換新油：發煙點低於 170℃；油色深又黏、有油耗味、泡沫多而大且面積超過油鍋一半；酸價達 2.0（mg KOH/g）；總極性物質達 25% 以上（要送驗）。',
+        '油炸時要撈除油渣、過濾，避免不必要的加熱。可以用油質測試紙測酸價，色帶由藍轉黃越多表示劣化越嚴重。'],
+      done: ['[[油炸油換油標準：發煙點 < 170℃；色深黏稠、油耗味、泡沫超過鍋面一半；酸價 ≥ 2.0 mg KOH/g；總極性物質 ≥ 25%。]]', '酸價是中和 1 公克油脂中游離脂肪酸所需的氫氧化鉀毫克數；新的食用油酸價很低。'] },
+    { t: '影響發煙點的因素', kind: 'list',
+      intro: ['游離脂肪酸越多，發煙點越低；乳化劑會降低發煙點；食物的裹粉顆粒掉進油裡也會降低發煙點；在寬淺的鍋子比在深的油炸鍋容易冒煙。氫化油的發煙點比一般動植物油高。',
+        '選油炸油時，發煙點較高的較安全。'],
+      listTitle: '會讓發煙點怎樣',
+      list: [['游離脂肪酸增加', { a: 'hi', o: ['hi', 'hio'] }], ['加入乳化劑', { a: 'hi', o: ['hi', 'hio'] }], ['裹粉碎屑留在油中', { a: 'hi', o: ['hi', 'hio'] }], ['氫化油', { a: 'hio', o: ['hi', 'hio'] }]],
+      done: ['[[游離脂肪酸、乳化劑、裹衣碎屑、寬淺鍋都會降低發煙點；氫化油發煙點較高。選油炸油以發煙點高者較安全。]]'] },
+    { t: '黃豆與豆製品', kind: 'list',
+      intro: ['黃豆蛋白質約 34～40%，是植物性食物中最高的，離胺酸多、甲硫胺酸少，正好和穀類（離胺酸少、甲硫胺酸多）互補。脂質約 15～20%，以亞麻油酸為主，不含膽固醇，但容易氧化。',
+        '生黃豆有抗營養因子（胰蛋白酶抑制劑等），要加熱破壞。皂素讓豆漿煮沸起泡；植酸會影響礦物質吸收（含量很高才有影響）；異黃酮是植物性雌激素。',
+        '製作：黃豆泡水 → 磨碎過濾 → 煮沸成豆漿；豆漿冷卻到 65～70℃，加生豆重 2～3% 的硫酸鈣，靜置成豆花；壓模出水成豆腐，再重壓成豆干；煮豆漿時挑起的表面薄膜是豆皮。百頁豆腐製程加了大量油，熱量遠高於板豆腐。',
+        '保存：板豆腐泡冷開水冷藏、每天換水；盒裝豆腐經殺菌可直接冷藏；豆干、干絲冷藏 1～2 天內用完，入菜前先汆燙，可去豆腥味與可能殘留的過氧化氫。煮豆腐想保持完整先在湯中加鹽，想保持軟嫩先勾芡。'],
+      listTitle: '是哪一個',
+      list: [['黃豆含量多、可以補穀類不足的胺基酸', { a: 'lys', o: ['lys', 'met'] }], ['黃豆含量少的胺基酸', { a: 'met', o: ['lys', 'met'] }], ['讓生豆漿煮沸時起泡', { a: 'sap', o: ['sap', 'iso', 'phy'] }], ['植物性雌激素', { a: 'iso', o: ['sap', 'iso', 'phy'] }],
+        ['點豆花常用的凝固劑', { a: 'caso', o: ['caso', 'salt'] }], ['板豆腐的保存', { a: 'soak', o: ['soak', 'box'] }], ['盒裝豆腐的保存', { a: 'box', o: ['soak', 'box'] }], ['豆干、干絲入菜前', { a: 'blan', o: ['blan', 'box'] }], ['煮湯時想保持豆腐完整', { a: 'salt', o: ['salt', 'thick'] }]],
+      done: ['[[黃豆蛋白質 34～40%，離胺酸多、甲硫胺酸少，與穀類互補。豆花：豆漿 65～70℃ 加生豆重 2～3% 硫酸鈣。百頁豆腐含大量油脂。]]', '[[板豆腐泡水冷藏每天換水；盒裝豆腐直接冷藏；豆干干絲先汆燙去過氧化氫。]]'] },
+    { t: '冷凍食品的解凍與烹調', kind: 'list',
+      intro: ['低溫解凍：前一天移到冷藏庫，最衛生、最能保持品質，但費時。自然解凍：放室溫，不容易掌控，不建議。流水解凍：連包裝放進塑膠袋、排出空氣綁緊，用流動的冷水解凍，適合臨時需要。微波解凍快速，但容量有限，不適合大量。',
+        '冷凍肉品、水產解凍到半解凍就分切烹調；切成小丁的冷凍蔬菜不必解凍，大塊的要先解凍或汆燙；水餃、包子、雞塊、蔥油餅等小體積調理食品不必解凍直接加熱；油炸冷凍調理食品油溫約 180℃，一次不要下太多，以免油溫驟降。'],
+      listTitle: '怎麼處理',
+      list: [['明天要用的冷凍雞腿', { a: 'low', o: ['low', 'run', 'none'] }], ['臨時要用的冷凍肉', { a: 'run', o: ['low', 'run', 'none'] }], ['冷凍水餃、雞塊', { a: 'none', o: ['low', 'run', 'none'] }]],
+      countsTitle: '數字', counts: [['油炸冷凍調理食品的油溫約（℃）', '180', ['120', '150', '180', '220']]],
+      done: ['[[解凍：低溫解凍（最好）、流水解凍（密封、冷水，臨時用）、微波（少量）；不建議室溫自然解凍。小體積調理食品不必解凍。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['酸價達', { a: 'o2', o: ['o1', 'o2'] }, '就要換油。'],
+        ['選油炸油時以', { a: 'hio', o: ['hi', 'hio'] }, '的較安全。'],
+        ['豆干、干絲入菜前', { a: 'blan', o: ['blan', 'box'] }, '，可去除可能殘留的過氧化氫。'],
+        ['冷凍肉最衛生的解凍方法是', { a: 'low', o: ['low', 'run'] }, '。'],
+        ['Soybeans are rich in', { a: 'lys', o: ['lys', 'met'], lang: 'en' }, '.'],
+        ['Tofu is set with', { a: 'caso', o: ['caso', 'salt'], lang: 'en' }, '.']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: GSOY_M.h, force: 'en', svg: GSOY_M.svg, blanks: GSOY_M.b(),
+      intro: ['油炸油的換油標準，用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   團體膳食：HACCP 團膳廚房與衛生（危害、清潔度分區、動線、溫度、人員衛生）
+   ====================================================================== */
+var GHAC_M = SM([['驗收區、洗滌區、原料倉庫', 'Receiving, dishwashing, raw store', 'z1'], ['前處理、烹調、加工區', 'Preparation, cooking', 'z2'], ['配膳區、內包裝區', 'Portioning, inner packing', 'z3'], ['辦公室、更衣室、廁所', 'Office, locker room, toilets', 'z4']],
+  { l: ['區域', 'area'], r: ['清潔度分區', 'hygiene zone'], k: 'T', dy: 56 });
+var GHAC = { id: 'ghac', zh: 'HACCP 團膳廚房與衛生', en: 'HACCP kitchen and sanitation', alias: '三大危害・清潔度分區・人流物流氣流水流・HACCP 的基礎 GHP・溫度與時間・留樣・照度・洗手・從業人員健康', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    z1: { zh: '一般作業區', en: 'General work area' }, z2: { zh: '準清潔區', en: 'Semi-clean area' }, z3: { zh: '清潔區', en: 'Clean area' }, z4: { zh: '非食品處理區', en: 'Non-food area' },
+    bio: { zh: '生物性危害', en: 'Biological hazard' }, chem: { zh: '化學性危害', en: 'Chemical hazard' }, phys: { zh: '物理性危害', en: 'Physical hazard' },
+    c2d: { zh: '由清潔區流向污染區', en: 'From clean to dirty' }, d2c: { zh: '由污染區流向清潔區', en: 'From dirty to clean' },
+    h60: { zh: '60℃ 以上', en: '60 °C or above' }, h74: { zh: '中心溫度 74℃ 以上', en: 'Core 74 °C or above' }, k48: { zh: '冷藏 7℃ 以下 48 小時', en: 'Chilled ≤ 7 °C for 48 h' },
+    ok: { zh: '可以從事接觸食品的工作', en: 'May handle food' }, no: { zh: '不可接觸食品', en: 'Must not handle food' },
+    iod: { zh: '碘液（澱粉殘留）', en: 'Iodine (starch)' }, sud: { zh: '蘇丹 IV（脂肪殘留）', en: 'Sudan IV (fat)' }
+  },
+  levels: [
+    { t: '先看全貌：清潔度分區', kind: 'ov', h: GHAC_M.h, svg: GHAC_M.svg, blanks: GHAC_M.b(),
+      intro: ['HACCP（食品安全管制系統）是事先分析每個步驟可能的危害、找出重要管制點並持續監測，屬於預防性、全程的管理；傳統衛生管理靠最後檢驗成品，是事後補救。HACCP 要建立在良好衛生規範（GHP）的基礎上：溫度控制、人員衛生、清潔消毒、病媒防治等。',
+        '廚房依清潔程度分區。一般作業區：驗收、洗滌、原料倉庫，生的、髒的東西進來的地方；準清潔區：前處理、烹調；清潔區：配膳、內包裝，煮好的食物直接接觸的地方；非食品處理區：辦公室、更衣室、廁所。',
+        '建置 HACCP 團膳廚房要三方面：人員（管制小組與輔導團隊）、硬體（廠區動線、設備、安全設施）、軟體（程序書與各種表單）。'],
+      done: ['[[清潔度分區：一般作業區（驗收、洗滌、原料倉庫）、準清潔區（前處理、烹調）、清潔區（配膳、內包裝）、非食品處理區（辦公室、更衣室、廁所）。]]', '[[HACCP 是事前預防、全程管制；以 GHP 為基礎。]]'] },
+    { t: '三大危害與動線', kind: 'list',
+      intro: ['生物性危害：細菌、病毒、黴菌、寄生蟲（腸炎弧菌、金黃色葡萄球菌、諾羅病毒、旋毛蟲）；烤雞中心溫度不足讓細菌存活也屬於生物性。化學性：農藥、動物用藥、重金屬、違法添加物、天然毒素、過敏原，炸油酸價過高也是。物理性：玻璃、金屬屑、鋼刷絲、訂書針、頭髮、砂石、蟑螂屍體。',
+        '動線：物流由驗收 → 庫房 → 前處理 → 烹調 → 配膳，單向不回頭；人流、氣流由清潔區往污染區（配膳 → 烹調 → 洗滌），清潔區保持正壓；排水也由清潔區流向污染區。'],
+      listTitle: '是哪一個',
+      list: [['烤雞中心溫度不夠', { a: 'bio', o: ['bio', 'chem', 'phys'] }], ['炸油酸價過高', { a: 'chem', o: ['bio', 'chem', 'phys'] }], ['抗生素殘留', { a: 'chem', o: ['bio', 'chem', 'phys'] }], ['蔬菜裡有沙子、鋼刷絲', { a: 'phys', o: ['bio', 'chem', 'phys'] }],
+        ['人流與氣流的方向', { a: 'c2d', o: ['c2d', 'd2c'] }]],
+      done: ['[[人流、氣流、水流：由清潔區流向污染區；物流：驗收 → 前處理 → 烹調 → 配膳，單向不交叉。]]'] },
+    { t: '溫度、時間與留樣', kind: 'list',
+      intro: ['冷藏 7℃ 以下、冷凍 −18℃ 以下、熱藏 60℃ 以上；煮好的菜室溫不得放超過 2 小時；剩菜復熱中心溫度 74℃ 以上。肉品家禽驗收時溫度要在約 5℃（41°F）以下，生肉與即食食品分開。',
+        '每餐成品抽一份留樣，標示日期與餐別，冷藏 7℃ 以下保存 48 小時，發生食物中毒時才有檢體可驗。',
+        '不耐熱的器具可泡有效氯 200 ppm 的氯液 2 分鐘以上消毒；工作檯面照度 200 米燭光以上。餐具殘留檢驗：澱粉用碘液（呈藍紫色）、脂肪用蘇丹 IV。'],
+      listTitle: '是多少',
+      list: [['熱食保溫', { a: 'h60', o: ['h60', 'h74', 'k48'] }], ['剩菜復熱', { a: 'h74', o: ['h60', 'h74', 'k48'] }], ['留樣', { a: 'k48', o: ['h60', 'h74', 'k48'] }], ['檢查餐具澱粉殘留', { a: 'iod', o: ['iod', 'sud'] }]],
+      countsTitle: '數字', counts: [['工作檯面的照度至少（米燭光）', '200', ['100', '200', '300', '540']], ['浸泡消毒的有效氯濃度（ppm）', '200', ['10', '50', '200', '1000']]],
+      done: ['[[熱藏 60℃ 以上；復熱 74℃ 以上；室溫不超過 2 小時；留樣冷藏 7℃ 以下 48 小時；有效氯 200 ppm 浸 2 分鐘；工作檯照度 200 米燭光以上。]]'] },
+    { t: '人員衛生與洗手', kind: 'list',
+      intro: ['從業人員新進要體檢，之後每年體檢。患 A 型肝炎、手部皮膚病、出疹、膿瘡、外傷、結核病、傷寒，或其他可能污染食品的疾病，不得接觸食品；B 型肝炎經血液傳染，不受限。諾羅病毒感染者症狀解除後至少 48 小時才能回到調理工作。',
+        '工作服裝：白色網帽、廚師服、圍裙、長褲、廚師鞋，不戴飾品。手部有傷口要包紮並戴手套（防金黃色葡萄球菌）。',
+        '洗手設施：流動的自來水、液體清潔劑、擦手紙或烘手機、不用手開蓋的垃圾桶、洗手步驟圖；菜瓜布不是洗手用品。廁所不可正面開向作業場所，並標示「如廁後應洗手」。'],
+      listTitle: '可以接觸食品嗎',
+      list: [['B 型肝炎帶原', { a: 'ok', o: ['ok', 'no'] }], ['A 型肝炎', { a: 'no', o: ['ok', 'no'] }], ['手上有化膿的傷口未包紮', { a: 'no', o: ['ok', 'no'] }], ['諾羅病毒症狀解除才 1 天', { a: 'no', o: ['ok', 'no'] }]],
+      done: ['[[A 型肝炎、手部皮膚病、出疹、膿瘡、外傷、結核、傷寒不得接觸食品；B 型肝炎可以。諾羅病毒症狀解除 48 小時後才能復工。]]', '[[洗手設施：流動水、液體清潔劑、擦手紙或烘手機、免手開蓋垃圾桶。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['配膳區屬於', { a: 'z3', o: ['z1', 'z2', 'z3'] }, '。'],
+        ['驗收區、洗滌區屬於', { a: 'z1', o: ['z1', 'z2', 'z3'] }, '。'],
+        ['人流與氣流應', { a: 'c2d', o: ['c2d', 'd2c'] }, '。'],
+        ['每餐留樣應', { a: 'k48', o: ['k48', 'h60'] }, '。'],
+        ['Sand or steel wool in food is a', { a: 'phys', o: ['bio', 'phys'], lang: 'en' }, '.'],
+        ['Reheat leftovers to', { a: 'h74', o: ['h60', 'h74'], lang: 'en' }, '.']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: GHAC_M.h, force: 'en', svg: GHAC_M.svg, blanks: GHAC_M.b(),
+      intro: ['清潔度分區，用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。' }
+  ] };
+/* ======================================================================
+   團體膳食補充：品質管理、人事與危機處理（照國考範圍補）
+   ====================================================================== */
+var GQC_M = SM([['P', 'Plan', 'q1', 'T'], ['D', 'Do', 'q2', 'T'], ['C', 'Check', 'q3', 'T'], ['A', 'Act', 'q4', 'T']],
+  { l: ['PDCA', 'PDCA'], r: ['這一步做什麼', 'what to do'], dy: 56, lw: 120, lx: 72, rx: 250, rw: 200 });
+var GQC = { id: 'gqc', zh: '品質管理、人事與危機處理', en: 'Quality management, staff and emergencies', alias: 'PDCA・品管七大手法・5S・5W1H・HACCP 管制小組・勞基法工時・火災分類與滅火器・食物中毒處理', layout: 'none', nodes: [], steps: [], enz: {}, prod: {},
+  dict: {
+    q1: { zh: '掌握現狀、找原因、訂計畫', en: 'Study the situation, plan' }, q2: { zh: '照計畫執行', en: 'Carry out the plan' }, q3: { zh: '查核結果是否達到目標', en: 'Check the results' }, q4: { zh: '有效的標準化，無效的再改進', en: 'Standardize or improve again' },
+    chk: { zh: '檢核表（查檢表）', en: 'Check sheet' }, par: { zh: '柏拉圖', en: 'Pareto chart' }, fish: { zh: '特性要因圖（魚骨圖）', en: 'Fishbone diagram' }, sca: { zh: '散布圖', en: 'Scatter diagram' }, ctl: { zh: '管制圖', en: 'Control chart' },
+    s1: { zh: '整理', en: 'Sort' }, s2: { zh: '整頓', en: 'Set in order' },
+    h11: { zh: '11 小時', en: '11 hours' }, h8: { zh: '8 小時', en: '8 hours' }, h40: { zh: '40 小時', en: '40 hours' },
+    fa: { zh: 'A 類（普通可燃物）', en: 'Class A (ordinary)' }, fb: { zh: 'B 類（油類）', en: 'Class B (oil)' }, fc: { zh: 'C 類（電器）', en: 'Class C (electrical)' },
+    lid: { zh: '關火、蓋鍋蓋', en: 'Turn off heat, cover the pan' }, water: { zh: '潑水', en: 'Pour water' },
+    keep: { zh: '保留剩餘食物與檢體並冷藏', en: 'Keep leftovers and samples chilled' }, toss: { zh: '立刻倒掉剩菜', en: 'Throw away leftovers' }
+  },
+  levels: [
+    { t: '先看全貌：PDCA 循環', kind: 'ov', h: GQC_M.h, svg: GQC_M.svg, blanks: GQC_M.b(),
+      intro: ['品質管理常用 PDCA 循環（戴明循環）：計畫（P）掌握現狀、分析原因、訂改善計畫；執行（D）；查核（C）比較結果與目標；處置（A）把有效的做法標準化，無效的檢討後進入下一個循環。品管圈就是一群同仁用 PDCA 持續改善。',
+        '寫標準作業程序（SOP）常用 5W1H：What、Why、Where、When、Who、How。'],
+      done: ['[[PDCA：Plan（掌握現狀、訂計畫）→ Do → Check → Act（標準化或再改進）。「現狀把握」在 P。]]', '[[5W1H：What、Why、Where、When、Who、How（沒有 Which）。]]'] },
+    { t: '品管七大手法與 5S', kind: 'list',
+      intro: ['品管七大手法：檢核表（用簡單記號登記資料、方便統計）、柏拉圖（把原因依次數排序，找出最大的影響因素）、特性要因圖（魚骨圖，分析特性與原因）、散布圖（兩變數的關係）、管制圖（製程是否穩定）、直方圖、層別法。',
+        '5S：整理（把要與不要的分開，丟掉不要的）、整頓（把要的東西定位、標示、方便取用）、清掃、清潔（維持前三項）、教養（養成習慣）。'],
+      listTitle: '是哪一個',
+      list: [['用記號登記資料，方便統計', { a: 'chk', o: ['chk', 'par', 'fish', 'sca', 'ctl'] }], ['找出不良率增加的最大因素', { a: 'par', o: ['chk', 'par', 'fish', 'sca', 'ctl'] }], ['分析一個問題的各種可能原因', { a: 'fish', o: ['chk', 'par', 'fish', 'sca', 'ctl'] }],
+        ['看兩個變數有沒有關係', { a: 'sca', o: ['chk', 'par', 'fish', 'sca', 'ctl'] }], ['把要與不要的物品分開', { a: 's1', o: ['s1', 's2'] }], ['把要的物品定位放好', { a: 's2', o: ['s1', 's2'] }]],
+      done: ['[[柏拉圖找「重要的少數」；檢核表登記資料；魚骨圖分析原因；散布圖看兩變數關係；管制圖看製程穩定。]]', '[[5S：整理、整頓、清掃、清潔、教養。]]'] },
+    { t: 'HACCP 管制小組與人事', kind: 'list',
+      intro: ['食品安全管制系統準則：管制小組至少 3 人，負責人或其指定人員為必要成員；成員要受過中央主管機關認可的 30 小時以上訓練並取得證明，之後每 3 年至少 12 小時持續訓練；執行紀錄保存至少 5 年。',
+        '勞動基準法：每日正常工時 8 小時、每週 40 小時；輪班更換班次時至少連續休息 11 小時；出勤紀錄保存 5 年。人力資源計畫是長期規劃（招募、訓練、薪資制度），每天的排班屬日常管理。'],
+      listTitle: '是多少',
+      list: [['輪班換班時至少要休息', { a: 'h11', o: ['h11', 'h8', 'h40'] }], ['每日正常工作時間', { a: 'h8', o: ['h11', 'h8', 'h40'] }], ['每週正常工作時間', { a: 'h40', o: ['h11', 'h8', 'h40'] }]],
+      countsTitle: '數字', counts: [['HACCP 管制小組至少幾人', '3', ['2', '3', '5']], ['管制小組成員受訓至少幾小時', '30', ['12', '30', '60']]],
+      done: ['[[HACCP 管制小組至少 3 人、受訓 30 小時以上、每 3 年 12 小時持續教育、紀錄保存 5 年。]]', '[[勞基法：每日 8 小時、每週 40 小時；輪班間隔至少 11 小時。]]'] },
+    { t: '危機處理：火災與食物中毒', kind: 'list',
+      intro: ['火災分類：A 類是紙、木材等普通可燃物，可以用水；B 類是油類；C 類是通電中的電器；D 類是金屬。油鍋起火要關火、蓋上鍋蓋或用濕布、滅火毯隔絕空氣，絕對不能潑水。二氧化碳滅火器不導電、不殘留，適用 B、C 類；泡沫滅火器不能用在電器火災。滅火時站在上風處。',
+        '發生疑似食物中毒：保留剩餘食物、留樣與病人的嘔吐物、排泄物並冷藏（不可冷凍），立即通報衛生局，協助送醫與調查；醫療院所要在 24 小時內通報。'],
+      listTitle: '是哪一個',
+      list: [['油鍋起火', { a: 'fb', o: ['fa', 'fb', 'fc'] }], ['電器起火', { a: 'fc', o: ['fa', 'fb', 'fc'] }], ['紙箱、木材起火', { a: 'fa', o: ['fa', 'fb', 'fc'] }], ['油鍋起火第一步', { a: 'lid', o: ['lid', 'water'] }], ['疑似食物中毒', { a: 'keep', o: ['keep', 'toss'] }]],
+      done: ['[[火災：A 普通可燃物、B 油類、C 電器、D 金屬。油鍋起火關火蓋鍋蓋，不可潑水。二氧化碳滅火器適用 B、C 類。]]', '[[食物中毒：保留檢體冷藏、立即通報衛生局。]]'] },
+    { t: '國考重點', kind: 'cloze',
+      intro: ['把這個單元的重點走一次。最後幾題的選項只有英文。'],
+      cloze: [
+        ['PDCA 的「現狀把握」屬於', { a: 'q1', o: ['q1', 'q4'] }, '。'],
+        ['某便當工廠想找出不良率增加的最大因素，用', { a: 'par', o: ['par', 'fish'] }, '。'],
+        ['輪班換班時至少連續休息', { a: 'h11', o: ['h11', 'h8'] }, '。'],
+        ['油鍋起火應', { a: 'lid', o: ['lid', 'water'] }, '。'],
+        ['To separate needed from unneeded items is', { a: 's1', o: ['s1', 's2'], lang: 'en' }, '.'],
+        ['A CO₂ extinguisher suits', { a: 'fc', o: ['fa', 'fc'], lang: 'en' }, ' fires.']
+      ] },
+    { t: '總複習（英文作答）', kind: 'ov', h: GQC_M.h, force: 'en', svg: GQC_M.svg, blanks: GQC_M.b(),
+      intro: ['PDCA 每一步，用英文作答。'], tip: '這一關固定用英文作答。答對後，空格下方會顯示中文。' }
+  ] };
+/* 團膳與膳療的目錄。團膳照老師授課章節的順序（第 2～5 章與 HACCP 廚房），補上國考常考的品質管理；膳療照《膳食療養學》14 章。有 levels 的才是做好的單元 */
+function TODO(id, zh, en) { return { id: id, zh: zh, en: en }; }
+function U_(n, id, zh, en) { return typeof window[n] !== 'undefined' ? window[n] : TODO(id, zh, en); }
+var GROUPS = [
+  { tab: 'gs', g: '先讀這裡', items: [GPRE] },
+  { tab: 'gs', g: '第 2 章・菜單設計與成本', c: 6, items: [U_('GMEN', 'gmen', '菜單設計：份數、標準食譜與循環菜單', 'Menu planning'), U_('GLUN', 'glun', '學校午餐食物內容及營養基準', 'School lunch standards'), U_('GCST', 'gcst', '成本控制與損益平衡', 'Cost control')] },
+  { tab: 'gs', g: '第 3 章・採購與驗收', c: 3, items: [U_('GBUY', 'gbuy', '採購：標章、方法與訂購點', 'Purchasing'), U_('GQTY', 'gqty', '採購量的計算', 'Calculating purchase quantities'), U_('GRCV', 'grcv', '驗收', 'Receiving')] },
+  { tab: 'gs', g: '第 4 章・庫房管理', c: 5, items: [U_('GSTO', 'gsto', '庫房的設施與各類食材貯存', 'Storage facilities'), U_('GINV', 'ginv', '物料控制、盤點與撥發', 'Inventory control')] },
+  { tab: 'gs', g: '第 5 章・食材的前處理與烹調', c: 6, items: [U_('GCER', 'gcer', '穀類、澱粉與蔬果', 'Cereals, starch, fruits and vegetables'), U_('GMEAT', 'gmeat', '肉類、魚貝與蛋', 'Meat, seafood and eggs'), U_('GSOY', 'gsoy', '豆製品、油脂與冷凍食品', 'Soy foods, frying fats and frozen foods')] },
+  { tab: 'gs', g: '衛生、品質與管理', c: 4, items: [U_('GHAC', 'ghac', 'HACCP 團膳廚房與衛生', 'HACCP kitchen and sanitation'), U_('GQC', 'gqc', '品質管理、人事與危機處理', 'Quality, staff and emergencies')] },
+  { tab: 'dt', g: '先讀這裡', items: [U_('DPRE', 'dpre', '第 1 章 營養照護', 'Nutrition care process')] },
+  { tab: 'dt', g: '第 2～3 章・營養支持與體重', c: 3, items: [U_('DSUP', 'dsup', '第 2 章 營養支持', 'Nutrition support'), U_('DWT', 'dwt', '第 3 章 體重控制與管理', 'Weight management')] },
+  { tab: 'dt', g: '第 4～7 章・慢性疾病', c: 5, items: [U_('DCV', 'dcv', '第 4 章 高血壓、高脂血症與心臟疾病', 'Cardiovascular disease'), U_('DGI', 'dgi', '第 5 章（一）消化道疾病', 'Gastrointestinal disease'), U_('DLV', 'dlv', '第 5 章（二）肝、膽、胰臟疾病', 'Liver, gallbladder and pancreas'), U_('DDM', 'ddm', '第 6 章 糖尿病', 'Diabetes'), U_('DRN', 'drn', '第 7 章 腎臟疾病', 'Kidney disease')] },
+  { tab: 'dt', g: '第 8～11 章・腫瘤、壓力、肺與貧血', c: 3, items: [U_('DCA', 'dca', '第 8 章 腫瘤與癌症', 'Cancer'), U_('DST', 'dst', '第 9 章 生理壓力：手術、創傷、燒傷與敗血症', 'Metabolic stress'), U_('DLU', 'dlu', '第 10 章 肺部疾病', 'Pulmonary disease'), U_('DAN', 'dan', '第 11 章 貧血', 'Anemia')] },
+  { tab: 'dt', g: '第 12～14 章・內分泌、小兒與藥物', c: 2, items: [U_('DEN', 'den', '第 12 章 內分泌與新陳代謝疾病', 'Endocrine and metabolic disease'), U_('DPD', 'dpd', '第 13 章 小兒科之營養照護', 'Pediatric nutrition care'), U_('DDR', 'ddr', '第 14 章 飲食、營養與藥物的交互作用', 'Food–drug interactions')] }
+];
+function prep(u, par) {
+  if (par) ['dict', 'enz', 'prod', 'tags', 'zh', 'en'].forEach(function (k) { if (u[k] == null) u[k] = par[k]; });
+  u.map = {}; (u.nodes || (u.nodes = [])).forEach(function (n) { u.map[n.k] = n; }); (u.extra || []).forEach(function (n) { u.map[n.k] = n; });
+  u.steps = u.steps || []; u.enz = u.enz || {}; u.prod = u.prod || {};
+  for (var k in (u.subs || {})) prep(u.subs[k], u);
+}
+var UNITS = {}; GROUPS.forEach(function (g) { g.items.forEach(function (u) { if (u.levels) { UNITS[u.id] = u; u.tab = g.tab; prep(u); } }); });
+/* 團膳與膳療的設定（共用 pw/tail.html 的程式）。LINE 選單 C 格 */
+window.CFG = {
+  key: 'diet-v1', title: '團膳與膳療',
+  tabs: [['gs', '團體膳食'], ['dt', '膳食療養']],
+  hint: { gs: '琥珀色是食材與製備、藍色是溫度與貯存、玫瑰色是數量與成本的計算、青色是衛生與品質、紫色是制度、表單與法規，', dt: '琥珀色是熱量與醣類、紫色是脂質、玫瑰色是蛋白質、藍色是礦物質、水分與電解質、青色是維生素與其他，' },
+  top: '<a class="card pad" href="menu.html" style="display:block;text-decoration:none;color:inherit;margin-bottom:10px"><b>國小營養午餐循環菜單練習 →</b><div class="small muted">4 週菜單可以換菜、調份數，營養素與檢核即時重算。修改只存在自己的手機。</div></a>' +
+    '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px">' +
+    [['index.html?app=weight', '體重與熱量計算'], ['fx.html', '食物代換表'], ['exam.html?g=food', '團膳考題'], ['exam.html?course=%E8%86%B3%E9%A3%9F%E7%99%82%E9%A4%8A', '膳療考題']].map(function (x) { return '<a href="' + x[0] + '" style="flex:1 1 40%;text-align:center;text-decoration:none;font-weight:600;font-size:14px;color:var(--brand,inherit);border:1px solid var(--line);border-radius:12px;padding:9px 6px;background:var(--card)">' + x[1] + '</a>'; }).join('') + '</div>',
+  howto: '<p>上面兩個分頁是兩個科目：團體膳食（菜單設計、採購驗收、庫房、食材製備、衛生與品質）與膳食療養（依《膳食療養學》14 章）。膳食療養的內容依國考考過的觀念與現行指引整理，等拿到課本與講義再修正。</p>',
+  note: function (t) { return t === 'dt' ? '膳食療養的數值依常用臨床指引與國考寫法，實際飲食以醫囑與營養師評估為準；不同課本或指引版本的數字可能不同，以老師上課的說明為準。' : '學校午餐依教育部「學校午餐食物內容及營養基準」（109 年修訂）；法規數字會修正，請以最新公告為準。'; }
+};
+/* ======================================================================
+   程式
+   ====================================================================== */
+function $(id) { return document.getElementById(id); }
+function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+
+/* 進度與語言：只存在這支手機的瀏覽器 */
+var CFG = window.CFG || {};
+var KEY = CFG.key || 'pathway-v1', OK = true, SAVE = { done: {}, lang: 'bi' };
+try { var s0 = JSON.parse(localStorage.getItem(KEY) || '{}'); if (s0 && s0.done) SAVE = s0; localStorage.setItem(KEY + '-t', '1'); } catch (e) { OK = false; }
+function save() { try { localStorage.setItem(KEY, JSON.stringify(SAVE)); } catch (e) { OK = false; } }
+LANG = SAVE.lang === 'en' || SAVE.lang === 'zh' ? SAVE.lang : 'bi';
+function isDone(pid, i) { return !!(SAVE.done[pid] && SAVE.done[pid][i]); }
+var CUR = null, LV = 0, ST = null;   // 目前單元、關卡、作答狀態
+function seg() { var s = $('lang'); s.hidden = !!FORCE; s.querySelectorAll('button').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-l') === LANG); b.setAttribute('aria-pressed', b.getAttribute('data-l') === LANG ? 'true' : 'false'); }); }
+
+/* ---------- 目錄 ---------- */
+var TABS = CFG.tabs || [['met', '生化代謝'], ['mb', '分子生物'], ['phy', '人體生理']], TAB0 = TABS[0][0], TITLE = CFG.title || '圖解生理生化';
+var HINT = CFG.hint || { met: '圖上名稱的底色是碳數（6 碳、3 碳…），小標籤是這一步花掉或產生什麼，', mb: '藍色是 DNA、青色是新合成的 DNA、玫瑰色是 RNA、琥珀色是蛋白質（酵素、因子、核糖體），', phy: '玫瑰色是興奮、交感、去極化；藍色是抑制、副交感、再極化；琥珀色是激素或要花能量的步驟；每張圖下面都有圖例，' };
+function home() {
+  CUR = null; FORCE = null; $('title').textContent = TITLE; $('subtitle').textContent = '看圖、填空，一關一關記起來';
+  $('back').hidden = true; $('lv').hidden = true; seg();
+  var tab = TABS.some(function (x) { return x[0] === SAVE.tab; }) ? SAVE.tab : TAB0, fresh = !Object.keys(SAVE.done).length;
+  var h = (CFG.top || '') + '<div class="tabs" role="tablist">' + TABS.map(function (x) { return '<button type="button" role="tab" data-t="' + x[0] + '" class="' + (x[0] === tab ? 'on' : '') + '" aria-selected="' + (x[0] === tab) + '">' + x[1] + '</button>'; }).join('') + '</div>';
+  h += '<details class="card pad"' + (fresh ? ' open' : '') + '><summary>怎麼用</summary><p>每個單元分成幾關，從只看大方向開始，一次多記一點，最後整張圖自己填出來。</p>' +
+    '<p>虛線框的空格是下拉選單，點一下選答案，填完按「對答案」。</p>' + (CFG.howto || '') +
+    '<ul class="small muted"><li>右上角可以切換名稱：中文、中英對照、英文。預設是中英對照。</li><li>顏色都有意思：' + HINT[tab] + '<mark>黃底的字</mark>是必背。</li><li>國考的專有名詞常常只寫英文，所以每個單元最後的總複習固定用英文作答。考的是選擇題，練到看到認得就夠了，不必會拼。</li><li>第一次來，請先做最上面「先讀這裡」的單元。</li></ul></details>';
+  GROUPS.forEach(function (g) {
+    if ((g.tab || TAB0) !== tab) return;
+    h += '<div class="glab' + (g.c ? ' k' + g.c : '') + '">' + esc(g.g) + '</div>';
+    g.items.forEach(function (p) {
+      if (p.levels) { var n = p.levels.length, d = p.levels.filter(function (_, i) { return isDone(p.id, i); }).length;
+        h += '<button type="button" class="item' + (g.c ? ' k' + g.c : '') + '" data-p="' + p.id + '"><b>' + esc(p.zh) + '<span>' + esc(p.alias || p.en) + '</span></b><i>' + (d === n ? '已完成' : d + ' ／ ' + n + ' 關') + '</i></button>';
+      } else h += '<button type="button" class="item' + (g.c ? ' k' + g.c : '') + '" disabled><b>' + esc(p.zh) + '<span>' + esc(p.en) + '</span></b><i>製作中</i></button>';
+    });
+  });
+  h += OK ? '<p class="note">完成的關卡只記在這支手機的瀏覽器。清除瀏覽器資料、換手機，或 iPhone 超過一週沒打開，紀錄會消失；內容不受影響。</p>' : '<p class="note">這個瀏覽器無法儲存資料，完成紀錄不會保留。</p>';
+  h += '<p class="note">名詞以營養師國考題目的寫法為主。' + (CFG.note ? CFG.note(tab) : tab === 'met' ? '換算 ATP 時，沒有特別說明就用 NADH 2.5、FADH₂ 1.5。' : '') + '內容是教學用的重點整理，細節以課本與老師上課為準。</p>';
+  $('main').innerHTML = h;
+  document.querySelectorAll('.tabs button').forEach(function (b) { b.onclick = function () { SAVE.tab = b.getAttribute('data-t'); save(); home(); }; });
+  document.querySelectorAll('.item[data-p]').forEach(function (b) { b.onclick = function () { var u = UNITS[b.getAttribute('data-p')]; open(u, firstTodo(u)); }; });
+  window.scrollTo(0, 0);
+}
+function firstTodo(p) { for (var i = 0; i < p.levels.length; i++) if (!isDone(p.id, i)) return i; return 0; }
+function open(p, i) { CUR = p; LV = i; ST = null; if (p.tab && SAVE.tab !== p.tab) { SAVE.tab = p.tab; save(); } level(); window.scrollTo(0, 0); }
+
+/* ---------- 版面：每個節點在圖上的位置 ----------
+   鏈狀（chain）：主幹由上往下；旁支 side 接在某個主幹節點的同一列，link 決定線怎麼畫：
+     in（預設）前一個主幹 → 旁支，旁支 ⇌ 同列主幹（例：DHAP）；branch 前一個主幹 → 旁支；
+     feed 旁支 → 同列主幹；leaf 同列主幹 → 旁支；at:'seg' 的 feed 接到上一段的中間
+   環狀（cycle）：節點依 ang 角度排在橢圓上；top 是從上面進來的分子；pre 是進環之前的步驟
+   每個單元可用 geo 覆寫尺寸 */
+var CY0 = { cx: 180, cy: 312, rx: 118, ry: 196, h: 560, nw: 100 }, CH0 = { x: 152, w: 168, y0: 36, dy: 66, sx: 302, sw: 104 };
+function G(U) { var b = U.layout === 'cycle' ? CY0 : CH0, g = U.geo || {}, o = {}; for (var k in b) o[k] = g[k] != null ? g[k] : b[k]; return o; }
+function cpt(U, a, drx, dry) { var g = G(U), r = a * Math.PI / 180; return { x: g.cx + (g.rx + (drx || 0)) * Math.sin(r), y: g.cy - (g.ry + (dry || 0)) * Math.cos(r) }; }
+function mainNodes(U) { return U.nodes.filter(function (n) { return !n.side; }); }
+function pos(U, k) {
+  var g = G(U);
+  if (U.layout === 'cycle') { var p = cpt(U, U.ang[k]); return { x: p.x, y: p.y, w: g.nw }; }
+  var m = mainNodes(U), n = U.map[k];
+  if (n.side) { var q = pos(U, n.side); return { x: g.sx, y: q.y - (n.at === 'seg' ? g.dy / 2 : 0), w: g.sw }; }
+  for (var i = 0; i < m.length; i++) if (m[i].k === k) return { x: g.x, y: g.y0 + i * g.dy, w: g.w };
+}
+function mapH(U) { var g = G(U); return U.layout === 'cycle' ? g.h : g.y0 * 2 + (mainNodes(U).length - 1) * g.dy; }
+function allSteps(U) { return (U.pre || []).concat(U.steps); }
+function stepNo(U, f, t) { var A = allSteps(U); for (var i = 0; i < A.length; i++) if (A[i].f === f && A[i].t === t) return i; return -1; }
+function asked(L, st) { return !!st && (L.rows === 'enz' ? !!st.e : L.rows === 'prod' ? !!st.p : false); }
+
+function mapSvg(U, L, E) {      // E：'all' 顯示能量標籤、'co2' 只顯示 CO₂、'' 只顯示進出的分子
+  var s = '', tg = '', g = G(U), A = allSteps(U), h = PH() / 2, isBlank = function (k) { return L.blanks.indexOf(k) >= 0; };
+  var pick = function (st) { return ((U.tags && U.tags[st.p] || []).concat(st.io || [])).filter(function (t) { return t[1] === 'mol' || E === 'all' || (E === 'co2' && t[1] === 'co2'); }); };
+  var mark = function (x, y, i, ang) { var st = A[i]; return asked(L, st) ? badge(x, y, i + 1, st.irr) : '<polygon class="ar" points="-7,-6 7,0 -7,6" transform="translate(' + x + ',' + y + ') rotate(' + ang + ')"/>'; };
+  if (U.layout === 'cycle') {
+    s += '<ellipse class="ln" cx="' + g.cx + '" cy="' + g.cy + '" rx="' + g.rx + '" ry="' + g.ry + '" fill="none" stroke-width="3"/>';
+    A.forEach(function (st, i) {
+      if (U.ang[st.f] == null || U.ang[st.t] == null) return;
+      var a = U.ang[st.f], b = U.ang[st.t]; if (b <= a) b += 360; var m = ((a + b) / 2) % 360, p = cpt(U, m), r = m * Math.PI / 180;
+      s += mark(p.x, p.y, i, Math.atan2(g.ry * Math.sin(r), g.rx * Math.cos(r)) * 180 / Math.PI);
+      var tl = pick(st), cr = Math.cos(r), ac = Math.abs(cr), q = cpt(U, m, 44 + 6 * ac, 14 + 12 * ac);
+      var hit = tl.some(function (t, j) { var w = tagW(t[0]), x = Math.max(3 + w / 2, Math.min(357 - w / 2, q.x)); return Math.abs(x - p.x) < w / 2 + 13 && Math.abs(q.y + (j - (tl.length - 1) / 2) * 18 - p.y) < 20; });
+      tl.forEach(function (t, j) { tg += tagC(q.x, hit ? p.y + (cr >= 0 ? -1 : 1) * (22 + 18 * j) : q.y + (j - (tl.length - 1) / 2) * 18, t[0], t[1]); });      // 標籤太長會壓到編號時，改成往外疊
+    });
+    if (U.top) { var atTop = U.nodes.some(function (n) { return U.ang[n.k] === 0; }), y1 = 35 + h, y2 = g.cy - g.ry - (atTop ? h + 3 : 14), pre = (U.pre || [])[0];
+      s += '<line class="ln" x1="' + g.cx + '" y1="' + y1 + '" x2="' + g.cx + '" y2="' + y2 + '" stroke-width="3"/><polygon class="ar" points="-6,-7 6,-7 0,7" transform="translate(' + g.cx + ',' + (y2 + 2) + ')"/>';
+      if (pre && asked(L, pre)) s += badge(g.cx, (y1 + y2) / 2 - 3, 1, pre.irr);
+      if (pre) { var x0 = g.cx + 17, xl = g.cx - 17; pick(pre).forEach(function (t) { var w = tagW(t[0]);      // 進出的分子放右邊，能量標籤放左邊
+        if (t[1] === 'mol') { tg += tagC(x0 + w / 2, (y1 + y2) / 2 - 3, t[0], t[1]); x0 += w + 4; } else { tg += tagC(xl - w / 2, (y1 + y2) / 2 - 3, t[0], t[1]); xl -= w + 4; } }); }
+      s += pill(g.cx, 34, U.top.w || 128, { zh: U.top.zh + (L.carbon && U.top.c ? '（' + U.top.c + 'C）' : ''), en: U.top.en + (L.carbon && U.top.c ? ' (' + U.top.c + 'C)' : '') }, 'src' + (U.top.c ? ' k' + U.top.c : '')); }
+    var cz = U.czh || U.zh, ce = U.cen || U.en, iw = 2 * (g.rx - g.nw / 2) + 4;      // 圓心的字：寬度不能超過左右兩個節點之間
+    if (M() === 'bi') s += tx(g.cx, g.cy - 10, cz, 'b', fit(cz, iw, 15)) + tx(g.cx, g.cy + 7, ce, 'b', fit(ce, iw, 11.5)) + tx(g.cx, g.cy + 24, '順時針方向', 'm', 11);
+    else s += tx(g.cx, g.cy - 4, T(cz, ce), 'b', fit(T(cz, ce), iw, 15)) + tx(g.cx, g.cy + 16, T('順時針方向', 'clockwise'), 'm', 11);
+  } else {
+    var m = mainNodes(U), down = function (x, y) { return '<polygon class="ar" points="-6,-6 6,-6 0,6" transform="translate(' + x + ',' + y + ')"/>'; };
+    (U.phases || []).forEach(function (ph) { var a = pos(U, ph.a), b = pos(U, ph.b), my = (a.y + b.y) / 2;
+      s += '<line x1="46" y1="' + (a.y - h + 1) + '" x2="46" y2="' + (b.y + h - 1) + '" stroke="var(' + ph.c + ')" stroke-width="4" stroke-linecap="round"/>' +
+        '<text x="30" y="' + my + '" text-anchor="middle" font-size="11.5" font-weight="700" style="fill:var(' + ph.c + ')" transform="rotate(-90 30 ' + my + ')">' + esc(T(ph.zh, ph.en)) + '</text>'; });
+    for (var i = 0; i < m.length - 1; i++) { var a = pos(U, m[i].k), b = pos(U, m[i + 1].k), n = stepNo(U, m[i].k, m[i + 1].k), st = A[n], my = (a.y + b.y) / 2;
+      s += '<line class="ln" x1="' + a.x + '" y1="' + (a.y + h) + '" x2="' + b.x + '" y2="' + (b.y - h) + '" stroke-width="3"' + (st && st.dots ? ' stroke-dasharray="2 5" stroke-linecap="round"' : '') + '/>';
+      s += asked(L, st) ? badge(a.x, my, n + 1, st.irr) : down(a.x, my + 1);
+      var tl = st ? pick(st) : [], tx0 = a.x + 17; tl.forEach(function (t) { var w = tagW(t[0]); tg += tagC(tx0 + w / 2, my, t[0], t[1]); tx0 += w + 4; });
+      if (st && st.dots && !tl.length) s += tx(a.x + 16, my + 3.5, T(st.dots.zh, st.dots.en), 'nt', 10, 'start'); }
+    U.nodes.forEach(function (sd) { if (!sd.side) return;
+      var p = pos(U, sd.k), q = pos(U, sd.side), link = sd.link || 'in', prev = null, pk = null;
+      for (var i = 1; i < m.length; i++) if (m[i].k === sd.side) { prev = pos(U, m[i - 1].k); pk = m[i - 1].k; }
+      var x1 = q.x + q.w / 2 + 1, x2 = p.x - p.w / 2 - 1, xm = (x1 + x2) / 2, n;
+      if (link === 'in' || link === 'branch') { n = stepNo(U, pk, sd.k);
+        if (link === 'branch') s += arrow(prev.x + 50, prev.y + h, p.x, p.y - h - 3); else s += '<line class="ln" x1="' + (prev.x + 50) + '" y1="' + (prev.y + h) + '" x2="' + p.x + '" y2="' + (p.y - h - 1) + '" stroke-width="3"/>';
+        if (link === 'branch' && asked(L, A[n])) s += badge((prev.x + 50 + p.x) / 2 + 4, (prev.y + p.y) / 2 - 1, n + 1, A[n].irr); }
+      if (link === 'in') { n = stepNo(U, sd.k, sd.side); s += '<line class="ln" x1="' + x1 + '" y1="' + p.y + '" x2="' + x2 + '" y2="' + p.y + '" stroke-width="3"/>';
+        s += asked(L, A[n]) ? badge(xm + 4, p.y + h + 13, n + 1, A[n].irr) : tx(xm + 4, p.y + h + 14, '⇌', 'm', 14); }
+      if (link === 'feed' || link === 'leaf') { n = link === 'feed' ? stepNo(U, sd.k, sd.side) : stepNo(U, sd.side, sd.k); var into = sd.at === 'seg' ? q.x + 6 : x1 + 2;
+        s += link === 'feed' ? arrow(x2, p.y, into, p.y) : arrow(x1, p.y, x2 - 2, p.y);
+        if (asked(L, A[n])) s += badge(xm, p.y - 15, n + 1, A[n].irr); }
+    });
+  }
+  U.nodes.forEach(function (n) { var p = pos(U, n.k);
+    if (!isBlank(n.k)) s += pill(p.x, p.y, p.w, n, (U.layout === 'chain' && n === U.nodes[0] ? 'src' : 'pill') + (n.c ? ' k' + n.c : ''));
+    if (L.carbon && n.c) s += '<text x="' + p.x + '" y="' + (p.y + h + 13) + '" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--k' + n.c + 's)">' + n.c + 'C</text>';
+  });
+  return s + tg;
+}
+
+/* ---------- 一關的空格清單 ---------- */
+function buildBlanks(U, L) {
+  var B = [];
+  if (L.kind === 'ov') L.blanks.forEach(function (b) { B.push({ id: b.id, where: 'node', ans: b.a, src: U.dict, opts: shuffle(b.o), x: b.x, y: b.y, w: b.w, c: b.c }); });
+  if (L.kind === 'map') {
+    var keys = U.nodes.filter(function (n) { return (n !== U.nodes[0] || U.layout === 'cycle') && !n.fixed; }).concat(U.extra || []).map(function (n) { return n.k; });
+    L.blanks.forEach(function (k) { var p = pos(U, k); B.push({ id: 'n_' + k, where: 'node', ans: k, src: U.map, enFirst: true, opts: shuffle(keys), x: p.x, y: p.y, w: p.w, c: L.plain ? null : U.map[k].c }); });
+    if (L.rows) { var A = allSteps(U), fld = L.rows === 'enz' ? 'e' : 'p', d = L.rows === 'enz' ? U.enz : U.prod, ks = Object.keys(d).filter(function (k) { return A.some(function (t) { return t[fld] === k; }) || (U.rowExtra || []).indexOf(k) >= 0; });      // rowExtra：額外的干擾選項
+      A.forEach(function (s, i) { if (s[fld]) B.push({ id: 'r' + i, where: 'row', ans: s[fld], src: d, enFirst: true, opts: shuffle(ks), step: i, st: s }); }); }
+  }
+  (L.list || []).forEach(function (it, i) { var x = it[1]; B.push({ id: 'l' + i, where: 'row', li: i, desc: it[0], ans: x.a, lang: x.lang, src: x.src === 'enz' ? U.enz : U.dict, enFirst: x.src === 'enz', opts: shuffle(x.o) }); });
+  (L.counts || []).forEach(function (c, i) { B.push({ id: 'c' + i, where: 'count', ans: c[1], label: c[0], opts: c[2] }); });
+  if (L.kind === 'cloze') L.cloze.forEach(function (row, i) { row.forEach(function (x) { if (typeof x === 'object') B.push({ id: 'z' + i, where: 'cloze', ans: x.a, lang: x.lang, src: x.src === 'enz' ? U.enz : U.dict, enFirst: x.src === 'enz', opts: shuffle(x.o) }); }); });
+  return B;
+}
+function label(b, v) { return b.src ? one(b.src[v], b.lang, b.enFirst) : v; }
+/* 空格上看得到的字 */
+function face(b) {
+  var v = ST.ans[b.id] || '';
+  if (b.where === 'node') { if (!v) return '<b style="font-size:17px">？</b>'; var L = two(b.src[v], b.lang, b.w);
+    return '<b style="font-size:' + (fit(L[0], b.w - 8, L[1] ? 11.5 : 12.5) / .75).toFixed(1) + 'px">' + esc(L[0]) + '</b>' + (L[1] ? '<small style="font-size:' + (fit(L[1], b.w - 4, 10) / .75).toFixed(1) + 'px">' + esc(L[1]) + '</small>' : ''); }
+  if (!v) return '<b class="muted" style="font-weight:400">請選擇</b>';
+  if (b.where === 'row' || b.enFirst) { var R = two(b.src[v], b.lang); return '<b>' + esc(R[0]) + '</b>' + (R[1] ? '<small>' + esc(R[1]) + '</small>' : ''); }
+  return '<b>' + esc(label(b, v)) + '</b>';
+}
+/* 空格的顏色：圖上的空格＝這個位置的碳數；圖下的空格＝選到的答案是哪一類
+   （激酶與 ATP、GTP 橘色；去氫酶與 NADH 藍色；FADH₂ 紫色；NADPH 青色） */
+function kind(e) { e = e || ''; return /NADPH/.test(e) ? 'tp' : /kinase|ATP|GTP|UTP/.test(e) ? 'tk' : /dehydrogenase|NADH/.test(e) ? 'td' : /FADH/.test(e) ? 'tf' : ''; }
+function faceCls(b) {
+  var v = ST.ans[b.id] || '', c = 'face';
+  if (b.where === 'node' && b.c) c += ' k' + b.c;
+  if (b.where === 'row' && b.li == null && v) c += ' ' + kind(b.src[v].en);
+  return c;
+}
+function sel(b) {
+  var v = ST.ans[b.id] || '';
+  return '<span class="pick' + (v ? ' has' : '') + '"><span class="' + faceCls(b) + '">' + face(b) + '</span><select data-b="' + b.id + '" aria-label="空格"><option value="">' + (b.where === 'node' ? '？' : '請選擇') + '</option>' +
+    b.opts.map(function (o) { return '<option value="' + esc(o) + '"' + (o === v ? ' selected' : '') + '>' + esc(label(b, o)) + '</option>'; }).join('') + '</select></span>';
+}
+
+/* ---------- 一關的畫面 ---------- */
+var KLAB = { enz: { tk: '激酶 kinase', td: '去氫酶 dehydrogenase' }, prod: { tk: 'ATP、GTP', td: 'NADH', tf: 'FADH₂', tp: 'NADPH' } };
+function level() {
+  var P = CUR, L = P.levels[LV], U = L.sub ? P.subs[L.sub] : P, n = P.levels.length; FORCE = L.force || null;
+  if (!ST) ST = { blanks: buildBlanks(U, L), ans: {}, checked: false, shown: false };
+  $('title').textContent = P.zh; $('subtitle').textContent = '第 ' + (LV + 1) + ' 關，共 ' + n + ' 關・' + L.t;
+  $('back').hidden = false; seg();
+  $('lv').hidden = false; $('lv').innerHTML = P.levels.map(function (_, i) { var d = isDone(P.id, i); return '<button type="button" data-i="' + i + '" class="' + (i === LV ? 'on' : '') + (d ? ' done' : '') + '" aria-label="第 ' + (i + 1) + ' 關' + (d ? '（已完成）' : '') + '">' + (i + 1) + (d ? ' ✓' : '') + '</button>'; }).join('');
+  $('lv').querySelectorAll('button').forEach(function (b) { b.onclick = function () { open(P, +b.getAttribute('data-i')); }; });
+  var on = $('lv').querySelector('.on'); if (on && on.scrollIntoView) on.scrollIntoView({ block: 'nearest', inline: 'center' });
+
+  var h = '<div class="card pad"><h2>' + esc(L.t) + '</h2>' + L.intro.map(function (p) { return '<p>' + fmt(p) + '</p>'; }).join('') + (L.tip ? '<div class="tip">' + fmt(esc(L.tip)) + '</div>' : '') + '</div>';
+  var by = function (w) { return ST.blanks.filter(function (b) { return b.where === w; }); }, nodes = by('node'), rows = by('row').filter(function (b) { return b.li == null; }), lst = by('row').filter(function (b) { return b.li != null; }), cnt = by('count');
+  var passed = ST.checked && !ST.shown && ST.blanks.every(function (b) { return ST.ans[b.id] === b.ans; });
+  var E = L.energy || (L.rows === 'prod' && (ST.shown || passed)) ? 'all' : L.carbon ? 'co2' : '';      // 算帳那一關：全對或看答案後，圖上才出現能量標籤
+  var lgS = L.legend || (L.kind === 'map' && !L.plain ? U.nodes.map(function (n) { return n.c; }).concat(U.top ? [U.top.c] : []).filter(function (c, i, a) { return c && a.indexOf(c) === i; }).sort(function (a, b) { return b - a; }) : []);
+  var lg = lgS.map(function (c) { return typeof c === 'object' ? '<span><i class="' + c[0] + '"></i>' + esc(c[1]) + '</span>' : '<span><i class="k' + c + '"></i>' + c + ' 碳</span>'; });      // 圖例：數字＝碳數；[樣式, 文字]＝自訂
+  if (lg.length && (L.legendTitle || typeof lgS[0] !== 'object')) lg.unshift('<span>' + esc(L.legendTitle || '底色＝碳數') + '</span>');
+  if (L.kind === 'map' && L.rows && allSteps(U).some(function (s) { return s.irr && asked(L, s); })) lg.push('<span><i class="irr">1</i>實心編號＝不可逆步驟</span>');
+  if (L.kind === 'ov' || L.kind === 'map') { var H = L.kind === 'ov' ? L.h : mapH(U), fh = Math.round(PH() / .75);
+    h += '<div class="card pad"><div class="dia" id="dia"><svg viewBox="0 0 360 ' + H + '" role="img" aria-label="' + esc(P.zh) + '路徑圖">' + (L.kind === 'ov' ? L.svg() : mapSvg(U, L, E)) + '</svg>' +
+      nodes.map(function (b) { return '<span class="bk" data-k="' + b.id + '" style="left:' + (b.x / 360 * 100) + '%;top:' + (b.y / H * 100) + '%"><span style="display:block;width:' + Math.round(b.w / .75) + 'px;height:' + fh + 'px">' + sel(b) + '</span><i class="mk"></i></span>'; }).join('') + '</div>' +
+      (lg.length ? '<div class="lgd">' + lg.join('') + '</div>' : '') + (nodes.length ? '<div class="small muted" style="text-align:center;margin-top:6px">點虛線框選答案</div>' : '') + '</div>'; }
+  if (rows.length) { var seen = {}, kl = ''; rows[0].opts.forEach(function (o) { var k = kind(rows[0].src[o].en); if (k && !seen[k] && KLAB[L.rows][k]) { seen[k] = 1; } });
+    ['tk', 'td', 'tf', 'tp'].forEach(function (k) { if (seen[k]) kl += '<span><i class="' + k + '"></i>' + KLAB[L.rows][k] + '</span>'; });
+    h += '<div class="card pad"><h2>' + esc(L.rowsTitle || '') + '</h2>' + (kl ? '<div class="lgd" style="justify-content:flex-start;margin:0 0 4px">' + kl + '</div>' : '') + rows.map(function (b) { var s = b.st;
+      var d = s.desc ? T(s.desc.zh, s.desc.en) : short(U.map[s.f]) + ' → ' + short(U.map[s.t]) + (s.also ? ' ＋ ' + short(U.map[s.also]) : '');
+      return '<div class="st" data-k="' + b.id + '"><span class="n">' + (b.step + 1) + '</span><span class="d">' + esc(d) + '</span><span class="w">' + sel(b) + '<div class="r"></div></span></div>'; }).join('') + '</div>'; }
+  if (lst.length) h += '<div class="card pad"><h2>' + esc(L.listTitle || '') + '</h2>' + lst.map(function (b) {
+    return '<div class="st" data-k="' + b.id + '"><span class="n">' + (b.li + 1) + '</span><span class="d" style="font-size:14px;color:var(--ink)">' + fmt(esc(b.desc)) + '</span><span class="w">' + sel(b) + '<div class="r"></div></span></div>'; }).join('') + '</div>';
+  if (cnt.length) h += '<div class="card pad"><h2>' + esc(L.countsTitle || '') + '</h2>' + cnt.map(function (b) {
+    return '<div class="st c" data-k="' + b.id + '"><span class="d">' + esc(b.label) + '</span><span class="w">' + sel(b) + '<div class="r"></div></span></div>'; }).join('') + '</div>';
+  if (L.kind === 'cloze') { var zb = by('cloze'); h += '<div class="card pad"><ol class="cz">' + L.cloze.map(function (row, i) {
+    return '<li data-k="z' + i + '">' + row.map(function (x) { return typeof x === 'string' ? (x === '。' ? '' : esc(x)) : sel(zb[i]); }).join('') + '<div class="r"></div></li>'; }).join('') + '</ol></div>'; }
+  h += '<div id="res"></div><div class="foot"><div class="row" id="acts"></div></div>';
+  $('main').innerHTML = h;
+  document.querySelectorAll('.pick select').forEach(function (el) { el.onchange = function () {
+    var id = el.getAttribute('data-b'), b = ST.blanks.filter(function (x) { return x.id === id; })[0];
+    ST.ans[id] = el.value; el.parentNode.classList.toggle('has', !!el.value); var fe = el.parentNode.querySelector('.face'); fe.className = faceCls(b); fe.innerHTML = face(b);
+    if (ST.checked) { ST.checked = false; clearMarks(); acts(); }
+  }; });
+  if (ST.shown) document.querySelectorAll('.pick select').forEach(function (el) { el.disabled = true; });
+  scaleDia(); if (ST.checked) mark(); acts();
+}
+function scaleDia() { var d = $('dia'); if (d) d.style.setProperty('--s', (d.clientWidth / 360 * .75).toFixed(3)); }
+window.addEventListener('resize', scaleDia);
+function holder(b) { return document.querySelector('[data-k="' + b.id + '"]'); }
+function clearMarks() {
+  document.querySelectorAll('.pick').forEach(function (el) { el.classList.remove('ok', 'no'); });
+  document.querySelectorAll('[data-k]').forEach(function (el) { el.classList.remove('ok', 'no'); var r = el.querySelector('.r'); if (r) r.textContent = ''; var m = el.querySelector('.mk'); if (m) m.textContent = ''; });
+  $('res').innerHTML = '';
+}
+function mark() {
+  var right = 0, total = ST.blanks.length, L = CUR.levels[LV];
+  ST.blanks.forEach(function (b) {
+    var v = ST.ans[b.id] || '', ok = v === b.ans, el = holder(b), s = el.querySelector('.pick');
+    if (ok) right++;
+    s.classList.remove('ok', 'no'); el.classList.remove('ok', 'no'); s.classList.add(ok ? 'ok' : 'no'); el.classList.add(ok ? 'ok' : 'no');
+    var m = el.querySelector('.mk'); if (m) m.textContent = ok ? '✓' : '✕';
+    var o = b.src && b.src[b.ans], zh = o && (b.lang || M()) === 'en' && o.zh !== (o.en || o.zh) ? o.zh : '';      // 用英文作答的空格，答對後補上中文
+    var r = el.querySelector('.r'); if (r) r.textContent = ok ? '✓ 正確' + (zh ? '：' + zh : '') : (v ? '✕ 再想想' : '✕ 還沒填');
+  });
+  var all = right === total, last = LV === CUR.levels.length - 1;
+  if (all && !ST.shown) { if (!SAVE.done[CUR.id]) SAVE.done[CUR.id] = {}; SAVE.done[CUR.id][LV] = 1; save(); var c = $('lv').querySelectorAll('button')[LV]; c.classList.add('done'); if (c.textContent.indexOf('✓') < 0) c.textContent += ' ✓'; }
+  $('res').innerHTML = '<div class="res ' + (all ? 'ok' : 'bad') + '"><b>' + (ST.shown ? '這是正確答案' : all ? '全對！' : '答對 ' + right + ' ／ ' + total) + '</b>　' +
+    (ST.shown ? '看熟之後按「重來」，自己再填一次才算過關。' : all ? (last ? '這個單元完成了。' : '可以進下一關了。') : '紅色的空格再改一次，改完再按「對答案」。') + '</div>' +
+    (all && !ST.shown && L.done ? '<div class="card pad"><h2>記住這幾件事</h2><ul>' + L.done.map(function (t) { return '<li>' + fmt(esc(t)) + '</li>'; }).join('') + '</ul></div>' : '');
+  return all;
+}
+function acts() {
+  var last = LV === CUR.levels.length - 1, all = ST.checked && ST.blanks.every(function (b) { return ST.ans[b.id] === b.ans; }) && !ST.shown, h = '';
+  if (all) h = '<button type="button" class="btn plain" id="redo">重來</button><button type="button" class="btn" id="next">' + (last ? '回目錄' : '下一關') + '</button>';
+  else if (ST.checked) h = '<button type="button" class="btn plain" id="' + (ST.shown ? 'redo' : 'show') + '">' + (ST.shown ? '重來' : '看正確答案') + '</button><button type="button" class="btn" id="chk"' + (ST.shown ? ' disabled' : '') + '>對答案</button>';
+  else h = '<button type="button" class="btn" id="chk">對答案</button>';
+  $('acts').innerHTML = h;
+  if ($('chk')) $('chk').onclick = function () { ST.checked = true; var L = CUR.levels[LV]; if (L.rows === 'prod' && ST.blanks.every(function (b) { return ST.ans[b.id] === b.ans; })) level(); else { mark(); acts(); } var r = $('res'); if (r.scrollIntoView) r.scrollIntoView({ block: 'nearest' }); };
+  if ($('show')) $('show').onclick = function () { ST.shown = true; ST.blanks.forEach(function (b) { ST.ans[b.id] = b.ans; }); level(); };
+  if ($('redo')) $('redo').onclick = function () { ST = null; level(); window.scrollTo(0, 0); };
+  if ($('next')) $('next').onclick = function () { if (last) home(); else open(CUR, LV + 1); };
+}
+
+$('back').onclick = home;
+$('lang').querySelectorAll('button').forEach(function (b) { b.onclick = function () { LANG = b.getAttribute('data-l'); SAVE.lang = LANG; save(); if (CUR) { var y = window.pageYOffset; level(); window.scrollTo(0, y); } else home(); }; });
+(function () { var m = (location.search.match(/[?&]p=([a-z]+)/) || [])[1]; if (m && UNITS[m]) open(UNITS[m], firstTodo(UNITS[m])); else home(); })();
+</script>
 </body>
 </html>

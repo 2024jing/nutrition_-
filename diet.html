@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>團膳與膳療</title>
+<style>
+  :root {
+    --bg: #f4f5f2; --card: #ffffff; --ink: #1f2a24; --muted: #5f6a63; --line: #e2e5df;
+    --brand: #2f6b4f; --brand-soft: #e3efe8; --warm: #fff3d6; --warm-ink: #7a5a12; --chip: #eef0eb;
+    --shadow: 0 1px 2px rgba(0,0,0,.06), 0 2px 8px rgba(0,0,0,.04);
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+    --bg: #121614; --card: #1b201d; --ink: #e8ece9; --muted: #9aa49e; --line: #2c332f; --brand: #7cc4a0; --brand-soft: #1f3329;
+    --warm: #3a3220; --warm-ink: #f0d58a; --chip: #252b27; --shadow: none; color-scheme: dark; } }
+  :root[data-theme="dark"] {
+    --bg: #121614; --card: #1b201d; --ink: #e8ece9; --muted: #9aa49e; --line: #2c332f; --brand: #7cc4a0; --brand-soft: #1f3329;
+    --warm: #3a3220; --warm-ink: #f0d58a; --chip: #252b27; --shadow: none; color-scheme: dark; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--ink);
+    font: 15px/1.6 -apple-system, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif; -webkit-text-size-adjust: 100%; }
+  main { max-width: 640px; margin: 0 auto; padding: 18px 16px 32px; }
+  h1 { font-size: 21px; margin: 4px 0 2px; letter-spacing: .02em; }
+  .sub { color: var(--muted); font-size: 13px; margin: 0 0 14px; }
+  .big { display: block; position: relative; text-decoration: none; color: inherit; background: var(--card); border: 1px solid var(--line);
+    border-radius: 18px; box-shadow: var(--shadow); padding: 18px 44px 18px 18px; margin: 12px 0; }
+  .big:active { background: var(--brand-soft); }
+  .big .ic { font-size: 30px; line-height: 1; }
+  .big h2 { font-size: 19px; margin: 8px 0 4px; color: var(--brand); }
+  .big p { margin: 0; color: var(--muted); font-size: 14px; }
+  .big .go { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-size: 26px; color: var(--brand); }
+  .tag { display: inline-block; font-size: 12px; font-weight: 700; padding: 2px 9px; border-radius: 999px; margin-left: 6px; vertical-align: 2px; }
+  .tag.wip { background: var(--warm); color: var(--warm-ink); }
+  .row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .row a { flex: 1 1 140px; text-align: center; text-decoration: none; color: var(--brand); font-weight: 600; font-size: 14px;
+    border: 1px solid var(--line); background: var(--card); border-radius: 12px; padding: 10px 8px; }
+  .row a:active { background: var(--brand-soft); }
+  .lab { font-size: 13px; color: var(--muted); margin: 20px 2px 0; }
+  .note { color: var(--muted); font-size: 12px; margin: 18px 2px 0; }
+</style>
+</head>
+<body>
+<main>
+  <h1>團膳與膳療</h1>
+  <p class="sub">選一個科目進入</p>
+
+  <a class="big" href="menu.html">
+    <div class="ic" aria-hidden="true">🍱</div>
+    <h2>團體膳食</h2>
+    <p>國小營養午餐 4 週循環菜單：換菜、調份數，營養素與檢核即時重算。修改只存在自己的手機，可以恢復原版。</p>
+    <span class="go" aria-hidden="true">›</span>
+  </a>
+
+  <a class="big" href="index.html?app=therapy">
+    <div class="ic" aria-hidden="true">🩺</div>
+    <h2>膳食療養<span class="tag wip">製作中</span></h2>
+    <p>目前是常見疾病的飲食設計原則摘要。依課本 14 章整理的內容還在製作中，完成後會放在這裡。</p>
+    <span class="go" aria-hidden="true">›</span>
+  </a>
+
+  <div class="lab">相關工具與練習</div>
+  <div class="row">
+    <a href="index.html?app=weight">體重與熱量計算</a>
+    <a href="fx.html">食物代換表</a>
+  </div>
+  <div class="row">
+    <a href="exam.html?g=food">團膳考題練習</a>
+    <a href="exam.html?course=%E8%86%B3%E9%A3%9F%E7%99%82%E9%A4%8A">膳療考題練習</a>
+  </div>
+
+  <p class="note">膳食療養的內容是教學摘要，實際飲食以醫囑與營養師評估為準。</p>
+</main>
+</body>
+</html>

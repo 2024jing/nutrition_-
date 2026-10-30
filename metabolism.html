@@ -1,0 +1,1389 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>代謝路徑圖解</title>
+<meta name="description" content="營養生化代謝路徑圖解：醣類、脂質、蛋白質、核苷酸代謝，含位置圖、環狀循環圖與填空練習">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#faf7f1;--surface:#fff;--soft:#f1ede6;--soft2:#e9e4db;--ink:#2a2723;--muted:#6f685e;--muted2:#a39b8f;--line:#e7e0d4;--line2:#cfc6b8;
+--carb:#e07a2f;--lipid:#c39100;--protein:#2f72c8;--nuc:#8a56c2;--other:#1f9286;
+--atp:#2e9a4e;--nadh:#2f6fd0;--nadph:#8a4fd0;--fad:#d97d1f;--co2:#7d7d7d;--vit:#c2477a;--bad:#d64545;--ok:#2e9a4e;--acc:var(--carb)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1b1a18;--surface:#262421;--soft:#2f2c28;--soft2:#3a3631;--ink:#eee8de;--muted:#b3aa9d;--muted2:#7d756a;--line:#3a3631;--line2:#575047}}
+:root[data-theme="dark"]{--bg:#1b1a18;--surface:#262421;--soft:#2f2c28;--soft2:#3a3631;--ink:#eee8de;--muted:#b3aa9d;--muted2:#7d756a;--line:#3a3631;--line2:#575047}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.65 "Noto Sans TC",system-ui,-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif}
+a{color:inherit}
+header.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;padding:10px 16px;background:var(--surface);border-bottom:1px solid var(--line)}
+header.top .brand{font-weight:700;text-decoration:none;font-size:17px}
+header.top .brand small{font-weight:400;color:var(--muted);margin-left:8px;font-size:13px}
+#menu{display:none;border:1px solid var(--line2);background:var(--surface);color:var(--ink);border-radius:8px;padding:6px 10px;font:inherit;font-size:14px}
+.app{display:grid;grid-template-columns:270px minmax(0,1fr);max-width:1280px;margin:0 auto}
+#side{position:sticky;top:53px;height:calc(100vh - 53px);overflow:auto;padding:14px 12px 40px;border-right:1px solid var(--line)}
+#q{width:100%;padding:8px 10px;border:1px solid var(--line2);border-radius:8px;background:var(--surface);color:var(--ink);font:inherit;font-size:14px;margin-bottom:10px}
+#navlist a{text-decoration:none;display:block;border-radius:6px}
+.nav-home{padding:6px 8px;font-weight:700}
+.nav-cat{margin-top:12px}
+.nav-cat-t{display:flex;justify-content:space-between;padding:4px 8px;font-weight:700;color:var(--acc);border-left:4px solid var(--acc);border-radius:0!important}
+.nav-cat-t small{color:var(--muted);font-weight:400}
+.nav-cat ul{list-style:none;margin:4px 0 0;padding:0}
+.nav-cat li a{padding:3px 8px 3px 16px;font-size:14px;color:var(--muted)}
+#navlist a:hover{background:var(--soft)}
+#navlist a.on{background:color-mix(in srgb,var(--acc) 15%,var(--surface));color:var(--ink);font-weight:500}
+main{padding:22px 28px 60px;min-width:0}
+.page{max-width:880px}
+.crumb{font-size:13px;color:var(--acc);text-decoration:none;font-weight:500}
+h1{font-size:28px;margin:4px 0 0;line-height:1.3}
+.en-t{color:var(--muted);margin:2px 0 14px;font-style:italic}
+h3{font-size:18px;margin:26px 0 10px;padding-left:10px;border-left:4px solid var(--acc)}
+h3 small{font-weight:400;color:var(--muted);font-size:13px;margin-left:6px}
+.lead{font-size:16px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.info{width:100%;border-collapse:collapse;background:var(--surface);border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.info th{width:120px;text-align:left;background:color-mix(in srgb,var(--acc) 10%,var(--surface));padding:8px 12px;font-weight:500;font-size:14px;vertical-align:top}
+.info td{padding:8px 12px;border-top:1px solid var(--line)}
+.info tr:first-child td{border-top:0}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table.grid{width:100%;border-collapse:collapse;font-size:14px}
+table.grid th{background:color-mix(in srgb,var(--acc) 12%,var(--surface));text-align:left;padding:8px 10px;white-space:nowrap}
+table.grid td{padding:8px 10px;border-top:1px solid var(--line);vertical-align:top}
+table.cat td:first-child{min-width:150px}
+table.cat a{color:var(--acc)}
+.chip{display:inline-block;font-size:12px;padding:1px 8px;border-radius:999px;margin:2px 4px 2px 0;border:1px solid currentColor;line-height:1.5;background:var(--surface)}
+.c-atp{color:var(--atp)}.c-nadh{color:var(--nadh)}.c-nadph{color:var(--nadph)}.c-fad{color:var(--fad)}.c-co2{color:var(--co2)}.c-vit{color:var(--vit)}.c-bad{color:var(--bad)}
+.bd{display:inline-block;font-size:12px;padding:1px 8px;border-radius:999px;margin:2px 4px 2px 0;font-weight:500;vertical-align:middle}
+.bd-rl{background:var(--bad);color:#fff}.bd-irr{background:var(--soft2);color:var(--ink)}.bd-cyc{background:var(--acc);color:#fff;font-size:13px}
+/* where */
+.where-grid{display:flex;flex-wrap:wrap;gap:12px}
+.where figure{margin:0;flex:1 1 260px;max-width:380px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px}
+.where figcaption{text-align:center;font-size:13px;color:var(--muted)}
+.where-txt{font-size:14px;color:var(--muted);margin:6px 2px 0}
+svg.body{display:block;max-height:260px;width:100%}
+svg.cell{display:block;width:100%}
+.olab{font-size:11px;font-weight:700}
+.clab{font-size:12px}.clab.on{font-weight:700}
+/* ring */
+.ringwrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:6px}
+svg.ring{display:block;width:100%;max-width:680px;margin:0 auto}
+.rn-en{font-size:15px;font-weight:700;fill:var(--ink)}.rn-zh{font-size:13px;fill:var(--muted)}
+.rnum{font-size:14px;font-weight:700;fill:#fff}
+.ran{font-size:15px;font-weight:700}.ran-in{fill:var(--atp)}.ran-out{fill:var(--fad)}.ran-tag{fill:var(--muted)}
+.rc1{font-size:23px;font-weight:700;fill:var(--acc)}.rc2{font-size:15px;fill:var(--muted)}
+.zlab{font-size:18px;font-weight:700}.zsub{font-size:11px;fill:var(--muted)}
+.hint{font-size:13px;color:var(--muted);margin:6px 2px}
+/* flow */
+.ctrl{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.seg{display:inline-flex;border:1px solid var(--line2);border-radius:9px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:transparent;color:var(--ink);font:inherit;font-size:14px;padding:6px 12px;cursor:pointer}
+.seg button.on{background:var(--acc);color:#fff}
+.qbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 12px}
+.btn{border:1px solid var(--line2);background:var(--surface);color:var(--ink);border-radius:9px;padding:6px 14px;font:inherit;font-size:14px;cursor:pointer}
+.btn.pri{background:var(--acc);border-color:var(--acc);color:#fff}
+#score{font-weight:700;color:var(--acc)}
+.flow{max-width:620px}
+.node{--nc:var(--acc);background:var(--surface);border:2px solid var(--nc);border-left-width:7px;border-radius:12px;padding:8px 12px;position:relative}
+.node b{display:block;font-size:15px}
+.node small{color:var(--muted);font-size:13px}
+.ntag{position:absolute;right:8px;top:-10px;color:#fff;font-size:11px;padding:0 8px;border-radius:999px;line-height:18px}
+.edge{display:flex;gap:12px;padding-left:20px}
+.arr{flex:none;width:28px;position:relative;display:flex;justify-content:center}
+.arr::before{content:"";position:absolute;top:0;bottom:8px;left:13px;width:3px;background:var(--acc)}
+.arr::after{content:"";position:absolute;bottom:0;left:7px;border:7px solid transparent;border-top:10px solid var(--acc);border-bottom:0}
+.arr .num{position:relative;z-index:1;margin-top:14px;width:22px;height:22px;border-radius:50%;background:var(--acc);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.ebody{flex:1;min-width:0;padding:10px 0 12px}
+.enz{display:inline-block;max-width:100%;background:color-mix(in srgb,var(--acc) 11%,var(--surface));border-left:3px solid var(--acc);border-radius:6px;padding:5px 10px}
+.enz b{display:block;font-size:14px;font-weight:700}
+.enz small{color:var(--muted);font-size:13px}
+.meta{margin-top:4px}
+.enote{font-size:13px;color:var(--muted);margin-top:2px}
+.cross{font-size:13px;margin-bottom:4px;padding:2px 8px;border:1px dashed var(--line2);border-radius:6px;display:inline-block;background:var(--soft)}
+.loop{margin-top:6px;border:2px dashed var(--acc);border-radius:12px;padding:8px 12px;color:var(--acc);font-weight:500}
+select.q{max-width:100%;font:inherit;font-size:14px;padding:6px 8px;border-radius:8px;border:1.5px solid var(--line2);background:var(--surface);color:var(--ink)}
+select.q.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 10%,var(--surface))}
+select.q.bad{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 8%,var(--surface))}
+.fb{display:block;font-size:13px;font-weight:500;margin-top:3px}.fb.ok{color:var(--ok)}.fb.bad{color:var(--bad)}
+.q-node{padding:8px}
+.br li,.keys li{margin:4px 0}
+.keys ul{background:color-mix(in srgb,var(--acc) 8%,var(--surface));border:1px solid var(--line);border-radius:12px;padding:12px 14px 12px 32px;margin:0}
+.br{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px 12px 32px;margin:0}
+.pn{display:flex;justify-content:space-between;gap:10px;margin-top:30px;padding-top:14px;border-top:1px solid var(--line)}
+.pn a{text-decoration:none;color:var(--acc);font-weight:500}
+/* home */
+.q3{margin:14px 0;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+.q3 ol{margin:4px 0 0;padding-left:22px}
+.maps{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.maps section{min-width:0}
+.hubwrap,.cellmapwrap{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:8px}
+svg.hub,svg.cellmap{display:block;width:100%;max-width:440px;margin:0 auto}
+.hn{font-size:11.5px;font-weight:700;fill:var(--ink)}.hz{font-size:10px;fill:var(--muted)}
+.hl{font-size:10.5px;fill:var(--muted);font-weight:500}
+.go{cursor:pointer}.go:hover rect{stroke-width:2.5}
+text.go:hover{text-decoration:underline}
+.cm{font-size:12.5px;font-weight:500}.cmt{font-size:13.5px;font-weight:700}.cms{font-size:11px;fill:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:10px;font-size:13px;margin-top:8px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.card{display:block;text-decoration:none;background:var(--surface);border:1px solid var(--line);border-top:5px solid var(--acc);border-radius:12px;padding:12px 14px}
+.card b{color:var(--acc);font-size:16px}.card small{color:var(--muted);margin-left:6px}
+.card span{display:block;font-size:13px;color:var(--muted);margin-top:4px}
+.card:hover{box-shadow:0 2px 10px rgba(0,0,0,.07)}
+/* practice */
+.nav-pr{color:var(--carb);margin-top:2px}
+.lbl{font-size:14px;color:var(--muted);align-self:center}
+.btn.big{font-size:16px;padding:10px 18px;margin:4px 10px 4px 0}
+.prog{font-size:14px;color:var(--muted)}
+.plist{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.pitem{position:relative;display:block;text-decoration:none;background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--acc);border-radius:10px;padding:8px 12px}
+.pitem b{display:block;font-size:15px}.pitem small{color:var(--muted);font-size:12px}
+.pitem.done{background:color-mix(in srgb,var(--acc) 7%,var(--surface))}
+.pscore{position:absolute;right:8px;top:8px;font-size:12px;font-weight:700;color:var(--muted)}.pscore.full{color:var(--ok)}
+.qbar2{margin:14px 0 0}.score2{font-weight:700;color:var(--acc)}
+.hintbox{margin-top:22px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+.hintbox summary{cursor:pointer;font-weight:500}
+.learnlink{font-size:14px}.learnlink a{color:var(--acc)}
+.prbanner{display:block;text-decoration:none;margin:22px 0 4px;background:var(--carb);color:#fff;border-radius:14px;padding:14px 18px}
+.prbanner b{display:block;font-size:19px}.prbanner span{font-size:14px;opacity:.92}
+.pn #rnd{color:var(--muted)}
+footer{color:var(--muted);font-size:13px;text-align:center;padding:20px 16px 30px}
+@media (max-width:900px){
+  .maps{grid-template-columns:1fr}
+}
+@media (max-width:860px){
+  #menu{display:inline-block}
+  .app{display:block}
+  #side{display:none;position:fixed;inset:53px 0 0 0;height:auto;background:var(--bg);z-index:15;border:0;padding:14px 16px 60px}
+  body.navopen #side{display:block}
+  main{padding:16px 16px 50px}
+  h1{font-size:23px}
+  .edge{padding-left:6px}
+  .info th{width:96px;padding:8px}
+}
+</style>
+</head>
+<body>
+<header class="top"><button id="menu" aria-label="開啟目錄">☰ 目錄</button><a class="brand" href="#/">代謝路徑圖解<small>保健營養菜單研究室</small></a></header>
+<div class="app">
+  <nav id="side"><input id="q" type="search" placeholder="搜尋路徑（中文或英文）"><div id="navlist"></div></nav>
+  <main id="main"></main>
+</div>
+<footer>整理：蕭靜 · 內容為營養師國考複習用，以課本與現行指引為準</footer>
+<script>
+// ===== 代謝路徑資料 =====
+// node: '英文|中文'   edge: {e:'英文|中文', c:[輔因子/產物], rl:限速, irr:不可逆, n:補充}
+const CATS = {
+  carb:   {zh:'醣類代謝', en:'Carbohydrate Metabolism', color:'var(--carb)',
+           intro:'醣類以產能為主：有氧時 1 分子葡萄糖約得 30–32 ATP，無氧糖解只得 2 ATP。'},
+  lipid:  {zh:'脂質代謝', en:'Lipid Metabolism', color:'var(--lipid)',
+           intro:'脂肪只能在有氧下燃燒；β-氧化每輪切 2 碳，α-氧化只切 1 碳且不產生 ATP，用來處理支鏈脂肪酸。'},
+  protein:{zh:'蛋白質與胺基酸代謝', en:'Protein & Amino Acid Metabolism', color:'var(--protein)',
+           intro:'蛋白質以建造與調節為主，正常只提供約 10–15% 能量；胺基的氮最後在肝臟經尿素循環排除。'},
+  nuc:    {zh:'核苷酸代謝', en:'Nucleotide Metabolism', color:'var(--nuc)',
+           intro:'核苷酸合成大量依賴葉酸與 NADPH；嘌呤分解的終產物是尿酸，與痛風直接相關。'},
+  other:  {zh:'其他重要代謝', en:'Other Key Metabolism', color:'var(--other)',
+           intro:'這些路徑不以產能為目的，而是解毒、防禦與功能活化。'}
+};
+
+const P = [
+/* ================= 醣類 ================= */
+{id:'glycolysis', cat:'carb', zh:'糖解作用', en:'Glycolysis',
+ loc:'細胞質', func:'葡萄糖 → 丙酮酸，淨得 2 ATP、2 NADH', rl:'己糖激酶/葡萄糖激酶、PFK-1（限速）、丙酮酸激酶', cof:'NAD⁺、Mg²⁺', dis:'丙酮酸激酶缺乏 → 溶血性貧血',
+ nodes:['Glucose|葡萄糖','Glucose-6-phosphate (G6P)|葡萄糖-6-磷酸','Fructose-6-phosphate (F6P)|果糖-6-磷酸','Fructose-1,6-bisphosphate|果糖-1,6-雙磷酸','Glyceraldehyde-3-phosphate (G3P) ×2|甘油醛-3-磷酸 ×2','1,3-Bisphosphoglycerate|1,3-雙磷酸甘油酸','3-Phosphoglycerate|3-磷酸甘油酸','2-Phosphoglycerate|2-磷酸甘油酸','Phosphoenolpyruvate (PEP)|磷酸烯醇丙酮酸','Pyruvate|丙酮酸'],
+ edges:[
+  {e:'Hexokinase / Glucokinase|己糖激酶／葡萄糖激酶', c:['−1 ATP','Mg²⁺'], irr:1, n:'肝臟用 Glucokinase（Km 高，飯後才大量作用）'},
+  {e:'Phosphoglucose isomerase|磷酸葡萄糖異構酶', c:[]},
+  {e:'Phosphofructokinase-1 (PFK-1)|磷酸果糖激酶-1', c:['−1 ATP'], rl:1, irr:1, n:'被 ATP、檸檬酸抑制；被 AMP、F-2,6-BP 活化'},
+  {e:'Aldolase|醛縮酶', c:[], n:'切成 DHAP + G3P，DHAP 再經 Triose phosphate isomerase 轉成 G3P'},
+  {e:'Glyceraldehyde-3-phosphate dehydrogenase|甘油醛-3-磷酸去氫酶', c:['NAD⁺→NADH ×2','+Pi']},
+  {e:'Phosphoglycerate kinase|磷酸甘油酸激酶', c:['+2 ATP'], n:'受質層次磷酸化'},
+  {e:'Phosphoglycerate mutase|磷酸甘油酸變位酶', c:[]},
+  {e:'Enolase|烯醇酶', c:['−H₂O'], n:'氟化物（fluoride）抑制'},
+  {e:'Pyruvate kinase|丙酮酸激酶', c:['+2 ATP'], irr:1, n:'缺乏 → 紅血球 ATP 不足 → 溶血性貧血'}
+ ],
+ key:['投入 2 ATP、產出 4 ATP → 淨得 2 ATP + 2 NADH','三個不可逆步驟：Hexokinase、PFK-1、Pyruvate kinase（糖質新生要繞道）','無氧時丙酮酸 → 乳酸（LDH），把 NADH 還原回 NAD⁺ 讓糖解繼續','紅血球沒有粒線體，只能靠糖解產能']},
+
+{id:'pdh', cat:'carb', zh:'丙酮酸氧化', en:'Pyruvate Oxidation (PDH)',
+ loc:'粒線體', func:'丙酮酸 → 乙醯-CoA', rl:'丙酮酸去氫酶複合體（PDH）', cof:'B₁、B₂、B₃、B₅、硫辛酸', dis:'B₁ 缺乏 → 乳酸堆積、腳氣病',
+ nodes:['Pyruvate|丙酮酸（細胞質 → 粒線體）','Acetyl-CoA|乙醯輔酶 A'],
+ edges:[{e:'Pyruvate dehydrogenase complex (PDH)|丙酮酸去氫酶複合體', c:['NAD⁺→NADH','釋出 CO₂','TPP (B₁)','FAD (B₂)','NAD⁺ (B₃)','CoA (B₅)','硫辛酸 Lipoic acid'], irr:1, n:'不可逆 → 乙醯-CoA 無法再變回葡萄糖'}],
+ key:['PDH 五輔因子口訣：B₁、B₂、B₃、B₅、硫辛酸','胰島素活化 PDH；產物乙醯-CoA、NADH 抑制它','酗酒者常缺 B₁ → 丙酮酸無法進 TCA → 乳酸堆積']},
+
+{id:'tca', cat:'carb', zh:'TCA 循環（檸檬酸循環）', en:'TCA Cycle / Krebs Cycle', cycle:1,
+ loc:'粒線體基質', func:'氧化乙醯-CoA，每輪產 3 NADH、1 FADH₂、1 GTP、2 CO₂', rl:'檸檬酸合成酶、異檸檬酸去氫酶（限速）、α-酮戊二酸去氫酶', cof:'NAD⁺、FAD、B₁', dis:'—',
+ nodes:['Acetyl-CoA + Oxaloacetate|乙醯-CoA + 草醯乙酸','Citrate|檸檬酸','Isocitrate|異檸檬酸','α-Ketoglutarate|α-酮戊二酸','Succinyl-CoA|琥珀醯-CoA','Succinate|琥珀酸','Fumarate|延胡索酸','Malate|蘋果酸','Oxaloacetate|草醯乙酸'],
+ edges:[
+  {e:'Citrate synthase|檸檬酸合成酶', c:[], irr:1},
+  {e:'Aconitase|烏頭酸酶', c:[], n:'含鐵硫中心'},
+  {e:'Isocitrate dehydrogenase|異檸檬酸去氫酶', c:['NAD⁺→NADH','釋出 CO₂'], rl:1, irr:1, n:'ADP 活化；ATP、NADH 抑制'},
+  {e:'α-Ketoglutarate dehydrogenase complex|α-酮戊二酸去氫酶複合體', c:['NAD⁺→NADH','釋出 CO₂','TPP (B₁)'], irr:1, n:'輔因子與 PDH 相同'},
+  {e:'Succinyl-CoA synthetase|琥珀醯-CoA 合成酶', c:['+GTP'], n:'受質層次磷酸化'},
+  {e:'Succinate dehydrogenase|琥珀酸去氫酶', c:['FAD→FADH₂'], n:'嵌在粒線體內膜，同時是電子傳遞鏈複合體 II'},
+  {e:'Fumarase|延胡索酸酶', c:['+H₂O']},
+  {e:'Malate dehydrogenase|蘋果酸去氫酶', c:['NAD⁺→NADH']}
+ ],
+ loop:'草醯乙酸再接下一個乙醯-CoA，循環繼續',
+ key:['每輪：3 NADH + 1 FADH₂ + 1 GTP ≈ 10 ATP','TCA 是醣、脂、蛋白質氧化的共同終點','中間產物也被拿去合成：α-KG → 麩胺酸；琥珀醯-CoA → 血基質；草醯乙酸 → 糖質新生']},
+
+{id:'etc', cat:'carb', zh:'電子傳遞鏈與氧化磷酸化', en:'Electron Transport Chain & Oxidative Phosphorylation',
+ loc:'粒線體內膜', func:'NADH、FADH₂ 的電子交給 O₂，產生大量 ATP', rl:'複合體 I–IV、ATP 合成酶', cof:'CoQ10、細胞色素（鐵、銅）', dis:'氰化物、一氧化碳抑制複合體 IV',
+ nodes:['NADH|來自糖解、PDH、TCA、β-氧化','Coenzyme Q (Ubiquinone)|輔酶 Q10','Cytochrome c|細胞色素 c','O₂ → H₂O|氧是最終電子接受者','ATP|約 2.5 ATP/NADH，1.5 ATP/FADH₂'],
+ edges:[
+  {e:'Complex I (NADH dehydrogenase)|複合體 I', c:['NADH→NAD⁺','打出 H⁺','FMN (B₂)','Fe-S'], n:'Rotenone 抑制；FADH₂ 則由 Complex II 交給 CoQ（不打 H⁺）'},
+  {e:'Complex III (Cytochrome bc₁)|複合體 III', c:['打出 H⁺','Fe'], n:'Antimycin A 抑制'},
+  {e:'Complex IV (Cytochrome c oxidase)|複合體 IV', c:['打出 H⁺','Cu','Fe'], n:'氰化物 CN⁻、一氧化碳 CO 抑制'},
+  {e:'ATP synthase (Complex V)|ATP 合成酶', c:['ADP + Pi → ATP'], n:'H⁺ 從膜間隙流回基質推動；Oligomycin 抑制'}
+ ],
+ key:['化學滲透學說：電子傳遞把 H⁺ 打到膜間隙 → 形成質子梯度 → 推動 ATP 合成酶','解偶聯（UCP1，棕色脂肪）：H⁺ 漏回不經 ATP 合成酶 → 產熱','鐵缺乏影響細胞色素 → 易疲勞']},
+
+{id:'gng', cat:'carb', zh:'糖質新生', en:'Gluconeogenesis',
+ loc:'肝、腎（粒線體＋細胞質）', func:'非醣物質（乳酸、甘油、生糖胺基酸）→ 葡萄糖', rl:'丙酮酸羧化酶、PEPCK、果糖-1,6-雙磷酸酶（限速）、葡萄糖-6-磷酸酶', cof:'生物素、ATP、GTP', dis:'偶數碳脂肪酸不能生糖',
+ nodes:['Pyruvate|丙酮酸（來自乳酸、丙胺酸）','Oxaloacetate|草醯乙酸（粒線體）','Phosphoenolpyruvate (PEP)|磷酸烯醇丙酮酸','Fructose-1,6-bisphosphate|果糖-1,6-雙磷酸','Fructose-6-phosphate|果糖-6-磷酸','Glucose-6-phosphate|葡萄糖-6-磷酸','Glucose|葡萄糖（送入血液）'],
+ edges:[
+  {e:'Pyruvate carboxylase|丙酮酸羧化酶', c:['−ATP','+CO₂','生物素 Biotin'], n:'粒線體內；乙醯-CoA 活化它'},
+  {e:'PEP carboxykinase (PEPCK)|磷酸烯醇丙酮酸羧激酶', c:['−GTP','釋出 CO₂'], n:'草醯乙酸先以蘋果酸形式運出粒線體'},
+  {e:'Glycolytic enzymes (reverse)|糖解可逆酵素逆行', c:['−ATP','NADH→NAD⁺'], n:'甘油（→DHAP）從這一段進入'},
+  {e:'Fructose-1,6-bisphosphatase|果糖-1,6-雙磷酸酶', c:['−Pi'], rl:1, n:'繞過 PFK-1；被 F-2,6-BP、AMP 抑制'},
+  {e:'Phosphoglucose isomerase|磷酸葡萄糖異構酶', c:[]},
+  {e:'Glucose-6-phosphatase|葡萄糖-6-磷酸酶', c:['−Pi'], n:'只在肝、腎（內質網）；肌肉沒有，所以肌肝醣不能直接升血糖'}
+ ],
+ key:['合成 1 葡萄糖耗 4 ATP + 2 GTP（共 6 高能鍵）','繞過糖解三個不可逆步驟：丙酮酸羧化酶＋PEPCK、F-1,6-BPase、G-6-Pase','原料：乳酸（Cori）、丙胺酸、甘油、生糖胺基酸、奇數碳脂肪酸（丙醯-CoA）','乙醯-CoA 不能淨生成葡萄糖 → 偶數碳脂肪酸不能生糖']},
+
+{id:'glycogenesis', cat:'carb', zh:'肝醣合成', en:'Glycogenesis',
+ loc:'肝、肌肉（細胞質）', func:'葡萄糖 → 肝醣儲存', rl:'肝醣合成酶（限速）、分支酶', cof:'UTP（UDP-葡萄糖）', dis:'—',
+ nodes:['Glucose|葡萄糖','Glucose-6-phosphate|葡萄糖-6-磷酸','Glucose-1-phosphate|葡萄糖-1-磷酸','UDP-glucose|UDP-葡萄糖（活化型）','Glycogen (α-1,4 chain)|肝醣直鏈','Glycogen (branched)|分支肝醣'],
+ edges:[
+  {e:'Hexokinase / Glucokinase|己糖激酶／葡萄糖激酶', c:['−ATP']},
+  {e:'Phosphoglucomutase|磷酸葡萄糖變位酶', c:[]},
+  {e:'UDP-glucose pyrophosphorylase|UDP-葡萄糖焦磷酸化酶', c:['−UTP','釋出 PPi']},
+  {e:'Glycogen synthase|肝醣合成酶', c:['形成 α-1,4 鍵'], rl:1, n:'需要 Glycogenin 當起始引子；胰島素活化'},
+  {e:'Branching enzyme|分支酶', c:['形成 α-1,6 鍵'], n:'約每 8–10 個葡萄糖一個分支 → 增加溶解度與分解速度'}
+ ],
+ key:['胰島素 → 去磷酸化 → 肝醣合成酶活化','肝肝醣維持血糖；肌肝醣只供肌肉自己用']},
+
+{id:'glycogenolysis', cat:'carb', zh:'肝醣分解', en:'Glycogenolysis',
+ loc:'肝、肌肉（細胞質）', func:'肝醣 → 葡萄糖', rl:'肝醣磷酸化酶（限速）、去分支酶', cof:'B₆（PLP）', dis:'肝醣儲積症（Von Gierke、Pompe、McArdle）',
+ nodes:['Glycogen|肝醣','Glucose-1-phosphate|葡萄糖-1-磷酸','Glucose-6-phosphate|葡萄糖-6-磷酸','Glucose|葡萄糖（肝 → 血液）'],
+ edges:[
+  {e:'Glycogen phosphorylase|肝醣磷酸化酶', c:['+Pi','PLP (B₆)'], rl:1, n:'切 α-1,4 鍵；分支點附近由 Debranching enzyme（去分支酶）處理，釋出少量游離葡萄糖'},
+  {e:'Phosphoglucomutase|磷酸葡萄糖變位酶', c:[], n:'肌肉的 G6P 直接進入糖解'},
+  {e:'Glucose-6-phosphatase|葡萄糖-6-磷酸酶', c:['−Pi'], n:'只在肝、腎 → 只有肝肝醣能升血糖'}
+ ],
+ table:{head:['肝醣儲積症','缺乏酵素','特徵'],rows:[
+  ['Type I Von Gierke','Glucose-6-phosphatase','嚴重空腹低血糖、肝腫大、乳酸與尿酸↑；少量多餐、生玉米澱粉'],
+  ['Type II Pompe','溶酶體 α-1,4-glucosidase（酸性麥芽糖酶）','心肌肥大、肌無力'],
+  ['Type V McArdle','肌肉肝醣磷酸化酶','運動時肌肉痙攣、無力，血乳酸不上升']]},
+ key:['升糖素（肝）、腎上腺素（肝＋肌肉）→ cAMP → 磷酸化 → 磷酸化酶活化','肝醣磷酸化酶需 PLP（B₆）—— 人體 B₆ 大部分存在肌肉的磷酸化酶中']},
+
+{id:'ppp', cat:'carb', zh:'五碳糖磷酸途徑', en:'Pentose Phosphate Pathway (HMP shunt)',
+ loc:'細胞質', func:'產生 NADPH（合成、抗氧化）與核糖-5-磷酸（核苷酸）', rl:'G6PD（限速）、轉酮酶', cof:'NADP⁺、B₁', dis:'G6PD 缺乏症（蠶豆症），台灣常見',
+ nodes:['Glucose-6-phosphate|葡萄糖-6-磷酸','6-Phosphogluconolactone|6-磷酸葡萄糖酸內酯','6-Phosphogluconate|6-磷酸葡萄糖酸','Ribulose-5-phosphate|核酮糖-5-磷酸','Ribose-5-phosphate|核糖-5-磷酸（做核苷酸）','Fructose-6-P + Glyceraldehyde-3-P|回到糖解'],
+ edges:[
+  {e:'Glucose-6-phosphate dehydrogenase (G6PD)|葡萄糖-6-磷酸去氫酶', c:['NADP⁺→NADPH'], rl:1, irr:1, n:'NADP⁺ 活化、NADPH 抑制'},
+  {e:'Lactonase|內酯酶', c:['+H₂O']},
+  {e:'6-Phosphogluconate dehydrogenase|6-磷酸葡萄糖酸去氫酶', c:['NADP⁺→NADPH','釋出 CO₂']},
+  {e:'Ribose-5-phosphate isomerase|核糖-5-磷酸異構酶', c:[], n:'到此為氧化相；以下為非氧化相（可逆）'},
+  {e:'Transketolase / Transaldolase|轉酮酶／轉醛酶', c:['TPP (B₁)'], n:'紅血球轉酮酶活性可用來評估 B₁ 營養狀況'}
+ ],
+ key:['NADPH 用途：脂肪酸與膽固醇合成、還原穀胱甘肽（抗氧化）、P450','G6PD 缺乏 → 紅血球 NADPH 不足 → 穀胱甘肽無法再生 → 吃蠶豆、樟腦丸、某些藥物後溶血','肝、脂肪組織、腎上腺、紅血球此路徑活躍']},
+
+{id:'fructose', cat:'carb', zh:'果糖代謝', en:'Fructose Metabolism',
+ loc:'肝', func:'果糖進入糖解', rl:'果糖激酶、醛縮酶 B', cof:'ATP', dis:'遺傳性果糖不耐症',
+ nodes:['Fructose|果糖','Fructose-1-phosphate|果糖-1-磷酸','DHAP + Glyceraldehyde|磷酸二羥丙酮 + 甘油醛','Glyceraldehyde-3-phosphate|甘油醛-3-磷酸 → 糖解'],
+ edges:[
+  {e:'Fructokinase|果糖激酶', c:['−ATP'], n:'缺乏 → 原發性果糖尿（良性）'},
+  {e:'Aldolase B|醛縮酶 B', c:[], n:'缺乏 → 遺傳性果糖不耐症：F-1-P 堆積、低血糖、肝損傷；需禁果糖、蔗糖、山梨醇'},
+  {e:'Triokinase|三碳糖激酶', c:['−ATP']}
+ ],
+ key:['果糖繞過 PFK-1 限速步驟 → 進入快 → 大量攝取易生成脂肪（脂肪肝）、尿酸↑','肌肉中果糖可由 Hexokinase 變成 F6P']},
+
+{id:'galactose', cat:'carb', zh:'半乳糖代謝', en:'Galactose Metabolism (Leloir pathway)',
+ loc:'肝', func:'半乳糖 → 葡萄糖', rl:'GALT', cof:'UDP', dis:'半乳糖血症（需無乳糖飲食）',
+ nodes:['Galactose|半乳糖（來自乳糖）','Galactose-1-phosphate|半乳糖-1-磷酸','Glucose-1-phosphate|葡萄糖-1-磷酸','Glucose-6-phosphate|葡萄糖-6-磷酸 → 糖解或肝醣'],
+ edges:[
+  {e:'Galactokinase|半乳糖激酶', c:['−ATP'], n:'缺乏 → 白內障（半乳糖醇堆積）'},
+  {e:'Galactose-1-phosphate uridyltransferase (GALT)|半乳糖-1-磷酸尿苷轉移酶', c:['UDP-glucose → UDP-galactose'], rl:1, n:'產生的 UDP-galactose 再經 UDP-galactose 4-epimerase 變回 UDP-glucose'},
+  {e:'Phosphoglucomutase|磷酸葡萄糖變位酶', c:[]}
+ ],
+ key:['典型半乳糖血症 = GALT 缺乏：新生兒嘔吐、黃疸、肝腫大、白內障、智能障礙','飲食：終身限制乳糖與半乳糖，嬰兒改用黃豆配方']},
+
+{id:'uronic', cat:'carb', zh:'糖醛酸途徑', en:'Uronic Acid Pathway',
+ loc:'肝', func:'產生葡萄糖醛酸（解毒、膽紅素結合）', rl:'UDP-葡萄糖去氫酶', cof:'NAD⁺', dis:'—',
+ nodes:['Glucose-6-phosphate|葡萄糖-6-磷酸','Glucose-1-phosphate|葡萄糖-1-磷酸','UDP-glucose|UDP-葡萄糖','UDP-glucuronic acid|UDP-葡萄糖醛酸','Glucuronide conjugates|葡萄糖醛酸結合物（膽紅素、藥物）'],
+ edges:[
+  {e:'Phosphoglucomutase|磷酸葡萄糖變位酶', c:[]},
+  {e:'UDP-glucose pyrophosphorylase|UDP-葡萄糖焦磷酸化酶', c:['−UTP']},
+  {e:'UDP-glucose dehydrogenase|UDP-葡萄糖去氫酶', c:['2 NAD⁺→2 NADH']},
+  {e:'UDP-glucuronosyltransferase (UGT)|UDP-葡萄糖醛酸轉移酶', c:[], n:'第二相結合反應：讓物質變水溶性排出'}
+ ],
+ key:['不產生 ATP','人類缺 L-gulonolactone oxidase → 不能自行合成維生素 C','葡萄糖醛酸也是玻尿酸、硫酸軟骨素等黏多醣的原料']},
+
+{id:'cori', cat:'carb', zh:'Cori 循環（乳酸循環）', en:'Cori Cycle', cycle:1,
+ loc:'肌肉 ↔ 肝', func:'肌肉產生的乳酸送回肝臟再生成葡萄糖', rl:'乳酸去氫酶', cof:'NAD⁺', dis:'—',
+ nodes:['Glucose (muscle)|葡萄糖（肌肉）','Pyruvate (muscle)|丙酮酸（肌肉）','Lactate (muscle → blood)|乳酸（肌肉 → 血液）','Lactate (liver)|乳酸（肝）','Pyruvate (liver)|丙酮酸（肝）','Glucose (liver → blood)|葡萄糖（肝 → 血液）'],
+ edges:[
+  {e:'Glycolysis|糖解作用', c:['+2 ATP','NAD⁺→NADH']},
+  {e:'Lactate dehydrogenase (LDH)|乳酸去氫酶', c:['NADH→NAD⁺'], n:'劇烈運動缺氧時'},
+  {e:'Blood transport|經血液運送', c:[]},
+  {e:'Lactate dehydrogenase (LDH)|乳酸去氫酶', c:['NAD⁺→NADH']},
+  {e:'Gluconeogenesis|糖質新生', c:['−6 ATP（4 ATP + 2 GTP）']}
+ ],
+ loop:'葡萄糖再經血液回到肌肉使用',
+ key:['肌肉賺 2 ATP，肝花 6 ATP → 整體淨耗 4 ATP','把肌肉的代謝負擔轉給肝臟；紅血球的乳酸也走這條']},
+
+{id:'glucose-alanine', cat:'carb', zh:'葡萄糖-丙胺酸循環', en:'Glucose–Alanine Cycle', cycle:1,
+ loc:'肌肉 ↔ 肝', func:'把肌肉的氮與碳骨架運到肝臟', rl:'ALT', cof:'B₆', dis:'—',
+ nodes:['Glucose (muscle)|葡萄糖（肌肉）','Pyruvate (muscle)|丙酮酸（肌肉）','Alanine (muscle → blood)|丙胺酸（肌肉 → 血液）','Alanine (liver)|丙胺酸（肝）','Pyruvate (liver)|丙酮酸（肝）','Glucose (liver → blood)|葡萄糖（肝 → 血液）'],
+ edges:[
+  {e:'Glycolysis|糖解作用', c:['+2 ATP']},
+  {e:'Alanine aminotransferase (ALT)|丙胺酸轉胺酶', c:['PLP (B₆)','Glutamate → α-KG'], n:'胺基主要來自分解的支鏈胺基酸'},
+  {e:'Blood transport|經血液運送', c:[]},
+  {e:'Alanine aminotransferase (ALT)|丙胺酸轉胺酶', c:['PLP (B₆)','α-KG → Glutamate'], n:'麩胺酸的氮 → 尿素循環'},
+  {e:'Gluconeogenesis|糖質新生', c:['−ATP','−GTP']}
+ ],
+ loop:'葡萄糖回到肌肉；氮變成尿素排出',
+ key:['與 Cori 循環差別：除了碳，還把「氮」安全運到肝（氨有毒）','飢餓、長時間運動時重要']},
+
+/* ================= 脂質 ================= */
+{id:'lipolysis', cat:'lipid', zh:'脂肪分解', en:'Lipolysis',
+ loc:'脂肪組織', func:'三酸甘油酯 → 3 脂肪酸＋甘油', rl:'ATGL、荷爾蒙敏感性脂解酶（HSL）', cof:'—', dis:'升糖素、腎上腺素促進；胰島素抑制',
+ nodes:['Triacylglycerol (TAG)|三酸甘油酯','Diacylglycerol (DAG) + FA|雙酸甘油酯 + 脂肪酸','Monoacylglycerol (MAG) + FA|單酸甘油酯 + 脂肪酸','Glycerol + FA|甘油 + 脂肪酸'],
+ edges:[
+  {e:'Adipose triglyceride lipase (ATGL)|脂肪三酸甘油酯脂解酶', c:['+H₂O']},
+  {e:'Hormone-sensitive lipase (HSL)|荷爾蒙敏感性脂解酶', c:['+H₂O'], rl:1, n:'cAMP → PKA 磷酸化活化；胰島素抑制'},
+  {e:'Monoacylglycerol lipase (MGL)|單酸甘油酯脂解酶', c:['+H₂O']}
+ ],
+ key:['脂肪酸與白蛋白結合，經血液送到肌肉、肝利用','甘油到肝 → Glycerol kinase → 糖質新生（脂肪組織沒有 glycerol kinase）']},
+
+{id:'carnitine', cat:'lipid', zh:'肉鹼穿梭', en:'Carnitine Shuttle',
+ loc:'粒線體膜', func:'長鏈脂肪酸進入粒線體', rl:'CPT-I（β-氧化的限速）', cof:'肉鹼', dis:'被丙二醯-CoA 抑制',
+ nodes:['Fatty acid|脂肪酸（細胞質）','Fatty acyl-CoA|脂醯-CoA（活化）','Acylcarnitine|脂醯肉鹼（外膜）','Acylcarnitine (matrix)|脂醯肉鹼（進入基質）','Fatty acyl-CoA (matrix)|脂醯-CoA → β-氧化'],
+ edges:[
+  {e:'Acyl-CoA synthetase|脂醯-CoA 合成酶', c:['ATP → AMP（耗 2 高能鍵）','CoA (B₅)']},
+  {e:'Carnitine palmitoyltransferase I (CPT-I)|肉鹼棕櫚醯轉移酶 I', c:['肉鹼 Carnitine'], rl:1, n:'丙二醯-CoA（脂肪酸合成中間物）抑制 → 合成與分解不同時進行'},
+  {e:'Carnitine-acylcarnitine translocase|肉鹼-脂醯肉鹼轉位酶', c:[]},
+  {e:'Carnitine palmitoyltransferase II (CPT-II)|肉鹼棕櫚醯轉移酶 II', c:['+CoA']}
+ ],
+ key:['中、短鏈脂肪酸（MCT）不需肉鹼可直接進入 → 臨床營養用 MCT 油','肉鹼由離胺酸＋甲硫胺酸合成，需維生素 C、鐵']},
+
+{id:'beta-ox', cat:'lipid', zh:'β-氧化', en:'β-Oxidation', cycle:1,
+ loc:'粒線體', func:'脂肪酸每輪切下 2 碳 → 乙醯-CoA', rl:'（入口 CPT-I 限速）醯基-CoA 去氫酶等 4 步', cof:'FAD、NAD⁺、CoA', dis:'MCAD 缺乏症；棕櫚酸約得 106 ATP',
+ nodes:['Fatty acyl-CoA (Cₙ)|脂醯-CoA（n 碳）','trans-Δ²-Enoyl-CoA|反式烯醯-CoA','L-3-Hydroxyacyl-CoA|3-羥脂醯-CoA','3-Ketoacyl-CoA|3-酮脂醯-CoA','Acyl-CoA (Cₙ₋₂) + Acetyl-CoA|少 2 碳的脂醯-CoA + 乙醯-CoA'],
+ edges:[
+  {e:'Acyl-CoA dehydrogenase|醯基-CoA 去氫酶', c:['FAD→FADH₂'], n:'依鏈長分 VLCAD、LCAD、MCAD、SCAD；MCAD 缺乏 → 空腹低血糖、低酮'},
+  {e:'Enoyl-CoA hydratase|烯醯-CoA 水合酶', c:['+H₂O']},
+  {e:'3-Hydroxyacyl-CoA dehydrogenase|3-羥脂醯-CoA 去氫酶', c:['NAD⁺→NADH']},
+  {e:'β-Ketothiolase (Thiolase)|β-酮硫解酶', c:['+CoA']}
+ ],
+ loop:'碳鏈少 2 碳後再進入下一輪（口訣：氧化 → 水合 → 氧化 → 硫解）',
+ key:['棕櫚酸 C16：7 輪 → 8 乙醯-CoA + 7 FADH₂ + 7 NADH','= 80 + 10.5 + 17.5 = 108 ATP，扣活化 2 → 淨 106 ATP','不飽和脂肪酸需額外異構酶，產能略少']},
+
+{id:'odd-chain', cat:'lipid', zh:'奇數碳脂肪酸氧化', en:'Odd-chain Fatty Acid Oxidation',
+ loc:'粒線體', func:'最後剩下的丙醯-CoA → 琥珀醯-CoA', rl:'丙醯-CoA 羧化酶、甲基丙二醯-CoA 變位酶', cof:'生物素、B₁₂', dis:'唯一可生糖的脂肪酸部分',
+ nodes:['Propionyl-CoA (C3)|丙醯-CoA','D-Methylmalonyl-CoA|D-甲基丙二醯-CoA','L-Methylmalonyl-CoA|L-甲基丙二醯-CoA','Succinyl-CoA|琥珀醯-CoA → TCA → 可糖質新生'],
+ edges:[
+  {e:'Propionyl-CoA carboxylase|丙醯-CoA 羧化酶', c:['−ATP','+CO₂','生物素 Biotin']},
+  {e:'Methylmalonyl-CoA epimerase|甲基丙二醯-CoA 差向異構酶', c:[]},
+  {e:'Methylmalonyl-CoA mutase|甲基丙二醯-CoA 變位酶', c:['B₁₂ (Adenosylcobalamin)'], n:'B₁₂ 缺乏 → 甲基丙二酸（MMA）堆積，可用來與葉酸缺乏區分'}
+ ],
+ key:['異白胺酸、纈胺酸、甲硫胺酸、蘇胺酸分解也會產生丙醯-CoA']},
+
+{id:'alpha-ox', cat:'lipid', zh:'α-氧化', en:'α-Oxidation',
+ loc:'過氧化體', func:'處理支鏈脂肪酸（植烷酸 → 降植烷酸），切 1 碳', rl:'植烷醯-CoA 羥化酶、2-羥基醯基-CoA 裂解酶', cof:'Fe²⁺、維生素 C、B₁（TPP）', dis:'雷夫叟姆病：限制反芻動物肉脂與乳脂',
+ nodes:['Phytanic acid|植烷酸（β 碳有甲基，β-氧化卡住）','Phytanoyl-CoA|植烷醯-CoA','2-Hydroxyphytanoyl-CoA|2-羥植烷醯-CoA','Pristanal + Formyl-CoA|降植烷醛 + 甲醯-CoA（少 1 碳）','Pristanic acid|降植烷酸 → 可進行 β-氧化'],
+ edges:[
+  {e:'Acyl-CoA synthetase|脂醯-CoA 合成酶', c:['−ATP','CoA']},
+  {e:'Phytanoyl-CoA hydroxylase (PHYH)|植烷醯-CoA 羥化酶', c:['Fe²⁺','O₂','維生素 C','α-KG'], rl:1, n:'缺乏 → Refsum disease（雷夫叟姆病）'},
+  {e:'2-Hydroxyacyl-CoA lyase (HACL1)|2-羥基醯基-CoA 裂解酶', c:['TPP (B₁)']},
+  {e:'Aldehyde dehydrogenase|醛去氫酶', c:['NAD⁺→NADH']}
+ ],
+ key:['口訣：α 切一碳、植烷酸、過氧化體、不產能、缺了得 Refsum','植烷酸來源：反芻動物（牛、羊）肉脂、乳脂、部分魚類','Refsum 症狀：視網膜色素變性、周邊神經病變、魚鱗癬']},
+
+{id:'omega-ox', cat:'lipid', zh:'ω-氧化', en:'ω-Oxidation',
+ loc:'內質網', func:'β-氧化受阻時的備援，產生二羧酸', rl:'細胞色素 P450', cof:'NADPH、O₂', dis:'—',
+ nodes:['Fatty acid|脂肪酸','ω-Hydroxy fatty acid|ω-羥脂肪酸','ω-Oxo fatty acid|ω-醛脂肪酸','Dicarboxylic acid|二羧酸 → 兩端進行 β-氧化'],
+ edges:[
+  {e:'Cytochrome P450 ω-hydroxylase (CYP4A)|細胞色素 P450 ω-羥化酶', c:['NADPH','O₂']},
+  {e:'Alcohol dehydrogenase|醇去氫酶', c:['NAD⁺→NADH']},
+  {e:'Aldehyde dehydrogenase|醛去氫酶', c:['NAD⁺→NADH']}
+ ],
+ key:['從離羧基最遠的 ω 碳（甲基端）開始氧化','MCAD 缺乏等 β-氧化障礙時尿中二羧酸增加']},
+
+{id:'perox-beta', cat:'lipid', zh:'過氧化體 β-氧化', en:'Peroxisomal β-Oxidation',
+ loc:'過氧化體', func:'把極長鏈脂肪酸（VLCFA，>C22）縮短', rl:'醯基-CoA 氧化酶', cof:'FAD', dis:'Zellweger 症候群、腎上腺腦白質失養症',
+ nodes:['Very-long-chain fatty acid (VLCFA)|極長鏈脂肪酸','VLCFA-CoA|極長鏈脂醯-CoA（細胞質）','VLCFA-CoA (peroxisome)|極長鏈脂醯-CoA（過氧化體內）','trans-Δ²-Enoyl-CoA|反式烯醯-CoA','Octanoyl-CoA|中鏈脂醯-CoA（約 C8）','Mitochondria|送到粒線體完成 β-氧化'],
+ edges:[
+  {e:'Very-long-chain acyl-CoA synthetase|極長鏈脂醯-CoA 合成酶', c:['−ATP']},
+  {e:'ABCD1 transporter|ABCD1 運送蛋白', c:[], n:'缺陷 → X 性聯腎上腺腦白質失養症（X-ALD）'},
+  {e:'Acyl-CoA oxidase|醯基-CoA 氧化酶', c:['FAD','O₂ → H₂O₂'], rl:1, n:'電子直接給 O₂ 產生 H₂O₂（再由過氧化氫酶分解），不經電子傳遞鏈 → 產能較少'},
+  {e:'Bifunctional enzyme + Thiolase|雙功能酶＋硫解酶', c:['NAD⁺→NADH'], n:'重複數輪'},
+  {e:'Carnitine octanoyltransferase|肉鹼辛醯轉移酶', c:['肉鹼']}
+ ],
+ key:['Zellweger 症候群：過氧化體無法形成 → VLCFA、植烷酸都堆積','過氧化體也參與膽酸、縮醛磷脂（plasmalogen）合成']},
+
+{id:'ketogenesis', cat:'lipid', zh:'酮體生成', en:'Ketogenesis',
+ loc:'肝粒線體', func:'過多乙醯-CoA → 酮體', rl:'HMG-CoA 合成酶（粒線體型，限速）', cof:'—', dis:'糖尿病酮酸中毒；肝臟不能利用酮體',
+ nodes:['2 Acetyl-CoA|2 乙醯-CoA','Acetoacetyl-CoA|乙醯乙醯-CoA','HMG-CoA|羥甲基戊二醯-CoA','Acetoacetate|乙醯乙酸','β-Hydroxybutyrate|β-羥丁酸'],
+ edges:[
+  {e:'Thiolase|硫解酶', c:['釋出 CoA']},
+  {e:'HMG-CoA synthase (mitochondrial)|HMG-CoA 合成酶（粒線體）', c:['+Acetyl-CoA'], rl:1},
+  {e:'HMG-CoA lyase|HMG-CoA 裂解酶', c:['釋出 Acetyl-CoA']},
+  {e:'β-Hydroxybutyrate dehydrogenase|β-羥丁酸去氫酶', c:['NADH→NAD⁺'], n:'乙醯乙酸也可自發脫羧 → 丙酮（Acetone，由呼吸排出，水果味）'}
+ ],
+ key:['飢餓、低醣飲食、第 1 型糖尿病（胰島素不足）時，草醯乙酸被拿去糖質新生 → 乙醯-CoA 無法進 TCA → 轉成酮體','三種酮體：乙醯乙酸、β-羥丁酸、丙酮','膽固醇合成用的是「細胞質」HMG-CoA 合成酶，注意區分']},
+
+{id:'ketolysis', cat:'lipid', zh:'酮體利用', en:'Ketolysis (Ketone Body Utilization)',
+ loc:'腦、心、肌肉（肝外組織粒線體）', func:'酮體 → 乙醯-CoA → TCA 產能', rl:'琥珀醯-CoA 轉移酶（SCOT）', cof:'—', dis:'飢餓時腦部能量來源',
+ nodes:['β-Hydroxybutyrate|β-羥丁酸','Acetoacetate|乙醯乙酸','Acetoacetyl-CoA|乙醯乙醯-CoA','2 Acetyl-CoA|2 乙醯-CoA → TCA'],
+ edges:[
+  {e:'β-Hydroxybutyrate dehydrogenase|β-羥丁酸去氫酶', c:['NAD⁺→NADH']},
+  {e:'Succinyl-CoA:acetoacetate CoA transferase (SCOT)|琥珀醯-CoA 轉移酶', c:['Succinyl-CoA → Succinate'], rl:1, n:'肝臟沒有此酶 → 肝只製造、不利用酮體'},
+  {e:'Thiolase|硫解酶', c:['+CoA']}
+ ],
+ key:['長期飢餓數天後，腦約 2/3 能量來自酮體 → 減少肌肉蛋白分解','紅血球沒有粒線體，不能用酮體']},
+
+{id:'fa-synthesis', cat:'lipid', zh:'脂肪酸合成', en:'Fatty Acid Synthesis (De novo lipogenesis)',
+ loc:'細胞質（肝、脂肪組織、乳腺）', func:'乙醯-CoA → 棕櫚酸（16C）', rl:'乙醯-CoA 羧化酶（限速）、脂肪酸合成酶', cof:'生物素、NADPH、ATP', dis:'需檸檬酸穿梭送出乙醯-CoA',
+ nodes:['Acetyl-CoA (mitochondria)|乙醯-CoA（粒線體）','Citrate|檸檬酸（運到細胞質）','Acetyl-CoA (cytosol)|乙醯-CoA（細胞質）','Malonyl-CoA|丙二醯-CoA','Palmitate (C16:0)|棕櫚酸'],
+ edges:[
+  {e:'Citrate synthase|檸檬酸合成酶', c:['+Oxaloacetate'], n:'乙醯-CoA 本身不能穿過粒線體內膜'},
+  {e:'ATP-citrate lyase|ATP-檸檬酸裂解酶', c:['−ATP'], n:'草醯乙酸 → 蘋果酸 → Malic enzyme 產 NADPH'},
+  {e:'Acetyl-CoA carboxylase (ACC)|乙醯-CoA 羧化酶', c:['−ATP','+CO₂','生物素 Biotin'], rl:1, n:'胰島素、檸檬酸活化；升糖素、棕櫚醯-CoA 抑制'},
+  {e:'Fatty acid synthase (FAS)|脂肪酸合成酶', c:['7 輪','14 NADPH'], n:'每輪：縮合 → 還原 → 脫水 → 還原，加 2 碳'}
+ ],
+ key:['合成 1 棕櫚酸：8 乙醯-CoA + 7 ATP + 14 NADPH','NADPH 來源：五碳糖磷酸途徑（主要）、Malic enzyme','丙二醯-CoA 抑制 CPT-I → 合成時不會同時燃燒']},
+
+{id:'elongation', cat:'lipid', zh:'脂肪酸延長與去飽和', en:'Fatty Acid Elongation & Desaturation',
+ loc:'內質網', func:'加長碳鏈、形成雙鍵', rl:'延長酶、去飽和酶（Δ9、Δ6、Δ5）', cof:'NADPH、O₂', dis:'缺 Δ12、Δ15 → 亞麻油酸、次亞麻油酸為必需脂肪酸',
+ nodes:['Palmitate 16:0|棕櫚酸','Stearate 18:0|硬脂酸','Oleate 18:1 n-9|油酸','Linoleic acid (LA) 18:2 n-6|亞麻油酸（必需，需由食物攝取）','γ-Linolenic acid (GLA) 18:3 n-6|γ-次亞麻油酸','Dihomo-γ-linolenic acid (DGLA) 20:3 n-6|雙同-γ-次亞麻油酸','Arachidonic acid (AA) 20:4 n-6|花生四烯酸'],
+ edges:[
+  {e:'Elongase|延長酶', c:['Malonyl-CoA','NADPH']},
+  {e:'Δ9 Desaturase (SCD1)|Δ9 去飽和酶', c:['O₂','NADH']},
+  {e:'Δ12 Desaturase (absent in humans)|Δ12 去飽和酶（人體沒有）', c:['✗ 人體缺乏'], n:'只有植物有 → LA 必須由飲食攝取'},
+  {e:'Δ6 Desaturase|Δ6 去飽和酶', c:['O₂','NADPH'], rl:1, n:'n-3 與 n-6 競爭同一酵素'},
+  {e:'Elongase|延長酶', c:['Malonyl-CoA','NADPH']},
+  {e:'Δ5 Desaturase|Δ5 去飽和酶', c:['O₂']}
+ ],
+ key:['n-3 系列用同一組酵素：α-次亞麻油酸 ALA 18:3 → EPA 20:5 → DHA 22:6','人體缺 Δ12、Δ15 → LA（n-6）與 ALA（n-3）為必需脂肪酸','人體去飽和酶只能在 Δ9 以內（靠羧基端）加雙鍵']},
+
+{id:'tag-synthesis', cat:'lipid', zh:'三酸甘油酯合成', en:'Triacylglycerol Synthesis',
+ loc:'肝、脂肪組織、小腸', func:'甘油骨架＋3 脂肪酸 → TAG', rl:'醯基轉移酶', cof:'ATP', dis:'脂肪肝',
+ nodes:['Glycerol-3-phosphate|甘油-3-磷酸','Lysophosphatidic acid|溶血磷脂酸','Phosphatidic acid|磷脂酸','Diacylglycerol (DAG)|雙酸甘油酯','Triacylglycerol (TAG)|三酸甘油酯'],
+ edges:[
+  {e:'Glycerol-3-phosphate acyltransferase (GPAT)|甘油-3-磷酸醯基轉移酶', c:['+Acyl-CoA']},
+  {e:'Acylglycerol-3-phosphate acyltransferase (AGPAT)|醯基甘油磷酸醯基轉移酶', c:['+Acyl-CoA']},
+  {e:'Phosphatidic acid phosphatase (Lipin)|磷脂酸磷酸酶', c:['−Pi'], n:'磷脂酸也是磷脂質合成的分叉點'},
+  {e:'Diacylglycerol acyltransferase (DGAT)|雙酸甘油酯醯基轉移酶', c:['+Acyl-CoA']}
+ ],
+ key:['甘油-3-磷酸來源：脂肪組織由 DHAP 還原（需葡萄糖）；肝可用 Glycerol kinase','小腸走單酸甘油酯途徑重新合成 TAG → 包成乳糜微粒','肝合成 TAG 太多、VLDL 送不出去 → 脂肪肝']},
+
+{id:'phospholipid', cat:'lipid', zh:'磷脂質合成', en:'Phospholipid Synthesis',
+ loc:'內質網', func:'合成細胞膜磷脂（卵磷脂 PC 等）', rl:'CDP-膽鹼途徑、PE 甲基化', cof:'CTP、SAM、膽鹼', dis:'膽鹼不足 → 脂肪肝',
+ nodes:['Choline|膽鹼','Phosphocholine|磷酸膽鹼','CDP-choline|CDP-膽鹼','Phosphatidylcholine (PC)|磷脂醯膽鹼（卵磷脂）'],
+ edges:[
+  {e:'Choline kinase|膽鹼激酶', c:['−ATP']},
+  {e:'CTP:phosphocholine cytidylyltransferase (CCT)|磷酸膽鹼胞苷醯轉移酶', c:['−CTP'], rl:1},
+  {e:'Cholinephosphotransferase|膽鹼磷酸轉移酶', c:['+DAG']}
+ ],
+ key:['另一路徑（肝）：PE + 3 SAM → PC（PEMT 甲基化）','PC 是組裝 VLDL 必需 → 膽鹼不足時 TAG 送不出肝 → 脂肪肝','PC 也是肺表面張力素（DPPC）的主成分']},
+
+{id:'cholesterol', cat:'lipid', zh:'膽固醇合成', en:'Cholesterol Synthesis',
+ loc:'細胞質／內質網（肝為主）', func:'乙醯-CoA → 膽固醇（27C）', rl:'HMG-CoA 還原酶（限速）', cof:'NADPH、ATP', dis:'Statin 類降血脂藥作用點',
+ nodes:['Acetyl-CoA ×2|乙醯-CoA','Acetoacetyl-CoA|乙醯乙醯-CoA','HMG-CoA|羥甲基戊二醯-CoA','Mevalonate|甲羥戊酸','Isopentenyl pyrophosphate (IPP, 5C)|異戊烯焦磷酸','Farnesyl pyrophosphate (15C)|法尼基焦磷酸','Squalene (30C)|鯊烯','Lanosterol|羊毛固醇','Cholesterol (27C)|膽固醇'],
+ edges:[
+  {e:'Thiolase|硫解酶', c:[]},
+  {e:'HMG-CoA synthase (cytosolic)|HMG-CoA 合成酶（細胞質）', c:['+Acetyl-CoA']},
+  {e:'HMG-CoA reductase|HMG-CoA 還原酶', c:['2 NADPH'], rl:1, irr:1, n:'Statin 抑制；胰島素活化；膽固醇、升糖素抑制'},
+  {e:'Mevalonate kinase etc. (decarboxylation)|甲羥戊酸激酶等（脫羧）', c:['−3 ATP','釋出 CO₂']},
+  {e:'Prenyltransferase|異戊烯基轉移酶', c:['5C → 10C → 15C']},
+  {e:'Squalene synthase|鯊烯合成酶', c:['NADPH'], n:'2 個 15C 頭對頭接合'},
+  {e:'Squalene epoxidase / Lanosterol cyclase|鯊烯環氧酶／羊毛固醇環化酶', c:['O₂','NADPH']},
+  {e:'Multiple steps (demethylation)|多步去甲基反應', c:['NADPH','O₂'], n:'約 19 步，去掉 3 個甲基'}
+ ],
+ key:['膽固醇用途：細胞膜、膽酸、類固醇激素、維生素 D','人體每天自行合成約 1 g，多於飲食攝取','合成時中間產物也做 CoQ10 → Statin 可能降低 CoQ10']},
+
+{id:'bile-acid', cat:'lipid', zh:'膽酸合成', en:'Bile Acid Synthesis',
+ loc:'肝', func:'膽固醇 → 膽酸（膽固醇主要排除途徑）', rl:'7α-羥化酶（CYP7A1，限速）', cof:'NADPH、O₂、維生素 C', dis:'膽固醇主要排除途徑',
+ nodes:['Cholesterol|膽固醇','7α-Hydroxycholesterol|7α-羥膽固醇','Primary bile acids|初級膽酸（膽酸 Cholic acid、鵝去氧膽酸 CDCA）','Conjugated bile salts|結合型膽鹽（甘胺膽酸、牛磺膽酸）','Secondary bile acids|次級膽酸（去氧膽酸、石膽酸）'],
+ edges:[
+  {e:'Cholesterol 7α-hydroxylase (CYP7A1)|膽固醇 7α-羥化酶', c:['NADPH','O₂','維生素 C'], rl:1, n:'膽酸回饋抑制'},
+  {e:'Ring modification & side-chain cleavage|環修飾與側鏈切除', c:['NADPH']},
+  {e:'Conjugation with glycine / taurine|與甘胺酸或牛磺酸結合', c:['CoA'], n:'結合後更易解離、乳化力更好'},
+  {e:'Intestinal bacteria (7α-dehydroxylation)|腸道細菌去羥化', c:[], n:'在腸道發生'}
+ ],
+ key:['腸肝循環：約 95% 膽酸在迴腸末端被再吸收','水溶性膳食纖維、膽酸結合樹脂結合膽酸 → 肝要用更多膽固醇補做 → 血膽固醇下降','迴腸切除 → 膽酸流失 → 脂肪痢、脂溶性維生素缺乏']},
+
+{id:'steroid', cat:'lipid', zh:'類固醇激素合成', en:'Steroid Hormone Synthesis',
+ loc:'腎上腺皮質、性腺', func:'膽固醇 → 皮質醇、醛固酮、性激素', rl:'側鏈裂解酶（P450scc，限速）', cof:'NADPH、O₂', dis:'先天性腎上腺增生（CAH）',
+ nodes:['Cholesterol|膽固醇','Pregnenolone|孕烯醇酮','Progesterone|黃體素','17α-Hydroxyprogesterone|17α-羥黃體素','11-Deoxycortisol|11-去氧皮質醇','Cortisol|皮質醇（糖皮質素）'],
+ edges:[
+  {e:'Cholesterol side-chain cleavage enzyme (P450scc, CYP11A1)|側鏈裂解酶', c:['NADPH','O₂'], rl:1, n:'粒線體內；StAR 蛋白把膽固醇送進粒線體；ACTH 促進'},
+  {e:'3β-Hydroxysteroid dehydrogenase (3β-HSD)|3β-羥類固醇去氫酶', c:['NAD⁺']},
+  {e:'17α-Hydroxylase (CYP17)|17α-羥化酶', c:['NADPH','O₂']},
+  {e:'21-Hydroxylase (CYP21)|21-羥化酶', c:['NADPH','O₂'], n:'缺乏 → 最常見的 CAH：皮質醇、醛固酮不足，雄性素過多'},
+  {e:'11β-Hydroxylase (CYP11B1)|11β-羥化酶', c:['NADPH','O₂']}
+ ],
+ branches:['礦物皮質素：黃體素 → 21-羥化酶 → 11-去氧皮質酮 → 11β-羥化酶 → 皮質酮 → 醛固酮合成酶 → 醛固酮（球狀帶）','性激素：17α-羥孕烯醇酮 → 17,20-裂解酶 → DHEA → 雄烯二酮 → 睪固酮 → 芳香環酶（Aromatase）→ 雌二醇'],
+ key:['腎上腺皮質三層口訣「鹽、糖、性」：球狀帶醛固酮、束狀帶皮質醇、網狀帶雄性素']},
+
+{id:'vitd', cat:'lipid', zh:'維生素 D 合成與活化', en:'Vitamin D Synthesis & Activation',
+ loc:'皮膚 → 肝 → 腎', func:'7-去氫膽固醇 → 活性維生素 D（鈣三醇）', rl:'25-羥化酶（肝）、1α-羥化酶（腎）', cof:'紫外線、O₂', dis:'腎病患者活化障礙',
+ nodes:['7-Dehydrocholesterol|7-去氫膽固醇（皮膚）','Previtamin D₃|前維生素 D₃','Cholecalciferol (Vitamin D₃)|膽鈣化醇','25-Hydroxyvitamin D [25(OH)D]|骨化二醇（肝，血中儲存型）','1,25-Dihydroxyvitamin D [1,25(OH)₂D]|骨化三醇（腎，活性型）'],
+ edges:[
+  {e:'UVB photolysis|紫外線 B 光解', c:['UVB 290–315 nm']},
+  {e:'Thermal isomerization|體溫異構化', c:[]},
+  {e:'25-Hydroxylase (CYP2R1)|25-羥化酶（肝）', c:['NADPH','O₂']},
+  {e:'1α-Hydroxylase (CYP27B1)|1α-羥化酶（腎）', c:['NADPH','O₂'], rl:1, n:'PTH、低磷促進；FGF23、高鈣抑制'}
+ ],
+ key:['評估維生素 D 營養狀況看血清 25(OH)D','慢性腎病 → 1α-羥化不足 → 需補活性維生素 D（Calcitriol）','活性 D 作用：促進腸道鈣、磷吸收，維持骨骼']},
+
+{id:'eicosanoid', cat:'lipid', zh:'類二十碳酸合成', en:'Eicosanoid Synthesis',
+ loc:'各組織', func:'花生四烯酸、EPA → 前列腺素、血栓素、白三烯', rl:'磷脂酶 A₂、環氧化酶（COX）、脂氧合酶', cof:'O₂', dis:'阿斯匹靈抑制 COX；ω-3/ω-6 比例與發炎',
+ nodes:['Membrane phospholipid|細胞膜磷脂','Arachidonic acid (AA, 20:4 n-6)|花生四烯酸','PGH₂|前列腺素 H₂（共同前驅物）','Prostanoids: PGE₂ / TXA₂ / PGI₂|前列腺素／血栓素／前列環素'],
+ edges:[
+  {e:'Phospholipase A₂ (PLA₂)|磷脂酶 A₂', c:[], rl:1, n:'類固醇（皮質醇）抑制 → 抗發炎'},
+  {e:'Cyclooxygenase (COX-1 / COX-2)|環氧化酶', c:['2 O₂'], n:'阿斯匹靈（不可逆）、NSAIDs 抑制'},
+  {e:'Specific synthases|各專一合成酶', c:[], n:'血小板產 TXA₂（凝集、收縮血管）；血管內皮產 PGI₂（抗凝集、擴張血管）'}
+ ],
+ branches:['脂氧合酶途徑：AA → 5-Lipoxygenase（5-LOX）→ 白三烯 LTB₄、LTC₄（發炎、氣喘、支氣管收縮）','n-3 EPA → 3 系列前列腺素、5 系列白三烯：發炎與凝血作用較弱 → 魚油抗發炎原理'],
+ key:['n-6（AA）衍生物偏促發炎；n-3（EPA）衍生物偏抗發炎','低劑量阿斯匹靈：抑制血小板 TXA₂ → 預防心血管栓塞']},
+
+{id:'lipoprotein', cat:'lipid', zh:'脂蛋白代謝', en:'Lipoprotein Metabolism',
+ loc:'血液、肝', func:'在血液中運送脂質', rl:'脂蛋白脂解酶（LPL）、LCAT、LDL 受體', cof:'apoC-II、apoB-100', dis:'家族性高膽固醇血症',
+ nodes:['VLDL (apoB-100)|極低密度脂蛋白（肝分泌，運 TAG）','IDL|中密度脂蛋白','LDL|低密度脂蛋白（運膽固醇到周邊）','Cell uptake|進入細胞（肝與周邊組織）'],
+ edges:[
+  {e:'Lipoprotein lipase (LPL)|脂蛋白脂解酶', c:['apoC-II 活化'], n:'位於脂肪、肌肉微血管內皮；胰島素增加 LPL'},
+  {e:'Hepatic lipase|肝脂解酶', c:[]},
+  {e:'LDL receptor (recognizes apoB-100)|LDL 受體', c:[], rl:1, n:'受體缺陷 → 家族性高膽固醇血症（FH）'}
+ ],
+ branches:['外源性：小腸 → 乳糜微粒（apoB-48）→ LPL 分解 TAG → 乳糜殘粒（apoE）→ 肝回收','逆向膽固醇運輸：HDL（apoA-I）收集周邊膽固醇 → LCAT（apoA-I 活化）酯化 → 送回肝 → 「好膽固醇」'],
+ table:{head:['脂蛋白','主要成分','主要 apo','功能'],rows:[
+  ['乳糜微粒','外源 TAG','B-48、C-II、E','把食物脂肪送到組織'],
+  ['VLDL','內源 TAG','B-100、C-II、E','肝合成的 TAG 送到組織'],
+  ['LDL','膽固醇','B-100','膽固醇送到周邊'],
+  ['HDL','蛋白質、磷脂','A-I','周邊膽固醇送回肝']]},
+ key:['密度：乳糜微粒 < VLDL < IDL < LDL < HDL（蛋白質越多越重）']},
+
+/* ================= 蛋白質 ================= */
+{id:'transamination', cat:'protein', zh:'轉胺作用', en:'Transamination',
+ loc:'肝、肌肉', func:'胺基在胺基酸與 α-酮酸之間轉移', rl:'ALT（GPT）、AST（GOT）', cof:'B₆（PLP）', dis:'肝功能指標',
+ nodes:['Alanine + α-Ketoglutarate|丙胺酸 + α-酮戊二酸','Pyruvate + Glutamate|丙酮酸 + 麩胺酸','Glutamate + Oxaloacetate|麩胺酸 + 草醯乙酸','α-Ketoglutarate + Aspartate|α-酮戊二酸 + 天門冬胺酸（→ 尿素循環）'],
+ edges:[
+  {e:'Alanine aminotransferase (ALT / GPT)|丙胺酸轉胺酶', c:['PLP (B₆)'], n:'主要在肝 → 肝炎時特異性上升'},
+  {e:'Rearrange|同一個麩胺酸往下傳', c:[]},
+  {e:'Aspartate aminotransferase (AST / GOT)|天門冬胺酸轉胺酶', c:['PLP (B₆)'], n:'肝、心肌、骨骼肌都有'}
+ ],
+ key:['α-酮戊二酸是胺基的主要接受者 → 匯集成麩胺酸','轉胺作用可逆，也是合成非必需胺基酸的方法','離胺酸、蘇胺酸不進行轉胺']},
+
+{id:'deamination', cat:'protein', zh:'氧化脫胺', en:'Oxidative Deamination',
+ loc:'肝粒線體', func:'麩胺酸 → 氨＋α-酮戊二酸', rl:'麩胺酸去氫酶（GDH）', cof:'NAD⁺/NADP⁺', dis:'—',
+ nodes:['Glutamate|麩胺酸','α-Ketoglutarate + NH₄⁺|α-酮戊二酸 + 氨','Urea cycle|進入尿素循環（CPS-I）'],
+ edges:[
+  {e:'Glutamate dehydrogenase (GDH)|麩胺酸去氫酶', c:['NAD(P)⁺→NAD(P)H'], n:'ADP、GDP 活化；ATP、GTP 抑制'},
+  {e:'Carbamoyl phosphate synthetase I|胺甲醯磷酸合成酶 I', c:['2 ATP']}
+ ],
+ branches:['肝外組織的氨：Glutamine synthetase 把氨接到麩胺酸 → 麩醯胺酸（無毒運送型）→ 到肝、腎經 Glutaminase 釋出氨','腎臟釋放的氨可排出 H⁺，調節酸鹼'],
+ key:['轉胺 + 氧化脫胺 = 聯合脫胺（transdeamination），胺基酸脫氮的主要方式']},
+
+{id:'urea', cat:'protein', zh:'尿素循環', en:'Urea Cycle (Ornithine Cycle)', cycle:1,
+ loc:'肝（粒線體＋細胞質）', func:'有毒的氨 → 尿素排出', rl:'CPS-I（限速）、OTC、精胺酸酶', cof:'ATP、N-乙醯麩胺酸', dis:'高血氨、肝昏迷；OTC 缺乏',
+ nodes:['NH₄⁺ + HCO₃⁻|氨 + 碳酸氫根','Carbamoyl phosphate|胺甲醯磷酸','Citrulline|瓜胺酸','Argininosuccinate|精胺琥珀酸','Arginine|精胺酸','Ornithine + Urea|鳥胺酸 + 尿素（排出）'],
+ edges:[
+  {e:'Carbamoyl phosphate synthetase I (CPS-I)|胺甲醯磷酸合成酶 I', c:['−2 ATP','N-乙醯麩胺酸（NAG）活化'], rl:1, n:'粒線體'},
+  {e:'Ornithine transcarbamoylase (OTC)|鳥胺酸胺甲醯轉移酶', c:['+Ornithine'], n:'粒線體；OTC 缺乏為最常見尿素循環缺陷（X 性聯）'},
+  {e:'Argininosuccinate synthetase|精胺琥珀酸合成酶', c:['+Aspartate（第 2 個氮）','ATP → AMP'], n:'瓜胺酸已運到細胞質'},
+  {e:'Argininosuccinate lyase|精胺琥珀酸裂解酶', c:['釋出 Fumarate → TCA'], n:'連接尿素循環與 TCA（Krebs 雙循環）'},
+  {e:'Arginase|精胺酸酶', c:['+H₂O','釋出 Urea'], n:'只在肝臟大量存在'}
+ ],
+ loop:'鳥胺酸回到粒線體，接下一個胺甲醯磷酸',
+ key:['尿素的 2 個氮：1 個來自游離氨、1 個來自天門冬胺酸；碳來自 CO₂','每產生 1 尿素耗 3 ATP（4 個高能鍵）','肝硬化 → 尿素循環差 → 高血氨 → 肝腦病變；飲食控制蛋白質、可用 BCAA 配方','橫跨粒線體與細胞質：口訣「糖尿血」的「尿」']},
+
+{id:'carbon-skeleton', cat:'protein', zh:'碳骨架代謝（生糖／生酮）', en:'Carbon Skeleton Fate (Glucogenic / Ketogenic)',
+ loc:'肝', func:'脫胺後的碳骨架進入 TCA 或轉成酮體', rl:'各種', cof:'—', dis:'白胺酸、離胺酸為純生酮胺基酸',
+ nodes:[], edges:[],
+ table:{head:['進入點','胺基酸','性質'],rows:[
+  ['丙酮酸 Pyruvate','Ala、Ser、Gly、Cys、Thr、Trp','生糖'],
+  ['草醯乙酸 Oxaloacetate','Asp、Asn','生糖'],
+  ['α-酮戊二酸 α-KG','Glu、Gln、His、Pro、Arg','生糖'],
+  ['琥珀醯-CoA Succinyl-CoA','Val、Ile、Met、Thr','生糖'],
+  ['延胡索酸 Fumarate','Phe、Tyr','生糖'],
+  ['乙醯-CoA／乙醯乙醯-CoA','Leu、Lys（純生酮）；Ile、Phe、Tyr、Trp、Thr（兼）','生酮']]},
+ key:['純生酮：白胺酸 Leu、離胺酸 Lys','生糖兼生酮：異白胺酸、苯丙胺酸、酪胺酸、色胺酸、蘇胺酸（口訣「異苯酪色蘇」）','其餘都是純生糖','能進 TCA 中間物（→ 草醯乙酸）的才能生糖；變成乙醯-CoA 的只能生酮']},
+
+{id:'neaa', cat:'protein', zh:'非必需胺基酸合成', en:'Non-essential Amino Acid Synthesis',
+ loc:'肝', func:'用代謝中間物自行合成胺基酸', rl:'轉胺酶等', cof:'B₆', dis:'—',
+ nodes:[], edges:[],
+ table:{head:['胺基酸','前驅物','關鍵酵素／輔因子'],rows:[
+  ['丙胺酸 Ala','丙酮酸','ALT（B₆）'],
+  ['天門冬胺酸 Asp','草醯乙酸','AST（B₆）'],
+  ['麩胺酸 Glu','α-酮戊二酸','GDH 或轉胺酶'],
+  ['麩醯胺酸 Gln','麩胺酸 + NH₄⁺','Glutamine synthetase（ATP）'],
+  ['天門冬醯胺 Asn','天門冬胺酸','Asparagine synthetase（Gln、ATP）'],
+  ['絲胺酸 Ser','3-磷酸甘油酸（糖解）','去氫、轉胺、去磷酸'],
+  ['甘胺酸 Gly','絲胺酸','SHMT（THF 葉酸、B₆）'],
+  ['半胱胺酸 Cys','甲硫胺酸 + 絲胺酸','轉硫途徑（B₆）'],
+  ['酪胺酸 Tyr','苯丙胺酸','PAH（BH₄）'],
+  ['脯胺酸 Pro、精胺酸 Arg','麩胺酸','多步；Arg 也來自尿素循環']]},
+ key:['條件必需：Cys（需 Met）、Tyr（需 Phe）——前驅物不足或疾病時需由飲食補充','PKU 病人酪胺酸變成必需胺基酸']},
+
+{id:'phe-tyr', cat:'protein', zh:'苯丙胺酸／酪胺酸代謝', en:'Phenylalanine & Tyrosine Metabolism',
+ loc:'肝（羥化）、神經與腎上腺髓質（兒茶酚胺）', func:'苯丙胺酸 → 酪胺酸 → 兒茶酚胺、黑色素、甲狀腺素', rl:'苯丙胺酸羥化酶', cof:'BH₄、O₂', dis:'苯酮尿症（PKU）、黑尿症、白化症',
+ nodes:['Phenylalanine|苯丙胺酸','Tyrosine|酪胺酸','L-DOPA|左旋多巴','Dopamine|多巴胺','Norepinephrine|正腎上腺素','Epinephrine|腎上腺素'],
+ edges:[
+  {e:'Phenylalanine hydroxylase (PAH)|苯丙胺酸羥化酶', c:['BH₄','O₂','Fe²⁺'], n:'缺乏 → 苯酮尿症 PKU'},
+  {e:'Tyrosine hydroxylase|酪胺酸羥化酶', c:['BH₄','O₂'], rl:1, n:'兒茶酚胺合成限速'},
+  {e:'Aromatic L-amino acid decarboxylase (DOPA decarboxylase)|芳香族胺基酸脫羧酶', c:['PLP (B₆)','釋出 CO₂']},
+  {e:'Dopamine β-hydroxylase|多巴胺 β-羥化酶', c:['維生素 C','Cu²⁺']},
+  {e:'PNMT (phenylethanolamine N-methyltransferase)|苯乙醇胺 N-甲基轉移酶', c:['SAM（甲基）'], n:'腎上腺髓質；皮質醇誘導'}
+ ],
+ branches:['酪胺酸 → Tyrosinase（含銅）→ 黑色素；缺乏 → 白化症','酪胺酸 + 碘 → 甲狀腺素 T₃、T₄','酪胺酸 → … → 尿黑酸 Homogentisate → 尿黑酸氧化酶（缺乏 → 黑尿症）→ 延胡索酸 + 乙醯乙酸'],
+ key:['PKU 飲食：限制苯丙胺酸、補充酪胺酸，避免阿斯巴甜（含苯丙胺酸）','新生兒篩檢項目之一']},
+
+{id:'tryptophan', cat:'protein', zh:'色胺酸代謝', en:'Tryptophan Metabolism',
+ loc:'腦、腸、松果體、肝', func:'色胺酸 → 血清素、褪黑激素、菸鹼酸', rl:'色胺酸羥化酶', cof:'BH₄、B₆、B₂', dis:'類癌症候群、Hartnup 病 → 類糙皮病',
+ nodes:['Tryptophan|色胺酸','5-Hydroxytryptophan (5-HTP)|5-羥色胺酸','Serotonin (5-HT)|血清素','N-Acetylserotonin|N-乙醯血清素','Melatonin|褪黑激素'],
+ edges:[
+  {e:'Tryptophan hydroxylase|色胺酸羥化酶', c:['BH₄','O₂'], rl:1},
+  {e:'Aromatic L-amino acid decarboxylase|芳香族胺基酸脫羧酶', c:['PLP (B₆)','釋出 CO₂']},
+  {e:'Serotonin N-acetyltransferase|血清素 N-乙醯轉移酶', c:['Acetyl-CoA'], n:'松果體，黑暗時活性高'},
+  {e:'ASMT (HIOMT)|羥吲哚-O-甲基轉移酶', c:['SAM（甲基）']}
+ ],
+ branches:['犬尿胺酸途徑（肝）：色胺酸 → Kynurenine → … → 菸鹼酸 NAD⁺（需 B₆、B₂、鐵）；60 mg 色胺酸 ≈ 1 mg 菸鹼酸（1 NE）'],
+ key:['玉米為主食者缺菸鹼酸與色胺酸 → 糙皮病（4D）','B₆ 缺乏會影響色胺酸轉菸鹼酸']},
+
+{id:'bcaa', cat:'protein', zh:'支鏈胺基酸代謝', en:'Branched-chain Amino Acid (BCAA) Metabolism',
+ loc:'肌肉（第一步）', func:'白胺酸、異白胺酸、纈胺酸分解', rl:'支鏈 α-酮酸去氫酶（BCKDH）', cof:'B₁ 等', dis:'楓糖尿症（MSUD）',
+ nodes:['Leucine / Isoleucine / Valine|白胺酸／異白胺酸／纈胺酸','Branched-chain α-keto acids (BCKA)|支鏈 α-酮酸','Branched-chain acyl-CoA|支鏈脂醯-CoA','Acetyl-CoA / Acetoacetate / Succinyl-CoA|最終產物'],
+ edges:[
+  {e:'Branched-chain aminotransferase (BCAT)|支鏈胺基酸轉胺酶', c:['PLP (B₆)','α-KG → Glu'], n:'主要在骨骼肌（肝臟活性低）'},
+  {e:'Branched-chain α-keto acid dehydrogenase (BCKDH)|支鏈 α-酮酸去氫酶', c:['TPP (B₁)','硫辛酸','FAD','NAD⁺','CoA','釋出 CO₂'], rl:1, irr:1, n:'輔因子與 PDH 相同；缺乏 → 楓糖尿症'},
+  {e:'Further oxidation|後續氧化（類似 β-氧化）', c:['FAD','NAD⁺']}
+ ],
+ key:['Leu → 乙醯-CoA + 乙醯乙酸（純生酮）；Val → 琥珀醯-CoA（生糖）；Ile → 兩者皆有','MSUD：尿液楓糖漿味、神經損傷；飲食限制三種 BCAA','肝病時補充 BCAA：肌肉可直接利用、改善 BCAA/芳香族胺基酸比值']},
+
+{id:'methionine', cat:'protein', zh:'甲硫胺酸循環／一碳單位', en:'Methionine Cycle & One-carbon Metabolism', cycle:1,
+ loc:'肝', func:'提供甲基（SAM），回收同半胱胺酸', rl:'甲硫胺酸合成酶、胱硫醚 β-合成酶', cof:'葉酸、B₁₂、B₆', dis:'高同半胱胺酸血症（心血管風險）',
+ nodes:['Methionine|甲硫胺酸','S-Adenosylmethionine (SAM)|S-腺苷甲硫胺酸（萬用甲基供應者）','S-Adenosylhomocysteine (SAH)|S-腺苷同半胱胺酸','Homocysteine|同半胱胺酸','Methionine (regenerated)|甲硫胺酸（再生）'],
+ edges:[
+  {e:'Methionine adenosyltransferase (MAT)|甲硫胺酸腺苷轉移酶', c:['−ATP']},
+  {e:'Methyltransferases|甲基轉移酶', c:['把 −CH₃ 給 DNA、肌酸、PC、腎上腺素']},
+  {e:'SAH hydrolase|SAH 水解酶', c:['+H₂O','釋出腺苷']},
+  {e:'Methionine synthase|甲硫胺酸合成酶', c:['B₁₂ (Methylcobalamin)','5-Methyl-THF (葉酸)'], n:'B₁₂ 缺乏 → 葉酸卡在甲基型（methyl-folate trap）→ 巨球性貧血'}
+ ],
+ loop:'甲硫胺酸再活化成 SAM',
+ branches:['轉硫途徑：同半胱胺酸 + 絲胺酸 → Cystathionine β-synthase（B₆）→ 胱硫醚 → γ-Cystathionase（B₆）→ 半胱胺酸（→ 穀胱甘肽、牛磺酸）','葉酸一碳：THF → 5,10-亞甲基-THF（SHMT）→ MTHFR（B₂）→ 5-甲基-THF → 交給甲硫胺酸合成酶'],
+ key:['葉酸、B₁₂、B₆ 任一缺乏 → 同半胱胺酸上升 → 動脈硬化風險','B₁₂ 與葉酸缺乏都造成巨球性貧血；只有 B₁₂ 缺乏有神經症狀與 MMA 上升']},
+
+{id:'heme-synthesis', cat:'protein', zh:'血基質合成', en:'Heme Synthesis',
+ loc:'骨髓、肝（粒線體＋細胞質）', func:'甘胺酸＋琥珀醯-CoA → 血基質', rl:'ALA 合成酶（限速）', cof:'B₆、鐵', dis:'紫質症；鉛中毒抑制此路徑',
+ nodes:['Glycine + Succinyl-CoA|甘胺酸 + 琥珀醯-CoA','δ-Aminolevulinic acid (ALA)|δ-胺基乙醯丙酸','Porphobilinogen (PBG)|膽色素原','Hydroxymethylbilane|羥甲基膽色烷','Uroporphyrinogen III|尿紫質原 III','Coproporphyrinogen III|糞紫質原 III','Protoporphyrinogen IX|原紫質原 IX','Protoporphyrin IX|原紫質 IX','Heme|血基質'],
+ edges:[
+  {e:'ALA synthase|ALA 合成酶', c:['PLP (B₆)'], rl:1, n:'粒線體；血基質回饋抑制；B₆ 缺乏 → 鐵粒母細胞性貧血'},
+  {e:'ALA dehydratase|ALA 脫水酶', c:['Zn²⁺'], n:'細胞質；鉛抑制'},
+  {e:'Porphobilinogen deaminase|膽色素原脫胺酶', c:[], n:'缺乏 → 急性間歇性紫質症（AIP）'},
+  {e:'Uroporphyrinogen III synthase|尿紫質原 III 合成酶', c:[]},
+  {e:'Uroporphyrinogen decarboxylase|尿紫質原脫羧酶', c:['釋出 CO₂'], n:'缺乏 → 遲發性皮膚紫質症（最常見）'},
+  {e:'Coproporphyrinogen oxidase|糞紫質原氧化酶', c:['O₂'], n:'回到粒線體'},
+  {e:'Protoporphyrinogen oxidase|原紫質原氧化酶', c:['O₂']},
+  {e:'Ferrochelatase|亞鐵螯合酶', c:['+Fe²⁺'], n:'鉛抑制'}
+ ],
+ key:['橫跨粒線體與細胞質：口訣「糖尿血」的「血」','鉛中毒抑制 ALA 脫水酶與亞鐵螯合酶 → 貧血、ALA 上升']},
+
+{id:'heme-degradation', cat:'protein', zh:'血基質分解', en:'Heme Degradation',
+ loc:'脾、肝（網狀內皮系統）', func:'血基質 → 膽紅素 → 排出', rl:'血基質氧化酶、UDP-葡萄糖醛酸轉移酶', cof:'O₂、NADPH', dis:'黃疸、新生兒黃疸',
+ nodes:['Heme|血基質（老舊紅血球）','Biliverdin|膽綠素（綠）','Unconjugated bilirubin|非結合型膽紅素（間接型，脂溶性，與白蛋白結合運到肝）','Conjugated bilirubin|結合型膽紅素（直接型，水溶性 → 膽汁）','Urobilinogen|尿膽素原（腸道）','Stercobilin / Urobilin|糞膽素（糞便棕色）／尿膽素（尿液黃色）'],
+ edges:[
+  {e:'Heme oxygenase|血基質氧化酶', c:['O₂','NADPH','釋出 Fe²⁺、CO'], rl:1},
+  {e:'Biliverdin reductase|膽綠素還原酶', c:['NADPH']},
+  {e:'UDP-glucuronosyltransferase (UGT1A1)|UDP-葡萄糖醛酸轉移酶', c:['UDP-葡萄糖醛酸'], n:'新生兒活性低 → 新生兒黃疸；Gilbert 症候群活性偏低'},
+  {e:'Intestinal bacteria|腸道細菌還原', c:[], n:'部分尿膽素原被再吸收（腸肝循環），少量由尿排出'},
+  {e:'Oxidation|氧化', c:[]}
+ ],
+ key:['溶血性黃疸：間接型↑；阻塞性黃疸：直接型↑、灰白便','鐵被回收再利用（運鐵蛋白、鐵蛋白）']},
+
+{id:'aa-derivatives', cat:'protein', zh:'胺基酸衍生的重要物質', en:'Amino Acid–derived Compounds',
+ loc:'各組織', func:'胺基酸 → 神經傳導物質、激素、抗氧化物', rl:'各脫羧酶、羥化酶', cof:'B₆、BH₄、維生素 C、SAM', dis:'—',
+ nodes:[], edges:[],
+ table:{head:['前驅物','產物','所需輔因子'],rows:[
+  ['酪胺酸 Tyrosine','多巴胺、正腎上腺素、腎上腺素、甲狀腺素、黑色素','BH₄、維生素 C、銅、碘'],
+  ['色胺酸 Tryptophan','血清素、褪黑激素、菸鹼酸（60 mg 色胺酸 ≈ 1 mg 菸鹼酸）','B₆、B₂'],
+  ['組胺酸 Histidine','組織胺 Histamine','B₆'],
+  ['麩胺酸 Glutamate','GABA（抑制性神經傳導物質）','B₆'],
+  ['精胺酸 Arginine','一氧化氮 NO（血管擴張）','NADPH、O₂（NOS）'],
+  ['甘胺酸＋精胺酸＋甲硫胺酸','肌酸 Creatine','SAM'],
+  ['麩胺酸＋半胱胺酸＋甘胺酸','穀胱甘肽 Glutathione（抗氧化）','ATP']]},
+ key:['脫羧反應（產胺類）幾乎都需要 B₆（PLP）','羥化反應常需 BH₄ 或維生素 C']},
+
+/* ================= 核苷酸 ================= */
+{id:'purine-denovo', cat:'nuc', zh:'嘌呤從頭合成', en:'De novo Purine Synthesis',
+ loc:'肝（細胞質）', func:'合成 AMP、GMP', rl:'PRPP 醯胺轉移酶（限速）', cof:'葉酸、麩醯胺酸、甘胺酸、天門冬胺酸', dis:'—',
+ nodes:['Ribose-5-phosphate|核糖-5-磷酸（來自五碳糖途徑）','PRPP|5-磷酸核糖焦磷酸','5-Phosphoribosylamine|5-磷酸核糖胺','IMP (Inosine monophosphate)|肌苷酸（第一個嘌呤核苷酸）','AMP|腺苷酸'],
+ edges:[
+  {e:'PRPP synthetase|PRPP 合成酶', c:['ATP → AMP']},
+  {e:'Glutamine-PRPP amidotransferase|PRPP 醯胺轉移酶', c:['+Glutamine'], rl:1, n:'被 AMP、GMP、IMP 回饋抑制'},
+  {e:'Ring assembly (9 steps)|嘌呤環組裝（9 步）', c:['Glycine','N¹⁰-Formyl-THF ×2 (葉酸)','Glutamine','Aspartate','CO₂','ATP']},
+  {e:'Adenylosuccinate synthetase / lyase|腺苷琥珀酸合成酶／裂解酶', c:['GTP','+Aspartate','釋出 Fumarate']}
+ ],
+ branches:['IMP → IMP dehydrogenase（NAD⁺）→ XMP → GMP synthetase（ATP、Gln）→ GMP'],
+ key:['嘌呤是「直接蓋在核糖上」；嘧啶是「先做環再接核糖」','嘌呤環原子來源：甘胺酸、天門冬胺酸、麩醯胺酸、葉酸一碳、CO₂','葉酸拮抗劑（methotrexate）阻斷 → 抑制細胞分裂']},
+
+{id:'purine-salvage', cat:'nuc', zh:'嘌呤回收途徑', en:'Purine Salvage Pathway',
+ loc:'各組織（腦、骨髓特別依賴）', func:'回收游離嘌呤鹼基再利用', rl:'HGPRT', cof:'PRPP', dis:'Lesch-Nyhan 症候群',
+ nodes:['Hypoxanthine / Guanine + PRPP|次黃嘌呤／鳥嘌呤 + PRPP','IMP / GMP|肌苷酸／鳥苷酸'],
+ edges:[{e:'Hypoxanthine-guanine phosphoribosyltransferase (HGPRT)|次黃嘌呤-鳥嘌呤磷酸核糖轉移酶', c:['PRPP','釋出 PPi']}],
+ branches:['腺嘌呤 Adenine + PRPP → APRT（腺嘌呤磷酸核糖轉移酶）→ AMP'],
+ key:['比從頭合成省能量','Lesch-Nyhan 症候群：HGPRT 完全缺乏（X 性聯）→ 嘌呤無法回收、PRPP 堆積 → 尿酸過多、痛風、自殘行為、智能障礙']},
+
+{id:'pyrimidine', cat:'nuc', zh:'嘧啶合成', en:'De novo Pyrimidine Synthesis',
+ loc:'細胞質（一步在粒線體）', func:'合成 UMP → UTP、CTP、dTMP', rl:'CPS-II、天門冬胺酸轉胺甲醯酶', cof:'葉酸、麩醯胺酸', dis:'乳清酸尿症',
+ nodes:['Glutamine + CO₂|麩醯胺酸 + CO₂','Carbamoyl phosphate|胺甲醯磷酸（細胞質）','Carbamoyl aspartate|胺甲醯天門冬胺酸','Dihydroorotate|二氫乳清酸','Orotate|乳清酸（嘧啶環完成）','OMP|乳清酸核苷酸','UMP|尿苷酸','CTP|胞苷三磷酸'],
+ edges:[
+  {e:'Carbamoyl phosphate synthetase II (CPS-II)|胺甲醯磷酸合成酶 II', c:['−2 ATP'], rl:1, n:'細胞質；氮來自麩醯胺酸（CPS-I 用氨，在粒線體）；UTP 抑制'},
+  {e:'Aspartate transcarbamoylase (ATCase)|天門冬胺酸轉胺甲醯酶', c:['+Aspartate'], n:'細菌中的限速酶；CTP 回饋抑制'},
+  {e:'Dihydroorotase|二氫乳清酸酶', c:['−H₂O'], n:'前三個酵素在人體是同一條多功能蛋白 CAD'},
+  {e:'Dihydroorotate dehydrogenase|二氫乳清酸去氫酶', c:['CoQ'], n:'唯一在粒線體內膜的步驟'},
+  {e:'Orotate phosphoribosyltransferase|乳清酸磷酸核糖轉移酶', c:['+PRPP']},
+  {e:'OMP decarboxylase|OMP 脫羧酶', c:['釋出 CO₂'], n:'與上一步合稱 UMP synthase；缺乏 → 遺傳性乳清酸尿症（補充尿苷治療）'},
+  {e:'Kinases + CTP synthetase|激酶 + CTP 合成酶', c:['ATP','+Glutamine']}
+ ],
+ key:['CPS-I（尿素循環、粒線體、NH₃、NAG 活化）vs CPS-II（嘧啶、細胞質、Gln）','OTC 缺乏時胺甲醯磷酸外溢 → 也會乳清酸尿（但伴隨高血氨）']},
+
+{id:'dntp', cat:'nuc', zh:'去氧核苷酸合成', en:'Deoxyribonucleotide Synthesis',
+ loc:'細胞質', func:'核糖 → 去氧核糖（DNA 原料）；dUMP → dTMP', rl:'核糖核苷酸還原酶、胸苷酸合成酶', cof:'NADPH、葉酸', dis:'化療藥 methotrexate、5-FU 作用點',
+ nodes:['NDP (ADP, GDP, CDP, UDP)|核糖核苷二磷酸','dNDP|去氧核糖核苷二磷酸','dUMP|去氧尿苷酸','dTMP|去氧胸苷酸（T，DNA 專用）'],
+ edges:[
+  {e:'Ribonucleotide reductase|核糖核苷酸還原酶', c:['NADPH（經 Thioredoxin）'], rl:1, n:'Hydroxyurea 抑制'},
+  {e:'Dephosphorylation (dUTPase)|去磷酸', c:[]},
+  {e:'Thymidylate synthase|胸苷酸合成酶', c:['5,10-Methylene-THF (葉酸)','THF → DHF'], n:'5-FU 抑制'}
+ ],
+ branches:['葉酸再生：DHF → Dihydrofolate reductase（DHFR，NADPH）→ THF；Methotrexate 抑制 DHFR'],
+ key:['葉酸或 B₁₂ 缺乏 → dTMP 合成不足 → DNA 合成受阻 → 巨球性貧血','快速分裂的細胞（腫瘤、骨髓、腸黏膜）最受影響']},
+
+{id:'purine-degradation', cat:'nuc', zh:'嘌呤分解', en:'Purine Degradation',
+ loc:'肝、小腸', func:'嘌呤 → 尿酸', rl:'黃嘌呤氧化酶', cof:'鉬、O₂', dis:'痛風；allopurinol 抑制此酶；限制高普林飲食',
+ nodes:['AMP|腺苷酸','IMP|肌苷酸','Inosine|肌苷','Hypoxanthine|次黃嘌呤','Xanthine|黃嘌呤','Uric acid|尿酸'],
+ edges:[
+  {e:'AMP deaminase|AMP 脫胺酶', c:['釋出 NH₃']},
+  {e:'5′-Nucleotidase|5′-核苷酸酶', c:['−Pi']},
+  {e:'Purine nucleoside phosphorylase (PNP)|嘌呤核苷磷酸化酶', c:['+Pi','釋出 Ribose-1-P']},
+  {e:'Xanthine oxidase|黃嘌呤氧化酶', c:['Mo（鉬）','O₂ → H₂O₂'], rl:1, n:'Allopurinol、Febuxostat 抑制'},
+  {e:'Xanthine oxidase|黃嘌呤氧化酶', c:['Mo（鉬）','O₂ → H₂O₂']}
+ ],
+ branches:['GMP → 鳥苷 Guanosine → 鳥嘌呤 Guanine → Guanase → 黃嘌呤 Xanthine'],
+ key:['人類缺尿酸酶（uricase）→ 尿酸是終產物，溶解度低 → 痛風、尿酸結石','痛風飲食：限高普林（內臟、海鮮、濃肉湯）、限酒與果糖、多喝水','嘧啶分解產物（β-丙胺酸、β-胺基異丁酸）水溶性高，不易造成疾病']},
+
+/* ================= 其他 ================= */
+{id:'alcohol', cat:'other', zh:'酒精代謝', en:'Ethanol Metabolism',
+ loc:'肝（細胞質、粒線體、內質網）', func:'乙醇 → 乙醛 → 乙酸', rl:'醇去氫酶（ADH）、醛去氫酶（ALDH2）、MEOS（CYP2E1）', cof:'NAD⁺', dis:'台灣約半數人 ALDH2 缺陷（喝酒臉紅）；NADH 過多 → 脂肪肝',
+ nodes:['Ethanol|乙醇','Acetaldehyde|乙醛（有毒、致癌）','Acetate|乙酸','Acetyl-CoA|乙醯-CoA'],
+ edges:[
+  {e:'Alcohol dehydrogenase (ADH)|醇去氫酶', c:['NAD⁺→NADH','Zn²⁺'], n:'細胞質；大量飲酒時 MEOS（CYP2E1，內質網，耗 NADPH）也參與，且會被誘導'},
+  {e:'Aldehyde dehydrogenase 2 (ALDH2)|醛去氫酶 2', c:['NAD⁺→NADH'], rl:1, n:'粒線體；ALDH2*2 變異 → 乙醛堆積 → 臉紅、心悸，食道癌風險↑'},
+  {e:'Acetyl-CoA synthetase|乙醯-CoA 合成酶', c:['ATP → AMP']}
+ ],
+ key:['NADH/NAD⁺ 比值↑ → 抑制糖質新生（空腹低血糖）、乳酸↑、尿酸↑','→ 抑制 β-氧化、促進脂肪酸合成 → 酒精性脂肪肝','酗酒常缺 B₁（Wernicke 腦病）、葉酸','1 g 酒精 ≈ 7 kcal']},
+
+{id:'drug', cat:'other', zh:'藥物／毒物代謝', en:'Drug & Xenobiotic Metabolism',
+ loc:'肝（內質網為主）、小腸', func:'把脂溶性物質變成水溶性排出', rl:'細胞色素 P450、結合酶', cof:'NADPH、O₂', dis:'葡萄柚影響部分藥物代謝',
+ nodes:['Lipophilic drug / toxin|脂溶性藥物或毒物','Phase I metabolite|第一相產物（加上 −OH 等極性基）','Phase II conjugate|第二相結合物（水溶性）','Excretion|經尿液或膽汁排出'],
+ edges:[
+  {e:'Cytochrome P450 (e.g., CYP3A4)|細胞色素 P450', c:['NADPH','O₂'], rl:1, n:'氧化、還原、水解'},
+  {e:'Conjugating enzymes (UGT, SULT, GST, NAT)|結合酶', c:['葡萄糖醛酸','硫酸','穀胱甘肽','乙醯基']},
+  {e:'Transporters|運送蛋白', c:[]}
+ ],
+ key:['葡萄柚的呋喃香豆素抑制腸道 CYP3A4 → 部分藥物（如某些降血壓、降血脂藥）血中濃度上升','酒精、抽菸可誘導某些 P450','乙醯胺酚過量 → 毒性中間物耗盡穀胱甘肽 → 肝毒性（解毒劑 N-乙醯半胱胺酸）']},
+
+{id:'antioxidant', cat:'other', zh:'抗氧化系統', en:'Antioxidant Defense System',
+ loc:'細胞質、粒線體、過氧化體', func:'清除自由基與過氧化物', rl:'SOD、過氧化氫酶、穀胱甘肽過氧化酶', cof:'銅、鋅、錳、鐵、硒、NADPH', dis:'G6PD 缺乏 → 溶血',
+ nodes:['Superoxide (O₂•⁻)|超氧自由基','Hydrogen peroxide (H₂O₂)|過氧化氫','H₂O|水'],
+ edges:[
+  {e:'Superoxide dismutase (SOD)|超氧歧化酶', c:['Cu/Zn（細胞質）','Mn（粒線體）']},
+  {e:'Glutathione peroxidase / Catalase|穀胱甘肽過氧化酶／過氧化氫酶', c:['Se（GPx）','Fe（Catalase）','2 GSH → GSSG']}
+ ],
+ branches:['穀胱甘肽再生：GSSG → Glutathione reductase（FAD，B₂）+ NADPH（來自五碳糖途徑）→ 2 GSH','非酵素抗氧化物：維生素 E（細胞膜）、維生素 C（水相，可再生維生素 E）、β-胡蘿蔔素、多酚'],
+ key:['G6PD 缺乏 → NADPH 不足 → GSH 無法再生 → 紅血球氧化性溶血（蠶豆症）','紅血球穀胱甘肽還原酶活性可評估 B₂ 營養狀況']},
+
+{id:'vitk', cat:'other', zh:'維生素 K 循環', en:'Vitamin K Cycle', cycle:1,
+ loc:'肝（內質網）', func:'活化凝血因子（Glu → Gla）', rl:'γ-羧化酶', cof:'維生素 K', dis:'Warfarin 抗凝血藥作用點',
+ nodes:['Vitamin K hydroquinone (KH₂)|維生素 K 氫醌（還原型、活性）','Vitamin K epoxide|維生素 K 環氧化物','Vitamin K quinone|維生素 K 醌','Vitamin K hydroquinone (KH₂)|維生素 K 氫醌（再生）'],
+ edges:[
+  {e:'γ-Glutamyl carboxylase|γ-麩胺醯羧化酶', c:['CO₂','O₂'], rl:1, n:'凝血因子 II、VII、IX、X 及蛋白 C、S、骨鈣素的 Glu → Gla，才能結合鈣'},
+  {e:'Vitamin K epoxide reductase (VKOR)|維生素 K 環氧化物還原酶', c:[], n:'Warfarin 抑制'},
+  {e:'Vitamin K reductase|維生素 K 還原酶', c:['NAD(P)H']}
+ ],
+ loop:'維生素 K 可重複使用 → 每日需要量很少',
+ key:['服用 Warfarin 者維生素 K 攝取要「穩定」，不是完全不吃深綠色蔬菜','新生兒腸道菌少、乳汁維生素 K 低 → 出生時注射維生素 K','長期使用廣效抗生素可能缺維生素 K']}
+];
+
+const REFS = {
+  vit:{zh:'維生素與礦物質輔因子總表', en:'Vitamin & Mineral Cofactors',
+       intro:'多數 B 群維生素本身不提供熱量，而是代謝酵素的輔酶；缺乏症可由它參與的路徑推得。',
+       head:['營養素','輔酶形式','主要參與'],rows:[
+    ['B₁（硫胺）','TPP','PDH、α-酮戊二酸去氫酶、轉酮酶、支鏈胺基酸代謝、α-氧化'],
+    ['B₂（核黃素）','FAD、FMN','β-氧化、TCA、電子傳遞鏈、穀胱甘肽還原酶'],
+    ['B₃（菸鹼酸）','NAD⁺、NADP⁺','幾乎所有氧化還原反應'],
+    ['B₅（泛酸）','CoA','乙醯-CoA、脂肪酸代謝'],
+    ['B₆（吡哆醇）','PLP','轉胺、脫羧、肝醣分解、血基質合成、神經傳導物質合成'],
+    ['B₇（生物素）','生物素','羧化反應（丙酮酸羧化酶、乙醯-CoA 羧化酶、丙醯-CoA 羧化酶）'],
+    ['B₉（葉酸）','THF','一碳單位、嘌呤與 dTMP 合成'],
+    ['B₁₂（鈷胺素）','甲基鈷胺素、腺苷鈷胺素','甲硫胺酸合成酶、甲基丙二醯-CoA 變位酶'],
+    ['維生素 C','—','羥化反應（膠原蛋白、肉鹼、正腎上腺素合成）、促進鐵吸收'],
+    ['維生素 K','—','γ-羧化（凝血因子）'],
+    ['鎂','Mg-ATP','所有用到 ATP 的反應'],
+    ['鐵','血基質、鐵硫蛋白','攜氧、電子傳遞鏈'],
+    ['銅','—','細胞色素氧化酶、SOD、多巴胺 β-羥化酶、酪胺酸酶'],
+    ['鋅','—','SOD、醇去氫酶、碳酸酐酶、ALA 脫水酶'],
+    ['錳','—','粒線體 SOD、丙酮酸羧化酶'],
+    ['硒','—','穀胱甘肽過氧化酶、甲狀腺素活化（脫碘酶）'],
+    ['鉬','—','黃嘌呤氧化酶']]},
+  hormone:{zh:'荷爾蒙代謝調節', en:'Hormonal Regulation',
+       intro:'吃飽時胰島素主導合成與儲存，空腹時升糖素主導分解與產能。',
+       head:['荷爾蒙','時機','促進','抑制'],rows:[
+    ['胰島素 Insulin','吃飽','糖解、肝醣合成、脂肪酸與膽固醇合成、蛋白質合成','糖質新生、肝醣分解、脂肪分解、酮體生成'],
+    ['升糖素 Glucagon','空腹','肝醣分解、糖質新生、脂肪分解、酮體生成','肝醣合成、脂肪酸合成'],
+    ['腎上腺素 Epinephrine','壓力、運動','肝醣分解（肝、肌肉）、脂肪分解','—'],
+    ['皮質醇 Cortisol','長期壓力、飢餓','糖質新生、蛋白質分解','蛋白質合成']]},
+  loc:{zh:'細胞位置總整理與記憶口訣', en:'Subcellular Location & Mnemonics',
+       intro:'橫跨粒線體與細胞質的三條路徑用「糖尿血」記：糖質新生、尿素循環、血基質合成。',
+       head:['位置','路徑'],rows:[
+    ['只在粒線體','PDH、TCA 循環、β-氧化、酮體生成、電子傳遞鏈'],
+    ['只在細胞質','糖解、五碳糖磷酸途徑、脂肪酸合成、肝醣代謝'],
+    ['粒線體＋細胞質','糖質新生、尿素循環、血基質合成'],
+    ['過氧化體','α-氧化、極長鏈脂肪酸 β-氧化'],
+    ['內質網','ω-氧化、脂肪酸延長與去飽和、磷脂質合成、P450 解毒']],
+       tips:['α-氧化：α 切一碳、植烷酸、過氧化體、不產能、缺了得 Refsum','PDH 五輔因子：B₁、B₂、B₃、B₅、硫辛酸','純生酮胺基酸：白胺酸、離胺酸','必需脂肪酸原因：人體缺 Δ12、Δ15 去飽和酶','β-氧化四步：氧化 → 水合 → 氧化 → 硫解','腎上腺皮質三層：鹽、糖、性']}
+};
+// ===== 位置資料：細胞內區室、器官、各路徑位置、環狀圖設定 =====
+const LOC = {
+  c:{zh:'細胞質',en:'Cytosol',col:'#d99a1e'},
+  m:{zh:'粒線體基質',en:'Mito. matrix',col:'#d4533f'},
+  im:{zh:'粒線體內膜',en:'Inner membrane',col:'#9c2f22'},
+  is:{zh:'粒線體膜間隙',en:'Intermembrane space',col:'#e08a6a'},
+  p:{zh:'過氧化體',en:'Peroxisome',col:'#2a9a6a'},
+  e:{zh:'內質網',en:'ER',col:'#3f78cf'}
+};
+const ORG = {
+  all:{zh:'全身細胞',col:'#8a7f72'}, RBC:{zh:'紅血球',col:'#c0392b'}, B:{zh:'血液',col:'#b03a48'},
+  L:{zh:'肝',col:'#8b4a2b'}, K:{zh:'腎',col:'#7a55b8'}, M:{zh:'骨骼肌',col:'#c4476a'}, H:{zh:'心臟',col:'#d23a3a'},
+  Br:{zh:'腦',col:'#4f7fd0'}, A:{zh:'脂肪組織',col:'#d1a520'}, I:{zh:'小腸／腸道',col:'#d27f2c'},
+  S:{zh:'皮膚',col:'#c98d5c'}, AG:{zh:'腎上腺',col:'#6c8f2f'}, Go:{zh:'性腺',col:'#b5559b'},
+  GB:{zh:'膽囊',col:'#4d9a57'}, Sp:{zh:'脾臟',col:'#9a3b5c'}, BM:{zh:'骨髓',col:'#a8662d'}
+};
+function codeInfo(k){ return LOC[k] ? {...LOC[k], kind:'cell'} : ORG[k] ? {...ORG[k], kind:'org'} : null; }
+
+// org: 器官；cell: 細胞內區室；n: 每個節點所在位置（跨區時顯示）
+const WH = {
+ glycolysis:{org:['all','RBC'],cell:['c']},
+ pdh:{cell:['c','m'],n:['c','m']},
+ tca:{cell:['m']},
+ etc:{cell:['m','im','is'],n:['m','im','is','m','m']},
+ gng:{org:['L','K'],cell:['m','c','e'],n:['c','m','c','c','c','c','e']},
+ glycogenesis:{org:['L','M'],cell:['c']},
+ glycogenolysis:{org:['L','M'],cell:['c','e'],n:['c','c','c','e']},
+ ppp:{org:['L','A','RBC','AG'],cell:['c']},
+ fructose:{org:['L'],cell:['c']},
+ galactose:{org:['L'],cell:['c']},
+ uronic:{org:['L'],cell:['c','e'],n:['c','c','c','c','e']},
+ cori:{org:['M','B','L'],n:['M','M','M','L','L','L']},
+ 'glucose-alanine':{org:['M','B','L'],n:['M','M','M','L','L','L']},
+ lipolysis:{org:['A','B'],cell:['c']},
+ carnitine:{cell:['c','is','m'],n:['c','c','is','m','m']},
+ 'beta-ox':{org:['L','M','H'],cell:['m']},
+ 'odd-chain':{cell:['m']},
+ 'alpha-ox':{cell:['p']},
+ 'omega-ox':{org:['L','K'],cell:['e']},
+ 'perox-beta':{cell:['c','p','m'],n:['c','c','p','p','p','m']},
+ ketogenesis:{org:['L'],cell:['m']},
+ ketolysis:{org:['Br','H','M'],cell:['m']},
+ 'fa-synthesis':{org:['L','A'],cell:['m','c'],n:['m','c','c','c','c']},
+ elongation:{cell:['c','e'],n:['c','e','e','e','e','e','e']},
+ 'tag-synthesis':{org:['L','A','I'],cell:['e']},
+ phospholipid:{cell:['c','e'],n:['c','c','c','e']},
+ cholesterol:{org:['L'],cell:['c','e'],n:['c','c','c','e','c','c','e','e','e']},
+ 'bile-acid':{org:['L','GB','I'],cell:['e','p'],n:['L','L','L','L','I']},
+ steroid:{org:['AG','Go'],cell:['m','e'],n:['c','m','e','e','e','m']},
+ vitd:{org:['S','L','K'],n:['S','S','S','L','K']},
+ eicosanoid:{org:['all'],cell:['c','e']},
+ lipoprotein:{org:['L','B','A','M'],n:['L','B','B','all']},
+ transamination:{org:['L','M'],cell:['c','m']},
+ deamination:{org:['L'],cell:['m']},
+ urea:{org:['L'],cell:['m','c'],n:['m','m','m','c','c','c']},
+ 'carbon-skeleton':{org:['L'],cell:['m','c']},
+ neaa:{org:['L'],cell:['c','m']},
+ 'phe-tyr':{org:['L','Br','AG'],cell:['c']},
+ tryptophan:{org:['Br','I','L'],cell:['c']},
+ bcaa:{org:['M','L'],cell:['m']},
+ methionine:{org:['L'],cell:['c']},
+ 'heme-synthesis':{org:['BM','L'],cell:['m','c'],n:['m','m','c','c','c','c','m','m','m']},
+ 'heme-degradation':{org:['Sp','B','L','I','K'],n:['Sp','Sp','B','L','I','I']},
+ 'aa-derivatives':{org:['all']},
+ 'purine-denovo':{org:['L'],cell:['c']},
+ 'purine-salvage':{org:['Br','BM'],cell:['c']},
+ pyrimidine:{cell:['c','im'],n:['c','c','c','c','im','c','c','c']},
+ dntp:{cell:['c']},
+ 'purine-degradation':{org:['L','I'],cell:['c']},
+ alcohol:{org:['L'],cell:['c','m','e'],n:['c','c','m','m']},
+ drug:{org:['L','I','K'],cell:['e','c']},
+ antioxidant:{cell:['c','m','p']},
+ vitk:{org:['L'],cell:['e']}
+};
+
+// 環狀圖：ring 節點 [英文短名, 中文, 位置]；arcEdge = 每段弧對應步驟清單的第幾步（-1 = 無編號）
+// ann：每段弧旁的投入(in)/產出(out)/標記(tag)
+const RING = {
+ tca:{center:['TCA 循環','粒線體基質'],
+  ring:[['Oxaloacetate','草醯乙酸','m'],['Citrate','檸檬酸','m'],['Isocitrate','異檸檬酸','m'],['α-Ketoglutarate','α-酮戊二酸','m'],['Succinyl-CoA','琥珀醯-CoA','m'],['Succinate','琥珀酸','m'],['Fumarate','延胡索酸','m'],['Malate','蘋果酸','m']],
+  ann:{0:[['in','+ Acetyl-CoA']],2:[['out','NADH'],['out','CO₂']],3:[['out','NADH'],['out','CO₂']],4:[['out','GTP']],5:[['out','FADH₂']],6:[['in','+ H₂O']],7:[['out','NADH']]}},
+ urea:{center:['尿素循環','Urea cycle'], zones:{type:'h',a:'m',b:'c'},
+  ring:[['Ornithine','鳥胺酸','m'],['Citrulline','瓜胺酸','m'],['Argininosuccinate','精胺琥珀酸','c'],['Arginine','精胺酸','c']],
+  ang:[-135,-45,45,135], arcEdge:[1,2,3,4],
+  ann:{0:[['in','+ Carbamoyl-P'],['tag','(CPS-I：NH₄⁺+CO₂)']],1:[['in','+ Aspartate'],['in','+ ATP']],2:[['out','Fumarate → TCA']],3:[['out','Urea 尿素'],['in','+ H₂O']]}},
+ cori:{center:['Cori 循環','乳酸循環'], zones:{type:'v',a:'M',b:'L'},
+  ring:[['Glucose','葡萄糖','M'],['Pyruvate','丙酮酸','M'],['Lactate','乳酸','M'],['Lactate','乳酸','L'],['Pyruvate','丙酮酸','L'],['Glucose','葡萄糖','L']],
+  ang:[-128,-180,-232,-308,-360,-412], end:-488, arcEdge:[0,1,2,3,4,-1],
+  ann:{0:[['out','+2 ATP']],2:[['tag','經血液']],4:[['in','−6 ATP']],5:[['tag','經血液']]}},
+ 'glucose-alanine':{center:['葡萄糖-','丙胺酸循環'], zones:{type:'v',a:'M',b:'L'},
+  ring:[['Glucose','葡萄糖','M'],['Pyruvate','丙酮酸','M'],['Alanine','丙胺酸','M'],['Alanine','丙胺酸','L'],['Pyruvate','丙酮酸','L'],['Glucose','葡萄糖','L']],
+  ang:[-128,-180,-232,-308,-360,-412], end:-488, arcEdge:[0,1,2,3,4,-1],
+  ann:{1:[['in','+ NH₂（來自 BCAA）']],2:[['tag','經血液']],3:[['out','NH₂ → 尿素']],5:[['tag','經血液']]}},
+ 'beta-ox':{center:['β-氧化','每輪 −2 碳'],
+  ring:[['Acyl-CoA (Cₙ)','脂醯-CoA','m'],['Enoyl-CoA','烯醯-CoA','m'],['Hydroxyacyl-CoA','羥脂醯-CoA','m'],['Ketoacyl-CoA','酮脂醯-CoA','m']],
+  ann:{0:[['out','FADH₂']],1:[['in','+ H₂O']],2:[['out','NADH']],3:[['in','+ CoA'],['out','Acetyl-CoA'],['tag','→ Acyl-CoA (Cₙ₋₂)']]}},
+ methionine:{center:['甲硫胺酸','循環'],
+  ring:[['Methionine','甲硫胺酸','c'],['SAM','S-腺苷甲硫胺酸','c'],['SAH','S-腺苷同半胱胺酸','c'],['Homocysteine','同半胱胺酸','c']],
+  ann:{0:[['in','+ ATP']],1:[['out','−CH₃ 給甲基化反應']],2:[['out','Adenosine']],3:[['in','+ 5-CH₃-THF（葉酸）'],['in','+ B₁₂']]}},
+ vitk:{center:['維生素 K','循環'],
+  ring:[['Vitamin K (KH₂)','氫醌（活性）','e'],['K epoxide','環氧化物','e'],['K quinone','醌','e']],
+  ann:{0:[['out','Glu → Gla'],['tag','凝血因子活化']],1:[['tag','Warfarin ✕ 抑制']],2:[['in','+ NAD(P)H']]}}
+};
+// ===== App =====
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const sp = s => { const i = s.indexOf('|'); return i < 0 ? [s, ''] : [s.slice(0, i), s.slice(i + 1)]; };
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const byId = Object.fromEntries(P.map(p => [p.id, p]));
+const ORDER = P.map(p => p.id);
+const CIRC = '①②③④⑤⑥⑦⑧⑨⑩⑪⑫';
+
+const S = { mode: 'learn', blank: 'enz', lang: 'both', pr: false };
+const PRACT = P.filter(p => p.edges.length).map(p => p.id);
+function getScores() { try { return JSON.parse(localStorage.getItem('pw-scores') || '{}'); } catch (e) { return {}; } }
+function setScore(id, ok, tot) { try { const o = getScores(); const old = o[id]; o[id] = {ok, tot, best: Math.max(ok, old ? old.best || 0 : 0)}; localStorage.setItem('pw-scores', JSON.stringify(o)); } catch (e) {} }
+try { const v = JSON.parse(localStorage.getItem('pw-settings') || '{}'); Object.assign(S, {lang: v.lang || 'both', blank: v.blank || 'enz'}); } catch (e) {}
+function save() { try { localStorage.setItem('pw-settings', JSON.stringify({lang: S.lang, blank: S.blank})); } catch (e) {} }
+
+function chipClass(t) {
+  if (/NADPH|NAD\(P\)/.test(t)) return 'c-nadph';
+  if (/NADH|NAD⁺/.test(t)) return 'c-nadh';
+  if (/FAD|FMN/.test(t)) return 'c-fad';
+  if (/ATP|GTP|UTP|CTP/.test(t)) return 'c-atp';
+  if (/CO₂|H₂O|O₂|Pi|PPi/.test(t) && !/[Bb]₁|維生素/.test(t)) return 'c-co2';
+  if (/✗|✕/.test(t)) return 'c-bad';
+  return 'c-vit';
+}
+const chips = arr => (arr || []).map(t => `<span class="chip ${chipClass(t)}">${esc(t)}</span>`).join('');
+const label = (en, zh) => S.lang === 'en' || !zh ? en : `${en}｜${zh}`;
+
+/* ---------- 導覽 ---------- */
+function buildNav() {
+  let h = `<a class="nav-home" href="#/">🏠 總覽與代謝地圖</a><a class="nav-home nav-pr" href="#/practice">✏️ 練習模式</a>`;
+  for (const [k, c] of Object.entries(CATS)) {
+    const items = P.filter(p => p.cat === k);
+    h += `<div class="nav-cat" style="--acc:${c.color}"><a class="nav-cat-t" href="#/cat/${k}">${c.zh}<small>${items.length}</small></a><ul>` +
+      items.map(p => `<li><a href="#/${p.id}" data-s="${esc((p.zh + p.en).toLowerCase())}">${esc(p.zh)}</a></li>`).join('') + `</ul></div>`;
+  }
+  h += `<div class="nav-cat" style="--acc:var(--ink)"><span class="nav-cat-t">總表與口訣</span><ul>` +
+    Object.entries(REFS).map(([k, r]) => `<li><a href="#/ref/${k}" data-s="${esc(r.zh.toLowerCase())}">${esc(r.zh)}</a></li>`).join('') + `</ul></div>`;
+  $('#navlist').innerHTML = h;
+}
+function markNav() {
+  const h = location.hash || '#/';
+  document.querySelectorAll('#navlist a').forEach(a => a.classList.toggle('on', a.getAttribute('href') === h));
+}
+
+/* ---------- 人體器官圖 ---------- */
+const ORGPOS = { Br:[110,24], B:[110,68], H:[98,88], RBC:[84,104], Sp:[90,124], L:[127,112], GB:[124,130], AG:[118,142], K:[128,154], A:[86,168], I:[110,184], Go:[110,208], M:[160,150], S:[60,120], BM:[93,258] };
+function bodySVG(org, flow) {
+  const all = org.includes('all');
+  const fillBody = all ? 'color-mix(in srgb, #8a7f72 22%, var(--surface))' : 'var(--soft)';
+  let s = `<svg viewBox="0 0 220 300" class="body" role="img" aria-label="人體器官位置圖"><defs><marker id="ah-b" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ink)"/></marker></defs>`;
+  s += `<g fill="${fillBody}" stroke="var(--line2)" stroke-width="1.5"><circle cx="110" cy="28" r="20"/><rect x="76" y="52" width="68" height="168" rx="26"/><rect x="50" y="58" width="22" height="140" rx="11"/><rect x="148" y="58" width="22" height="140" rx="11"/><rect x="80" y="212" width="27" height="84" rx="12"/><rect x="113" y="212" width="27" height="84" rx="12"/></g>`;
+  for (const [k, [x, y]] of Object.entries(ORGPOS)) {
+    if (!org.includes(k)) { s += `<circle cx="${x}" cy="${y}" r="3" fill="var(--line2)"/>`; }
+  }
+  // flow arrows
+  if (flow) {
+    const seq = []; flow.forEach(c => { if (ORGPOS[c] && seq[seq.length - 1] !== c) seq.push(c); });
+    for (let i = 0; i < seq.length - 1; i++) {
+      const [x1, y1] = ORGPOS[seq[i]], [x2, y2] = ORGPOS[seq[i + 1]];
+      const mx = (x1 + x2) / 2 + (y2 - y1) * 0.35, my = (y1 + y2) / 2 - (x2 - x1) * 0.35;
+      s += `<path d="M${x1},${y1} Q${mx},${my} ${x2},${y2}" fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#ah-b)" opacity=".75"/>`;
+    }
+  }
+  for (const k of org) {
+    if (k === 'all') { s += `<text x="110" y="292" text-anchor="middle" class="olab" fill="#6d645a">全身細胞</text>`; continue; }
+    const p = ORGPOS[k]; if (!p) continue; const [x, y] = p; const o = ORG[k];
+    const right = x >= 110;
+    s += `<circle cx="${x}" cy="${y}" r="8" fill="${o.col}" stroke="var(--surface)" stroke-width="2"/>`;
+    s += `<text x="${right ? x + 12 : x - 12}" y="${y + 4}" text-anchor="${right ? 'start' : 'end'}" class="olab" fill="${o.col}">${o.zh}</text>`;
+  }
+  return s + `</svg>`;
+}
+
+/* ---------- 細胞區室圖（小） ---------- */
+function cellSVG(on) {
+  const has = k => on.includes(k);
+  const col = k => LOC[k].col;
+  const tint = (k, pct) => has(k) ? `color-mix(in srgb, ${col(k)} ${pct}%, var(--surface))` : 'var(--soft)';
+  const lab = (k, x, y, a = 'middle') => `<text x="${x}" y="${y}" text-anchor="${a}" class="clab ${has(k) ? 'on' : ''}" fill="${has(k) ? col(k) : 'var(--muted2)'}">${LOC[k].zh}</text>`;
+  let s = `<svg viewBox="0 0 320 210" class="cell" role="img" aria-label="細胞內位置圖">`;
+  s += `<rect x="4" y="4" width="312" height="202" rx="42" fill="${tint('c', 16)}" stroke="${has('c') ? col('c') : 'var(--line2)'}" stroke-width="${has('c') ? 3 : 1.5}"/>`;
+  s += lab('c', 24, 28, 'start');
+  // nucleus
+  s += `<circle cx="66" cy="120" r="34" fill="var(--soft2)" stroke="var(--line2)"/><text x="66" y="124" text-anchor="middle" class="clab" fill="var(--muted2)">細胞核</text>`;
+  // ER
+  const eS = has('e') ? col('e') : 'var(--line2)';
+  s += `<g fill="none" stroke="${eS}" stroke-width="${has('e') ? 4 : 2.5}" stroke-linecap="round"><path d="M108 80 q10 40 0 80"/><path d="M120 72 q14 48 0 96"/><path d="M132 66 q16 54 0 108"/></g>`;
+  s += lab('e', 122, 192);
+  // mitochondrion
+  s += `<ellipse cx="226" cy="74" rx="76" ry="40" fill="${tint('is', 35)}" stroke="var(--line2)" stroke-width="1.5"/>`;
+  s += `<ellipse cx="226" cy="74" rx="66" ry="31" fill="${tint('m', 24)}" stroke="${has('im') ? col('im') : 'var(--line2)'}" stroke-width="${has('im') ? 3.5 : 1.5}"/>`;
+  s += `<path d="M180 50 v18 M198 46 v22 M216 44 v20 M234 44 v20 M252 46 v22 M270 50 v18 M189 98 v-18 M207 102 v-20 M225 104 v-20 M243 102 v-20 M261 98 v-18" stroke="${has('im') ? col('im') : 'var(--line2)'}" stroke-width="${has('im') ? 2.5 : 1.2}" stroke-linecap="round"/>`;
+  s += `<text x="226" y="78" text-anchor="middle" class="clab ${has('m') ? 'on' : ''}" fill="${has('m') ? col('m') : 'var(--muted2)'}">基質</text>`;
+  s += `<text x="226" y="128" text-anchor="middle" class="clab" fill="var(--muted)">粒線體</text>`;
+  if (has('im')) s += `<text x="306" y="44" text-anchor="end" class="clab on" fill="${col('im')}">內膜</text>`;
+  if (has('is')) s += `<text x="150" y="40" text-anchor="middle" class="clab on" fill="${col('is')}">膜間隙</text>`;
+  // peroxisome
+  s += `<circle cx="248" cy="164" r="22" fill="${tint('p', 30)}" stroke="${has('p') ? col('p') : 'var(--line2)'}" stroke-width="${has('p') ? 3 : 1.5}"/>`;
+  s += lab('p', 248, 168);
+  return s + `</svg>`;
+}
+
+/* ---------- 環狀圖 ---------- */
+function ringSVG(p, R0, hideNames) {
+  const n = R0.ring.length;
+  const R = n >= 7 ? 215 : n >= 6 ? 175 : 140, W = 2 * R + 300, H = 2 * R + 190, cx = W / 2, cy = H / 2;
+  const bws = R0.ring.map(([en]) => Math.max(96, (hideNames ? 1 : en.length) * 8.4 + 20)), BH = 46;
+  const offAt = (i, a) => { const r = a * Math.PI / 180; return ((Math.abs(Math.sin(r)) * bws[i] / 2 + Math.abs(Math.cos(r)) * BH / 2) / R) * 180 / Math.PI + 4; };
+  const ang = R0.ang || R0.ring.map((_, i) => -90 + i * 360 / n);
+  const end = R0.end != null ? R0.end : (R0.ang ? ang[0] + 360 : ang[0] + 360);
+  const dir = (ang[1] ?? end) > ang[0] ? 1 : -1;
+  const pt = (a, r = R) => [cx + r * Math.cos(a * Math.PI / 180), cy + r * Math.sin(a * Math.PI / 180)];
+  const colOf = k => (codeInfo(k) || {col: 'var(--acc)'}).col;
+  let s = `<svg viewBox="0 0 ${W} ${H}" class="ring" role="img" aria-label="${esc(p.zh)} 環狀圖"><defs><marker id="ah-r-${p.id}" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--acc)"/></marker></defs>`;
+  if (R0.zones) {
+    const z = R0.zones, A = codeInfo(z.a), B = codeInfo(z.b);
+    if (z.type === 'h') {
+      s += `<rect x="0" y="0" width="${W}" height="${cy}" rx="18" fill="${A.col}" opacity=".09"/><rect x="0" y="${cy}" width="${W}" height="${H - cy}" rx="18" fill="${B.col}" opacity=".09"/>`;
+      s += `<line x1="8" y1="${cy}" x2="${W - 8}" y2="${cy}" stroke="var(--muted2)" stroke-dasharray="6 5"/>`;
+      s += `<text x="14" y="26" class="zlab" fill="${A.col}">${A.zh}</text><text x="14" y="${H - 14}" class="zlab" fill="${B.col}">${B.zh}</text>`;
+    } else {
+      s += `<rect x="0" y="0" width="${cx}" height="${H}" rx="18" fill="${A.col}" opacity=".09"/><rect x="${cx}" y="0" width="${W - cx}" height="${H}" rx="18" fill="${B.col}" opacity=".09"/>`;
+      s += `<line x1="${cx}" y1="8" x2="${cx}" y2="${H - 8}" stroke="var(--muted2)" stroke-dasharray="6 5"/>`;
+      s += `<text x="14" y="26" class="zlab" fill="${A.col}">${A.zh}</text><text x="${W - 14}" y="26" text-anchor="end" class="zlab" fill="${B.col}">${B.zh}</text>`;
+    }
+  }
+  // arcs
+  for (let i = 0; i < n; i++) {
+    const a1 = ang[i], a2 = i < n - 1 ? ang[i + 1] : end;
+    const j = (i + 1) % n;
+    const sA = a1 + dir * offAt(i, a1), eA = a2 - dir * offAt(j, a2);
+    const [x1, y1] = pt(sA), [x2, y2] = pt(eA);
+    const large = Math.abs(eA - sA) > 180 ? 1 : 0, sweep = dir > 0 ? 1 : 0;
+    s += `<path d="M${x1.toFixed(1)},${y1.toFixed(1)} A${R},${R} 0 ${large} ${sweep} ${x2.toFixed(1)},${y2.toFixed(1)}" fill="none" stroke="var(--acc)" stroke-width="3" marker-end="url(#ah-r-${p.id})"/>`;
+    const m = (a1 + a2) / 2; const [mx, my] = pt(m);
+    const ei = R0.arcEdge ? R0.arcEdge[i] : i;
+    if (ei >= 0) s += `<circle cx="${mx}" cy="${my}" r="13" fill="var(--acc)"/><text x="${mx}" y="${my + 5}" text-anchor="middle" class="rnum">${ei + 1}</text>`;
+    const an = (R0.ann || {})[i];
+    if (an) {
+      const [ax, ay] = pt(m, R + 50); const c = Math.cos(m * Math.PI / 180);
+      const anchor = c > 0.3 ? 'start' : c < -0.3 ? 'end' : 'middle';
+      const y0 = ay - (an.length - 1) * 9 + 5;
+      an.forEach(([t, txt], j) => { s += `<text x="${ax.toFixed(1)}" y="${(y0 + j * 18).toFixed(1)}" text-anchor="${anchor}" class="ran ran-${t}">${esc(txt)}</text>`; });
+    }
+  }
+  // nodes
+  R0.ring.forEach(([en, zh, w], i) => {
+    const [x, y] = pt(ang[i]);
+    const shown = hideNames ? '?' : en;
+    const bw = bws[i], bh = BH;
+    s += `<rect x="${(x - bw / 2).toFixed(1)}" y="${y - bh / 2}" width="${bw.toFixed(1)}" height="${bh}" rx="10" fill="var(--surface)" stroke="${colOf(w)}" stroke-width="2.5"/>`;
+    s += `<text x="${x}" y="${hideNames ? y + 5 : y - 4}" text-anchor="middle" class="rn-en">${esc(shown)}</text>`;
+    if (!hideNames) s += `<text x="${x}" y="${y + 15}" text-anchor="middle" class="rn-zh">${esc(zh)}</text>`;
+  });
+  s += `<text x="${cx}" y="${cy - 2}" text-anchor="middle" class="rc1">${esc(R0.center[0])}</text><text x="${cx}" y="${cy + 20}" text-anchor="middle" class="rc2">${esc(R0.center[1] || '')}</text>`;
+  return s + `</svg>`;
+}
+
+/* ---------- 位置面板 ---------- */
+function wherePanel(p) {
+  const w = WH[p.id]; if (!w) return '';
+  let h = `<section class="where"><h3>📍 作用位置</h3><div class="where-grid">`;
+  if (w.org) {
+    const flow = w.n && w.n.some(k => ORG[k]) ? w.n : null;
+    h += `<figure>${bodySVG(w.org, flow)}<figcaption>人體器官${flow ? '（虛線箭頭＝物質移動方向）' : ''}</figcaption></figure>`;
+  }
+  if (w.cell) h += `<figure>${cellSVG(w.cell)}<figcaption>細胞內位置（亮起處）</figcaption></figure>`;
+  h += `</div><p class="where-txt">${esc(p.loc)}</p></section>`;
+  return h;
+}
+
+/* ---------- 路徑流程（直式） ---------- */
+function pool(p, kind) {
+  const mine = kind === 'enz' ? p.edges.map(e => e.e) : p.nodes.slice(1);
+  const uniq = [...new Set(mine)];
+  const others = [...new Set(P.filter(q => q.cat === p.cat && q.id !== p.id).flatMap(q => kind === 'enz' ? q.edges.map(e => e.e) : q.nodes))].filter(x => !uniq.includes(x));
+  const extra = shuffle(others).slice(0, Math.max(2, 7 - uniq.length));
+  return shuffle(uniq.concat(extra));
+}
+function sel(opts, ans) {
+  return `<select class="q" data-ans="${esc(ans)}"><option value="">— 選擇 —</option>` +
+    opts.map(o => { const [en, zh] = sp(o); return `<option value="${esc(o)}">${esc(label(en, zh))}</option>`; }).join('') + `</select><span class="fb"></span>`;
+}
+function flowHTML(p) {
+  const w = WH[p.id] || {}; const n = w.n;
+  const multi = n && new Set(n).size > 1;
+  const quiz = S.mode === 'quiz';
+  const optE = quiz && S.blank === 'enz' ? pool(p, 'enz') : null;
+  const optN = quiz && S.blank === 'met' ? pool(p, 'met') : null;
+  let h = `<div class="flow">`;
+  p.nodes.forEach((nd, i) => {
+    const [en, zh] = sp(nd);
+    const ci = multi ? codeInfo(n[i]) : null;
+    const st = ci ? ` style="--nc:${ci.col}"` : '';
+    const tag = ci ? `<span class="ntag" style="background:${ci.col}">${ci.zh}</span>` : '';
+    if (optN && i > 0) h += `<div class="node q-node"${st}>${tag}${sel(optN, nd)}</div>`;
+    else h += `<div class="node"${st}>${tag}<b>${esc(en)}</b>${S.lang !== 'en' && zh ? `<small>${esc(zh)}</small>` : ''}</div>`;
+    if (i < p.edges.length) {
+      const e = p.edges[i]; const [een, ezh] = sp(e.e);
+      let cross = '';
+      if (multi && n[i] !== n[i + 1]) { const a = codeInfo(n[i]), b = codeInfo(n[i + 1]); cross = `<div class="cross">⇢ 移動：<b style="color:${a.col}">${a.zh}</b> → <b style="color:${b.col}">${b.zh}</b></div>`; }
+      const badges = (e.rl ? `<span class="bd bd-rl">限速 Rate-limiting</span>` : '') + (e.irr ? `<span class="bd bd-irr">不可逆</span>` : '');
+      const enz = optE ? `<div class="enz q-enz">${sel(optE, e.e)}</div>` :
+        `<div class="enz"><b>${esc(een)}</b>${S.lang !== 'en' && ezh ? `<small>${esc(ezh)}</small>` : ''}</div>`;
+      h += `<div class="edge"><div class="arr"><span class="num">${i + 1}</span></div><div class="ebody">${cross}${enz}<div class="meta">${badges}${chips(e.c)}</div>${e.n ? `<div class="enote">${esc(e.n)}</div>` : ''}</div></div>`;
+    }
+  });
+  if (p.loop) h += `<div class="loop">↻ ${esc(p.loop)}</div>`;
+  return h + `</div>`;
+}
+
+/* ---------- 頁面 ---------- */
+function infoTable(p) {
+  const rows = [['位置', p.loc], ['功能', p.func], ['限速／關鍵酶', p.rl], ['輔因子', p.cof], ['相關疾病／重點', p.dis]];
+  return `<table class="info">${rows.map(([a, b]) => `<tr><th>${a}</th><td>${esc(b)}</td></tr>`).join('')}</table>`;
+}
+function tableHTML(t) {
+  return `<div class="tw"><table class="grid"><thead><tr>${t.head.map(x => `<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>${t.rows.map(r => `<tr>${r.map(x => `<td>${esc(x)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+}
+function controls(p) {
+  if (!p.edges.length) return '';
+  return `<div class="ctrl">
+    <div class="seg" role="group"><button data-mode="learn" class="${S.mode === 'learn' ? 'on' : ''}">📖 學習</button><button data-mode="quiz" class="${S.mode === 'quiz' ? 'on' : ''}">✏️ 練習填空</button></div>
+    ${S.mode === 'quiz' ? `<div class="seg"><button data-blank="enz" class="${S.blank === 'enz' ? 'on' : ''}">挖空酵素</button><button data-blank="met" class="${S.blank === 'met' ? 'on' : ''}">挖空產物</button></div>` : ''}
+    <div class="seg"><button data-lang="both" class="${S.lang === 'both' ? 'on' : ''}">中英</button><button data-lang="en" class="${S.lang === 'en' ? 'on' : ''}">只英文</button></div>
+  </div>
+  ${S.mode === 'quiz' && !S.pr ? `<div class="qbar"><button id="chk" class="btn pri">對答案</button><button id="reshuf" class="btn">重新出題</button><button id="reveal" class="btn">顯示答案</button><span id="score"></span></div>` : ''}`;
+}
+function renderPath(id) {
+  const p = byId[id]; const c = CATS[p.cat]; const pr = S.pr;
+  const LIST = pr ? PRACT : ORDER; const base = pr ? '#/q/' : '#/';
+  const idx = LIST.indexOf(id); const prev = byId[LIST[idx - 1]], next = byId[LIST[idx + 1]];
+  const R0 = RING[id];
+  if (pr) { renderPractPath(p, c, R0, prev, next, base); return; }
+  let h = `<article class="page" style="--acc:${c.color}">
+    <a class="crumb" href="#/cat/${p.cat}">${c.zh}</a>
+    <h1>${esc(p.zh)}${p.cycle ? ' <span class="bd bd-cyc">↻ 循環</span>' : ''}</h1><p class="en-t">${esc(p.en)}</p>
+    ${infoTable(p)}
+    ${wherePanel(p)}
+    ${R0 ? `<section><h3>🔄 循環全貌</h3><div class="ringwrap">${ringSVG(p, R0, S.mode === 'quiz' && S.blank === 'met')}</div><p class="hint">圓圈數字＝下方步驟編號；綠字＝投入、橘字＝產出。</p></section>` : ''}
+    ${p.edges.length ? `<section><h3>🧭 逐步路徑</h3>${controls(p)}${flowHTML(p)}</section>` : ''}
+    ${p.table ? `<section><h3>📋 整理表</h3>${tableHTML(p.table)}</section>` : ''}
+    ${p.branches ? `<section><h3>🔀 分支路徑</h3><ul class="br">${p.branches.map(b => `<li>${esc(b)}</li>`).join('')}</ul></section>` : ''}
+    ${p.key ? `<section class="keys"><h3>⭐ 國考重點</h3><ul>${p.key.map(k => `<li>${esc(k)}</li>`).join('')}</ul></section>` : ''}
+    <nav class="pn">${prev ? `<a href="#/${prev.id}">← ${esc(prev.zh)}</a>` : '<span></span>'}${next ? `<a href="#/${next.id}">${esc(next.zh)} →</a>` : '<span></span>'}</nav>
+  </article>`;
+  $('#main').innerHTML = h;
+  bindPath(id);
+}
+function renderPractPath(p, c, R0, prev, next, base) {
+  const sc = getScores()[p.id];
+  const hints = `${infoTable(p)}${wherePanel(p)}${p.table ? `<section><h3>📋 整理表</h3>${tableHTML(p.table)}</section>` : ''}${p.branches ? `<section><h3>🔀 分支路徑</h3><ul class="br">${p.branches.map(b => `<li>${esc(b)}</li>`).join('')}</ul></section>` : ''}${p.key ? `<section class="keys"><h3>⭐ 國考重點</h3><ul>${p.key.map(k => `<li>${esc(k)}</li>`).join('')}</ul></section>` : ''}`;
+  $('#main').innerHTML = `<article class="page" style="--acc:${c.color}">
+    <a class="crumb" href="#/practice">← 練習清單</a>
+    <h1>✏️ ${esc(p.zh)}</h1><p class="en-t">${esc(p.en)}${sc ? `　·　上次 ${sc.ok}/${sc.tot}，最佳 ${sc.best}/${sc.tot}` : ''}</p>
+    ${controls(p)}
+    ${R0 ? `<div class="ringwrap">${ringSVG(p, R0, S.blank === 'met')}</div>` : ''}
+    <section>${flowHTML(p)}</section>
+    <div class="qbar qbar2"><button class="btn pri" data-act="chk">對答案</button><button class="btn" data-act="reshuf">重新出題</button><span class="score2"></span></div>
+    <details class="hintbox"><summary>💡 看提示（重點表、作用位置、國考重點）</summary>${hints}</details>
+    <p class="learnlink"><a href="#/${p.id}">📖 到學習頁看完整說明</a></p>
+    <nav class="pn">${prev ? `<a href="${base}${prev.id}">← ${esc(prev.zh)}</a>` : '<span></span>'}<a href="#" id="rnd">🎲 隨機下一條</a>${next ? `<a href="${base}${next.id}">${esc(next.zh)} →</a>` : '<span></span>'}</nav>
+  </article>`;
+  bindPath(p.id);
+  const r = $('#rnd'); r.onclick = e => { e.preventDefault(); const o = PRACT.filter(x => x !== p.id); location.hash = '#/q/' + o[Math.floor(Math.random() * o.length)]; };
+}
+function renderPractice() {
+  const sc = getScores(); const done = PRACT.filter(id => sc[id]).length;
+  $('#main').innerHTML = `<article class="page" style="--acc:var(--carb)">
+   <h1>✏️ 代謝路徑練習</h1><p class="en-t">選一條路徑，用下拉選單填出酵素或產物</p>
+   <div class="lead">
+     <div class="ctrl" style="margin:0 0 8px">
+       <span class="lbl">挖空：</span><div class="seg"><button data-pb="enz" class="${S.blank === 'enz' ? 'on' : ''}">酵素</button><button data-pb="met" class="${S.blank === 'met' ? 'on' : ''}">產物</button></div>
+       <span class="lbl">語言：</span><div class="seg"><button data-pl="both" class="${S.lang === 'both' ? 'on' : ''}">中英</button><button data-pl="en" class="${S.lang === 'en' ? 'on' : ''}">只英文</button></div>
+     </div>
+     <button class="btn pri big" id="rnd0">🎲 隨機抽一條開始</button>
+     <span class="prog">已練習 ${done} / ${PRACT.length} 條</span>
+   </div>
+   ${Object.entries(CATS).map(([k, c]) => `<h3 style="--acc:${c.color}">${c.zh}</h3><div class="plist" style="--acc:${c.color}">${P.filter(p => p.cat === k && p.edges.length).map(p => { const s = sc[p.id]; const full = s && s.best === s.tot; return `<a class="pitem${s ? ' done' : ''}" href="#/q/${p.id}"><b>${esc(p.zh)}</b><small>${p.edges.length} 格${p.cycle ? ' · ↻' : ''}</small>${s ? `<span class="pscore${full ? ' full' : ''}">${full ? '★ ' : ''}${s.best}/${s.tot}</span>` : ''}</a>`; }).join('')}</div>`).join('')}
+   ${done ? `<p style="margin-top:24px"><button class="btn" id="clr">清除我的練習紀錄</button></p>` : ''}
+  </article>`;
+  document.querySelectorAll('[data-pb]').forEach(b => b.onclick = () => { S.blank = b.dataset.pb; save(); renderPractice(); });
+  document.querySelectorAll('[data-pl]').forEach(b => b.onclick = () => { S.lang = b.dataset.pl; save(); renderPractice(); });
+  $('#rnd0').onclick = () => { location.hash = '#/q/' + PRACT[Math.floor(Math.random() * PRACT.length)]; };
+  const clr = $('#clr'); if (clr) clr.onclick = () => { try { localStorage.removeItem('pw-scores'); } catch (e) {} renderPractice(); };
+}
+function bindPath(id) {
+  document.querySelectorAll('[data-mode]').forEach(b => b.onclick = () => { if (S.pr && b.dataset.mode === 'learn') { location.hash = '#/' + id; return; } S.mode = b.dataset.mode; renderPath(id); });
+  document.querySelectorAll('[data-blank]').forEach(b => b.onclick = () => { S.blank = b.dataset.blank; save(); renderPath(id); });
+  document.querySelectorAll('[data-lang]').forEach(b => b.onclick = () => { S.lang = b.dataset.lang; save(); renderPath(id); });
+  const chk = $('#chk') || document.querySelector('[data-act=chk]'); if (!chk) return;
+  const check = () => {
+    let ok = 0, tot = 0;
+    document.querySelectorAll('select.q').forEach(s => {
+      tot++; const right = s.value === s.dataset.ans; if (right) ok++;
+      s.classList.toggle('ok', right); s.classList.toggle('bad', !right);
+      const [en, zh] = sp(s.dataset.ans);
+      s.nextElementSibling.textContent = right ? '✓' : `✗ 正解：${label(en, zh)}`;
+      s.nextElementSibling.className = 'fb ' + (right ? 'ok' : 'bad');
+    });
+    const msg = `${ok} / ${tot}${ok === tot ? ' 🎉 全對！' : ''}`;
+    document.querySelectorAll('#score, .score2').forEach(e => e.textContent = msg);
+    return [ok, tot];
+  };
+  let revealed = false;
+  document.querySelectorAll('#chk, [data-act=chk]').forEach(b => b.onclick = () => { const [ok, tot] = check(); if (!revealed) setScore(id, ok, tot); });
+  document.querySelectorAll('#reshuf, [data-act=reshuf]').forEach(b => b.onclick = () => renderPath(id));
+  const rv = $('#reveal'); if (rv) rv.onclick = () => { revealed = true; document.querySelectorAll('select.q').forEach(s => s.value = s.dataset.ans); check(); };
+}
+
+function renderCat(k) {
+  const c = CATS[k]; const items = P.filter(p => p.cat === k);
+  $('#main').innerHTML = `<article class="page" style="--acc:${c.color}"><h1>${c.zh}</h1><p class="en-t">${c.en}</p><p class="lead">${esc(c.intro)}</p>
+   <div class="tw"><table class="grid cat"><thead><tr><th>路徑</th><th>位置</th><th>功能</th><th>限速／關鍵酶</th><th>輔因子</th><th>相關疾病／重點</th></tr></thead><tbody>
+   ${items.map(p => `<tr><td><a href="#/${p.id}"><b>${esc(p.zh)}</b></a><br><small>${esc(p.en)}</small></td><td>${esc(p.loc)}</td><td>${esc(p.func)}</td><td>${esc(p.rl)}</td><td>${esc(p.cof)}</td><td>${esc(p.dis)}</td></tr>`).join('')}
+   </tbody></table></div></article>`;
+}
+function renderRef(k) {
+  const r = REFS[k];
+  $('#main').innerHTML = `<article class="page" style="--acc:var(--other)"><h1>${r.zh}</h1><p class="en-t">${r.en}</p><p class="lead">${esc(r.intro)}</p>
+   ${k === 'loc' ? `<section><h3>🧫 細胞位置地圖（點路徑名稱可進入）</h3><div class="cellmapwrap">${cellMapSVG()}</div></section>` : ''}
+   ${tableHTML(r)}${r.tips ? `<section class="keys"><h3>🧠 記憶口訣</h3><ul>${r.tips.map(t => `<li>${esc(t)}</li>`).join('')}</ul></section>` : ''}</article>`;
+  bindGo();
+}
+
+/* ---------- 首頁：代謝地圖 + 細胞地圖 ---------- */
+function hubSVG() {
+  const N = {
+    glycogen:[62,40,'Glycogen','肝醣','glycogenesis'], glucose:[212,40,'Glucose','葡萄糖','glycolysis'], nuc:[362,40,'Nucleotides','核苷酸','purine-denovo'],
+    g6p:[212,115,'G6P','葡萄糖-6-磷酸','glycolysis'], ppp:[362,115,'NADPH・Ribose','五碳糖途徑','ppp'],
+    lac:[62,195,'Lactate','乳酸','cori'], pyr:[212,195,'Pyruvate','丙酮酸','glycolysis'], aa:[362,195,'Amino acids','胺基酸','transamination'],
+    fa:[62,275,'Fatty acids','脂肪酸','beta-ox'], acoa:[212,275,'Acetyl-CoA','乙醯-CoA','pdh'], urea:[362,275,'Urea','尿素','urea'],
+    tag:[62,355,'TAG','三酸甘油酯','tag-synthesis'], tca:[212,355,'TCA cycle','檸檬酸循環','tca'], ket:[362,355,'Ketone bodies','酮體','ketogenesis'],
+    atp:[212,435,'ETC → ATP','電子傳遞鏈','etc'], chol:[362,435,'Cholesterol','膽固醇','cholesterol']
+  };
+  const E = [['glucose','glycogen','⇄','glycogenesis','carb'],['glucose','g6p','','glycolysis','carb'],['g6p','ppp','五碳糖','ppp','carb'],['ppp','nuc','核糖','purine-denovo','nuc'],
+    ['g6p','pyr','糖解 ⇅ 糖質新生','glycolysis','carb'],['pyr','lac','Cori','cori','carb'],['pyr','acoa','PDH','pdh','carb'],['aa','pyr','碳骨架','carbon-skeleton','protein'],
+    ['aa','urea','尿素循環','urea','protein'],['fa','acoa','β-ox','beta-ox','lipid'],['acoa','ket','酮體生成','ketogenesis','lipid'],['acoa','chol','膽固醇合成','cholesterol','lipid'],
+    ['acoa','tca','','tca','carb'],['tca','atp','NADH・FADH₂','etc','carb'],['fa','tag','TAG 合成','tag-synthesis','lipid'],['aa','acoa','','carbon-skeleton','protein']];
+  const hw = 54, hh = 18;
+  const clip = (x1, y1, x2, y2) => { const dx = x2 - x1, dy = y2 - y1; const t = Math.min(dx ? hw / Math.abs(dx) : 9, dy ? hh / Math.abs(dy) : 9); return [x1 + dx * t, y1 + dy * t, x2 - dx * t, y2 - dy * t]; };
+  let s = `<svg viewBox="0 0 424 470" class="hub" role="img" aria-label="代謝總地圖"><defs><marker id="ah-h" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--muted)"/></marker></defs>`;
+  for (const [a, b, l, go, cat] of E) {
+    const [x1, y1] = N[a], [x2, y2] = N[b]; const [sx, sy, ex, ey] = clip(x1, y1, x2, y2);
+    s += `<line x1="${sx}" y1="${sy}" x2="${ex}" y2="${ey}" stroke="${CATS[cat].color}" stroke-width="2.4" marker-end="url(#ah-h)"/>`;
+    if (l) { const f = Math.abs(x1 - x2) > 5 && Math.abs(y1 - y2) > 5 ? 0.4 : 0.5; const mx = x1 + (x2 - x1) * f, my = y1 + (y2 - y1) * f; const vert = Math.abs(x1 - x2) < 5, diag = !vert && Math.abs(y1 - y2) > 5;
+      s += `<text x="${vert ? mx + 6 : diag ? mx + 8 : mx}" y="${vert ? my + 4 : diag ? my - 6 : my - 5}" text-anchor="${vert || diag ? 'start' : 'middle'}" class="hl go" data-go="${go}">${l}</text>`; }
+  }
+  for (const [x, y, en, zh, go] of Object.values(N)) {
+    s += `<g class="go" data-go="${go}"><rect x="${x - hw}" y="${y - hh}" width="${hw * 2}" height="${hh * 2}" rx="9" fill="var(--surface)" stroke="var(--ink)" stroke-width="1.3"/><text x="${x}" y="${y - 2}" text-anchor="middle" class="hn">${en}</text><text x="${x}" y="${y + 11}" text-anchor="middle" class="hz">${zh}</text></g>`;
+  }
+  return s + `</svg>`;
+}
+function cellMapSVG() {
+  const L = LOC; const it = (x, y, t, go, col, a = 'start') => `<text x="${x}" y="${y}" text-anchor="${a}" class="cm go" data-go="${go}" fill="${col || 'var(--ink)'}">${t}</text>`;
+  let s = `<svg viewBox="0 0 360 340" class="cellmap" role="img" aria-label="細胞位置地圖">`;
+  s += `<rect x="4" y="4" width="352" height="332" rx="40" fill="color-mix(in srgb, ${L.c.col} 12%, var(--surface))" stroke="${L.c.col}" stroke-width="3"/>`;
+  s += `<text x="22" y="32" class="cmt" fill="${L.c.col}">細胞質 Cytosol</text>`;
+  [['糖解作用','glycolysis'],['五碳糖磷酸途徑','ppp'],['脂肪酸合成','fa-synthesis'],['肝醣合成／分解','glycogenesis'],['果糖、半乳糖代謝','fructose'],['嘌呤／嘧啶合成','purine-denovo'],['甲硫胺酸循環','methionine']].forEach(([t, g], i) => s += it(22, 54 + i * 17, '• ' + t, g));
+  // mito
+  s += `<ellipse cx="258" cy="96" rx="94" ry="74" fill="color-mix(in srgb, ${L.is.col} 25%, var(--surface))" stroke="var(--line2)"/>`;
+  s += `<ellipse cx="258" cy="96" rx="82" ry="62" fill="color-mix(in srgb, ${L.m.col} 16%, var(--surface))" stroke="${L.im.col}" stroke-width="3"/>`;
+  s += `<text x="258" y="20" text-anchor="middle" class="cmt" fill="${L.m.col}">粒線體基質</text>`;
+  [['PDH 丙酮酸氧化','pdh'],['TCA 循環','tca'],['β-氧化','beta-ox'],['酮體生成','ketogenesis'],['奇數碳脂肪酸','odd-chain']].forEach(([t, g], i) => s += it(258, 58 + i * 17, t, g, L.m.col, 'middle'));
+  s += it(258, 144, '內膜：電子傳遞鏈', 'etc', L.im.col, 'middle');
+  // straddle
+  s += `<rect x="104" y="176" width="212" height="62" rx="14" fill="var(--surface)" stroke="${L.m.col}" stroke-width="2" stroke-dasharray="6 4"/>`;
+  s += `<text x="210" y="193" text-anchor="middle" class="cms">粒線體＋細胞質（口訣：糖尿血）</text>`;
+  s += it(150, 214, '糖質新生', 'gng', L.m.col, 'middle') + it(212, 214, '尿素循環', 'urea', L.m.col, 'middle') + it(276, 214, '血基質合成', 'heme-synthesis', L.m.col, 'middle');
+  s += `<text x="210" y="231" text-anchor="middle" class="cms">另：脂肪酸合成起點（檸檬酸穿梭）</text>`;
+  // nucleus
+  s += `<circle cx="58" cy="286" r="34" fill="var(--soft2)" stroke="var(--line2)"/><text x="58" y="290" text-anchor="middle" class="cms">細胞核</text>`;
+  // ER
+  s += `<rect x="100" y="246" width="136" height="84" rx="16" fill="color-mix(in srgb, ${L.e.col} 14%, var(--surface))" stroke="${L.e.col}" stroke-width="2.5"/>`;
+  s += `<text x="112" y="264" class="cmt" fill="${L.e.col}">內質網 ER</text>`;
+  [['ω-氧化','omega-ox'],['延長與去飽和','elongation'],['磷脂質合成','phospholipid'],['P450 解毒','drug']].forEach(([t, g], i) => s += it(112, 280 + i * 14, '• ' + t, g, L.e.col));
+  // peroxisome
+  s += `<circle cx="294" cy="288" r="46" fill="color-mix(in srgb, ${L.p.col} 18%, var(--surface))" stroke="${L.p.col}" stroke-width="2.5"/>`;
+  s += `<text x="294" y="268" text-anchor="middle" class="cmt" fill="${L.p.col}">過氧化體</text>`;
+  s += it(294, 288, 'α-氧化', 'alpha-ox', L.p.col, 'middle') + it(294, 306, 'VLCFA β-氧化', 'perox-beta', L.p.col, 'middle');
+  return s + `</svg>`;
+}
+function renderHome() {
+  $('#main').innerHTML = `<article class="page home" style="--acc:var(--carb)">
+   <h1>代謝路徑圖解</h1><p class="en-t">Metabolic Pathways · 營養師國考程度</p>
+   <p class="lead">代謝 = <b>分解</b>（氧化，取得能量與還原力）＋ <b>合成</b>（用能量與還原力，把原料組成身體需要的東西），兩者靠 <span class="chip c-atp">ATP</span> <span class="chip c-nadh">NADH</span> <span class="chip c-nadph">NADPH</span> 串起來。</p>
+   <div class="tw"><table class="grid"><thead><tr><th>代謝管理的東西</th><th>意思</th><th>和氧化還原的關係</th></tr></thead><tbody>
+    <tr><td>能量（ATP）</td><td>細胞做事的貨幣</td><td>高度相關：主要靠氧化營養素產生</td></tr>
+    <tr><td>還原力（NADH、NADPH）</td><td>搬運電子的工具</td><td>就是氧化還原本身</td></tr>
+    <tr><td>建材（碳骨架、氮）</td><td>建造身體的原料</td><td>部分相關：許多步驟是轉移、連接、改結構</td></tr></tbody></table></div>
+   <div class="q3"><b>讀每條路徑時問三個問題：</b><ol><li>這條路在分解還是合成？</li><li>它產生或消耗多少 ATP、NADH、NADPH？</li><li>產物拿去做什麼？</li></ol></div>
+   <div class="maps">
+    <section><h3>🗺️ 代謝總地圖 <small>點方塊或路徑名稱進入</small></h3><div class="hubwrap">${hubSVG()}</div>
+     <div class="legend">${Object.values(CATS).map(c => `<span><i style="background:${c.color}"></i>${c.zh}</span>`).join('')}</div></section>
+    <section><h3>🧫 細胞位置地圖 <small>每條路徑在哪裡進行</small></h3><div class="cellmapwrap">${cellMapSVG()}</div></section>
+   </div>
+   <a class="prbanner" href="#/practice"><b>✏️ 進入練習模式</b><span>${PRACT.length} 條路徑・下拉選單填空・自動記錄成績</span></a>
+   <h3>📚 分類</h3><div class="cards">${Object.entries(CATS).map(([k, c]) => `<a class="card" href="#/cat/${k}" style="--acc:${c.color}"><b>${c.zh}</b><small>${P.filter(p => p.cat === k).length} 條路徑</small><span>${esc(c.intro)}</span></a>`).join('')}
+    ${Object.entries(REFS).map(([k, r]) => `<a class="card" href="#/ref/${k}" style="--acc:var(--muted)"><b>${r.zh}</b><span>${esc(r.intro)}</span></a>`).join('')}</div>
+   <h3>🎨 顏色說明</h3><p class="legend2"><span class="chip c-atp">ATP／GTP</span><span class="chip c-nadh">NADH</span><span class="chip c-nadph">NADPH</span><span class="chip c-fad">FAD／FADH₂</span><span class="chip c-vit">維生素／礦物質輔因子</span><span class="chip c-co2">CO₂／H₂O／O₂</span><span class="bd bd-rl">限速</span><span class="bd bd-irr">不可逆</span></p>
+  </article>`;
+  bindGo();
+}
+function bindGo() { document.querySelectorAll('.go[data-go]').forEach(g => g.addEventListener('click', () => location.hash = '#/' + g.dataset.go)); }
+
+/* ---------- 路由 ---------- */
+function route() {
+  let h = (location.hash || '#/').slice(2);
+  if (!location.hash && /practice|quiz/.test(location.search)) h = 'practice';
+  S.pr = false;
+  if (h === 'practice') renderPractice();
+  else if (h.startsWith('q/') && byId[h.slice(2)] && byId[h.slice(2)].edges.length) { S.pr = true; S.mode = 'quiz'; renderPath(h.slice(2)); }
+  else if (h.startsWith('cat/') && CATS[h.slice(4)]) renderCat(h.slice(4));
+  else if (h.startsWith('ref/') && REFS[h.slice(4)]) renderRef(h.slice(4));
+  else if (byId[h]) { renderPath(h); }
+  else renderHome();
+  markNav(); window.scrollTo(0, 0);
+  document.body.classList.remove('navopen');
+}
+window.addEventListener('hashchange', () => { S.mode = 'learn'; route(); });
+$('#q').addEventListener('input', e => {
+  const v = e.target.value.trim().toLowerCase();
+  document.querySelectorAll('#navlist li').forEach(li => { const a = li.querySelector('a'); li.style.display = !v || a.dataset.s.includes(v) ? '' : 'none'; });
+});
+$('#menu').onclick = () => document.body.classList.toggle('navopen');
+buildNav(); route();
+
+</script>
+</body>
+</html>

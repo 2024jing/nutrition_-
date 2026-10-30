@@ -146,6 +146,59 @@ text.go:hover{text-decoration:underline}
 .prbanner{display:block;text-decoration:none;margin:22px 0 4px;background:var(--carb);color:#fff;border-radius:14px;padding:14px 18px}
 .prbanner b{display:block;font-size:19px}.prbanner span{font-size:14px;opacity:.92}
 .pn #rnd{color:var(--muted)}
+/* journey */
+.nav-jr{color:var(--other)}
+.jrbanner{background:var(--other)}
+.jgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start;margin-top:14px}
+.jleft{position:sticky;top:64px}
+.jmapwrap{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:6px}
+svg.jmap{display:block;width:100%;max-width:460px;margin:0 auto}
+.jb{font-size:12.5px;font-weight:700}.jbs{font-size:10px;fill:var(--muted)}
+.jst .jc{fill:var(--surface);stroke:var(--line2);stroke-width:2;transition:all .3s}
+.jst .jn{font-size:11px;font-weight:700;fill:var(--muted)}
+.jst .jl{font-size:12px;fill:var(--muted);font-weight:500;paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round}
+.jst.past .jc{fill:color-mix(in srgb,var(--acc) 35%,var(--surface));stroke:var(--acc)}
+.jst.past .jn{fill:var(--ink)}
+.jst.now .jc{fill:var(--acc);stroke:var(--acc);r:13}
+.jst.now .jn{fill:#fff}.jst.now .jl{fill:var(--ink);font-weight:700}
+.jtok{transition:transform .8s cubic-bezier(.45,.05,.3,1)}
+.jtok rect{fill:var(--ink)}.jtok text{fill:var(--bg);font-size:12px;font-weight:700}.jtokp{fill:var(--ink)}
+.jctrl{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px}
+.jctrl #jstep{font-weight:700;color:var(--acc);font-size:14px}
+.jctrl .btn{font-size:15px;padding:8px 14px}.btn:disabled{opacity:.4;cursor:default}
+.jctrl2{display:flex;gap:8px;margin-top:8px}
+.jcard{background:var(--surface);border:1px solid var(--line);border-top:5px solid var(--acc);border-radius:14px;padding:14px 16px}
+.jhead{display:flex;gap:10px;align-items:flex-start}
+.jnum{flex:none;width:30px;height:30px;border-radius:50%;background:var(--acc);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center}
+.jhead b{display:block;font-size:17px;line-height:1.4}
+.jwhere{display:inline-block;margin-top:4px;font-size:13px;padding:1px 10px;border-radius:999px;background:color-mix(in srgb,var(--bc) 16%,var(--surface));color:var(--ink)}
+.jform{margin:12px 0 6px;font-size:14px}.jform span,.jout span{display:inline-block;font-size:12px;color:var(--muted);margin-right:8px}
+.jform b{font-size:16px;background:var(--ink);color:var(--bg);padding:1px 10px;border-radius:999px}
+.jhow{margin:6px 0;padding-left:20px}.jhow li{margin:4px 0}
+.jout{margin-top:8px;padding:8px 10px;border-radius:8px;background:var(--soft);font-weight:500}
+.jtip{margin-top:8px;font-size:14px;padding:8px 10px;border-radius:8px;background:color-mix(in srgb,var(--acc) 10%,var(--surface))}
+.jlinks{margin-top:10px;font-size:14px}.jlinks a{color:var(--acc);margin-right:10px;white-space:nowrap;font-weight:500}
+.jtl{list-style:none;padding:0;margin:0;counter-reset:j}
+.jtl li{counter-increment:j;position:relative;padding:8px 10px 8px 42px;border-left:3px solid var(--line2);margin-left:14px;cursor:pointer;border-radius:0 8px 8px 0}
+.jtl li::before{content:counter(j);position:absolute;left:-14px;top:9px;width:24px;height:24px;border-radius:50%;background:var(--surface);border:2px solid var(--acc);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.jtl li.on{background:color-mix(in srgb,var(--acc) 10%,var(--surface))}.jtl li.on::before{background:var(--acc);color:#fff}
+.jtl b{display:block;font-size:15px}.jtl small{color:var(--muted);font-size:13px}
+.jtlb{float:right;color:#fff;font-size:11px;padding:0 8px;border-radius:999px;margin-left:6px}
+.jref{font-size:14px;margin:10px 0 0;padding:8px 12px;background:color-mix(in srgb,var(--other) 9%,var(--surface));border-radius:10px}
+.jref a{color:var(--other);font-weight:500;margin-left:8px;white-space:nowrap}
+.jhub span{font-size:12.5px}
+.fsbar{margin:6px 0 10px;font-size:15px}
+.feedwrap{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:6px}
+svg.feed{display:block;width:100%;max-width:520px;margin:0 auto}
+.fo{font-size:16px;font-weight:700}.fnum{font-size:12px;font-weight:700;fill:#fff}
+.flegend{list-style:none;counter-reset:f;padding:0;margin:10px 0 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:6px}
+.flegend li{counter-increment:f;position:relative;padding:6px 10px 6px 40px;background:var(--surface);border:1px solid var(--line);border-radius:10px;font-size:14px}
+.flegend li::before{content:counter(f);position:absolute;left:10px;top:8px;width:22px;height:22px;border-radius:50%;background:var(--fc);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.flegend b{display:block;font-size:13px;color:var(--fc)}
+.fcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:12px}
+.fcard{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--oc);border-radius:10px;padding:8px 12px}
+.fcard b{display:block;color:var(--oc)}.fcard span{font-size:14px}
+@media (max-width:860px){.jgrid{grid-template-columns:1fr}.jleft{position:static}}
 footer{color:var(--muted);font-size:13px;text-align:center;padding:20px 16px 30px}
 @media (max-width:900px){
   .maps{grid-template-columns:1fr}
@@ -956,6 +1009,301 @@ const RING = {
   ring:[['Vitamin K (KH₂)','氫醌（活性）','e'],['K epoxide','環氧化物','e'],['K quinone','醌','e']],
   ann:{0:[['out','Glu → Gla'],['tag','凝血因子活化']],1:[['tag','Warfarin ✕ 抑制']],2:[['in','+ NAD(P)H']]}}
 };
+// ===== 營養素旅程：從吃進去到排出去 =====
+// bands：圖上由上到下的區域；stages：每一站（b=區域、x=橫向位置）
+const JOURNEYS = {
+glucose:{zh:'葡萄糖的旅程', en:'Journey of Glucose', color:'var(--carb)', icon:'🍚',
+ intro:'從一口飯裡的澱粉開始：在消化道被切成葡萄糖，穿過小腸細胞進入血液，先到肝，再送到全身細胞，最後在粒線體被氧化成 CO₂ 和水，同時產生 ATP。',
+ bands:[['消化道腔','口腔 → 胃 → 小腸','#e9a15b'],['小腸黏膜細胞','吸收','#d9864a'],['血液','肝門靜脈・體循環','#c94b4b'],['肝細胞','第一站器官','#8b4a2b'],['周邊細胞・細胞質','肌肉、腦、紅血球…','#d99a1e'],['粒線體','基質・內膜','#d4533f'],['排出・用途','肺、體液、做功','#7d7d7d']],
+ stages:[
+  {b:0,x:125,short:'口腔',form:'澱粉',title:'口腔：澱粉開始被切開',
+   where:'口腔（唾液）',how:['唾液 α-澱粉酶（ptyalin）切 α-1,4 鍵 → 糊精、少量麥芽糖','食物在口中停留短，到胃後被胃酸停止作用','α-1,6 分支點切不斷'],
+   out:'糊精、麥芽糖',chips:['Salivary α-amylase'],tip:'唾液澱粉酶需 Cl⁻ 活化；胃酸 pH 低使其失活'},
+  {b:0,x:215,short:'小腸腔',form:'糊精',title:'小腸腔：胰澱粉酶主力分解',
+   where:'十二指腸、空腸腔內',how:['胰液中的胰 α-澱粉酶完成大部分澱粉消化','胰液含 HCO₃⁻，中和胃酸提供適合 pH','產物：麥芽糖、麥芽三糖、α-極限糊精（含 α-1,6 分支）'],
+   out:'麥芽糖、α-極限糊精',chips:['Pancreatic α-amylase','HCO₃⁻'],tip:'醣類消化主要在小腸，不在口腔'},
+  {b:0,x:310,short:'刷狀緣',form:'雙醣',title:'刷狀緣：雙醣酶切成單醣',
+   where:'小腸絨毛表面（刷狀緣膜）',how:['麥芽糖酶 Maltase：麥芽糖 → 2 葡萄糖','蔗糖酶-異麥芽糖酶 Sucrase-isomaltase：蔗糖 → 葡萄糖＋果糖；切 α-1,6','乳糖酶 Lactase：乳糖 → 葡萄糖＋半乳糖'],
+   out:'葡萄糖、果糖、半乳糖',chips:['Maltase','Sucrase-isomaltase','Lactase'],tip:'乳糖酶缺乏 → 乳糖不耐：未消化乳糖被腸菌發酵 → 脹氣、腹瀉'},
+  {b:1,x:250,short:'SGLT1',form:'葡萄糖',title:'進入小腸細胞：鈉-葡萄糖共同運輸',
+   where:'小腸黏膜細胞頂端膜（朝腸腔那一側）',how:['葡萄糖、半乳糖：SGLT1 與 Na⁺ 一起進入（二次主動運輸，逆濃度）','果糖：GLUT5 促進性擴散（不耗能、較慢）','基底側 Na⁺/K⁺-ATPase 把 Na⁺ 打出去，維持鈉梯度（耗 ATP）'],
+   out:'細胞內的葡萄糖',chips:['SGLT1 + Na⁺','GLUT5（果糖）','Na⁺/K⁺-ATPase −ATP'],tip:'口服電解質液（ORS）同時給葡萄糖和鈉，就是利用 SGLT1 帶水吸收'},
+  {b:2,x:170,short:'肝門靜脈',form:'葡萄糖',title:'離開小腸細胞：進入肝門靜脈',
+   where:'小腸細胞基底側膜 → 微血管 → 肝門靜脈',how:['葡萄糖、果糖、半乳糖都經 GLUT2 出細胞（促進性擴散）','水溶性營養素走「血液 → 肝門靜脈」，先到肝','（對照：長鏈脂肪走淋巴，不先經過肝）'],
+   out:'門靜脈血中的單醣',chips:['GLUT2'],tip:'水溶性營養素經門靜脈先到肝，稱為「首渡」'},
+  {b:3,x:140,short:'肝細胞',form:'G6P',title:'肝：先截留、分配',
+   where:'肝細胞細胞質',how:['經 GLUT2 進入（不需胰島素）','葡萄糖激酶 Glucokinase 磷酸化成 G6P，鎖在細胞內（Km 高，飯後血糖高時才大量作用）','果糖、半乳糖在肝轉成糖解中間物或葡萄糖','吃飽時：G6P → 肝醣合成；多餘 → 乙醯-CoA → 脂肪酸合成 → 包進 VLDL 送出'],
+   out:'肝醣、VLDL、或送回血液的葡萄糖',chips:['GLUT2','Glucokinase −ATP'],go:['glycogenesis','fructose','galactose','fa-synthesis'],tip:'肝有葡萄糖-6-磷酸酶，可以把葡萄糖放回血液；肌肉沒有'},
+  {b:2,x:290,short:'體循環',form:'血糖',title:'回到血液：送往全身',
+   where:'肝靜脈 → 體循環',how:['空腹血糖約 70–99 mg/dL','胰島素讓肌肉、脂肪細胞把 GLUT4 送到細胞膜 → 葡萄糖才能大量進入','腦（GLUT3）、紅血球（GLUT1）、肝（GLUT2）不需胰島素'],
+   out:'被各組織取用的葡萄糖',chips:['Insulin → GLUT4','GLUT1／GLUT3'],tip:'第 2 型糖尿病：胰島素阻抗，GLUT4 移位不足 → 血糖升高'},
+  {b:4,x:230,short:'糖解',form:'丙酮酸',title:'細胞質：糖解作用',
+   where:'肌肉等周邊細胞的細胞質',how:['己糖激酶 Hexokinase → G6P（被產物抑制）','PFK-1 限速 → … → 2 分子丙酮酸','淨得 2 ATP + 2 NADH','分支：肌肉存成肌肝醣；部分走五碳糖途徑產 NADPH','缺氧或紅血球（無粒線體）：丙酮酸 → 乳酸 → 送回肝（Cori 循環）'],
+   out:'2 丙酮酸 + 2 ATP + 2 NADH',chips:['Hexokinase','PFK-1（限速）','+2 ATP','NAD⁺→NADH'],go:['glycolysis','ppp','cori'],tip:'糖解在細胞質，不需要氧'},
+  {b:5,x:160,short:'PDH・TCA',form:'乙醯-CoA',title:'進入粒線體：PDH 與 TCA 循環',
+   where:'粒線體基質',how:['丙酮酸經粒線體丙酮酸載體（MPC）進入基質','PDH：丙酮酸 → 乙醯-CoA + CO₂ + NADH（需 B₁、B₂、B₃、B₅、硫辛酸）','TCA 循環：每個乙醯-CoA → 2 CO₂ + 3 NADH + 1 FADH₂ + 1 GTP'],
+   out:'CO₂、NADH、FADH₂、GTP',chips:['PDH','TPP (B₁)','釋出 CO₂','NAD⁺→NADH','FAD→FADH₂'],go:['pdh','tca'],tip:'葡萄糖的碳在這裡全部變成 CO₂'},
+  {b:5,x:290,short:'電子傳遞鏈',form:'NADH',title:'粒線體內膜：電子傳遞鏈',
+   where:'粒線體內膜',how:['NADH、FADH₂ 把電子交給複合體 I–IV','氧是最後的電子接受者 → 形成水','質子梯度推動 ATP 合成酶','1 分子葡萄糖完全氧化約得 30–32 ATP'],
+   out:'H₂O + 大量 ATP',chips:['Complex I–IV','O₂ → H₂O','ATP synthase'],go:['etc'],tip:'吸入的氧最後變成代謝水，不是變成 CO₂'},
+  {b:6,x:200,short:'CO₂・H₂O',form:'CO₂ + H₂O',title:'終點：排出與利用',
+   where:'肺、體液、各種細胞工作',how:['CO₂ 主要以 HCO₃⁻ 形式經血液運到肺呼出','H₂O 成為體液（代謝水）','ATP 用於肌肉收縮、主動運輸、合成反應'],
+   out:'C₆H₁₂O₆ + 6 O₂ → 6 CO₂ + 6 H₂O + ATP',chips:['呼出 CO₂','代謝水','ATP 做功'],tip:'醣類呼吸商 RQ = 1.0（脂肪約 0.7、蛋白質約 0.8）'}
+ ]},
+
+fat:{zh:'脂肪的旅程', en:'Journey of Dietary Fat (Triacylglycerol)', color:'var(--lipid)', icon:'🥑',
+ intro:'三酸甘油酯不溶於水，所以旅程和葡萄糖很不一樣：要靠膽汁乳化、微膠粒運送，在小腸細胞重新組裝成乳糜微粒，走淋巴繞過肝，最後由肉鹼帶進粒線體做 β-氧化。',
+ bands:[['消化道腔','口・胃・小腸','#d8b445'],['小腸黏膜細胞','重新組裝','#c39100'],['淋巴・血液','乳糜管 → 胸管 → 血液','#c94b4b'],['脂肪・肌肉組織','微血管旁','#d1a520'],['細胞質','活化','#d99a1e'],['粒線體','穿梭・β-氧化','#d4533f'],['去向','ATP・酮體・儲存','#7d7d7d']],
+ stages:[
+  {b:0,x:125,short:'口・胃',form:'TAG',title:'口腔與胃：少量分解',
+   where:'口腔、胃',how:['舌脂酶、胃脂酶分解少量 TAG（偏好短、中鏈脂肪酸）','嬰兒消化乳脂時較重要','胃的攪拌把油脂打散成大油滴'],
+   out:'大部分仍是 TAG',chips:['Lingual lipase','Gastric lipase'],tip:'成人脂肪消化主要在小腸'},
+  {b:0,x:215,short:'乳化',form:'油滴',title:'小腸：膽汁乳化＋胰脂酶',
+   where:'十二指腸腔',how:['脂肪進入小腸 → 分泌 CCK → 膽囊收縮、胰臟分泌酵素','膽鹽把大油滴乳化成小油滴，增加表面積','胰脂酶（需共脂酶 colipase）切 sn-1、sn-3 → 2-單酸甘油酯 + 2 脂肪酸','磷脂酶 A₂ 分解磷脂；膽固醇酯酶分解膽固醇酯'],
+   out:'2-單酸甘油酯、游離脂肪酸',chips:['Bile salts 膽鹽','CCK','Pancreatic lipase + colipase','Phospholipase A₂'],go:['bile-acid'],tip:'膽鹽只負責乳化，本身不是酵素'},
+  {b:0,x:310,short:'微膠粒',form:'微膠粒',title:'微膠粒：把脂質送到刷狀緣',
+   where:'小腸腔 → 刷狀緣表面',how:['膽鹽把單酸甘油酯、脂肪酸、膽固醇、脂溶性維生素 A D E K 包成微膠粒（micelle）','微膠粒穿過水層，到達細胞表面後脂質擴散進入細胞','膽鹽留在腸腔，到迴腸末端被再吸收 → 回肝（腸肝循環）'],
+   out:'進入細胞的 MAG、FA、膽固醇',chips:['Micelle 微膠粒','A D E K'],go:['bile-acid'],tip:'迴腸切除或膽汁不足 → 脂肪痢、脂溶性維生素缺乏'},
+  {b:1,x:240,short:'重組 TAG',form:'乳糜微粒',title:'小腸細胞：重新合成 TAG、包成乳糜微粒',
+   where:'小腸黏膜細胞的內質網、高基氏體',how:['脂肪酸先活化成脂醯-CoA','單酸甘油酯途徑：2-MAG + 2 脂醯-CoA → TAG','TAG、膽固醇酯、磷脂、apoB-48 組裝成乳糜微粒（chylomicron）','短鏈、中鏈脂肪酸（MCT）不重組，直接進入肝門靜脈'],
+   out:'乳糜微粒（apoB-48）',chips:['Acyl-CoA synthetase','MAG pathway','apoB-48'],go:['tag-synthesis','lipoprotein'],tip:'MCT 不需膽鹽、不走淋巴 → 用於脂肪吸收不良的病人'},
+  {b:2,x:170,short:'乳糜管',form:'乳糜微粒',title:'走淋巴：繞過肝臟',
+   where:'絨毛中央乳糜管 → 胸管 → 左鎖骨下靜脈 → 血液',how:['乳糜微粒太大進不了微血管，先進淋巴管（乳糜管 lacteal）','經胸管匯入左鎖骨下靜脈，進入體循環','飯後血漿呈乳白混濁就是乳糜微粒'],
+   out:'血液中的乳糜微粒',chips:['Lacteal 乳糜管','Thoracic duct 胸管'],go:['lipoprotein'],tip:'長鏈脂肪不經肝門靜脈，不先到肝'},
+  {b:3,x:140,short:'LPL',form:'脂肪酸',title:'微血管：脂蛋白脂解酶卸貨',
+   where:'脂肪組織、肌肉、心臟的微血管內皮',how:['脂蛋白脂解酶（LPL）被 apoC-II 活化，把乳糜微粒中的 TAG 切成脂肪酸 + 甘油','吃飽時（胰島素↑）：脂肪細胞吸收脂肪酸 → 重新合成 TAG 儲存','肌肉、心臟：拿脂肪酸當燃料','剩下的乳糜殘粒（apoE）被肝回收'],
+   out:'進入細胞的脂肪酸',chips:['LPL','apoC-II','Insulin ↑ LPL'],go:['lipoprotein','tag-synthesis'],tip:'肝自己做的 TAG 則包成 VLDL 送出，走同樣的 LPL 卸貨'},
+  {b:3,x:270,short:'HSL',form:'脂肪酸',title:'空腹時：脂肪組織釋出脂肪酸',
+   where:'脂肪細胞 → 血液',how:['升糖素、腎上腺素 → cAMP → 荷爾蒙敏感性脂解酶（HSL）活化；胰島素抑制','TAG → 3 脂肪酸 + 甘油','脂肪酸與白蛋白結合，運到肌肉、肝','甘油送到肝 → 糖質新生'],
+   out:'血中游離脂肪酸（與白蛋白結合）',chips:['ATGL','HSL','Albumin 白蛋白'],go:['lipolysis','gng'],tip:'脂肪酸不能變成葡萄糖，但甘油可以'},
+  {b:4,x:210,short:'活化',form:'脂醯-CoA',title:'細胞質：脂肪酸活化',
+   where:'肌肉、肝細胞的細胞質（粒線體外膜）',how:['脂醯-CoA 合成酶：脂肪酸 + CoA + ATP → 脂醯-CoA + AMP','耗 2 個高能磷酸鍵','活化後才能進行下一步'],
+   out:'脂醯-CoA',chips:['Acyl-CoA synthetase','ATP → AMP','CoA (B₅)'],go:['carnitine'],tip:'計算棕櫚酸淨 ATP 時要扣這 2'},
+  {b:5,x:140,short:'肉鹼穿梭',form:'脂醯肉鹼',title:'進入粒線體：肉鹼穿梭',
+   where:'粒線體外膜 → 內膜 → 基質',how:['CPT-I 把脂醯基轉到肉鹼上（β-氧化限速步驟）','轉位酶把脂醯肉鹼帶過內膜','CPT-II 在基質內換回脂醯-CoA','丙二醯-CoA（脂肪酸合成中間物）抑制 CPT-I → 合成時不燃燒'],
+   out:'基質內的脂醯-CoA',chips:['CPT-I（限速）','肉鹼 Carnitine','CPT-II'],go:['carnitine'],tip:'中、短鏈脂肪酸不需肉鹼'},
+  {b:5,x:250,short:'β-氧化',form:'乙醯-CoA',title:'粒線體基質：β-氧化',
+   where:'粒線體基質',how:['每輪四步：氧化 → 水合 → 氧化 → 硫解','每輪切下 2 碳 → 1 乙醯-CoA + 1 FADH₂ + 1 NADH','棕櫚酸（16C）跑 7 輪 → 8 乙醯-CoA','極長鏈先在過氧化體縮短；支鏈（植烷酸）走 α-氧化'],
+   out:'乙醯-CoA、FADH₂、NADH',chips:['Acyl-CoA dehydrogenase','FAD→FADH₂','NAD⁺→NADH','Thiolase'],go:['beta-ox','perox-beta','alpha-ox'],tip:'β-氧化只能在有氧下進行'},
+  {b:6,x:200,short:'ATP・酮體',form:'CO₂ + H₂O',title:'終點：燃燒、生酮或儲存',
+   where:'各組織粒線體；肝',how:['乙醯-CoA 進 TCA + 電子傳遞鏈 → CO₂ + H₂O + ATP（棕櫚酸淨得約 106 ATP）','肝在飢餓、低醣時乙醯-CoA 過多 → 酮體 → 送給腦、心、肌肉','吃飽時多餘熱量 → 脂肪組織儲存 TAG'],
+   out:'ATP、酮體、儲存脂肪',chips:['TCA + ETC','Ketone bodies','每克脂肪 9 kcal'],go:['tca','etc','ketogenesis','ketolysis'],tip:'脂肪 RQ ≈ 0.7；肝製造酮體但自己不能用'}
+ ]},
+
+protein:{zh:'蛋白質的旅程', en:'Journey of Dietary Protein', color:'var(--protein)', icon:'🥚',
+ intro:'蛋白質先被切成胺基酸，經門靜脈到肝。胺基酸主要用來「建造」：合成身體的蛋白質與含氮物質。多出來的胺基酸，碳骨架拿去產能或生糖，氮則變成尿素由腎排出。',
+ bands:[['胃','酸性環境','#7fa7dc'],['小腸腔','胰臟蛋白酶','#5b8fd4'],['小腸黏膜細胞','吸收','#2f72c8'],['血液・肝','肝門靜脈 → 肝','#8b4a2b'],['組織細胞','肌肉等','#c4476a'],['肝：尿素循環','粒線體＋細胞質','#d4533f'],['腎・排出','尿液','#7a55b8']],
+ stages:[
+  {b:0,x:190,short:'胃蛋白酶',form:'蛋白質',title:'胃：變性與初步切割',
+   where:'胃腔',how:['胃酸 HCl 使蛋白質變性、展開','胃蛋白酶原（pepsinogen）在酸中活化成胃蛋白酶（pepsin）','切成大小不一的多胜肽'],
+   out:'多胜肽',chips:['HCl','Pepsinogen → Pepsin'],tip:'酵素以「酶原」形式分泌，避免消化自己的組織'},
+  {b:1,x:140,short:'胰蛋白酶',form:'多胜肽',title:'小腸腔：胰臟蛋白酶接力',
+   where:'十二指腸腔',how:['腸激酶（enteropeptidase）把胰蛋白酶原活化成胰蛋白酶（trypsin）','胰蛋白酶再活化：胰凝乳蛋白酶、彈性蛋白酶、羧肽酶','內切酶切中間、羧肽酶從尾端切'],
+   out:'寡胜肽、胺基酸',chips:['Enteropeptidase','Trypsin','Chymotrypsin','Carboxypeptidase'],tip:'胰蛋白酶是活化其他胰臟酶原的關鍵'},
+  {b:1,x:290,short:'刷狀緣',form:'雙・三胜肽',title:'刷狀緣：胜肽酶',
+   where:'小腸刷狀緣膜',how:['胺肽酶（aminopeptidase）從 N 端切','雙胜肽酶切雙胜肽','產物：游離胺基酸、雙胜肽、三胜肽'],
+   out:'胺基酸、雙胜肽、三胜肽',chips:['Aminopeptidase','Dipeptidase'],tip:''},
+  {b:2,x:200,short:'吸收',form:'胺基酸',title:'進入小腸細胞',
+   where:'小腸黏膜細胞',how:['胺基酸：多種運送系統，多數與 Na⁺ 共同運輸（主動運輸）','雙、三胜肽：PepT1 與 H⁺ 共同運輸，吸收比游離胺基酸快','進入細胞後再被水解成胺基酸 → 經基底側進入血液','小腸細胞以麩醯胺酸為主要能量來源'],
+   out:'門靜脈血中的胺基酸',chips:['Na⁺ 共同運輸','PepT1 + H⁺'],tip:'Hartnup 病：中性胺基酸運送缺陷 → 色胺酸吸收差 → 類糙皮病'},
+  {b:3,x:140,short:'肝',form:'胺基酸',title:'肝：第一站分配',
+   where:'肝門靜脈 → 肝細胞',how:['肝先使用大部分胺基酸：合成白蛋白、凝血因子、運輸蛋白','合成非必需胺基酸、肌酸、穀胱甘肽等','支鏈胺基酸（BCAA）肝臟代謝少 → 大多送到肌肉'],
+   out:'血漿蛋白、血中胺基酸',chips:['Albumin','BCAA → 肌肉'],go:['neaa','aa-derivatives','bcaa'],tip:'血清白蛋白低可反映長期蛋白質營養不良或肝功能差'},
+  {b:4,x:140,short:'合成',form:'身體蛋白',title:'組織細胞：合成蛋白質（主要用途）',
+   where:'細胞質的核糖體（分泌蛋白在粗糙內質網）',how:['胺基酸進入細胞，形成胺基酸庫','依 mRNA 序列在核糖體合成蛋白質：肌肉、酵素、激素、抗體','需要所有必需胺基酸同時存在；缺最少的是「限制胺基酸」','也合成神經傳導物質、血基質等含氮物質'],
+   out:'身體蛋白質、含氮物質',chips:['Ribosome 核糖體','限制胺基酸'],go:['aa-derivatives','phe-tyr','tryptophan','heme-synthesis'],tip:'穀類限制胺基酸多為離胺酸；豆類為甲硫胺酸 → 互補'},
+  {b:4,x:280,short:'轉胺',form:'α-酮酸',title:'分解：轉胺作用拆下胺基',
+   where:'肌肉、肝的細胞質與粒線體',how:['胺基酸過多、飢餓或分解蛋白時','轉胺酶（ALT、AST，需 B₆）把胺基交給 α-酮戊二酸 → 麩胺酸','剩下的碳骨架（α-酮酸）進 TCA 產能、糖質新生（生糖）或成為酮體（生酮）'],
+   out:'碳骨架 + 麩胺酸（帶著氮）',chips:['ALT / AST','PLP (B₆)'],go:['transamination','carbon-skeleton'],tip:'純生酮：白胺酸、離胺酸'},
+  {b:3,x:290,short:'運氮',form:'丙胺酸・麩醯胺酸',title:'把氮安全運回肝',
+   where:'肌肉 → 血液 → 肝',how:['氨有毒，不能直接在血中大量運送','肌肉：丙酮酸接上胺基 → 丙胺酸 → 到肝（葡萄糖-丙胺酸循環）','其他組織：麩胺酸 + NH₃ → 麩醯胺酸（麩醯胺酸合成酶）→ 到肝、腎'],
+   out:'送到肝的胺基',chips:['Alanine','Glutamine synthetase'],go:['glucose-alanine','deamination'],tip:'麩醯胺酸是血中含量最多的胺基酸'},
+  {b:5,x:200,short:'尿素循環',form:'尿素',title:'肝：氨變成尿素',
+   where:'肝細胞粒線體（前兩步）＋細胞質（後三步）',how:['麩胺酸去氫酶（GDH）氧化脫胺 → 釋出 NH₃','CPS-I（限速，需 N-乙醯麩胺酸）：NH₃ + CO₂ → 胺甲醯磷酸','經瓜胺酸、精胺琥珀酸、精胺酸 → 精胺酸酶切出尿素','每個尿素耗 3 ATP；第 2 個氮來自天門冬胺酸'],
+   out:'尿素（無毒、水溶性）',chips:['GDH','CPS-I（限速）','Arginase','−3 ATP'],go:['deamination','urea'],tip:'肝硬化 → 尿素循環差 → 高血氨 → 肝腦病變'},
+  {b:6,x:200,short:'腎排出',form:'尿素 → 尿液',title:'終點：由腎排出',
+   where:'血液 → 腎絲球過濾 → 尿液',how:['尿素經血液運到腎，隨尿排出（血中測得 BUN）','腎也從麩醯胺酸產生 NH₄⁺ 排出，幫助排酸','肌肉的肌酸 → 肌酸酐（creatinine），也由腎排出'],
+   out:'尿素、NH₄⁺、肌酸酐',chips:['BUN','NH₄⁺','Creatinine'],go:['urea'],tip:'腎衰竭 → BUN、肌酸酐上升；慢性腎病需控制蛋白質攝取'}
+ ]}
+};
+
+// 吃飽／空腹／長期飢餓：器官之間的燃料流動
+const FEEDSTATE = {
+ org:{gut:[95,58,'小腸','I'],brain:[325,58,'腦','Br'],liver:[60,205,'肝','L'],muscle:[360,205,'肌肉','M'],adipose:[210,350,'脂肪組織','A'],blood:[210,205,'血液','B']},
+ states:{
+  fed:{zh:'吃飽', sub:'飯後 0–4 小時', hor:'胰島素 ↑', col:'#2e9a4e',
+   flows:[['gut','blood','葡萄糖・胺基酸'],['gut','adipose','乳糜微粒（淋巴）'],['blood','liver','葡萄糖・胺基酸'],['liver','blood','VLDL'],['blood','muscle','葡萄糖（GLUT4）'],['blood','brain','葡萄糖'],['blood','adipose','葡萄糖・VLDL']],
+   org:{liver:'肝醣合成、脂肪酸合成 → VLDL、合成蛋白質',muscle:'葡萄糖進入（GLUT4）→ 肌肝醣、蛋白質合成',adipose:'LPL 卸下 TAG → 儲存脂肪',brain:'只用葡萄糖',gut:'吸收單醣、胺基酸；脂肪包成乳糜微粒'},
+   go:['glycogenesis','fa-synthesis','lipoprotein','tag-synthesis']},
+  fast:{zh:'空腹', sub:'隔夜 12–24 小時', hor:'升糖素 ↑ 胰島素 ↓', col:'#d97d1f',
+   flows:[['adipose','blood','脂肪酸・甘油'],['blood','liver','甘油・乳酸・丙胺酸'],['liver','blood','葡萄糖'],['blood','muscle','脂肪酸'],['muscle','blood','乳酸・丙胺酸'],['blood','brain','葡萄糖']],
+   org:{liver:'肝醣分解 → 葡萄糖；糖質新生開始；β-氧化',muscle:'改用脂肪酸，把葡萄糖留給腦；送出丙胺酸、乳酸',adipose:'HSL 分解 TAG → 脂肪酸、甘油',brain:'仍用葡萄糖（約每天 120 g）',gut:'沒有吸收'},
+   go:['glycogenolysis','gng','lipolysis','beta-ox','cori','glucose-alanine']},
+  starve:{zh:'長期飢餓', sub:'3 天以上', hor:'升糖素・皮質醇 ↑', col:'#d64545',
+   flows:[['adipose','blood','脂肪酸・甘油'],['blood','liver','脂肪酸・甘油・胺基酸'],['liver','blood','酮體（＋少量葡萄糖）'],['blood','muscle','脂肪酸・酮體'],['muscle','blood','胺基酸（逐漸減少）'],['blood','brain','酮體・葡萄糖']],
+   org:{liver:'肝醣已耗盡；糖質新生＋大量酮體生成',muscle:'用脂肪酸、酮體；蛋白質分解在適應後減少',adipose:'持續分解脂肪，是主要能量來源',brain:'約 2/3 能量改用酮體 → 減少肌肉被分解',gut:'沒有吸收'},
+   go:['ketogenesis','ketolysis','gng','lipolysis']}
+ }
+};
+// ===== 旅程畫面 =====
+const JR = { id: null, cur: 0, timer: null };
+const BH_J = 78, JW = 380;
+function jPos(J, i) { const s = J.stages[i]; return [s.x, s.b * BH_J + 46]; }
+function journeySVG(J) {
+  const H = J.bands.length * BH_J + 6;
+  let s = `<svg viewBox="0 0 ${JW} ${H}" class="jmap" role="img" aria-label="${esc(J.zh)}路線圖"><defs><marker id="ah-j" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--acc)"/></marker></defs>`;
+  J.bands.forEach(([zh, sub, col], i) => {
+    const y = i * BH_J;
+    s += `<rect x="2" y="${y + 2}" width="${JW - 4}" height="${BH_J - 4}" rx="10" fill="${col}" opacity=".12"/>`;
+    s += `<text x="10" y="${y + 17}" class="jb" fill="${col}">${esc(zh)}</text><text x="10" y="${y + 30}" class="jbs">${esc(sub)}</text>`;
+  });
+  const pts = J.stages.map((_, i) => jPos(J, i));
+  s += `<polyline points="${pts.map(p => p.join(',')).join(' ')}" fill="none" stroke="var(--line2)" stroke-width="2.5" stroke-dasharray="5 5"/>`;
+  s += `<polyline id="jdone" points="" fill="none" stroke="var(--acc)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`;
+  J.stages.forEach((st, i) => {
+    const [x, y] = pts[i];
+    s += `<g class="jst" data-i="${i}" style="cursor:pointer"><circle cx="${x}" cy="${y}" r="11" class="jc"/><text x="${x}" y="${y + 4}" text-anchor="middle" class="jn">${i + 1}</text>` +
+      `<text x="${x}" y="${y + 26}" text-anchor="middle" class="jl">${esc(st.short)}</text></g>`;
+  });
+  s += `<g id="jtok" class="jtok"><rect id="jtokr" x="-30" y="-36" width="60" height="22" rx="11"/><text id="jtokt" x="0" y="-21" text-anchor="middle"></text><path d="M-5,-14 L5,-14 L0,-8z" class="jtokp"/></g>`;
+  return s + `</svg>`;
+}
+function stageCard(J, i) {
+  const st = J.stages[i]; const band = J.bands[st.b];
+  const links = (st.go || []).filter(id => byId[id]).map(id => `<a href="#/${id}">${esc(byId[id].zh)} →</a>`).join('');
+  return `<div class="jcard">
+    <div class="jhead"><span class="jnum">${i + 1}</span><div><b>${esc(st.title)}</b><span class="jwhere" style="--bc:${band[2]}">📍 ${esc(st.where)}</span></div></div>
+    <div class="jform"><span>分子形式</span><b>${esc(st.form)}</b></div>
+    <ul class="jhow">${st.how.map(h => `<li>${esc(h)}</li>`).join('')}</ul>
+    <div class="jmeta">${chips(st.chips)}</div>
+    <div class="jout"><span>產物／接下來</span>${esc(st.out)}</div>
+    ${st.tip ? `<div class="jtip">⭐ ${esc(st.tip)}</div>` : ''}
+    ${links ? `<div class="jlinks">詳細路徑：${links}</div>` : ''}
+  </div>`;
+}
+function jUpdate() {
+  const J = JOURNEYS[JR.id]; const i = JR.cur; const st = J.stages[i];
+  const [x, y] = jPos(J, i);
+  const tok = $('#jtok'); if (!tok) return;
+  tok.style.transform = `translate(${x}px, ${y}px)`;
+  const t = $('#jtokt'); t.textContent = st.form;
+  const w = Math.max(44, [...st.form].reduce((a, c) => a + (c.charCodeAt(0) > 255 ? 13 : 7.4), 0) + 18);
+  $('#jtokr').setAttribute('x', -w / 2); $('#jtokr').setAttribute('width', w);
+  $('#jdone').setAttribute('points', J.stages.slice(0, i + 1).map((_, k) => jPos(J, k).join(',')).join(' '));
+  document.querySelectorAll('.jst').forEach(g => { const k = +g.dataset.i; g.classList.toggle('past', k < i); g.classList.toggle('now', k === i); });
+  $('#jcardwrap').innerHTML = stageCard(J, i);
+  $('#jstep').textContent = `第 ${i + 1} / ${J.stages.length} 站`;
+  $('#jprev').disabled = i === 0; $('#jnext').disabled = i === J.stages.length - 1;
+  document.querySelectorAll('.jtl li').forEach((li, k) => li.classList.toggle('on', k === i));
+}
+function jGo(i) { const J = JOURNEYS[JR.id]; JR.cur = Math.max(0, Math.min(J.stages.length - 1, i)); jUpdate(); }
+function jStop() { if (JR.timer) { clearInterval(JR.timer); JR.timer = null; } const b = $('#jplay'); if (b) b.textContent = '▶ 自動播放'; }
+function renderJourney(id, start) {
+  jStop(); const J = JOURNEYS[id]; JR.id = id; JR.cur = Math.max(0, Math.min(J.stages.length - 1, +start || 0));
+  const others = Object.entries(JOURNEYS).filter(([k]) => k !== id);
+  $('#main').innerHTML = `<article class="page jpage" style="--acc:${J.color}">
+    <a class="crumb" href="#/journey">← 營養素的旅程</a>
+    <h1>${J.icon} ${esc(J.zh)}</h1><p class="en-t">${esc(J.en)}</p>
+    <p class="lead">${esc(J.intro)}</p>
+    <div class="jgrid">
+      <div class="jleft"><div class="jmapwrap">${journeySVG(J)}</div>
+        <div class="jctrl"><button class="btn" id="jprev">← 上一站</button><span id="jstep"></span><button class="btn pri" id="jnext">下一站 →</button></div>
+        <div class="jctrl2"><button class="btn" id="jplay">▶ 自動播放</button><button class="btn" id="jreset">↺ 從頭</button></div>
+        <p class="hint">點圖上的站名也可以跳過去；上方彩色區塊＝分子所在的位置。</p>
+      </div>
+      <div class="jright" id="jcardwrap"></div>
+    </div>
+    <h3>🧭 全程一覽</h3>
+    <ol class="jtl">${J.stages.map((st, i) => `<li data-i="${i}"><span class="jtlb" style="background:${J.bands[st.b][2]}">${esc(J.bands[st.b][0])}</span><b>${esc(st.title)}</b><small>${esc(st.form)} → ${esc(st.out)}</small></li>`).join('')}</ol>
+    <nav class="pn">${others.map(([k, o]) => `<a href="#/journey/${k}">${o.icon} ${esc(o.zh)}</a>`).join('')}<a href="#/feedstate">🍽️ 吃飽 vs 空腹</a></nav>
+  </article>`;
+  $('#jprev').onclick = () => { jStop(); jGo(JR.cur - 1); };
+  $('#jnext').onclick = () => { jStop(); jGo(JR.cur + 1); };
+  $('#jreset').onclick = () => { jStop(); jGo(0); };
+  $('#jplay').onclick = () => {
+    if (JR.timer) { jStop(); return; }
+    if (JR.cur === J.stages.length - 1) jGo(0);
+    $('#jplay').textContent = '⏸ 暫停';
+    JR.timer = setInterval(() => { if (JR.cur >= J.stages.length - 1) { jStop(); return; } jGo(JR.cur + 1); }, 3200);
+  };
+  document.querySelectorAll('.jst, .jtl li').forEach(el => el.addEventListener('click', () => { jStop(); jGo(+el.dataset.i); if (el.tagName === 'LI') $('.jmapwrap').scrollIntoView({behavior: 'smooth', block: 'start'}); }));
+  jUpdate();
+}
+
+function feedSVG(st) {
+  const O = FEEDSTATE.org; const S0 = FEEDSTATE.states[st];
+  const box = k => { const [x, y, zh, code] = O[k]; return k === 'blood' ? {x, y, w: 84, h: 84} : {x, y, w: 100, h: 46}; };
+  const edge = (a, b) => { // 從 a 中心往 b，停在 a 的邊界
+    const A = box(a), B = box(b); const dx = B.x - A.x, dy = B.y - A.y;
+    const t = a === 'blood' ? 42 / Math.hypot(dx, dy) : Math.min(dx ? A.w / 2 / Math.abs(dx) : 9, dy ? A.h / 2 / Math.abs(dy) : 9);
+    return [A.x + dx * t, A.y + dy * t];
+  };
+  let s = `<svg viewBox="-40 0 460 400" class="feed" role="img" aria-label="器官燃料流向"><defs><marker id="ah-f-${st}" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="${S0.col}"/></marker></defs>`;
+  const pairs = {};
+  S0.flows.forEach(([a, b]) => { pairs[[a, b].sort().join()] = (pairs[[a, b].sort().join()] || 0) + 1; });
+  const labels = [];
+  S0.flows.forEach(([a, b, lab], fi) => {
+    let [x1, y1] = edge(a, b), [x2, y2] = edge(b, a);
+    const both = pairs[[a, b].sort().join()] > 1;
+    const L = Math.hypot(x2 - x1, y2 - y1), nx = -(y2 - y1) / L, ny = (x2 - x1) / L;
+    const off = both ? 7 : 0;
+    x1 += nx * off; y1 += ny * off; x2 += nx * off; y2 += ny * off;
+    let d;
+    if (a === 'gut' && b === 'adipose') { const g = box('gut'); x1 = g.x - 50; y1 = g.y + 10; d = `M${x1},${y1} C -25,120 -25,330 ${box('adipose').x - 50},${box('adipose').y}`; labels.push([-14, 265, fi]); }
+    else { d = `M${x1.toFixed(1)},${y1.toFixed(1)} L${x2.toFixed(1)},${y2.toFixed(1)}`;
+      labels.push([x1 + (x2 - x1) * .42 + nx * (both ? 9 : 0), y1 + (y2 - y1) * .42 + ny * (both ? 9 : 0), fi]); }
+    s += `<path d="${d}" fill="none" stroke="${S0.col}" stroke-width="3" marker-end="url(#ah-f-${st})"/>`;
+  });
+  for (const k of Object.keys(O)) {
+    const [x, y, zh, code] = O[k]; const col = ORG[code].col;
+    if (k === 'blood') s += `<circle cx="${x}" cy="${y}" r="42" fill="color-mix(in srgb, ${col} 14%, var(--surface))" stroke="${col}" stroke-width="2.5"/><text x="${x}" y="${y + 6}" text-anchor="middle" class="fo" fill="${col}">${zh}</text>`;
+    else s += `<rect x="${x - 50}" y="${y - 23}" width="100" height="46" rx="12" fill="var(--surface)" stroke="${col}" stroke-width="2.5"/><text x="${x}" y="${y + 6}" text-anchor="middle" class="fo" fill="${col}">${zh}</text>`;
+  }
+  labels.forEach(([x, y, fi]) => { s += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="11" fill="${S0.col}" stroke="var(--surface)" stroke-width="2"/><text x="${x.toFixed(1)}" y="${(y + 4.5).toFixed(1)}" text-anchor="middle" class="fnum">${fi + 1}</text>`; });
+  return s + `</svg>`;
+}
+function renderFeed(st) {
+  st = FEEDSTATE.states[st] ? st : 'fed'; const S0 = FEEDSTATE.states[st];
+  const names = {liver: '肝', muscle: '肌肉', adipose: '脂肪組織', brain: '腦', gut: '小腸'};
+  $('#main').innerHTML = `<article class="page" style="--acc:${S0.col}">
+    <a class="crumb" href="#/journey">← 營養素的旅程</a>
+    <h1>🍽️ 吃飽 vs 空腹 vs 長期飢餓</h1><p class="en-t">Fed – Fasting – Starvation · 同一個分子，荷爾蒙讓它走不同的路</p>
+    <div class="ctrl"><div class="seg">${Object.entries(FEEDSTATE.states).map(([k, o]) => `<button data-fs="${k}" class="${k === st ? 'on' : ''}">${o.zh}</button>`).join('')}</div></div>
+    <div class="fsbar"><b>${S0.zh}</b>（${S0.sub}）　主導荷爾蒙：<b>${S0.hor}</b></div>
+    <div class="feedwrap">${feedSVG(st)}</div>
+    <ol class="flegend" style="--fc:${S0.col}">${S0.flows.map(([a, b, lab]) => `<li><b>${FEEDSTATE.org[a][2]} → ${FEEDSTATE.org[b][2]}</b>${esc(lab)}</li>`).join('')}</ol>
+    <div class="fcards">${Object.entries(names).map(([k, zh]) => `<div class="fcard" style="--oc:${ORG[FEEDSTATE.org[k][3]].col}"><b>${zh}</b><span>${esc(S0.org[k])}</span></div>`).join('')}</div>
+    <p class="jlinks">相關路徑：${S0.go.map(id => `<a href="#/${id}">${esc(byId[id].zh)} →</a>`).join('')}</p>
+    ${tableHTML(REFS.hormone)}
+    <nav class="pn">${Object.entries(JOURNEYS).map(([k, o]) => `<a href="#/journey/${k}">${o.icon} ${esc(o.zh)}</a>`).join('')}</nav>
+  </article>`;
+  document.querySelectorAll('[data-fs]').forEach(b => b.onclick = () => { history.replaceState(null, '', '#/feedstate/' + b.dataset.fs); renderFeed(b.dataset.fs); });
+}
+function renderJourneyHub() {
+  $('#main').innerHTML = `<article class="page" style="--acc:var(--other)">
+    <h1>🧳 營養素的旅程</h1><p class="en-t">從吃進去到排出去：在哪裡分解、怎麼吸收、怎麼進入細胞、在哪裡作用、最後變成什麼</p>
+    <p class="lead">單看每條代謝路徑，容易只知其一不知其二。這裡把一個營養素分子從頭到尾的路線串起來：<b>消化道 → 小腸細胞 → 血液或淋巴 → 器官 → 細胞質 → 粒線體 → 排出</b>。每一站都標出位置、分子形式、靠什麼酵素或運送蛋白，並連到那一段的詳細路徑。</p>
+    <div class="cards">${Object.entries(JOURNEYS).map(([k, J]) => `<a class="card jhub" href="#/journey/${k}" style="--acc:${J.color}"><b>${J.icon} ${esc(J.zh)}</b><small>${J.stages.length} 站</small><span>${esc(J.stages.map(s => s.short).join(' → '))}</span></a>`).join('')}
+      <a class="card jhub" href="#/feedstate" style="--acc:var(--other)"><b>🍽️ 吃飽 vs 空腹</b><small>3 種狀態</small><span>胰島素、升糖素讓肝、肌肉、脂肪、腦改用不同燃料</span></a></div>
+    <h3>三條旅程怎麼比</h3>
+    <div class="tw"><table class="grid"><thead><tr><th></th><th>葡萄糖</th><th>脂肪（長鏈）</th><th>蛋白質</th></tr></thead><tbody>
+      <tr><td>主要消化酵素</td><td>唾液・胰 α-澱粉酶、雙醣酶</td><td>胰脂酶（＋膽鹽、共脂酶）</td><td>胃蛋白酶、胰蛋白酶等</td></tr>
+      <tr><td>吸收形式</td><td>單醣</td><td>單酸甘油酯＋脂肪酸（微膠粒）</td><td>胺基酸、雙・三胜肽</td></tr>
+      <tr><td>進入小腸細胞</td><td>SGLT1（Na⁺）、GLUT5</td><td>擴散</td><td>Na⁺ 共同運輸、PepT1</td></tr>
+      <tr><td>離開路線</td><td>GLUT2 → 肝門靜脈 → 肝</td><td>乳糜微粒 → 淋巴 → 胸管（繞過肝）</td><td>肝門靜脈 → 肝</td></tr>
+      <tr><td>進入組織細胞</td><td>GLUT4（胰島素）、GLUT1/3</td><td>LPL 卸貨 → 脂肪酸</td><td>胺基酸運送蛋白</td></tr>
+      <tr><td>細胞內產能地點</td><td>細胞質（糖解）→ 粒線體</td><td>肉鹼穿梭 → 粒線體（β-氧化）</td><td>轉胺後碳骨架進 TCA</td></tr>
+      <tr><td>終產物</td><td>CO₂、H₂O</td><td>CO₂、H₂O（肝：酮體）</td><td>CO₂、H₂O ＋ 尿素（腎排出）</td></tr>
+      <tr><td>熱量 / RQ</td><td>4 kcal/g · 1.0</td><td>9 kcal/g · 0.7</td><td>4 kcal/g · 0.8</td></tr>
+    </tbody></table></div>
+  </article>`;
+}
+// 路徑頁：這條路徑出現在哪些旅程的第幾站
+function journeyRefs(id) {
+  const out = [];
+  for (const [k, J] of Object.entries(JOURNEYS)) J.stages.forEach((st, i) => { if ((st.go || []).includes(id)) out.push(`<a href="#/journey/${k}/${i}">${J.icon} ${esc(J.zh)}・第 ${i + 1} 站</a>`); });
+  return out.length ? `<p class="jref">🧳 在旅程中的位置：${out.join('')}</p>` : '';
+}
 // ===== App =====
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -986,7 +1334,7 @@ const label = (en, zh) => S.lang === 'en' || !zh ? en : `${en}｜${zh}`;
 
 /* ---------- 導覽 ---------- */
 function buildNav() {
-  let h = `<a class="nav-home" href="#/">🏠 總覽與代謝地圖</a><a class="nav-home nav-pr" href="#/practice">✏️ 練習模式</a>`;
+  let h = `<a class="nav-home" href="#/">🏠 總覽與代謝地圖</a><a class="nav-home nav-pr" href="#/practice">✏️ 練習模式</a><a class="nav-home nav-jr" href="#/journey">🧳 營養素的旅程</a>`;
   for (const [k, c] of Object.entries(CATS)) {
     const items = P.filter(p => p.cat === k);
     h += `<div class="nav-cat" style="--acc:${c.color}"><a class="nav-cat-t" href="#/cat/${k}">${c.zh}<small>${items.length}</small></a><ul>` +
@@ -998,7 +1346,8 @@ function buildNav() {
 }
 function markNav() {
   const h = location.hash || '#/';
-  document.querySelectorAll('#navlist a').forEach(a => a.classList.toggle('on', a.getAttribute('href') === h));
+  const hh = /^#\/(journey|feedstate)/.test(h) ? '#/journey' : /^#\/q\//.test(h) ? '#/practice' : h;
+  document.querySelectorAll('#navlist a').forEach(a => a.classList.toggle('on', a.getAttribute('href') === hh));
 }
 
 /* ---------- 人體器官圖 ---------- */
@@ -1195,6 +1544,7 @@ function renderPath(id) {
     <a class="crumb" href="#/cat/${p.cat}">${c.zh}</a>
     <h1>${esc(p.zh)}${p.cycle ? ' <span class="bd bd-cyc">↻ 循環</span>' : ''}</h1><p class="en-t">${esc(p.en)}</p>
     ${infoTable(p)}
+    ${journeyRefs(p.id)}
     ${wherePanel(p)}
     ${R0 ? `<section><h3>🔄 循環全貌</h3><div class="ringwrap">${ringSVG(p, R0, S.mode === 'quiz' && S.blank === 'met')}</div><p class="hint">圓圈數字＝下方步驟編號；綠字＝投入、橘字＝產出。</p></section>` : ''}
     ${p.edges.length ? `<section><h3>🧭 逐步路徑</h3>${controls(p)}${flowHTML(p)}</section>` : ''}
@@ -1353,6 +1703,7 @@ function renderHome() {
      <div class="legend">${Object.values(CATS).map(c => `<span><i style="background:${c.color}"></i>${c.zh}</span>`).join('')}</div></section>
     <section><h3>🧫 細胞位置地圖 <small>每條路徑在哪裡進行</small></h3><div class="cellmapwrap">${cellMapSVG()}</div></section>
    </div>
+   <a class="prbanner jrbanner" href="#/journey"><b>🧳 營養素的旅程</b><span>葡萄糖・脂肪・蛋白質：從消化吸收到進入細胞、在哪裡作用、最後變成什麼</span></a>
    <a class="prbanner" href="#/practice"><b>✏️ 進入練習模式</b><span>${PRACT.length} 條路徑・下拉選單填空・自動記錄成績</span></a>
    <h3>📚 分類</h3><div class="cards">${Object.entries(CATS).map(([k, c]) => `<a class="card" href="#/cat/${k}" style="--acc:${c.color}"><b>${c.zh}</b><small>${P.filter(p => p.cat === k).length} 條路徑</small><span>${esc(c.intro)}</span></a>`).join('')}
     ${Object.entries(REFS).map(([k, r]) => `<a class="card" href="#/ref/${k}" style="--acc:var(--muted)"><b>${r.zh}</b><span>${esc(r.intro)}</span></a>`).join('')}</div>
@@ -1366,8 +1717,12 @@ function bindGo() { document.querySelectorAll('.go[data-go]').forEach(g => g.add
 function route() {
   let h = (location.hash || '#/').slice(2);
   if (!location.hash && /practice|quiz/.test(location.search)) h = 'practice';
-  S.pr = false;
-  if (h === 'practice') renderPractice();
+  S.pr = false; if (typeof jStop === 'function') jStop();
+  const jm = h.match(/^journey\/(\w+)(?:\/(\d+))?$/), fm = h.match(/^feedstate(?:\/(\w+))?$/);
+  if (h === 'journey') renderJourneyHub();
+  else if (jm && JOURNEYS[jm[1]]) renderJourney(jm[1], jm[2]);
+  else if (fm) renderFeed(fm[1] || 'fed');
+  else if (h === 'practice') renderPractice();
   else if (h.startsWith('q/') && byId[h.slice(2)] && byId[h.slice(2)].edges.length) { S.pr = true; S.mode = 'quiz'; renderPath(h.slice(2)); }
   else if (h.startsWith('cat/') && CATS[h.slice(4)]) renderCat(h.slice(4));
   else if (h.startsWith('ref/') && REFS[h.slice(4)]) renderRef(h.slice(4));

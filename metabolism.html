@@ -199,6 +199,22 @@ svg.feed{display:block;width:100%;max-width:520px;margin:0 auto}
 .fcard{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--oc);border-radius:10px;padding:8px 12px}
 .fcard b{display:block;color:var(--oc)}.fcard span{font-size:14px}
 @media (max-width:860px){.jgrid{grid-template-columns:1fr}.jleft{position:static}}
+/* tts */
+#ttsbar{position:fixed;left:0;right:0;bottom:0;z-index:50;display:none;gap:10px;align-items:center;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:rgba(32,30,27,.95);color:#fff;box-shadow:0 -2px 12px rgba(0,0,0,.2)}
+#ttsbar.on{display:flex}
+#ttsbar .tcap{flex:1;min-width:0;font-size:15px;line-height:1.5;max-height:4.5em;overflow:auto}
+#ttsbar .tcap a{color:#ffd28a}
+#ttsbar .tbtns{display:flex;align-items:center;gap:6px;flex:none}
+#ttsbar button{width:40px;height:40px;border-radius:50%;border:0;background:#fff;color:#222;font-size:16px;cursor:pointer}
+#ttsbar label{font-size:12px;color:#ddd}#ttsbar select{font:inherit;font-size:13px;border-radius:6px;padding:2px}
+body.tts-on main{padding-bottom:150px}
+.speaking{outline:3px solid var(--acc);outline-offset:4px;border-radius:10px;background:color-mix(in srgb,var(--acc) 8%,transparent)}
+.lecbar{display:flex;flex-wrap:wrap;align-items:flex-start;gap:10px;margin:4px 0 12px}
+.lecbar .btn{font-size:15px;padding:8px 16px}
+.script{flex:1 1 200px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:14px}
+.script summary{cursor:pointer;color:var(--muted)}.script p{margin:8px 0}
+.jcard .lecbar{margin:12px 0 0}
+@media (max-width:600px){#ttsbar{padding:8px 12px calc(8px + env(safe-area-inset-bottom));gap:8px}#ttsbar .tcap{font-size:14px}#ttsbar .tbtns{flex-direction:column;gap:4px}#ttsbar button{width:36px;height:36px;font-size:14px}#ttsbar label{font-size:0}#ttsbar select{font-size:12px}}
 footer{color:var(--muted);font-size:13px;text-align:center;padding:20px 16px 30px}
 @media (max-width:900px){
   .maps{grid-template-columns:1fr}
@@ -1145,8 +1161,299 @@ const FEEDSTATE = {
    go:['ketogenesis','ketolysis','gng','lipolysis']}
  }
 };
+// ===== 老師講稿：營養素旅程（專業名詞只講英文） =====
+// 每一站一段講稿；用「。」分句，播放時會逐句顯示字幕
+const LECT_J = {
+glucose:[
+ '我們從一口飯開始。飯裡面的醣類主要是 starch。starch 一進到嘴巴，唾液裡的 salivary alpha amylase 就開始切它的 alpha one four glycosidic bond，切成比較短的 dextrin 和一點點 maltose。不過食物在口腔停留的時間很短，吞下去到了胃，胃酸讓 pH 變得很低，salivary amylase 就失去活性了。所以要記得，醣類消化的主戰場不在口腔。另外 alpha amylase 切不斷 alpha one six 的分支點，這個分支等一下會由別的酵素處理。',
+ '食物離開胃進入 duodenum，這時候 pancreas 分泌的胰液進來了。胰液裡有 bicarbonate，先把胃酸中和掉，讓 pH 適合酵素工作。接著 pancreatic alpha amylase 接手，把大部分的 starch 切成 maltose、maltotriose，還有帶著分支點的 alpha limit dextrin。到這裡為止，分子還太大，小腸細胞吸收不了，還需要最後一刀。',
+ '最後一刀發生在小腸絨毛表面的 brush border。這裡的酵素是長在細胞膜上的，叫做 disaccharidase。maltase 把 maltose 切成兩個 glucose。sucrase isomaltase 把 sucrose 切成 glucose 和 fructose，同時負責切開 alpha one six 的分支。lactase 把 lactose 切成 glucose 和 galactose。如果 lactase 不足，lactose 留在腸道被細菌發酵，就會脹氣、腹瀉，這就是 lactose intolerance。到這裡，醣類都變成 monosaccharide，終於可以被吸收了。',
+ '現在 glucose 要穿過小腸細胞，也就是 enterocyte 的頂端膜。glucose 和 galactose 走的是 SGLT1，它一次帶一個 glucose 和鈉離子一起進來，可以逆著濃度梯度運送，所以是 secondary active transport。那鈉的梯度從哪裡來？是細胞底部的 sodium potassium ATPase 不停把鈉打出去，這一步要消耗 ATP。fructose 則不一樣，它走 GLUT5，是 facilitated diffusion，不耗能但比較慢。臨床上 oral rehydration solution 同時給 glucose 和鈉，就是利用 SGLT1 把水一起帶進來。',
+ 'glucose 進入 enterocyte 之後，要從細胞底部的 basolateral membrane 出去。這裡三種 monosaccharide 都走 GLUT2，順著濃度梯度出去，進入微血管，再匯集到 hepatic portal vein。請記住這個重點：水溶性的營養素，包括 monosaccharide 和 amino acid，都是經由 portal vein 先送到肝臟。等一下講脂肪的時候你會發現，長鏈脂肪走的是完全不同的路。',
+ '肝臟是 glucose 的第一站。肝細胞用 GLUT2 把 glucose 拿進來，這一步不需要 insulin。進來之後 glucokinase 馬上把它磷酸化成 glucose six phosphate，帶了磷酸根的分子出不去，等於被鎖在細胞裡。glucokinase 的 Km 很高，平常血糖不高時它不太工作，飯後血糖一高才大量運作，所以肝臟只在吃飽的時候大量收 glucose。吃飽時，肝把 glucose six phosphate 拿去做 glycogenesis 存起來；存滿了，多的就變成 acetyl CoA，做 fatty acid synthesis，再包成 VLDL 送出去。fructose 和 galactose 也在肝臟轉成 glucose 的代謝中間物。',
+ '沒有被肝臟留下的 glucose，經過 hepatic vein 進入全身循環，這就是我們說的血糖。空腹血糖大約七十到九十九 mg per dL。肌肉和脂肪細胞要拿 glucose，需要 insulin 幫忙：insulin 讓細胞把 GLUT4 從細胞內移到細胞膜上，glucose 才進得去。腦用 GLUT3，紅血球用 GLUT1，它們都不需要 insulin，這是為了保證腦和紅血球隨時有 glucose 可以用。type 2 diabetes 的 insulin resistance，就是 GLUT4 移不上去，血糖降不下來。',
+ 'glucose 進到肌肉細胞的 cytosol 之後，hexokinase 先把它變成 glucose six phosphate，接著進入 glycolysis。glycolysis 的 rate limiting enzyme 是 PFK1。一個 glucose 經過十個步驟變成兩個 pyruvate，淨得兩個 ATP 和兩個 NADH。這裡有幾條岔路要記：肌肉可以把 glucose 存成 muscle glycogen；一部分 glucose six phosphate 走 pentose phosphate pathway，產生 NADPH。如果氧氣不夠，或是在沒有 mitochondria 的紅血球，pyruvate 會被 lactate dehydrogenase 還原成 lactate，送回肝臟，這就是 Cori cycle。',
+ '有氧的情況下，pyruvate 經由 mitochondrial pyruvate carrier 進入 mitochondrial matrix。pyruvate dehydrogenase complex，也就是 PDH，把 pyruvate 變成 acetyl CoA，同時放出一個 CO2 和一個 NADH。PDH 需要五個輔因子：thiamine，riboflavin，niacin，pantothenic acid，還有 lipoic acid。缺 thiamine 的人這一步卡住，pyruvate 就轉成 lactate 堆積起來。acetyl CoA 接著進入 TCA cycle，每一圈放出兩個 CO2，產生三個 NADH、一個 FADH2 和一個 GTP。到這裡，glucose 原本的六個碳，已經全部變成 CO2 了。',
+ '那能量呢？能量大部分還存在 NADH 和 FADH2 裡面。它們到 inner mitochondrial membrane，把電子交給 electron transport chain，也就是 complex one 到 complex four。電子一路傳遞，同時把 proton 打到膜間隙，形成 proton gradient。最後電子交給 oxygen，和 proton 結合變成水。proton 再順著梯度流回 matrix，推動 ATP synthase 合成 ATP。一個 glucose 完全氧化，總共大約三十到三十二個 ATP，其中絕大部分是在這裡產生的。要注意，我們吸進來的 oxygen 最後是變成水，不是變成 CO2。',
+ '旅程的終點。CO2 大部分以 bicarbonate 的形式溶在血液裡，送到肺呼出去；水成為身體的體液，叫做 metabolic water；ATP 則被拿去做肌肉收縮、主動運輸、合成反應。整條旅程可以用一個式子總結：一個 glucose 加六個 oxygen，變成六個 CO2、六個水，加上 ATP。醣類的 respiratory quotient 是一點零，脂肪大約零點七，蛋白質大約零點八。我們回頭看：消化在小腸腔和 brush border，吸收靠 SGLT1 和 GLUT2，先到肝，再靠 GLUT4 進入肌肉，在 cytosol 做 glycolysis，在 mitochondria 完成氧化。這就是 glucose 的完整旅程。'
+],
+fat:[
+ '這次我們追蹤一口油，也就是 triacylglycerol，簡稱 TAG。脂肪不溶於水，這一點決定了它整條旅程都和 glucose 不一樣。在口腔和胃，lingual lipase 和 gastric lipase 會分解一小部分 TAG，它們比較喜歡短鏈和中鏈的 fatty acid，所以對喝母乳的嬰兒比較重要。成人主要是靠胃的攪拌，把油脂打散成比較大的油滴，真正的消化要等到小腸。',
+ '脂肪一進入 duodenum，腸道細胞分泌 cholecystokinin，也就是 CCK。CCK 讓 gallbladder 收縮，把 bile 擠進小腸，同時刺激 pancreas 分泌酵素。bile salts 的作用是 emulsification，把大油滴乳化成很多小油滴，表面積變大，酵素才有地方下手。要注意 bile salts 本身不是酵素。接著 pancreatic lipase，在 colipase 的幫忙下，切掉 TAG 的第一和第三個 fatty acid，得到一個 two monoacylglycerol 和兩個 free fatty acid。phospholipase A2 分解 phospholipid，cholesterol esterase 分解 cholesteryl ester。',
+ '分解出來的 monoacylglycerol 和 fatty acid 還是怕水，要怎麼穿過腸道裡的水層呢？答案是 micelle。bile salts 把 monoacylglycerol、fatty acid、cholesterol，還有 vitamin A、D、E、K 這些脂溶性維生素包成很小的 micelle，像接駁車一樣送到 brush border。到了細胞表面，脂質自己擴散進細胞，bile salts 則留在腸道，一路走到 terminal ileum 被重新吸收，回到肝臟再利用，這叫 enterohepatic circulation。所以 ileum 切除或 bile 不足的病人，會有 steatorrhea 和脂溶性維生素缺乏。',
+ '進到 enterocyte 之後，細胞做了一件很特別的事：把剛剛拆開的東西重新組裝回去。fatty acid 先活化成 acyl CoA，再和 two monoacylglycerol 重新合成 TAG，這叫 monoacylglycerol pathway，在 smooth endoplasmic reticulum 進行。然後 TAG、cholesteryl ester、phospholipid，再加上一個標誌性的蛋白質 apoB48，一起包成 chylomicron。有一個例外：short chain 和 medium chain fatty acid 不需要重新組裝，直接進入 portal vein。所以臨床上脂肪吸收不良的病人，會使用 MCT oil。',
+ 'chylomicron 的體積太大，進不了微血管，只好走另一條路：先進入絨毛中央的 lacteal，也就是淋巴管，再經過 thoracic duct，從左邊的 subclavian vein 匯入血液。這代表長鏈脂肪吸收之後，不會先經過肝臟，這和 glucose、amino acid 走 portal vein 先到肝，是最大的差別。飯後抽血，血漿看起來白白混濁，就是因為裡面有大量的 chylomicron。',
+ 'chylomicron 隨著血液流到脂肪組織、肌肉和心臟的微血管。微血管內皮上有一個酵素叫 lipoprotein lipase，簡稱 LPL。chylomicron 表面的 apoC2 會活化 LPL，LPL 就把 TAG 切成 fatty acid 和 glycerol，fatty acid 進入旁邊的細胞。吃飽的時候 insulin 升高，會增加脂肪組織的 LPL，所以 fatty acid 主要被脂肪細胞收下，重新合成 TAG 存起來；肌肉和心臟則把 fatty acid 當燃料。卸完貨剩下的 chylomicron remnant，帶著 apoE，被肝臟回收。肝臟自己做的 TAG 包成 VLDL 送出，也是用同樣的 LPL 卸貨。',
+ '現在把時間跳到空腹的時候。這時 insulin 下降，glucagon 和 epinephrine 上升，透過 cAMP 活化脂肪細胞裡的 hormone sensitive lipase，簡稱 HSL，還有 ATGL。它們把儲存的 TAG 分解成三個 fatty acid 和一個 glycerol。fatty acid 不溶於水，要和 albumin 結合，才能在血液裡運送到肌肉和肝臟。glycerol 則被送到肝臟，做 gluconeogenesis。要記住一個重要觀念：fatty acid 不能變成 glucose，但是 glycerol 可以。',
+ 'fatty acid 進到肌肉或肝細胞的 cytosol，第一件事是活化。acyl CoA synthetase 把 fatty acid 接上 coenzyme A，變成 fatty acyl CoA。這一步要消耗一個 ATP，但 ATP 被切成 AMP，等於用掉兩個高能磷酸鍵。所以等一下計算 palmitate 產生多少 ATP 的時候，要記得扣掉這兩個。',
+ '長鏈的 fatty acyl CoA 不能直接穿過 inner mitochondrial membrane，需要 carnitine 來接送，這叫 carnitine shuttle。在外膜上，CPT1 把 acyl 基團從 CoA 換到 carnitine 上，變成 acylcarnitine。這一步是整個 beta oxidation 的 rate limiting step。接著 translocase 把 acylcarnitine 運進 matrix，CPT2 再把它換回 acyl CoA。CPT1 會被 malonyl CoA 抑制，malonyl CoA 是 fatty acid synthesis 的中間產物，所以身體在合成脂肪的時候，就不會同時燃燒脂肪。medium chain fatty acid 不需要 carnitine，這也是 MCT 好用的原因。',
+ '到了 mitochondrial matrix，終於開始 beta oxidation。每一輪有四個步驟：oxidation、hydration、oxidation、thiolysis。第一次 oxidation 產生 FADH2，第二次 oxidation 產生 NADH，最後 thiolase 切下兩個碳，變成一個 acetyl CoA。碳鏈少了兩個碳，再進入下一輪。以十六個碳的 palmitate 為例，跑七輪，得到八個 acetyl CoA、七個 FADH2、七個 NADH。極長鏈的 fatty acid 要先在 peroxisome 縮短，帶支鏈的 phytanic acid 則要走 alpha oxidation。beta oxidation 只能在有氧的情況下進行。',
+ '最後是脂肪的去向。acetyl CoA 進入 TCA cycle 和 electron transport chain，最後變成 CO2、水和 ATP。palmitate 完全氧化，扣掉活化的兩個，淨得大約一百零六個 ATP，所以脂肪每克有九大卡。在飢餓或極低醣的時候，肝臟產生的 acetyl CoA 太多，oxaloacetate 又被拿去做 gluconeogenesis，acetyl CoA 進不了 TCA，就轉成 ketone bodies，送給腦、心臟和肌肉使用。肝臟會製造 ketone bodies，但自己不能用，因為缺少 SCOT 這個酵素。吃飽的時候，多出來的熱量則以 TAG 的形式存在脂肪組織。回顧一下：bile 乳化，lipase 分解，micelle 運送，重組成 chylomicron，走 lymph 繞過肝，LPL 卸貨，carnitine 帶進 mitochondria，beta oxidation 燃燒。'
+],
+protein:[
+ '第三條旅程，我們追蹤一顆蛋裡的 protein。protein 在口腔幾乎沒有被消化，真正開始是在胃。胃酸 HCl 先讓 protein denaturation，把折疊好的結構打開。胃的主細胞分泌的是沒有活性的 pepsinogen，在酸性環境中自己活化成 pepsin，把 protein 切成大小不一的 polypeptide。為什麼要先分泌沒有活性的 zymogen？因為如果一開始就有活性，會先把自己的組織消化掉。',
+ '到了 duodenum，pancreas 送來一整組 protease，一樣以 zymogen 的形式分泌。關鍵的開關在小腸黏膜：enteropeptidase 把 trypsinogen 活化成 trypsin。trypsin 再去活化其他的 zymogen，包括 chymotrypsin、elastase 和 carboxypeptidase。trypsin、chymotrypsin、elastase 是 endopeptidase，從中間切；carboxypeptidase 是 exopeptidase，從羧基端一個一個切。所以 trypsin 是整組胰臟蛋白酶的總開關。',
+ '剩下的 oligopeptide 到了 brush border，由膜上的 aminopeptidase 從胺基端切，dipeptidase 切開雙胜肽。最後的產物是游離的 amino acid，還有很多 dipeptide 和 tripeptide。和醣類不同，小腸可以直接吸收 dipeptide 和 tripeptide，不一定要切到最小的單位。',
+ '吸收的時候，amino acid 有好幾種運送系統，大多數和鈉離子一起進入細胞，屬於 secondary active transport。dipeptide 和 tripeptide 則經由 PepT1，和 proton 一起進入，速度甚至比游離 amino acid 還快，進到細胞裡再被切成 amino acid。之後 amino acid 從基底側出去，進入 portal vein。小腸細胞自己最喜歡用的能量來源是 glutamine。如果中性 amino acid 的運送蛋白有缺陷，就是 Hartnup disease，tryptophan 吸收不好，會出現類似 pellagra 的症狀。',
+ 'amino acid 和 glucose 一樣，經過 portal vein 先到肝臟。肝臟會先使用大部分的 amino acid，合成 albumin、凝血因子和各種運輸蛋白，也合成 non essential amino acid、creatine、glutathione 等等。但是有一群例外：branched chain amino acid，也就是 leucine、isoleucine、valine，肝臟代謝得很少，大部分直接送到肌肉。臨床上血清 albumin 偏低，可以反映長期的蛋白質營養不良或肝功能不好。',
+ 'amino acid 最主要的用途是建造。amino acid 進入各組織細胞，形成 amino acid pool，再依照 mRNA 的序列，在 ribosome 上合成 protein，包括肌肉、酵素、激素和抗體。合成的時候，所有 essential amino acid 必須同時存在，含量最不足的那一個叫 limiting amino acid，它決定了能合成多少蛋白質。穀類的 limiting amino acid 通常是 lysine，豆類是 methionine，兩者一起吃就能互補。amino acid 也用來合成 neurotransmitter、heme 等含氮物質。',
+ '當 amino acid 吃太多、飢餓，或身體在分解蛋白質的時候，amino acid 就要被拆掉。第一步是 transamination：ALT 和 AST 這些 aminotransferase，在 pyridoxal phosphate，也就是 vitamin B6 的幫忙下，把 amino group 交給 alpha ketoglutarate，變成 glutamate。amino acid 拿掉 amino group 之後剩下的 carbon skeleton，可以進入 TCA cycle 產生能量，可以做 gluconeogenesis，也可以變成 ketone bodies。要記得 leucine 和 lysine 是 purely ketogenic。',
+ '拿下來的氮是一個麻煩，因為 ammonia 有毒，不能在血液裡大量運送。身體有兩種安全的運送方式。在肌肉，pyruvate 接上 amino group 變成 alanine，送到肝臟，肝臟再把 alanine 變回 pyruvate 做 gluconeogenesis，這就是 glucose alanine cycle。在其他組織，glutamine synthetase 把 ammonia 接到 glutamate 上，變成 glutamine，送到肝臟和腎臟。所以 glutamine 是血液中含量最多的 amino acid。',
+ '氮最後都匯集到肝臟。在 mitochondria 裡，glutamate dehydrogenase 進行 oxidative deamination，把 ammonia 放出來。ammonia 和 CO2 在 CPS1 的作用下變成 carbamoyl phosphate，CPS1 是 urea cycle 的 rate limiting enzyme，需要 N acetylglutamate 活化。接著經過 citrulline、argininosuccinate、arginine，最後 arginase 切出 urea，ornithine 回到起點。urea cycle 前兩步在 mitochondria，後三步在 cytosol。每產生一個 urea 要消耗三個 ATP，第二個氮來自 aspartate。肝硬化的病人 urea cycle 做不好，ammonia 堆積，就會出現 hepatic encephalopathy。',
+ '旅程的終點是腎臟。urea 是無毒又水溶的分子，經由血液送到腎臟，在 glomerulus 過濾，隨尿液排出。抽血檢驗的 BUN，就是血中的 urea nitrogen。腎臟也會從 glutamine 產生 ammonium 排出，幫身體排酸。另外，肌肉裡的 creatine 會轉成 creatinine，也由腎臟排出。腎衰竭的時候，BUN 和 creatinine 都會上升，所以 chronic kidney disease 的病人需要控制蛋白質攝取。整理一下：protein 被 pepsin 和 trypsin 切開，以 amino acid 和 peptide 吸收，經 portal vein 到肝，主要用來合成蛋白質；多餘的 carbon skeleton 拿去產能，氮則轉成 urea 由腎臟排出。'
+]};
+
+const LECT_F = {
+ fed:'先看吃飽的時候，也就是飯後零到四小時。這時候主導的荷爾蒙是 insulin。小腸把 glucose 和 amino acid 經由 portal vein 送進血液，脂肪則包成 chylomicron 走淋巴。肝臟收下 glucose，做 glycogenesis，多餘的變成 fatty acid，包成 VLDL 送出。肌肉在 insulin 的作用下，把 GLUT4 移到細胞膜，大量收進 glucose，做成 muscle glycogen，也用 amino acid 合成蛋白質。脂肪組織的 LPL 增加，把 chylomicron 和 VLDL 裡的 TAG 卸下來存好。腦則一直使用 glucose。一句話：吃飽的時候，insulin 讓身體合成和儲存。',
+ fast:'接著是空腹，例如隔夜十二到二十四小時。insulin 下降，glucagon 上升。血糖靠肝臟維持：先做 glycogenolysis，把肝醣分解成 glucose 放回血液，同時 gluconeogenesis 開始，原料是脂肪組織來的 glycerol、肌肉來的 lactate 和 alanine。脂肪組織的 HSL 被活化，把 TAG 分解成 fatty acid 和 glycerol。肌肉改用 fatty acid 當燃料，把 glucose 留給腦和紅血球，同時送出 lactate 和 alanine 給肝臟。肝臟也開始 beta oxidation。一句話：空腹的時候，glucagon 讓身體分解和釋放，目標是維持血糖。',
+ starve:'最後是長期飢餓，超過三天。肝醣大約一天就用完了，所以 gluconeogenesis 和 ketogenesis 成為主角，glucagon 和 cortisol 都升高。脂肪組織持續分解脂肪，是最主要的能量來源。肝臟把大量的 acetyl CoA 轉成 ketone bodies 送進血液。這時候最重要的改變發生在腦：腦大約三分之二的能量改用 ketone bodies，對 glucose 的需求大幅減少，gluconeogenesis 就不用分解那麼多肌肉蛋白。所以適應之後，肌肉蛋白質的分解反而會減少，這是身體保護蛋白質的機制。'
+};
+// ===== 老師講稿：各條路徑的開場與總結（中間步驟由資料自動講解） =====
+const LECT_P = {
+glycolysis:['今天先講 glycolysis。它在 cytosol 進行，不需要氧氣，幾乎每一個細胞都會做，紅血球因為沒有 mitochondria，只能靠它產生能量。glycolysis 把一個六碳的 glucose 切成兩個三碳的 pyruvate。我們一步一步看。',
+ '整理一下。前半段投資兩個 ATP，後半段回收四個 ATP，所以淨得兩個 ATP 和兩個 NADH。三個不可逆的步驟一定要背：hexokinase、PFK1、pyruvate kinase，其中 PFK1 是 rate limiting enzyme，ATP 和 citrate 抑制它，AMP 和 fructose two six bisphosphate 活化它。沒有氧的時候，pyruvate 被 lactate dehydrogenase 變成 lactate，目的是把 NADH 變回 NAD plus，讓 glycolysis 可以繼續。pyruvate kinase deficiency 會讓紅血球 ATP 不足，造成 hemolytic anemia。'],
+pdh:['glycolysis 產生的 pyruvate，如果有氧，就會進入 mitochondria，由 pyruvate dehydrogenase complex，也就是 PDH，轉成 acetyl CoA。這一步是醣類進入 TCA cycle 的大門。',
+ 'PDH 這一步是不可逆的，所以 acetyl CoA 不能再變回 glucose，這也是為什麼偶數碳的 fatty acid 不能生糖。PDH 需要五個輔因子：thiamine pyrophosphate、FAD、NAD plus、coenzyme A，還有 lipoic acid，也就是 B1、B2、B3、B5 和硫辛酸。insulin 活化 PDH，產物 acetyl CoA 和 NADH 抑制它。酗酒的人常缺 thiamine，PDH 卡住，pyruvate 就轉成 lactate，造成 lactic acidosis，嚴重時就是 beriberi。'],
+tca:['接下來是 TCA cycle，也叫 citric acid cycle 或 Krebs cycle，在 mitochondrial matrix 進行。醣類、脂肪、蛋白質分解到最後都變成 acetyl CoA，在這裡被完全氧化，所以 TCA cycle 是三大營養素的共同終點。acetyl CoA 先和 oxaloacetate 結合，然後繞一圈。',
+ '每轉一圈，放出兩個 CO2，產生三個 NADH、一個 FADH2 和一個 GTP，換算大約十個 ATP。rate limiting enzyme 是 isocitrate dehydrogenase，ADP 活化它，ATP 和 NADH 抑制它。succinate dehydrogenase 同時也是 electron transport chain 的 complex two。另外 TCA 的中間產物也被拿去合成別的東西：alpha ketoglutarate 變成 glutamate，succinyl CoA 用來合成 heme，oxaloacetate 可以去做 gluconeogenesis。'],
+etc:['NADH 和 FADH2 裡面存了大量的能量，要在 inner mitochondrial membrane 上的 electron transport chain 才能換成 ATP。這個過程叫 oxidative phosphorylation。',
+ '重點是 chemiosmotic theory：電子傳遞的時候，complex one、three、four 把 proton 打到膜間隙，形成 proton gradient，proton 流回 matrix 時推動 ATP synthase。一個 NADH 大約換兩點五個 ATP，一個 FADH2 大約一點五個，因為 FADH2 從 complex two 進入，少了一個打 proton 的站。cyanide 和 carbon monoxide 抑制 complex four，oligomycin 抑制 ATP synthase。brown adipose tissue 的 UCP1 讓 proton 漏回去，不產生 ATP 而是產生熱。'],
+gng:['空腹的時候，血糖要靠肝臟和腎臟製造，這就是 gluconeogenesis，從非醣類的原料合成 glucose。它大致是 glycolysis 倒過來走，但是 glycolysis 有三個不可逆步驟，必須繞道。',
+ '要背四個繞道的酵素：pyruvate carboxylase 和 PEPCK 繞過 pyruvate kinase，fructose one six bisphosphatase 繞過 PFK1，它也是 gluconeogenesis 的 rate limiting enzyme，最後 glucose six phosphatase 繞過 hexokinase。pyruvate carboxylase 需要 biotin。合成一個 glucose 要消耗四個 ATP 和兩個 GTP。原料包括 lactate、alanine、glycerol、glucogenic amino acid，還有奇數碳 fatty acid 產生的 propionyl CoA。glucose six phosphatase 只在肝和腎，肌肉沒有，所以肌肉的 glycogen 不能直接拿來升血糖。'],
+glycogenesis:['吃飽的時候，多的 glucose 會在肝臟和肌肉存成 glycogen，這就是 glycogenesis，在 cytosol 進行。',
+ '重點有三個。第一，glucose 要先活化成 UDP glucose，所以需要 UTP。第二，rate limiting enzyme 是 glycogen synthase，insulin 讓它去磷酸化而活化。第三，branching enzyme 形成 alpha one six 的分支，分支越多，溶解度越高，分解時也越快。肝臟的 glycogen 用來維持血糖，肌肉的 glycogen 只給肌肉自己使用。'],
+glycogenolysis:['空腹或運動的時候，glycogen 要被分解，這叫 glycogenolysis。',
+ 'rate limiting enzyme 是 glycogen phosphorylase，它需要 pyridoxal phosphate，也就是 vitamin B6。glucagon 在肝臟、epinephrine 在肝臟和肌肉，透過 cAMP 讓 phosphorylase 磷酸化而活化。只有肝臟有 glucose six phosphatase，能把 glucose 放回血液。glycogen storage disease 要記三個：type one Von Gierke disease 缺 glucose six phosphatase，嚴重空腹低血糖；type two Pompe disease 缺 lysosomal acid maltase，影響心肌；type five McArdle disease 缺肌肉的 phosphorylase，運動時肌肉痙攣。'],
+ppp:['pentose phosphate pathway，也叫 hexose monophosphate shunt，在 cytosol 進行。它不是為了產生 ATP，而是為了產生兩樣東西：NADPH 和 ribose five phosphate。',
+ 'NADPH 是合成反應和抗氧化需要的還原力，用在 fatty acid synthesis、cholesterol synthesis，還有把 glutathione 還原回來。ribose five phosphate 用來做 nucleotide。rate limiting enzyme 是 G6PD。G6PD deficiency 在台灣很常見，紅血球的 NADPH 不足，glutathione 無法再生，吃到蠶豆、樟腦丸或某些藥物後就會溶血。transketolase 需要 thiamine，紅血球 transketolase 的活性可以用來評估 thiamine 營養狀況。'],
+fructose:['fructose 主要在肝臟代謝，它有一個特別的地方：會繞過 glycolysis 的關卡。',
+ 'fructose 被 fructokinase 變成 fructose one phosphate，再由 aldolase B 切開，直接進入 glycolysis 的下半段，跳過了 PFK1 這個 rate limiting step，所以代謝得很快。大量攝取 fructose 容易生成脂肪，造成 fatty liver，也會讓 uric acid 上升。aldolase B 缺乏是 hereditary fructose intolerance，fructose one phosphate 堆積，造成低血糖和肝損傷，飲食要避免 fructose、sucrose 和 sorbitol。fructokinase 缺乏則是良性的 essential fructosuria。'],
+galactose:['galactose 主要來自 lactose，在肝臟經由 Leloir pathway 轉成 glucose。',
+ '最重要的酵素是 GALT，也就是 galactose one phosphate uridyltransferase。GALT 缺乏就是 classic galactosemia，新生兒會嘔吐、黃疸、肝腫大、cataract 和智能障礙，飲食必須終身限制 lactose 和 galactose，嬰兒改用 soy formula。galactokinase 缺乏比較輕微，主要是 galactitol 堆積造成 cataract。'],
+uronic:['uronic acid pathway 在肝臟進行，它不產生 ATP，主要產物是 glucuronic acid。',
+ 'UDP glucuronic acid 用在 phase two conjugation，和 bilirubin、藥物結合，讓它們變得水溶性，容易排出。它也是 hyaluronic acid 等 glycosaminoglycan 的原料。另外一個考點：人類缺少 L gulonolactone oxidase，所以不能自己合成 vitamin C，必須從食物攝取。'],
+cori:['Cori cycle 是肌肉和肝臟之間的合作，處理劇烈運動時產生的 lactate。',
+ '肌肉做 glycolysis 賺兩個 ATP，肝臟做 gluconeogenesis 花六個 ATP，所以整個 Cori cycle 淨消耗四個 ATP。它的意義是把代謝負擔從肌肉轉給肝臟，讓肌肉在缺氧時還能繼續產能。紅血球產生的 lactate 也是走這條路。'],
+'glucose-alanine':['glucose alanine cycle 和 Cori cycle 很像，也是肌肉和肝臟之間的循環，但它多運了一樣東西：氮。',
+ '肌肉分解 amino acid，特別是 branched chain amino acid，把 amino group 經由 ALT 接到 pyruvate 上，變成 alanine 送到肝臟。肝臟再把 alanine 變回 pyruvate 做 gluconeogenesis，氮則進入 urea cycle。和 Cori cycle 最大的差別，就是它同時把碳和氮安全地運到肝臟，在飢餓和長時間運動時特別重要。'],
+lipolysis:['空腹的時候，脂肪組織要把儲存的 TAG 拿出來用，這叫 lipolysis。',
+ '分解出來的 fatty acid 和 albumin 結合，經血液送到肌肉和肝臟。HSL 是 hormone sensitive lipase，glucagon 和 epinephrine 經由 cAMP 和 protein kinase A 活化它，insulin 則抑制它。glycerol 送到肝臟，經由 glycerol kinase 做 gluconeogenesis，脂肪組織本身沒有 glycerol kinase。'],
+carnitine:['長鏈 fatty acid 要進入 mitochondria 做 beta oxidation，必須先通過 carnitine shuttle。',
+ 'CPT1 是 beta oxidation 的 rate limiting step，會被 malonyl CoA 抑制，這樣合成脂肪的時候就不會同時燃燒脂肪。活化 fatty acid 時 ATP 變成 AMP，消耗兩個高能鍵。short chain 和 medium chain fatty acid 不需要 carnitine，可以直接進入 mitochondria，所以 MCT oil 用在脂肪吸收或代謝有問題的病人。carnitine 由 lysine 和 methionine 合成，需要 vitamin C 和鐵。'],
+'beta-ox':['beta oxidation 在 mitochondrial matrix 進行，每一輪從 fatty acid 的羧基端切下兩個碳，變成 acetyl CoA。每一輪有四個步驟。',
+ '口訣是 oxidation、hydration、oxidation、thiolysis。以 palmitate 為例，十六個碳跑七輪，得到八個 acetyl CoA、七個 FADH2、七個 NADH，總共一百零八個 ATP，扣掉活化的兩個，淨得一百零六個 ATP。acyl CoA dehydrogenase 依碳鏈長度分成好幾種，MCAD deficiency 會造成空腹低血糖，而且 ketone bodies 也偏低。'],
+'odd-chain':['大部分 fatty acid 是偶數碳，但奇數碳的 fatty acid 跑完 beta oxidation，最後會剩下三個碳的 propionyl CoA。',
+ 'propionyl CoA 要經過 propionyl CoA carboxylase，需要 biotin，再經過 methylmalonyl CoA mutase，需要 vitamin B12，最後變成 succinyl CoA 進入 TCA cycle。因為 succinyl CoA 可以變成 oxaloacetate，所以這是 fatty acid 唯一可以生糖的部分。B12 缺乏時 methylmalonic acid 會堆積，這可以用來和 folate deficiency 區分。'],
+'alpha-ox':['有些 fatty acid 在 beta 碳上帶了甲基，beta oxidation 會卡住，例如 phytanic acid。這時候要先走 alpha oxidation，在 peroxisome 進行。',
+ '口訣：alpha 切一碳、phytanic acid、peroxisome、不產生 ATP、缺了得 Refsum disease。phytanoyl CoA hydroxylase 需要 ferrous iron、vitamin C 和 oxygen，下一步的 lyase 需要 thiamine。Refsum disease 會有 retinitis pigmentosa、周邊神經病變和 ichthyosis，phytanic acid 主要來自反芻動物，也就是牛羊的肉脂和乳脂，所以飲食要限制這些食物。'],
+'omega-ox':['omega oxidation 是 beta oxidation 的備用路線，在 endoplasmic reticulum 進行，從離羧基最遠的 omega 碳開始氧化。',
+ '它由 cytochrome P450 進行，需要 NADPH 和 oxygen，產物是 dicarboxylic acid，兩端都可以再做 beta oxidation。平常量很少，但在 MCAD deficiency 這類 beta oxidation 有障礙的時候，尿中的 dicarboxylic acid 會增加。'],
+'perox-beta':['極長鏈的 fatty acid，超過二十二個碳，mitochondria 處理不了，要先送到 peroxisome 縮短。',
+ 'peroxisome 的第一個酵素是 acyl CoA oxidase，它把電子直接交給 oxygen 產生 hydrogen peroxide，不經過 electron transport chain，所以產能比較少。縮短到大約八個碳以後，再送到 mitochondria 完成。ABCD1 缺陷造成 X linked adrenoleukodystrophy；Zellweger syndrome 是 peroxisome 根本無法形成，very long chain fatty acid 和 phytanic acid 都會堆積。'],
+ketogenesis:['ketogenesis 是肝臟在 mitochondria 把過多的 acetyl CoA 轉成 ketone bodies。',
+ '什麼時候會大量產生？飢餓、極低醣飲食，還有 type 1 diabetes 缺乏 insulin 的時候。這時 oxaloacetate 被拿去做 gluconeogenesis，acetyl CoA 進不了 TCA cycle，只好轉成 ketone bodies。三種 ketone bodies 是 acetoacetate、beta hydroxybutyrate 和 acetone，acetone 從呼吸排出，有水果味。rate limiting enzyme 是 mitochondrial HMG CoA synthase，注意 cholesterol synthesis 用的是 cytosolic 的 HMG CoA synthase。diabetic ketoacidosis 就是 ketone bodies 過多造成的酸中毒。'],
+ketolysis:['肝臟製造的 ketone bodies，要送到腦、心臟和肌肉，在這些組織的 mitochondria 重新變回 acetyl CoA 來產能。',
+ '關鍵酵素是 SCOT，也就是 succinyl CoA acetoacetate CoA transferase。肝臟沒有 SCOT，所以肝臟只製造、不使用 ketone bodies。長期飢餓幾天以後，腦大約三分之二的能量來自 ketone bodies，這樣可以減少肌肉蛋白被分解來做 gluconeogenesis。紅血球沒有 mitochondria，不能使用 ketone bodies。'],
+'fa-synthesis':['吃飽的時候，多餘的醣類會在肝臟和脂肪組織的 cytosol 合成 fatty acid，這叫 de novo lipogenesis。',
+ 'acetyl CoA 是在 mitochondria 產生的，卻不能直接穿出來，要先變成 citrate，經由 citrate shuttle 運到 cytosol。rate limiting enzyme 是 acetyl CoA carboxylase，需要 biotin，insulin 和 citrate 活化它，glucagon 抑制它。合成一個 palmitate 需要八個 acetyl CoA、七個 ATP 和十四個 NADPH，NADPH 主要來自 pentose phosphate pathway 和 malic enzyme。中間產物 malonyl CoA 會抑制 CPT1，避免合成和分解同時進行。'],
+elongation:['palmitate 合成出來以後，會在 endoplasmic reticulum 被延長，或是加上雙鍵，這是 elongation 和 desaturation。',
+ '人體的 desaturase 只能在 delta nine 以內加雙鍵，缺少 delta twelve 和 delta fifteen desaturase，所以 linoleic acid 和 alpha linolenic acid 是 essential fatty acid，一定要從食物攝取。omega 6 和 omega 3 這兩個系列會競爭同一組 delta six 和 delta five desaturase。omega 6 的 linoleic acid 最後變成 arachidonic acid；omega 3 的 alpha linolenic acid 變成 EPA 和 DHA。'],
+'tag-synthesis':['TAG synthesis 把 glycerol 骨架接上三個 fatty acid，在肝臟、脂肪組織和小腸進行。',
+ '骨架是 glycerol three phosphate，脂肪組織從 glucose 的中間產物 DHAP 還原得到，所以脂肪組織合成 TAG 需要 glucose；肝臟則可以用 glycerol kinase。phosphatidic acid 是一個分岔點，也可以去做 phospholipid。小腸則是走 monoacylglycerol pathway，重新合成 TAG 包成 chylomicron。肝臟做太多 TAG、VLDL 又送不出去，就會形成 fatty liver。'],
+phospholipid:['phospholipid 是細胞膜的主要成分，在 endoplasmic reticulum 合成，最重要的是 phosphatidylcholine，也就是 lecithin。',
+ 'CDP choline pathway 需要 CTP，rate limiting enzyme 是 CCT。肝臟還可以把 phosphatidylethanolamine 用三個 SAM 甲基化成 phosphatidylcholine。phosphatidylcholine 是組裝 VLDL 必需的，所以 choline 不足的時候，TAG 送不出肝臟，就會造成 fatty liver。肺的 surfactant 主成分 DPPC 也是一種 phosphatidylcholine。'],
+cholesterol:['cholesterol 主要在肝臟合成，位置在 cytosol 和 endoplasmic reticulum，原料是 acetyl CoA。',
+ 'rate limiting enzyme 是 HMG CoA reductase，這是 statin 降血脂藥的作用點。insulin 活化它，cholesterol 和 glucagon 抑制它。人體每天自己合成大約一公克 cholesterol，比從食物吃進來的還多。cholesterol 用來做細胞膜、bile acid、steroid hormone 和 vitamin D。合成過程的中間產物也用來做 coenzyme Q10，所以服用 statin 可能會降低 CoQ10。'],
+'bile-acid':['bile acid synthesis 是 cholesterol 最主要的排除途徑，在肝臟進行。',
+ 'rate limiting enzyme 是 cholesterol seven alpha hydroxylase，也就是 CYP7A1，需要 vitamin C，bile acid 會回饋抑制它。primary bile acid 和 glycine 或 taurine 結合後變成 bile salt，分泌到腸道，被細菌修飾成 secondary bile acid。大約百分之九十五的 bile acid 在 terminal ileum 被重新吸收，這是 enterohepatic circulation。soluble fiber 和 bile acid sequestrant 會結合 bile acid，肝臟只好用更多 cholesterol 去補做，血中 cholesterol 因此下降。'],
+steroid:['steroid hormone 由 cholesterol 合成，主要在 adrenal cortex 和 gonad。',
+ '第一步也是 rate limiting step，是 cholesterol side chain cleavage enzyme，P450scc，在 mitochondria 把 cholesterol 變成 pregnenolone，ACTH 促進這一步。之後分成三條：mineralocorticoid 的 aldosterone、glucocorticoid 的 cortisol、還有 sex hormone。adrenal cortex 三層的口訣是鹽、糖、性：zona glomerulosa 做 aldosterone，zona fasciculata 做 cortisol，zona reticularis 做 androgen。21 hydroxylase deficiency 是最常見的 congenital adrenal hyperplasia，cortisol 和 aldosterone 不足，androgen 過多。'],
+vitd:['vitamin D 的活化要經過三個地方：皮膚、肝臟和腎臟。',
+ '皮膚的 seven dehydrocholesterol 照到 UVB，變成 cholecalciferol。到肝臟由 25 hydroxylase 變成 25 hydroxyvitamin D，這是血中的儲存形式，評估 vitamin D 營養狀況就是測它。到腎臟由 one alpha hydroxylase 變成活性的 calcitriol，PTH 和低血磷促進這一步，FGF23 和高血鈣抑制它。chronic kidney disease 的病人 one alpha hydroxylation 不足，要直接補充活性 vitamin D。calcitriol 促進腸道吸收鈣和磷。'],
+eicosanoid:['eicosanoid 是由二十個碳的 polyunsaturated fatty acid 衍生出來的局部激素，包括 prostaglandin、thromboxane 和 leukotriene。',
+ '第一步是 phospholipase A2 把 arachidonic acid 從細胞膜切出來，cortisol 抑制這一步，所以有抗發炎作用。cyclooxygenase，也就是 COX，產生 prostaglandin 和 thromboxane，aspirin 不可逆地抑制 COX。血小板做 thromboxane A2 促進凝集，血管內皮做 prostacyclin 抑制凝集。lipoxygenase 產生 leukotriene，和氣喘有關。omega 6 的 arachidonic acid 衍生物偏向促發炎，omega 3 的 EPA 衍生物作用比較弱，這就是 fish oil 抗發炎的原理。'],
+lipoprotein:['脂質不溶於水，要包成 lipoprotein 才能在血液中運送。我們看肝臟分泌的 VLDL 怎麼一步一步變成 LDL。',
+ '要背四種 lipoprotein：chylomicron 帶食物來的 TAG，apo 是 B48；VLDL 帶肝臟做的 TAG，apo 是 B100；LDL 把 cholesterol 送到周邊；HDL 把周邊的 cholesterol 送回肝臟，apo 是 A1，LCAT 被 apoA1 活化。LPL 被 apoC2 活化。LDL receptor 缺陷就是 familial hypercholesterolemia。密度從小到大是 chylomicron、VLDL、IDL、LDL、HDL，蛋白質越多越重。'],
+transamination:['amino acid 分解的第一步通常是 transamination，把 amino group 從 amino acid 轉移到 alpha keto acid 上。',
+ '兩個最重要的 aminotransferase 是 ALT 和 AST，都需要 pyridoxal phosphate，也就是 vitamin B6。ALT 主要在肝臟，所以肝炎時特異性地上升；AST 在肝臟、心肌和骨骼肌都有。alpha ketoglutarate 是 amino group 的主要接受者，接了以後變成 glutamate。transamination 是可逆的，所以也用來合成 non essential amino acid。lysine 和 threonine 不進行 transamination。'],
+deamination:['transamination 把 amino group 集中到 glutamate 上，接著在肝臟的 mitochondria，由 glutamate dehydrogenase 把 ammonia 放出來，這叫 oxidative deamination。',
+ 'transamination 加上 oxidative deamination，合稱 transdeamination，是 amino acid 脫氮的主要方式。肝外組織的 ammonia 則由 glutamine synthetase 接到 glutamate 上，變成無毒的 glutamine 運送。腎臟用 glutaminase 釋出 ammonia，可以把 proton 排出去，幫忙調節酸鹼。'],
+urea:['ammonia 對腦有毒，肝臟要把它轉成無毒又水溶的 urea，這就是 urea cycle，也叫 ornithine cycle。它橫跨 mitochondria 和 cytosol。',
+ 'urea 的兩個氮，一個來自游離的 ammonia，一個來自 aspartate，碳來自 CO2。產生一個 urea 消耗三個 ATP，相當於四個高能鍵。rate limiting enzyme 是 CPS1，需要 N acetylglutamate 活化。OTC deficiency 是最常見的 urea cycle 缺陷，屬於 X linked。argininosuccinate lyase 放出的 fumarate 進入 TCA cycle，把兩個循環連在一起。肝硬化的病人 urea cycle 做不好，hyperammonemia 造成 hepatic encephalopathy，飲食要控制蛋白質，可以使用 branched chain amino acid 配方。'],
+'carbon-skeleton':['amino acid 拿掉 amino group 以後，剩下的 carbon skeleton 會進入不同的入口，決定它是 glucogenic 還是 ketogenic。',
+ '能進入 TCA cycle 中間產物的，可以變成 oxaloacetate，所以是 glucogenic；只能變成 acetyl CoA 或 acetoacetyl CoA 的，是 ketogenic。purely ketogenic 的只有兩個：leucine 和 lysine。同時 glucogenic 和 ketogenic 的有五個：isoleucine、phenylalanine、tyrosine、tryptophan 和 threonine。其餘都是 purely glucogenic。'],
+neaa:['non essential amino acid 是身體可以自己合成的 amino acid，原料多半是醣類代謝的中間產物。',
+ 'alanine 來自 pyruvate，aspartate 來自 oxaloacetate，glutamate 來自 alpha ketoglutarate，都靠 transamination，需要 vitamin B6。serine 來自 glycolysis 的 three phosphoglycerate，glycine 由 serine 經過 SHMT 產生，需要 folate。要特別注意 conditionally essential amino acid：cysteine 需要 methionine，tyrosine 需要 phenylalanine。PKU 的病人不能把 phenylalanine 轉成 tyrosine，所以 tyrosine 變成 essential。'],
+'phe-tyr':['phenylalanine 先在肝臟轉成 tyrosine，tyrosine 再做成很多重要的分子：catecholamine、melanin 和 thyroid hormone。我們看 catecholamine 這一條。',
+ 'phenylalanine hydroxylase 需要 tetrahydrobiopterin，缺乏就是 phenylketonuria，PKU，飲食要限制 phenylalanine、補充 tyrosine，也要避免含 phenylalanine 的 aspartame，這是新生兒篩檢項目之一。tyrosine hydroxylase 是 catecholamine 合成的 rate limiting enzyme。dopamine beta hydroxylase 需要 vitamin C 和銅。tyrosinase 缺乏造成 albinism；homogentisate oxidase 缺乏造成 alkaptonuria。'],
+tryptophan:['tryptophan 可以做成 serotonin、melatonin，還可以在肝臟轉成 niacin。我們先看 serotonin 和 melatonin 這一條。',
+ 'tryptophan hydroxylase 是 rate limiting enzyme，需要 tetrahydrobiopterin。decarboxylase 需要 vitamin B6。melatonin 在松果體合成，黑暗時增加。在肝臟，tryptophan 經過 kynurenine pathway 變成 niacin，大約六十毫克 tryptophan 換一毫克 niacin，這個過程需要 B6、B2 和鐵。以玉米為主食的人，niacin 和 tryptophan 都不足，就會得 pellagra。'],
+bcaa:['branched chain amino acid 是 leucine、isoleucine 和 valine，它們和其他 amino acid 不同，主要在肌肉分解，而不是在肝臟。',
+ 'branched chain alpha keto acid dehydrogenase 需要的輔因子和 PDH 一樣，缺乏就是 maple syrup urine disease，MSUD，尿液有楓糖漿味，造成神經損傷，飲食要限制這三種 amino acid。leucine 是 purely ketogenic，valine 是 glucogenic，isoleucine 兩者都是。肝病的病人補充 branched chain amino acid，因為肌肉可以直接利用，也能改善 branched chain amino acid 和 aromatic amino acid 的比值。'],
+methionine:['methionine cycle 在肝臟進行，它的任務是提供 methyl group，同時回收 homocysteine。',
+ 'SAM 是身體最主要的 methyl donor，用來甲基化 DNA，合成 creatine、phosphatidylcholine 和 epinephrine。homocysteine 有兩條出路：一條是由 methionine synthase 變回 methionine，需要 vitamin B12 和 folate；另一條是 transsulfuration，由 cystathionine beta synthase 變成 cysteine，需要 vitamin B6。folate、B12、B6 任何一個缺乏，homocysteine 都會上升，增加 cardiovascular disease 的風險。B12 缺乏時 folate 卡在 methyl 形式，叫 methyl folate trap，造成 megaloblastic anemia。'],
+'heme-synthesis':['heme synthesis 主要在 bone marrow 和肝臟，橫跨 mitochondria 和 cytosol，原料是 glycine 和 succinyl CoA。',
+ 'rate limiting enzyme 是 ALA synthase，需要 vitamin B6，heme 會回饋抑制它。B6 缺乏可能造成 sideroblastic anemia。lead poisoning 抑制 ALA dehydratase 和 ferrochelatase，造成貧血，ALA 上升。porphobilinogen deaminase 缺乏是 acute intermittent porphyria。口訣「糖尿血」的血，就是指 heme synthesis 橫跨兩個區域。'],
+'heme-degradation':['紅血球大約活一百二十天，老舊的紅血球在脾臟被破壞，heme 被分解成 bilirubin 排出。',
+ 'heme oxygenase 把 heme 打開，放出鐵和 carbon monoxide，鐵會被回收再利用。unconjugated bilirubin 是脂溶性的，要和 albumin 結合才能運到肝臟。肝臟用 UDP glucuronosyltransferase 把它變成 conjugated bilirubin，水溶性，隨膽汁排出。新生兒這個酵素活性低，所以容易有 neonatal jaundice。hemolytic jaundice 是 unconjugated bilirubin 上升；obstructive jaundice 是 conjugated bilirubin 上升，糞便變成灰白色。'],
+'aa-derivatives':['amino acid 除了合成蛋白質，還會變成很多有功能的小分子。',
+ '請記這張表：tyrosine 做 catecholamine、thyroid hormone 和 melanin；tryptophan 做 serotonin、melatonin 和 niacin；histidine 做 histamine；glutamate 做 GABA；arginine 做 nitric oxide；glycine、arginine 和 methionine 一起做 creatine；glutamate、cysteine 和 glycine 一起做 glutathione。decarboxylation 產生 amine 類的反應，幾乎都需要 vitamin B6；hydroxylation 常需要 tetrahydrobiopterin 或 vitamin C。'],
+'purine-denovo':['purine 是 adenine 和 guanine，de novo synthesis 在肝臟的 cytosol 進行。它的特點是把環直接蓋在 ribose 上。',
+ 'rate limiting enzyme 是 glutamine PRPP amidotransferase，被 AMP、GMP 和 IMP 回饋抑制。第一個做出來的 purine nucleotide 是 IMP，再分成 AMP 和 GMP。purine 環的原子來自 glycine、aspartate、glutamine、folate 提供的一碳單位，還有 CO2。folate antagonist，例如 methotrexate，會阻斷這條路，用來抑制細胞分裂。'],
+'purine-salvage':['de novo synthesis 很耗能，所以身體也會回收游離的 purine base 再利用，這叫 salvage pathway。',
+ 'HGPRT 回收 hypoxanthine 和 guanine，APRT 回收 adenine，都需要 PRPP。腦和骨髓特別依賴 salvage pathway。HGPRT 完全缺乏是 Lesch Nyhan syndrome，X linked，purine 無法回收，PRPP 堆積，uric acid 大量產生，造成 gout，還有自殘行為和智能障礙。'],
+pyrimidine:['pyrimidine 是 cytosine、thymine 和 uracil。和 purine 相反，pyrimidine 是先做好環，再接到 ribose 上。',
+ 'rate limiting enzyme 是 CPS2，在 cytosol，氮來自 glutamine，被 UTP 抑制。要和 urea cycle 的 CPS1 區分：CPS1 在 mitochondria，用 ammonia，需要 N acetylglutamate 活化。dihydroorotate dehydrogenase 是唯一在 inner mitochondrial membrane 的步驟。UMP synthase 缺乏是 hereditary orotic aciduria，可以補充 uridine 治療。OTC deficiency 的時候 carbamoyl phosphate 外溢，也會有 orotic aciduria，但同時伴隨 hyperammonemia。'],
+dntp:['DNA 用的是 deoxyribose，要由 ribonucleotide 還原而來；而且 DNA 用 thymine 不用 uracil，要另外合成 dTMP。',
+ 'ribonucleotide reductase 需要 NADPH，經過 thioredoxin 提供電子，hydroxyurea 抑制它。thymidylate synthase 把 dUMP 變成 dTMP，需要 methylene THF，也就是 folate，5 fluorouracil 抑制它。用掉的 folate 要靠 dihydrofolate reductase 再生，methotrexate 抑制這個酵素。所以 folate 或 B12 缺乏時 dTMP 不足，DNA 合成受阻，快速分裂的骨髓細胞最受影響，造成 megaloblastic anemia。'],
+'purine-degradation':['purine 分解的終產物是 uric acid，和 gout 直接相關。',
+ 'xanthine oxidase 需要 molybdenum，allopurinol 和 febuxostat 抑制它，用來治療 gout。人類缺少 uricase，所以 uric acid 就是終產物，它的溶解度很低，容易沉積成結晶，造成 gout 和 uric acid stone。gout 的飲食原則是限制高普林食物，例如內臟、海鮮和濃肉湯，限制酒精和 fructose，多喝水。pyrimidine 的分解產物水溶性高，比較不會造成疾病。'],
+alcohol:['ethanol 主要在肝臟代謝，先變成 acetaldehyde，再變成 acetate。',
+ '台灣大約一半的人有 ALDH2 變異，acetaldehyde 代謝慢，喝酒就臉紅、心悸，esophageal cancer 的風險也比較高。代謝酒精產生大量 NADH，NADH 和 NAD plus 的比值升高，會抑制 gluconeogenesis 造成空腹低血糖，lactate 和 uric acid 上升，同時抑制 beta oxidation、促進 fatty acid synthesis，形成 alcoholic fatty liver。酗酒的人常缺 thiamine，可能造成 Wernicke encephalopathy，也常缺 folate。一公克酒精大約七大卡。'],
+drug:['藥物和毒物大多是脂溶性的，肝臟要把它們變成水溶性才能排出，分成 phase one 和 phase two。',
+ 'phase one 主要由 cytochrome P450 進行，例如 CYP3A4，加上 hydroxyl 等極性基團，需要 NADPH 和 oxygen。phase two 是 conjugation，接上 glucuronic acid、sulfate、glutathione 或 acetyl group。葡萄柚裡的 furanocoumarin 會抑制腸道的 CYP3A4，讓某些降血壓或降血脂藥的血中濃度上升。acetaminophen 過量時，毒性中間產物耗盡 glutathione，造成肝毒性，解毒劑是 N acetylcysteine。'],
+antioxidant:['細胞會產生 reactive oxygen species，抗氧化系統負責把它們清除。',
+ 'superoxide dismutase，SOD，在 cytosol 需要銅和鋅，在 mitochondria 需要錳。glutathione peroxidase 需要 selenium，catalase 需要鐵。glutathione 用完之後，由 glutathione reductase 用 NADPH 還原回來，這個酵素需要 FAD，所以紅血球 glutathione reductase 活性可以評估 riboflavin 營養狀況。NADPH 來自 pentose phosphate pathway，這就是 G6PD deficiency 會溶血的原因。非酵素的抗氧化物包括 vitamin E、vitamin C 和 polyphenol。'],
+vitk:['vitamin K cycle 在肝臟進行，任務是活化凝血因子。',
+ 'gamma glutamyl carboxylase 把凝血因子 two、seven、nine、ten，還有 protein C、protein S 和 osteocalcin 上的 glutamate 變成 gamma carboxyglutamate，這樣才能結合鈣。vitamin K epoxide reductase，VKOR，被 warfarin 抑制。vitamin K 可以重複使用，所以每天需要量很少。服用 warfarin 的人，vitamin K 的攝取要穩定，而不是完全不吃深綠色蔬菜。新生兒出生時要注射 vitamin K，預防出血。']
+};
+// ===== 語音講解：中文用中文聲音、英文專有名詞用英文聲音 =====
+const TTS = (() => {
+  const ok = typeof window !== 'undefined' && 'speechSynthesis' in window && typeof SpeechSynthesisUtterance !== 'undefined';
+  const st = { q: [], i: 0, playing: false, gen: 0, rate: 1, onDone: null, keep: [] };
+  try { st.rate = +localStorage.getItem('pw-rate') || 1; } catch (e) {}
+  let vz = null, ve = null;
+  function pickVoices() {
+    if (!ok) return; const vs = speechSynthesis.getVoices(); if (!vs.length) return;
+    const find = (tests) => { for (const t of tests) { const v = vs.find(t); if (v) return v; } return null; };
+    vz = find([v => /zh[-_]TW/i.test(v.lang), v => /Taiwan|Mei-?Jia|Yating|Hanhan|Zhiwei|國語/i.test(v.name), v => /zh[-_](CN|Hans)|cmn/i.test(v.lang), v => /^zh/i.test(v.lang) && !/HK|yue/i.test(v.lang)]);
+    ve = find([v => /en[-_]US/i.test(v.lang) && /Samantha|Google US|Aria|Jenny|Ava|Allison/i.test(v.name), v => /en[-_]US/i.test(v.lang), v => /^en/i.test(v.lang)]);
+  }
+  if (ok) { pickVoices(); speechSynthesis.onvoiceschanged = pickVoices; }
+
+  const SUB = {'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4','₅':'5','₆':'6','₇':'7','₈':'8','₉':'9','ₙ':'n'};
+  function enNorm(t) {
+    return t.replace(/NADP⁺/g, 'NADP plus').replace(/NAD⁺/g, 'NAD plus').replace(/NAD\(P\)⁺/g, 'NADP plus').replace(/NAD\(P\)H/g, 'NADPH')
+      .replace(/[₀-₉ₙ]/g, c => SUB[c]).replace(/[⁰-⁹⁺⁻²³¹]/g, '')
+      .replace(/α/g, 'alpha ').replace(/β/g, 'beta ').replace(/γ/g, 'gamma ').replace(/ω/g, 'omega ').replace(/Δ/g, 'delta ').replace(/δ/g, 'delta ')
+      .replace(/(\d),(\d)/g, '$1 $2').replace(/(\d+):(\d+)/g, '$1 $2').replace(/\s*→\s*/g, ' to ').replace(/\s\+\s/g, ' and ').replace(/×\s*\d+/g, '').replace(/[()]/g, ' ').replace(/-/g, ' ').replace(/\s+/g, ' ').trim();
+  }
+  function zhNorm(t) { return t.replace(/→/g, '變成').replace(/[／/]/g, '、').replace(/[（）()「」]/g, ' ').replace(/[⁺⁻₀-₉]/g, '').trim(); }
+  const LAT = /(?:\d+(?:,\d+)*-)?[A-Za-zα-ωΔ][A-Za-z0-9α-ωΔ₀-₉ₙ⁺²'’\-\/ .,:()+×→]*[A-Za-z0-9α-ωΔ₀-₉⁺)]|[A-Za-zα-ωΔ]/g;
+  function segs(sentence) {
+    const out = []; let last = 0; let m; LAT.lastIndex = 0;
+    while ((m = LAT.exec(sentence))) {
+      if (m.index > last) { const z = zhNorm(sentence.slice(last, m.index)); if (z.replace(/[，。、：；！？\s]/g, '')) out.push(['zh', z]); }
+      const e = enNorm(m[0]); if (e) out.push(['en', e]);
+      last = m.index + m[0].length;
+    }
+    const z = zhNorm(sentence.slice(last)); if (z.replace(/[，。、：；！？\s]/g, '')) out.push(['zh', z]);
+    return out;
+  }
+  function split(text) { return text.split(/(?<=[。！？])/).map(s => s.trim()).filter(Boolean); }
+
+  function bar() {
+    let b = document.getElementById('ttsbar');
+    if (!b) {
+      b = document.createElement('div'); b.id = 'ttsbar';
+      b.innerHTML = `<div class="tcap" id="tcap"></div><div class="tbtns"><button id="tpp" aria-label="暫停">⏸</button><button id="tstop" aria-label="停止">■</button><label>速度 <select id="trate">${[0.8, 1, 1.2, 1.4].map(r => `<option value="${r}">${r}×</option>`).join('')}</select></label></div>`;
+      document.body.appendChild(b);
+      b.querySelector('#tpp').onclick = () => st.playing ? pause() : resume();
+      b.querySelector('#tstop').onclick = () => stop();
+      const sel = b.querySelector('#trate'); sel.value = String(st.rate);
+      sel.onchange = () => { st.rate = +sel.value; try { localStorage.setItem('pw-rate', st.rate); } catch (e) {} if (st.playing) { const i = st.i; speechSynthesis.cancel(); st.gen++; st.i = i; speakItem(); } };
+    }
+    return b;
+  }
+  function show(on) { const b = bar(); b.classList.toggle('on', on); document.body.classList.toggle('tts-on', on); }
+  function speakItem() {
+    const g = st.gen; const it = st.q[st.i];
+    if (!it) { st.playing = false; show(false); clearMark(); const f = st.onDone; st.onDone = null; if (f) f(); return; }
+    document.getElementById('tcap').textContent = it.text;
+    document.getElementById('tpp').textContent = '⏸';
+    if (it.mark) it.mark();
+    const parts = segs(it.text); let k = 0; st.keep = [];
+    const next = () => {
+      if (g !== st.gen) return;
+      if (k >= parts.length) { st.i++; speakItem(); return; }
+      const [lang, t] = parts[k++];
+      const u = new SpeechSynthesisUtterance(t);
+      u.lang = lang === 'en' ? 'en-US' : 'zh-TW';
+      const v = lang === 'en' ? ve : vz; if (v) u.voice = v;
+      u.rate = lang === 'en' ? st.rate * 0.95 : st.rate;
+      u.onend = next; u.onerror = (e) => { if (e.error !== 'interrupted' && e.error !== 'canceled') next(); };
+      st.keep.push(u); speechSynthesis.speak(u);
+    };
+    next();
+  }
+  function clearMark() { document.querySelectorAll('.speaking').forEach(e => e.classList.remove('speaking')); }
+  function play(items, onDone) {
+    if (!ok) { notice(); return; }
+    speechSynthesis.cancel(); st.gen++; pickVoices();
+    st.q = items; st.i = 0; st.playing = true; st.onDone = onDone || null;
+    show(true); speakItem();
+  }
+  function pause() { if (!st.playing) return; st.playing = false; st.gen++; speechSynthesis.cancel(); document.getElementById('tpp').textContent = '▶'; }
+  function resume() { if (st.playing || !st.q[st.i]) return; st.playing = true; st.gen++; speakItem(); }
+  function stop() { st.gen++; st.playing = false; st.onDone = null; st.q = []; if (ok) speechSynthesis.cancel(); clearMark(); const b = document.getElementById('ttsbar'); if (b) show(false); }
+  function notice() {
+    const line = /Line\//i.test(navigator.userAgent);
+    const u = location.href.split('#'); const ext = u[0] + (u[0].includes('?') ? '&' : '?') + 'openExternalBrowser=1' + (u[1] ? '#' + u[1] : '');
+    const b = bar(); show(true);
+    document.getElementById('tcap').innerHTML = line ? `LINE 內建瀏覽器不支援語音。<a href="${ext}">點這裡用手機瀏覽器開啟</a>` : '這個瀏覽器不支援語音朗讀，請改用 Chrome 或 Safari。';
+  }
+  // 把講稿文字變成播放項目
+  function items(text, mark) { return split(text).map(t => ({text: t, mark})); }
+  return { ok, play, stop, pause, resume, items, split, segs, get playing() { return st.playing; } };
+})();
+
+// ---------- 路徑頁：自動組成逐步講解 ----------
+const ZHN = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二', '十三', '十四'];
+const zhCount = n => n === 2 ? '兩' : (ZHN[n] || String(n));
+function latinOf(s) { const m = s.match(/[A-Za-zα-ωΔ][A-Za-z0-9α-ωΔ₀-₉⁺²\-\s'(),./]*[A-Za-z0-9₀-₉⁺)]|[A-Za-z]/g); return m ? m.join(' ').trim() : ''; }
+function enName(s) { return sp(s)[0].replace(/×\s*\d+/g, '').replace(/\s*\+\s*/g, ' and ').trim(); }
+function chipSay(c) {
+  let m;
+  if ((m = c.match(/^([+−-])\s*(\d+)?\s*(ATP|GTP|UTP|CTP)\b/))) return [m[1] === '+' ? '產生' : '消耗', `${m[2] ? zhCount(+m[2]) + '個' : ''} ${m[3]}`];
+  if ((m = c.match(/^(ATP|UTP|CTP)\s*→\s*(AMP)/))) return ['消耗', `${m[1]}`];
+  if ((m = c.match(/^(\d+)?\s*(NAD\(P\)⁺|NADP⁺|NAD⁺|FAD|NADH|NADPH|NAD\(P\)H)\s*→\s*(\d+)?\s*(\S+)/))) {
+    const from = m[2], to = m[4]; return /H/.test(to.replace(/[₂]/g, '')) && !/H$/.test(from) ? ['產生', to] : ['消耗', from];
+  }
+  if ((m = c.match(/^釋出\s*(.+)/))) { const l = latinOf(m[1]); return l ? ['釋出', l] : null; }
+  if ((m = c.match(/^\+\s*(.+)/))) { const l = latinOf(m[1]); return l ? ['加入', l] : null; }
+  if ((m = c.match(/^−\s*(.+)/))) { const l = latinOf(m[1]); return l ? ['移除', l] : null; }
+  if (/✗/.test(c)) return ['note', '人體沒有這個酵素'];
+  const l = latinOf(c); return l ? ['需要', l] : null;
+}
+function stepSentence(p, i) {
+  const e = p.edges[i]; const en = enName(e.e);
+  const from = enName(p.nodes[i]), to = enName(p.nodes[i + 1]);
+  let s = en === 'Rearrange' ? `第${ZHN[i + 1] || i + 1}步，接著 ${from} 變成 ${to}。` : `第${ZHN[i + 1] || i + 1}步，${en}，把 ${from} 變成 ${to}。`;
+  const groups = {}; let note = '';
+  (e.c || []).forEach(c => { const r = chipSay(c); if (!r) return; if (r[0] === 'note') { note = r[1]; return; } (groups[r[0]] = groups[r[0]] || []).push(r[1]); });
+  const parts = ['產生', '消耗', '釋出', '加入', '移除', '需要'].filter(k => groups[k]).map(k => `${k} ${groups[k].join('、')}`);
+  if (parts.length) s += `這一步${parts.join('，')}。`;
+  if (note) s += note + '。';
+  if (e.rl && e.irr) s += '這是 rate limiting step，而且是 irreversible。';
+  else if (e.rl) s += '這是 rate limiting step。';
+  else if (e.irr) s += '這一步是 irreversible。';
+  return s;
+}
+function lecturePath(id) {
+  const p = byId[id]; const L = LECT_P[id] || ['', ''];
+  const mk = i => () => { document.querySelectorAll('.speaking').forEach(x => x.classList.remove('speaking')); const el = document.querySelectorAll('.flow .edge')[i]; if (el) { el.classList.add('speaking'); el.scrollIntoView({behavior: 'smooth', block: 'center'}); } };
+  const top = () => { document.querySelectorAll('.speaking').forEach(x => x.classList.remove('speaking')); };
+  let it = TTS.items(L[0], top);
+  if (S.mode === 'learn') p.edges.forEach((_, i) => { it = it.concat(TTS.items(stepSentence(p, i), mk(i))); });
+  it = it.concat(TTS.items(L[1], () => { top(); const k = document.querySelector('.keys'); if (k) { k.classList.add('speaking'); k.scrollIntoView({behavior: 'smooth', block: 'center'}); } }));
+  TTS.play(it);
+}
+function lectureText(id) {
+  const p = byId[id]; const L = LECT_P[id] || ['', ''];
+  return [L[0], ...p.edges.map((_, i) => stepSentence(p, i)), L[1]].filter(Boolean);
+}
 // ===== 旅程畫面 =====
-const JR = { id: null, cur: 0, timer: null };
+const JR = { id: null, cur: 0, timer: null, lec: false };
 const BH_J = 78, JW = 380;
 function jPos(J, i) { const s = J.stages[i]; return [s.x, s.b * BH_J + 46]; }
 function journeySVG(J) {
@@ -1179,6 +1486,7 @@ function stageCard(J, i) {
     <div class="jout"><span>產物／接下來</span>${esc(st.out)}</div>
     ${st.tip ? `<div class="jtip">⭐ ${esc(st.tip)}</div>` : ''}
     ${links ? `<div class="jlinks">詳細路徑：${links}</div>` : ''}
+    ${LECT_J[JR.id] ? `<div class="lecbar"><button class="btn" id="jlec1">🔊 聽這一站</button><details class="script"><summary>📝 看講稿</summary><p>${esc(LECT_J[JR.id][i])}</p></details></div>` : ''}
   </div>`;
 }
 function jUpdate() {
@@ -1195,9 +1503,18 @@ function jUpdate() {
   $('#jstep').textContent = `第 ${i + 1} / ${J.stages.length} 站`;
   $('#jprev').disabled = i === 0; $('#jnext').disabled = i === J.stages.length - 1;
   document.querySelectorAll('.jtl li').forEach((li, k) => li.classList.toggle('on', k === i));
+  const l1 = $('#jlec1'); if (l1) l1.onclick = () => { jStop(); jSay(false); };
+}
+function jSay(chain) {
+  const J = JOURNEYS[JR.id]; const txt = LECT_J[JR.id][JR.cur];
+  TTS.play(TTS.items(`第${ZHN[JR.cur + 1] || JR.cur + 1}站。` + txt), chain ? () => {
+    if (!JR.lec) return;
+    if (JR.cur < J.stages.length - 1) { jGo(JR.cur + 1); JR.timer = setTimeout(() => { JR.timer = null; if (JR.lec) jSay(true); }, 700); }
+    else { JR.lec = false; const b = $('#jplay'); if (b) b.textContent = '🔊 老師講解全程'; }
+  } : null);
 }
 function jGo(i) { const J = JOURNEYS[JR.id]; JR.cur = Math.max(0, Math.min(J.stages.length - 1, i)); jUpdate(); }
-function jStop() { if (JR.timer) { clearInterval(JR.timer); JR.timer = null; } const b = $('#jplay'); if (b) b.textContent = '▶ 自動播放'; }
+function jStop() { if (JR.timer) { clearInterval(JR.timer); clearTimeout(JR.timer); JR.timer = null; } if (JR.lec) { JR.lec = false; TTS.stop(); } const b = $('#jplay'); if (b) b.textContent = TTS.ok ? '🔊 老師講解全程' : '▶ 自動播放'; }
 function renderJourney(id, start) {
   jStop(); const J = JOURNEYS[id]; JR.id = id; JR.cur = Math.max(0, Math.min(J.stages.length - 1, +start || 0));
   const others = Object.entries(JOURNEYS).filter(([k]) => k !== id);
@@ -1208,7 +1525,7 @@ function renderJourney(id, start) {
     <div class="jgrid">
       <div class="jleft"><div class="jmapwrap">${journeySVG(J)}</div>
         <div class="jctrl"><button class="btn" id="jprev">← 上一站</button><span id="jstep"></span><button class="btn pri" id="jnext">下一站 →</button></div>
-        <div class="jctrl2"><button class="btn" id="jplay">▶ 自動播放</button><button class="btn" id="jreset">↺ 從頭</button></div>
+        <div class="jctrl2"><button class="btn pri" id="jplay">${TTS.ok ? '🔊 老師講解全程' : '▶ 自動播放'}</button><button class="btn" id="jreset">↺ 從頭</button></div>
         <p class="hint">點圖上的站名也可以跳過去；上方彩色區塊＝分子所在的位置。</p>
       </div>
       <div class="jright" id="jcardwrap"></div>
@@ -1217,16 +1534,22 @@ function renderJourney(id, start) {
     <ol class="jtl">${J.stages.map((st, i) => `<li data-i="${i}"><span class="jtlb" style="background:${J.bands[st.b][2]}">${esc(J.bands[st.b][0])}</span><b>${esc(st.title)}</b><small>${esc(st.form)} → ${esc(st.out)}</small></li>`).join('')}</ol>
     <nav class="pn">${others.map(([k, o]) => `<a href="#/journey/${k}">${o.icon} ${esc(o.zh)}</a>`).join('')}<a href="#/feedstate">🍽️ 吃飽 vs 空腹</a></nav>
   </article>`;
-  $('#jprev').onclick = () => { jStop(); jGo(JR.cur - 1); };
-  $('#jnext').onclick = () => { jStop(); jGo(JR.cur + 1); };
-  $('#jreset').onclick = () => { jStop(); jGo(0); };
+  const stopAll = () => { jStop(); TTS.stop(); };
+  $('#jprev').onclick = () => { stopAll(); jGo(JR.cur - 1); };
+  $('#jnext').onclick = () => { stopAll(); jGo(JR.cur + 1); };
+  $('#jreset').onclick = () => { stopAll(); jGo(0); };
   $('#jplay').onclick = () => {
+    if (TTS.ok) {
+      if (JR.lec) { jStop(); return; }
+      stopAll(); if (JR.cur === J.stages.length - 1) jGo(0);
+      JR.lec = true; $('#jplay').textContent = '⏹ 停止講解'; jSay(true); return;
+    }
     if (JR.timer) { jStop(); return; }
     if (JR.cur === J.stages.length - 1) jGo(0);
     $('#jplay').textContent = '⏸ 暫停';
     JR.timer = setInterval(() => { if (JR.cur >= J.stages.length - 1) { jStop(); return; } jGo(JR.cur + 1); }, 3200);
   };
-  document.querySelectorAll('.jst, .jtl li').forEach(el => el.addEventListener('click', () => { jStop(); jGo(+el.dataset.i); if (el.tagName === 'LI') $('.jmapwrap').scrollIntoView({behavior: 'smooth', block: 'start'}); }));
+  document.querySelectorAll('.jst, .jtl li').forEach(el => el.addEventListener('click', () => { stopAll(); jGo(+el.dataset.i); if (el.tagName === 'LI') $('.jmapwrap').scrollIntoView({behavior: 'smooth', block: 'start'}); }));
   jUpdate();
 }
 
@@ -1270,6 +1593,7 @@ function renderFeed(st) {
     <h1>🍽️ 吃飽 vs 空腹 vs 長期飢餓</h1><p class="en-t">Fed – Fasting – Starvation · 同一個分子，荷爾蒙讓它走不同的路</p>
     <div class="ctrl"><div class="seg">${Object.entries(FEEDSTATE.states).map(([k, o]) => `<button data-fs="${k}" class="${k === st ? 'on' : ''}">${o.zh}</button>`).join('')}</div></div>
     <div class="fsbar"><b>${S0.zh}</b>（${S0.sub}）　主導荷爾蒙：<b>${S0.hor}</b></div>
+    <div class="lecbar"><button class="btn pri" id="flec">🔊 老師講解：${S0.zh}</button><details class="script"><summary>📝 看講稿</summary><p>${esc(LECT_F[st])}</p></details></div>
     <div class="feedwrap">${feedSVG(st)}</div>
     <ol class="flegend" style="--fc:${S0.col}">${S0.flows.map(([a, b, lab]) => `<li><b>${FEEDSTATE.org[a][2]} → ${FEEDSTATE.org[b][2]}</b>${esc(lab)}</li>`).join('')}</ol>
     <div class="fcards">${Object.entries(names).map(([k, zh]) => `<div class="fcard" style="--oc:${ORG[FEEDSTATE.org[k][3]].col}"><b>${zh}</b><span>${esc(S0.org[k])}</span></div>`).join('')}</div>
@@ -1277,7 +1601,8 @@ function renderFeed(st) {
     ${tableHTML(REFS.hormone)}
     <nav class="pn">${Object.entries(JOURNEYS).map(([k, o]) => `<a href="#/journey/${k}">${o.icon} ${esc(o.zh)}</a>`).join('')}</nav>
   </article>`;
-  document.querySelectorAll('[data-fs]').forEach(b => b.onclick = () => { history.replaceState(null, '', '#/feedstate/' + b.dataset.fs); renderFeed(b.dataset.fs); });
+  $('#flec').onclick = () => TTS.play(TTS.items(LECT_F[st]));
+  document.querySelectorAll('[data-fs]').forEach(b => b.onclick = () => { TTS.stop(); history.replaceState(null, '', '#/feedstate/' + b.dataset.fs); renderFeed(b.dataset.fs); });
 }
 function renderJourneyHub() {
   $('#main').innerHTML = `<article class="page" style="--acc:var(--other)">
@@ -1543,6 +1868,7 @@ function renderPath(id) {
   let h = `<article class="page" style="--acc:${c.color}">
     <a class="crumb" href="#/cat/${p.cat}">${c.zh}</a>
     <h1>${esc(p.zh)}${p.cycle ? ' <span class="bd bd-cyc">↻ 循環</span>' : ''}</h1><p class="en-t">${esc(p.en)}</p>
+    ${LECT_P[p.id] ? `<div class="lecbar"><button class="btn pri" id="lec">🔊 老師講解</button><details class="script"><summary>📝 看講稿</summary>${lectureText(p.id).map(t => `<p>${esc(t)}</p>`).join('')}</details></div>` : ''}
     ${infoTable(p)}
     ${journeyRefs(p.id)}
     ${wherePanel(p)}
@@ -1555,6 +1881,7 @@ function renderPath(id) {
   </article>`;
   $('#main').innerHTML = h;
   bindPath(id);
+  const lb = $('#lec'); if (lb) lb.onclick = () => lecturePath(id);
 }
 function renderPractPath(p, c, R0, prev, next, base) {
   const sc = getScores()[p.id];
@@ -1717,7 +2044,7 @@ function bindGo() { document.querySelectorAll('.go[data-go]').forEach(g => g.add
 function route() {
   let h = (location.hash || '#/').slice(2);
   if (!location.hash && /practice|quiz/.test(location.search)) h = 'practice';
-  S.pr = false; if (typeof jStop === 'function') jStop();
+  S.pr = false; if (typeof jStop === 'function') jStop(); TTS.stop();
   const jm = h.match(/^journey\/(\w+)(?:\/(\d+))?$/), fm = h.match(/^feedstate(?:\/(\w+))?$/);
   if (h === 'journey') renderJourneyHub();
   else if (jm && JOURNEYS[jm[1]]) renderJourney(jm[1], jm[2]);

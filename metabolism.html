@@ -1950,7 +1950,7 @@ function routeInfo(r) {
     <div class="rtpath">${esc(r.path)}</div>
     <div class="rtcarry"><span>運送什麼</span>${esc(r.carry)}</div>
     <ul>${r.key.map(k => `<li>${esc(k)}</li>`).join('')}</ul>
-    <div class="lecbar"><button class="btn pri" id="rtlec">🔊 老師講解這條路線</button><details class="script"><summary>📝 看講稿</summary><p>${esc(capOf(r.talk))}</p></details></div></div>`;
+    <div class="lecbar"><button class="btn pri" id="rtlec">🔊 講解這條路線</button><details class="script"><summary>📝 看講稿</summary><p>${esc(capOf(r.talk))}</p></details></div></div>`;
 }
 function renderRoutes(start) {
   const r0 = ROUTES.find(r => r.id === start) || ROUTES[0];
@@ -2030,11 +2030,11 @@ function jSay(chain) {
   TTS.play(TTS.items(`第${ZHN[JR.cur + 1] || JR.cur + 1}站。` + txt), chain ? () => {
     if (!JR.lec) return;
     if (JR.cur < J.stages.length - 1) { jGo(JR.cur + 1); JR.timer = setTimeout(() => { JR.timer = null; if (JR.lec) jSay(true); }, 700); }
-    else { JR.lec = false; const b = $('#jplay'); if (b) b.textContent = '🔊 老師講解全程'; }
+    else { JR.lec = false; const b = $('#jplay'); if (b) b.textContent = '🔊 講解全程'; }
   } : null);
 }
 function jGo(i) { const J = JOURNEYS[JR.id]; JR.cur = Math.max(0, Math.min(J.stages.length - 1, i)); jUpdate(); }
-function jStop() { if (JR.timer) { clearInterval(JR.timer); clearTimeout(JR.timer); JR.timer = null; } if (JR.lec) { JR.lec = false; TTS.stop(); } const b = $('#jplay'); if (b) b.textContent = TTS.ok ? '🔊 老師講解全程' : '▶ 自動播放'; }
+function jStop() { if (JR.timer) { clearInterval(JR.timer); clearTimeout(JR.timer); JR.timer = null; } if (JR.lec) { JR.lec = false; TTS.stop(); } const b = $('#jplay'); if (b) b.textContent = TTS.ok ? '🔊 講解全程' : '▶ 自動播放'; }
 function renderJourney(id, start) {
   jStop(); const J = JOURNEYS[id]; JR.id = id; JR.cur = Math.max(0, Math.min(J.stages.length - 1, +start || 0));
   const others = Object.entries(JOURNEYS).filter(([k]) => k !== id);
@@ -2045,7 +2045,7 @@ function renderJourney(id, start) {
     <div class="jgrid">
       <div class="jleft"><div class="jmapwrap">${journeySVG(J)}</div>
         <div class="jctrl"><button class="btn" id="jprev">← 上一站</button><span id="jstep"></span><button class="btn pri" id="jnext">下一站 →</button></div>
-        <div class="jctrl2"><button class="btn pri" id="jplay">${TTS.ok ? '🔊 老師講解全程' : '▶ 自動播放'}</button><button class="btn" id="jreset">↺ 從頭</button></div>
+        <div class="jctrl2"><button class="btn pri" id="jplay">${TTS.ok ? '🔊 講解全程' : '▶ 自動播放'}</button><button class="btn" id="jreset">↺ 從頭</button></div>
         <div class="jctrl2">${termToggleHTML()}</div>
         <p class="hint">點圖上的站名也可以跳過去；上方彩色區塊＝分子所在的位置。</p>
       </div>
@@ -2114,7 +2114,7 @@ function renderFeed(st) {
     <h1>🍽️ 吃飽 vs 空腹 vs 長期飢餓</h1><p class="en-t">Fed – Fasting – Starvation · 同一個分子，荷爾蒙讓它走不同的路</p>
     <div class="ctrl"><div class="seg">${Object.entries(FEEDSTATE.states).map(([k, o]) => `<button data-fs="${k}" class="${k === st ? 'on' : ''}">${o.zh}</button>`).join('')}</div></div>
     <div class="fsbar"><b>${S0.zh}</b>（${S0.sub}）　主導荷爾蒙：<b>${S0.hor}</b></div>
-    <div class="lecbar"><button class="btn pri" id="flec">🔊 老師講解：${S0.zh}</button>${termToggleHTML()}<details class="script"><summary>📝 看講稿</summary><p>${esc(capOf(T(fText(st))))}</p></details></div>
+    <div class="lecbar"><button class="btn pri" id="flec">🔊 講解：${S0.zh}</button>${termToggleHTML()}<details class="script"><summary>📝 看講稿</summary><p>${esc(capOf(T(fText(st))))}</p></details></div>
     <div class="feedwrap">${feedSVG(st)}</div>
     <ol class="flegend" style="--fc:${S0.col}">${S0.flows.map(([a, b, lab]) => `<li><b>${FEEDSTATE.org[a][2]} → ${FEEDSTATE.org[b][2]}</b>${esc(lab)}</li>`).join('')}</ol>
     <div class="fcards">${Object.entries(names).map(([k, zh]) => `<div class="fcard" style="--oc:${ORG[FEEDSTATE.org[k][3]].col}"><b>${zh}</b><span>${esc(S0.org[k])}</span></div>`).join('')}</div>
@@ -2390,7 +2390,7 @@ function renderPath(id) {
   let h = `<article class="page" style="--acc:${c.color}">
     <a class="crumb" href="#/cat/${p.cat}">${c.zh}</a>
     <h1>${esc(p.zh)}${p.cycle ? ' <span class="bd bd-cyc">↻ 循環</span>' : ''}</h1><p class="en-t">${esc(p.en)}</p>
-    ${LECT_P[p.id] ? `<div class="lecbar"><button class="btn pri" id="lec">🔊 老師講解</button>${termToggleHTML()}<details class="script"><summary>📝 看講稿</summary>${lectureText(p.id).map(t => `<p>${esc(t)}</p>`).join('')}</details></div>` : ''}
+    ${LECT_P[p.id] ? `<div class="lecbar"><button class="btn pri" id="lec">🔊 講解這條路徑</button>${termToggleHTML()}<details class="script"><summary>📝 看講稿</summary>${lectureText(p.id).map(t => `<p>${esc(t)}</p>`).join('')}</details></div>` : ''}
     ${infoTable(p)}
     ${journeyRefs(p.id)}
     ${wherePanel(p)}

@@ -1129,7 +1129,7 @@ fat:{zh:'脂肪的旅程', en:'Journey of Dietary Fat (Triacylglycerol)', color:
   {b:5,x:250,short:'β-氧化',form:'乙醯-CoA',title:'粒線體基質：β-氧化',
    where:'粒線體基質',how:['每輪四步：氧化 → 水合 → 氧化 → 硫解','每輪切下 2 碳 → 1 乙醯-CoA + 1 FADH₂ + 1 NADH','棕櫚酸（16C）跑 7 輪 → 8 乙醯-CoA','極長鏈先在過氧化體縮短；支鏈（植烷酸）走 α-氧化'],
    out:'乙醯-CoA、FADH₂、NADH',chips:['Acyl-CoA dehydrogenase','FAD→FADH₂','NAD⁺→NADH','Thiolase'],go:['beta-ox','perox-beta','alpha-ox'],tip:'β-氧化只能在有氧下進行'},
-  {b:6,x:200,short:'ATP・酮體',form:'CO₂ + H₂O',title:'終點：燃燒、生酮或儲存',
+  {b:6,x:200,short:'ATP・酮體',form:'CO₂・酮體・TAG',title:'終點：燃燒、生酮或儲存',
    where:'各組織粒線體；肝',how:['乙醯-CoA 進 TCA + 電子傳遞鏈 → CO₂ + H₂O + ATP（棕櫚酸淨得約 106 ATP）','肝在飢餓、低醣時乙醯-CoA 過多 → 酮體 → 送給腦、心、肌肉','吃飽時多餘熱量 → 脂肪組織儲存 TAG'],
    out:'ATP、酮體、儲存脂肪',chips:['TCA + ETC','Ketone bodies','每克脂肪 9 kcal'],go:['tca','etc','ketogenesis','ketolysis'],tip:'脂肪 RQ ≈ 0.7；肝製造酮體但自己不能用'}
  ]},
@@ -2198,7 +2198,8 @@ function markNav() {
 }
 
 /* ---------- 人體器官圖 ---------- */
-const ORGPOS = { Br:[110,24], B:[110,68], H:[98,88], RBC:[84,104], Sp:[90,124], L:[127,112], GB:[124,130], AG:[118,142], K:[128,154], A:[86,168], I:[110,184], Go:[110,208], M:[160,150], S:[60,120], BM:[93,258] };
+// 人體正面朝向觀看者：人的右側在畫面左邊（肝、膽在左），人的左側在畫面右邊（心尖、脾在右）
+const ORGPOS = { Br:[110,24], B:[110,66], H:[121,88], RBC:[98,92], L:[93,114], GB:[96,133], Sp:[131,120], AG:[123,141], K:[126,155], A:[86,168], I:[110,184], Go:[110,208], M:[160,150], S:[58,98], BM:[93,258] };
 function bodySVG(org, flow) {
   const all = org.includes('all');
   const fillBody = all ? 'color-mix(in srgb, #8a7f72 22%, var(--surface))' : 'var(--soft)';

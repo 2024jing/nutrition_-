@@ -116,9 +116,9 @@ select.q.bad{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 8%,
 .maps{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .maps section{min-width:0}
 .hubwrap,.cellmapwrap{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:8px}
-svg.hub,svg.cellmap{display:block;width:100%;max-width:440px;margin:0 auto}
+svg.hub,svg.cellmap{display:block;width:100%;max-width:480px;margin:0 auto}
 .hn{font-size:11.5px;font-weight:700;fill:var(--ink)}.hz{font-size:10px;fill:var(--muted)}
-.hl{font-size:10.5px;fill:var(--muted);font-weight:500}
+.hl{font-size:10.5px;fill:var(--muted);font-weight:500}.hl.hirr,.hlg.hirr{fill:#d64545;font-weight:700}.hlg{font-size:11px;fill:var(--muted)}
 .go{cursor:pointer}.go:hover rect{stroke-width:2.5}
 text.go:hover{text-decoration:underline}
 .cm{font-size:12.5px;font-weight:500}.cmt{font-size:13.5px;font-weight:700}.cms{font-size:11px;fill:var(--muted)}
@@ -527,7 +527,7 @@ const P = [
   {e:'HMG-CoA lyase|HMG-CoA 裂解酶', c:['釋出 Acetyl-CoA']},
   {e:'β-Hydroxybutyrate dehydrogenase|β-羥丁酸去氫酶', c:['NADH→NAD⁺'], n:'乙醯乙酸也可自發脫羧 → 丙酮（Acetone，由呼吸排出，水果味）'}
  ],
- key:['飢餓、低醣飲食、第 1 型糖尿病（胰島素不足）時，草醯乙酸被拿去糖質新生 → 乙醯-CoA 無法進 TCA → 轉成酮體','三種酮體：乙醯乙酸、β-羥丁酸、丙酮','膽固醇合成用的是「細胞質」HMG-CoA 合成酶，注意區分']},
+ key:['血液中的酮體以 β-羥丁酸為主（約 70–80%），國考考過','飢餓、低醣飲食、第 1 型糖尿病（胰島素不足）時，草醯乙酸被拿去糖質新生 → 乙醯-CoA 無法進 TCA → 轉成酮體','三種酮體：乙醯乙酸、β-羥丁酸、丙酮','膽固醇合成用的是「細胞質」HMG-CoA 合成酶，注意區分']},
 
 {id:'ketolysis', cat:'lipid', zh:'酮體利用', en:'Ketolysis (Ketone Body Utilization)',
  loc:'腦、心、肌肉（肝外組織粒線體）', func:'酮體 → 乙醯-CoA → TCA 產能', rl:'琥珀醯-CoA 轉移酶（SCOT）', cof:'—', dis:'飢餓時腦部能量來源',
@@ -704,8 +704,8 @@ const P = [
   ['α-酮戊二酸 α-KG','Glu、Gln、His、Pro、Arg','生糖'],
   ['琥珀醯-CoA Succinyl-CoA','Val、Ile、Met、Thr','生糖'],
   ['延胡索酸 Fumarate','Phe、Tyr','生糖'],
-  ['乙醯-CoA／乙醯乙醯-CoA','Leu、Lys（純生酮）；Ile、Phe、Tyr、Trp、Thr（兼）','生酮']]},
- key:['純生酮：白胺酸 Leu、離胺酸 Lys','生糖兼生酮：異白胺酸、苯丙胺酸、酪胺酸、色胺酸、蘇胺酸（口訣「異苯酪色蘇」）','其餘都是純生糖','能進 TCA 中間物（→ 草醯乙酸）的才能生糖；變成乙醯-CoA 的只能生酮']},
+  ['乙醯-CoA／乙醯乙醯-CoA','Leu、Lys（純生酮）；Ile、Phe、Tyr、Trp（兼）','生酮']]},
+ key:['純生酮：白胺酸 Leu、離胺酸 Lys','生糖兼生酮：異白胺酸 Ile，加上三個芳香族胺基酸苯丙胺酸 Phe、酪胺酸 Tyr、色胺酸 Trp','蘇胺酸 Thr 有的課本列為生糖兼生酮、有的列為純生糖，考題出現時看選項判斷','其餘都是純生糖','能進 TCA 中間物（→ 草醯乙酸）的才能生糖；變成乙醯-CoA 的只能生酮']},
 
 {id:'neaa', cat:'protein', zh:'非必需胺基酸合成', en:'Non-essential Amino Acid Synthesis',
  loc:'肝', func:'用代謝中間物自行合成胺基酸', rl:'轉胺酶等', cof:'B₆', dis:'—',
@@ -1074,7 +1074,7 @@ glucose:{zh:'葡萄糖的旅程', en:'Journey of Glucose', color:'var(--carb)', 
    out:'細胞內的葡萄糖',chips:['SGLT1 + Na⁺','GLUT5（果糖）','Na⁺/K⁺-ATPase −ATP'],tip:'口服電解質液（ORS）同時給葡萄糖和鈉，就是利用 SGLT1 帶水吸收'},
   {b:2,x:170,short:'肝門靜脈',form:'葡萄糖',title:'離開小腸細胞：進入肝門靜脈',
    where:'小腸細胞基底側膜 → 微血管 → 肝門靜脈',how:['葡萄糖、果糖、半乳糖都經 GLUT2 出細胞（促進性擴散）','水溶性營養素走「血液 → 肝門靜脈」，先到肝','（對照：長鏈脂肪走淋巴，不先經過肝）'],
-   out:'門靜脈血中的單醣',chips:['GLUT2'],tip:'水溶性營養素經門靜脈先到肝，稱為「首渡」'},
+   out:'門靜脈血中的單醣',chips:['GLUT2'],tip:'水溶性營養素經門靜脈先到肝處理；藥物在這裡先被肝代謝掉一部分，叫做「首渡效應」'},
   {b:3,x:140,short:'肝細胞',form:'G6P',title:'肝：先截留、分配',
    where:'肝細胞細胞質',how:['經 GLUT2 進入（不需胰島素）','葡萄糖激酶 Glucokinase 磷酸化成 G6P，鎖在細胞內（Km 高，飯後血糖高時才大量作用）','果糖、半乳糖在肝轉成糖解中間物或葡萄糖','吃飽時：G6P → 肝醣合成；多餘 → 乙醯-CoA → 脂肪酸合成 → 包進 VLDL 送出'],
    out:'肝醣、VLDL、或送回血液的葡萄糖',chips:['GLUT2','Glucokinase −ATP'],go:['glycogenesis','fructose','galactose','fa-synthesis'],tip:'肝有葡萄糖-6-磷酸酶，可以把葡萄糖放回血液；肌肉沒有'},
@@ -1278,7 +1278,7 @@ carnitine:['長鏈的 fatty acid 要進到 mitochondria 燒掉，必須搭 carni
 'perox-beta':['碳鏈特別長的 fatty acid，超過二十二個碳，mitochondria 處理不了，要先送到 peroxisome 把它剪短。',
  'peroxisome 剪的時候，電子直接交給 oxygen，所以產生的能量比較少。剪到大約八個碳以後，再送到 mitochondria 繼續燒。如果 peroxisome 有問題，很長的 fatty acid 會堆積，相關的疾病是 adrenoleukodystrophy 和 Zellweger syndrome。'],
 ketogenesis:['ketogenesis 是肝臟把多出來的 acetyl CoA 做成 ketone bodies，在 mitochondria 裡面進行。',
- '什麼時候會大量做 ketone bodies？飢餓、極低醣飲食，還有 type 1 diabetes 缺 insulin 的時候。這時候 oxaloacetate 被拿去做 glucose，acetyl CoA 進不了 TCA cycle，只好轉成 ketone bodies。ketone bodies 有三種，其中 acetone 會從呼吸排出，聞起來有水果味。太多的話就會變成 diabetic ketoacidosis。'],
+ '什麼時候會大量做 ketone bodies？飢餓、極低醣飲食，還有 type 1 diabetes 缺 insulin 的時候。這時候 oxaloacetate 被拿去做 glucose，acetyl CoA 進不了 TCA cycle，只好轉成 ketone bodies。ketone bodies 有三種：acetoacetate、beta hydroxybutyrate 和 acetone。血液裡最多的是 beta hydroxybutyrate，國考考過；acetone 則會從呼吸排出，聞起來有水果味。太多的話就會變成 diabetic ketoacidosis。'],
 ketolysis:['肝臟做好的 ketone bodies，會送到腦、心臟和肌肉，在那裡重新變回 acetyl CoA 拿來燒。',
  '最有趣的是，肝臟自己會做 ketone bodies，可是不能用，因為它缺少 SCOT 這個酵素。長期飢餓的時候，腦大約三分之二的能量都改用 ketone bodies，這樣就不用一直分解肌肉去做糖。'],
 'fa-synthesis':['吃飽的時候，多出來的糖會在肝臟和脂肪組織變成脂肪，這叫 fatty acid synthesis，在 cytosol 進行。',
@@ -1308,7 +1308,7 @@ deamination:['transamination 把胺基集中到 glutamate 身上以後，肝臟�
 urea:['ammonia 對腦有毒，所以肝臟要把它變成沒有毒、又溶於水的 urea，這就是 urea cycle。它比較特別，是橫跨 mitochondria 和 cytosol 的。',
  '我們來整理一下。urea 上面的兩個氮，一個來自 ammonia，一個來自 aspartate。做一個 urea 要花三個 ATP。限速酶是 CPS1。肝硬化的病人這個循環做不好，ammonia 會堆積，影響腦部，所以飲食要控制蛋白質，也常會使用 branched chain amino acid 的配方。'],
 'carbon-skeleton':['amino acid 拿掉胺基以後，剩下的碳骨架會從不同的入口進入代謝，決定它能不能拿來生糖。',
- '能進到 TCA cycle 中間站的，可以變成 glucose，叫 glucogenic；只能變成 acetyl CoA 的，只能做 ketone bodies，叫 ketogenic。只能生酮的只有兩個：leucine 跟 lysine。兩種都可以的有五個：isoleucine、phenylalanine、tyrosine、tryptophan、threonine。其他的都是生糖的。'],
+ '能進到 TCA cycle 中間站的，可以變成 glucose，叫 glucogenic；只能變成 acetyl CoA 的，只能做 ketone bodies，叫 ketogenic。只能生酮的只有兩個：leucine 跟 lysine。兩種都可以的有四個：isoleucine，加上三個有苯環的 phenylalanine、tyrosine、tryptophan。threonine 比較麻煩，有的課本把它放在兩種都可以，有的放在生糖，考試時看選項判斷。其他的都是生糖的。'],
 neaa:['non essential amino acid 是身體可以自己做的 amino acid，原料大多是醣類代謝的中間產物。',
  '大家比較要注意的是兩個條件性必需的：cysteine 要用 methionine 來做，tyrosine 要用 phenylalanine 來做。所以 PKU 的病人沒辦法把 phenylalanine 變成 tyrosine，對他們來說，tyrosine 就變成一定要吃的了。'],
 'phe-tyr':['phenylalanine 先在肝臟變成 tyrosine，tyrosine 再拿去做很多重要的東西，像 dopamine、epinephrine、甲狀腺素和黑色素。我們來看做 epinephrine 這一條。',
@@ -2483,27 +2483,30 @@ function renderRef(k) {
 
 /* ---------- 首頁：代謝地圖 + 細胞地圖 ---------- */
 function hubSVG() {
+  const C = [68, 238, 408];
   const N = {
-    glycogen:[62,40,'Glycogen','肝醣','glycogenesis'], glucose:[212,40,'Glucose','葡萄糖','glycolysis'], nuc:[362,40,'Nucleotides','核苷酸','purine-denovo'],
-    g6p:[212,115,'G6P','葡萄糖-6-磷酸','glycolysis'], ppp:[362,115,'NADPH・Ribose','五碳糖途徑','ppp'],
-    lac:[62,195,'Lactate','乳酸','cori'], pyr:[212,195,'Pyruvate','丙酮酸','glycolysis'], aa:[362,195,'Amino acids','胺基酸','transamination'],
-    fa:[62,275,'Fatty acids','脂肪酸','beta-ox'], acoa:[212,275,'Acetyl-CoA','乙醯-CoA','pdh'], urea:[362,275,'Urea','尿素','urea'],
-    tag:[62,355,'TAG','三酸甘油酯','tag-synthesis'], tca:[212,355,'TCA cycle','檸檬酸循環','tca'], ket:[362,355,'Ketone bodies','酮體','ketogenesis'],
-    atp:[212,435,'ETC → ATP','電子傳遞鏈','etc'], chol:[362,435,'Cholesterol','膽固醇','cholesterol']
+    glucose:[C[1],40,'Glucose','葡萄糖','glycolysis'], nuc:[C[2],40,'Nucleotides','核苷酸','purine-denovo'],
+    glycogen:[C[0],115,'Glycogen','肝醣','glycogenesis'], g6p:[C[1],115,'G6P','葡萄糖-6-磷酸','glycolysis'], ppp:[C[2],115,'NADPH・Ribose','五碳糖途徑','ppp'],
+    lac:[C[0],195,'Lactate','乳酸','cori'], pyr:[C[1],195,'Pyruvate','丙酮酸','glycolysis'], aa:[C[2],195,'Amino acids','胺基酸','transamination'],
+    fa:[C[0],275,'Fatty acids','脂肪酸','beta-ox'], acoa:[C[1],275,'Acetyl-CoA','乙醯-CoA','pdh'], urea:[C[2],275,'Urea','尿素','urea'],
+    tag:[C[0],355,'TAG','三酸甘油酯','tag-synthesis'], tca:[C[1],355,'TCA cycle','檸檬酸循環','tca'], ket:[C[2],355,'Ketone bodies','酮體','ketogenesis'],
+    atp:[C[1],435,'ETC → ATP','電子傳遞鏈','etc'], chol:[C[2],435,'Cholesterol','膽固醇','cholesterol']
   };
-  const E = [['glucose','glycogen','⇄','glycogenesis','carb'],['glucose','g6p','','glycolysis','carb'],['g6p','ppp','五碳糖','ppp','carb'],['ppp','nuc','核糖','purine-denovo','nuc'],
-    ['g6p','pyr','糖解 ⇅ 糖質新生','glycolysis','carb'],['pyr','lac','Cori','cori','carb'],['pyr','acoa','PDH','pdh','carb'],['aa','pyr','碳骨架','carbon-skeleton','protein'],
-    ['aa','urea','尿素循環','urea','protein'],['fa','acoa','β-ox','beta-ox','lipid'],['acoa','ket','酮體生成','ketogenesis','lipid'],['acoa','chol','膽固醇合成','cholesterol','lipid'],
-    ['acoa','tca','','tca','carb'],['tca','atp','NADH・FADH₂','etc','carb'],['fa','tag','TAG 合成','tag-synthesis','lipid'],['aa','acoa','','carbon-skeleton','protein']];
-  const hw = 54, hh = 18;
+  // [起點, 終點, 標籤, 連結, 分類, 'bi'=雙向可逆 / 'irr'=不可逆]
+  const E = [['glucose','g6p','己糖激酶 ⇅ G6Pase','glycolysis','carb','bi'],['g6p','glycogen','合成⇄分解','glycogenesis','carb','bi'],['g6p','ppp','五碳糖','ppp','carb'],['ppp','nuc','核糖','purine-denovo','nuc'],
+    ['g6p','pyr','糖解 ⇅ 糖質新生','glycolysis','carb','bi'],['pyr','lac','LDH','cori','carb','bi'],['pyr','acoa','PDH（不可逆）','pdh','carb','irr'],['aa','pyr','轉胺','transamination','protein','bi'],
+    ['aa','urea','不可逆','urea','protein','irr'],['fa','acoa','β-ox⇄合成','beta-ox','lipid','bi'],['acoa','ket','生成⇄利用','ketogenesis','lipid','bi'],['acoa','chol','不可逆','cholesterol','lipid','irr'],
+    ['acoa','tca','','tca','carb'],['tca','atp','NADH・FADH₂','etc','carb'],['fa','tag','合成 ⇅ 分解','tag-synthesis','lipid','bi'],['aa','acoa','','carbon-skeleton','protein']];
+  const hw = 56, hh = 18;
   const clip = (x1, y1, x2, y2) => { const dx = x2 - x1, dy = y2 - y1; const t = Math.min(dx ? hw / Math.abs(dx) : 9, dy ? hh / Math.abs(dy) : 9); return [x1 + dx * t, y1 + dy * t, x2 - dx * t, y2 - dy * t]; };
-  let s = `<svg viewBox="0 0 424 470" class="hub" role="img" aria-label="代謝總地圖"><defs><marker id="ah-h" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--muted)"/></marker></defs>`;
-  for (const [a, b, l, go, cat] of E) {
+  let s = `<svg viewBox="0 0 476 492" class="hub" role="img" aria-label="代謝總地圖"><defs><marker id="ah-h" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--muted)"/></marker></defs>`;
+  for (const [a, b, l, go, cat, kind] of E) {
     const [x1, y1] = N[a], [x2, y2] = N[b]; const [sx, sy, ex, ey] = clip(x1, y1, x2, y2);
-    s += `<line x1="${sx}" y1="${sy}" x2="${ex}" y2="${ey}" stroke="${CATS[cat].color}" stroke-width="2.4" marker-end="url(#ah-h)"/>`;
-    if (l) { const f = Math.abs(x1 - x2) > 5 && Math.abs(y1 - y2) > 5 ? 0.4 : 0.5; const mx = x1 + (x2 - x1) * f, my = y1 + (y2 - y1) * f; const vert = Math.abs(x1 - x2) < 5, diag = !vert && Math.abs(y1 - y2) > 5;
-      s += `<text x="${vert ? mx + 6 : diag ? mx + 8 : mx}" y="${vert ? my + 4 : diag ? my - 6 : my - 5}" text-anchor="${vert || diag ? 'start' : 'middle'}" class="hl go" data-go="${go}">${l}</text>`; }
+    s += `<line x1="${sx}" y1="${sy}" x2="${ex}" y2="${ey}" stroke="${CATS[cat].color}" stroke-width="2.4" marker-end="url(#ah-h)"${kind === 'bi' ? ' marker-start="url(#ah-h)"' : ''}/>`;
+    if (l) { const f = Math.abs(x1 - x2) > 5 && Math.abs(y1 - y2) > 5 ? (b === 'chol' ? 0.76 : 0.4) : 0.5; const mx = x1 + (x2 - x1) * f, my = y1 + (y2 - y1) * f; const vert = Math.abs(x1 - x2) < 5, diag = !vert && Math.abs(y1 - y2) > 5;
+      s += `<text x="${vert ? mx + 7 : diag ? mx + 8 : mx}" y="${vert ? my + 4 : diag ? my - 6 : my - 6}" text-anchor="${vert || diag ? 'start' : 'middle'}" class="hl go${kind === 'irr' ? ' hirr' : ''}" data-go="${go}">${l}</text>`; }
   }
+  s += `<text x="10" y="484" class="hlg">⟷ 雙向箭頭＝可以互相轉換　</text><text x="200" y="484" class="hlg hirr">紅字＝不可逆（單行道）</text>`;
   for (const [x, y, en, zh, go] of Object.values(N)) {
     s += `<g class="go" data-go="${go}"><rect x="${x - hw}" y="${y - hh}" width="${hw * 2}" height="${hh * 2}" rx="9" fill="var(--surface)" stroke="var(--ink)" stroke-width="1.3"/><text x="${x}" y="${y - 2}" text-anchor="middle" class="hn">${en}</text><text x="${x}" y="${y + 11}" text-anchor="middle" class="hz">${zh}</text></g>`;
   }

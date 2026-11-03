@@ -243,6 +243,59 @@ svg.rtmap{display:block;width:100%;max-width:480px;margin:0 auto}
 .rtcard.on{background:color-mix(in srgb,var(--rc) 12%,var(--surface))}
 @media (max-width:860px){.rtgrid{grid-template-columns:1fr}.rtmapwrap{position:static}}
 @media (prefers-reduced-motion:reduce){.rtflow{animation:none}}
+/* terms */
+.nav-rg{color:#d97d1f}.nav-nc{color:#3f78cf}.nav-iq{color:#1f9286}.nav-tm{color:#5b6bd6}
+button.tm,.tm.demo{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;border-bottom:2px solid #5b6bd6;background:color-mix(in srgb,#5b6bd6 9%,transparent);border-radius:2px}
+button.tm:hover{background:color-mix(in srgb,#5b6bd6 20%,transparent)}
+#tmpop{position:fixed;inset:0;z-index:60;display:none}#tmpop.on{display:block}
+#tmpop .tmbg{position:absolute;inset:0;background:rgba(0,0,0,.45)}
+#tmpop .tmbox{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(560px,calc(100% - 24px));max-height:calc(100% - 40px);overflow:auto;background:var(--bg);border-radius:16px;padding:16px;box-shadow:0 10px 40px rgba(0,0,0,.3)}
+#tmpop .tmx{position:sticky;top:0;float:right;width:34px;height:34px;border-radius:50%;border:1px solid var(--line2);background:var(--surface);color:var(--ink);font-size:15px;cursor:pointer}
+.tmcard{background:var(--surface);border:1px solid var(--line);border-top:5px solid #5b6bd6;border-radius:12px;padding:12px 14px}
+.tmh b{font-size:19px;display:block}.tmh small{color:var(--muted);font-style:italic}.tmcat{display:inline-block;margin-left:8px;font-size:12px;background:#5b6bd6;color:#fff;border-radius:999px;padding:0 8px}
+.tmsec{margin-top:10px}.tmsec>span,.tmgo>span{display:inline-block;font-size:12px;font-weight:700;color:#fff;background:var(--muted);border-radius:6px;padding:0 8px;margin-bottom:3px}
+.tmsec p{margin:2px 0}.tmana>span{background:#d97d1f}.tmmemo>span{background:#2e9a4e}.tmexam>span{background:#d64545}
+.tmexam ul{margin:2px 0;padding-left:20px}.tmexam li{margin:2px 0;font-size:14.5px}
+.tmgo{margin-top:10px;font-size:14px}.tmgo>span{background:#5b6bd6;margin-right:6px}.tmgo a{color:#5b6bd6;margin-right:10px;white-space:nowrap;font-weight:500}
+.tmact{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}.tmact .btn{text-decoration:none}
+.tmq{width:100%;padding:9px 12px;border:1px solid var(--line2);border-radius:10px;background:var(--surface);color:var(--ink);font:inherit;margin-bottom:10px}
+.tmchips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}.tmchips button{font:inherit;font-size:13.5px;border:1px solid var(--line2);background:var(--surface);color:var(--ink);border-radius:999px;padding:4px 12px;cursor:pointer}.tmchips button.on{background:#5b6bd6;color:#fff;border-color:#5b6bd6}
+.tmitem{background:var(--surface);border:1px solid var(--line);border-radius:12px;margin-bottom:8px}
+.tmitem summary{cursor:pointer;padding:10px 14px;list-style:none}.tmitem summary b{font-size:16px;margin-right:8px}.tmitem summary small{color:var(--muted)}
+.tmitem[open] summary{border-bottom:1px solid var(--line)}.tmitem .tmcard{border:0;border-radius:0 0 12px 12px}
+.tmrel{display:flex;flex-wrap:wrap;gap:8px 14px;font-size:14.5px}
+.bngrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;margin-top:22px}
+.bngrid .prbanner{margin:0}.bn-tm{background:#5b6bd6}.bn-rg{background:#d97d1f}.bn-nc{background:#3f78cf}.bn-iq{background:#1f9286}
+/* regulation */
+.reggrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:16px;align-items:start;margin-top:10px}
+.regmapwrap{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:6px}
+svg.regsvg{display:block;width:100%;max-width:420px;margin:0 auto}
+.rega{font-size:14px;font-weight:700;fill:var(--ink)}.regb{font-size:11.5px;fill:var(--muted)}.regmem{font-size:11px;fill:var(--muted)}
+.regstep{animation:regpop 2.8s ease-in-out infinite}@keyframes regpop{0%,100%{opacity:.55}15%,40%{opacity:1}}
+.regrow{display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:8px 12px;border:1px solid var(--line);border-left:6px solid var(--muted2);border-radius:10px;background:var(--surface);margin-bottom:6px}
+.regrow.on{border-left-color:#2e9a4e}.regrow.off{border-left-color:#b8b0a4;opacity:.85}
+.regn a{font-weight:700;color:var(--ink);text-decoration:none}.regn small{display:block;color:var(--muted);font-size:12.5px}
+.regsw{display:flex;align-items:center;gap:6px}.regp{color:#d97d1f;font-weight:700}
+.regst{font-weight:700;border-radius:999px;padding:1px 12px;color:#fff;background:#b8b0a4}.regrow.on .regst{background:#2e9a4e}
+.regwhy{grid-column:1/-1;font-size:13.5px;color:var(--muted)}
+.regmemo{margin-top:16px;background:color-mix(in srgb,var(--acc) 9%,var(--surface));border:1px solid var(--line);border-radius:12px;padding:12px 14px}.regmemo p{margin:6px 0}
+@media (prefers-reduced-motion:reduce){.regstep{animation:none}.regdot{display:none}}
+/* nucleic */
+.nucmap{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:6px;margin-bottom:6px}
+svg.nucsvg{display:block;width:100%;max-width:520px;margin:0 auto}
+.nca{font-size:14px;font-weight:700;fill:var(--ink)}.ncb{font-size:11px;fill:var(--muted)}.ncl{font-size:11px;font-weight:700;paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round}.ncz{font-size:12px;font-weight:700}
+.ncflow{stroke-dasharray:8 5;animation:rtf .9s linear infinite}
+.nucsec{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--nc);border-radius:12px;padding:4px 14px 10px;margin-top:12px}
+.nucsec h3{border-left:0;padding-left:0;color:var(--nc)}.nucsec ul{padding-left:20px;margin:4px 0}.nucsec li{margin:5px 0}
+/* integrate */
+.iqscore{position:sticky;top:56px;z-index:5;background:var(--acc);color:#fff;font-weight:700;border-radius:10px;padding:6px 12px;display:inline-block}
+.iq{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:4px 14px 12px;margin-top:12px}
+.iqq{font-size:16px;font-weight:500}
+.iqo{display:grid;gap:8px}.iqo button{text-align:left;font:inherit;font-size:15px;padding:10px 12px;border-radius:10px;border:1.5px solid var(--line2);background:var(--bg);color:var(--ink);cursor:pointer}
+.iqo button.right{border-color:#2e9a4e;background:color-mix(in srgb,#2e9a4e 12%,var(--surface))}.iqo button.wrong{border-color:#d64545;background:color-mix(in srgb,#d64545 10%,var(--surface))}
+.iqo button:disabled{cursor:default;color:var(--ink)}
+.iqex{margin-top:10px;padding:10px 12px;border-radius:10px;background:color-mix(in srgb,var(--acc) 8%,var(--surface))}
+@media (max-width:860px){.reggrid{grid-template-columns:1fr}}
 footer{color:var(--muted);font-size:13px;text-align:center;padding:20px 16px 30px}
 @media (max-width:900px){
   .maps{grid-template-columns:1fr}
@@ -257,6 +310,42 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:20px 16px 30p
   .edge{padding-left:6px}
   .info th{width:96px;padding:8px}
 }
+
+.nav-ln{color:#1f9286;font-weight:700}.nav-cm{color:#7a55b8}.bn-ln{background:linear-gradient(120deg,#1f9286,#7a55b8)}
+.chemsteps{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 4px}.chemsteps a{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;text-decoration:none;font-weight:700;font-size:14px;border:2px solid var(--sc,#7a55b8);color:var(--sc,#7a55b8);background:var(--surface)}
+.chemsteps a.on{background:var(--sc,#7a55b8);color:#fff}.chemsteps a.done{background:color-mix(in srgb,var(--sc,#7a55b8) 18%,var(--surface))}
+.chembody p{font-size:16px;line-height:1.85;margin:.7em 0}
+.lnprog{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin:14px 0 6px;padding:12px 14px;background:var(--soft);border-radius:12px}
+.lnbar{flex:1 1 160px;height:10px;background:var(--soft2);border-radius:6px;overflow:hidden}.lnbar i{display:block;height:100%;background:linear-gradient(90deg,#1f9286,#7a55b8);border-radius:6px}
+.lnprog span{font-size:14px;color:var(--muted);font-weight:600}
+.lnst{margin:14px 0 0;border-left:5px solid var(--lc);padding-left:12px}.lnst h3{margin:0;color:var(--lc);display:inline}
+.lnst summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;padding:6px 0}.lnst summary::-webkit-details-marker{display:none}
+.lnst summary::before{content:'▸';color:var(--lc);font-size:18px;transition:transform .2s}.lnst[open] summary::before{transform:rotate(90deg)}
+.lnsc{margin-left:auto;font-size:13px;color:var(--muted);font-weight:600}
+.lngoal{background:color-mix(in srgb,var(--lc) 7%,var(--surface));border-radius:10px;padding:8px 12px;margin:0 0 10px;font-size:14px;line-height:1.7}.lngoal p{margin:3px 0}.lngoal b{color:var(--lc)}
+.lnmap{list-style:none;margin:16px 0 8px;padding:0;position:relative}
+.lnmap::before{content:'';position:absolute;left:19px;top:18px;bottom:18px;width:4px;background:var(--line2);border-radius:2px}
+.lnmap li{position:relative;margin:0 0 8px}
+.lnmap a{display:grid;grid-template-columns:42px 1fr auto;grid-template-rows:auto auto;column-gap:8px;text-decoration:none;color:var(--ink);align-items:center}
+.lnmap i{grid-row:1/3;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:800;background:var(--surface);border:3px solid var(--lc);color:var(--lc);position:relative;z-index:1}
+.lnmap li.full i{background:var(--lc);color:#fff}.lnmap li.cur i{box-shadow:0 0 0 5px color-mix(in srgb,var(--lc) 25%,transparent)}
+.lnmap b{font-size:15.5px;color:var(--lc)}.lnmap small{grid-column:2/4;font-size:13px;color:var(--muted);line-height:1.5}
+.lnmap em{grid-column:3;grid-row:1;font-style:normal;font-size:12.5px;color:var(--muted);font-weight:600}
+.nav-st{color:#c0567a}.lnsub{margin:2px 0 8px;color:var(--muted);font-size:14px}
+.lnlist{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.lnlist li{display:flex;gap:10px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:9px 10px}
+.lnlist li.ok{background:color-mix(in srgb,var(--lc) 9%,var(--surface))}.lnlist li.ext{opacity:.85;border-style:dashed}
+.lnchk{flex:none;width:26px;height:26px;border-radius:7px;border:2px solid var(--lc);background:var(--surface);color:#fff;font-weight:800;cursor:pointer;margin-top:1px}
+.lnlist li.ok .lnchk{background:var(--lc)}
+.lnlist a{text-decoration:none;color:var(--ink);flex:1;min-width:0}.lnlist a b{display:block;font-size:15.5px}.lnlist a small{display:block;color:var(--muted);font-size:13.5px;line-height:1.55;margin-top:2px}
+.lnn{display:inline-block;min-width:22px;color:var(--lc);font-weight:800;margin-right:4px}
+.lnlist em{font-style:normal;font-size:11.5px;color:var(--muted);border:1px solid var(--line2);border-radius:6px;padding:0 5px;margin-left:6px;vertical-align:2px}
+.lnnav{margin:28px 0 6px;padding:14px;border:2px solid var(--lc);border-radius:14px;background:color-mix(in srgb,var(--lc) 6%,var(--surface))}
+.lnnavh{font-size:13.5px;font-weight:700;color:var(--lc);margin-bottom:8px}
+.lnnavb{display:flex;justify-content:space-between;gap:8px;margin-top:10px;font-size:14px}.lnnavb a{color:var(--lc);text-decoration:none;font-weight:600}.lnnavb a:nth-child(2){color:var(--muted)}
+.lnnavb a:first-child{text-align:left}.lnnavb a:last-child{text-align:right}
+.lnnavb a{flex:1}.lnnavb a:nth-child(2){flex:none;white-space:nowrap;align-self:center}.chemtab td:first-child{white-space:nowrap}.chemtab.nw2 td:nth-child(2){white-space:nowrap}
+.lnwhy{font-size:13.5px;color:var(--muted);margin:8px 0 0}
 </style>
 </head>
 <body>
@@ -1949,7 +2038,7 @@ function routeInfo(r) {
   return `<div class="rtinfo" style="--rc:${r.col}"><b>${esc(r.zh)}</b><small>${esc(r.en)}</small>
     <div class="rtpath">${esc(r.path)}</div>
     <div class="rtcarry"><span>運送什麼</span>${esc(r.carry)}</div>
-    <ul>${r.key.map(k => `<li>${esc(k)}</li>`).join('')}</ul>
+    <ul>${(() => { const sn = new Set(); return r.key.map(k => `<li>${termify(k, sn)}</li>`).join(''); })()}</ul>
     <div class="lecbar"><button class="btn pri" id="rtlec">🔊 講解這條路線</button><details class="script"><summary>📝 看講稿</summary><p>${esc(capOf(r.talk))}</p></details></div></div>`;
 }
 function renderRoutes(start) {
@@ -2001,10 +2090,10 @@ function stageCard(J, i) {
   return `<div class="jcard">
     <div class="jhead"><span class="jnum">${i + 1}</span><div><b>${esc(st.title)}</b><span class="jwhere" style="--bc:${band[2]}">📍 ${esc(st.where)}</span></div></div>
     <div class="jform"><span>分子形式</span><b>${esc(st.form)}</b></div>
-    <ul class="jhow">${st.how.map(h => `<li>${esc(h)}</li>`).join('')}</ul>
+    <ul class="jhow">${(() => { const sn = new Set(); return st.how.map(h => `<li>${termify(h, sn)}</li>`).join(''); })()}</ul>
     <div class="jmeta">${chips(st.chips)}</div>
     <div class="jout"><span>產物／接下來</span>${esc(st.out)}</div>
-    ${st.tip ? `<div class="jtip">⭐ ${esc(st.tip)}</div>` : ''}
+    ${st.tip ? `<div class="jtip">⭐ ${termify(st.tip)}</div>` : ''}
     ${links ? `<div class="jlinks">詳細路徑：${links}</div>` : ''}
     ${LECT_J[JR.id] ? `<div class="lecbar"><button class="btn" id="jlec1">🔊 聽這一站</button><details class="script"><summary>📝 看講稿</summary><p>${esc(capOf(T(jText(JR.id, i))))}</p></details></div>` : ''}
   </div>`;
@@ -2117,7 +2206,7 @@ function renderFeed(st) {
     <div class="lecbar"><button class="btn pri" id="flec">🔊 講解：${S0.zh}</button>${termToggleHTML()}<details class="script"><summary>📝 看講稿</summary><p>${esc(capOf(T(fText(st))))}</p></details></div>
     <div class="feedwrap">${feedSVG(st)}</div>
     <ol class="flegend" style="--fc:${S0.col}">${S0.flows.map(([a, b, lab]) => `<li><b>${FEEDSTATE.org[a][2]} → ${FEEDSTATE.org[b][2]}</b>${esc(lab)}</li>`).join('')}</ol>
-    <div class="fcards">${Object.entries(names).map(([k, zh]) => `<div class="fcard" style="--oc:${ORG[FEEDSTATE.org[k][3]].col}"><b>${zh}</b><span>${esc(S0.org[k])}</span></div>`).join('')}</div>
+    <div class="fcards">${Object.entries(names).map(([k, zh]) => `<div class="fcard" style="--oc:${ORG[FEEDSTATE.org[k][3]].col}"><b>${zh}</b><span>${termify(S0.org[k])}</span></div>`).join('')}</div>
     <p class="jlinks">相關路徑：${S0.go.map(id => `<a href="#/${id}">${esc(byId[id].zh)} →</a>`).join('')}</p>
     ${tableHTML(REFS.hormone)}
     <nav class="pn">${Object.entries(JOURNEYS).map(([k, o]) => `<a href="#/journey/${k}">${o.icon} ${esc(o.zh)}</a>`).join('')}</nav>
@@ -2151,6 +2240,894 @@ function journeyRefs(id) {
   for (const [k, J] of Object.entries(JOURNEYS)) J.stages.forEach((st, i) => { if ((st.go || []).includes(id)) out.push(`<a href="#/journey/${k}/${i}">${J.icon} ${esc(J.zh)}・第 ${i + 1} 站</a>`); });
   return out.length ? `<p class="jref">🧳 在旅程中的位置：${out.join('')}</p>` : '';
 }
+// ===== 名詞小辭典 =====
+// plain 白話、ana 比喻、memo 記憶法、go 出現在哪（路徑 id 或 #/ 路由）、exam 國考怎麼考、aka 頁面上會自動變成可點的寫法
+const TERM_CATS = {enz:'酵素與調控', eng:'能量', sig:'荷爾蒙與訊息', nut:'營養素的吸收與運送', aa:'胺基酸與含氮物', lip:'脂質', nuc:'核酸'};
+const TERMS = {
+// ---------- 酵素與調控 ----------
+enzyme:{zh:'酵素', en:'Enzyme', cat:'enz', aka:['酵素'],
+ plain:'酵素是身體裡的「催化劑」，大多是蛋白質。它讓化學反應變快很多倍，但自己反應完不會被用掉，可以一直重複使用。每種酵素只做一種（或一類）反應，這叫專一性。',
+ ana:'就像鑰匙和鎖：酵素的活性部位是鎖孔，只有形狀對的受質（鑰匙）才插得進去。',
+ memo:'英文名稱字尾是 -ase 的，幾乎都是酵素，例如 lipase、kinase、dehydrogenase。',
+ go:['glycolysis','#/regulation'], exam:['酵素降低的是「活化能」，不會改變反應的平衡','酵素的名稱常常直接告訴你它做什麼：kinase 加磷酸、phosphatase 去磷酸、dehydrogenase 拿走氫（氧化）']},
+ratelimit:{zh:'限速酶', en:'Rate-limiting enzyme', cat:'enz', aka:['限速酶','限速步驟','Rate-limiting','限速'],
+ plain:'一條代謝路徑有很多步驟，其中跑得最慢、決定整條路速度的那一步，就是限速步驟，負責這一步的酵素叫限速酶。身體想要調整整條路的快慢，只要調控這個酵素就好。',
+ ana:'像高速公路的收費站：其他路段再寬，車流量還是由收費站決定。要讓車變多或變少，只要多開或少開收費亭。',
+ memo:'限速酶通常是：路徑的前段、不可逆、而且受荷爾蒙或產物調控的那一步。',
+ go:['glycolysis','tca','gng','cholesterol','fa-synthesis','urea'],
+ exam:['必背：糖解 PFK-1、TCA 異檸檬酸去氫酶、糖質新生果糖-1,6-雙磷酸酶、肝醣合成肝醣合成酶、肝醣分解肝醣磷酸化酶、脂肪酸合成乙醯輔酶 A 羧化酶、β-氧化 CPT-I、膽固醇 HMG-CoA 還原酶、尿素循環 CPS-I、血基質 ALA 合成酶','五碳糖途徑 G6PD、酮體 HMG-CoA 合成酶、嘌呤 PRPP 醯胺轉移酶、嘧啶 CPS-II']},
+irrev:{zh:'不可逆反應', en:'Irreversible reaction', cat:'enz', aka:['不可逆'],
+ plain:'有些反應釋放的能量很多，幾乎只能往一個方向走，就叫不可逆。要往回走，身體得換另一個酵素、繞另一條路。',
+ ana:'像溜滑梯：滑下來很容易，要回到上面不能逆著滑，得另外走樓梯。',
+ memo:'糖解三個不可逆：己糖激酶、PFK-1、丙酮酸激酶，所以糖質新生要準備四個「繞道酵素」。',
+ go:['glycolysis','gng','pdh'], exam:['PDH 不可逆 → 乙醯輔酶 A 不能變回葡萄糖 → 偶數碳脂肪酸不能生糖','不可逆的步驟通常就是調控點']},
+cofactor:{zh:'輔因子／輔酶', en:'Cofactor / Coenzyme', cat:'enz', aka:['輔因子','輔酶'],
+ plain:'很多酵素自己沒辦法工作，需要一個「小幫手」才會有活性。小幫手如果是金屬離子（鎂、鋅、鐵、銅），叫輔因子；如果是小的有機分子，叫輔酶。大部分的輔酶是 B 群維生素做成的。',
+ ana:'酵素像一台電鑽，輔酶是電池：鑽頭再好，沒有電池也轉不動。',
+ memo:'B1 → TPP、B2 → FAD、B3 → NAD、B5 → 輔酶 A、B6 → PLP、B7 → 生物素、B9 → THF、B12 → 鈷胺素。',
+ go:['pdh','#/ref/vit'], exam:['維生素缺乏症可以從「它是哪個酵素的輔酶」推出來，例如 B1 缺乏 → PDH 卡住 → 乳酸堆積','PDH 五輔因子：B1、B2、B3、B5、硫辛酸']},
+allosteric:{zh:'異位調節', en:'Allosteric regulation', cat:'enz', aka:['異位調節'],
+ plain:'有些分子不是接在酵素的活性部位，而是接在旁邊另一個位置（異位），讓酵素的形狀改變，變得更活躍或更不活躍。這種調節反應很快，幾秒鐘就有效。',
+ ana:'像水龍頭旁邊的旋鈕：不是去碰水管本身，而是轉旁邊的鈕來調水量。',
+ memo:'能量多（ATP、檸檬酸）→ 關掉產能的酵素；能量少（AMP、ADP）→ 打開。',
+ go:['glycolysis','tca','gng'], exam:['PFK-1：ATP、檸檬酸抑制；AMP、果糖-2,6-雙磷酸活化','乙醯輔酶 A 活化丙酮酸羧化酶']},
+feedback:{zh:'回饋抑制', en:'Feedback inhibition', cat:'enz', aka:['回饋抑制'],
+ plain:'一條路徑最後的產物做太多時，會回頭去抑制前面的酵素（通常是限速酶），讓整條路慢下來，避免浪費。',
+ ana:'像冷氣的溫控器：溫度降到設定值，壓縮機就自動停。',
+ memo:'「做夠了就喊停」。',
+ go:['cholesterol','heme-synthesis','purine-denovo','bile-acid'], exam:['膽固醇抑制 HMG-CoA 還原酶','血基質抑制 ALA 合成酶','AMP、GMP、IMP 抑制 PRPP 醯胺轉移酶','膽酸抑制 7α-羥化酶']},
+phospho:{zh:'磷酸化（共價修飾）', en:'Phosphorylation (covalent modification)', cat:'enz', aka:['磷酸化','去磷酸化'],
+ plain:'在酵素身上接一個磷酸根（由 kinase 負責），或把磷酸根拿掉（由 phosphatase 負責），酵素的形狀就會改變，像開關一樣變成「開」或「關」。荷爾蒙主要就是靠這個方法控制代謝。',
+ ana:'像在酵素身上貼一張「工作中」或「休息中」的牌子。',
+ memo:'升糖素、腎上腺素讓酵素「加磷酸」：分解的打開、合成的關掉。胰島素讓酵素「去磷酸」：剛好相反。',
+ go:['#/regulation','glycogenolysis','glycogenesis','lipolysis','fa-synthesis'], exam:['肝醣磷酸化酶加磷酸 = 開；肝醣合成酶加磷酸 = 關','PDH 被 PDH kinase 磷酸化 → 失去活性']},
+zymogen:{zh:'酶原', en:'Zymogen', cat:'enz', aka:['酶原'],
+ plain:'有些酵素一做出來是沒有活性的「前身」，要被切掉一小段才會開始工作，這個前身叫酶原。消化酵素多半用這種方式，避免在分泌的器官裡就把自己消化掉。',
+ ana:'像刀子出廠時套著刀鞘，拿到廚房才拔掉刀鞘。',
+ memo:'名稱有「原」或英文 -ogen 的：胃蛋白酶原 pepsinogen、胰蛋白酶原 trypsinogen。',
+ go:['#/journey/protein/0','#/journey/protein/1'], exam:['腸激酶活化胰蛋白酶原 → 胰蛋白酶再活化其他胰臟酶原','凝血因子也是酶原']},
+isozyme:{zh:'同功酶', en:'Isozyme', cat:'enz', aka:['同功酶'],
+ plain:'做同一個反應，但構造和特性不一樣的酵素，分布在不同的組織，各自配合那個組織的需要。',
+ ana:'像同一款車有市區版和越野版，功能一樣，但設計給不同路況。',
+ memo:'己糖激酶（全身，Km 低，一直收葡萄糖）vs 葡萄糖激酶（肝臟，Km 高，飯後才大量收）。',
+ go:['glycolysis'], exam:['LDH、CK 的同功酶可以用來判斷哪個器官受損','葡萄糖激酶不受 G6P 抑制']},
+km:{zh:'Km（米氏常數）', en:'Michaelis constant (Km)', cat:'enz', aka:['Km'],
+ plain:'Km 是酵素跑到最快速度一半時，需要的受質濃度。Km 越小，表示酵素對受質越「黏」，受質很少也能抓得到；Km 越大，要受質很多才會大量工作。',
+ ana:'Km 小像很敏感的感應燈，一點點動靜就亮；Km 大像要用力拍才會亮的燈。',
+ memo:'Km 小 = 親和力大。',
+ go:['glycolysis'], exam:['葡萄糖激酶 Km 高 → 只有飯後血糖高時肝臟才大量收葡萄糖','競爭性抑制：Km 變大、Vmax 不變；非競爭性抑制：Km 不變、Vmax 變小']},
+// ---------- 能量 ----------
+atp:{zh:'ATP 與高能磷酸鍵', en:'ATP & high-energy phosphate bond', cat:'eng', aka:['高能磷酸鍵','高能鍵'],
+ plain:'ATP 是細胞的能量貨幣。它後面接了三個磷酸，最後兩個磷酸之間的鍵斷開時會放出很多能量，所以叫高能磷酸鍵。細胞做事時「花掉 ATP」，就是把它變成 ADP（斷一個鍵）或 AMP（斷兩個鍵）。',
+ ana:'像充電電池：ATP 是滿電，ADP 是用掉一格，AMP 是快沒電。',
+ memo:'ATP → AMP 等於花掉兩個高能鍵，脂肪酸活化就是這樣。',
+ go:['etc','carnitine','urea'], exam:['尿素循環：3 ATP、4 個高能鍵','糖質新生：4 ATP + 2 GTP = 6 個高能鍵']},
+redox:{zh:'NADH 與 NADPH（還原力）', en:'NADH vs NADPH', cat:'eng', aka:['還原力','NADPH'],
+ plain:'NADH 和 NADPH 都是攜帶電子的「搬運工」。NADH 主要把電子送去電子傳遞鏈做 ATP（分解、產能用）；NADPH 主要把電子交給合成反應和抗氧化（合成、建造用）。',
+ ana:'NADH 像要拿去換錢的發票（換 ATP）；NADPH 像工地的建材券（拿去蓋脂肪、膽固醇）。',
+ memo:'有 P 的 NADPH = 「P」roduce，用來合成；NADH 用來產能。',
+ go:['ppp','fa-synthesis','cholesterol','etc','antioxidant'], exam:['NADPH 主要來自五碳糖磷酸途徑，其次是蘋果酸酶','G6PD 缺乏 → NADPH 不足 → 紅血球溶血']},
+sublevel:{zh:'受質層次磷酸化', en:'Substrate-level phosphorylation', cat:'eng', aka:['受質層次磷酸化'],
+ plain:'直接把受質上的磷酸根轉給 ADP 做成 ATP，不需要氧氣，也不需要電子傳遞鏈。',
+ ana:'像現金交易：一手交貨一手交錢，馬上拿到 ATP。',
+ memo:'糖解兩個（磷酸甘油酸激酶、丙酮酸激酶）＋ TCA 一個（琥珀醯輔酶 A 合成酶做 GTP）。',
+ go:['glycolysis','tca'], exam:['無氧時唯一能產 ATP 的方式','和氧化磷酸化比較常考']},
+oxphos:{zh:'氧化磷酸化', en:'Oxidative phosphorylation', cat:'eng', aka:['氧化磷酸化'],
+ plain:'NADH 和 FADH₂ 的電子在粒線體內膜一路傳下去，最後交給氧氣，過程中把質子打到膜外；質子再流回來推動 ATP 合成酶做出 ATP。身體大部分的 ATP 都是這樣來的，一定要有氧氣。',
+ ana:'像水力發電：先把水抽到水庫（打質子），再放水推動發電機（ATP 合成酶）。',
+ memo:'1 NADH ≈ 2.5 ATP，1 FADH₂ ≈ 1.5 ATP。',
+ go:['etc','#/journey/glucose/9'], exam:['氰化物、一氧化碳抑制複合體 IV','寡黴素抑制 ATP 合成酶']},
+chemiosmotic:{zh:'化學滲透學說與解偶聯', en:'Chemiosmotic theory & uncoupling', cat:'eng', aka:['化學滲透','解偶聯'],
+ plain:'化學滲透學說說的是：電子傳遞製造出質子濃度差，質子流回去的力量才是做 ATP 的動力。如果膜上開了小洞讓質子漏回去、不經過 ATP 合成酶，能量就變成熱，這叫解偶聯。',
+ ana:'水庫旁邊開了一條排水溝，水沒經過發電機就流走了，只剩下熱。',
+ memo:'棕色脂肪的 UCP1 = 產熱蛋白，是天然的解偶聯劑。',
+ go:['etc'], exam:['嬰兒靠棕色脂肪產熱','解偶聯時耗氧增加但 ATP 減少']},
+rq:{zh:'呼吸商 RQ', en:'Respiratory quotient', cat:'eng', aka:['呼吸商','RQ'],
+ plain:'呼出的二氧化碳量除以消耗的氧氣量。不同營養素燒起來比例不同，所以可以用來推測身體正在燒哪一種燃料。',
+ ana:'像從排氣管冒出來的氣體，猜車子在燒汽油還是柴油。',
+ memo:'醣 1.0、蛋白質 0.8、脂肪 0.7。',
+ go:['#/journey/glucose/10'], exam:['RQ 接近 0.7 表示主要燒脂肪（如飢餓）','過度餵食醣類時 RQ 可大於 1（醣轉脂）']},
+// ---------- 荷爾蒙與訊息 ----------
+messenger1:{zh:'第一傳訊者', en:'First messenger', cat:'sig', aka:['第一傳訊者'],
+ plain:'從外面帶消息來給細胞的分子，例如荷爾蒙、神經傳導物質。它們在血液或組織液裡移動，到了目標細胞要靠「受體」才能把消息交進去。',
+ ana:'像送信的郵差，把信送到你家門口。',
+ memo:'第一傳訊者在細胞「外」，第二傳訊者在細胞「內」。',
+ go:['#/regulation'], exam:['水溶性荷爾蒙（胜肽類、兒茶酚胺）接細胞膜受體','脂溶性荷爾蒙（類固醇、甲狀腺素）接細胞內／核受體']},
+messenger2:{zh:'第二傳訊者', en:'Second messenger', cat:'sig', aka:['第二傳訊者','cAMP'],
+ plain:'水溶性荷爾蒙進不了細胞，只能接在細胞膜外的受體上。受體被接上後，細胞在裡面做出一種小分子把消息傳開，這個小分子就是第二傳訊者。最常考的是 cAMP：腺苷酸環化酶把 ATP 做成 cAMP，cAMP 活化 PKA，PKA 再去幫酵素加磷酸。',
+ ana:'客人在大樓外按門鈴（荷爾蒙接受體），客人沒有進來，但屋裡的鈴聲（cAMP）響遍每個房間，大家聽到就開始動。一聲門鈴叫醒很多人，所以訊號會被放大。',
+ memo:'「水溶性按門鈴，脂溶性直接進門。」cAMP → PKA → 加磷酸。',
+ go:['#/regulation','glycogenolysis','lipolysis'],
+ exam:['cAMP 由 ATP 經腺苷酸環化酶生成，由磷酸二酯酶分解','咖啡因、茶鹼抑制磷酸二酯酶 → cAMP 留得久 → 脂肪分解增加','升糖素、腎上腺素（β 受體）讓 cAMP 上升；胰島素讓 cAMP 下降','其他第二傳訊者：Ca²⁺、IP₃ 與 DAG、cGMP（一氧化氮 → cGMP → 血管擴張）']},
+gprotein:{zh:'G 蛋白', en:'G protein', cat:'sig', aka:['G 蛋白'],
+ plain:'接在受體裡面的開關蛋白。荷爾蒙接上受體後，G 蛋白把手上的 GDP 換成 GTP 變成「開」，再去打開腺苷酸環化酶做 cAMP；它把 GTP 分解掉以後就自己關掉。',
+ ana:'像門鈴的電線開關：按下去接通，放開就斷。',
+ memo:'G 蛋白 = 用 GTP 當開關的蛋白質。',
+ go:['#/regulation'], exam:['霍亂毒素讓 G 蛋白一直開著 → cAMP 持續升高 → 嚴重腹瀉']},
+pka:{zh:'蛋白質激酶 A（PKA）', en:'Protein kinase A', cat:'sig', aka:['PKA'],
+ plain:'被 cAMP 活化的激酶，它的工作就是在各種酵素身上加磷酸，讓空腹時該開的分解酵素打開、該關的合成酵素關掉。',
+ ana:'像接到命令後到各部門去貼「開工」或「暫停」告示的人。',
+ memo:'cAMP 一到，PKA 就去貼磷酸。',
+ go:['#/regulation','glycogenolysis','lipolysis'], exam:['PKA 活化肝醣磷酸化酶激酶、HSL；抑制肝醣合成酶、乙醯輔酶 A 羧化酶']},
+nuclearrec:{zh:'核受體', en:'Nuclear receptor', cat:'sig', aka:['核受體'],
+ plain:'在細胞裡面（細胞質或細胞核）的受體。脂溶性荷爾蒙可以直接穿過細胞膜，接上核受體後一起進入細胞核，直接決定某些基因要不要轉錄，所以作用比較慢，但比較持久。',
+ ana:'不按門鈴，直接拿鑰匙進門，到書房（細胞核）修改食譜。',
+ memo:'類固醇激素、甲狀腺素、活性維生素 D（骨化三醇）、維生素 A（視網酸）都走核受體。',
+ go:['steroid','vitd','#/nucleic'], exam:['維生素 A、D 的活性形式像荷爾蒙一樣調控基因','這是荷爾蒙、維生素和核酸（轉錄）的交會點']},
+insulin:{zh:'胰島素', en:'Insulin', cat:'sig', aka:['胰島素'],
+ plain:'吃飽、血糖上升時由胰臟 β 細胞分泌的荷爾蒙。它的意思是「現在東西很多，趕快存起來」：讓肌肉和脂肪把 GLUT4 送到細胞膜吸收葡萄糖，促進肝醣、脂肪、蛋白質的合成。',
+ ana:'像倉庫管理員下令「進貨入庫」。',
+ memo:'胰島素 = 合成、儲存、降血糖；它讓酵素「去磷酸化」。',
+ go:['#/regulation','#/feedstate/fed','glycogenesis','fa-synthesis'], exam:['胰島素受體是酪胺酸激酶，不用 cAMP','胰島素不足 → 酮體大量生成 → 糖尿病酮酸中毒']},
+glucagon:{zh:'升糖素', en:'Glucagon', cat:'sig', aka:['升糖素'],
+ plain:'空腹、血糖下降時由胰臟 α 細胞分泌。意思是「要動用存款了」：讓肝臟分解肝醣、做糖質新生，讓脂肪組織分解脂肪。它主要作用在肝臟，肌肉幾乎沒有升糖素受體。',
+ ana:'像倉庫管理員下令「出貨」。',
+ memo:'升糖素 = 分解、釋放、升血糖；它透過 cAMP 讓酵素「加磷酸」。',
+ go:['#/regulation','#/feedstate/fast','glycogenolysis','gng'], exam:['肌肉沒有升糖素受體，所以肌肉肝醣分解靠腎上腺素','升糖素增加 PEPCK 的合成']},
+// ---------- 營養素的吸收與運送 ----------
+portal:{zh:'門脈系統（肝門靜脈）', en:'Hepatic portal system', cat:'nut', aka:['肝門靜脈','門靜脈'],
+ plain:'一般的靜脈直接把血送回心臟，但胃、腸、脾、胰的靜脈血會先匯集到肝門靜脈送進肝臟。它兩端都是微血管（腸道和肝竇），所以叫門脈系統。水溶性營養素吸收後都先經過這裡。',
+ ana:'像所有進口貨物都要先經過海關（肝臟）檢查，才能進入市面（全身）。',
+ memo:'水溶性走門靜脈先到肝；長鏈脂肪走淋巴繞過肝。',
+ go:['#/routes/portal','#/journey/glucose/4'], exam:['肝血流約 75% 來自門靜脈、25% 來自肝動脈','肝硬化 → 門脈高壓 → 食道靜脈曲張、腹水']},
+firstpass:{zh:'首渡效應', en:'First-pass effect', cat:'nut', aka:['首渡效應','首渡'],
+ plain:'口服的藥物或物質，從腸道吸收後經門靜脈先到肝臟，被肝代謝掉一部分，真正進入全身循環的量就變少了。',
+ ana:'像貨物過海關時被抽走一部分。',
+ memo:'口服 → 門靜脈 → 肝先吃一口。',
+ go:['#/routes/portal','drug'], exam:['同一種藥口服劑量常比靜脈注射高','肝功能不好時首渡減少，藥物血中濃度上升']},
+lymph:{zh:'淋巴路徑與乳糜微粒', en:'Lymphatic route & chylomicron', cat:'nut', aka:['乳糜微粒','乳糜管','胸管'],
+ plain:'長鏈脂肪在小腸細胞重新組成三酸甘油酯，和膽固醇、apoB-48 包成乳糜微粒。它太大進不了微血管，只能走乳糜管 → 胸管 → 左鎖骨下靜脈進入血液，不先經過肝臟。',
+ ana:'大貨車上不了一般道路（微血管），只好走專用的貨運道（淋巴）。',
+ memo:'長鏈走淋巴，中短鏈（MCT）走門靜脈。',
+ go:['#/routes/lymph','#/journey/fat/4','lipoprotein'], exam:['乳糜微粒的標誌蛋白是 apoB-48','MCT 用於脂肪吸收不良的病人']},
+enterohep:{zh:'腸肝循環', en:'Enterohepatic circulation', cat:'nut', aka:['腸肝循環'],
+ plain:'肝臟做的膽鹽隨膽汁進入小腸幫忙消化脂肪，用完以後大約 95% 在迴腸末端被再吸收，經門靜脈送回肝臟再用一次。',
+ ana:'像可以回收重複使用的環保杯。',
+ memo:'迴腸收回 95%。',
+ go:['#/routes/enterohep','bile-acid'], exam:['迴腸切除 → 膽鹽流失 → 脂肪痢、脂溶性維生素缺乏','水溶性纖維打斷腸肝循環 → 降血膽固醇']},
+glut:{zh:'GLUT 與 SGLT', en:'Glucose transporters', cat:'nut', aka:['GLUT4','SGLT1','GLUT2'],
+ plain:'葡萄糖不能自己穿過細胞膜，要靠運送蛋白。SGLT1 在小腸，和鈉一起把葡萄糖拉進細胞（二次主動運輸）；GLUT 家族則是順著濃度差讓葡萄糖通過（促進性擴散）。',
+ ana:'SGLT1 像要刷卡（鈉）的閘門；GLUT 像自動門，人多的一邊往人少的一邊走。',
+ memo:'GLUT1 紅血球、GLUT2 肝與小腸基底側、GLUT3 腦、GLUT4 肌肉與脂肪（要胰島素）、GLUT5 果糖。',
+ go:['#/journey/glucose/3','#/journey/glucose/6'], exam:['只有 GLUT4 受胰島素調控','口服電解質液利用 SGLT1']},
+albumin:{zh:'白蛋白', en:'Albumin', cat:'nut', aka:['白蛋白'],
+ plain:'肝臟做的血漿蛋白，是血液裡最多的蛋白質。它負責維持血液的滲透壓，也像計程車一樣載運不溶於水的東西，例如游離脂肪酸、膽紅素、某些藥物。',
+ ana:'血液裡的計程車。',
+ memo:'游離脂肪酸搭白蛋白，膽紅素也搭白蛋白。',
+ go:['lipolysis','heme-degradation','#/routes/ffa'], exam:['血清白蛋白低 → 長期蛋白質營養不良或肝功能差，可能水腫']},
+// ---------- 胺基酸與含氮物 ----------
+glucogenic:{zh:'生糖與生酮胺基酸', en:'Glucogenic vs ketogenic', cat:'aa', aka:['生糖','生酮'],
+ plain:'胺基酸拿掉胺基後剩下的碳骨架，如果能變成丙酮酸或 TCA 循環的中間物，就能拿去做葡萄糖，叫生糖；如果只能變成乙醯輔酶 A 或乙醯乙醯輔酶 A，就只能做酮體或脂肪，叫生酮。',
+ ana:'同樣是拆下來的零件，有的能組回車子（葡萄糖），有的只能拿去當燃料。',
+ memo:'純生酮只有 L 開頭兩個：Leu、Lys。生糖兼生酮：Ile ＋ 三個芳香族 Phe、Tyr、Trp。',
+ go:['carbon-skeleton','bcaa'], exam:['蘇胺酸 Thr 各課本歸類不同，看選項判斷']},
+essential:{zh:'必需與條件必需胺基酸', en:'Essential & conditionally essential AA', cat:'aa', aka:['必需胺基酸','條件必需','限制胺基酸'],
+ plain:'身體做不出來、一定要從食物吃的胺基酸叫必需胺基酸，共 9 種。條件必需是平常做得出來，但在特殊情況下（缺原料、生病、早產）做不夠，就變成必須從食物補充。',
+ ana:'必需胺基酸像只能進口的零件；條件必需像平常自己做，但工廠出問題時就要進口。',
+ memo:'9 種必需：組、異白、白、離、甲硫、苯丙、蘇、色、纈。PKU 病人的酪胺酸變成必需。',
+ go:['neaa','phe-tyr','#/journey/protein/5'], exam:['穀類限制胺基酸多為離胺酸，豆類為甲硫胺酸 → 互補作用']},
+transam:{zh:'轉胺作用', en:'Transamination', cat:'aa', aka:['轉胺作用','轉胺'],
+ plain:'把一個胺基酸身上的胺基，轉交給一個 α-酮酸，於是前者變成酮酸、後者變成新的胺基酸。胺基最後大多集中到麩胺酸身上。這個反應是可逆的，所以也能拿來做非必需胺基酸。',
+ ana:'像接力賽交棒：胺基是接力棒，從一個選手交到下一個。',
+ memo:'轉胺酶都需要 B6（PLP）。ALT 在肝，所以 ALT 上升代表肝發炎。',
+ go:['transamination','neaa','#/journey/protein/6'], exam:['離胺酸、蘇胺酸不進行轉胺']},
+ammonia:{zh:'氨的毒性與運送', en:'Ammonia toxicity & transport', cat:'aa', aka:['高血氨','氨'],
+ plain:'胺基酸脫下來的氮會變成氨，氨對腦有毒，所以不能讓它在血液裡大量跑。肌肉把氮做成丙胺酸、其他組織做成麩醯胺酸，安全地送到肝臟，再由尿素循環變成無毒的尿素。',
+ ana:'危險物品要裝進專用容器（丙胺酸、麩醯胺酸）才能上路，到處理廠（肝）再銷毀（變尿素）。',
+ memo:'氨 → 麩醯胺酸（運送）→ 肝 → 尿素 → 腎排出。',
+ go:['urea','deamination','glucose-alanine','#/journey/protein/7'], exam:['肝硬化 → 高血氨 → 肝腦病變','麩醯胺酸是血中含量最多的胺基酸']},
+// ---------- 脂質 ----------
+essentialfa:{zh:'必需脂肪酸', en:'Essential fatty acids', cat:'lip', aka:['必需脂肪酸'],
+ plain:'人體的去飽和酶只能在碳鏈前段（Δ9 以內）加雙鍵，做不出 ω-6 的亞麻油酸和 ω-3 的 α-次亞麻油酸，所以這兩個一定要從食物攝取。',
+ ana:'工廠缺一台機器（Δ12、Δ15 去飽和酶），這兩個零件只能進口。',
+ memo:'缺 Δ12、Δ15 → LA、ALA 必需。',
+ go:['elongation','eicosanoid'], exam:['ω-3 與 ω-6 搶同一組 Δ6、Δ5 去飽和酶','ω-6 → 花生四烯酸；ω-3 → EPA、DHA']},
+lipoprotein:{zh:'脂蛋白', en:'Lipoprotein', cat:'lip', aka:['脂蛋白'],
+ plain:'油不溶於水，要用磷脂和蛋白質把它包起來才能在血液裡運送，包好的顆粒就是脂蛋白。裡面油越多越輕，蛋白質越多越重。',
+ ana:'像把油裝進有標籤的貨櫃，標籤（apo 蛋白）決定送到哪裡。',
+ memo:'密度由小到大：乳糜微粒 < VLDL < IDL < LDL < HDL。LDL 送出膽固醇（壞），HDL 收回（好）。',
+ go:['lipoprotein','#/routes/lipo'], exam:['apoB-100 是 LDL 受體辨識的蛋白','apoC-II 活化 LPL；apoA-I 活化 LCAT']},
+ketone:{zh:'酮體', en:'Ketone bodies', cat:'lip', aka:['酮體'],
+ plain:'肝臟在乙醯輔酶 A 太多、又進不了 TCA 循環時做出的水溶性燃料，包括乙醯乙酸、β-羥丁酸和丙酮。肝臟只做不用，送給腦、心臟、肌肉使用。',
+ ana:'肝臟把多出來的燃料裝成「罐裝燃料」外送給其他器官。',
+ memo:'血中最多的是 β-羥丁酸；丙酮從呼吸排出，有水果味。',
+ go:['ketogenesis','ketolysis','#/feedstate/starve'], exam:['肝臟缺 SCOT，不能用酮體','長期飢餓時腦約 2/3 能量來自酮體']},
+// ---------- 核酸 ----------
+central:{zh:'中心法則', en:'Central dogma', cat:'nuc', aka:['中心法則'],
+ plain:'遺傳訊息的流向：DNA 先複製自己，DNA 再轉錄成 RNA，RNA 再轉譯成蛋白質。所有酵素都是這樣做出來的。',
+ ana:'總食譜（DNA）鎖在保險箱，影印一張（mRNA）帶到廚房，廚師（核糖體）照著做菜（蛋白質）。',
+ memo:'複製 DNA→DNA、轉錄 DNA→RNA、轉譯 RNA→蛋白質。',
+ go:['#/nucleic'], exam:['反轉錄病毒可以 RNA → DNA（反轉錄酶）']},
+transcription:{zh:'轉錄與轉譯', en:'Transcription & translation', cat:'nuc', aka:['轉錄','轉譯'],
+ plain:'轉錄是在細胞核裡，以 DNA 為模板做出 mRNA；轉譯是在細胞質的核糖體上，照著 mRNA 每三個鹼基（密碼子）接上一個胺基酸，做出蛋白質。',
+ ana:'轉錄 = 影印食譜；轉譯 = 照食譜做菜。',
+ memo:'錄在核、譯在質。',
+ go:['#/nucleic','#/journey/protein/5'], exam:['荷爾蒙（如胰島素、升糖素、皮質醇）可以改變酵素基因的轉錄量','起始密碼子 AUG（甲硫胺酸）']},
+nucleotide:{zh:'核苷酸', en:'Nucleotide', cat:'nuc', aka:['核苷酸'],
+ plain:'由含氮鹼基、五碳糖（核糖或去氧核糖）和磷酸組成，是 DNA、RNA 的單元。ATP、GTP、cAMP，還有 NAD、FAD、輔酶 A 的一部分，也都是核苷酸或含核苷酸。',
+ ana:'像樂高積木：同一種積木可以蓋房子（DNA），也可以拿來當電池（ATP）。',
+ memo:'嘌呤 A、G（兩個環）；嘧啶 C、T、U（一個環）。',
+ go:['purine-denovo','pyrimidine','#/nucleic'], exam:['嘌呤分解成尿酸 → 痛風','合成需要葉酸、麩醯胺酸、天門冬胺酸、甘胺酸']},
+methylation:{zh:'甲基化', en:'Methylation', cat:'nuc', aka:['甲基化'],
+ plain:'把一個甲基（-CH₃）接到另一個分子上。接在 DNA 上會讓那段基因關起來；也用來合成肌酸、磷脂醯膽鹼、腎上腺素。甲基主要由 SAM 提供。',
+ ana:'在食譜的某一頁貼上便利貼「暫停使用」。',
+ memo:'SAM 給甲基，需要葉酸、B12 回收同半胱胺酸。',
+ go:['methionine','#/nucleic'], exam:['葉酸、B12、B6 缺乏 → 同半胱胺酸上升','營養會透過甲基化影響基因表現（表觀遺傳）']},
+mutation:{zh:'突變', en:'Mutation', cat:'nuc', aka:['突變'],
+ plain:'DNA 序列發生改變。可能是複製時抄錯，也可能是紫外線、化學物質造成的損傷沒修好。如果剛好改到酵素的基因，就可能造成先天代謝疾病。',
+ ana:'食譜印錯一個字，做出來的菜就可能完全不對。',
+ memo:'一個鹼基改變也可能致病：鐮刀型貧血。',
+ go:['#/nucleic','phe-tyr','galactose'], exam:['PKU、半乳糖血症、楓糖尿症等先天代謝異常都是基因突變','紫外線造成嘧啶二聚體']}
+};
+// ===== 名詞小辭典：自動連結、彈出卡、辭典頁 =====
+const TM_RE = (() => {
+  const list = []; for (const [k, t] of Object.entries(TERMS)) (t.aka || [t.zh]).forEach(a => list.push([a, k]));
+  list.sort((a, b) => b[0].length - a[0].length);
+  const map = Object.fromEntries(list.map(([a, k]) => [a, k]));
+  const re = new RegExp(list.map(([a]) => a.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|'), 'g');
+  return {re, map};
+})();
+// 把一段純文字變成 HTML，名詞變成可點的字；seen 讓同一頁每個名詞只連結一次
+function termify(text, seen) {
+  const s = String(text); let out = '', last = 0, m; TM_RE.re.lastIndex = 0;
+  while ((m = TM_RE.re.exec(s))) {
+    const k = TM_RE.map[m[0]];
+    if (seen && seen.has(k)) continue;
+    // 英文縮寫要整字比對（避免 RQ、Km 出現在其他字中間）
+    if (/^[A-Za-z0-9]+$/.test(m[0]) && (/[A-Za-z0-9]/.test(s[m.index - 1] || '') || /[A-Za-z0-9]/.test(s[m.index + m[0].length] || ''))) continue;
+    out += esc(s.slice(last, m.index)) + `<button type="button" class="tm" data-t="${k}">${esc(m[0])}</button>`;
+    last = m.index + m[0].length; if (seen) seen.add(k);
+  }
+  return out + esc(s.slice(last));
+}
+function goLink(g) {
+  if (g.startsWith('#/')) {
+    const lab = g.startsWith('#/routes') ? '輸送路線：' + ((ROUTES.find(r => '#/routes/' + r.id === g) || {}).zh || '總覽')
+      : g.startsWith('#/journey/') ? (JOURNEYS[g.split('/')[2]] || {}).zh + (g.split('/')[3] ? '・第 ' + (+g.split('/')[3] + 1) + ' 站' : '')
+      : g.startsWith('#/feedstate') ? '吃飽 vs 空腹' : g === '#/regulation' ? '調控總覽' : g === '#/nucleic' ? '核酸為什麼重要' : g === '#/learn' ? '學習地圖' : /^#\/(chem|start|x)\/\d+$/.test(g) || g === '#/' || g === '#/terms' ? learnTitle(g) : g.startsWith('#/ref/') ? REFS[g.slice(6)].zh : g;
+    return `<a href="${g}">${esc(lab)}</a>`;
+  }
+  return byId[g] ? `<a href="#/${g}">${esc(byId[g].zh)}</a>` : '';
+}
+function termCard(k, full) {
+  const t = TERMS[k];
+  return `<div class="tmcard" data-k="${k}">
+    <div class="tmh"><b>${esc(t.zh)}</b><small>${esc(t.en)}</small><span class="tmcat">${TERM_CATS[t.cat]}</span></div>
+    <div class="tmsec"><span>白話</span><p>${esc(t.plain)}</p></div>
+    <div class="tmsec tmana"><span>比喻</span><p>${esc(t.ana)}</p></div>
+    <div class="tmsec tmmemo"><span>記憶法</span><p>${esc(t.memo)}</p></div>
+    ${t.exam && t.exam.length ? `<div class="tmsec tmexam"><span>國考怎麼考</span><ul>${t.exam.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>` : ''}
+    ${t.go && t.go.length ? `<div class="tmgo"><span>出現在哪裡</span>${t.go.map(goLink).join('')}</div>` : ''}
+    <div class="tmact"><button type="button" class="btn" data-tsay="${k}">🔊 聽解說</button>${full ? '' : `<a class="btn" href="#/terms/${k}">📖 完整辭典</a>`}</div>
+  </div>`;
+}
+function termSpeech(k) { const t = TERMS[k]; return `${t.zh}。${t.plain}打個比方，${t.ana}記憶的方法是：${t.memo}`; }
+function openTerm(k) {
+  if (!TERMS[k]) return;
+  let p = document.getElementById('tmpop');
+  if (!p) { p = document.createElement('div'); p.id = 'tmpop'; p.innerHTML = '<div class="tmbg"></div><div class="tmbox"><button type="button" class="tmx" aria-label="關閉">✕</button><div class="tmin"></div></div>'; document.body.appendChild(p);
+    p.querySelector('.tmbg').onclick = closeTerm; p.querySelector('.tmx').onclick = closeTerm; }
+  p.querySelector('.tmin').innerHTML = termCard(k, false);
+  p.classList.add('on'); p.querySelector('.tmbox').scrollTop = 0;
+}
+function closeTerm() { const p = document.getElementById('tmpop'); if (p) p.classList.remove('on'); }
+document.addEventListener('click', e => {
+  const b = e.target.closest('.tm'); if (b) { e.preventDefault(); openTerm(b.dataset.t); return; }
+  const s = e.target.closest('[data-tsay]'); if (s) { TTS.play(TTS.items(termSpeech(s.dataset.tsay))); return; }
+  const a = e.target.closest('#tmpop a'); if (a) closeTerm();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeTerm(); });
+
+function renderTerms(focus) {
+  const cats = Object.keys(TERM_CATS);
+  $('#main').innerHTML = `<article class="page" style="--acc:#5b6bd6">
+    <h1>📖 名詞小辭典</h1><p class="en-t">看不懂的名詞，先來這裡查：白話、比喻、記憶法、出現在哪、國考怎麼考</p>
+    <p class="lead">網頁各處<span class="tm demo">藍色底線</span>的名詞都可以點，會跳出這裡的解說卡。共 ${Object.keys(TERMS).length} 個名詞。</p>
+    <input id="tmq" class="tmq" type="search" placeholder="搜尋名詞（中文或英文）">
+    <div class="tmchips"><button class="on" data-c="">全部</button>${cats.map(c => `<button data-c="${c}">${TERM_CATS[c]}</button>`).join('')}</div>
+    <div class="tmlist">${Object.entries(TERMS).map(([k, t]) => `<details class="tmitem" data-k="${k}" data-c="${t.cat}" data-s="${esc((t.zh + t.en + (t.aka || []).join('')).toLowerCase())}"${k === focus ? ' open' : ''}><summary><b>${esc(t.zh)}</b><small>${esc(t.en)}</small></summary>${termCard(k, true)}</details>`).join('')}</div>
+  </article>`;
+  let cat = '';
+  const filt = () => { const v = $('#tmq').value.trim().toLowerCase(); document.querySelectorAll('.tmitem').forEach(d => d.hidden = !((!cat || d.dataset.c === cat) && (!v || d.dataset.s.includes(v)))); };
+  $('#tmq').oninput = filt;
+  document.querySelectorAll('.tmchips button').forEach(b => b.onclick = () => { cat = b.dataset.c; document.querySelectorAll('.tmchips button').forEach(x => x.classList.toggle('on', x === b)); filt(); });
+  if (focus) { const el = document.querySelector(`.tmitem[data-k="${focus}"]`); if (el) setTimeout(() => el.scrollIntoView({block: 'start'}), 50); }
+}
+// ===== 調控總覽：吃飽與空腹的開關 =====
+// p：加上磷酸時是「開」還是「關」；why：為什麼這樣安排
+const REG_ENZ = [
+ {zh:'肝醣磷酸化酶', en:'Glycogen phosphorylase', go:'glycogenolysis', p:'on', job:'分解肝醣', why:'空腹要把存起來的葡萄糖拿出來'},
+ {zh:'肝醣合成酶', en:'Glycogen synthase', go:'glycogenesis', p:'off', job:'合成肝醣', why:'空腹時不要再把葡萄糖存起來'},
+ {zh:'荷爾蒙敏感性脂解酶 HSL', en:'Hormone-sensitive lipase', go:'lipolysis', p:'on', job:'分解脂肪', why:'空腹要把脂肪酸放出來當燃料'},
+ {zh:'乙醯輔酶 A 羧化酶', en:'Acetyl-CoA carboxylase', go:'fa-synthesis', p:'off', job:'合成脂肪酸', why:'空腹時不要再做脂肪'},
+ {zh:'HMG-CoA 還原酶', en:'HMG-CoA reductase', go:'cholesterol', p:'off', job:'合成膽固醇', why:'空腹時不做膽固醇，省下能量'},
+ {zh:'肝臟丙酮酸激酶', en:'Pyruvate kinase (liver)', go:'glycolysis', p:'off', job:'糖解的最後一步', why:'空腹時肝臟要做葡萄糖，不能自己把它燒掉'},
+ {zh:'肝臟 PFK-2', en:'PFK-2 (liver)', go:'gng', p:'off', job:'做果糖-2,6-雙磷酸（加速糖解）', why:'果糖-2,6-雙磷酸變少 → 糖解變慢、糖質新生變快'},
+ {zh:'丙酮酸去氫酶 PDH*', en:'Pyruvate dehydrogenase', go:'pdh', p:'off', job:'丙酮酸 → 乙醯輔酶 A', why:'空腹時把丙酮酸留下來做糖質新生（*由 PDH kinase 磷酸化，不是 PKA）'}
+];
+const REG_TALK = {
+ fast:'我們先看空腹。血糖下降，胰臟分泌升糖素。升糖素是水溶性的荷爾蒙，進不了細胞，只能接在肝細胞表面的受體上，這就是第一傳訊者。受體被接上以後，裡面的 G 蛋白打開腺苷酸環化酶，把 ATP 做成 cAMP，這就是第二傳訊者。cAMP 活化蛋白質激酶 A，也就是 PKA，PKA 就開始到處幫酵素加上磷酸。加上磷酸以後，結果是這樣：分解肝醣的磷酸化酶打開，分解脂肪的 HSL 打開；合成肝醣、合成脂肪酸、合成膽固醇的酵素都關掉。還有一個重點，肝臟連糖解和 PDH 都會關掉，因為空腹時肝臟的任務是把葡萄糖送出去給腦用，不能自己燒掉，丙酮酸要留下來做糖質新生。所以記一句話：空腹時，升糖素讓酵素加上磷酸，分解的打開，合成的關掉，肝臟也停止燒糖。腎上腺素走的是同一條路，而且肌肉也會反應。',
+ fed:'接著看吃飽。血糖上升，胰臟分泌胰島素。胰島素的受體不一樣，它本身就是一個酪胺酸激酶，不靠 cAMP。胰島素做兩件事：第一，活化磷酸二酯酶，把 cAMP 分解掉，PKA 就停下來；第二，活化蛋白質磷酸酶，把酵素身上的磷酸拿掉。磷酸拿掉以後，剛好和空腹相反：合成肝醣、合成脂肪酸、合成膽固醇的酵素打開，糖解和 PDH 也打開；分解肝醣和分解脂肪的酵素關掉。另外，胰島素還會讓肌肉和脂肪細胞把 GLUT4 送到細胞膜，葡萄糖才進得去。所以記一句話：吃飽時，胰島素讓酵素去掉磷酸，合成的打開，分解的關掉。',
+ long:'剛剛講的磷酸化，幾秒到幾分鐘就有效，是短期的調控。如果空腹或吃飽的狀態持續好幾個小時甚至好幾天，身體還會改變酵素的「數量」，這就要靠基因的轉錄。例如升糖素和皮質醇讓肝臟多做 PEPCK，糖質新生的能力就變強；胰島素讓肝臟多做葡萄糖激酶和脂肪酸合成酶。這就是荷爾蒙透過核酸，也就是基因表現，來長期調整代謝。'
+};
+function regSVG(st) {
+  const fast = st === 'fast', col = fast ? '#d97d1f' : '#2e9a4e';
+  const steps = fast
+    ? [['升糖素', '第一傳訊者（血液中）'], ['受體 → G 蛋白', '接在細胞膜上'], ['腺苷酸環化酶', 'ATP → cAMP'], ['cAMP', '第二傳訊者'], ['PKA 活化', '蛋白質激酶 A'], ['酵素加上磷酸 Ⓟ', '開關改變']]
+    : [['胰島素', '第一傳訊者（血液中）'], ['胰島素受體', '本身是酪胺酸激酶（不用 cAMP）'], ['細胞內訊息傳遞', '同時讓 GLUT4 移到細胞膜'], ['磷酸二酯酶活化', 'cAMP 被分解 → PKA 停止'], ['蛋白質磷酸酶活化', 'PP1 把磷酸拿掉'], ['酵素去掉磷酸', '開關改變']];
+  const W = 380, top = 20, gap = 64, H = top + steps.length * gap + 10;
+  let s = `<svg viewBox="0 0 ${W} ${H}" class="regsvg" role="img" aria-label="荷爾蒙訊息傳遞">`;
+  s += `<rect x="6" y="${top + gap - 12}" width="${W - 12}" height="${H - top - gap + 4}" rx="14" fill="${col}" opacity=".06"/>`;
+  s += `<line x1="6" y1="${top + gap - 12}" x2="${W - 6}" y2="${top + gap - 12}" stroke="var(--muted2)" stroke-width="3" stroke-dasharray="2 4"/>`;
+  s += `<text x="${W - 12}" y="${top + gap - 18}" text-anchor="end" class="regmem">細胞膜</text><text x="${W - 12}" y="${top + gap + 4}" text-anchor="end" class="regmem">細胞內</text>`;
+  steps.forEach(([a, b], i) => {
+    const y = top + i * gap;
+    if (i) s += `<line x1="${W / 2}" y1="${y - gap + 44}" x2="${W / 2}" y2="${y - 2}" stroke="${col}" stroke-width="3"/><path d="M${W / 2 - 6},${y - 9} L${W / 2 + 6},${y - 9} L${W / 2},${y - 1}z" fill="${col}"/>`;
+    s += `<g class="regstep" style="animation-delay:${i * 0.45}s"><rect x="${W / 2 - 120}" y="${y}" width="240" height="42" rx="12" fill="var(--surface)" stroke="${col}" stroke-width="2.5"/><text x="${W / 2}" y="${y + 18}" text-anchor="middle" class="rega">${a}</text><text x="${W / 2}" y="${y + 34}" text-anchor="middle" class="regb">${b}</text></g>`;
+  });
+  s += `<circle r="7" fill="${col}" class="regdot"><animateMotion dur="2.8s" repeatCount="indefinite" path="M${W / 2},${top + 21} L${W / 2},${top + (steps.length - 1) * gap + 21}"/></circle>`;
+  return s + `</svg>`;
+}
+function renderReg(st) {
+  st = st === 'fed' ? 'fed' : 'fast'; const fast = st === 'fast';
+  const sn = new Set();
+  const rows = REG_ENZ.map(e => { const on = fast ? e.p === 'on' : e.p !== 'on';
+    return `<div class="regrow ${on ? 'on' : 'off'}"><div class="regn"><a href="#/${e.go}">${esc(e.zh)}</a><small>${esc(e.en)}・${esc(e.job)}</small></div><div class="regsw">${fast ? '<span class="regp">Ⓟ</span>' : ''}<span class="regst">${on ? '開' : '關'}</span></div><div class="regwhy">${fast ? termify(e.why, sn) : (on ? '吃飽時打開' : '吃飽時關掉')}</div></div>`; }).join('');
+  $('#main').innerHTML = `<article class="page" style="--acc:${fast ? '#d97d1f' : '#2e9a4e'}">
+    <h1>🎚️ 調控總覽：吃飽與空腹的開關</h1><p class="en-t">Hormonal regulation · 荷爾蒙怎麼一次打開或關掉好幾條代謝路徑</p>
+    <p class="lead">前面每條路徑都提到「被升糖素抑制、被胰島素活化」。其實這些都是同一套機制：荷爾蒙 → 第二傳訊者 → 在酵素上加或去掉磷酸。看懂這一頁，各章的調控就串起來了。</p>
+    <div class="ctrl"><div class="seg"><button data-rs="fast" class="${fast ? 'on' : ''}">空腹（升糖素）</button><button data-rs="fed" class="${!fast ? 'on' : ''}">吃飽（胰島素）</button></div></div>
+    <div class="lecbar"><button class="btn pri" id="reglec">🔊 講解：${fast ? '空腹' : '吃飽'}</button>${termToggleHTML()}<details class="script"><summary>📝 看講稿</summary><p>${esc(capOf(T(REG_TALK[st])))}</p></details></div>
+    <div class="reggrid"><div class="regmapwrap">${regSVG(st)}</div>
+      <div><h3 style="margin-top:0">🔀 酵素開關表（${fast ? '空腹：加上磷酸 Ⓟ' : '吃飽：去掉磷酸'}）</h3><div class="regtable">${rows}</div></div></div>
+    <div class="regmemo"><b>🧠 記憶法</b>
+      <p><b>空腹＝升糖素＝加磷酸：</b>分解的打開（肝醣、脂肪），合成的關掉（肝醣、脂肪酸、膽固醇）。肝臟連糖解、PDH 也關掉，因為它的任務是「把葡萄糖送出去」，不是自己燒掉。</p>
+      <p><b>吃飽＝胰島素＝去磷酸：</b>剛好相反，合成的打開、分解的關掉。</p>
+      <p>兩個例外要注意：肝臟的丙酮酸激酶和 PFK-2 屬於糖解（分解），但空腹時一樣被關掉。</p></div>
+    <h3>⏳ 長期調控：改變酵素的「量」</h3>
+    <div class="tw"><table class="grid"><thead><tr><th>狀態</th><th>荷爾蒙</th><th>多做的酵素（轉錄增加）</th><th>結果</th></tr></thead><tbody>
+      <tr><td>長時間空腹、壓力</td><td>升糖素、皮質醇</td><td>PEPCK、果糖-1,6-雙磷酸酶、葡萄糖-6-磷酸酶、尿素循環酵素</td><td>糖質新生能力變強</td></tr>
+      <tr><td>持續吃飽、高醣</td><td>胰島素</td><td>葡萄糖激酶、乙醯輔酶 A 羧化酶、脂肪酸合成酶</td><td>醣類轉成脂肪的能力變強</td></tr></tbody></table></div>
+    <p class="hint">磷酸化幾秒鐘就有效（短期）；改變轉錄要幾小時到幾天（長期）。長期調控就是荷爾蒙透過<button type="button" class="tm" data-t="transcription">轉錄</button>改變酵素數量，詳見「<a href="#/nucleic">核酸為什麼重要</a>」。</p>
+    <div class="lecbar"><button class="btn" id="reglec2">🔊 講解：長期調控</button></div>
+    <h3>📌 相關名詞</h3><p class="tmrel">${['messenger1', 'messenger2', 'gprotein', 'pka', 'phospho', 'insulin', 'glucagon', 'nuclearrec', 'ratelimit', 'allosteric'].map(k => `<button type="button" class="tm" data-t="${k}">${TERMS[k].zh}</button>`).join('')}</p>
+    <nav class="pn"><a href="#/feedstate">🍽️ 吃飽 vs 空腹（器官燃料圖）</a><a href="#/terms">📖 名詞小辭典</a></nav>
+  </article>`;
+  document.querySelectorAll('[data-rs]').forEach(b => b.onclick = () => { TTS.stop(); history.replaceState(null, '', '#/regulation/' + b.dataset.rs); renderReg(b.dataset.rs); });
+  $('#reglec').onclick = () => TTS.play(TTS.items(REG_TALK[st]));
+  $('#reglec2').onclick = () => TTS.play(TTS.items(REG_TALK.long));
+}
+// ===== 核酸為什麼重要 =====
+const NUC_SEC = [
+ {icon:'📜', t:'設計圖：所有酵素都照基因做出來', col:'#3f78cf',
+  p:['前面每一條代謝路徑都靠酵素推動，而酵素是蛋白質，長什麼樣子由 DNA 上的基因決定。','遺傳訊息的流向叫中心法則：DNA 轉錄成 mRNA，mRNA 在核糖體上轉譯成蛋白質。','所以苯酮尿症、半乳糖血症、楓糖尿症這些先天代謝疾病，根本原因都是那段基因寫錯了，酵素做不出來或做壞了。'],
+  go:['phe-tyr','galactose','bcaa'], terms:['central','transcription','mutation','enzyme']},
+ {icon:'🎚️', t:'開關：荷爾蒙透過核苷酸和基因調控代謝', col:'#d97d1f',
+  p:['短期：升糖素、腎上腺素靠第二傳訊者 cAMP（它本身就是一種核苷酸）活化 PKA，幾秒內就改變酵素的開關。','長期：荷爾蒙改變酵素基因的轉錄量，例如升糖素和皮質醇讓肝臟多做 PEPCK。','脂溶性的類固醇、甲狀腺素、活性維生素 D 和維生素 A，直接接上核受體，進入細胞核改變轉錄。'],
+  go:['#/regulation','glycogenolysis','gng','vitd'], terms:['messenger2','nuclearrec','phospho']},
+ {icon:'🔋', t:'零件：能量貨幣和輔酶都含核苷酸', col:'#2e9a4e',
+  p:['ATP、GTP 是能量貨幣，本身就是核苷酸。','NAD⁺、FAD、輔酶 A 的結構裡都有一個腺苷酸的部分。','合成肝醣要先做成 UDP-葡萄糖（用 UTP）；合成磷脂質要用 CDP-膽鹼（用 CTP）。所以醣類、脂質代謝裡到處都有核苷酸在幫忙。'],
+  go:['glycogenesis','phospholipid','etc'], terms:['atp','cofactor','nucleotide']},
+ {icon:'🥬', t:'和營養素的關係：葉酸、B12、普林與痛風', col:'#c2477a',
+  p:['做 DNA 的原料（特別是胸腺嘧啶 dTMP）要葉酸提供一碳單位；葉酸或 B12 不夠，DNA 做不出來，分裂最快的骨髓先受影響，造成巨球性貧血。','嘌呤分解成尿酸，人類沒有尿酸酶，尿酸太多會結晶，就是痛風，所以痛風要限制高普林食物。','五碳糖磷酸途徑做出的核糖，就是拿來做核苷酸的；化療藥 methotrexate、5-FU 就是不讓癌細胞做出 DNA。'],
+  go:['dntp','methionine','purine-degradation','ppp'], terms:['methylation','nucleotide']},
+ {icon:'🧬', t:'複製與突變：為什麼會生病、營養怎麼影響基因', col:'#8a56c2',
+  p:['細胞分裂前要把 DNA 完整複製一份，抄錯或被紫外線、化學物質傷害沒修好，就是突變。鐮刀型貧血只是一個鹼基改變。','DNA 上接甲基可以把基因關起來，提供甲基的 SAM 來自甲硫胺酸循環，需要葉酸、B12、B6，這是營養影響基因表現的例子。','不同基因型的人對營養的反應不同，例如台灣常見的 ALDH2 變異讓人喝酒臉紅。'],
+  go:['methionine','alcohol'], terms:['mutation','methylation']}
+];
+const NUC_TALK = '我們來想一個問題：醣類、脂質、蛋白質是身體的材料和燃料，那核酸呢？核酸是決定這些材料怎麼用的說明書和指揮系統。第一，它是設計圖。每一條代謝路徑都靠酵素，酵素是蛋白質，而蛋白質由 DNA 上的基因決定。DNA 先轉錄成 mRNA，再在核糖體上轉譯成蛋白質，這叫中心法則。先天代謝疾病，其實就是基因寫錯了。第二，它是開關。升糖素用的第二傳訊者 cAMP 本身就是核苷酸；長時間的空腹或吃飽，荷爾蒙還會改變酵素基因的轉錄量；脂溶性的類固醇、活性維生素 D 和維生素 A，更是直接進到細胞核改變轉錄。第三，它是零件。ATP、GTP，還有 NAD、FAD、輔酶 A，都含有核苷酸。第四，它和營養素直接相關：做 DNA 需要葉酸和 B12，缺了就會巨球性貧血；嘌呤分解成尿酸，太多就會痛風。第五，複製和突變解釋了為什麼會生病，而甲基化讓營養可以影響基因的開關。所以一句話：代謝路徑告訴你身體怎麼做，核酸告訴你身體為什麼會這樣做、由誰決定。';
+function nucSVG() {
+  const W = 380, H = 300;
+  const box = (x, y, w, t, sub, col, cls) => `<g class="${cls || ''}"><rect x="${x - w / 2}" y="${y - 22}" width="${w}" height="44" rx="12" fill="var(--surface)" stroke="${col}" stroke-width="2.5"/><text x="${x}" y="${y - 3}" text-anchor="middle" class="nca">${t}</text><text x="${x}" y="${y + 14}" text-anchor="middle" class="ncb">${sub}</text></g>`;
+  const arr = (x1, y1, x2, y2, lab, col) => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${col}" stroke-width="3" class="ncflow"/><path d="M${x2 - 6},${y2 - 8} L${x2 + 6},${y2 - 8} L${x2},${y2}z" fill="${col}"/><text x="${x1 + 10}" y="${(y1 + y2) / 2 + 4}" class="ncl" fill="${col}">${lab}</text>`;
+  let s = `<svg viewBox="0 0 ${W} ${H}" class="nucsvg" role="img" aria-label="中心法則與代謝">`;
+  s += `<rect x="20" y="8" width="200" height="132" rx="16" fill="#3f78cf" opacity=".07"/><text x="30" y="26" class="ncz" fill="#3f78cf">細胞核</text>`;
+  s += box(120, 52, 150, 'DNA 基因', '設計圖（總食譜）', '#3f78cf');
+  s += arr(120, 74, 120, 106, '轉錄', '#3f78cf');
+  s += box(120, 128, 150, 'mRNA', '影印的食譜', '#3f78cf');
+  s += arr(120, 150, 120, 182, '轉譯（核糖體）', '#2e9a4e');
+  s += box(120, 204, 150, '蛋白質＝酵素', '例如 PFK-1、CPS-I', '#2e9a4e');
+  s += arr(120, 226, 120, 254, '催化', '#d97d1f');
+  s += box(120, 276, 170, '代謝路徑運轉', '糖解、尿素循環…', '#d97d1f');
+  s += box(300, 52, 130, '荷爾蒙', '升糖素、胰島素', '#c2477a');
+  s += `<path d="M300,74 C300,110 230,120 196,128" fill="none" stroke="#c2477a" stroke-width="2.5" stroke-dasharray="5 4"/><text x="250" y="104" class="ncl" fill="#c2477a">長期：改變轉錄量</text>`;
+  s += `<path d="M300,74 C330,150 260,200 196,204" fill="none" stroke="#c2477a" stroke-width="2.5" stroke-dasharray="5 4"/><text x="262" y="176" class="ncl" fill="#c2477a">短期：cAMP</text><text x="262" y="190" class="ncl" fill="#c2477a">→ 磷酸化開關</text>`;
+  s += box(300, 250, 130, '營養素', '葉酸、B12 做 DNA', '#8a56c2');
+  s += `<path d="M236,248 C210,200 210,90 196,60" fill="none" stroke="#8a56c2" stroke-width="2.5" stroke-dasharray="5 4"/>`;
+  return s + `</svg>`;
+}
+function renderNucleic() {
+  $('#main').innerHTML = `<article class="page" style="--acc:#3f78cf">
+    <h1>🧬 核酸為什麼重要</h1><p class="en-t">Nucleic acids · 醣類、脂質、蛋白質是材料和燃料，核酸是說明書和指揮系統</p>
+    <p class="lead">國考命題大綱把核酸列為生化五大項之一（核苷的結構與合成分解、荷爾蒙與細胞訊息、轉錄與轉譯、複製與突變）。這一頁用五個角度說明它和前面代謝路徑的關係。</p>
+    <div class="lecbar"><button class="btn pri" id="nuclec">🔊 講解這一頁</button>${termToggleHTML()}<details class="script"><summary>📝 看講稿</summary><p>${esc(capOf(T(NUC_TALK)))}</p></details></div>
+    <div class="nucmap">${nucSVG()}</div>
+    ${NUC_SEC.map((x, i) => { const sn = new Set(); return `<section class="nucsec" style="--nc:${x.col}"><h3>${x.icon} ${i + 1}. ${esc(x.t)}</h3><ul>${x.p.map(t => `<li>${termify(t, sn)}</li>`).join('')}</ul>
+      <div class="tmgo"><span>相關頁面</span>${x.go.map(goLink).join('')}</div>
+      <p class="tmrel">${x.terms.map(k => `<button type="button" class="tm" data-t="${k}">${TERMS[k].zh}</button>`).join('')}</p></section>`; }).join('')}
+    <div class="regmemo"><b>🧠 一句話整理</b><p>核酸既是「設計圖」（決定做哪些酵素），也是「開關」（荷爾蒙透過它調控代謝），還是「零件」（ATP、NAD、輔酶 A 都含核苷酸）。代謝路徑告訴你身體「怎麼做」，核酸告訴你身體「為什麼這樣做、由誰決定」。</p></div>
+    <nav class="pn"><a href="#/cat/nuc">核苷酸代謝的 5 條路徑 →</a><a href="#/regulation">🎚️ 調控總覽</a></nav>
+  </article>`;
+  $('#nuclec').onclick = () => TTS.play(TTS.items(NUC_TALK));
+}
+// ===== 跨章整合題 =====
+const INTEG = [
+ {q:'維生素 B12 缺乏時，下列哪一組代謝會同時受到影響？', o:['甲硫胺酸循環與奇數碳脂肪酸的代謝','糖解作用與 TCA 循環','尿素循環與肝醣合成','β-氧化與酮體生成'], a:0,
+  ex:'B12 是兩個酵素的輔酶：甲硫胺酸合成酶（把同半胱胺酸變回甲硫胺酸）和甲基丙二醯輔酶 A 變位酶（奇數碳脂肪酸最後的丙醯輔酶 A → 琥珀醯輔酶 A）。所以 B12 缺乏時同半胱胺酸和甲基丙二酸都會上升。又因為葉酸卡在甲基的形式（甲基葉酸陷阱），DNA 也做不好，造成巨球性貧血。',
+  go:['methionine','odd-chain','dntp'], terms:['cofactor','methylation']},
+ {q:'喝咖啡為什麼會促進脂肪分解？', o:['咖啡因抑制磷酸二酯酶，cAMP 維持較高，HSL 持續活化','咖啡因直接活化脂蛋白脂解酶 LPL','咖啡因增加胰島素分泌','咖啡因抑制肉鹼穿梭'], a:0,
+  ex:'升糖素和腎上腺素讓脂肪細胞產生 cAMP，cAMP 活化 PKA，PKA 讓荷爾蒙敏感性脂解酶（HSL）加上磷酸而打開。cAMP 平常由磷酸二酯酶分解掉；咖啡因抑制磷酸二酯酶，cAMP 留得比較久，HSL 就一直開著。這題串起了第二傳訊者、磷酸化開關和脂肪分解。',
+  go:['lipolysis','#/regulation'], terms:['messenger2','pka','phospho']},
+ {q:'為什麼偶數碳脂肪酸不能用來合成葡萄糖，甘油卻可以？', o:['脂肪酸分解成乙醯輔酶 A，而 PDH 不可逆，乙醯輔酶 A 不能變回丙酮酸；甘油可以變成 DHAP 進入糖質新生','脂肪酸只能在粒線體裡代謝','甘油含有氮，可以進入尿素循環','脂肪酸缺乏輔酶 A'], a:0,
+  ex:'β-氧化把偶數碳脂肪酸全部切成乙醯輔酶 A。丙酮酸 → 乙醯輔酶 A 這一步（PDH）不可逆，而乙醯輔酶 A 進入 TCA 循環後，兩個碳會以 CO₂ 的形式放掉，沒有淨增加草醯乙酸，所以不能淨生成葡萄糖。甘油則經甘油激酶變成甘油-3-磷酸、再變成 DHAP，接上糖質新生。奇數碳脂肪酸最後的丙醯輔酶 A 可以生糖。',
+  go:['pdh','beta-ox','gng','odd-chain'], terms:['irrev','glucogenic']},
+ {q:'空腹時，升糖素讓肝臟的丙酮酸激酶失去活性，主要目的是什麼？', o:['把磷酸烯醇丙酮酸和丙酮酸留下來做糖質新生，讓肝臟把葡萄糖送出去','讓肝臟燒更多葡萄糖產生 ATP','促進肝醣合成','增加脂肪酸合成'], a:0,
+  ex:'空腹時肝臟的任務是維持血糖、把葡萄糖送給腦。如果丙酮酸激酶還開著，糖質新生剛做出的磷酸烯醇丙酮酸又會被糖解燒回丙酮酸，白白浪費能量（無效循環）。所以升糖素經 cAMP、PKA 把肝臟的丙酮酸激酶磷酸化關掉，PDH 也關掉。',
+  go:['glycolysis','gng','#/regulation'], terms:['phospho','glucagon']},
+ {q:'長期酗酒的人常出現乳酸堆積和空腹低血糖，下列解釋何者最完整？', o:['缺乏 B1 使 PDH 卡住，丙酮酸轉成乳酸；代謝酒精產生大量 NADH，使丙酮酸偏向乳酸並抑制糖質新生','酒精直接抑制胰島素分泌','酒精讓肝醣合成增加','酒精活化尿素循環'], a:0,
+  ex:'兩個原因加在一起：①酗酒者常缺 B1（TPP），PDH 需要 TPP，丙酮酸進不了 TCA，只好變成乳酸。②醇去氫酶和醛去氫酶產生大量 NADH，NADH/NAD⁺ 比值升高，丙酮酸被推向乳酸、草醯乙酸被推向蘋果酸，糖質新生的原料不夠，空腹時就容易低血糖。NADH 過多也抑制 β-氧化、促進脂肪合成，造成酒精性脂肪肝。',
+  go:['alcohol','pdh','gng'], terms:['redox','cofactor']},
+ {q:'G6PD 缺乏的人吃了蠶豆後發生溶血，下列哪一串因果正確？', o:['五碳糖磷酸途徑做不出 NADPH → 穀胱甘肽無法還原 → 紅血球抵抗不了氧化壓力 → 溶血','糖解作用停止 → 紅血球缺乏 ATP','血基質合成受阻 → 貧血','膽紅素無法結合 → 黃疸'], a:0,
+  ex:'G6PD 是五碳糖磷酸途徑的限速酶，負責做 NADPH。紅血球沒有粒線體，NADPH 幾乎只能靠這條路。NADPH 用來把氧化型穀胱甘肽（GSSG）還原成還原型（GSH），GSH 再由穀胱甘肽過氧化酶（需要硒）清除過氧化氫。蠶豆含有氧化性物質，G6PD 缺乏的紅血球擋不住，細胞膜被破壞而溶血。',
+  go:['ppp','antioxidant'], terms:['redox','ratelimit']},
+ {q:'第一型糖尿病患者沒有注射胰島素時，為什麼會發生酮酸中毒？', o:['胰島素不足 → HSL 打開，大量脂肪酸送到肝臟 β-氧化 → 乙醯輔酶 A 過多，草醯乙酸又被拿去做糖質新生 → 轉成酮體','胰島素不足 → 肝醣大量合成','胰島素不足 → 尿素循環停止','胰島素不足 → 胺基酸無法吸收'], a:0,
+  ex:'胰島素本來會抑制 HSL；沒有胰島素、升糖素相對變高時，脂肪大量分解，脂肪酸送到肝臟燒成乙醯輔酶 A。同時肝臟拚命做糖質新生，草醯乙酸被拿走，乙醯輔酶 A 進不了 TCA，只好轉成酮體。酮體是酸，太多就造成酸中毒。這題串起了荷爾蒙、脂肪分解、β-氧化、糖質新生和酮體生成。',
+  go:['lipolysis','beta-ox','ketogenesis','#/feedstate/starve'], terms:['insulin','ketone']},
+ {q:'臨床上脂肪吸收不良的病人會使用 MCT（中鏈三酸甘油酯），原因是什麼？', o:['中鏈脂肪酸不需要膽鹽乳化和乳糜微粒，可直接經門靜脈到肝，也不需要肉鹼就能進入粒線體','中鏈脂肪酸熱量比較高','中鏈脂肪酸會走淋巴管','中鏈脂肪酸含有必需脂肪酸'], a:0,
+  ex:'長鏈脂肪需要膽鹽乳化、微膠粒運送、在小腸細胞重組成乳糜微粒走淋巴；進入細胞後還要靠肉鹼穿梭才能進粒線體。中鏈脂肪酸比較水溶，大部分直接被吸收進門靜脈送到肝臟，也可以不靠肉鹼進入粒線體，所以膽汁不足、腸道吸收面積不夠或淋巴有問題時都能使用。注意 MCT 不含必需脂肪酸。',
+  go:['#/journey/fat/3','carnitine','#/routes/lymph'], terms:['lymph','portal']},
+ {q:'肝硬化病人常補充支鏈胺基酸（BCAA），理由是什麼？', o:['BCAA 主要在肌肉代謝，不依賴受損的肝臟，並可改善 BCAA 與芳香族胺基酸的比值','BCAA 可以直接進入尿素循環','BCAA 不含氮','BCAA 可以合成膽酸'], a:0,
+  ex:'肝硬化時尿素循環做不好，氨堆積造成肝腦病變，所以要控制蛋白質。BCAA（白胺酸、異白胺酸、纈胺酸）的第一步轉胺主要在骨骼肌進行，肌肉可以直接拿來用，比較不會增加肝臟負擔；同時肝病時芳香族胺基酸偏高，補充 BCAA 可以改善兩者的比值。',
+  go:['bcaa','urea','#/journey/protein/8'], terms:['ammonia','essential']},
+ {q:'迴腸末端切除的病人，下列哪一組營養問題最可能同時出現？', o:['脂肪痢、脂溶性維生素缺乏、維生素 B12 缺乏','乳糖不耐與鐵缺乏','高血氨與低血糖','痛風與高膽固醇'], a:0,
+  ex:'迴腸末端負責兩件重要的事：①把膽鹽再吸收回肝臟（腸肝循環），切除後膽鹽流失，脂肪乳化不好，造成脂肪痢和維生素 A、D、E、K 缺乏；②吸收與內在因子結合的維生素 B12，切除後 B12 吸收不了，久了會巨球性貧血和神經症狀。',
+  go:['bile-acid','#/routes/enterohep','methionine'], terms:['enterohep']},
+ {q:'長期飢餓時，腦改用酮體作為主要能量來源，對身體最大的好處是什麼？', o:['減少分解肌肉蛋白來做糖質新生','增加肝醣儲存','提高血糖濃度','促進脂肪合成'], a:0,
+  ex:'腦平常每天需要約 120 g 葡萄糖。肝醣一天就用完，之後葡萄糖要靠糖質新生，而原料大多來自肌肉蛋白分解出的胺基酸。腦適應後約三分之二的能量改用酮體（由脂肪酸在肝臟做成），葡萄糖需求大減，肌肉就不必一直被分解，這是保護蛋白質的機制。',
+  go:['ketolysis','gng','#/feedstate/starve'], terms:['ketone','glucogenic']},
+ {q:'葉酸缺乏造成巨球性貧血，最直接的原因是哪一條路徑受阻？', o:['胸苷酸（dTMP）合成不足，DNA 無法複製，紅血球前驅細胞不能正常分裂','血基質合成受阻','糖解作用受阻','尿素循環受阻'], a:0,
+  ex:'胸苷酸合成酶把 dUMP 變成 dTMP 時，需要葉酸（5,10-亞甲基四氫葉酸）提供一碳單位。葉酸不夠 → dTMP 不夠 → DNA 複製卡住；細胞質還在長大但核不能分裂，紅血球前驅細胞就變得又大又少，這就是巨球性貧血。B12 缺乏也會因為甲基葉酸陷阱造成同樣的結果。',
+  go:['dntp','methionine','#/nucleic'], terms:['nucleotide','central']}
+];
+function renderInteg() {
+  const sc = {ok: 0, done: 0};
+  $('#main').innerHTML = `<article class="page" style="--acc:#1f9286">
+    <h1>🔗 跨章整合題</h1><p class="en-t">一題串好幾章：維生素 × 代謝 × 荷爾蒙 × 吸收運送 × 核酸</p>
+    <p class="lead">國考最難的題型，是把不同章節串在一起問。每題選完會顯示解析，並連到相關的路徑和名詞。共 ${INTEG.length} 題，選項每次順序不同。</p>
+    <div class="iqscore" id="iqscore">已作答 0 / ${INTEG.length}</div>
+    ${INTEG.map((x, i) => { const ord = shuffle(x.o.map((_, k) => k)); return `<section class="iq" data-i="${i}">
+      <h3>第 ${i + 1} 題</h3><p class="iqq">${esc(x.q)}</p>
+      <div class="iqo">${ord.map(k => `<button type="button" data-k="${k}">${esc(x.o[k])}</button>`).join('')}</div>
+      <div class="iqex" hidden><p>${termify(x.ex)}</p><div class="tmgo"><span>相關頁面</span>${x.go.map(goLink).join('')}</div>
+        <p class="tmrel">${x.terms.map(k => `<button type="button" class="tm" data-t="${k}">${TERMS[k].zh}</button>`).join('')}</p></div></section>`; }).join('')}
+    <nav class="pn"><a href="#/terms">📖 名詞小辭典</a><a href="#/regulation">🎚️ 調控總覽</a></nav>
+  </article>`;
+  document.querySelectorAll('.iq').forEach(sec => {
+    const x = INTEG[+sec.dataset.i];
+    sec.querySelectorAll('.iqo button').forEach(b => b.onclick = () => {
+      if (sec.classList.contains('done')) return;
+      sec.classList.add('done'); const k = +b.dataset.k; sc.done++; if (k === x.a) sc.ok++;
+      sec.querySelectorAll('.iqo button').forEach(o => { const kk = +o.dataset.k; o.classList.toggle('right', kk === x.a); o.classList.toggle('wrong', kk === k && k !== x.a); o.disabled = true; });
+      sec.querySelector('.iqex').hidden = false;
+      $('#iqscore').textContent = `已作答 ${sc.done} / ${INTEG.length}，答對 ${sc.ok} 題${sc.done === INTEG.length ? (sc.ok === INTEG.length ? ' 🎉 全對！' : '') : ''}`;
+    });
+  });
+}
+// ===== 化學基礎：從原子到代謝（漸進 7 課） =====
+Object.assign(TERM_CATS, {chem:'化學基礎'});
+Object.assign(TERMS, {
+covalent:{zh:'共價鍵', en:'Covalent bond', cat:'chem', aka:['共價鍵'],
+ plain:'兩個原子各拿出電子來「共用」，形成很牢固的鍵。分子的骨架都是共價鍵接起來的，例如碳和碳、碳和氫之間。',
+ ana:'像兩個人手牽手，而且握得很緊，不容易拉開。',
+ memo:'碳四隻手、氮三隻、氧兩隻、氫一隻（可以接幾個共價鍵）。',
+ go:['#/chem/1'], exam:['肽鍵、醣苷鍵、酯鍵、磷酸二酯鍵都是共價鍵','蛋白質變性破壞的是弱作用力，肽鍵（共價鍵）不會斷']},
+hbond:{zh:'氫鍵', en:'Hydrogen bond', cat:'chem', aka:['氫鍵'],
+ plain:'接在氧或氮上的氫，會被旁邊另一個氧或氮輕輕吸住，這種吸引力叫氫鍵。單一個很弱，但數量多時力量很大，決定了 DNA 雙股、蛋白質摺疊和水的特性。',
+ ana:'像魔鬼氈：每一根小鉤子都很弱，整片黏起來卻很牢，而且可以撕開再黏回去。',
+ memo:'A–T 兩個氫鍵、G–C 三個氫鍵，所以 G–C 越多 DNA 越耐熱。',
+ go:['#/chem/1','#/nucleic'], exam:['蛋白質二級結構（α-螺旋、β-摺板）靠氫鍵','DNA 複製、轉錄時要先把氫鍵打開']},
+hydrophobic:{zh:'親水性與疏水性', en:'Hydrophilic vs hydrophobic', cat:'chem', aka:['疏水','親水'],
+ plain:'有電荷或有 -OH、-NH₂ 這類極性基團的分子喜歡水（親水）；主要是 C–H 的長鏈不喜歡水（疏水），會聚在一起躲開水。',
+ ana:'油滴在湯裡會聚成一顆顆，就是疏水作用。',
+ memo:'醣多 -OH → 親水；脂肪酸長碳鏈 → 疏水。',
+ go:['#/chem/1','#/journey/fat/1','lipoprotein'], exam:['細胞膜磷脂雙層：親水頭朝外、疏水尾朝內','脂質要靠膽鹽、微膠粒、脂蛋白才能在水中運送']},
+fgroup:{zh:'官能基', en:'Functional group', cat:'chem', aka:['官能基'],
+ plain:'接在碳骨架上的小基團，決定分子的性質和會發生什麼反應。認得官能基，就能大概猜出一個陌生分子的個性。',
+ ana:'像人的名牌和制服：看制服就知道他是醫生還是廚師、會做什麼事。',
+ memo:'羥基 -OH、羰基 C=O、羧基 -COOH、胺基 -NH₂、磷酸基 -PO₄、硫氫基 -SH、甲基 -CH₃。',
+ go:['#/chem/2'], exam:['胺基酸＝同一個碳上有胺基和羧基','醛糖（葡萄糖）與酮糖（果糖）的差別在羰基位置']},
+condense:{zh:'脫水縮合與水解', en:'Condensation & hydrolysis', cat:'chem', aka:['脫水縮合','縮合','水解'],
+ plain:'兩個小分子接在一起時會放出一分子水，叫脫水縮合，用來把小分子組成大分子；反過來加水把鍵切開，叫水解，消化就是一連串的水解。',
+ ana:'組樂高時「喀」一聲接上（縮合，掉出一滴水）；拆開時要用力（水解，加回一滴水）。',
+ memo:'合成＝縮合、放水；消化＝水解、加水。',
+ go:['#/chem/3','#/journey/glucose/1'], exam:['葡萄糖 → 醣苷鍵 → 肝醣；胺基酸 → 肽鍵 → 蛋白質；甘油＋脂肪酸 → 酯鍵 → 三酸甘油酯；核苷酸 → 磷酸二酯鍵 → DNA']},
+oxred:{zh:'氧化與還原', en:'Oxidation & reduction', cat:'chem', aka:['氧化還原'],
+ plain:'失去電子叫氧化，得到電子叫還原，兩者一定同時發生。在生化裡常常是拿走或加上氫：拿走氫（交給 NAD⁺、FAD）就是氧化。營養素產生能量，本質上就是被氧化。',
+ ana:'像傳球：一個人把球（電子）丟出去（氧化），另一個人接住（還原）。',
+ memo:'「失電子是氧化，得電子是還原」；名字有 dehydrogenase 的酵素就是在做氧化還原。',
+ go:['#/chem/5','etc','tca'], exam:['NAD⁺ 接電子變 NADH（被還原）','脂肪的碳比較還原（C–H 多），所以每克熱量比醣高']},
+coupling:{zh:'能量偶聯', en:'Energy coupling', cat:'chem', aka:['偶聯'],
+ plain:'有些反應本身不划算（需要吸收能量），細胞就把它和「分解 ATP」這種放出能量的反應綁在一起做，讓整體變得划算。合成反應幾乎都靠這種方式。',
+ ana:'像推一台很重的車上坡，旁邊綁一個往下滑的重物幫忙拉。',
+ memo:'合成要花 ATP；名稱有 synthetase、carboxylase 的常常要花 ATP。',
+ go:['#/chem/5','gng','urea'], exam:['尿素循環、糖質新生、脂肪酸合成都要耗 ATP','合成肝醣用 UTP、合成磷脂用 CTP，也是偶聯']},
+pi:{zh:'等電點', en:'Isoelectric point (pI)', cat:'chem', aka:['等電點'],
+ plain:'胺基酸同時有可以放出氫離子的羧基和可以接收氫離子的胺基，帶的電荷會隨 pH 改變。正電和負電剛好抵消、整體不帶電時的 pH，就叫等電點。',
+ ana:'像蹺蹺板：兩邊的電荷一樣重時，剛好平衡。',
+ memo:'pH 比 pI 低 → 帶正電；pH 比 pI 高 → 帶負電。',
+ go:['#/chem/6'], exam:['蛋白質在等電點時溶解度最低，容易沉澱','電泳就是利用不同蛋白質帶電不同來分離']},
+buffer:{zh:'pH 與緩衝系統', en:'pH & buffer', cat:'chem', aka:['緩衝','酸中毒'],
+ plain:'pH 表示氫離子的多寡，越小越酸。緩衝系統可以吸收多出來的酸或鹼，讓 pH 維持穩定。血液最主要的緩衝是碳酸氫根，正常 pH 7.35 到 7.45。',
+ ana:'像海綿：酸多時吸走一些，酸少時放出一些。',
+ memo:'CO₂ ＋ H₂O ⇌ H₂CO₃ ⇌ H⁺ ＋ HCO₃⁻；肺排 CO₂、腎排 H⁺（NH₄⁺）一起調節。',
+ go:['#/chem/6','ketogenesis','#/routes/pulmonary'], exam:['糖尿病酮酸中毒、乳酸中毒都是代謝性酸中毒','每種酵素有最適 pH，例如胃蛋白酶在酸性下工作']},
+enzclass:{zh:'酵素六大類', en:'Six enzyme classes', cat:'chem', aka:['六大類'],
+ plain:'國際上依照酵素催化的反應種類，把酵素分成六大類：氧化還原酶、轉移酶、水解酶、裂解酶、異構酶、連接酶（合成酶）。酵素的名稱通常就透露它屬於哪一類。',
+ ana:'像工廠的六個部門，每個部門只做一種工作。',
+ memo:'口訣「氧轉水，裂異連」。',
+ go:['#/chem/4'], exam:['kinase 屬於轉移酶（轉移磷酸）','synthetase 要耗 ATP，屬於連接酶；synthase 不一定耗 ATP']}
+});
+const CHEM = [
+ {t:'身體由哪些元素組成？為什麼是這六種', icon:'⚛️',
+  body:['人體的有機物主要由六種元素組成，口訣是 CHONPS：碳 C、氫 H、氧 O、氮 N、磷 P、硫 S。按重量算，氧約 65%、碳 18%、氫 10%、氮 3%，鈣和磷大約 1.5% 和 1%（主要在骨骼）。氧特別多，是因為身體大約六成是水。',
+   '為什麼偏偏是這六種？有三個原因。第一，它們都是很輕、在地球上很常見的元素，水、空氣、食物裡到處都有，生物拿得到。第二，它們都能和別的原子共用電子，形成穩定的共價鍵，搭出牢固的分子骨架。第三，它們能接的鍵數不一樣：氫 1 個、氧 2 個、氮 3 個、碳 4 個，磷通常以磷酸的形式出現。就像樂高有一孔、兩孔、三孔、四孔的零件，種類不多，但互相搭配就能做出幾乎任何形狀。',
+   '每一種元素在身體裡都有自己的工作，看下面這張表：'],
+  table:{nw2:1, head:['元素','能接幾個鍵','主要工作','在哪裡看到'],rows:[
+   ['碳 C','4','當骨架，可以接成長鏈、分岔、圓環','所有有機物：葡萄糖、脂肪酸、胺基酸'],
+   ['氫 H','1','把骨架的空位補滿；H⁺ 決定 pH；搬運電子','NADH、FADH₂；C–H 越多，熱量越高'],
+   ['氧 O','2','組成水；構成 -OH、C=O 等官能基；粒線體最後接電子的是氧','水、醣類、脂肪酸的羧基；電子傳遞鏈'],
+   ['氮 N','3','組成胺基；形成氫鍵；含氮鹼基帶遺傳訊息','胺基酸、蛋白質、DNA/RNA 鹼基、血基質、神經傳導物質'],
+   ['磷 P','磷酸形式','儲存和傳遞能量；當 DNA 的骨架；加上磷酸當開關','ATP、DNA/RNA、磷脂質、骨骼、酵素磷酸化'],
+   ['硫 S','2','形成雙硫鍵固定蛋白質形狀；-SH 可以接住醯基','半胱胺酸、甲硫胺酸、輔酶 A、麩胱甘肽']]},
+  after:['那身體為什麼需要氮？因為少了氮，就沒有胺基酸和核酸。胺基酸的「胺」就是含氮的胺基，二十種胺基酸接成蛋白質，而酵素、肌肉、抗體、運輸蛋白、很多荷爾蒙都是蛋白質。DNA 和 RNA 的鹼基也都含氮，鹼基之間靠 N–H 和 O、N 形成氫鍵才能配對。另外，血紅素裡的血基質、血清素和多巴胺等神經傳導物質、肌酸，也都需要氮。',
+   '空氣裡七成八是氮氣，可是人體沒辦法直接利用氮氣，只有某些細菌能把它固定下來。所以我們唯一的氮來源，就是從食物吃進蛋白質，消化成胺基酸。有九種必需胺基酸身體不能自己做，一定要靠飲食。',
+   '既然氮這麼重要，為什麼最後要變成尿素排掉？因為身體沒有地方儲存多餘的胺基酸，不像葡萄糖可以存成肝醣、脂肪酸可以存成三酸甘油酯。用不完的胺基酸會先把胺基拿掉，碳骨架拿去產能、做葡萄糖或脂肪；拿下來的氮會變成氨，而氨對腦有毒，所以肝臟用尿素循環把它變成無毒的尿素，再由腎臟排出。核酸的嘧啶分解也會產生氨，嘌呤則變成尿酸排掉。',
+   '國考常考的是氮平衡：吃進來的氮等於排出去的氮，叫氮平衡，健康成人是這樣。生長期、懷孕、傷口癒合時，吃進來的比排出去的多，叫正氮平衡；飢餓、燒燙傷、重大手術後，分解大於合成，叫負氮平衡。蛋白質平均含氮約 16%，所以氮的量乘上 6.25 就是蛋白質的量。',
+   '最後一個小技巧：醣類和脂質主要是 C、H、O；蛋白質多了 N（和一點 S）；核酸多了 N 和 P。看分子裡有沒有 N、P，就能大概猜出它屬於哪一類。'],
+  terms:['covalent','hbond'], go:['#/journey/protein/9','urea','transamination','#/nucleic']},
+ {t:'化學鍵與作用力：分子為什麼長這樣', icon:'🔗',
+  body:['共價鍵：原子共用電子，很牢固，構成分子的骨架。消化酵素要切開的，就是共價鍵。',
+   '氫鍵：接在氧或氮上的氫被旁邊的氧或氮吸住。單個很弱，數量多就很有力。DNA 雙股靠鹼基之間的氫鍵配對，蛋白質的 α-螺旋、β-摺板也靠氫鍵。',
+   '離子鍵：正負電互相吸引，例如蛋白質裡帶正電和帶負電的胺基酸互相拉住。',
+   '疏水作用：油怕水，會聚在一起。細胞膜的磷脂雙層、蛋白質把疏水的胺基酸藏在裡面，都是這個原因；這也是脂肪需要膽鹽、微膠粒和脂蛋白才能在身體裡運送的根本原因。',
+   '所以生化裡講的「結構」，例如蛋白質摺疊、DNA 雙螺旋、細胞膜，其實都是這幾種力的組合。蛋白質變性就是加熱或酸鹼把氫鍵、離子鍵打散，形狀垮掉，但肽鍵（共價鍵）還在。'],
+  terms:['covalent','hbond','hydrophobic'], go:['#/journey/fat/2','lipoprotein','#/nucleic']},
+ {t:'官能基：分子的名牌', icon:'🏷️',
+  body:['分子的個性主要由接在碳骨架上的小基團決定，叫官能基。認得官能基，看到陌生分子就能猜出它的性質和會參與的反應。'],
+  table:{nw2:1, head:['官能基','長相','在哪裡看到'],rows:[
+   ['羥基（醇）','-OH','醣類到處都是，所以醣很溶於水'],
+   ['羰基（醛、酮）','C=O','葡萄糖是醛糖、果糖是酮糖；「酮體」名稱的由來'],
+   ['羧基（酸）','-COOH','脂肪「酸」、胺基「酸」的那個酸；在體內常帶負電（-COO⁻）'],
+   ['胺基','-NH₂','胺基酸的「胺」；轉胺作用搬的就是它；在體內常帶正電（-NH₃⁺）'],
+   ['磷酸基','-PO₄','ATP、G6P、DNA 骨架；荷爾蒙調控的磷酸化開關'],
+   ['硫氫基','-SH','半胱胺酸、輔酶 A（乙醯輔酶 A 的乙醯基就接在這個硫上）'],
+   ['甲基','-CH₃','SAM 提供甲基；DNA 甲基化把基因關掉']]},
+  after:['例子：胺基酸就是同一個碳上同時接了胺基和羧基，所以它既能接收也能放出氫離子，電荷隨 pH 改變，這就是等電點的由來。'],
+  terms:['fgroup','pi'], go:['transamination','methionine','#/regulation']},
+ {t:'縮合與水解：小分子怎麼變成大分子', icon:'🧱',
+  body:['兩個小分子接起來時放出一分子水，叫脫水縮合；加水把它們切開，叫水解。身體的四大類大分子，全都是這樣組成的。消化就是一連串的水解。'],
+  table:{head:['小分子（單元）','連接的鍵','大分子','消化（水解）的酵素'],rows:[
+   ['葡萄糖','醣苷鍵','澱粉、肝醣','澱粉酶、雙醣酶'],
+   ['胺基酸','肽鍵','蛋白質','胃蛋白酶、胰蛋白酶、胜肽酶'],
+   ['甘油＋脂肪酸','酯鍵','三酸甘油酯','脂解酶'],
+   ['核苷酸','磷酸二酯鍵','DNA、RNA','核酸酶']]},
+  after:['所以「營養素的旅程」第一段（消化）其實就是水解，最後一段（在細胞裡合成肝醣、蛋白質、脂肪）就是縮合。'],
+  terms:['condense'], go:['#/journey/glucose/0','#/journey/protein/0','glycogenesis']},
+ {t:'六大反應類型：看酵素名字就知道在做什麼', icon:'🔧',
+  body:['代謝路徑看起來有幾百步，但反應種類只有六種。酵素也依此分成六大類，而且英文名稱的字尾通常就是線索，這就是老師要你們記英文名的好處。'],
+  table:{head:['反應類型','名稱線索','網頁裡的例子'],rows:[
+   ['氧化還原：拿走或給電子、氫','dehydrogenase、oxidase、reductase','丙酮酸去氫酶、HMG-CoA 還原酶'],
+   ['轉移：把基團搬到另一個分子','kinase（磷酸）、transaminase（胺基）、methyltransferase（甲基）','己糖激酶、ALT／AST'],
+   ['水解：加水切開','-ase（lipase、protease）、phosphatase','脂解酶、葡萄糖-6-磷酸酶'],
+   ['裂解：不用水切開、或拿掉一個基團','lyase、aldolase、decarboxylase','醛縮酶、芳香族胺基酸脫羧酶'],
+   ['異構化：原子重新排列','isomerase、mutase、epimerase','磷酸葡萄糖異構酶、變位酶'],
+   ['連接：把兩個分子接起來，要花 ATP','synthetase、carboxylase、ligase','乙醯輔酶 A 羧化酶、麩醯胺酸合成酶']]},
+  after:['讀路徑時每一步先問：這是哪一類反應？就不會只是死背一串名字。口訣「氧轉水，裂異連」。'],
+  terms:['enzclass','enzyme'], go:['glycolysis','transamination','fa-synthesis']},
+ {t:'氧化還原與能量：營養素為什麼能產生能量', icon:'⚡',
+  body:['氧化是失去電子，還原是得到電子，兩者同時發生。在生化裡通常是拿走氫：營養素上的氫（連同電子）被交給 NAD⁺ 和 FAD，變成 NADH 和 FADH₂。',
+   'NADH 和 FADH₂ 把電子送到粒線體的電子傳遞鏈，最後交給氧氣變成水，途中的能量拿去做 ATP。所以「燃燒營養素」本質上就是氧化：碳最後變成 CO₂，氫和氧結合成水。',
+   '為什麼脂肪每克 9 大卡、醣只有 4 大卡？因為脂肪酸幾乎全是 C–H，還沒被氧化過，可以拿走的電子比較多；葡萄糖每個碳已經接了氧（-OH），算是「半燒過」的燃料。',
+   '有些反應本身不划算（要吸能量），細胞就把它和分解 ATP 綁在一起，這叫偶聯。合成肝醣、脂肪、蛋白質、尿素都要花 ATP，就是這個道理。'],
+  terms:['oxred','redox','atp','coupling'], go:['etc','tca','beta-ox']},
+ {t:'酸鹼與 pH：為什麼會酸中毒', icon:'🧪',
+  body:['pH 表示氫離子多寡，數字越小越酸。血液 pH 要維持在 7.35 到 7.45，靠的主要是碳酸氫根緩衝系統：CO₂ ＋ H₂O ⇌ H₂CO₃ ⇌ H⁺ ＋ HCO₃⁻。',
+   '肺把 CO₂ 呼出、腎把 H⁺（以 NH₄⁺ 的形式）排出，一起調節酸鹼。',
+   '胺基酸、蛋白質的電荷會隨 pH 改變，所以每種酵素都有最適 pH：胃蛋白酶在胃酸裡工作，胰臟的酵素則需要碳酸氫根把酸中和掉。',
+   '代謝產生的酸太多，緩衝不過來，就是代謝性酸中毒：例如糖尿病酮酸中毒（酮體是酸）、劇烈缺氧時的乳酸中毒。'],
+  terms:['buffer','pi'], go:['ketogenesis','cori','#/routes/pulmonary','deamination']}
+];
+function renderChem(n) {
+  const i = Math.max(0, Math.min(CHEM.length - 1, (+n || 1) - 1)); const c = CHEM[i]; const sn = new Set();
+  const talk = [c.t + '。', ...c.body, ...(c.after || [])].join('');
+  $('#main').innerHTML = `<article class="page" style="--acc:#7a55b8">
+    <a class="crumb" href="#/learn">← 學習地圖</a>
+    <h1>${c.icon} 化學基礎 ${i + 1}：${esc(c.t)}</h1><p class="en-t">第 ${i + 1} / ${CHEM.length} 課 · 從原子到代謝</p>
+    <div class="chemsteps">${CHEM.map((x, k) => `<a href="#/chem/${k + 1}" class="${k === i ? 'on' : k < i ? 'done' : ''}">${k + 1}</a>`).join('')}</div>
+    <div class="lecbar"><button class="btn pri" id="chemlec">🔊 講解這一課</button><details class="script"><summary>📝 看講稿</summary><p>${esc(talk)}</p></details></div>
+    <div class="chembody">${c.body.map(t => `<p>${termify(t, sn)}</p>`).join('')}</div>
+    ${c.table ? `<div class="chemtab">${tableHTML(c.table)}</div>` : ''}
+    ${c.after ? `<div class="chembody">${c.after.map(t => `<p>${termify(t, sn)}</p>`).join('')}</div>` : ''}
+    <div class="tmgo"><span>在網頁裡的例子</span>${c.go.map(goLink).join('')}</div>
+    <p class="tmrel">${c.terms.map(k => `<button type="button" class="tm" data-t="${k}">${TERMS[k].zh}</button>`).join('')}</p>
+  </article>`;
+  $('#chemlec').onclick = () => TTS.play(TTS.items(talk));
+}
+// ===== 漸進課程：開始之前（start）、化學與分子基礎（chem）、整合專題（x） =====
+const START = [
+ {t:'營養學和生化在學什麼？', icon:'🧭',
+  body:['營養學回答「吃什麼、吃多少、吃了對身體有什麼影響」，例如一天需要多少蛋白質、缺維生素 B1 會怎樣。生物化學回答更底層的「為什麼」：食物進到身體以後，在細胞裡被拆成什麼、靠哪個酵素、在哪裡進行、最後變成什麼。',
+   '打個比方：營養學像「菜單和採購清單」，生化像「廚房裡怎麼做菜」。只看菜單，你知道要買什麼；懂了廚房，你才知道為什麼少了一樣材料，整道菜就做不出來。',
+   '營養師國考把它們分成「營養學」和「生理學與生物化學」兩科，其實考的是同一件事的兩面。下面這張表，左邊是營養學會問的問題，右邊是生化給的答案：'],
+  table:{head:['營養學的問題','生化的答案'],rows:[
+   ['缺維生素 B1 為什麼會疲倦、神經病變？','B1 變成 TPP，是 PDH 的輔酶；缺了它丙酮酸進不了檸檬酸循環，最依賴葡萄糖的神經最先受影響'],
+   ['糖尿病控制不好為什麼會酮酸中毒？','胰島素不足，脂肪大量分解，肝臟的乙醯輔酶 A 太多，做成酮體'],
+   ['腎臟病為什麼要調整蛋白質？','胺基酸的氮會變成尿素，要靠腎臟排出'],
+   ['痛風為什麼要少吃高普林食物？','嘌呤分解的終產物是尿酸'],
+   ['G6PD 缺乏為什麼不能吃蠶豆？','五碳糖磷酸途徑做不出足夠的 NADPH，紅血球擋不住氧化傷害'],
+   ['吃太多糖為什麼也會變胖？','葡萄糖 → 乙醯輔酶 A → 脂肪酸 → 三酸甘油酯']]},
+  after:['所以學生化不是為了背整張代謝圖，而是為了能說出營養建議背後的原因。這個網站的每一條路徑，最後都會連回「吃」和「疾病」。'],
+  terms:['cofactor','ketone'], go:['pdh','ketogenesis','urea','purine-degradation','ppp']},
+ {t:'營養師為什麼要懂生化？', icon:'🩺',
+  body:['依照考選部的說明，營養師的工作有四大塊：營養狀況評估、依個人生理或疾病狀況設計飲食並做營養諮詢、團體膳食的設計與管理、社區營養調查與改善。其中「依疾病設計飲食」也就是膳食療養，最需要生化：幾乎每一種疾病飲食，原理都是某條代謝路徑出了問題。',
+   '懂生化的好處是能推理。例如你知道蛋白質的氮要在肝臟做成尿素、再由腎臟排出，就能自己推出：肝硬化的人為什麼可能血氨升高、腎臟病的人為什麼要調整蛋白質。課本沒寫到的情況，也能用同樣的方法想。'],
+  table:{head:['疾病或飲食','背後的代謝路徑'],rows:[
+   ['糖尿病飲食','胰島素與升糖素、肝醣、糖質新生、GLUT4'],
+   ['腎臟病飲食','胺基酸分解、尿素循環、腎臟排泄'],
+   ['肝病、肝昏迷','尿素循環、氨的毒性、支鏈胺基酸'],
+   ['痛風飲食','嘌呤分解成尿酸'],
+   ['高血脂飲食','脂蛋白、膽固醇合成、膽酸與腸肝循環'],
+   ['苯酮尿症（PKU）','苯丙胺酸羥化酶缺乏，苯丙胺酸轉不成酪胺酸'],
+   ['半乳糖血症','半乳糖代謝的酵素缺乏'],
+   ['生酮飲食','酮體生成與利用'],
+   ['服用華法林（warfarin）的人','維生素 K 循環，要注意深綠色蔬菜攝取穩定']]},
+  after:['國考方面，生化本身就是「生理學與生物化學」的一半，而營養學、膳食療養學的很多題目也要用生化來理解。先打好這個底，後面幾科會輕鬆很多。'],
+  terms:['ammonia','essential'], go:['#/regulation','urea','bcaa','purine-degradation','lipoprotein','phe-tyr','galactose','vitk']},
+ {t:'身體要營養素做什麼？', icon:'🍱',
+  body:['營養素有六大類：醣類、脂質、蛋白質、維生素、礦物質和水。身體需要它們做三件事：產生能量、當作建材、調節生理功能。',
+   '醣類、脂質、蛋白質叫巨量營養素，可以產生熱量：醣類和蛋白質每克約 4 大卡，脂質約 9 大卡（酒精約 7 大卡，但不算營養素）。維生素和礦物質不產生熱量，卻是讓代謝能進行的工具，很多 B 群維生素就是酵素的輔酶。'],
+  table:{head:['營養素','主要用途','生化會學到'],rows:[
+   ['醣類','能量；腦和紅血球最依賴葡萄糖','糖解、檸檬酸循環、肝醣、糖質新生'],
+   ['脂質','儲存能量、細胞膜、荷爾蒙原料','β-氧化、脂肪酸合成、膽固醇、脂蛋白'],
+   ['蛋白質','建材（酵素、肌肉、抗體），必要時產能','轉胺作用、尿素循環、胺基酸衍生物'],
+   ['維生素','輔酶、抗氧化、調節','PDH 需要 B1、B2、菸鹼酸、泛酸；轉胺需要 B6；一碳單位需要葉酸、B12'],
+   ['礦物質','骨骼、電解質、酵素的輔因子','鐵在血基質、鎂陪著 ATP、硒在抗氧化酵素'],
+   ['水','溶劑、運輸、調節體溫、參與反應','消化就是水解；pH 與緩衝']]},
+  after:['所有代謝路徑都可以用這三個用途來分：產能（分解）、做建材（合成）、調節（開關）。讀每一條路徑時先問自己：它在幫身體做哪一件事？'],
+  terms:['atp','cofactor','essential'], go:['#/ref/vit','glycolysis','beta-ox','transamination']},
+ {t:'一張圖看懂：從食物到細胞', icon:'🗺️',
+  body:['營養素在身體裡走的路可以分成六站：消化、吸收、運輸、進入細胞、細胞代謝、儲存或排出。',
+   '營養學課本多半講前幾站和需要量；生化則把「細胞代謝」這一站放大，一條一條看細胞裡的反應。這個網站的「營養素的旅程」把六站串起來，各條代謝路徑則是第五站的放大鏡。'],
+  table:{head:['站','在哪裡','重點'],rows:[
+   ['1 消化','口腔、胃、小腸','酵素把大分子水解成小分子'],
+   ['2 吸收','小腸絨毛','運輸蛋白（SGLT1、GLUT5、GLUT2）、微膠粒'],
+   ['3 運輸','肝門靜脈、淋巴、血液','水溶性的先到肝臟；長鏈脂肪走淋巴；脂蛋白'],
+   ['4 進入細胞','各個器官','肌肉和脂肪的 GLUT4 要靠胰島素；長鏈脂肪酸靠肉鹼進粒線體'],
+   ['5 細胞代謝','細胞質、粒線體、內質網','分解產能、合成、調控'],
+   ['6 儲存與排出','肝、肌肉、脂肪、腎、肺、腸','肝醣、脂肪；尿素、二氧化碳、膽汁']]},
+  after:['還有一件事要記：時間。剛吃飽、空腹幾小時、長期飢餓，身體用的路徑不一樣。所以學代謝要同時問兩個問題：在哪裡？什麼時候？'],
+  terms:['portal','lymph','glut'], go:['#/journey/glucose','#/journey/fat','#/journey/protein','#/feedstate']},
+ {t:'代謝的五個核心觀念，和怎麼讀', icon:'🔑',
+  body:['生化有五十多條路徑，但背後只有幾個反覆出現的觀念。先抓住這五個，後面每一條路徑都只是它們的變化。'],
+  table:{head:['觀念','一句話','比喻'],rows:[
+   ['酵素','每一步反應都要酵素，酵素決定速度','工廠裡的工人'],
+   ['能量貨幣','分解產生 ATP 和 NADH；合成要花 ATP 和 NADPH','賺錢和花錢'],
+   ['分解與合成分開走','正反兩個方向用不同的酵素，常常在不同的位置','單行道，去和回走不同的路'],
+   ['限速與不可逆步驟','每條路徑有一兩個關鍵步驟，調控集中在這裡','水龍頭'],
+   ['荷爾蒙調控','胰島素管吃飽、升糖素管空腹，一次開關好幾條路徑','總開關']]},
+  after:['讀每一條路徑時，固定問五個問題：一、它在分解還是合成？二、它產生或消耗多少 ATP、NADH、NADPH？三、產物拿去做什麼？四、在細胞的哪裡進行？五、什麼時候會走這條路？',
+   '讀的順序：先看全貌，再看細節；遇到看不懂的名詞就點開；每讀完一個階段就做練習。國考考的不是把圖背下來，而是限速酵素、調控、維生素輔酶，以及路徑出問題時會造成什麼疾病。'],
+  terms:['enzyme','atp','ratelimit','irrev'], go:['#/','#/regulation','#/terms']}
+];
+CHEM.push(
+ {t:'四大生物分子的結構', icon:'🧱',
+  body:['國考的命題大綱裡，醣類、脂質、蛋白質、核酸每一項都從「化學結構與物化性質」開始。原因很簡單：結構決定性質，性質決定它在身體裡怎麼被消化、運送和使用。'],
+  table:{head:['分子','單元','連接的鍵','結構重點','性質'],rows:[
+   ['醣類','單醣：葡萄糖、果糖、半乳糖','醣苷鍵','α-1,4 和 α-1,6（澱粉、肝醣）人可以消化；β-1,4（纖維素）不行','很多 -OH，易溶於水'],
+   ['脂質','脂肪酸＋甘油；膽固醇是四個環','酯鍵','飽和（沒有雙鍵）與不飽和（有雙鍵）；順式與反式','疏水，要靠膽鹽、脂蛋白運送'],
+   ['蛋白質','20 種胺基酸','肽鍵','一級（順序）→ 二級（α-螺旋、β-摺板）→ 三級 → 四級','有等電點；加熱、酸鹼會變性'],
+   ['核酸','核苷酸：鹼基＋五碳糖＋磷酸','磷酸二酯鍵','DNA 雙股，A 配 T、G 配 C；RNA 單股，用 U 代替 T','磷酸帶負電；吸收 260 nm 紫外光']]},
+  after:['幾個常考的結構觀念：葡萄糖是醛糖，果糖是酮糖。肝醣的分支比澱粉多，末端多，所以分解得快。不飽和脂肪酸的雙鍵越多，熔點越低，所以植物油常溫是液體。人體不能在 ω-3、ω-6 的位置加雙鍵，所以亞麻油酸和次亞麻油酸是必需脂肪酸。胺基酸依側鏈分成非極性、極性、酸性、鹼性。G 和 C 之間有三個氫鍵，A 和 T 只有兩個，所以 GC 越多，DNA 越不容易解開。',
+   '學結構不是為了畫分子式，而是為了推理。例如纖維素和澱粉都是葡萄糖接成的，只差 α 和 β 鍵，人體就只能消化澱粉，纖維素只能留給大腸細菌。'],
+  terms:['hbond','condense','essentialfa','pi'], go:['glycogenesis','#/journey/fat/1','elongation','#/nucleic']},
+ {t:'酵素：代謝的工人', icon:'⚙️',
+  body:['酵素大多是蛋白質，作用是降低反應需要的活化能，讓反應在體溫下也能很快進行，但它不會改變反應最後的平衡。每種酵素只認特定的受質，像鎖和鑰匙；後來發現酵素接上受質時形狀會稍微改變，叫誘導契合。',
+   '影響酵素速度的因素有溫度、pH、受質濃度、酵素的量，以及抑制劑和活化劑。Km 是反應速度到達最大速度一半時的受質濃度，Km 越小，表示酵素和受質越親。例如己糖激酶的 Km 很低，血糖低時也抓得住葡萄糖；肝臟的葡萄糖激酶 Km 很高，要吃飽、血糖高時才大量工作。',
+   '抑制劑分成三種，國考常考它們對 Km 和 Vmax 的影響：'],
+  table:{head:['抑制類型','怎麼作用','Km','Vmax','例子'],rows:[
+   ['競爭性','和受質搶同一個活性位','變大','不變','statin 抑制 HMG-CoA 還原酶；甲胺喋呤抑制二氫葉酸還原酶'],
+   ['非競爭性','接在別的位置，讓酵素變慢','不變','變小','重金屬接在酵素的 -SH 上'],
+   ['不可逆','和酵素形成共價鍵，永久失效','—','—','阿斯匹靈讓環氧化酶乙醯化']]},
+  after:['身體調節酵素有四種方法：別構調節（例如產物回頭抑制，叫回饋抑制）、共價修飾（加上或去掉磷酸）、改變酵素的量（轉錄），以及酵素原活化（例如胃蛋白酶原在胃酸中變成胃蛋白酶）。前兩種幾秒到幾分鐘就有效，改變酵素的量要幾小時到幾天。',
+   '很多酵素需要幫手，叫輔因子：可以是礦物質，例如鎂、鋅、鐵、銅、錳、硒；也可以是有機的輔酶，而輔酶大多來自 B 群維生素：B1 變成 TPP，B2 變成 FAD 和 FMN，菸鹼酸變成 NAD⁺ 和 NADP⁺，泛酸變成輔酶 A，B6 變成 PLP，生物素接在羧化酶上，葉酸變成 THF，B12 參與甲基轉移。這就是為什麼缺維生素會讓代謝卡住。'],
+  terms:['enzyme','km','allosteric','feedback','phospho','zymogen','cofactor','enzclass'], go:['#/ref/vit','cholesterol','#/regulation','glycolysis']}
+);
+const XTRA = [
+ {t:'身體的海關與解毒：吃進去的都會吸收嗎？', icon:'🛃',
+  body:['吃進去的東西不一定會被吸收。它可能有三種結局：沒被吸收、吸收了但用不完、吸收了但有毒。身體有三道關卡來處理：腸道像海關，肝臟像加工廠，腎臟、膽汁和肺像垃圾車。',
+   '第一關是腸道。要被吸收有兩個條件：先拆得夠小，例如單醣、胺基酸、脂肪酸；而且小腸細胞上要有對應的運輸蛋白。所以膳食纖維不會被吸收，因為人體沒有能切開 β-1,4 醣苷鍵的酵素，纖維會到大腸，一部分被細菌發酵成短鏈脂肪酸。乳糖不耐的人缺乏乳糖酶，乳糖也會跑到大腸發酵，造成脹氣和腹瀉。很多礦物質的吸收是按需要調節的，例如鐵大約只吸收一成到一成五，缺鐵時吸收變多，存量夠了就靠 hepcidin 把門關小；鈣的吸收要靠維生素 D。相對地，醣類、脂質、蛋白質在健康的人身上吸收率大約九成以上。',
+   '第二關是吸收了但用不完。多的葡萄糖存成肝醣，肝醣存滿了就轉成脂肪。多的胺基酸沒地方存，胺基拿掉變成尿素排出，碳骨架拿去產能或轉成脂肪。水溶性維生素多的大多從尿液排出；脂溶性維生素會存在肝臟和脂肪組織，補充劑吃太多可能累積中毒，尤其是維生素 A 和 D。',
+   '第三關是有毒的東西。吸收以前，胃酸先殺菌，嘔吐和腹瀉把東西趕快排掉，腸道細胞之間有緊密連接，細胞上還有 P-醣蛋白這種抽水機，把某些藥物和毒素推回腸道。從腸道吸收的水溶性物質會先經肝門靜脈到肝臟，這就是首渡效應。肝臟解毒分兩個階段，原則是把油溶性變成水溶性：第一階段主要靠細胞色素 P450，用氧化在分子上加一個 -OH 之類的把手；第二階段在把手上接一個很親水的分子，叫結合反應，例如葡萄糖醛酸、硫酸根、麩胱甘肽、甘胺酸。變成水溶性以後，小分子從尿液排出，大分子分泌進膽汁從糞便排出，揮發性的從肺呼出。'],
+  table:{head:['身體處理不了的情況','為什麼'],rows:[
+   ['重金屬（鉛、汞、鎘）','沒有專門分解的路徑，會累積在骨骼和腎臟；鉛會抑制血基質合成的酵素'],
+   ['脂溶性污染物（如戴奧辛）','很難變成水溶性，會存在脂肪組織裡好幾年'],
+   ['黃麴毒素','被 P450 活化以後才傷害 DNA，可能引起肝癌，所以發霉的花生和穀類不能吃'],
+   ['乙醯胺酚過量','結合反應被塞滿，P450 做出的毒性產物把麩胱甘肽用光，造成肝損傷'],
+   ['劑量太大','解毒酵素的速度有上限，來不及處理；所以毒不毒常常看劑量']]},
+  after:['身體自己產生的廢物也是同一套邏輯：氨做成尿素，膽紅素接上葡萄糖醛酸，酒精經過 ADH 和 ALDH 變成乙酸。把這一頁和藥物代謝、葡萄糖醛酸途徑、酒精代謝、抗氧化系統一起看，就是完整的「身體怎麼處理不要的東西」。'],
+  terms:['firstpass','portal','enterohep'], go:['drug','uronic','alcohol','antioxidant','heme-degradation','#/routes/renal','#/routes/enterohep']}
+];
+const SERIES = {
+  start:{arr:START, zh:'開始之前', col:'#c0567a'},
+  chem:{arr:CHEM, zh:'化學與分子基礎', col:'#7a55b8'},
+  x:{arr:XTRA, zh:'整合專題', col:'#d97d1f'}
+};
+function lessonTalk(c) {
+  const tb = c.table ? c.table.rows.map(r => r.map((x, i) => (i ? c.table.head[i] + '：' : '') + x).join('，') + '。') : [];
+  return [c.t + '。', ...c.body, ...tb, ...(c.after || [])].join('');
+}
+function renderLesson(ser, n) {
+  const S0 = SERIES[ser], A = S0.arr; const i = Math.max(0, Math.min(A.length - 1, (+n || 1) - 1)); const c = A[i]; const sn = new Set();
+  const talk = lessonTalk(c);
+  $('#main').innerHTML = `<article class="page" style="--acc:${S0.col}">
+    <a class="crumb" href="#/learn">← 學習地圖</a>
+    <h1>${c.icon} ${A.length > 1 ? esc(S0.zh) + ' ' + (i + 1) + '：' : ''}${esc(c.t)}</h1><p class="en-t">${A.length > 1 ? `第 ${i + 1} / ${A.length} 課 · ` : ''}${esc(S0.zh)}</p>
+    ${A.length > 1 ? `<div class="chemsteps" style="--sc:${S0.col}">${A.map((x, k) => `<a href="#/${ser}/${k + 1}" class="${k === i ? 'on' : k < i ? 'done' : ''}">${k + 1}</a>`).join('')}</div>` : ''}
+    <div class="lecbar"><button class="btn pri" id="chemlec">🔊 講解這一課</button><details class="script"><summary>📝 看講稿</summary><p>${esc(talk)}</p></details></div>
+    <div class="chembody">${c.body.map(t => `<p>${termify(t, sn)}</p>`).join('')}</div>
+    ${c.table ? `<div class="chemtab${c.table.nw2 ? ' nw2' : ''}">${tableHTML(c.table)}</div>` : ''}
+    ${c.after ? `<div class="chembody">${c.after.map(t => `<p>${termify(t, sn)}</p>`).join('')}</div>` : ''}
+    <div class="tmgo"><span>在網頁裡的例子</span>${c.go.map(goLink).join('')}</div>
+    <p class="tmrel">${c.terms.map(k => `<button type="button" class="tm" data-t="${k}">${TERMS[k].zh}</button>`).join('')}</p>
+  </article>`;
+  $('#chemlec').onclick = () => TTS.play(TTS.items(talk));
+}
+renderChem = n => renderLesson('chem', n);
+// ===== 學習路線：由淺入深 =====
+// go：路徑 id 或 #/ 路由；why：為什麼現在學這一課；ext：延伸（可先跳過）
+const LEARN = [
+ {t:'階段 0　開始之前：為什麼要學', sub:'先知道要學什麼、為什麼要學，讀起來才有方向', col:'#c0567a', q:'營養學和生化有什麼關係？營養師的工作哪裡用得到生化？代謝有哪幾個核心觀念？', syl:'營養師業務範圍與核心能力；營養學總論', items:[
+  {go:'#/start/1', why:'營養學問「吃什麼、吃多少」，生化回答「為什麼」：先看兩者怎麼對應。'},
+  {go:'#/start/2', why:'糖尿病、腎臟病、痛風、PKU……每一種疾病飲食背後都是一條代謝路徑。'},
+  {go:'#/start/3', why:'六大營養素在身體裡做三件事：能量、建材、調節。'},
+  {go:'#/start/4', why:'從食物到細胞的六站，對照這個網站每一部分在學哪一站。'},
+  {go:'#/start/5', why:'五個核心觀念和讀每條路徑的五個問題，後面全部用得上。'}]},
+ {t:'階段 1　化學與分子基礎', sub:'先認識「零件」和「工具」，後面的路徑才看得懂', col:'#7a55b8', q:'身體由哪些元素組成？分子靠什麼力量維持形狀？四大分子長什麼樣？酵素怎麼工作、怎麼被調節？', syl:'生化：醣類、脂質、蛋白質、核酸的「化學結構與物化性質」；酵素性質與調節、維生素與輔酶', items:[
+  {go:'#/chem/1', why:'所有營養素都由 C、H、O、N、P、S 組成：為什麼是這六種、各做什麼、身體為什麼需要氮。'},
+  {go:'#/chem/2', why:'分子的形狀由共價鍵、氫鍵、疏水作用決定，這是 DNA、蛋白質、細胞膜的基礎。'},
+  {go:'#/chem/3', why:'認得官能基，看到陌生分子就能猜出它的性質。'},
+  {go:'#/chem/4', why:'小分子怎麼接成大分子（縮合）、消化怎麼把它拆開（水解）。'},
+  {go:'#/chem/5', why:'代謝只有六種反應，看酵素名字就知道這一步在做什麼。'},
+  {go:'#/chem/6', why:'營養素為什麼能產生能量：氧化還原、NADH、ATP。'},
+  {go:'#/chem/7', why:'pH 與緩衝：之後的酮酸中毒、乳酸中毒都會用到。'},
+  {go:'#/chem/8', why:'醣類、脂質、蛋白質、核酸的結構：國考每一大項都從結構開始考。'},
+  {go:'#/chem/9', why:'酵素是每一條路徑的主角：Km、抑制劑、調節方法、維生素輔酶。'}]},
+ {t:'階段 2　先看全貌', q:'營養素從嘴巴到細胞經過哪些地方？吸收後走哪條路？細胞裡哪個位置做什麼？', syl:'生理：消化與吸收、細胞生理；營養學：各營養素的消化吸收', sub:'在細節之前，先知道一個營養素從嘴巴到細胞走過哪些地方', col:'#1f9286', items:[
+  {go:'#/', why:'代謝總地圖：先看所有路徑怎麼接在一起，哪些可逆、哪些是單行道。'},
+  {go:'#/journey/glucose', why:'跟著一口飯走一趟：消化、吸收、進入細胞、在哪裡被燒掉。後面每一課都是這趟旅程的放大。'},
+  {go:'#/routes/portal', why:'吸收後怎麼運送：肝門靜脈是最重要的一條路。'},
+  {go:'#/ref/loc', why:'細胞裡的位置：細胞質、粒線體、內質網、過氧化體各做哪些事。'}]},
+ {t:'階段 3　能量的核心', q:'葡萄糖怎麼變成 ATP？為什麼檸檬酸循環是三大營養素的共同終點？氧氣用在哪裡？', syl:'生化：糖解作用；檸檬酸循環、電子傳遞與氧化磷酸化', sub:'三大營養素最後都會走到這裡，是整本生化的主幹', col:'#e07a2f', items:[
+  {go:'glycolysis', why:'第一條完整路徑：葡萄糖在細胞質切成丙酮酸，學會看步驟、酵素、ATP 與 NADH。'},
+  {go:'pdh', why:'丙酮酸進入粒線體的大門，也是第一個「不可逆」的重要例子。'},
+  {go:'tca', why:'三大營養素的共同終點：乙醯輔酶 A 在這裡被完全氧化。'},
+  {go:'etc', why:'NADH 和 FADH₂ 在這裡換成大量 ATP，氧氣在這裡變成水。'}]},
+ {t:'階段 4　醣類的其他路徑', q:'吃飽和空腹時肝臟怎麼處理葡萄糖？身體怎麼自己做葡萄糖？NADPH 從哪裡來？', syl:'生化：糖質新生、五碳糖磷酸循環、肝醣合成與異化', sub:'有了主幹，再看醣類怎麼儲存、怎麼自己做、怎麼轉成其他用途', col:'#e07a2f', items:[
+  {go:'glycogenesis', why:'吃飽時把葡萄糖存起來。'},
+  {go:'glycogenolysis', why:'空腹時把肝醣拿出來，第一次看到荷爾蒙調控和磷酸化。'},
+  {go:'gng', why:'把糖解倒過來走，學會「繞道酵素」和為什麼脂肪酸不能生糖。'},
+  {go:'cori', why:'肌肉和肝臟合作：乳酸送回肝臟做成葡萄糖。'},
+  {go:'ppp', why:'不是為了 ATP，而是做 NADPH 和核糖；G6PD 缺乏症在這裡。'},
+  {go:'fructose', ext:1, why:'果糖為什麼容易變成脂肪。'},
+  {go:'galactose', ext:1, why:'半乳糖血症。'},
+  {go:'uronic', ext:1, why:'葡萄糖醛酸與解毒。'}]},
+ {t:'階段 5　脂質', q:'脂肪怎麼消化運送？怎麼燒、怎麼做？酮體和膽固醇從哪裡來？', syl:'生化：脂質的細胞膜與輸送、脂肪酸分解與合成、其他脂質生合成與異化', sub:'先跟著脂肪走一趟，再看分解與合成', col:'#c39100', items:[
+  {go:'#/journey/fat', why:'脂肪不溶於水，所以旅程和葡萄糖很不一樣：膽鹽、微膠粒、乳糜微粒、淋巴。'},
+  {go:'#/routes/lymph', why:'長鏈脂肪走淋巴、繞過肝臟。'},
+  {go:'lipolysis', why:'空腹時脂肪組織把脂肪拆開。'},
+  {go:'carnitine', why:'長鏈脂肪酸怎麼進入粒線體，β-氧化的限速步驟。'},
+  {go:'beta-ox', why:'每輪切兩個碳，算出棕櫚酸 106 個 ATP。'},
+  {go:'ketogenesis', why:'乙醯輔酶 A 太多時做成酮體；糖尿病酮酸中毒。'},
+  {go:'ketolysis', why:'腦、心、肌肉怎麼使用酮體。'},
+  {go:'fa-synthesis', why:'吃太多醣時怎麼變成脂肪，和 β-氧化做比較。'},
+  {go:'tag-synthesis', why:'脂肪酸接上甘油存起來。'},
+  {go:'cholesterol', why:'膽固醇合成與 statin 的作用點。'},
+  {go:'lipoprotein', why:'脂質在血液中怎麼運送：LDL、HDL。'},
+  {go:'elongation', ext:1, why:'必需脂肪酸、ω-3 與 ω-6。'},
+  {go:'eicosanoid', ext:1, why:'前列腺素與發炎、阿斯匹靈。'},
+  {go:'phospholipid', ext:1, why:'磷脂質與脂肪肝。'},
+  {go:'bile-acid', ext:1, why:'膽酸與腸肝循環。'},
+  {go:'steroid', ext:1, why:'類固醇激素。'},
+  {go:'vitd', ext:1, why:'維生素 D 的活化。'},
+  {go:'odd-chain', ext:1, why:'奇數碳脂肪酸：脂肪裡唯一能生糖的部分。'},
+  {go:'alpha-ox', ext:1, why:'α-氧化與雷夫叟姆病。'},
+  {go:'omega-ox', ext:1, why:'ω-氧化。'},
+  {go:'perox-beta', ext:1, why:'過氧化體 β-氧化。'}]},
+ {t:'階段 6　蛋白質與胺基酸', q:'胺基酸的氮去哪裡？碳骨架變成什麼？胺基酸還能做出哪些重要分子？', syl:'生化：胺基酸氧化與尿素生成、胺基酸之合成', sub:'蛋白質主要用來建造，多的才拿去產能，氮要變成尿素排掉', col:'#2f72c8', items:[
+  {go:'#/journey/protein', why:'先看全貌：消化、吸收、到肝、合成蛋白質、分解、排氮。'},
+  {go:'transamination', why:'胺基酸分解的第一步：把胺基交出去。'},
+  {go:'deamination', why:'胺基在肝臟變成氨。'},
+  {go:'urea', why:'有毒的氨變成尿素，橫跨粒線體與細胞質。'},
+  {go:'glucose-alanine', why:'肌肉怎麼把氮安全送到肝臟。'},
+  {go:'carbon-skeleton', why:'拿掉胺基後的碳骨架：生糖還是生酮。'},
+  {go:'neaa', why:'哪些胺基酸可以自己做。'},
+  {go:'aa-derivatives', why:'胺基酸做成神經傳導物質、激素等小分子。'},
+  {go:'phe-tyr', ext:1, why:'苯酮尿症、兒茶酚胺。'},
+  {go:'tryptophan', ext:1, why:'血清素、褪黑激素、菸鹼酸。'},
+  {go:'bcaa', ext:1, why:'支鏈胺基酸與楓糖尿症。'},
+  {go:'methionine', ext:1, why:'甲基、葉酸、B12 與同半胱胺酸。'},
+  {go:'heme-synthesis', ext:1, why:'血基質合成與鉛中毒。'},
+  {go:'heme-degradation', ext:1, why:'膽紅素與黃疸。'}]},
+ {t:'階段 7　整合與調控', q:'吃飽、空腹、飢餓時各器官怎麼分工？荷爾蒙怎麼一次開關好幾條路徑？身體怎麼處理不要的東西？', syl:'生化：荷爾蒙與細胞訊息傳遞、酶的調節、營養素之相互作用', sub:'把前面學的串起來：荷爾蒙怎麼同時控制好幾條路徑', col:'#d97d1f', items:[
+  {go:'#/routes/enterohep', why:'把各條運送路線補齊：腸肝循環、膽道、腎臟排泄。'},
+  {go:'#/feedstate', why:'吃飽、空腹、長期飢餓時，各器官改用什麼燃料。'},
+  {go:'#/regulation', why:'同一套機制：荷爾蒙 → 第二傳訊者 → 磷酸化開關。'},
+  {go:'alcohol', why:'酒精代謝：NADH 太多會怎樣。'},
+  {go:'#/x/1', why:'吃進去的都會吸收嗎？用不完和有毒的東西怎麼處理。'},
+  {go:'antioxidant', ext:1, why:'抗氧化系統、硒、G6PD。'},
+  {go:'drug', ext:1, why:'藥物代謝與首渡效應。'},
+  {go:'vitk', ext:1, why:'維生素 K 循環與華法林。'}]},
+ {t:'階段 8　核酸', q:'核酸怎麼決定要做哪些酵素？核苷酸怎麼合成與分解？痛風和巨球性貧血跟它有什麼關係？', syl:'生化：核苷之生合成與分解、基因之轉錄與轉譯、複製與突變、基因調控', sub:'最後回答「是誰決定要做哪些酵素」', col:'#3f78cf', items:[
+  {go:'#/nucleic', why:'核酸為什麼重要：設計圖、開關、零件。'},
+  {go:'purine-denovo', why:'嘌呤怎麼做出來，葉酸在這裡很重要。'},
+  {go:'pyrimidine', why:'嘧啶的合成，和尿素循環的 CPS-I 做比較。'},
+  {go:'dntp', why:'DNA 的原料，巨球性貧血的原因。'},
+  {go:'purine-degradation', why:'嘌呤分解成尿酸與痛風。'},
+  {go:'purine-salvage', ext:1, why:'回收途徑與 Lesch-Nyhan 症候群。'}]},
+ {t:'階段 9　綜合演練', q:'能不能把一題跨好幾章的題目串起來回答？', syl:'全部', sub:'用練習檢查自己真的懂了', col:'#1f9286', items:[
+  {go:'#/practice', why:'每條路徑的下拉填空練習。'},
+  {go:'#/integrate', why:'跨章整合題：國考最難的題型。'}]}
+];
+const LEARN_FLAT = LEARN.flatMap((s, si) => s.items.map(it => ({...it, si})));
+const learnKey = g => g.startsWith('#/') ? g : '#/' + g;
+function learnTitle(g) {
+  if (!g.startsWith('#/')) return byId[g] ? byId[g].zh : g;
+  const m = g.match(/^#\/(chem|start|x)\/(\d+)/); if (m) { const S0 = SERIES[m[1]], c = S0.arr[+m[2] - 1]; return (S0.arr.length > 1 ? S0.zh + ' ' + m[2] + '：' : '') + c.t; }
+  if (g === '#/') return '代謝總地圖'; if (g === '#/terms') return '名詞小辭典';
+  if (g === '#/practice') return '練習模式'; if (g === '#/integrate') return '跨章整合題';
+  if (g.startsWith('#/journey/')) return JOURNEYS[g.split('/')[2]].zh;
+  if (g.startsWith('#/routes/')) return '輸送路線：' + ROUTES.find(r => r.id === g.split('/')[2]).zh;
+  if (g === '#/feedstate') return '吃飽 vs 空腹 vs 長期飢餓'; if (g === '#/regulation') return '調控總覽'; if (g === '#/nucleic') return '核酸為什麼重要';
+  if (g.startsWith('#/ref/')) return REFS[g.slice(6)].zh;
+  return g;
+}
+function learnDone() { try { return JSON.parse(localStorage.getItem('pw-learn') || '{}'); } catch (e) { return {}; } }
+function setLearnDone(k, v) { try { const o = learnDone(); if (v) o[k] = 1; else delete o[k]; localStorage.setItem('pw-learn', JSON.stringify(o)); } catch (e) {} }
+function renderLearn() {
+  const d = learnDone(); const core = LEARN_FLAT.filter(x => !x.ext); const nDone = core.filter(x => d[learnKey(x.go)]).length;
+  const next = LEARN_FLAT.find(x => !x.ext && !d[learnKey(x.go)]);
+  let n = 0; const curSi = next ? next.si : -1;
+  const stProg = s => { const c = s.items.filter(x => !x.ext); return [c.filter(x => d[learnKey(x.go)]).length, c.length]; };
+  $('#main').innerHTML = `<article class="page" style="--acc:#1f9286">
+    <h1>🗺️ 學習地圖</h1><p class="en-t">由淺入深 10 個階段：先知道為什麼學，再一步一步往上走</p>
+    <p class="lead">左邊目錄是「分類」，適合查資料；這裡是「順序」，適合從頭學。順序依照營養師國考的命題大綱安排：先打化學與分子的底，再看全貌、能量核心，然後醣、脂、蛋白質，最後是調控和核酸。每一課都寫了為什麼現在學它，讀完按 ✓ 記錄進度（存在你自己的手機）。標「延伸」的可以先跳過。</p>
+    <div class="lnprog"><div class="lnbar"><i style="width:${Math.round(nDone / core.length * 100)}%"></i></div><span>主線進度 ${nDone} / ${core.length}</span>
+      ${next ? `<a class="btn pri" href="${learnKey(next.go)}">▶ 繼續：${esc(learnTitle(next.go))}</a>` : '<b>🎉 主線全部完成！</b>'}</div>
+    <ol class="lnmap">${LEARN.map((s, si) => { const [a, b] = stProg(s); return `<li class="${a === b ? 'full' : ''}${si === curSi ? ' cur' : ''}" style="--lc:${s.col}"><a href="#ln-${si}" data-lnj="${si}"><i>${si}</i><b>${esc(s.t.replace(/^階段 \d+　/, ''))}</b><small>${esc(s.q)}</small><em>${a} / ${b}</em></a></li>`; }).join('')}</ol>
+    ${LEARN.map((s, si) => `<details class="lnst" id="ln-${si}" style="--lc:${s.col}"${si === curSi || (curSi < 0 && !si) ? ' open' : ''}><summary><h3>${esc(s.t)}</h3><span class="lnsc">${stProg(s).join(' / ')}</span></summary><p class="lnsub">${esc(s.sub)}</p>
+      <div class="lngoal"><p><b>🎯 學完你能回答：</b>${esc(s.q)}</p><p><b>📋 國考命題大綱：</b>${esc(s.syl)}</p></div>
+      <ol class="lnlist">${s.items.map(it => { n++; const k = learnKey(it.go); const ok = d[k];
+      return `<li class="${ok ? 'ok' : ''}${it.ext ? ' ext' : ''}"><button type="button" class="lnchk" data-k="${k}" aria-label="標記讀完">${ok ? '✓' : ''}</button><a href="${k}"><b><span class="lnn">${n}</span>${esc(learnTitle(it.go))}${it.ext ? '<em>延伸</em>' : ''}</b><small>${esc(it.why)}</small></a></li>`; }).join('')}</ol></details>`).join('')}
+    ${nDone ? '<p><button class="btn" id="lnclr">清除學習進度</button></p>' : ''}
+  </article>`;
+  document.querySelectorAll('.lnchk').forEach(b => b.onclick = () => { setLearnDone(b.dataset.k, !learnDone()[b.dataset.k]); renderLearn(); });
+  document.querySelectorAll('[data-lnj]').forEach(a => a.onclick = ev => { ev.preventDefault(); const el = document.getElementById('ln-' + a.dataset.lnj); el.open = true; el.scrollIntoView({behavior: 'smooth'}); });
+  const c = $('#lnclr'); if (c) c.onclick = () => { try { localStorage.removeItem('pw-learn'); } catch (e) {} renderLearn(); };
+}
+// 每一頁底部：如果這頁在學習路線上，顯示「第幾課、上一課／下一課」
+function learnNav() {
+  const h = location.hash || '#/'; const key = h.replace(/\/(fed|fast|starve)$/, '');
+  const i = LEARN_FLAT.findIndex(x => learnKey(x.go) === key || (key === '#/feedstate/fed' && x.go === '#/feedstate'));
+  const art = document.querySelector('#main article'); if (!art || i < 0) return;
+  const it = LEARN_FLAT[i], prev = LEARN_FLAT[i - 1], next = LEARN_FLAT[i + 1], st = LEARN[it.si]; const k = learnKey(it.go); const ok = learnDone()[k];
+  const box = document.createElement('div'); box.className = 'lnnav'; box.style.setProperty('--lc', st.col);
+  box.innerHTML = `<div class="lnnavh">🗺️ 學習地圖・${esc(st.t)}・第 ${i + 1} / ${LEARN_FLAT.length} 課</div>
+    <button type="button" class="btn ${ok ? '' : 'pri'}" id="lndone">${ok ? '✓ 已讀完（再按取消）' : '✓ 這一課讀完了'}</button>
+    <div class="lnnavb">${prev ? `<a href="${learnKey(prev.go)}">← ${esc(learnTitle(prev.go))}</a>` : '<span></span>'}<a href="#/learn">學習地圖</a>${next ? `<a href="${learnKey(next.go)}">${esc(learnTitle(next.go))} →</a>` : '<span></span>'}</div>
+    ${next ? `<p class="lnwhy">下一課：${esc(next.why)}</p>` : ''}`;
+  art.appendChild(box);
+  box.querySelector('#lndone').onclick = () => { setLearnDone(k, !ok); box.remove(); learnNav(); };
+}
 // ===== App =====
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -2181,7 +3158,7 @@ const label = (en, zh) => S.lang === 'en' || !zh ? en : `${en}｜${zh}`;
 
 /* ---------- 導覽 ---------- */
 function buildNav() {
-  let h = `<a class="nav-home" href="#/">🏠 總覽與代謝地圖</a><a class="nav-home nav-pr" href="#/practice">✏️ 練習模式</a><a class="nav-home nav-jr" href="#/journey">🧳 營養素的旅程</a><a class="nav-home nav-rt" href="#/routes">🩸 營養素的輸送路線</a>`;
+  let h = `<a class="nav-home" href="#/">🏠 總覽與代謝地圖</a><a class="nav-home nav-ln" href="#/learn">🗺️ 學習地圖（從頭學）</a><a class="nav-home nav-st" href="#/start/1">🧭 開始之前：為什麼要學</a><a class="nav-home nav-cm" href="#/chem/1">⚗️ 化學與分子基礎</a><a class="nav-home nav-pr" href="#/practice">✏️ 練習模式</a><a class="nav-home nav-jr" href="#/journey">🧳 營養素的旅程</a><a class="nav-home nav-rt" href="#/routes">🩸 營養素的輸送路線</a><a class="nav-home nav-rg" href="#/regulation">🎚️ 調控總覽</a><a class="nav-home nav-nc" href="#/nucleic">🧬 核酸為什麼重要</a><a class="nav-home nav-iq" href="#/integrate">🔗 跨章整合題</a><a class="nav-home nav-tm" href="#/terms">📖 名詞小辭典</a>`;
   for (const [k, c] of Object.entries(CATS)) {
     const items = P.filter(p => p.cat === k);
     h += `<div class="nav-cat" style="--acc:${c.color}"><a class="nav-cat-t" href="#/cat/${k}">${c.zh}<small>${items.length}</small></a><ul>` +
@@ -2193,7 +3170,7 @@ function buildNav() {
 }
 function markNav() {
   const h = location.hash || '#/';
-  const hh = /^#\/routes/.test(h) ? '#/routes' : /^#\/(journey|feedstate)/.test(h) ? '#/journey' : /^#\/q\//.test(h) ? '#/practice' : h;
+  const hh = /^#\/routes/.test(h) ? '#/routes' : /^#\/terms/.test(h) ? '#/terms' : /^#\/regulation/.test(h) ? '#/regulation' : /^#\/(journey|feedstate)/.test(h) ? '#/journey' : /^#\/q\//.test(h) ? '#/practice' : /^#\/chem/.test(h) ? '#/chem/1' : /^#\/start/.test(h) ? '#/start/1' : h;
   document.querySelectorAll('#navlist a').forEach(a => a.classList.toggle('on', a.getAttribute('href') === hh));
 }
 
@@ -2358,7 +3335,7 @@ function flowHTML(p) {
       const badges = (e.rl ? `<span class="bd bd-rl">限速 Rate-limiting</span>` : '') + (e.irr ? `<span class="bd bd-irr">不可逆</span>` : '');
       const enz = optE ? `<div class="enz q-enz">${sel(optE, e.e)}</div>` :
         `<div class="enz"><b>${esc(een)}</b>${S.lang !== 'en' && ezh ? `<small>${esc(ezh)}</small>` : ''}</div>`;
-      h += `<div class="edge"><div class="arr"><span class="num">${i + 1}</span></div><div class="ebody">${cross}${enz}<div class="meta">${badges}${chips(e.c)}</div>${e.n ? `<div class="enote">${esc(e.n)}</div>` : ''}</div></div>`;
+      h += `<div class="edge"><div class="arr"><span class="num">${i + 1}</span></div><div class="ebody">${cross}${enz}<div class="meta">${badges}${chips(e.c)}</div>${e.n ? `<div class="enote">${tf(e.n)}</div>` : ''}</div></div>`;
     }
   });
   if (p.loop) h += `<div class="loop">↻ ${esc(p.loop)}</div>`;
@@ -2366,9 +3343,10 @@ function flowHTML(p) {
 }
 
 /* ---------- 頁面 ---------- */
+let TSEEN = new Set(); const tf = t => termify(t, TSEEN);
 function infoTable(p) {
   const rows = [['位置', p.loc], ['功能', p.func], ['限速／關鍵酶', p.rl], ['輔因子', p.cof], ['相關疾病／重點', p.dis]];
-  return `<table class="info">${rows.map(([a, b]) => `<tr><th>${a}</th><td>${esc(b)}</td></tr>`).join('')}</table>`;
+  return `<table class="info">${rows.map(([a, b]) => `<tr><th>${a}</th><td>${tf(b)}</td></tr>`).join('')}</table>`;
 }
 function tableHTML(t) {
   return `<div class="tw"><table class="grid"><thead><tr>${t.head.map(x => `<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>${t.rows.map(r => `<tr>${r.map(x => `<td>${esc(x)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
@@ -2386,7 +3364,7 @@ function renderPath(id) {
   const p = byId[id]; const c = CATS[p.cat]; const pr = S.pr;
   const LIST = pr ? PRACT : ORDER; const base = pr ? '#/q/' : '#/';
   const idx = LIST.indexOf(id); const prev = byId[LIST[idx - 1]], next = byId[LIST[idx + 1]];
-  const R0 = RING[id];
+  const R0 = RING[id]; TSEEN = new Set();
   if (pr) { renderPractPath(p, c, R0, prev, next, base); return; }
   let h = `<article class="page" style="--acc:${c.color}">
     <a class="crumb" href="#/cat/${p.cat}">${c.zh}</a>
@@ -2398,8 +3376,8 @@ function renderPath(id) {
     ${R0 ? `<section><h3>🔄 循環全貌</h3><div class="ringwrap">${ringSVG(p, R0, S.mode === 'quiz' && S.blank === 'met')}</div><p class="hint">圓圈數字＝下方步驟編號；綠字＝投入、橘字＝產出。</p></section>` : ''}
     ${p.edges.length ? `<section><h3>🧭 逐步路徑</h3>${controls(p)}${flowHTML(p)}</section>` : ''}
     ${p.table ? `<section><h3>📋 整理表</h3>${tableHTML(p.table)}</section>` : ''}
-    ${p.branches ? `<section><h3>🔀 分支路徑</h3><ul class="br">${p.branches.map(b => `<li>${esc(b)}</li>`).join('')}</ul></section>` : ''}
-    ${p.key ? `<section class="keys"><h3>⭐ 國考重點</h3><ul>${p.key.map(k => `<li>${esc(k)}</li>`).join('')}</ul></section>` : ''}
+    ${p.branches ? `<section><h3>🔀 分支路徑</h3><ul class="br">${p.branches.map(b => `<li>${tf(b)}</li>`).join('')}</ul></section>` : ''}
+    ${p.key ? `<section class="keys"><h3>⭐ 國考重點</h3><ul>${p.key.map(k => `<li>${tf(k)}</li>`).join('')}</ul></section>` : ''}
     <nav class="pn">${prev ? `<a href="#/${prev.id}">← ${esc(prev.zh)}</a>` : '<span></span>'}${next ? `<a href="#/${next.id}">${esc(next.zh)} →</a>` : '<span></span>'}</nav>
   </article>`;
   $('#main').innerHTML = h;
@@ -2408,7 +3386,7 @@ function renderPath(id) {
 }
 function renderPractPath(p, c, R0, prev, next, base) {
   const sc = getScores()[p.id];
-  const hints = `${infoTable(p)}${wherePanel(p)}${p.table ? `<section><h3>📋 整理表</h3>${tableHTML(p.table)}</section>` : ''}${p.branches ? `<section><h3>🔀 分支路徑</h3><ul class="br">${p.branches.map(b => `<li>${esc(b)}</li>`).join('')}</ul></section>` : ''}${p.key ? `<section class="keys"><h3>⭐ 國考重點</h3><ul>${p.key.map(k => `<li>${esc(k)}</li>`).join('')}</ul></section>` : ''}`;
+  const hints = `${infoTable(p)}${wherePanel(p)}${p.table ? `<section><h3>📋 整理表</h3>${tableHTML(p.table)}</section>` : ''}${p.branches ? `<section><h3>🔀 分支路徑</h3><ul class="br">${p.branches.map(b => `<li>${tf(b)}</li>`).join('')}</ul></section>` : ''}${p.key ? `<section class="keys"><h3>⭐ 國考重點</h3><ul>${p.key.map(k => `<li>${tf(k)}</li>`).join('')}</ul></section>` : ''}`;
   $('#main').innerHTML = `<article class="page" style="--acc:${c.color}">
     <a class="crumb" href="#/practice">← 練習清單</a>
     <h1>✏️ ${esc(p.zh)}</h1><p class="en-t">${esc(p.en)}${sc ? `　·　上次 ${sc.ok}/${sc.tot}，最佳 ${sc.best}/${sc.tot}` : ''}</p>
@@ -2556,6 +3534,8 @@ function renderHome() {
      <div class="legend">${Object.values(CATS).map(c => `<span><i style="background:${c.color}"></i>${c.zh}</span>`).join('')}</div></section>
     <section><h3>🧫 細胞位置地圖 <small>每條路徑在哪裡進行</small></h3><div class="cellmapwrap">${cellMapSVG()}</div></section>
    </div>
+   <a class="prbanner bn-ln" href="#/learn"><b>🗺️ 第一次學？從「學習地圖」開始</b><span>由淺入深 10 個階段：為什麼要學 → 化學與分子基礎 → 全貌 → 能量核心 → 醣、脂、蛋白質 → 調控 → 核酸 → 綜合演練，可打勾記錄進度</span></a>
+   <div class="bngrid"><a class="prbanner bn-tm" href="#/terms"><b>📖 名詞小辭典</b><span>看不懂的名詞先查這裡：白話、比喻、記憶法</span></a><a class="prbanner bn-rg" href="#/regulation"><b>🎚️ 調控總覽</b><span>荷爾蒙怎麼一次打開或關掉好幾條路徑</span></a><a class="prbanner bn-nc" href="#/nucleic"><b>🧬 核酸為什麼重要</b><span>設計圖、開關、零件：核酸和代謝的關係</span></a><a class="prbanner bn-iq" href="#/integrate"><b>🔗 跨章整合題</b><span>一題串好幾章，國考最難的題型</span></a></div>
    <a class="prbanner jrbanner" href="#/journey"><b>🧳 營養素的旅程</b><span>葡萄糖・脂肪・蛋白質：從消化吸收到進入細胞、在哪裡作用、最後變成什麼</span></a>
    <a class="prbanner" href="#/practice"><b>✏️ 進入練習模式</b><span>${PRACT.length} 條路徑・下拉選單填空・自動記錄成績</span></a>
    <h3>📚 分類</h3><div class="cards">${Object.entries(CATS).map(([k, c]) => `<a class="card" href="#/cat/${k}" style="--acc:${c.color}"><b>${c.zh}</b><small>${P.filter(p => p.cat === k).length} 條路徑</small><span>${esc(c.intro)}</span></a>`).join('')}
@@ -2572,8 +3552,15 @@ function route() {
   if (!location.hash && /practice|quiz/.test(location.search)) h = 'practice';
   S.pr = false; if (typeof jStop === 'function') jStop(); TTS.stop();
   const jm = h.match(/^journey\/(\w+)(?:\/(\d+))?$/), fm = h.match(/^feedstate(?:\/(\w+))?$/);
-  const rm = h.match(/^routes(?:\/(\w+))?$/);
+  const rm = h.match(/^routes(?:\/(\w+))?$/), tmm = h.match(/^terms(?:\/([\w-]+))?$/), rgm = h.match(/^regulation(?:\/(\w+))?$/);
+  if (typeof closeTerm === 'function') closeTerm();
   if (rm) renderRoutes(rm[1]);
+  else if (tmm) renderTerms(tmm[1]);
+  else if (rgm) renderReg(rgm[1]);
+  else if (h === 'nucleic') renderNucleic();
+  else if (h === 'learn') renderLearn();
+  else if (/^(chem|start|x)(\/\d+)?$/.test(h)) renderLesson(h.split('/')[0], h.split('/')[1]);
+  else if (h === 'integrate') renderInteg();
   else if (h === 'journey') renderJourneyHub();
   else if (jm && JOURNEYS[jm[1]]) renderJourney(jm[1], jm[2]);
   else if (fm) renderFeed(fm[1] || 'fed');
@@ -2583,6 +3570,7 @@ function route() {
   else if (h.startsWith('ref/') && REFS[h.slice(4)]) renderRef(h.slice(4));
   else if (byId[h]) { renderPath(h); }
   else renderHome();
+  if (typeof learnNav === 'function' && h !== 'learn') learnNav();
   markNav(); window.scrollTo(0, 0);
   document.body.classList.remove('navopen');
 }
